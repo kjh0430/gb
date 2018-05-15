@@ -16,4 +16,10 @@ public class TestViewController {
 		
 		return "client/poList_detail";
 	}
+	
+	@RequestMapping("clientlist.do")
+	public String clientListView() {
+		
+		return "client/clientList";
+	}
 }
