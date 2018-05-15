@@ -16,8 +16,8 @@
          <li><a><i class="fa fa-desktop"></i>사원관리 <span class="fa fa-chevron-down"></span></a>
            <ul class="nav child_menu">
              <li><a href="">목표관리</a></li>
-             <li><a href="">사원등록</a></li>
-             <li><a href="">사원목록</a></li>
+             <li><a href="empRegister.do">사원등록</a></li>
+             <li><a href="empList.do">사원목록</a></li>
              
            </ul>
          </li>

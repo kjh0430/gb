@@ -35,26 +35,41 @@ public class EmpServlceImpl implements EmpService{
 		return null;
 	}
 
-	/** 사원정보 등록 메소드 */
+//	/** 사원정보 등록 메소드 */
+//	@Override
+//	public int insertEmp(Emp emp) {
+//		// TODO Auto-generated method stub
+//		return 0;
+//	}
+//
+//	/** 사원정보 업데이트 메소드 */
+//	@Override
+//	public int updateEmp(Emp emp) {
+//		// TODO Auto-generated method stub
+//		return 0;
+//	}
+//
+//	/** 사원정보 삭제 메소드 */
+//	@Override
+//	public int deleteEmp(String emp_no) {
+//		// TODO Auto-generated method stub
+//		return 0;
+//	}
+
 	@Override
 	public int insertEmp(Emp emp) {
-		// TODO Auto-generated method stub
-		return 0;
+		return empDao.insertEmp(emp);
 	}
 
-	/** 사원정보 업데이트 메소드 */
 	@Override
 	public int updateEmp(Emp emp) {
-		// TODO Auto-generated method stub
-		return 0;
+		return empDao.updateEmp(emp);
 	}
 
-	/** 사원정보 삭제 메소드 */
 	@Override
-	public int deleteEmp(String emp_no) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
+	public int deleteEmp(Emp emp) {
+		return empDao.deleteEmp(emp);
+	}	
+	
 	
 }

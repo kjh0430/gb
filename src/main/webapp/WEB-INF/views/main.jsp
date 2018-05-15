@@ -17,15 +17,9 @@
     <link href="resources/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="resources/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="resources/vendors/nprogress/nprogress.css" rel="stylesheet">
     <!-- iCheck -->
     <link href="resources/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
 	
-    <!-- bootstrap-progressbar -->
-    <link href="resources/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
-   
-
     <!-- Custom Theme Style -->
     <link href="resources/build/css/custom.min.css" rel="stylesheet">
     <link href="resources/css/main.css" rel="stylesheet">
@@ -225,88 +219,6 @@
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                  <h4>App Usage across versions</h4>
-                  <div class="widget_summary">
-                    <div class="w_left w_25">
-                      <span>0.1.5.2</span>
-                    </div>
-                    <div class="w_center w_55">
-                      <div class="progress">
-                        <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 66%;">
-                          <span class="sr-only">60% Complete</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="w_right w_20">
-                      <span>123k</span>
-                    </div>
-                    <div class="clearfix"></div>
-                  </div>
-
-                  <div class="widget_summary">
-                    <div class="w_left w_25">
-                      <span>0.1.5.3</span>
-                    </div>
-                    <div class="w_center w_55">
-                      <div class="progress">
-                        <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 45%;">
-                          <span class="sr-only">60% Complete</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="w_right w_20">
-                      <span>53k</span>
-                    </div>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="widget_summary">
-                    <div class="w_left w_25">
-                      <span>0.1.5.4</span>
-                    </div>
-                    <div class="w_center w_55">
-                      <div class="progress">
-                        <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-                          <span class="sr-only">60% Complete</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="w_right w_20">
-                      <span>23k</span>
-                    </div>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="widget_summary">
-                    <div class="w_left w_25">
-                      <span>0.1.5.5</span>
-                    </div>
-                    <div class="w_center w_55">
-                      <div class="progress">
-                        <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 5%;">
-                          <span class="sr-only">60% Complete</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="w_right w_20">
-                      <span>3k</span>
-                    </div>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="widget_summary">
-                    <div class="w_left w_25">
-                      <span>0.1.5.6</span>
-                    </div>
-                    <div class="w_center w_55">
-                      <div class="progress">
-                        <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 2%;">
-                          <span class="sr-only">60% Complete</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="w_right w_20">
-                      <span>1k</span>
-                    </div>
-                    <div class="clearfix"></div>
-                  </div>
 
                 </div>
               </div>
@@ -378,7 +290,7 @@
             </div>
           </div>
 		
-         
+         </div>
         <!-- /page content -->
       </div>
       <!-- footer content -->
@@ -392,40 +304,10 @@
     <script src="resources/vendors/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap -->
     <script src="resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- FastClick -->
-    <script src="resources/vendors/fastclick/lib/fastclick.js"></script>
-    <!-- NProgress -->
-    <script src="resources/vendors/nprogress/nprogress.js"></script>
-    <!-- Chart.js -->
-   <!--  <script src="resources/vendors/Chart.js/dist/Chart.min.js"></script> -->
-    <!-- gauge.js -->
-    <script src="resources/vendors/gauge.js/dist/gauge.min.js"></script>
-    <!-- bootstrap-progressbar -->
-    <script src="resources/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+   
     <!-- iCheck -->
     <script src="resources/vendors/iCheck/icheck.min.js"></script>
-    <!-- Skycons -->
-    <script src="resources/vendors/skycons/skycons.js"></script>
-    <!-- Flot -->
-    <script src="resources/vendors/Flot/jquery.flot.js"></script>
-    <script src="resources/vendors/Flot/jquery.flot.pie.js"></script>
-    <script src="resources/vendors/Flot/jquery.flot.time.js"></script>
-    <script src="resources/vendors/Flot/jquery.flot.stack.js"></script>
-    <script src="resources/vendors/Flot/jquery.flot.resize.js"></script>
-    <!-- Flot plugins -->
-    <script src="resources/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
-    <script src="resources/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
-    <script src="resources/vendors/flot.curvedlines/curvedLines.js"></script>
-    <!-- DateJS -->
-    <script src="resources/vendors/DateJS/build/date.js"></script>
-    <!-- JQVMap -->
-    <script src="resources/vendors/jqvmap/dist/jquery.vmap.js"></script>
-    <script src="resources/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
-    <script src="resources/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
-    <!-- bootstrap-daterangepicker -->
-    <!-- <script src="resources/vendors/moment/min/moment.min.js"></script> -->
-    <script src="resources/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-
+  
     <!-- Custom Theme Scripts -->
     <script src="resources/build/js/custom.min.js"></script>
 	

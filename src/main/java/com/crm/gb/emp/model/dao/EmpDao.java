@@ -32,5 +32,16 @@ public class EmpDao {
 		return resultEmp;
 	}
 
+	public int insertEmp(Emp emp) {
+		return sqlSession.insert("empInsert", emp);
+	}
+
+	public int updateEmp(Emp emp) {
+		return sqlSession.update("empUpdate", emp);
+	}
+
+	public int deleteEmp(Emp emp) {
+		return sqlSession.delete("empDelete", emp);
+	}
 	
 }
