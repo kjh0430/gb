@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="images/favicon.ico" type="image/ico" />
 
-<title>GROUP BEAN |</title>
+<title>잠재고객 상세페이지</title>
 
 <!-- Bootstrap -->
 <link href="resources/vendors/bootstrap/dist/css/bootstrap.min.css"
@@ -157,194 +157,113 @@ $(document).ready(function() {
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
 								<div class="x_title">
-									<h2>
-										사원관리
-									</h2>
+									<font style="font-size:18px;">상세정보</font>
+									<font style="float:right; font-size:15px;">
+										<a href="moveEmpUpdate.do">수정</a>&nbsp; &nbsp;<a href="moveEmpDelete.do">삭제</a>
+									</font>
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
+								
+								
+					<!-- 사원 상세폼 -->
+					<table class="table form-horizontal form-label-left">
+                      <tbody>
+                        <tr>
+                          <!-- <th class="control-label col-md-3 col-sm-3 col-xs-12">사원번호</th>
+                          <td class="col-md-9 col-sm-9 col-xs-12">9973</td> -->
+                          <th class="control-label col-md-3 col-sm-3 col-xs-12">사원번호</th>
+                          <td class="col-md-9 col-sm-9 col-xs-12">9973</td>
+                        </tr>
+                        <tr>
+                          <th class="control-label col-md-3 col-sm-3 col-xs-12">사원이름</th>
+                          <td class="col-md-9 col-sm-9 col-xs-12">강석호</td>
+                        </tr>
+                        <tr>
+                          <th class="control-label col-md-3 col-sm-3 col-xs-12">사원거주지</th>
+                          <td class="col-md-9 col-sm-9 col-xs-12">서울특별시 강남구</td>
+                        </tr>
+                        <tr>
+                          <th class="control-label col-md-3 col-sm-3 col-xs-12">연락처</th>
+                          <td class="col-md-9 col-sm-9 col-xs-12">010-1111-1111</td>
+                        </tr>
+                        <tr>
+                          <th class="control-label col-md-3 col-sm-3 col-xs-12">직급번호</th>
+                          <td class="col-md-9 col-sm-9 col-xs-12">사원</td>
+                        <tr>
+                          <th class="control-label col-md-3 col-sm-3 col-xs-12">이메일</th>
+                          <td class="col-md-9 col-sm-9 col-xs-12">lee@naver.com</td>
+                        </tr>
+                        <tr>
+                          <th class="control-label col-md-3 col-sm-3 col-xs-12">상사번호</th>
+                          <td class="col-md-9 col-sm-9 col-xs-12">9000</td>
+                        </tr>
+                        <tr>
+                          <th class="control-label col-md-3 col-sm-3 col-xs-12">입사일</th>
+                          <td class="col-md-9 col-sm-9 col-xs-12">2012-05-21</td>
+                        </tr>
+                        <tr>
+                          <th class="control-label col-md-3 col-sm-3 col-xs-12">퇴사일</th>
+                          <td class="col-md-9 col-sm-9 col-xs-12">2017-12-28</td>
+                        </tr>
+                        <tr>
+                          <th class="control-label col-md-3 col-sm-3 col-xs-12">담당지역</th>
+                          <td class="col-md-9 col-sm-9 col-xs-12">서울</td>
+                        </tr>
+                        <tr>
+                          <th class="control-label col-md-3 col-sm-3 col-xs-12">부서</th>
+                          <td class="col-md-9 col-sm-9 col-xs-12">05</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
 									
-									<table id="table_cl" class="table table-striped table-bordered" style="min-width:650px;">
-										<thead>
-											<tr>
-												<th>사원명</th>
-												<th>부서명</th>
-												<th>사원번호</th>
-												<th>입사날짜</th>
-												<th>퇴사일</th>
-												<th>직급</th>
-												<th>전화번호</th>
-												<th>담당지역</th>
-											</tr>
-											
-										</thead>
-										<tbody>
-										<tr>
-												<td><a href="empDetail.do">강석호</a></td>
-												<td>영업부</td>
-												<td>9973</td>
-												<td>2016-5-1</td>
-												<td>-</td>
-												<td>사원</td>
-												<td>010-6541-4488</td>
-												<td>서울</td>
-											</tr>
-										<tr>
-												<td><a href="empDetail.do">김지민</a></td>
-												<td>마케팅부</td>
-												<td>8547</td>
-												<td>2016-4-30</td>
-												<td>2018-5-3</td>
-												<td>대리</td>
-												<td>010-2335-1111</td>
-												<td>경기</td>
-											</tr><tr>
-												<td><a href="empDetail.do">박찬수</a></td>
-												<td>총무부</td>
-												<td>9999</td>
-												<td>2018-05-01</td>
-												<td>-</td>
-												<td>과장</td>
-												<td>010-3333-5555</td>
-												<td>인천</td>
-											<tr>
-												<td><a href="empDetail.do">강석호</a></td>
-												<td>영업부</td>
-												<td>9973</td>
-												<td>2016-5-1</td>
-												<td>-</td>
-												<td>사원</td>
-												<td>010-6541-4488</td>
-												<td>서울</td>
-											</tr>
-										<tr>
-												<td><a href="#">김지민</a></td>
-												<td>마케팅부</td>
-												<td>8547</td>
-												<td>2016-4-30</td>
-												<td>2018-5-3</td>
-												<td>대리</td>
-												<td>010-2335-1111</td>
-												<td>경기</td>
-											</tr><tr>
-												<td><a href="#">박찬수</a></td>
-												<td>총무부</td>
-												<td>9999</td>
-												<td>2018-05-01</td>
-												<td>-</td>
-												<td>과장</td>
-												<td>010-3333-5555</td>
-												<td>인천</td><tr>
-												<td><a href="pdetail.do">강석호</a></td>
-												<td>영업부</td>
-												<td>9973</td>
-												<td>2016-5-1</td>
-												<td>-</td>
-												<td>사원</td>
-												<td>010-6541-4488</td>
-												<td>서울</td>
-											</tr>
-										<tr>
-												<td><a href="#">김지민</a></td>
-												<td>마케팅부</td>
-												<td>8547</td>
-												<td>2016-4-30</td>
-												<td>2018-5-3</td>
-												<td>대리</td>
-												<td>010-2335-1111</td>
-												<td>경기</td>
-											</tr><tr>
-												<td><a href="#">박찬수</a></td>
-												<td>총무부</td>
-												<td>9999</td>
-												<td>2018-05-01</td>
-												<td>-</td>
-												<td>과장</td>
-												<td>010-3333-5555</td>
-												<td>인천</td><tr>
-												<td><a href="#">강석호</a></td>
-												<td>영업부</td>
-												<td>9973</td>
-												<td>2016-5-1</td>
-												<td>-</td>
-												<td>사원</td>
-												<td>010-6541-4488</td>
-												<td>서울</td>
-											</tr>
-										<tr>
-												<td><a href="#">김지민</a></td>
-												<td>마케팅부</td>
-												<td>8547</td>
-												<td>2016-4-30</td>
-												<td>2018-5-3</td>
-												<td>대리</td>
-												<td>010-2335-1111</td>
-												<td>경기</td>
-											</tr><tr>
-												<td><a href="#">박찬수</a></td>
-												<td>총무부</td>
-												<td>9999</td>
-												<td>2018-05-01</td>
-												<td>-</td>
-												<td>과장</td>
-												<td>010-3333-5555</td>
-												<td>인천</td><tr>
-												<td><a href="#">강석호</a></td>
-												<td>영업부</td>
-												<td>9973</td>
-												<td>2016-5-1</td>
-												<td>-</td>
-												<td>사원</td>
-												<td>010-6541-4488</td>
-												<td>서울</td>
-											</tr>
-										<tr>
-												<td><a href="#">김지민</a></td>
-												<td>마케팅부</td>
-												<td>8547</td>
-												<td>2016-4-30</td>
-												<td>2018-5-3</td>
-												<td>대리</td>
-												<td>010-2335-1111</td>
-												<td>경기</td>
-											</tr><tr>
-												<td><a href="#">박찬수</a></td>
-												<td>총무부</td>
-												<td>9999</td>
-												<td>2018-05-01</td>
-												<td>-</td>
-												<td>과장</td>
-												<td>010-3333-5555</td>
-												<td>인천</td><tr>
-												<td><a href="#">강석호</a></td>
-												<td>영업부</td>
-												<td>9973</td>
-												<td>2016-5-1</td>
-												<td>-</td>
-												<td>사원</td>
-												<td>010-6541-4488</td>
-												<td>서울</td>
-											</tr>
-										<tr>
-												<td><a href="#">김지민</a></td>
-												<td>마케팅부</td>
-												<td>8547</td>
-												<td>2016-4-30</td>
-												<td>2018-5-3</td>
-												<td>대리</td>
-												<td>010-2335-1111</td>
-												<td>경기</td>
-											</tr><tr>
-												<td><a href="#">박찬수</a></td>
-												<td>총무부</td>
-												<td>9999</td>
-												<td>2018-05-01</td>
-												<td>-</td>
-												<td>과장</td>
-												<td>010-3333-5555</td>
-												<td>인천</td>
-										<tbody>
-									</table>
+			  <!-- <div class="col-md-12 col-sm-6 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>접촉이력</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>접촉일</th>
+                          <th>접촉구분</th>
+                          <th>접촉내용</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>2018/05/05</td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                  </div>
+                </div>
+              </div> -->
+									
+									
 								</div>
 							</div>
 						</div>
