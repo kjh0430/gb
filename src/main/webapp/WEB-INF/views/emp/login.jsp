@@ -21,53 +21,61 @@
 
 <!-- Custom Theme Style -->
 <link href="resources/build/css/custom.min.css" rel="stylesheet">
+<script src="resources/vendors/jquery/dist/jquery.min.js"></script>
+
+<script type="text/javascript">
+	
+		/** 로그인 submit */
+		function login() {
+			$('#loginForm').submit();
+		}
+			
+	
+</script>
+
 </head>
 
 <body class="login">
 	<div>
-		<a class="hiddenanchor" id="signup"></a> <a class="hiddenanchor"
-			id="signin"></a>
+		<a class="hiddenanchor" id="signup"></a> 
+		<a class="hiddenanchor" id="signin"></a>
 
 		<div class="login_wrapper">
 			<div class="animate form login_form">
 				<section class="login_content">
-					<form>
-						<img src="resources/images/login.png" style="margin-bottom: 20px;"/>
+				
+					<form id="loginForm" action="login.do" method="post">
+						<img src="resources/images/login.png" style="margin-bottom:20px;"/>
 						
 						<div>
-							<input type="text" class="form-control" placeholder="Username"
-								required="" />
+							<input type="text" name="emp_no" class="form-control" placeholder="Username"
+								required=""/>
 						</div>
 						<div>
-							<input type="password" class="form-control"
+							<input type="password" name="emp_pwd" class="form-control"
 								placeholder="Password" required="" />
 						</div>
 						<div>
-							<!-- 로그인 기능 구현 시 a태그 지우고 아래 주석 활용하여 할 것  
-							src-main-webapp-resources-build-css-custom.css
-						4039번째줄 margin-left:0px로 변경 -->
-							
-							<!--  <input type="submit" class="btn btn-default submit" style="background:#344659;width:100%;color:#fff;" value="LOGIN" />	 -->	
-						
-							<a href="main.do" class="btn btn-default submit" style="background:#344659;width:100%;color:#fff;">LOGIN</a>				
+							<input type="button" class="btn btn-default submit" 
+								style="background:#344659;width:100%;color:#fff; left-margin:0px;" 
+									value="LOGIN" onclick="login()"/>							
 						</div><br/>
-						<a class="reset_pass" href="clientList.do">Lost your password?</a>
-						<a class="reset_pass" href="testView.do">TestView</a>
-						<a class="reset_pass" href="testView2.do">TestView2</a>
+						<a class="reset_pass" href="#">Lost your password?</a>
+						<!-- <a class="reset_pass" href="main.do">main보기</a> -->
 	
 						<div class="clearfix"></div>
 						<br />
 						<div class="separator">
 							<br />
 							<div>
-								<p>©2016 All Rights Reserved.</p>
+								<p>©2018 All Rights Reserved.</p>
 							</div>
 						</div>
 					</form>
 				</section>
 			</div>
 
-			<div id="register" class="animate form registration_form">
+			<!-- <div id="register" class="animate form registration_form">
 				<section class="login_content">
 					<form>
 						<h1>Create Account</h1>
@@ -108,7 +116,7 @@
 						</div>
 					</form>
 				</section>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </body>

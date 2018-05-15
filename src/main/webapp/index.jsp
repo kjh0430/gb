@@ -7,6 +7,6 @@
 <title>start</title>
 </head>
 <body>
-<jsp:forward page="login.do"></jsp:forward>
+<jsp:forward page="view.do"></jsp:forward>
 </body>
 </html>
