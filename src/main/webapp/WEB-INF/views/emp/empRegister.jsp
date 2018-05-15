@@ -64,7 +64,7 @@
 					<div class="clearfix"></div>
 
 					<!-- sidebar menu -->
-					<%@ include file="../etc/adminsidebar.jsp"%>
+					<%@ include file="../etc/sidebar.jsp"%>
 					<!-- /sidebar menu -->
 
 				</div>
@@ -161,107 +161,102 @@
 									
 									
 									
-									<!-- 사원 등록 양식 폼 -->
-					<form class="form-horizontal form-label-left">
+					<!-- 사원 등록 -->
+					<form class="form-horizontal form-label-left" action="empinsert.do" method="post">
 
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">사원아이디 등록</label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">사원번호</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input class="form-control" type="text" placeholder="사원ID">
+                          <input class="form-control" id="emp_no" name="emp_no" type="text" placeholder="사원번호">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">사원번호 등록 </label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">비밀번호</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input class="form-control" type="text" placeholder="사원번호">
+                          <input class="form-control" id="emp_pwd" name="emp_pwd" type="password" placeholder="비밀번호">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">사원명</label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">사원이름 </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input class="form-control" type="text"  placeholder="사원명">
+                          <input class="form-control" id="emp_name" name="emp_name" type="text" placeholder="사원이름">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">입사년월일
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">사원거주지</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <input class="form-control" id="emp_addr" name="emp_addr" type="text"  placeholder="사원거주지">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">연락처
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input class="form-control" type="text" placeholder="yyyy-mm-dd">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">사원 연락처</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input class="form-control" type="password">
+                          <input class="form-control" id="emp_phone" name="emp_phone" type="tel" placeholder="연락처">
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">직급</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input name="country" class="form-control col-md-10" id="autocomplete-custom-append" type="text">
+                          <select class="form-control" id="job_no" name="job_no">
+                            <option value="1">사원</option>
+                            <option value="2">팀장</option>
+                            <option value="3">관리자</option>                         
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">이메일</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <input class="form-control" id="emp_email" name="emp_email" type="email" placeholder="이메일">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">상사번호</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <input class="form-control" id="emp_mgr" name="emp_mgr" type="text" placeholder="상사번호">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">입사일</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <input class="form-control" id="emp_hiredate" name="emp_hiredate" type="date">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">퇴사일</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <input class="form-control" id="emp_firedate" name="emp_firedate" type="date">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">담당지역</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <input class="form-control" id="emp_loc" name="emp_loc" type="text" placeholder="담당지역">
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">부서</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          <select class="form-control">
-                            <option>인사과</option>
-                            <option>행정과</option>
-                            <option>총무부</option>
-                            <option>영업부</option>
-                            <option>마케팅부</option>
-                           
+                          <select class="form-control" id="dept_no" name="dept_no">
+                            <option value="1">영업1팀</option>
+                            <option value="2">영업2팀</option>
+                            <option value="3">관리자</option>                       
                           </select>
                         </div>
                       </div>
-                    
-                      
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">급여(연봉)</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                          <select class="select2_multiple form-control" multiple="multiple">
-                            <option>1500~2000</option>
-                            <option>2000~3000</option>
-                            <option>3000~4000</option>
-                            <option>4000~5000</option>
-                            <option>5000이상~</option>
-                          
-                          </select>
-                        </div>
-                      </div>
-
-                      </div>
-                      <div class="form-group">
-                        <label class="col-md-3 col-sm-3 col-xs-12 control-label">경력유무
-                          <br>
-                          </label>
-
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                          <div class="checkbox">
-                            <label>
-                              <input type="checkbox" value=""> 신입
-                            </label>
-                          </div>
-                          <div class="checkbox">
-                            <label>
-                              <input type="checkbox" value=""> 경력
-                            </label>
-                          </div>
-                          
-                  
-
-
+                             
                       <div class="ln_solid"></div>
                       <div class="form-group">
-                        <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                        <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">                          
                           <button class="btn btn-primary" type="button">Cancel</button>
                           <button class="btn btn-primary" type="reset">Reset</button>
-                          <button class="btn btn-success" type="submit">Submit</button>
+                          <button class="btn btn-success" type="submit">Submit</button>                     
                         </div>
                       </div>
-
+                      </form>
                  
-									<!-- 사원 등록 양식 폼 -->
+									<!-- 사원 등록 -->
 								</div>
 							</div>
 						</div>

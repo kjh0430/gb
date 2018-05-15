@@ -65,7 +65,7 @@ $(document).ready(function() {
 					<div class="clearfix"></div>
 
 					<!-- sidebar menu -->
-					<%@ include file="../etc/adminsidebar.jsp"%>
+					<%@ include file="../etc/sidebar.jsp"%>
 					<!-- /sidebar menu -->
 
 				</div>
@@ -180,7 +180,7 @@ $(document).ready(function() {
 										</thead>
 										<tbody>
 										<tr>
-												<td><a href="#">강석호</a></td>
+												<td><a href="empDetail.do">강석호</a></td>
 												<td>영업부</td>
 												<td>9973</td>
 												<td>2016-5-1</td>
@@ -190,7 +190,7 @@ $(document).ready(function() {
 												<td>서울</td>
 											</tr>
 										<tr>
-												<td><a href="#">김지민</a></td>
+												<td><a href="empDetail.do">김지민</a></td>
 												<td>마케팅부</td>
 												<td>8547</td>
 												<td>2016-4-30</td>
@@ -199,7 +199,7 @@ $(document).ready(function() {
 												<td>010-2335-1111</td>
 												<td>경기</td>
 											</tr><tr>
-												<td><a href="#">박찬수</a></td>
+												<td><a href="empDetail.do">박찬수</a></td>
 												<td>총무부</td>
 												<td>9999</td>
 												<td>2018-05-01</td>
@@ -208,7 +208,7 @@ $(document).ready(function() {
 												<td>010-3333-5555</td>
 												<td>인천</td>
 											<tr>
-												<td><a href="#">강석호</a></td>
+												<td><a href="empDetail.do">강석호</a></td>
 												<td>영업부</td>
 												<td>9973</td>
 												<td>2016-5-1</td>
@@ -235,7 +235,7 @@ $(document).ready(function() {
 												<td>과장</td>
 												<td>010-3333-5555</td>
 												<td>인천</td><tr>
-												<td><a href="#">강석호</a></td>
+												<td><a href="pdetail.do">강석호</a></td>
 												<td>영업부</td>
 												<td>9973</td>
 												<td>2016-5-1</td>
