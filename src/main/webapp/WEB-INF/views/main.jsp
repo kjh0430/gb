@@ -33,8 +33,12 @@
 
             <div class="clearfix"></div>
             
-            <!-- sidebar menu -->
+<%--             <!-- sidebar menu -->
             <%@ include file="etc/sidebar.jsp" %>
+            <!-- /sidebar menu --> --%>
+            
+            <!-- sidebar menu -->
+            <%@ include file="etc/adminsidebar.jsp" %>
             <!-- /sidebar menu -->
 
           </div>
