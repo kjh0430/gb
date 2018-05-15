@@ -9,6 +9,7 @@ public class TestViewController {
 	public String TestView() {
 		
 		return "client/poList";
+		
 	}
 	@RequestMapping("testView2.do")
 	public String TestView2() {
