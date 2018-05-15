@@ -51,6 +51,17 @@ $(document).ready(function() {
     } );
 } );
 
+function clientList(){
+	$.ajax({
+		url : "/classKing/clentlist",
+		data : {empNo : ""},
+		type : "get",
+		datatype : "json",
+		success : function(data){
+			var jsonStr = JSON.stringfy
+		}
+	});
+}
 </script>
 
 <!-- ----------------------스크립트관련 작업영역 시작------------------------ -->

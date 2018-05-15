@@ -16,23 +16,11 @@
 <!-- Font Awesome -->
 <link href="resources/vendors/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet">
-<!-- NProgress -->
-<link href="resources/vendors/nprogress/nprogress.css" rel="stylesheet">
+
 <!-- iCheck -->
 <link href="resources/vendors/iCheck/skins/flat/green.css"
 	rel="stylesheet">
 
-<!-- bootstrap-progressbar -->
-<link
-	href="resources/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css"
-	rel="stylesheet">
-<!-- JQVMap -->
-<link href="resources/vendors/jqvmap/dist/jqvmap.min.css"
-	rel="stylesheet" />
-<!-- bootstrap-daterangepicker -->
-<link
-	href="resources/vendors/bootstrap-daterangepicker/daterangepicker.css"
-	rel="stylesheet">
 
 <!-- Custom Theme Style -->
 <link href="resources/build/css/custom.min.css" rel="stylesheet">
@@ -41,10 +29,12 @@
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-    $('#table_cl').dataTable( {
+    $('#table_pl').dataTable( {
         ordering:false,
         lengthChange:false,
-        pageLength:15
+        paging:false,
+        searching:false,
+        info:false
     } );
 } );
 
@@ -65,7 +55,7 @@ $(document).ready(function() {
 					<div class="clearfix"></div>
 
 					<!-- sidebar menu -->
-					<%@ include file="../etc/sidebar.jsp"%>
+					<%@ include file="../etc/adminsidebar.jsp"%>
 					<!-- /sidebar menu -->
 
 				</div>
@@ -156,15 +146,13 @@ $(document).ready(function() {
 					<div class="row">
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
-								<div class="x_title">
-									<h2>
-										모든 제품목록
-									</h2>
+								<div class="x_title" style="text-align:right">
+									<button class="btn btn-primary" onclick="location.href='moveProductInsert.do'">제품등록</button>
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
 									
-									<table id="table_cl" class="table table-striped table-bordered" style="min-width:650px;">
+									<table id="table_pl" class="table table-striped table-bordered" style="min-width:650px;">
 										<thead>
 											<tr>
 												<th>제품명</th>
@@ -185,127 +173,8 @@ $(document).ready(function() {
 												<td>12,000</td>
 												<td>EY2010Z</td>
 												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
+											</tr>
+											<tr>
 												<td><a href="#">이디오피아 예가체프 </a></td>
 												<td>12,000</td>
 												<td>EY2010Z</td>
@@ -316,103 +185,37 @@ $(document).ready(function() {
 												<td>12,000</td>
 												<td>EY2010Z</td>
 												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr><tr>
+											</tr>
+											<tr>
 												<td><a href="#">이디오피아 예가체프 </a></td>
 												<td>12,000</td>
 												<td>EY2010Z</td>
 												<td>판매</td>
 											</tr>
-
+											<tr>
+												<td><a href="#">이디오피아 예가체프 </a></td>
+												<td>12,000</td>
+												<td>EY2010Z</td>
+												<td>판매</td>
+											</tr>
+											<tr>
+												<td><a href="#">이디오피아 예가체프 </a></td>
+												<td>12,000</td>
+												<td>EY2010Z</td>
+												<td>판매</td>
+											</tr>
+											<tr>
+												<td><a href="#">이디오피아 예가체프 </a></td>
+												<td>12,000</td>
+												<td>EY2010Z</td>
+												<td>판매</td>
+											</tr>
+											<tr>
+												<td><a href="#">이디오피아 예가체프 </a></td>
+												<td>12,000</td>
+												<td>EY2010Z</td>
+												<td>판매</td>
+											</tr>
 										<tbody>
 									</table>
 								</div>
@@ -423,21 +226,16 @@ $(document).ready(function() {
 			</div>
 		</div>
 	</div>
-	</div>
 	<!-- /page content -->
 
 	
-	</div>
-	</div>
+	
 
 	<!-- jQuery -->
 	<script src="resources/vendors/jquery/dist/jquery.min.js"></script>
 	<!-- Bootstrap -->
 	<script src="resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-	<!-- FastClick -->
-	<script src="resources/vendors/fastclick/lib/fastclick.js"></script>
-	<!-- NProgress -->
-	<script src="resources/vendors/nprogress/nprogress.js"></script>
+
 	<!-- iCheck -->
 	<script src="resources/vendors/iCheck/icheck.min.js"></script>
 	<!-- Datatables -->
@@ -465,9 +263,7 @@ $(document).ready(function() {
 		src="resources/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
 	<script
 		src="resources/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-	<script src="resources/vendors/jszip/dist/jszip.min.js"></script>
-	<script src="resources/vendors/pdfmake/build/pdfmake.min.js"></script>
-	<script src="resources/vendors/pdfmake/build/vfs_fonts.js"></script>
+	
 
 	<!-- Custom Theme Scripts -->
 	<script src="resources/build/js/custom.min.js"></script>

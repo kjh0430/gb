@@ -12,8 +12,8 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Override
 	public int insertProduct(Product product) {
-		
-		return 0;
+		//제품 등록
+		return productDao.insertProduct(product);
 	}
 
 }

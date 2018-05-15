@@ -15,16 +15,19 @@
          <li><a href="main.html"><i class="fa fa-home"></i> Home</a></li>
          <li><a><i class="fa fa-desktop"></i>사원관리 <span class="fa fa-chevron-down"></span></a>
            <ul class="nav child_menu">
+
+             <li><a href="#">목표관리</a></li>
+             <li><a href="#">사원등록</a></li>
+             <li><a href="#">사원목록</a></li>
              <li><a href="">목표관리</a></li>
              <li><a href="empRegister.do">사원등록</a></li>
              <li><a href="empList.do">사원목록</a></li>
-             
            </ul>
          </li>
-         <li><a href="SaleActi.do"><i class="fa fa-table"></i>영업관리<span class="fa fa-chevron-down"></span></a>
+         <li><a href="#"><i class="fa fa-table"></i>영업관리<span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">
-             <li><a href="">제품관리</a></li>
-             <li><a href="">영업일지</a></li>
+             <li><a href="moveAdminPL.do">제품관리</a></li>
+             <li><a href="#">영업일지</a></li>
            </ul>
            
          </li>
@@ -47,8 +50,8 @@
 	      </li>
 	     
 	     
-	      <li><a href=""><i class="fa fa-file-text-o"></i> 쪽지함</a>
-	      </li>
+	     
+	     
 	     <!--  <li><a><i class="fa fa-cog"></i> 설정</a> </li> -->
 	    </ul>
      </div>
