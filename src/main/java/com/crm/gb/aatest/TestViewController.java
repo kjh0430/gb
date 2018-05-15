@@ -6,8 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class TestViewController {
 	
 	@RequestMapping("testView.do")
-	public String TestView() {
-		
+	public String TestView() {		
 		return "client/poList";
 	}
 	@RequestMapping("testView2.do")
