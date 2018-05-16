@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,10 +28,23 @@
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-  
+
 } );
 
 </script>
+
+<script type="text/javascript">
+	$(function(){
+		$('#deleteClient').on('click', function(){
+			if(confirm("해당 거래처를 삭제하시겠습니까?")==true) {
+				location.href="deleteClient.do?client_no="+""+${ detailClient.client_no }+"";
+			}else{
+				return false;
+			}
+		});
+	});
+</script>
+
 </head>
 
 
@@ -52,72 +68,7 @@ $(document).ready(function() {
 			</div>
 
 			<!-- top navigation -->
-			<div class="top_nav">
-				<div class="nav_menu">
-					<nav>
-						<div class="nav toggle">
-							<a id="menu_toggle"><i class="fa fa-bars"></i></a>
-						</div>
-
-						<ul class="nav navbar-nav navbar-right">
-							<li class=""><a href="javascript:;"
-								class="user-profile dropdown-toggle" data-toggle="dropdown"
-								aria-expanded="false"> <img src="images/img.jpg" alt="">John
-									Doe <span class=" fa fa-angle-down"></span>
-							</a>
-								<ul class="dropdown-menu dropdown-usermenu pull-right">
-									<li><a href="javascript:;"> Profile</a></li>
-									<li><a href="javascript:;"> <span
-											class="badge bg-red pull-right">50%</span> <span>Settings</span>
-									</a></li>
-									<li><a href="javascript:;">Help</a></li>
-									<li><a href="login.html"><i
-											class="fa fa-sign-out pull-right"></i> Log Out</a></li>
-								</ul></li>
-
-							<li role="presentation" class="dropdown"><a
-								href="javascript:;" class="dropdown-toggle info-number"
-								data-toggle="dropdown" aria-expanded="false"> <i
-									class="fa fa-envelope-o"></i> <span class="badge bg-green">6</span>
-							</a>
-								<ul id="menu1" class="dropdown-menu list-unstyled msg_list"
-									role="menu">
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li>
-										<div class="text-center">
-											<a> <strong>See All Alerts</strong> <i
-												class="fa fa-angle-right"></i>
-											</a>
-										</div>
-									</li>
-								</ul></li>
-						</ul>
-					</nav>
-				</div>
-			</div>
+			<c:import url="../etc/topnav.jsp"></c:import>
 			<!-- /top navigation -->
 
 			<!-- page content -->
@@ -151,8 +102,9 @@ $(document).ready(function() {
 												for="first-name">고객번호
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<input type="text" id="first-name" required="required"
-													class="form-control col-md-7 col-xs-12" value="154" readonly>
+												<input type="text" id="client_no" required="required"
+													class="form-control col-md-7 col-xs-12" 
+													value="${ detailClient.client_no }" readonly>
 											</div>
 										</div>
 										<div class="form-group">
@@ -160,8 +112,9 @@ $(document).ready(function() {
 												for="first-name">고객명
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<input type="text" id="first-name" required="required"
-													class="form-control col-md-7 col-xs-12" value="잉어킹" >
+												<input type="text" id="client_name" required="required"
+													class="form-control col-md-7 col-xs-12" 
+													value="${ detailClient.client_name }" >
 											</div>
 										</div>
 										<div class="form-group">
@@ -169,8 +122,9 @@ $(document).ready(function() {
 												for="last-name">담당자명 
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<input type="text" id="last-name" name="last-name"
-													required="required" class="form-control col-md-7 col-xs-12" value="정대만" >
+												<input type="text" id="" name="last-name"
+													required="required" class="form-control col-md-7 col-xs-12" 
+													value="미완성이요~" >
 											</div>
 										</div>
 										<div class="form-group">
@@ -179,9 +133,10 @@ $(document).ready(function() {
 												직책
 												</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<input id="middle-name"
+												<input id="client_job"
 													class="form-control col-md-7 col-xs-12" type="text"
-													name="middle-name" value="사원" >
+													name="middle-name" 
+													value="${ detailClient.client_job }" >
 											</div>
 										</div>
 										<div class="form-group">
@@ -189,9 +144,10 @@ $(document).ready(function() {
 												이메일
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<input id="birthday"
+												<input id="client_email"
 													class="date-picker form-control col-md-7 col-xs-12"
-													required="required" type="text" value="slamdunk@email.com">
+													required="required" type="text" 
+													value="${ detailClient.client_email }">
 											</div>
 										</div>
 										<div class="form-group">
@@ -199,9 +155,10 @@ $(document).ready(function() {
 												담당자 연락처
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<input id="birthday"
+												<input id=""
 													class="date-picker form-control col-md-7 col-xs-12"
-													required="required" type="text" value="02-5489-6598">
+													required="required" type="text"
+													value="미완성~~~">
 											</div>
 										</div>
 										<div class="form-group">
@@ -209,9 +166,10 @@ $(document).ready(function() {
 												주소
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<input id="birthday"
+												<input id="client_addr"
 													class="date-picker form-control col-md-7 col-xs-12"
-													required="required" type="text" value="서울시 송파구 삼전동 100">
+													required="required" type="text" 
+													value="${ detailClient.client_addr }">
 											</div>
 										</div>
 										<div class="form-group">
@@ -219,9 +177,10 @@ $(document).ready(function() {
 												고객 연락처
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<input id="birthday"
+												<input id="client_phone"
 													class="date-picker form-control col-md-7 col-xs-12"
-													required="required" type="text" value="02-5489-6598">
+													required="required" type="text" 
+													value="${ detailClient.client_phone }">
 											</div>
 										</div>
 										<div class="form-group">
@@ -229,16 +188,17 @@ $(document).ready(function() {
 												계약 유무
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<input id="birthday"
+												<input id="client_contract"
 													class="date-picker form-control col-md-7 col-xs-12"
-													required="required" type="text" value="N">
+													required="required" type="text" 
+													value="${ detailClient.client_contract }">
 											</div>
 										</div>
 										<div class="ln_solid"></div>
 										<div class="form-group">
 											<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
 												<button type="submit" class="btn btn-primary">정보수정</button>
-												<button class="btn" type="button">거래처 삭제</button>
+												<button id="deleteClient" class="btn" type="button">거래처 삭제</button>
 											</div>
 										</div>
 

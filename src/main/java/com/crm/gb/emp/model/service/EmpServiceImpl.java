@@ -1,5 +1,9 @@
 package com.crm.gb.emp.model.service;
 
-public class EmpServiceImpl implements EmpService {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-}
+import com.crm.gb.emp.model.dao.EmpDao;
+import com.crm.gb.emp.model.vo.Emp;
+
+

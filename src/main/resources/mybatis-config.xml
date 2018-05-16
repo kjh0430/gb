@@ -6,10 +6,12 @@
 	<typeAliases>
 		
 		<typeAlias type="com.crm.gb.emp.model.vo.Emp" alias="Emp" />
+		<typeAlias type="com.crm.gb.client.model.vo.Client" alias="Client" />
 		
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="mybatis/mappers/emp-mapper.xml" />
+		<mapper resource="mybatis/mappers/client-mapper.xml" />
 	</mappers>
 </configuration>

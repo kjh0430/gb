@@ -19,11 +19,13 @@
              <li><a href="goalStateAdmin.do">목표현황</a>
              <li><a href="empRegister.do">사원등록</a></li>
              <li><a href="empList.do">사원목록</a></li>
-             
            </ul>
          </li>
+
          <li><a href=""><i class="fa fa-table"></i>영업관리<span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">
+            
+
              <li><a href="#">제품관리</a></li>
              <li><a href="dailySales.do">영업일지</a></li>
            </ul>
@@ -47,9 +49,10 @@
 	        </ul>
 	      </li>
 	     
-	     
+
 	      <li><a href="messageList.do"><i class="fa fa-file-text-o"></i> 쪽지함</a>
 	      </li>
+
 	     <!--  <li><a><i class="fa fa-cog"></i> 설정</a> </li> -->
 	    </ul>
      </div>

@@ -2,10 +2,54 @@
 <!DOCTYPE mapper PUBLIC
 "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="emp">
-	
-	
 
-
+	<!-- 로그인관련 mapping -->
+	<select id="loginEmp" parameterType="emp" resultType="emp">
+		<![CDATA[
+			select emp_no, emp_pwd, emp_name from emp 
+			where emp_no = #{emp_no} and emp_pwd = #{emp_pwd}
+		]]>
+	</select>
+	
+	<resultMap type="Emp" id="resultEmp">
+		<id column="emp_no" property="emp_no" />
+		<result column="emp_pwd" property="emp_pwd" />
+		<result column="emp_name" property="emp_name" />
+		<result column="emp_addr" property="emp_addr" />
+		<result column="emp_phone" property="emp_phone" />
+		<result column="job_no" property="job_no" />
+		<result column="emp_email" property="emp_email" />
+		<result column="emp_mgr" property="emp_mgr" />
+		<result column="emp_hiredate" property="emp_hiredate" />
+		<result column="emp_firedate" property="emp_firedate" />
+		<result column="emp_loc" property="emp_loc" />
+		<result column="dept_no" property="dept_no" />
+	</resultMap>
+	
+	<insert id="empInsert" parameterType="Emp">
+	<![CDATA[
+		INSERT INTO EMP
+		VALUES (#{emp_no}, #{emp_pwd}, #{emp_name}, #{emp_addr}, 
+		#{emp_phone}, #{job_no}, #{emp_email}, #{emp_mgr}, #{emp_hiredate}, 
+		#{emp_firedate}, #{emp_loc}, #{dept_no})
+	]]>
+	</insert>
+	
+	<update id="empUpdate" parameterType="Emp">
+	<![CDATA[
+		UPDATE INTO EMP
+		SET #{emp_no}, #{emp_pwd}, #{emp_name}, #{emp_addr}, 
+		#{emp_phone}, #{job_no}, #{emp_email}, #{emp_mgr}, #{emp_hiredate}, 
+		#{emp_firedate}, #{emp_loc}, #{dept_no}
+	]]>
+	</update>
+	
+	<delete id="empDelete" parameterType="Emp">
+	<![CDATA[
+		DELETE FROM EMP WHERE #{emp_no}
+	]]>
+	</delete>
 
 </mapper>

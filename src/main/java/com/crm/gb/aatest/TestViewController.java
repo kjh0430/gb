@@ -13,6 +13,15 @@ public class TestViewController {
 	@RequestMapping("testView2.do")
 	public String TestView2() {
 		
+
+		int a=1;
+
 		return "client/poList_detail";
+	}
+	
+	@RequestMapping("clientlist.do")
+	public String clientListView() {
+		
+		return "client/clientList";
 	}
 }
