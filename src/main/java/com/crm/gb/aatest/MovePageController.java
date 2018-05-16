@@ -14,27 +14,27 @@ public class MovePageController {
 	
 	//approval
 	//결재신청
-	@RequestMapping("approval.do")
+	@RequestMapping("Moveapproval.do")
 	public String approval() {
 		
 		return "approval/approval";
 	}
 	
 	//결재목록
-	@RequestMapping("approvalList.do")
+	@RequestMapping("MoveapprovalList.do")
 	public String approvalList() {
 		
 		return "approval/approvalList";
 	}
 	
 	//결재 목록 관리자
-	@RequestMapping("approvalListAdmin.do")
+	@RequestMapping("MoveapprovalListAdmin.do")
 	public String approvalListAdmin() {
 		
 		return "approval/approvalListAdmin";
 	}
 	
-	@RequestMapping("approvalProcess.do")
+	@RequestMapping("MoveapprovalProcess.do")
 	public String approvalProcess() {
 		
 		return "approval/approvalProcess";
@@ -44,7 +44,7 @@ public class MovePageController {
 	
 	//client
 	//고객추가
-	@RequestMapping("addClient.do")
+	@RequestMapping("MoveaddClient.do")
 	public String addClient() {
 		
 		return "client/addClient";
@@ -52,7 +52,7 @@ public class MovePageController {
 	
 	//*allClient
 	//고객 리스트
-	@RequestMapping("clientList.do")
+	@RequestMapping("MoveclientList.do")
 	public String clientList() {
 		
 		return "client/clientList";
@@ -60,21 +60,21 @@ public class MovePageController {
 	
 	//+poList_detail.jsp
 	//잠재고객 세부사항
-	@RequestMapping("poList_detail.do")
+	@RequestMapping("MovepoList_detail.do")
 	public String poList_detail() {
 		
 		return "client/poList_detail";
 	}
 	//잠재고객 리스트
-	@RequestMapping("poList.do")
-	public String poList() {
-		
-		return "client/poList";
-	}
+//	@RequestMapping("poList.do")
+//	public String poList() {
+//		
+//		return "client/poList";
+//	}
 	
 	//contract
 	//계약
-	@RequestMapping("contract.do")
+	@RequestMapping("Movecontract.do")
 	public String contract() {
 		
 		return "contract/contract";
@@ -82,14 +82,14 @@ public class MovePageController {
 	
 	//dailyreport
 	//영업일지
-	@RequestMapping("dailySales.do")
+	@RequestMapping("MovedailySales.do")
 	public String dailySales() {
 		
 		return "dailyreport/dailySales";
 	}
 	
 	//방문일지
-	@RequestMapping("visit.do")
+	@RequestMapping("Movevisit.do")
 	public String visit() {
 		
 		return "dailyreport/visit";
@@ -98,7 +98,7 @@ public class MovePageController {
 	
 	//emp
 	//사원 리스트
-	@RequestMapping("empList.do")
+	@RequestMapping("MoveempList.do")
 	public String empList() {
 		
 		return "emp/empList";
@@ -111,29 +111,31 @@ public class MovePageController {
 		return "emp/empRegister";
 	}
 	
-	//로그인
+	
+	
+	/*//로그인
 	@RequestMapping("login.do")
 	public String login() {
 		
 		return "emp/login";
-	}
+	}*/
 	
 	//goal
 	//관리자 목표 현황 
-	@RequestMapping("goalStateAdmin.do")
+	@RequestMapping("MovegoalStateAdmin.do")
 	public String goalStateAdmin() {
 		
 		return "goal/goalStateAdmin";
 	}
 	
 	//사원 목표현황
-	@RequestMapping("goalState.do")
+	@RequestMapping("MovegoalState.do")
 	public String goalState() {
 		
 		return "goal/goalState";
 	}
 	//관리자 목표관리
-	@RequestMapping("goalAdmin.do")
+	@RequestMapping("MovegoalAdmin.do")
 	public String goalAdmin() {
 		
 		return "goal/goalAdmin";
@@ -141,7 +143,7 @@ public class MovePageController {
 	
 	//goal
 	//message
-	@RequestMapping("messageList.do")
+	@RequestMapping("MovemessageList.do")
 	public String messageList() {
 		
 		return "message/messageList";
@@ -149,14 +151,14 @@ public class MovePageController {
 	
 	//notice
 	//공지사항리스트
-		@RequestMapping("noticeList.do")
+		@RequestMapping("MovenoticeList.do")
 		public String noticeList() {
 			
 			return "notice/noticeList";
 		}
 		
 		//공지사항 쓰기
-		@RequestMapping("noticeWrite.do")
+		@RequestMapping("MovenoticeWrite.do")
 		public String noticeWrite() {
 			
 			return "notice/noticeWrite";
@@ -165,13 +167,13 @@ public class MovePageController {
 		
 		//order
 		//발주하기
-		@RequestMapping("order.do")
+		@RequestMapping("Moveorder.do")
 		public String order() {
 			
 			return "order/order";
 		}
 		//발주리스트
-		@RequestMapping("orderList.do")
+		@RequestMapping("MoveorderList.do")
 		public String orderList() {
 			
 			return "order/orderList";
@@ -179,7 +181,7 @@ public class MovePageController {
 		
 		//제품 
 		//제품 세부사항
-		@RequestMapping("productDetail.do")
+		@RequestMapping("MoveproductDetail.do")
 		public String productDetail() {
 			
 			return "product/productDetail";
@@ -187,7 +189,7 @@ public class MovePageController {
 		
 		//제품 리스트
 		
-		@RequestMapping("productList.do")
+		@RequestMapping("MoveproductList.do")
 		public String productList() {
 			
 			return "product/productList";

@@ -15,26 +15,26 @@
          <li><a href="main.html"><i class="fa fa-home"></i> Home</a></li>
          <li><a><i class="fa fa-desktop"></i>사원관리 <span class="fa fa-chevron-down"></span></a>
            <ul class="nav child_menu">
-             <li><a href="goalAdmin.do">목표관리</a></li>
-             <li><a href="goalStateAdmin.do">목표현황</a>
-             <li><a href="empRegister.do">사원등록</a></li>
-             <li><a href="empList.do">사원목록</a></li>
+             <li><a href="MovegoalAdmin.do">목표관리</a></li>
+             <li><a href="MovegoalStateAdmin.do">목표현황</a>
+             <li><a href="MoveempRegister.do">사원등록</a></li>
+             <li><a href="MoveempList.do">사원목록</a></li>
            </ul>
          </li>
 
-         <li><a href=""><i class="fa fa-table"></i>영업관리<span class="fa fa-chevron-down"></span></a>
+         <li><a href="#"><i class="fa fa-table"></i>영업관리<span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">
             
 
              <li><a href="#">제품관리</a></li>
-             <li><a href="dailySales.do">영업일지</a></li>
+             <li><a href="MovedailySales.do">영업일지</a></li>
            </ul>
            
          </li>
          <li><a><i class="fa fa-edit"></i> 영업현황 <span class="fa fa-chevron-down"></span></a>
            <ul class="nav child_menu">
-             <li><a href="clientList.do">거래처 목록</a></li>
-             <li><a href="orderList.do">매출현황</a></li>
+             <li><a href="MoveclientList.do">거래처 목록</a></li>
+             <li><a href="MoveorderList.do">매출현황</a></li>
            </ul>
          </li>
        </ul>
@@ -44,13 +44,13 @@
          <ul class="nav side-menu">
 	      <li><a><i class="fa fa-file-text-o"></i> 전자결재 <span class="fa fa-chevron-down"></span></a>
 	        <ul class="nav child_menu">
-	          <li><a href="approvalListAdmin.do">결재리스트</a></li>
+	          <li><a href="MoveapprovalListAdmin.do">결재리스트</a></li>
 	         
 	        </ul>
 	      </li>
 	     
 
-	      <li><a href="messageList.do"><i class="fa fa-file-text-o"></i> 쪽지함</a>
+	      <li><a href="MovemessageList.do"><i class="fa fa-file-text-o"></i> 쪽지함</a>
 	      </li>
 
 	     <!--  <li><a><i class="fa fa-cog"></i> 설정</a> </li> -->

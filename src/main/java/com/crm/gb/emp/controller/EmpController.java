@@ -69,10 +69,10 @@ public class EmpController {
 	}	
 	/* 2018.05.15 17:30 여기까지 */
 	
-	@RequestMapping(value="login.do")
+	/*@RequestMapping(value="login.do")
 		public String loginPage() {			
 			return "emp/login";
-		}
+		}*/
 	
 	
 	@RequestMapping(value="main.do")
