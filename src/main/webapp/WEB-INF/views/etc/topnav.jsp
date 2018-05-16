@@ -20,7 +20,7 @@
 							<li class=""><a href="javascript:;"
 								class="user-profile dropdown-toggle" data-toggle="dropdown"
 								aria-expanded="false">
-									${ loginEmp.emp_name }님<span class=" fa fa-angle-down"></span>
+									${ loginEmp.emp_name }님 ${ loginEmp.detp_no }<span class=" fa fa-angle-down"></span>
 							</a>
 								<ul class="dropdown-menu dropdown-usermenu pull-right">
 									<li><a href="javascript:;"> 내정보수정</a></li>

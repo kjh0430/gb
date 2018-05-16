@@ -1,6 +1,7 @@
 package com.crm.gb.emp.controller;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -18,6 +20,7 @@ import com.crm.gb.emp.model.service.EmpService;
 import com.crm.gb.emp.model.vo.Emp;
 
 @Controller
+@SessionAttributes("loginEmp")
 public class EmpController {
 	private static final Logger logger=LoggerFactory.getLogger(EmpController.class);
 	
@@ -42,7 +45,7 @@ public class EmpController {
 	
 	/** 로그인 정보확인 컨트롤러 */
 	@RequestMapping(value="login.do", method=RequestMethod.POST)
-	public String loginEmp(Emp emp, Model model, HttpServletResponse response) {
+	public String loginEmp(Emp emp, Model model) {
 		logger.info("로그인관련 컨트롤러 실행됨");
 		
 		System.out.println("받아온 사원정보: "+emp);
@@ -50,7 +53,7 @@ public class EmpController {
 		try {
 			
 			Emp returnEmp=empService.selectEmp(emp);
-			model.addAttribute("loginEmp", returnEmp);	
+			model.addAttribute("loginEmp", returnEmp);
 			
 			
 		} catch (EmpLoginFailException e) {

@@ -22,7 +22,7 @@ import com.crm.gb.client.model.vo.Client;
  */
 
 @Controller
-@SessionAttributes("loginEmp")
+//@SessionAttributes("loginEmp")
 public class ClientController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ClientController.class);
