@@ -1,4 +1,4 @@
-package com.crm.gb.aatest;
+/*package com.crm.gb.aatest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,33 +44,27 @@ public class MovePageController {
 	
 	//client
 	//고객추가
-	@RequestMapping("MoveaddClient.do")
-	public String addClient() {
-		
-		return "client/addClient";
-	}
-	
+//	@RequestMapping("MoveaddClient.do")
+//	public String addClient() {
+//		
+//		return "client/addClient";
+//	}
+//	
 	//*allClient
 	//고객 리스트
-	@RequestMapping("MoveclientList.do")
-	public String clientList() {
-		
-		return "client/clientList";
-	}
-//	
-//	//영업현황 거래처
-//	@RequestMapping("MoveaccountList.do")
-//	public String accountList() {
-//		return "accountList.do";
-//	} 
+//	@RequestMapping("MoveclientList.do")
+//	public String clientList() {
+//		
+//		return "client/clientList";
+//	}
 	
 	//+poList_detail.jsp
 	//잠재고객 세부사항
-	@RequestMapping("MovepoList_detail.do")
-	public String poList_detail() {
-		
-		return "client/poList_detail";
-	}
+//	@RequestMapping("MovepoList_detail.do")
+//	public String poList_detail() {
+//		
+//		return "client/poList_detail";
+//	}
 	//잠재고객 리스트
 //	@RequestMapping("poList.do")
 //	public String poList() {
@@ -119,12 +113,12 @@ public class MovePageController {
 	
 	
 	
-	/*//로그인
+	//로그인
 	@RequestMapping("login.do")
 	public String login() {
 		
 		return "emp/login";
-	}*/
+	}
 	
 	//goal
 	//관리자 목표 현황 
@@ -201,11 +195,22 @@ public class MovePageController {
 			return "product/productList";
 		}
 		
+		//adminmain보기 나중에 지울거예요!
+		@RequestMapping("adminmain.do")
+		public String adminMain() {
+			return "adminmain";
+			
+		}
+		
+		//main으로 가기
+
+		@RequestMapping("Movemain.do")
+		public String main() {
+			return "adminmain";
+			
+		}
 		
 		
 		
 		
-		
-		
-		
-}
+}*/

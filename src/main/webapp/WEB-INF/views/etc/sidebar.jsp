@@ -14,11 +14,11 @@
 	    <ul class="nav side-menu">
 	      <li><a href="main.html"><i class="fa fa-home"></i> Home</a></li>
 	      <li><a><i class="fa fa-desktop"></i> 고객관리 <span class="fa fa-chevron-down"></span></a>
-	        <ul class="nav child_menu">
-	          <li><a href="MoveaddClient.do">고객등록</a></li>
-	          <li><a href="MoveclientList.do">고객목록</a></li>
-	          <li><a href="MovepoList.do">잠재고객</a></li>
-	          <li><a href="Movecontract.do?emp_no=${ loginEmp.emp_no }">계약</a></li>
+	        <ul class="nav child_menu">	          
+	          <li><a href="addClient.do">고객등록</a></li>
+	          <li><a href="clientList.do">고객목록</a></li>
+	          <li><a href="poList.do">잠재고객</a></li>
+	          <li><a href="contract.do">계약</a></li>
 	        </ul>
 	      </li>
 	      <li><a><i class="fa fa-table"></i> 영업현황 <span class="fa fa-chevron-down"></span></a>

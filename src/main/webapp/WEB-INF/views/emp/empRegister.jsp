@@ -59,12 +59,12 @@ function Regiemp(){
 	var job_no = $('#job_no').val();
 	var emp_email = $('#emp_email').val();
 	var emp_mgr = $('#emp_mgr').val();
-	var emp_hiredate = $('emp_hiredate').val();
-	var emp_firedate = $('emp_firedate').val();
-	var city = $('city').val();
-	var county = $('county').val();
-	var village = $('village').val();
-	var dept_no = $('dept_no').val();
+	var emp_hiredate = $('#emp_hiredate').val();
+	var emp_firedate = $('#emp_firedate').val();
+	var city = $('#city').val();
+	var county = $('#county').val();
+	var village = $('#village').val();
+	var dept_no = $('#dept_no').val();
 	
 	var en1 = new RegExp("[A-Z]");
 	var en2 = new RegExp("[a-z]");
@@ -79,6 +79,39 @@ function Regiemp(){
 		alert("이메일 주소를 제대로 입력해주세요.");
 	}else if(!num.test(emp_mgr)){
 		alert("상사번호는 숫자만 입력해주세요.");
+	}else{
+		$.ajax({
+			url: "empinsert.do",
+			data:{
+				emp_no : emp_no,
+				emp_pwd : emp_pwd,
+				emp_name : emp_name,
+				emp_addr : emp_addr,
+				emp_phone : emp_phone,
+				job_no : job_no,
+				emp_email : emp_email,
+				emp_mgr : emp_mgr,
+				emp_hiredate : emp_hiredate,
+				emp_firedate : emp_firedate,
+				city : city,
+				county : county,
+				village : village,
+				dept_no : dept_no				
+			},
+			type:"post",
+			success: function(data){
+				console.log("data : " + data);
+				if (data != null) {
+    				alert("사원 등록 성공");
+                    location.href = "MoveempList.do";
+				}
+			},
+			error: function(){
+				/* alert("error code : " + request.status + "\n" + "message : " + request.responseText
+						+ "\n" + "error : " + errorData); */
+				alert("사원 등록 실패");
+			}
+		});
 	}
 }
 </script>
@@ -194,7 +227,8 @@ function Regiemp(){
 									
 									
 					<!-- 사원 등록 -->
-					<form class="form-horizontal form-label-left" action="empinsert.do" method="post">
+					<form class="form-horizontal form-label-left">
+					<!-- <form class="form-horizontal form-label-left" action="empinsert.do" method="post"> -->
 
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">사원번호</label>
@@ -263,19 +297,19 @@ function Regiemp(){
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">담당지역</label>
-                        <div class="col-md-3 col-sm-9 col-xs-12">
+                        <div class="col-md-9 col-sm-9 col-xs-12">
                           <input class="form-control" id="city" name="city" type="text" placeholder="시">
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
-                        <div class="col-md-3 col-sm-9 col-xs-12">
+                        <div class="col-md-9 col-sm-9 col-xs-12">
                           <input class="form-control" id="county" name="county" type="text" placeholder="구">
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
-                        <div class="col-md-3 col-sm-9 col-xs-12">
+                        <div class="col-md-9 col-sm-9 col-xs-12">
                           <input class="form-control" id="village" name="village" type="text" placeholder="동">
                         </div>
                       </div>

@@ -37,7 +37,8 @@ public class ClientDao {
 	
 	/** 거래중이 거래처 정보 확인 메소드 Dao **/
 	public ArrayList<Client> selectAccountClient(int emp_no){
-		return (ArrayList)sqlSession.selectList("selectAccountClient");
+		
+		return (ArrayList)sqlSession.selectList("selectAccountClient", emp_no);
 	}
 	
 

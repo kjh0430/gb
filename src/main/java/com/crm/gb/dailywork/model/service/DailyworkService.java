@@ -1,4 +1,4 @@
-package com.crm.gb.dailyworkmodel.service;
+package com.crm.gb.dailywork.model.service;
 
 import org.springframework.stereotype.Service;
 

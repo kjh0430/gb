@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" session="true" %>
+	pageEncoding="UTF-8"%>
 	
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	
@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="images/favicon.ico" type="image/ico" />
 
-<title>고객등록</title>
+<title>잠재고객 상세페이지</title>
 
 <!-- Bootstrap -->
 <link href="resources/vendors/bootstrap/dist/css/bootstrap.min.css"
@@ -49,9 +49,21 @@ $(document).ready(function() {
         lengthChange:false,
         pageLength:15
     } );
-    
 } );
 
+
+</script>
+
+<script type="text/javascript">
+	$(function(){
+		/* 고객삭제 확인 */
+		function deleteClient() {
+			if((confirm("해당 고객정보를 삭제하시겠습니까?") == true)) {
+				location.href="deleteClient.do?client_no="+""+${ deleteClient.client_no }+"";
+			}else{
+				return false;
+			}
+	});
 </script>
 
 </head>
@@ -86,7 +98,7 @@ $(document).ready(function() {
 					<div class="page-title">
 						<div class="title_left">
 							<h3>
-								고객등록
+								잠재고객
 							</h3>
 						</div>
 					</div>
@@ -97,81 +109,87 @@ $(document).ready(function() {
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
 								<div class="x_title">
-									<font style="font-size:18px;">고객등록</font>
+									<font style="font-size:18px;">${ detailClient.client_name }</font>
+									<font style="float:right; font-size:15px;">
+										<a href="#">수정</a>&nbsp; &nbsp;
+										<a href="#">삭제</a>
+									</font>
+									
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
-								
-									<form action="insertClient.do" method="post" clear="both">
+									
 									<table id="table_cl" class="table table-striped table-bordered" style="min-width:650px;">
-										<input type="hidden" name="emp_no" value="${ loginEmp.emp_no }">
-										<tbody>
 										
+										<tbody>
 											<tr>
-												<th width="100px;">고객명 *</th>
-												<td><input style="width:300px;" type="text" name="client_name"></td>
+												<th width="100px;">고객명</th>
+												<td>${ detailClient.client_name }</td>
 											</tr>
 											<tr>
-												<th width="100px;">회사명 *</th>
-												<td>
-													<input style="width:300px;" type="text" name="client_company">
-													<input type="button" name="" value="검색">
-												</td>
+												<th width="100px;">회사명</th>
+												<td>${ detailClient.client_company }</td>
 											</tr>
 											<tr>
 												<th width="100px;">직책/직위</th>
-												<td><input style="width:300px;" type="text" name="client_job"></td>
+												<td>${ detailClient.client_job }</td>
 											</tr>
 											<tr>
-												<th width="100px;">이메일 *</th>
-												<td><input style="width:300px;" type="email" name="client_email"></td>
+												<th width="100px;">이메일</th>
+												<td>${ detailClient.client_email }</td>
 											</tr>
 											<tr>
-												<th width="100px;">연락처 *</th>
-												<td><input style="width:300px;" type="tel" name="client_phone"></td>
+												<th width="100px;">연락처</th>
+												<td>${ detailClient.client_phone }</td>
 											</tr>
 											<tr>
 												<th width="100px;">주소</th>
-												<td><input style="width:300px;" type="text" name="client_addr"></td>
+												<td>${ detailClient.client_addr }</td>
 											</tr>
 											<tr>
 												<th width="100px;">회사 전화번호</th>
-												<td><input style="width:300px;" type="tel" name="client_com_tel"></td>
+												<td>${ detailClient.client_com_tel }</td>
 											</tr>
 											<tr>
 												<th width="100px;">계약여부</th>
-												<td>
-													<input type="radio" name="client_contract" value="Y">여
-													<input type="radio" name="client_contract" value="N">부
-												</td>
+												<td>${ detailClient.client_contract }</td>
 											</tr>
 											<tr>
 												<th width="100px;">비고</th>
-												<td><input style="width:300px;" type="text" name="client_comment"></td>
+												<td>${ detailClient.client_comment }</td>
 											</tr>
 
 										<tbody>
 									</table>
 									
-									<div class="x_title">
-										<font style="font-size:18px;">첨부파일</font> &nbsp;
-										<a href="#">파일찾기</a>
-									<div class="clearfix"></div>
-									
 									<br>
 									
-						              <span>첨부파일</span> &nbsp; 
-						              <a href="#"><span style="color:black;">첨부파일명</span></a>
-						              	
+									<div class="x_title">
+										<h2>
+											접촉이력
+										</h2>
+										<div class="clearfix"></div>
 									</div>
 									
-									<div class="clearfix"></div>
 									
-									<input style="float:right;" type="submit" value="등록">
+									<table id="table_cl" class="table table-striped table-bordered" style="min-width:650px;">
+										
+										<thead>
+											<tr>
+												<th width="150px;">접촉일</th>
+												<th>접촉내용</th>
+											</tr>
+										</thead>
+										
+										<tbody>
+											<tr>
+												<td></td>
+												<td></td>
+											</tr>
+
+										<tbody>
+									</table>
 									
-								</form>
-								<!-- -------------------------------------- -->
-								
 									
 								</div>
 							</div>
@@ -179,11 +197,6 @@ $(document).ready(function() {
 					</div>
 				</div>
 			</div>
-			
-			<!-- start footer -->
-				<c:import url="../etc/footer.jsp"></c:import>
-			<!-- end footer -->
-			
 		</div>
 	</div>
 	</div>

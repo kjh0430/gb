@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
 <!DOCTYPE html>
 <html>
@@ -35,21 +35,12 @@
             </div>
 
             <div class="clearfix"></div>
-            
-            <c:choose>
-            	<c:when test="${ loginEmp.job_no == 3 }">
-		            <!-- sidebar menu -->
-		            <%@ include file="etc/adminsidebar.jsp" %>
-		            <!-- /sidebar menu -->
-            	</c:when>
-            	<c:otherwise>
-					<!-- sidebar menu -->
-		            <%@ include file="etc/sidebar.jsp" %>
-		            <!-- /sidebar menu --> 
-            	</c:otherwise>
 
-            </c:choose>
             
+            <!-- sidebar menu -->
+            <%@ include file="etc/adminsidebar.jsp" %>
+            <!-- /sidebar menu -->
+
           </div>
         </div>
 
@@ -305,7 +296,8 @@
       </div>
       <!-- footer content -->
 		 <%@ include file="etc/footer.jsp" %>
-      <!-- /footer content -->
+       
+        <!-- /footer content -->
       
     </div>
 
