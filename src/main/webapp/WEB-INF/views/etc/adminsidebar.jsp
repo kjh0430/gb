@@ -26,12 +26,12 @@
             <ul class="nav child_menu">
             
 
-             <li><a href="#">제품관리</a></li>
+             <li><a href="MoveproductList.do">제품관리</a></li>
              <li><a href="MovedailySales.do">영업일지</a></li>
            </ul>
            
          </li>
-         <li><a><i class="fa fa-edit"></i> 영업현황 <span class="fa fa-chevron-down"></span></a>
+         <li><a><i class="fa fa-edit"></i>영업현황 <span class="fa fa-chevron-down"></span></a>
            <ul class="nav child_menu">
              <li><a href="MoveclientList.do">거래처 목록</a></li>
              <li><a href="MoveorderList.do">매출현황</a></li>

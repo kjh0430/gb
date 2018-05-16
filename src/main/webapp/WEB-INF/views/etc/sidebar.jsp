@@ -12,7 +12,7 @@
 	  <div class="menu_section">
 	   
 	    <ul class="nav side-menu">
-	      <li><a href="main.html"><i class="fa fa-home"></i> Home</a></li>
+	      <li><a href="Movemain.do"><i class="fa fa-home"></i> Home</a></li>
 	      <li><a><i class="fa fa-desktop"></i> 고객관리 <span class="fa fa-chevron-down"></span></a>
 	        <ul class="nav child_menu">
 	          <li><a href="MoveaddClient.do">고객등록</a></li>
@@ -30,7 +30,7 @@
 	      </li>
 	      <li><a><i class="fa fa-edit"></i> 영업관리 <span class="fa fa-chevron-down"></span></a>
 	        <ul class="nav child_menu">
-	          <li><a href="#">제품관리</a></li>
+	          <li><a href="MoveproductList.do">제품관리</a></li>
 	          <li><a href="MovegoalState.do">목표현황</a></li>
 	          <li><a href="MovedailySales.do">영업일지</a></li>
 	        </ul>
