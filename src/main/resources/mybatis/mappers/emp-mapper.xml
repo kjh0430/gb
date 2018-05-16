@@ -24,7 +24,9 @@
 		<result column="emp_mgr" property="emp_mgr" />
 		<result column="emp_hiredate" property="emp_hiredate" />
 		<result column="emp_firedate" property="emp_firedate" />
-		<result column="emp_loc" property="emp_loc" />
+		<result column="city" property="city" />
+		<result column="county" property="county" />
+		<result column="village" property="village" />
 		<result column="dept_no" property="dept_no" />
 	</resultMap>
 	
@@ -33,7 +35,7 @@
 		INSERT INTO EMP
 		VALUES (#{emp_no}, #{emp_pwd}, #{emp_name}, #{emp_addr}, 
 		#{emp_phone}, #{job_no}, #{emp_email}, #{emp_mgr}, #{emp_hiredate}, 
-		#{emp_firedate}, #{emp_loc}, #{dept_no})
+		#{emp_firedate}, #{city}, #{county}, #{village}, #{dept_no})
 	]]>
 	</insert>
 	
@@ -42,7 +44,7 @@
 		UPDATE INTO EMP
 		SET #{emp_no}, #{emp_pwd}, #{emp_name}, #{emp_addr}, 
 		#{emp_phone}, #{job_no}, #{emp_email}, #{emp_mgr}, #{emp_hiredate}, 
-		#{emp_firedate}, #{emp_loc}, #{dept_no}
+		#{emp_firedate}, #{city}, #{county}, #{village}, #{dept_no}
 	]]>
 	</update>
 	
