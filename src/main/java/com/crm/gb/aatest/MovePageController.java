@@ -1,4 +1,4 @@
-package com.crm.gb.aatest;
+/*package com.crm.gb.aatest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -113,12 +113,12 @@ public class MovePageController {
 	
 	
 	
-	/*//로그인
+	//로그인
 	@RequestMapping("login.do")
 	public String login() {
 		
 		return "emp/login";
-	}*/
+	}
 	
 	//goal
 	//관리자 목표 현황 
@@ -213,4 +213,4 @@ public class MovePageController {
 		
 		
 		
-}
+}*/

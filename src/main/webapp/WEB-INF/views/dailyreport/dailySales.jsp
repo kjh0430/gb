@@ -249,8 +249,6 @@
        
         <!-- /footer content -->
 	</div>
-	
-
 	<!-- /page content -->
 
 

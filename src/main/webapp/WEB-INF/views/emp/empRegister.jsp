@@ -59,12 +59,12 @@ function Regiemp(){
 	var job_no = $('#job_no').val();
 	var emp_email = $('#emp_email').val();
 	var emp_mgr = $('#emp_mgr').val();
-	var emp_hiredate = $('emp_hiredate').val();
-	var emp_firedate = $('emp_firedate').val();
-	var city = $('city').val();
-	var county = $('county').val();
-	var village = $('village').val();
-	var dept_no = $('dept_no').val();
+	var emp_hiredate = $('#emp_hiredate').val();
+	var emp_firedate = $('#emp_firedate').val();
+	var city = $('#city').val();
+	var county = $('#county').val();
+	var village = $('#village').val();
+	var dept_no = $('#dept_no').val();
 	
 	var en1 = new RegExp("[A-Z]");
 	var en2 = new RegExp("[a-z]");
@@ -82,7 +82,6 @@ function Regiemp(){
 	}else{
 		$.ajax({
 			url: "empinsert.do",
-			type:"post",
 			data:{
 				emp_no : emp_no,
 				emp_pwd : emp_pwd,
@@ -99,14 +98,15 @@ function Regiemp(){
 				village : village,
 				dept_no : dept_no				
 			},
+			type:"post",
 			success: function(data){
 				console.log("data : " + data);
 				if (data != null) {
     				alert("사원 등록 성공");
-                    location.href = "empList.do";
+                    location.href = "MoveempList.do";
 				}
 			},
-			error: function(Request, status, errorData){
+			error: function(){
 				/* alert("error code : " + request.status + "\n" + "message : " + request.responseText
 						+ "\n" + "error : " + errorData); */
 				alert("사원 등록 실패");
@@ -227,7 +227,8 @@ function Regiemp(){
 									
 									
 					<!-- 사원 등록 -->
-					<form class="form-horizontal form-label-left" action="empinsert.do" method="post">
+					<form class="form-horizontal form-label-left">
+					<!-- <form class="form-horizontal form-label-left" action="empinsert.do" method="post"> -->
 
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">사원번호</label>
