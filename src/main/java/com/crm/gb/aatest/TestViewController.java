@@ -24,4 +24,10 @@ public class TestViewController {
 		
 		return "client/clientList";
 	}
+	
+	@RequestMapping("adminmain.do")
+	public String adminmain() {
+		
+		return "adminmain";
+	}
 }
