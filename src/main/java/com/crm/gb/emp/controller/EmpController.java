@@ -1,6 +1,7 @@
 package com.crm.gb.emp.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URLEncoder;
 
 import javax.servlet.http.HttpServletResponse;
@@ -55,12 +56,13 @@ public class EmpController {
 			
 			Emp returnEmp=empService.selectEmp(emp);
 			model.addAttribute("loginEmp", returnEmp);	
-			
+			System.out.println("returnEmp"+returnEmp);
 			
 		} catch (EmpLoginFailException e) {
 			model.addAttribute("message", e.getMessage());
 			return "error/error";
 		}
+		
 		
 		return "main";
 	}
@@ -111,31 +113,14 @@ public class EmpController {
 	}
 	
 	@RequestMapping(value="empinsert.do", method=RequestMethod.POST)
-	public ModelAndView insertEmp(Emp emp, ModelAndView mv) throws IOException{
+	public void insertEmp(Emp emp, ModelAndView mv, HttpServletResponse response) throws IOException{
 		
 		System.out.println("전송온 값 : " + emp);
 		
 		int result = empService.insertEmp(emp);
-			
-		/*JSONObject job = new JSONObject();
-		job.put("emp_no", emp.getEmp_no());
-		job.put("emp_pwd", emp.getEmp_pwd());
-		job.put("emp_name", URLEncoder.encode(emp.getEmp_name(), "utf-8"));
-		job.put("emp_addr", URLEncoder.encode(emp.getEmp_addr(), "utf-8"));
-		job.put("emp_phone", emp.getEmp_phone());
-		job.put("job_no", emp.getJob_no());
-		job.put("emp_email", emp.getEmp_email());
-		job.put("emp_mgr", emp.getEmp_mgr());
-		job.put("emp_hiredate", emp.getEmp_hiredate());
-		job.put("emp_firedate", emp.getEmp_firedate());
-		job.put("city", URLEncoder.encode(emp.getCity(), "utf-8"));
-		job.put("county", URLEncoder.encode(emp.getCounty(), "utf-8"));
-		job.put("village", URLEncoder.encode(emp.getVillage(), "utf-8"));
-		job.put("dept_no", emp.getDept_no());*/
 		
-		mv.setViewName("emp/empList");
+		System.out.println("result : " + result);
 		
-		return mv;
 	}
 	
 	@RequestMapping(value="empupdate.do", method=RequestMethod.POST)

@@ -152,34 +152,16 @@ $(document).ready(function() {
 								</div>
 								<div class="x_content">
 									
-									<table id="table_pl" class="table table-striped table-bordered" style="min-width:650px;">
+									<table id="table_pl" class="table table-striped table-bordered table-responsive" style="min-width:550px;">
 										<thead>
 											<tr>
+												<th>제품번호</th>
 												<th>제품명</th>
-												<th>제품단가[1kg당]</th>
-												<th>제품코드</th>
+												<th>제품가격</th>
 												<th>판매여부</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr>
-											<tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr>
-											<tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr>
 											<tr>
 												<td><a href="#">이디오피아 예가체프 </a></td>
 												<td>12,000</td>

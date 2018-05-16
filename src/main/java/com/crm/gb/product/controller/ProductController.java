@@ -10,14 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ProductController {
 	
 	public ProductController() {}
-	
-	@RequestMapping("moveAdminPL.do")
-	public String moveAdminPL() {
-		return "product/productList";
-	}
 
+	//상품 등록 화면으로 이동
 	@RequestMapping("moveProductInsert.do")
 	public String moveProductInsert() {
 		return "product/productInsert";
 	}
+	
+	
 }
