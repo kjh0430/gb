@@ -47,9 +47,34 @@
 			pageLength : 15
 		});
 	});
-</script>
+</script> 
 </head>
-
+<script type="text/javascript">
+function Regiemp(){
+	var emp_no = $('#emp_no').val();
+	var emp_pwd = $('#emp_pwd').val();
+	var emp_name = $('#emp_name').val();
+	var emp_addr = $('#emp_addr').val();
+	var emp_phone = $('#emp_phone').val();
+	var job_no = $('#job_no').val();
+	var emp_email = $('#emp_email').val();
+	var emp_mgr = $('#emp_mgr').val();
+	var emp_hiredate = $('emp_hiredate').val();
+	var emp_firedate = $('emp_firedate').val();
+	var city = $('city').val();
+	var county = $('county').val();
+	var village = $('village').val();
+	var dept_no = $('dept_no').val();
+	
+	var en1 = new RegExp("[A-Z]");
+	var en2 = new RegExp("[a-z]");
+	var num = new RegExp("[0-9]");
+	
+	if(!num.test(emp_no)){
+		alert("사원번호는 숫자만 입력해주세요.");
+	}
+}
+</script>
 
 <body class="nav-md">
 	<div class="container body">

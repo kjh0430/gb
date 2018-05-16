@@ -15,7 +15,7 @@ public class Emp implements Serializable{
 	private String emp_addr;
 	private String emp_phone;
 	private int job_no;
-	private String email;
+	private String emp_email;
 	private int emp_mgr;
 	private Date emp_hiredate;
 	private Date emp_firedate;
@@ -26,9 +26,9 @@ public class Emp implements Serializable{
 	
 	public Emp() {}
 
-	public Emp(int emp_no, String emp_pwd, String emp_name, String emp_addr, String emp_phone, int job_no, String email,
-			int emp_mgr, Date emp_hiredate, Date emp_firedate, String city, String county, String village,
-			int dept_no) {
+	public Emp(int emp_no, String emp_pwd, String emp_name, String emp_addr, String emp_phone, int job_no,
+			String emp_email, int emp_mgr, Date emp_hiredate, Date emp_firedate, String city, String county,
+			String village, int dept_no) {
 		super();
 		this.emp_no = emp_no;
 		this.emp_pwd = emp_pwd;
@@ -36,7 +36,7 @@ public class Emp implements Serializable{
 		this.emp_addr = emp_addr;
 		this.emp_phone = emp_phone;
 		this.job_no = job_no;
-		this.email = email;
+		this.emp_email = emp_email;
 		this.emp_mgr = emp_mgr;
 		this.emp_hiredate = emp_hiredate;
 		this.emp_firedate = emp_firedate;
@@ -94,12 +94,12 @@ public class Emp implements Serializable{
 		this.job_no = job_no;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getEmp_email() {
+		return emp_email;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setEmp_email(String emp_email) {
+		this.emp_email = emp_email;
 	}
 
 	public int getEmp_mgr() {
@@ -161,9 +161,9 @@ public class Emp implements Serializable{
 	@Override
 	public String toString() {
 		return "Emp [emp_no=" + emp_no + ", emp_pwd=" + emp_pwd + ", emp_name=" + emp_name + ", emp_addr=" + emp_addr
-				+ ", emp_phone=" + emp_phone + ", job_no=" + job_no + ", email=" + email + ", emp_mgr=" + emp_mgr
-				+ ", emp_hiredate=" + emp_hiredate + ", emp_firedate=" + emp_firedate + ", city=" + city + ", county="
-				+ county + ", village=" + village + ", dept_no=" + dept_no + "]";
+				+ ", emp_phone=" + emp_phone + ", job_no=" + job_no + ", emp_email=" + emp_email + ", emp_mgr="
+				+ emp_mgr + ", emp_hiredate=" + emp_hiredate + ", emp_firedate=" + emp_firedate + ", city=" + city
+				+ ", county=" + county + ", village=" + village + ", dept_no=" + dept_no + "]";
 	}
 	
 }
