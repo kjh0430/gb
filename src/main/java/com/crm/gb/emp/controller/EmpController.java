@@ -121,13 +121,6 @@ public class EmpController {
 		
 		System.out.println("result : " + result);
 		
-		/*PrintWriter out = response.getWriter();
-		
-			out.append("ok");
-			out.flush();		
-		
-		out.close();*/
-		
 	}
 	
 	@RequestMapping(value="empupdate.do", method=RequestMethod.POST)
