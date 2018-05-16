@@ -36,7 +36,6 @@
 
             <div class="clearfix"></div>
             
-            
             <c:choose>
             	<c:when test="${ loginEmp.job_no == 3 }">
 		            <!-- sidebar menu -->
@@ -50,6 +49,7 @@
             	</c:otherwise>
 
             </c:choose>
+            
           </div>
         </div>
 
