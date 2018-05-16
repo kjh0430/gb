@@ -31,7 +31,7 @@
            </ul>
            
          </li>
-         <li><a><i class="fa fa-edit"></i> 영업현황 <span class="fa fa-chevron-down"></span></a>
+         <li><a><i class="fa fa-edit"></i>영업현황 <span class="fa fa-chevron-down"></span></a>
            <ul class="nav child_menu">
              <li><a href="MoveclientList.do">거래처 목록</a></li>
              <li><a href="MoveorderList.do">매출현황</a></li>

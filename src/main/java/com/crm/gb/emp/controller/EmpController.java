@@ -55,12 +55,13 @@ public class EmpController {
 			
 			Emp returnEmp=empService.selectEmp(emp);
 			model.addAttribute("loginEmp", returnEmp);	
-			
+			System.out.println("returnEmp"+returnEmp);
 			
 		} catch (EmpLoginFailException e) {
 			model.addAttribute("message", e.getMessage());
 			return "error/error";
 		}
+		
 		
 		return "main";
 	}
