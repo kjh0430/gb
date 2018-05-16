@@ -47,9 +47,74 @@
 			pageLength : 15
 		});
 	});
-</script>
+</script> 
 </head>
-
+<script type="text/javascript">
+function Regiemp(){
+	var emp_no = $('#emp_no').val();
+	var emp_pwd = $('#emp_pwd').val();
+	var emp_name = $('#emp_name').val();
+	var emp_addr = $('#emp_addr').val();
+	var emp_phone = $('#emp_phone').val();
+	var job_no = $('#job_no').val();
+	var emp_email = $('#emp_email').val();
+	var emp_mgr = $('#emp_mgr').val();
+	var emp_hiredate = $('emp_hiredate').val();
+	var emp_firedate = $('emp_firedate').val();
+	var city = $('city').val();
+	var county = $('county').val();
+	var village = $('village').val();
+	var dept_no = $('dept_no').val();
+	
+	var en1 = new RegExp("[A-Z]");
+	var en2 = new RegExp("[a-z]");
+	var num = new RegExp("[0-9]");
+	var email_check = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+	
+	if(!num.test(emp_no)){
+		alert("사원번호는 숫자만 입력해주세요.");
+	}else if(emp_pwd.length < 4){
+		alert("비밀번호는 4자리 이상 입력해주세요.");
+	}else if(emp_email.match(email_check) == null){
+		alert("이메일 주소를 제대로 입력해주세요.");
+	}else if(!num.test(emp_mgr)){
+		alert("상사번호는 숫자만 입력해주세요.");
+	}else{
+		$.ajax({
+			url: "empinsert.do",
+			type:"post",
+			data:{
+				emp_no : emp_no,
+				emp_pwd : emp_pwd,
+				emp_name : emp_name,
+				emp_addr : emp_addr,
+				emp_phone : emp_phone,
+				job_no : job_no,
+				emp_email : emp_email,
+				emp_mgr : emp_mgr,
+				emp_hiredate : emp_hiredate,
+				emp_firedate : emp_firedate,
+				city : city,
+				county : county,
+				village : village,
+				dept_no : dept_no				
+			},
+			success: function(data){
+				console.log("data : " + data);
+				if (data != null) {
+    				alert("사원 등록 성공");
+                    location.href = "empList.do";
+				}
+			},
+			error: function(Request, status, errorData){
+				/* alert("error code : " + request.status + "\n" + "message : " + request.responseText
+						+ "\n" + "error : " + errorData); */
+				alert("사원 등록 실패");
+			}
+		});
+	}
+}
+</script>
 
 <body class="nav-md">
 	<div class="container body">
@@ -232,7 +297,19 @@
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">담당지역</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input class="form-control" id="emp_loc" name="emp_loc" type="text" placeholder="담당지역">
+                          <input class="form-control" id="city" name="city" type="text" placeholder="시">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <input class="form-control" id="county" name="county" type="text" placeholder="구">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <input class="form-control" id="village" name="village" type="text" placeholder="동">
                         </div>
                       </div>
                       <div class="form-group">
@@ -251,7 +328,7 @@
                         <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">                          
                           <button class="btn btn-primary" type="button">Cancel</button>
                           <button class="btn btn-primary" type="reset">Reset</button>
-                          <button class="btn btn-success" type="submit">Submit</button>                     
+                          <button class="btn btn-success" type="submit" onclick="Regiemp()">Submit</button>                     
                         </div>
                       </div>
                       </form>

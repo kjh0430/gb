@@ -1,8 +1,12 @@
 package com.crm.gb.emp.controller;
 
+import java.io.IOException;
+import java.net.URLEncoder;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,10 +76,10 @@ public class EmpController {
 	}	
 	/* 2018.05.15 17:30 여기까지 */
 	
-	@RequestMapping(value="login.do")
+	/*@RequestMapping(value="login.do")
 		public String loginPage() {			
 			return "emp/login";
-		}
+		}*/
 	
 	
 	@RequestMapping(value="main.do")
@@ -110,11 +114,27 @@ public class EmpController {
 	}
 	
 	@RequestMapping(value="empinsert.do", method=RequestMethod.POST)
-	public ModelAndView insertEmp(Emp emp, ModelAndView mv) {
+	public ModelAndView insertEmp(Emp emp, ModelAndView mv) throws IOException{
 		
 		System.out.println("전송온 값 : " + emp);
 		
 		int result = empService.insertEmp(emp);
+			
+		/*JSONObject job = new JSONObject();
+		job.put("emp_no", emp.getEmp_no());
+		job.put("emp_pwd", emp.getEmp_pwd());
+		job.put("emp_name", URLEncoder.encode(emp.getEmp_name(), "utf-8"));
+		job.put("emp_addr", URLEncoder.encode(emp.getEmp_addr(), "utf-8"));
+		job.put("emp_phone", emp.getEmp_phone());
+		job.put("job_no", emp.getJob_no());
+		job.put("emp_email", emp.getEmp_email());
+		job.put("emp_mgr", emp.getEmp_mgr());
+		job.put("emp_hiredate", emp.getEmp_hiredate());
+		job.put("emp_firedate", emp.getEmp_firedate());
+		job.put("city", URLEncoder.encode(emp.getCity(), "utf-8"));
+		job.put("county", URLEncoder.encode(emp.getCounty(), "utf-8"));
+		job.put("village", URLEncoder.encode(emp.getVillage(), "utf-8"));
+		job.put("dept_no", emp.getDept_no());*/
 		
 		mv.setViewName("emp/empList");
 		
