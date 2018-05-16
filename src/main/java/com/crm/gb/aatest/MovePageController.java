@@ -1,4 +1,4 @@
-package com.crm.gb.aatest;
+/*package com.crm.gb.aatest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -201,3 +201,4 @@ public class MovePageController {
 		
 		
 }
+*/
