@@ -12,7 +12,7 @@
 	  <div class="menu_section">
 	   
 	    <ul class="nav side-menu">
-	      <li><a href="Movemain.do"><i class="fa fa-home"></i> Home</a></li>
+	      <li><a href="mainView.do"><i class="fa fa-home"></i> Home</a></li>
 	      <li><a><i class="fa fa-desktop"></i> 고객관리 <span class="fa fa-chevron-down"></span></a>
 	        <ul class="nav child_menu">
 	          <li><a href="addClient.do">고객등록</a></li>

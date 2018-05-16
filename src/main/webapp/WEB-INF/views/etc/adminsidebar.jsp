@@ -12,7 +12,7 @@
      <div class="menu_section">
       
        <ul class="nav side-menu">
-         <li><a href="main.html"><i class="fa fa-home"></i> Home</a></li>
+         <li><a href="mainView.do"><i class="fa fa-home"></i> Home</a></li>
          <li><a><i class="fa fa-desktop"></i>사원관리 <span class="fa fa-chevron-down"></span></a>
          <ul class="nav child_menu">
              <li><a href="goalAdmin.do">목표관리</a></li>
