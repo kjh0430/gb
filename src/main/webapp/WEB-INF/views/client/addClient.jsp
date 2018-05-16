@@ -179,6 +179,11 @@ $(document).ready(function() {
 					</div>
 				</div>
 			</div>
+			
+			<!-- start footer -->
+				<c:import url="../etc/footer.jsp"></c:import>
+			<!-- end footer -->
+			
 		</div>
 	</div>
 	</div>

@@ -32,7 +32,7 @@ public class ClientController {
 	
 	
 	/** 신규고객 등록 화면이동 */
-	@RequestMapping("addClient.do")
+	@RequestMapping("MoveaddClient.do")
 	public String addClient() {
 		return "client/addClient";
 	}
@@ -51,7 +51,7 @@ public class ClientController {
 	}
 	
 	/** 등록된 고객리스트 메소드 */
-	@RequestMapping("clientList.do")
+	@RequestMapping("MoveclientList.do")
 	public String showClient(Client client, Model model) {
 		logger.info("고객리스트 메소드 실행됨");
 		ArrayList<Client> clientList=clientService.selectAllClient();
@@ -61,7 +61,7 @@ public class ClientController {
 	}
 	
 	/** 잠재고객 리스트 메소드 */
-	@RequestMapping("poList.do")
+	@RequestMapping("MovepoList.do")
 	public String poList(Client client, Model model) {
 		logger.info("잠재고객 리스트 메소드 실행됨");
 		ArrayList<Client> poList = clientService.selectPoList();

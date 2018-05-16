@@ -44,27 +44,27 @@ public class MovePageController {
 	
 	//client
 	//고객추가
-	@RequestMapping("MoveaddClient.do")
-	public String addClient() {
-		
-		return "client/addClient";
-	}
-	
+//	@RequestMapping("MoveaddClient.do")
+//	public String addClient() {
+//		
+//		return "client/addClient";
+//	}
+//	
 	//*allClient
 	//고객 리스트
-	@RequestMapping("MoveclientList.do")
-	public String clientList() {
-		
-		return "client/clientList";
-	}
+//	@RequestMapping("MoveclientList.do")
+//	public String clientList() {
+//		
+//		return "client/clientList";
+//	}
 	
 	//+poList_detail.jsp
 	//잠재고객 세부사항
-	@RequestMapping("MovepoList_detail.do")
-	public String poList_detail() {
-		
-		return "client/poList_detail";
-	}
+//	@RequestMapping("MovepoList_detail.do")
+//	public String poList_detail() {
+//		
+//		return "client/poList_detail";
+//	}
 	//잠재고객 리스트
 //	@RequestMapping("poList.do")
 //	public String poList() {

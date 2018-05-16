@@ -8,7 +8,7 @@
 	<!-- 로그인관련 mapping -->
 	<select id="loginEmp" parameterType="emp" resultType="emp">
 		<![CDATA[
-			select * from emp 
+			select emp_no, emp_name, job_no from emp 
 			where emp_no = #{emp_no} and emp_pwd = #{emp_pwd}
 		]]>
 	</select>

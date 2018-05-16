@@ -14,6 +14,7 @@
    	<property name="url" value="jdbc:oracle:thin:@192.168.20.44:1521:xe"></property>
    	<property name="username" value="ttt"></property>
    	<property name="password" value="ttt"></property>
+
    	<property name="defaultAutoCommit" value="false"></property>
    </bean>
 
@@ -33,8 +34,6 @@
    <property name="dataSource" ref="dataSource"></property>
    </bean>
    
-
-
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
 			<tx:method name="select*" read-only="true" rollback-for="Exception" />
