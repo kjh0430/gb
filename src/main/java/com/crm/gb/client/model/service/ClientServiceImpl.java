@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.crm.gb.client.model.dao.ClientDao;
 import com.crm.gb.client.model.vo.Client;
+import com.crm.gb.emp.model.vo.Emp;
 
 @Service("clientService")
 public class ClientServiceImpl implements ClientService{
@@ -59,4 +60,10 @@ public class ClientServiceImpl implements ClientService{
 		return clientDao.deleteClient(client_no);
 	}
 	
+	/** 거래처 리스트 메소드 **/
+	@Override
+	public ArrayList<Client> selectAccountClientList(int emp_no) {
+		return clientDao.selectAccountClient(emp_no);
+	}
+
 }

@@ -43,25 +43,7 @@
 
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
-$(document).ready(function() {
-    $('#table_cl').dataTable( {
-        ordering:false,
-        lengthChange:false,
-        pageLength:15
-    } );
-} );
 
-function clientList(){
-	$.ajax({
-		url : "/classKing/clentlist",
-		data : {empNo : ""},
-		type : "get",
-		datatype : "json",
-		success : function(data){
-			var jsonStr = JSON.stringfy
-		}
-	});
-}
 </script>
 
 <!-- ----------------------스크립트관련 작업영역 시작------------------------ -->
@@ -105,7 +87,7 @@ function clientList(){
 					<div class="page-title">
 						<div class="title_left">
 							<h3>
-								고객목록
+								고객 목록
 							</h3>
 						</div>
 					</div>
@@ -117,7 +99,7 @@ function clientList(){
 							<div class="x_panel">
 								<div class="x_title">
 									<h2>
-										등록된 모든고객
+										거래처
 									</h2>
 									<div class="clearfix"></div>
 								</div>
@@ -136,14 +118,14 @@ function clientList(){
 										</thead>
 										<tbody>
 										
-										<c:forEach var="list" items="${ clientList }">
+										<c:forEach var="list" items="${ accountClientList }">
 											<tr>
-												<td><a href="detailClient.do?client_no=${ list.client_no }">${ list.client_name }</a></td>
-												<td>${ list.client_company }</td>
-												<td>${ list.client_job }</td>
-												<td>${ list.client_email }</td>
-												<td>${ list.client_phone }</td>
-												<td>${ list.client_addr }</td>
+												<td><a href="detailClient.do?client_no=${ accountClientList.client_no }">${ list.client_name }</a></td>
+												<td>${ accountClientList.client_company }</td>
+												<td>${ accountClientList.client_job }</td>
+												<td>${ accountClientList.client_email }</td>
+												<td>${ accountClientList.client_phone }</td>
+												<td>${ accountClientList.client_addr }</td>
 											</tr>
 											
 										</c:forEach>

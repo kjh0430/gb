@@ -57,6 +57,12 @@ public class MovePageController {
 		
 		return "client/clientList";
 	}
+//	
+//	//영업현황 거래처
+//	@RequestMapping("MoveaccountList.do")
+//	public String accountList() {
+//		return "accountList.do";
+//	} 
 	
 	//+poList_detail.jsp
 	//잠재고객 세부사항

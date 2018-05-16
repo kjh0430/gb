@@ -56,6 +56,14 @@
 		]]>
 	</select>
 	
+	<!-- 거래중인 거래처 리스트 mapping -->
+	<select id="selectAccountClient" resultMap="resultSelectAllClient">
+		<![CDATA[
+			select * from client
+			where emp_no = #{emp_no} and client_contract = 'Y'
+		]]>
+	</select>
+	
 	<!-- 고객정보 상세보기 mapping -->
 	<select id="detailClient" parameterType="int" resultMap="resultDetailClient">
 		<![CDATA[

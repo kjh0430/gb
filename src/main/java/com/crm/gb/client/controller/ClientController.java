@@ -2,8 +2,6 @@ package com.crm.gb.client.controller;
 
 import java.util.ArrayList;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +14,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.crm.gb.client.model.service.ClientService;
 import com.crm.gb.client.model.vo.Client;
+import com.crm.gb.emp.model.vo.Emp;
 
 /**
  * Handles requests for the application home page.
@@ -58,6 +57,17 @@ public class ClientController {
 		model.addAttribute("clientList", clientList);
 		
 		return "client/clientList";
+	}
+	
+	/** 거래중인 거래처 리스트 메소드 **/
+	@RequestMapping("MoveaccountList.do")
+	public String shoeAccountClient(@RequestParam("emp_no") String emp_num, Model model) {
+		logger.info("거래처 리스트 메소드 실행됨!!");
+		int emp_no = Integer.parseInt(emp_num);
+		ArrayList<Client> accountClientList = clientService.selectAccountClientList(emp_no);
+		model.addAttribute("accountClientList", accountClientList);
+		
+		return "client/accountList";
 	}
 	
 	/** 잠재고객 리스트 메소드 */

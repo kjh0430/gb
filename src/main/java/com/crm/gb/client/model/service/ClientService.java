@@ -3,6 +3,7 @@ package com.crm.gb.client.model.service;
 import java.util.ArrayList;
 
 import com.crm.gb.client.model.vo.Client;
+import com.crm.gb.emp.model.vo.Emp;
 
 public interface ClientService {
 	
@@ -13,4 +14,5 @@ public interface ClientService {
 	public abstract int insertClient(Client client);		// 고객등록
 	public abstract int updateClient(Client client);		// 고객정보변경
 	public abstract int deleteClient(int client_no);	// 고객정보삭제
+	public abstract ArrayList<Client> selectAccountClientList(int emp_no); //거래서 정보 조회
 }
