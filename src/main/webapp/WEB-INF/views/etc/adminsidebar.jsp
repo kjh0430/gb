@@ -26,7 +26,7 @@
             <ul class="nav child_menu">
             
 
-             <li><a href="#">제품관리</a></li>
+             <li><a href="MoveproductList.do">제품관리</a></li>
              <li><a href="MovedailySales.do">영업일지</a></li>
            </ul>
            

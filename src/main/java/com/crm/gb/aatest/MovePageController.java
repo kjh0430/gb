@@ -195,9 +195,20 @@ public class MovePageController {
 			return "product/productList";
 		}
 		
+		//adminmain보기 나중에 지울거예요!
+		@RequestMapping("adminmain.do")
+		public String adminMain() {
+			return "adminmain";
+			
+		}
 		
-		
-		
+		//main으로 가기
+
+		@RequestMapping("Movemain.do")
+		public String main() {
+			return "adminmain";
+			
+		}
 		
 		
 		
