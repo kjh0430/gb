@@ -3,6 +3,7 @@ package com.crm.gb.emp.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
@@ -89,41 +91,65 @@ public class EmpController {
 	public String main() {
 		
 		return "main";
-	}
-		
-	@RequestMapping(value = "empList.do", method = RequestMethod.GET)
-	public String empList() {
-				
-		return "emp/empList";
-	}
+	}		
+	
 	@RequestMapping(value = "empRegister.do", method = RequestMethod.GET)
 	public String empRegister() {
 				
 		return "emp/empRegister";
-	}
-	@RequestMapping(value = "empDetail.do", method = RequestMethod.GET)
-	public String empDetail() {
-				
-		return "emp/empDetail";
-	}
+	}	
+
 	@RequestMapping(value = "moveEmpUpdate.do", method = RequestMethod.GET)
 	public String moveEmpUpdate() {				
 		return "emp/empUpdate";
 	}
 	@RequestMapping(value = "moveEmpDelete.do", method = RequestMethod.GET)
 	public String moveEmpDelete() {
-				
 		return "emp/empList";
 	}
+	
+	@RequestMapping(value = "empList.do", method = RequestMethod.GET)
+	public String empList(Emp emp, Model model) {
+		logger.info("사원 목록 실행");
+		ArrayList<Emp> empList = empService.selectEmpList();
+		System.out.println("empList : " + empList);
+		model.addAttribute("empList", empList);
+		return "emp/empList";
+	}
+	
+	@RequestMapping(value = "empDetail.do", method = RequestMethod.GET)
+	public String empDetail(Emp emp, Model model, @RequestParam(value="emp_no") String emp_num) {
+		logger.info("사원 상세보기 실행");
+		
+		System.out.println("사원 상세정보: "+emp);
+		int emp_no = (Integer.parseInt(emp_num));
+					
+			Emp detailEmp = empService.selectEmpNo(emp_no);
+			model.addAttribute("emp", detailEmp);
+			System.out.println("detailEmp : " + detailEmp);
+		
+		return "emp/empDetail";
+	}
+	
 	
 	@RequestMapping(value="empinsert.do", method=RequestMethod.POST)
 	public void insertEmp(Emp emp, ModelAndView mv, HttpServletResponse response) throws IOException{
 		
 		System.out.println("전송온 값 : " + emp);
 		
+		response.setContentType("text/html; charset=utf-8");
+		
+		
+		
 		int result = empService.insertEmp(emp);
 		
 		System.out.println("result : " + result);
+		
+		PrintWriter out = response.getWriter();
+		
+		out.append("ok");
+		out.flush();
+		out.close();
 		
 	}
 	
@@ -150,6 +176,8 @@ public class EmpController {
 		
 		return mv;
 	}
+	
+	
 	
 }
 

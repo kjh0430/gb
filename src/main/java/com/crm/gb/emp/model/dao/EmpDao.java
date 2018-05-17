@@ -1,5 +1,7 @@
 package com.crm.gb.emp.model.dao;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -42,6 +44,14 @@ public class EmpDao {
 
 	public int deleteEmp(Emp emp) {
 		return sqlSession.delete("empDelete", emp);
+	}
+
+	public Emp selectEmpNo(int emp_no) {
+		return sqlSession.selectOne("detailEmp", emp_no);
+	}
+
+	public ArrayList<Emp> selectEmpList() {
+		return (ArrayList)sqlSession.selectList("empList");
 	}
 	
 }
