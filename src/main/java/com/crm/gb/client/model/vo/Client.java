@@ -1,6 +1,6 @@
 package com.crm.gb.client.model.vo;
 
-import java.io.Serializable;
+import java.io.Serializable; 
 import java.sql.Date;
 
 import org.springframework.stereotype.Component;
