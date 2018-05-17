@@ -162,8 +162,6 @@ $(document).ready(function() {
 					<div class="row">
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
-								
-								
 								<div class="x_content table-responsive">									
 									<table id="table_notice" class="table table-striped table-responsive table-bordered" style="min-width:600px;">
 										<thead>
