@@ -67,8 +67,8 @@ public class EmpServlceImpl implements EmpService{
 	}
 
 	@Override
-	public int deleteEmp(Emp emp) {
-		return empDao.deleteEmp(emp);
+	public int deleteEmp(int emp_no) {
+		return empDao.deleteEmp(emp_no);
 	}
 
 	@Override

@@ -100,7 +100,14 @@ public class EmpController {
 	}	
 
 	@RequestMapping(value = "moveEmpUpdate.do", method = RequestMethod.GET)
-	public String moveEmpUpdate() {				
+	public String moveEmpUpdate(Emp emp, Model model, @RequestParam(value="emp_no") String emp_num) {
+		logger.info("수정 페이지로 넘어감");
+		System.out.println("수정페이지로 넘어가면서 : " + emp);
+		int emp_no = (Integer.parseInt(emp_num));
+		
+		Emp detailEmp = empService.selectEmpNo(emp_no);
+		model.addAttribute("emp", detailEmp);
+		System.out.println("detailEmp : " + detailEmp);
 		return "emp/empUpdate";
 	}
 	@RequestMapping(value = "moveEmpDelete.do", method = RequestMethod.GET)
@@ -133,51 +140,48 @@ public class EmpController {
 	
 	
 	@RequestMapping(value="empinsert.do", method=RequestMethod.POST)
-	public void insertEmp(Emp emp, ModelAndView mv, HttpServletResponse response) throws IOException{
-		
+	public String insertEmp(Emp emp, Model model) {
+		logger.info("emp insert 실행");
 		System.out.println("전송온 값 : " + emp);
-		
-		response.setContentType("text/html; charset=utf-8");
-		
-		
 		
 		int result = empService.insertEmp(emp);
 		
 		System.out.println("result : " + result);
 		
-		PrintWriter out = response.getWriter();
+		ArrayList<Emp> empList = empService.selectEmpList();
+		model.addAttribute("empList", empList);
 		
-		out.append("ok");
-		out.flush();
-		out.close();
+		return "emp/empList";
 		
 	}
 	
 	@RequestMapping(value="empupdate.do", method=RequestMethod.POST)
-	public ModelAndView updateEmp(Emp emp, ModelAndView mv) {
+	public String updateEmp(Emp emp, Model model) {
+		
+		logger.info("emp update 실행");
 		
 		System.out.println("전송온값 : " + emp);
 		
 		int result = empService.updateEmp(emp);
+		ArrayList<Emp> empList = empService.selectEmpList();
+		model.addAttribute("empList", empList);
 		
-		mv.setViewName("emp/empList");
-		
-		return mv;
+		return "emp/empList";
 	}
 	
-	@RequestMapping(value="empdelete.do", method=RequestMethod.POST)
-	public ModelAndView deleteEmp(Emp emp, ModelAndView mv) {
+	@RequestMapping(value="empdelete.do")
+	public String deleteEmp(Emp emp, Model model, @RequestParam(value="emp_no") String emp_num) {
 		
-		System.out.println("전송온값 : " + emp);
+		logger.info("emp delete 실행");
 		
-		int result = empService.deleteEmp(emp);
+		System.out.println("사원 상세정보: "+emp);
+		int emp_no = (Integer.parseInt(emp_num));
 		
-		mv.setViewName("emp/empList");
+		int result = empService.deleteEmp(emp_no);
+		ArrayList<Emp> empList = empService.selectEmpList();
+		model.addAttribute("empList", empList);
 		
-		return mv;
+		return "emp/empList";
 	}
-	
-	
-	
+		
 }
-

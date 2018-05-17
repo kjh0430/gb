@@ -42,8 +42,8 @@ public class EmpDao {
 		return sqlSession.update("empUpdate", emp);
 	}
 
-	public int deleteEmp(Emp emp) {
-		return sqlSession.delete("empDelete", emp);
+	public int deleteEmp(int emp_no) {
+		return sqlSession.delete("empDelete", emp_no);
 	}
 
 	public Emp selectEmpNo(int emp_no) {

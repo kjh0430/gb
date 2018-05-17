@@ -19,7 +19,7 @@ public interface EmpService {
 
 	int insertEmp(Emp emp);
 	int updateEmp(Emp emp);
-	int deleteEmp(Emp emp);
+	int deleteEmp(int emp_no);
 	public abstract Emp selectEmpNo(int emp_no);
 	public abstract ArrayList<Emp> selectEmpList();
 	

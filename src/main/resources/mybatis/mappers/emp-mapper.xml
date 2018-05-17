@@ -62,8 +62,8 @@
 	
 	<insert id="empInsert" parameterType="Emp">
 	<![CDATA[
-		INSERT INTO EMP
-		VALUES (#{emp_no}, #{emp_pwd}, #{emp_name}, #{emp_addr}, 
+		insert into emp
+		values (#{emp_no}, #{emp_pwd}, #{emp_name}, #{emp_addr}, 
 		#{emp_phone}, #{job_no}, #{emp_email}, #{emp_mgr}, #{emp_hiredate}, 
 		#{emp_firedate}, #{city}, #{county}, #{village}, #{dept_no})
 	]]>
@@ -71,16 +71,16 @@
 	
 	<update id="empUpdate" parameterType="Emp">
 	<![CDATA[
-		UPDATE INTO EMP
-		SET #{emp_no}, #{emp_pwd}, #{emp_name}, #{emp_addr}, 
-		#{emp_phone}, #{job_no}, #{emp_email}, #{emp_mgr}, #{emp_hiredate}, 
-		#{emp_firedate}, #{city}, #{county}, #{village}, #{dept_no}
+		update emp set emp_no=#{emp_no}, emp_pwd=#{emp_pwd}, emp_name=#{emp_name}, emp_addr=#{emp_addr},
+		emp_phone=#{emp_phone}, job_no=#{job_no}, emp_email=#{emp_email}, emp_mgr=#{emp_mgr},
+		emp_hiredate=#{emp_hiredate}, emp_firedate=#{emp_firedate}, city=#{city}, county=#{county}, village=#{village},
+		dept_no=#{dept_no} where emp_no=#{emp_no}
 	]]>
 	</update>
 	
-	<delete id="empDelete" parameterType="Emp">
+	<delete id="empDelete" parameterType="int">
 	<![CDATA[
-		DELETE FROM EMP WHERE #{emp_no}
+		delete from emp where emp_no=#{emp_no}
 	]]>
 	</delete>
 
