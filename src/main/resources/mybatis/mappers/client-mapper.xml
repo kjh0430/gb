@@ -45,8 +45,8 @@
 		<![CDATA[
 			insert into client values(
 				(select max(client_no)+1 from client), #{client_name}, #{client_company}, #{client_job}, #{client_email},
-				#{client_phone}, #{client_addr}, #{client_com_tel}, #{client_contract}, #{client_comment},
-				#{emp_no}, sysdate
+				#{client_phone}, #{client_addr}, #{client_com_tel}, #{client_loc_x}, #{client_loc_y}, default, #{client_comment},
+				#{emp_no}, sysdate, default
 			)
 		]]>
 	</insert>
