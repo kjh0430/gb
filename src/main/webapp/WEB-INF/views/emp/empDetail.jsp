@@ -256,7 +256,7 @@ margin-top:6pt;
             					영업2팀	        		   
             				</c:when>
             				<c:when test="${ emp.dept_no == 3 }">
-            					영업3팀				
+            					관리자				
             				</c:when>
             			</c:choose>
                         </div>
