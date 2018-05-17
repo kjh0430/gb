@@ -49,10 +49,15 @@ public class ClientServiceImpl implements ClientService{
 	/** 고객정보 업데이트 메소드 */
 	@Override
 	public int updateClient(Client client) {
-		// TODO Auto-generated method stub
-		return 0;
+		return clientDao.updateClient(client);
 	}
-
+	
+	/** 고객담당 사원정보 업데이트 메소드 */
+	@Override
+	public int updateClientEmp(Client client) {
+		return clientDao.updateClientEmp(client);
+	}
+	
 	/** 고객정보 삭제 메소드 */
 	@Override
 	public int deleteClient(int client_no) {

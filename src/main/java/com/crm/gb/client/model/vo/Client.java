@@ -1,8 +1,11 @@
 package com.crm.gb.client.model.vo;
 
-import java.io.Serializable;
+import java.io.Serializable; 
+import java.sql.Date;
 
 import org.springframework.stereotype.Component;
+
+import com.crm.gb.emp.model.vo.Emp;
 
 @Component("client")
 public class Client implements Serializable{
@@ -16,15 +19,20 @@ public class Client implements Serializable{
 	private String client_phone;
 	private String client_addr;
 	private String client_com_tel;
+	private String client_loc_x;
+	private String client_loc_y;
 	private String client_contract;
 	private String client_comment;
 	private int emp_no;
+	private Date client_enroll;
+	
+	private Emp emp;
 	
 	public Client() {}
 
 	public Client(int client_no, String client_name, String client_company, String client_job, String client_email,
-			String client_phone, String client_addr, String client_com_tel, String client_contract,
-			String client_comment, int emp_no) {
+			String client_phone, String client_addr, String client_com_tel, String client_loc_x, String client_loc_y,
+			String client_contract, String client_comment, int emp_no, Date client_enroll, Emp emp) {
 		super();
 		this.client_no = client_no;
 		this.client_name = client_name;
@@ -34,9 +42,13 @@ public class Client implements Serializable{
 		this.client_phone = client_phone;
 		this.client_addr = client_addr;
 		this.client_com_tel = client_com_tel;
+		this.client_loc_x = client_loc_x;
+		this.client_loc_y = client_loc_y;
 		this.client_contract = client_contract;
 		this.client_comment = client_comment;
 		this.emp_no = emp_no;
+		this.client_enroll = client_enroll;
+		this.emp = emp;
 	}
 
 	public int getClient_no() {
@@ -103,6 +115,22 @@ public class Client implements Serializable{
 		this.client_com_tel = client_com_tel;
 	}
 
+	public String getClient_loc_x() {
+		return client_loc_x;
+	}
+
+	public void setClient_loc_x(String client_loc_x) {
+		this.client_loc_x = client_loc_x;
+	}
+
+	public String getClient_loc_y() {
+		return client_loc_y;
+	}
+
+	public void setClient_loc_y(String client_loc_y) {
+		this.client_loc_y = client_loc_y;
+	}
+
 	public String getClient_contract() {
 		return client_contract;
 	}
@@ -127,13 +155,33 @@ public class Client implements Serializable{
 		this.emp_no = emp_no;
 	}
 
+	public Date getClient_enroll() {
+		return client_enroll;
+	}
+
+	public void setClient_enroll(Date client_enroll) {
+		this.client_enroll = client_enroll;
+	}
+
+	public Emp getEmp() {
+		return emp;
+	}
+
+	public void setEmp(Emp emp) {
+		this.emp = emp;
+	}
+
 	@Override
 	public String toString() {
 		return "Client [client_no=" + client_no + ", client_name=" + client_name + ", client_company=" + client_company
 				+ ", client_job=" + client_job + ", client_email=" + client_email + ", client_phone=" + client_phone
-				+ ", client_addr=" + client_addr + ", client_com_tel=" + client_com_tel + ", client_contract="
-				+ client_contract + ", client_comment=" + client_comment + ", emp_no=" + emp_no + "]";
+				+ ", client_addr=" + client_addr + ", client_com_tel=" + client_com_tel + ", client_loc_x="
+				+ client_loc_x + ", client_loc_y=" + client_loc_y + ", client_contract=" + client_contract
+				+ ", client_comment=" + client_comment + ", emp_no=" + emp_no + ", client_enroll=" + client_enroll
+				+ ", emp=" + emp + "]";
 	}
+
+	
 	
 	
 }

@@ -43,6 +43,17 @@ public class ClientDao {
 	public int deleteClient(int client_no) {
 		return sqlSession.delete("client.deleteClient", client_no);
 	}
+
+	/** 고객정보 수정 메소드 Dao */
+	public int updateClient(Client client) {
+		return sqlSession.update("client.updateClient", client);
+	}
+	
+	/** 고객담당 사원정보 수정 메소드 Dao */
+	public int updateClientEmp(Client client) {
+		return sqlSession.update("client.updateClientEmp", client);
+	}
+	
 	
 	
 }

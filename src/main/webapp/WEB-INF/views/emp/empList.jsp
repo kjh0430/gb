@@ -176,10 +176,10 @@ $(document).ready(function() {
 											</tr>											
 										</thead>
 										<tbody>
-										<c:forEach items="${ empList }" var="category">
+										<c:forEach items="${ empList }" var="empList">
 											<tr>
-												<td>${ empList.emp_no }</td>
-												<td>${ empList.emp_name }</td>
+												<td><a href="empDetail.do?emp_no=${ empList.emp_no }">${ empList.emp_no }</a></td>
+												<td><a href="empDetail.do?emp_no=${ empList.emp_no }">${ empList.emp_name }</a></td>
 												<td>${ empList.emp_addr }</td>
 												<td>${ empList.emp_phone }</td>
 												<td>${ empList.emp_email }</td>

@@ -5,8 +5,6 @@
 
 <mapper namespace="client">
 
-	<!-- 해당 고객 담당사원 리스 -->
-	
 	
 	<!-- 고객 리스트 -->
 	<resultMap type="client" id="resultSelectAllClient">
@@ -17,6 +15,7 @@
 		<result column="client_email" property="client_email"/>
 		<result column="client_phone" property="client_phone"/>
 		<result column="client_addr" property="client_addr"/>
+
 	</resultMap>
 
 	<!-- 고객정보 상세보기 -->
@@ -31,6 +30,14 @@
 		<result column="client_com_tel" property="client_com_tel"/>
 		<result column="client_contract" property="client_contract"/>
 		<result column="client_comment" property="client_comment"/>
+		<result column="emp_no" property="emp_no"/>
+		
+		<association property="emp" javaType="Emp">
+			<id column="emp_no" property="emp_no"/>
+			<result column="emp_name" property="emp_name"/>
+			<result column="emp_phone" property="emp_phone"/>
+		</association>
+		
 	</resultMap>
 
 	<!-- 신규고객 등록 mapping -->
@@ -60,20 +67,55 @@
 	</select>
 	
 	<!-- 고객정보 상세보기 mapping -->
-	<select id="detailClient" parameterType="int" resultMap="resultDetailClient">
+	<select id="detailClient" parameterType="_int" resultMap="resultDetailClient">
 		<![CDATA[
-			select * from client
-			where client_no = #{client_no}
+			select c.client_no, c.client_name, c.emp_no, e.emp_name, c.client_job, c.client_email, e.emp_phone,
+			c.client_addr, c.client_phone, c.client_contract, c.client_comment
+			from emp e, client c
+			where e.emp_no = c.emp_no
+			and c.client_no = #{client_no}
 		]]>
 	</select>
 	
 	<!-- 고객정보 삭제 mapping -->
-	<delete id="deleteClient" parameterType="int">
+	<delete id="deleteClient" parameterType="_int">
 		<![CDATA[
 			delete from client
 			where client_no=#{client_no}
 		]]>
 	</delete>
 	
-
+	<!-- 고객정보 수정 mapping -->
+	<!-- 고객정보 관련 -->
+	<update id="updateClient" parameterType="client">
+		<![CDATA[
+			update (select * 
+					from client c, emp e 
+ 					where c.emp_no=e.emp_no and client_no = #{client_no}
+			)
+			set 
+				client_no = #{client_no},
+				client_name = #{client_name},
+				client_job = #{client_job},
+				client_email = #{client_email},
+				client_addr = #{client_addr},
+				client_phone = #{client_phone},
+				client_contract	= #{client_contract},
+				client_comment = #{client_comment}	
+				
+		]]>
+	</update>
+	<!-- 담당사원 정보관련 -->
+	<!-- <update id="updateClientEmp" parameterType="client">
+		<![CDATA[
+			update (select * 
+					from client c, emp e 
+ 					where c.emp_no=e.emp_no and client_no = #{client_no}
+			)
+			set 
+				emp_name = #{emp.emp_name},
+				emp_phone = #{emp.emp_phone}	
+				
+		]]>
+	</update> -->
 </mapper>

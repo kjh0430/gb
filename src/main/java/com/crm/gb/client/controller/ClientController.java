@@ -75,7 +75,7 @@ public class ClientController {
 	public String detailClient(Client client, Model model, @RequestParam(value="client_no") String client_num) {
 		logger.info("고객정보 상세보기 메소드 실행됨");
 		
-		int client_no=(Integer.parseInt(client_num));
+		int client_no=Integer.parseInt(client_num);
 		System.out.println("고객번호: "+client_no);	
 		Client returnClient=clientService.selectClient(client_no);
 		
@@ -89,7 +89,7 @@ public class ClientController {
 	@RequestMapping("deleteClient.do")
 	public String deleteClient(@RequestParam(value="client_no") String client_num,
 				Client client, Model model) {
-		
+		logger.info("고객정보 삭제 메소드 실행됨");
 		int client_no=Integer.parseInt(client_num);
 		int result=clientService.deleteClient(client_no);
 			System.out.println("삭제결과 실행: "+result);
@@ -99,6 +99,23 @@ public class ClientController {
 			
 		return "client/clientList";
 	}
+	
+	/** 고객정보 수정 메소드 */
+	@RequestMapping("updateClient.do")
+	public String updateClient(Client client, Model model, @RequestParam("client_no") String cNum) {
+		logger.info("고객정보 수정메소드 실행됨");
+		int client_no=Integer.parseInt(cNum);
+			System.out.println("받아온 고객번호: "+client_no);
+		
+		int resultClient=clientService.updateClient(client);	//고객정보 수정
+			System.out.println("고객정보 수정결과: "+resultClient);
+			
+		Client returnClient=clientService.selectClient(client_no);
+		model.addAttribute("detailClient", returnClient);
+		
+		return "client/poList_detail";
+	}
+	
 	
 }
 
