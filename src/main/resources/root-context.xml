@@ -11,6 +11,7 @@
    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
    	destroy-method="close">
    	<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+<<<<<<< HEAD
    	<property name="url" value="jdbc:oracle:thin:@192.168.40.120:49161:xe"></property>
    	<property name="username" value="system"></property>
    	<property name="password" value="oracle"></property>
@@ -18,6 +19,11 @@
    	<!-- <property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"></property>
    	<property name="username" value="final"></property>
    	<property name="password" value="final"></property> -->
+=======
+   	<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"></property>
+   	<property name="username" value="final"></property>
+   	<property name="password" value="final"></property>
+>>>>>>> branch 'master' of https://github.com/kjh0430/gb.git
 
    	<property name="defaultAutoCommit" value="false"></property>
    </bean>

@@ -14,4 +14,10 @@
 	     ]]>
 	</insert>
 	
+	<insert id="insertProductFile" parameterType="ProductFile">		
+		<![CDATA[
+		     insert into product_file values(${product_no},#{product_original_file},#{product_rename_file})
+	     ]]>
+	</insert>
+	
 </mapper>
