@@ -30,6 +30,36 @@
 		<result column="dept_no" property="dept_no" />
 	</resultMap>
 	
+	<resultMap type="Emp" id="resultEmpList">
+		<result column="emp_no" property="emp_no" />
+		<result column="emp_pwd" property="emp_pwd" />
+		<result column="emp_name" property="emp_name" />
+		<result column="emp_addr" property="emp_addr" />
+		<result column="emp_phone" property="emp_phone" />
+		<result column="job_no" property="job_no" />
+		<result column="emp_email" property="emp_email" />
+		<result column="emp_mgr" property="emp_mgr" />
+		<result column="emp_hiredate" property="emp_hiredate" />
+		<result column="emp_firedate" property="emp_firedate" />
+		<result column="city" property="city" />
+		<result column="county" property="county" />
+		<result column="village" property="village" />
+		<result column="dept_no" property="dept_no" />
+	</resultMap>
+	
+	<select id="empList" resultMap="resultEmpList">
+	<![CDATA[
+		SELECT * FROM EMP
+	]]>
+	</select>
+	
+	<select id="detailEmp" parameterType="int" resultMap="resultEmp">
+	<![CDATA[
+		SELECT * FROM EMP
+		WHERE EMP_NO = #{emp_no}
+	]]>
+	</select>
+	
 	<insert id="empInsert" parameterType="Emp">
 	<![CDATA[
 		INSERT INTO EMP
