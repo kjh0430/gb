@@ -17,10 +17,10 @@ public interface EmpService {
 //	public abstract int deleteEmp(String emp_no);	// 사원정보삭제
 	
 
-	int insertEmp(Emp emp);
-	int updateEmp(Emp emp);
-	int deleteEmp(int emp_no);
-	public abstract Emp selectEmpNo(int emp_no);
-	public abstract ArrayList<Emp> selectEmpList();
+	int insertEmp(Emp emp); //사원 등록
+	int updateEmp(Emp emp); //사원 정보 수정
+	int deleteEmp(int emp_no); //사원 삭제
+	public abstract Emp selectEmpNo(int emp_no); //사원 조회
+	public abstract ArrayList<Emp> selectEmpList(); //사원 전체 조회
 	
 }

@@ -93,13 +93,15 @@ public class EmpController {
 		return "main";
 	}		
 	
-	@RequestMapping(value = "empRegister.do", method = RequestMethod.GET)
+	/*사원 등록화면*/
+	@RequestMapping(value = "empRegister.do")
 	public String empRegister() {
 				
 		return "emp/empRegister";
 	}	
 
-	@RequestMapping(value = "moveEmpUpdate.do", method = RequestMethod.GET)
+	/*사원 수정화면 이동*/
+	@RequestMapping(value = "moveEmpUpdate.do")
 	public String moveEmpUpdate(Emp emp, Model model, @RequestParam(value="emp_no") String emp_num) {
 		logger.info("수정 페이지로 넘어감");
 		System.out.println("수정페이지로 넘어가면서 : " + emp);
@@ -110,12 +112,9 @@ public class EmpController {
 		System.out.println("detailEmp : " + detailEmp);
 		return "emp/empUpdate";
 	}
-	@RequestMapping(value = "moveEmpDelete.do", method = RequestMethod.GET)
-	public String moveEmpDelete() {
-		return "emp/empList";
-	}
 	
-	@RequestMapping(value = "empList.do", method = RequestMethod.GET)
+	/*사원 목록*/
+	@RequestMapping(value = "empList.do")
 	public String empList(Emp emp, Model model) {
 		logger.info("사원 목록 실행");
 		ArrayList<Emp> empList = empService.selectEmpList();
@@ -124,7 +123,8 @@ public class EmpController {
 		return "emp/empList";
 	}
 	
-	@RequestMapping(value = "empDetail.do", method = RequestMethod.GET)
+	/*사원 목록 상세보기*/
+	@RequestMapping(value = "empDetail.do")
 	public String empDetail(Emp emp, Model model, @RequestParam(value="emp_no") String emp_num) {
 		logger.info("사원 상세보기 실행");
 		
@@ -138,8 +138,8 @@ public class EmpController {
 		return "emp/empDetail";
 	}
 	
-	
-	@RequestMapping(value="empinsert.do", method=RequestMethod.POST)
+	/*사원 등록*/
+	@RequestMapping(value="empinsert.do")
 	public String insertEmp(Emp emp, Model model) {
 		logger.info("emp insert 실행");
 		System.out.println("전송온 값 : " + emp);
@@ -155,7 +155,8 @@ public class EmpController {
 		
 	}
 	
-	@RequestMapping(value="empupdate.do", method=RequestMethod.POST)
+	/*사원 정보 수정*/
+	@RequestMapping(value="empupdate.do")
 	public String updateEmp(Emp emp, Model model) {
 		
 		logger.info("emp update 실행");
@@ -169,6 +170,7 @@ public class EmpController {
 		return "emp/empList";
 	}
 	
+	/*사원 삭제*/
 	@RequestMapping(value="empdelete.do")
 	public String deleteEmp(Emp emp, Model model, @RequestParam(value="emp_no") String emp_num) {
 		

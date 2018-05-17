@@ -47,12 +47,14 @@
 		<result column="dept_no" property="dept_no" />
 	</resultMap>
 	
+	<!-- 사원 전체 조회 -->
 	<select id="empList" resultMap="resultEmpList">
 	<![CDATA[
 		SELECT * FROM EMP
 	]]>
 	</select>
 	
+	<!-- 사원 조회 -->
 	<select id="detailEmp" parameterType="int" resultMap="resultEmp">
 	<![CDATA[
 		SELECT * FROM EMP
@@ -60,6 +62,7 @@
 	]]>
 	</select>
 	
+	<!-- 사원 등록 -->
 	<insert id="empInsert" parameterType="Emp">
 	<![CDATA[
 		insert into emp
@@ -69,6 +72,7 @@
 	]]>
 	</insert>
 	
+	<!-- 사원 정보 수정 -->
 	<update id="empUpdate" parameterType="Emp">
 	<![CDATA[
 		update emp set emp_no=#{emp_no}, emp_pwd=#{emp_pwd}, emp_name=#{emp_name}, emp_addr=#{emp_addr},
@@ -78,6 +82,7 @@
 	]]>
 	</update>
 	
+	<!-- 사원 삭제 -->
 	<delete id="empDelete" parameterType="int">
 	<![CDATA[
 		delete from emp where emp_no=#{emp_no}

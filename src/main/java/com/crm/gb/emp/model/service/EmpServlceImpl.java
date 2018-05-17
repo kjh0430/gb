@@ -56,26 +56,31 @@ public class EmpServlceImpl implements EmpService{
 //		return 0;
 //	}
 
+	/*사원 등록*/
 	@Override
 	public int insertEmp(Emp emp) {
 		return empDao.insertEmp(emp);
 	}
 
+	/*사원 정보 수정*/
 	@Override
 	public int updateEmp(Emp emp) {
 		return empDao.updateEmp(emp);
 	}
 
+	/*사원 삭제*/
 	@Override
 	public int deleteEmp(int emp_no) {
 		return empDao.deleteEmp(emp_no);
 	}
 
+	/*사원 조회*/
 	@Override
 	public Emp selectEmpNo(int emp_no) {
 		return empDao.selectEmpNo(emp_no);
 	}
 
+	/*사원 전체 조회*/
 	@Override
 	public ArrayList<Emp> selectEmpList() {
 		return empDao.selectEmpList();

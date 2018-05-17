@@ -34,22 +34,27 @@ public class EmpDao {
 		return resultEmp;
 	}
 
+	/*사원 등록*/
 	public int insertEmp(Emp emp) {
 		return sqlSession.insert("empInsert", emp);
 	}
 
+	/*사원 정보 수정*/
 	public int updateEmp(Emp emp) {
 		return sqlSession.update("empUpdate", emp);
 	}
 
+	/*사원 삭제*/
 	public int deleteEmp(int emp_no) {
 		return sqlSession.delete("empDelete", emp_no);
 	}
 
+	/*사원 조회*/
 	public Emp selectEmpNo(int emp_no) {
 		return sqlSession.selectOne("detailEmp", emp_no);
 	}
 
+	/*사원 전체 조회*/
 	public ArrayList<Emp> selectEmpList() {
 		return (ArrayList)sqlSession.selectList("empList");
 	}

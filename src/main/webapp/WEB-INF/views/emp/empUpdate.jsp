@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
 <!DOCTYPE html>
 <html>
 <head>
@@ -206,11 +207,29 @@ table tr th, table tr td
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">직급</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          <select class="form-control" id="job_no" name="job_no">
-                            <option value="1">사원</option>
-                            <option value="2">팀장</option>
-                            <option value="3">관리자</option>                         
-                          </select>
+                        <c:choose>
+            				<c:when test="${ emp.job_no == 1 }">
+            					<select class="form-control" id="job_no" name="job_no">
+                           	 		<option value="1" selected>사원</option>
+                            		<option value="2">팀장</option>
+                            		<option value="3">관리자</option>                         
+                          		</select>		        		   
+            				</c:when>
+            				<c:when test="${ emp.job_no == 2 }">
+            					<select class="form-control" id="job_no" name="job_no">
+                           	 		<option value="1">사원</option>
+                            		<option value="2" selected>팀장</option>
+                            		<option value="3">관리자</option>                         
+                          		</select>		        		   
+            				</c:when>
+            				<c:when test="${ emp.job_no == 3 }">
+            					<select class="form-control" id="job_no" name="job_no">
+                           	 		<option value="1">사원</option>
+                            		<option value="2">팀장</option>
+                            		<option value="3" selected>관리자</option>                         
+                          		</select>					
+            				</c:when>
+            			</c:choose>
                         </div>
                       </div>
                       <div class="form-group">
@@ -258,11 +277,29 @@ table tr th, table tr td
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">부서</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          <select class="form-control" id="dept_no" name="dept_no">
-                            <option value="1">영업1팀</option>
-                            <option value="2">영업2팀</option>
-                            <option value="3">관리자</option>                       
-                          </select>
+                        <c:choose>
+            				<c:when test="${ emp.dept_no == 1 }">
+            					<select class="form-control" id="dept_no" name="dept_no">
+                           			<option value="1" selected>영업1팀</option>
+                            		<option value="2">영업2팀</option>
+                            		<option value="3">관리자</option>                       
+                          		</select>		        		   
+            				</c:when>
+            				<c:when test="${ emp.dept_no == 2 }">
+            					<select class="form-control" id="dept_no" name="dept_no">
+                           	 		<option value="1">영업1팀</option>
+                            		<option value="2" selected>영업2팀</option>
+                            		<option value="3">관리자</option>                         
+                          		</select>		        		   
+            				</c:when>
+            				<c:when test="${ emp.dept_no == 3 }">
+            					<select class="form-control" id="dept_no" name="dept_no">
+                           	 		<option value="1">영업1팀</option>
+                            		<option value="2">영업2팀</option>
+                            		<option value="3" selected>관리자</option>                         
+                          		</select>					
+            				</c:when>
+            			</c:choose>
                         </div>
                       </div>
                              
