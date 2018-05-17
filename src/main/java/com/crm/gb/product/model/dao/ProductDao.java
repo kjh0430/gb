@@ -14,7 +14,9 @@ public class ProductDao {
 	
 	public int insertProduct(Product product) {
 		// 제품등록
+		
 		return sqlSession.insert("insertProduct",product);
+		
 	}
 
 }

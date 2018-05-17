@@ -1,10 +1,13 @@
 package com.crm.gb.product.controller;
 
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.crm.gb.product.model.service.ProductService;
@@ -46,9 +49,8 @@ public class ProductController {
 	
 	//상품 등록 처리 컨트롤러
 	@RequestMapping(value="insertProduct.do", method=RequestMethod.POST)
-	public ModelAndView insertProduct(Product product,ModelAndView mv) {
-		
-		
+	public ModelAndView insertProduct(Product product,ModelAndView mv,HttpServletRequest request,MultipartHttpServletRequest mhsq) {
+				
 		if(product.getProduct_availavility().equals("sale_n")) {
 			product.setProduct_availavility("N");
 		}else {
@@ -56,6 +58,13 @@ public class ProductController {
 		}
 		System.out.println(product);
 		int result = productService.insertProduct(product);
+		int product_no = product.getProduct_no();
+		
+		String path = request.getSession().getServletContext().getRealPath("resources/upload/product");
+		
+		
+		
+		System.out.println("product_no 기본키 : " + product_no);
 		mv.setViewName("product/productList");		
 		
 		return mv;
