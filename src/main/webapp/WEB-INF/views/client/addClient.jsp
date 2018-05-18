@@ -204,7 +204,7 @@ $(document).ready(function() {
 										      
 										      <!-- 지도부분 시작 -->
 										     
-										     	<div id="searchAddr" style="width:100%;height:400px;"></div>
+										     	<div id="searchAddr" style="max-width:none;height:350px;"></div>
 							   				  <!-- 지도 스크립트 -->
 									     	 <!-- 다음지도 -->
 										  	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f99f3844ac8886eed3b0155cb0041a70&libraries=services,clusterer,drawing"></script>

@@ -1,8 +1,9 @@
 package com.crm.gb.client.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.activation.CommandMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.crm.gb.client.model.service.ClientService;
 import com.crm.gb.client.model.vo.Client;
+import com.crm.gb.emp.model.vo.Emp;
 
 /**
  * Handles requests for the application home page.
@@ -34,7 +37,7 @@ public class ClientController {
 	/** 신규고객 등록 화면이동 */
 	@RequestMapping("addClient.do")
 	public String addClient() {
-		return "client/addClient";
+		return "client/addClient2";
 	}
 	
 	/** 신규고객 등록 메소드 */
@@ -58,6 +61,18 @@ public class ClientController {
 		model.addAttribute("clientList", clientList);
 		
 		return "client/clientList";
+	}
+	
+	/** 거래중인 거래처 리스트 메소드 **/
+	@RequestMapping("accountList.do")
+	public String shoeAccountClient(@RequestParam("emp_no") String emp_num, Model model) {
+		logger.info("거래처 리스트 메소드 실행됨!!");
+		int emp_no = Integer.parseInt(emp_num);
+		System.out.println("emp_no : " + emp_no);
+		ArrayList<Client> accountClientList = clientService.selectAccountClientList(emp_no);
+		model.addAttribute("accountClientList", accountClientList);
+		System.out.println("accountClientList : " +accountClientList.toString());
+		return "client/accountList";
 	}
 	
 	/** 잠재고객 리스트 메소드 */
@@ -100,6 +115,7 @@ public class ClientController {
 		return "client/clientList";
 	}
 	
+
 	/** 고객정보 수정 메소드 */
 	@RequestMapping("updateClient.do")
 	public String updateClient(Client client, Model model, @RequestParam("client_no") String cNum) {

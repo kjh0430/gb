@@ -235,28 +235,58 @@
 										      <div class="modal-header">
 										        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
 										        <h4 class="modal-title" id="myModalLabel">주소검색</h4>
-										      </div>
+										        
+										      <!-- 검색창 -->	
+										      	<input type="text">
+										      	<button id="" type="button" class="btn btn-primary" style="margin-left:10px">검색</button>
+										      	
+										      </div><!-- modal heder end div -->	
+										      
 										      <div class="modal-body">
 										      
 										      <!-- 지도부분 시작 -->
-										     
 										     	<div id="searchAddr" style="width:100%;height:400px;"></div>
+										     	
 							   				  <!-- 지도 스크립트 -->
 									     	 <!-- 다음지도 -->
 										  	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f99f3844ac8886eed3b0155cb0041a70&libraries=services,clusterer,drawing"></script>
 											<script>
 												$(function(){
-														
-													var container = document.getElementById('searchAddr');
-													var options = {
-														center: new daum.maps.LatLng(33.450701, 126.570667),
-														level: 3
-													};
-													
-													var map = new daum.maps.Map(container, options);
-														
-													});
-												
+														$('#searchMap').on('click', function(){
+															
+															var container = document.getElementById('searchAddr');
+															var options = {
+																center: new daum.maps.LatLng(37.4990734,127.0317662),
+																level: 3
+															};
+															
+															$("#myModal").on('shown.bs.modal', function () {
+																var map = new daum.maps.Map(container, options);
+																// 지도에 클릭 이벤트를 등록합니다
+																// 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
+																daum.maps.event.addListener(map, 'click', function(mouseEvent) {        
+																    // 클릭한 위도, 경도 정보를 가져옵니다 
+																    var click = mouseEvent.latLng;
+																    
+																    /* alert("클릭 좌표 x : "+click.getLat()+"\n"
+																    	+"클릭 좌표 y : "+click.getLng()); */
+																
+																// 마커가 표시될 위치입니다 
+																var markerPosition  = new daum.maps.LatLng(click.getLat(),click.getLng()); 
+																
+																// 마커를 생성합니다
+																
+																var marker = new daum.maps.Marker({
+																    position: markerPosition
+																});
+																// 마커가 지도 위에 표시되도록 설정합니다
+																	marker.setMap(map);
+																
+													   		 }); //지도에 마우스 클릭
+																
+														}); //모달창에서 지도보여주기
+												}); // 주소검색을 누름
+											});	//onload
 											</script>
 										       <!-- 지도부분 끝 -->
 										       

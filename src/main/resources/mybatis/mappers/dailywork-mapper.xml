@@ -2,22 +2,45 @@
 <!DOCTYPE mapper PUBLIC
 "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="dailywork">
+<mapper namespace="Dailywork">
 
 	
 <!-- dailywork -->
 	<resultMap type="dailywork" id="resultDailywork">
 		<id column="dailywork_no" property="dailywork_no"/>
 		<result column="client_no" property="client_no"/>
+		<result column="client_name" property="client_name"/>
 		<result column="emp_no" property="emp_no"/>
 		<result column="daily_title" property="daily_title"/>
-		<result column="daily_loc_x" property="daily_loc_x"/>
-		<result column="daily_loc_y" property="daily_loc_y"/>
 		<result column="daily_comment" property="daily_commnet"/>
 		<result column="daily_date" property="daily_date"/>
 	</resultMap>
+	
+	<select id="selectVisit" parameterType="Dailywork" resultType="dailywork">
+		<![CDATA[
+			select dw.dailywork_no,c.client_name,dw.emp_no,dw.daily_comment 
+			from dailywork dw,client c where dw.client_no = c.client_no and dw.emp_no = #{emp_no} 
+			and dw.daily_date like sysdate
+		]]>
+		
+	</select>
+	
+	<insert id="dailyworkInsert" parameterType="Dailywork">
+		<![CDATA[
+			
+		]]>
+		
+	</insert>
 	
 	
 
 
 </mapper>
+			<!-- <choose>
+			    <when test="daily_date != null">
+			      AND dw.daily_date like #{daily_date}
+			    </when>
+			    <otherwise>
+			      and dw.daily_date like sysdate
+			    </otherwise>
+		  	</choose> -->

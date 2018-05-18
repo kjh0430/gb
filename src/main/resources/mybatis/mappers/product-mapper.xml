@@ -14,9 +14,12 @@
 	     ]]>
 	</insert>
 	
-	<insert id="insertProductFile" parameterType="ProductFile">		
+	<insert id="insertProductFile" parameterType="ProductFile">
+		<selectKey keyProperty="product_file_no" resultType="int" order="BEFORE">
+			select max(product_file_no)+1 from product_file
+		</selectKey>		
 		<![CDATA[
-		     insert into product_file values(${product_no},#{product_original_file},#{product_rename_file})
+		     insert into product_file values(${product_file_no},${product_no},#{product_original_file},#{product_rename_file})
 	     ]]>
 	</insert>
 	

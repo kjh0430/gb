@@ -1,101 +1,85 @@
 package com.crm.gb.dailywork.model.vo;
 
-import java.util.Date;
+import java.sql.Date;
 
 import org.springframework.stereotype.Component;
 
-@Component("dailywork")
+@Component("Dailywork")
 public class Dailywork implements java.io.Serializable{
 	
 	private static final long serialVersionUID = 1111L;
 
-	private int dailyworkNo;
-	private int clientNo;
-	private int empNo;
-	private String dailyTitle;
-	private String dailyLocX;
-	private String dailyLocY;
-	private String dailyComment;
-	private Date dailyDate;
+	private int dailywork_no;
+	private int client_no;
+	private int emp_no;
+	private String daily_comment;
+	private Date daily_date;
+	private String client_name;
 	
 	public Dailywork() {}
-	
-	public Dailywork(int dailyworkNo, int clientNo, int empNo, String dailyTitle, String dailyLocX, String dailyLocY,
-			String dailyComment, Date dailyDate) {
+
+	public Dailywork(int dailywork_no, int client_no, int emp_no, String daily_comment, Date daily_date) {
 		super();
-		this.dailyworkNo = dailyworkNo;
-		this.clientNo = clientNo;
-		this.empNo = empNo;
-		this.dailyTitle = dailyTitle;
-		this.dailyLocX = dailyLocX;
-		this.dailyLocY = dailyLocY;
-		this.dailyComment = dailyComment;
-		this.dailyDate = dailyDate;
+		this.dailywork_no = dailywork_no;
+		this.client_no = client_no;
+		this.emp_no = emp_no;
+		this.daily_comment = daily_comment;
+		this.daily_date = daily_date;
 	}
 
-	public int getDailyworkNo() {
-		return dailyworkNo;
+	public int getDailywork_no() {
+		return dailywork_no;
 	}
 
-	public void setDailyworkNo(int dailyworkNo) {
-		this.dailyworkNo = dailyworkNo;
+	public void setDailywork_no(int dailywork_no) {
+		this.dailywork_no = dailywork_no;
 	}
 
-	public int getClientNo() {
-		return clientNo;
+	public int getClient_no() {
+		return client_no;
 	}
 
-	public void setClientNo(int clientNo) {
-		this.clientNo = clientNo;
+	public void setClient_no(int client_no) {
+		this.client_no = client_no;
 	}
 
-	public int getEmpNo() {
-		return empNo;
+	public int getEmp_no() {
+		return emp_no;
 	}
 
-	public void setEmpNo(int empNo) {
-		this.empNo = empNo;
+	public void setEmp_no(int emp_no) {
+		this.emp_no = emp_no;
 	}
 
-	public String getDailyTitle() {
-		return dailyTitle;
+	public String getDaily_comment() {
+		return daily_comment;
 	}
 
-	public void setDailyTitle(String dailyTitle) {
-		this.dailyTitle = dailyTitle;
+	public void setDaily_comment(String daily_comment) {
+		this.daily_comment = daily_comment;
 	}
 
-	public String getDailyLocX() {
-		return dailyLocX;
+	public Date getDaily_date() {
+		return daily_date;
 	}
 
-	public void setDailyLocX(String dailyLocX) {
-		this.dailyLocX = dailyLocX;
+	public void setDaily_date(Date daily_date) {
+		this.daily_date = daily_date;
 	}
 
-	public String getDailyLocY() {
-		return dailyLocY;
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
-	public void setDailyLocY(String dailyLocY) {
-		this.dailyLocY = dailyLocY;
+	public String getClient_name() {
+		return client_name;
 	}
 
-	public String getDailyComment() {
-		return dailyComment;
+	public void setClient_name(String client_name) {
+		this.client_name = client_name;
 	}
-
-	public void setDailyComment(String dailyComment) {
-		this.dailyComment = dailyComment;
-	}
-
-	public Date getDailyDate() {
-		return dailyDate;
-	}
-
-	public void setDailyDate(Date dailyDate) {
-		this.dailyDate = dailyDate;
-	}
-
 	
+	
+	
+
 }
