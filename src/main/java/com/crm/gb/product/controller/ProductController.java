@@ -1,7 +1,5 @@
 package com.crm.gb.product.controller;
 
-
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -104,10 +102,7 @@ public class ProductController {
 	                originFile.delete(); // 원본파일 삭제            
 		            
 				}
-	            ProductFile pf = new ProductFile();
-				pf.setProduct_no(product_no);
-				pf.setProduct_original_file(originFile.getName());
-				pf.setProduct_rename_file(renameFile.getName());				
+	            ProductFile pf = new ProductFile(product_no,originFile.getName(),renameFile.getName());
 				
 				int result2=productService.insertProductFile(pf);
 				
