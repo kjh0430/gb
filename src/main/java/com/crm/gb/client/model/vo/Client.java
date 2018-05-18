@@ -1,9 +1,12 @@
 package com.crm.gb.client.model.vo;
 
 import java.io.Serializable;
+
 import java.sql.Date;
 
 import org.springframework.stereotype.Component;
+
+import com.crm.gb.emp.model.vo.Emp;
 
 @Component("client")
 public class Client implements Serializable{
@@ -23,6 +26,10 @@ public class Client implements Serializable{
 	private String client_comment;
 	private int emp_no;
 	private Date client_enroll;
+
+	private String client_delete;
+	
+	private Emp emp;
 	
 	public Client() {}
 	
@@ -32,7 +39,9 @@ public class Client implements Serializable{
 
 	public Client(int client_no, String client_name, String client_company, String client_job, String client_email,
 			String client_phone, String client_addr, String client_com_tel, String client_loc_x, String client_loc_y,
-			String client_contract, String client_comment, int emp_no, Date client_enroll) {
+
+			String client_contract, String client_comment, int emp_no, Date client_enroll, String client_delete,
+			Emp emp) {
 		super();
 		this.client_no = client_no;
 		this.client_name = client_name;
@@ -48,6 +57,9 @@ public class Client implements Serializable{
 		this.client_comment = client_comment;
 		this.emp_no = emp_no;
 		this.client_enroll = client_enroll;
+
+		this.client_delete = client_delete;
+		this.emp = emp;
 	}
 	
 	
@@ -179,6 +191,7 @@ public class Client implements Serializable{
 
 
 
+
 	public String getClient_loc_x() {
 		return client_loc_x;
 	}
@@ -206,6 +219,7 @@ public class Client implements Serializable{
 	public void setClient_loc_y(String client_loc_y) {
 		this.client_loc_y = client_loc_y;
 	}
+
 
 
 
@@ -272,13 +286,34 @@ public class Client implements Serializable{
 		this.emp_no = emp_no;
 	}
 
+
+	public String getClient_delete() {
+		return client_delete;
+	}
+
+	public void setClient_delete(String client_delete) {
+		this.client_delete = client_delete;
+	}
+
+	public Emp getEmp() {
+		return emp;
+	}
+
+	public void setEmp(Emp emp) {
+		this.emp = emp;
+	}
+
 	@Override
 	public String toString() {
 		return "Client [client_no=" + client_no + ", client_name=" + client_name + ", client_company=" + client_company
 				+ ", client_job=" + client_job + ", client_email=" + client_email + ", client_phone=" + client_phone
-				+ ", client_addr=" + client_addr + ", client_com_tel=" + client_com_tel + ", client_contract="
-				+ client_contract + ", client_comment=" + client_comment + ", emp_no=" + emp_no + "]";
+				+ ", client_addr=" + client_addr + ", client_com_tel=" + client_com_tel + ", client_loc_x="
+				+ client_loc_x + ", client_loc_y=" + client_loc_y + ", client_contract=" + client_contract
+				+ ", client_comment=" + client_comment + ", emp_no=" + emp_no + ", client_enroll=" + client_enroll
+				+ ", client_delete=" + client_delete + ", emp=" + emp + "]";
 	}
+
+	
 	
 	
 }

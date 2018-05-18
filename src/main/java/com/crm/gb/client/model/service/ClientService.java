@@ -15,6 +15,7 @@ public interface ClientService {
 	public abstract Client selectClient(int client_no);	// 고객번호로 조회
 	public abstract int insertClient(Client client);		// 고객등록
 	public abstract int updateClient(Client client);		// 고객정보변경
+	public abstract int updateClientEmp(Client client);		// 고객담당 사원정보변경
 	public abstract int deleteClient(int client_no);	// 고객정보삭제
 	public abstract ArrayList<Client> selectAccountClientList(int emp_no); //거래서 정보 조회
 

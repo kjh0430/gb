@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
 <!DOCTYPE html>
 <html>
 <head>
@@ -167,183 +168,24 @@ $(document).ready(function() {
 									<table id="table_cl" class="table table-striped table-bordered" style="min-width:650px;">
 										<thead>
 											<tr>
-												<th>사원명</th>
-												<th>부서명</th>
 												<th>사원번호</th>
-												<th>입사날짜</th>
-												<th>퇴사일</th>
-												<th>직급</th>
-												<th>전화번호</th>
-												<th>담당지역</th>
-											</tr>
-											
+												<th>사원이름</th>
+												<th>사원거주지</th>
+												<th>연락처</th>
+												<th>이메일</th>
+											</tr>											
 										</thead>
 										<tbody>
-										<tr>
-												<td><a href="empDetail.do">강석호</a></td>
-												<td>영업부</td>
-												<td>9973</td>
-												<td>2016-5-1</td>
-												<td>-</td>
-												<td>사원</td>
-												<td>010-6541-4488</td>
-												<td>서울</td>
-											</tr>
-										<tr>
-												<td><a href="empDetail.do">김지민</a></td>
-												<td>마케팅부</td>
-												<td>8547</td>
-												<td>2016-4-30</td>
-												<td>2018-5-3</td>
-												<td>대리</td>
-												<td>010-2335-1111</td>
-												<td>경기</td>
-											</tr><tr>
-												<td><a href="empDetail.do">박찬수</a></td>
-												<td>총무부</td>
-												<td>9999</td>
-												<td>2018-05-01</td>
-												<td>-</td>
-												<td>과장</td>
-												<td>010-3333-5555</td>
-												<td>인천</td>
+										<c:forEach items="${ empList }" var="empList">
 											<tr>
-												<td><a href="empDetail.do">강석호</a></td>
-												<td>영업부</td>
-												<td>9973</td>
-												<td>2016-5-1</td>
-												<td>-</td>
-												<td>사원</td>
-												<td>010-6541-4488</td>
-												<td>서울</td>
-											</tr>
-										<tr>
-												<td><a href="#">김지민</a></td>
-												<td>마케팅부</td>
-												<td>8547</td>
-												<td>2016-4-30</td>
-												<td>2018-5-3</td>
-												<td>대리</td>
-												<td>010-2335-1111</td>
-												<td>경기</td>
-											</tr><tr>
-												<td><a href="#">박찬수</a></td>
-												<td>총무부</td>
-												<td>9999</td>
-												<td>2018-05-01</td>
-												<td>-</td>
-												<td>과장</td>
-												<td>010-3333-5555</td>
-												<td>인천</td><tr>
-												<td><a href="pdetail.do">강석호</a></td>
-												<td>영업부</td>
-												<td>9973</td>
-												<td>2016-5-1</td>
-												<td>-</td>
-												<td>사원</td>
-												<td>010-6541-4488</td>
-												<td>서울</td>
-											</tr>
-										<tr>
-												<td><a href="#">김지민</a></td>
-												<td>마케팅부</td>
-												<td>8547</td>
-												<td>2016-4-30</td>
-												<td>2018-5-3</td>
-												<td>대리</td>
-												<td>010-2335-1111</td>
-												<td>경기</td>
-											</tr><tr>
-												<td><a href="#">박찬수</a></td>
-												<td>총무부</td>
-												<td>9999</td>
-												<td>2018-05-01</td>
-												<td>-</td>
-												<td>과장</td>
-												<td>010-3333-5555</td>
-												<td>인천</td><tr>
-												<td><a href="#">강석호</a></td>
-												<td>영업부</td>
-												<td>9973</td>
-												<td>2016-5-1</td>
-												<td>-</td>
-												<td>사원</td>
-												<td>010-6541-4488</td>
-												<td>서울</td>
-											</tr>
-										<tr>
-												<td><a href="#">김지민</a></td>
-												<td>마케팅부</td>
-												<td>8547</td>
-												<td>2016-4-30</td>
-												<td>2018-5-3</td>
-												<td>대리</td>
-												<td>010-2335-1111</td>
-												<td>경기</td>
-											</tr><tr>
-												<td><a href="#">박찬수</a></td>
-												<td>총무부</td>
-												<td>9999</td>
-												<td>2018-05-01</td>
-												<td>-</td>
-												<td>과장</td>
-												<td>010-3333-5555</td>
-												<td>인천</td><tr>
-												<td><a href="#">강석호</a></td>
-												<td>영업부</td>
-												<td>9973</td>
-												<td>2016-5-1</td>
-												<td>-</td>
-												<td>사원</td>
-												<td>010-6541-4488</td>
-												<td>서울</td>
-											</tr>
-										<tr>
-												<td><a href="#">김지민</a></td>
-												<td>마케팅부</td>
-												<td>8547</td>
-												<td>2016-4-30</td>
-												<td>2018-5-3</td>
-												<td>대리</td>
-												<td>010-2335-1111</td>
-												<td>경기</td>
-											</tr><tr>
-												<td><a href="#">박찬수</a></td>
-												<td>총무부</td>
-												<td>9999</td>
-												<td>2018-05-01</td>
-												<td>-</td>
-												<td>과장</td>
-												<td>010-3333-5555</td>
-												<td>인천</td><tr>
-												<td><a href="#">강석호</a></td>
-												<td>영업부</td>
-												<td>9973</td>
-												<td>2016-5-1</td>
-												<td>-</td>
-												<td>사원</td>
-												<td>010-6541-4488</td>
-												<td>서울</td>
-											</tr>
-										<tr>
-												<td><a href="#">김지민</a></td>
-												<td>마케팅부</td>
-												<td>8547</td>
-												<td>2016-4-30</td>
-												<td>2018-5-3</td>
-												<td>대리</td>
-												<td>010-2335-1111</td>
-												<td>경기</td>
-											</tr><tr>
-												<td><a href="#">박찬수</a></td>
-												<td>총무부</td>
-												<td>9999</td>
-												<td>2018-05-01</td>
-												<td>-</td>
-												<td>과장</td>
-												<td>010-3333-5555</td>
-												<td>인천</td>
-										<tbody>
+												<td><a href="empDetail.do?emp_no=${ empList.emp_no }">${ empList.emp_no }</a></td>
+												<td><a href="empDetail.do?emp_no=${ empList.emp_no }">${ empList.emp_name }</a></td>
+												<td>${ empList.emp_addr }</td>
+												<td>${ empList.emp_phone }</td>
+												<td>${ empList.emp_email }</td>
+											</tr>	
+										</c:forEach>																	
+										</tbody>
 									</table>
 								</div>
 							</div>
