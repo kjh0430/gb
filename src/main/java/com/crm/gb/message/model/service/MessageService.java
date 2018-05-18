@@ -1,8 +1,18 @@
 package com.crm.gb.message.model.service;
 
-import org.springframework.stereotype.Service;
+import java.util.ArrayList;
 
-@Service
+
+
+import com.crm.gb.emp.model.vo.Emp;
+
+
 public interface MessageService {
+
+	
+	
+	 ArrayList<Emp> selectSearch(String empName);
+	 
+	 
 
 }

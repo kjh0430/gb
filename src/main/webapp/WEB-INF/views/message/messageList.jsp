@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@page isELIgnored="false" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,25 +42,81 @@
 
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
-$(document).ready(function() {
-    
-} );
+ $(document).ready(function() {
+
+	
+	alert("zzz");
+	 
+	 
+		  });
+	
+	
+  function searchEmp() {
+		  alert($('#searchName').val()); 
+	
+		 $.ajax({
+			url:"searchEmp.do",
+			data:{searchName : $('#searchName').val()},
+			type: "post",
+			dataType:"json",
+			success : function(data){
+				
+				var jsonStr=JSON.stringfy(data);
+				
+				var json=JSON.parse(jsonStr);
+				
+				var value="<table class='table table-hover'><thead>"+
+				"<tr>th>이름</th><th>직급</th><th>부서</th></tr></thead><tbody>";
+				
+				
+				for(var i in json.list){
+				
+					value+="<tr><td>"+(이름)+"</td><td>"+(직급)+"</td><td>"+(부서)+"</td></tr>";
+					
+					
+					
+				}
+				
+				value+="</tbody></table>";
+				
+				
+			
+				$('#searchTable').html(value);
+				
+				
+				
+				location.href="";
+				
+				
+			}
+			 
+		 });
+		 
+		  } 
+
+
+	
+	
+	
+	
+	
+	
 
 </script>
 <style type="text/css">
-	.btn-modify{
-		padding:3px 6px;
-		margin:0px;
-		font-size:13px;
-	}
-	.table-bordered>tbody>tr>td{
-		vertical-align:middle;
-	}
-	#table_rm tr:last-child{
-	
-     border-bottom: 1px solid #ddd;
-	}
+.btn-modify {
+	padding: 3px 6px;
+	margin: 0px;
+	font-size: 13px;
+}
 
+.table-bordered>tbody>tr>td {
+	vertical-align: middle;
+}
+
+#table_rm tr:last-child {
+	border-bottom: 1px solid #ddd;
+}
 </style>
 </head>
 
@@ -157,7 +214,7 @@ $(document).ready(function() {
 				<div class="">
 					<div class="page-title">
 						<div class="title_left">
-							
+
 							<h3>쪽지</h3>
 						</div>
 					</div>
@@ -169,11 +226,12 @@ $(document).ready(function() {
 							<div class="x_panel">
 								<div class="x_title">
 									<!-- <div style="text-align:right"> -->
-									<div><form action="login.do" method="post">
-										<%-- <input type="hidden" name="fromEmp" value="${loginEmp.}" --%>
-										<button type="submit" class="btn btn-success"
-											data-toggle="modal" data-target=".sendMsg">쪽지보내기${loginEmp.emp_name }</button>
-									</form>
+									<div>
+										<%-- <form action="sendButton.do" method="post">
+										 <input type="hidden" name="fromEmp" value="${loginEmp.emp_name}"> --%>
+										<button type="button" class="btn btn-success"
+											data-toggle="modal" data-target=".sendMsg">쪽지보내기</button>
+										<!-- </form> -->
 									</div>
 									<div class="clearfix"></div>
 								</div>
@@ -240,7 +298,7 @@ $(document).ready(function() {
 												</table>
 											</div>
 											<!-- end of receive msg tab -->
-											
+
 											<!-- start of send msg tab -->
 											<div role="tabpanel" class="tab-pane fade" id="send_msg"
 												aria-labelledby="profile-tab">
@@ -288,6 +346,26 @@ $(document).ready(function() {
 															<td><a href="#">지각좀그만하세요...</a></td>
 															<td>2018.04.15</td>
 														</tr>
+														<tr>
+															<td>송태섭</td>
+															<td><a href="#">지각좀그만하세요...</a></td>
+															<td>2018.04.15</td>
+														</tr>
+														<tr>
+															<td>송태섭</td>
+															<td><a href="#">지각좀그만하세요...</a></td>
+															<td>2018.04.15</td>
+														</tr>
+														<tr>
+															<td>송태섭</td>
+															<td><a href="#">지각좀그만하세요...</a></td>
+															<td>2018.04.15</td>
+														</tr>
+														<tr>
+															<td>송태섭</td>
+															<td><a href="#">지각좀그만하세요...</a></td>
+															<td>2018.04.15</td>
+														</tr>
 													</tbody>
 												</table>
 											</div>
@@ -304,7 +382,7 @@ $(document).ready(function() {
 															<button type="button" class="close" data-dismiss="modal">
 																<span aria-hidden="true">×</span>
 															</button>
-															<h4 class="modal-title" id="myModalLabel">쪽지보내기</h4>
+															<h4 class="modal-title" id="myModalLabel">쪽지 보내기</h4>
 														</div>
 														<div class="modal-body">
 															<div class="form-group" style="margin: 0px;">
@@ -313,10 +391,17 @@ $(document).ready(function() {
 																		class="control-label col-md-3 col-sm-3 col-xs-12">받는사람</label>
 																	<div class="col-md-9 col-sm-9 col-xs-12">
 																		<div class="input-group">
-																			<input type="text" class="form-control"
-																				placeholder="받는이의 이름을 입력해주세요."> <span
-																				class="input-group-btn">
-																				<button type="button" class="btn btn-primary">
+
+
+																			<input type="text" id="searchName"
+																				class="form-control" placeholder="받는이의 이름을 입력해주세요.">
+
+																			<span class="input-group-btn"> <!-- <button
+																				data-toggle="modal" href="#myModal2"
+																				class="btn btn-primary"><i class="fa fa-search"></i></button> -->
+																			
+																				<button
+																					class="btn btn-primary" onclick="searchEmp();">
 																					<i class="fa fa-search"></i>
 																				</button>
 																			</span>
@@ -340,6 +425,78 @@ $(document).ready(function() {
 												</div>
 											</div>
 										</div>
+										<!-- 2번째 모달 -->
+										<div class="modal fade sendMsg2" tabindex="-1" role="dialog"
+											id="myModal2" aria-hidden="true">
+											<div class="modal-dialog modal-lg">
+												<div class="modal-content">
+													<form class="form-horizontal form-label-left input_mask">
+														<div class="modal-header">
+															<button type="button" class="close" data-dismiss="modal">
+																<span aria-hidden="true">×</span>
+															</button>
+															<h4 class="modal-title" id="myModalLabel2">사원 검색</h4>
+														</div>
+														<div class="modal-body">
+															<div class="form-group" style="margin: 0px;">
+																<div class="row">
+																	<!-- <label
+																		class="control-label col-md-3 col-sm-3 col-xs-12"></label> -->
+																	<!-- 		<div class="col-md-9 col-sm-9 col-xs-12">
+																	 	<div class="input-group">
+																			<input type="text" id="searchName" class="form-control"
+																				placeholder="받는이의 이름을 입력해주세요.">
+																				<div id="hi">
+																				<input type="text" id="searchName" class="form-control"
+																				placeholder="받는이의 이름을 입력해주세요.">
+																				</div>
+																				 <span
+																				class="input-group-btn">
+																				<button type="button" class="btn btn-primary" onclick="showSearchView();">
+																					<button type="button" class="btn btn-primary" id="searchEmp">
+																					<i class="fa fa-search"></i>
+																				</button>
+																				
+																				
+																				
+																				
+																			</span>
+																			
+																		</div> 
+																	</div> -->
+																	<!-- modal2 table 들어갈자리 -->
+																	<div id="searchTable"></div>
+
+
+
+
+
+
+
+
+																	<!-- <div class="form-group">
+
+
+
+
+
+																		<label
+																			class="control-label col-md-3 col-sm-3 col-xs-12">내용</label>
+																		<div class="col-md-9 col-sm-9 col-xs-12">
+																			<textarea class="form-control" rows="8"></textarea>
+																		</div>
+																	</div> -->
+																</div>
+																<!-- end of row -->
+															</div>
+														</div>
+														<div class="modal-footer">
+															<!-- <button type="submit" class="btn btn-primary">전송</button> -->
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
 										<!-- message modal -->
 									</div>
 
@@ -349,7 +506,7 @@ $(document).ready(function() {
 					</div>
 				</div>
 			</div>
-			
+
 			<!-- footer -->
 			<%@ include file="../etc/footer.jsp"%>
 			<!-- /footer -->

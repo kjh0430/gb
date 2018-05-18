@@ -21,6 +21,6 @@
 		<mapper resource="mybatis/mappers/client-mapper.xml" />
 		<mapper resource="mybatis/mappers/product-mapper.xml" />
 		<mapper resource="mybatis/mappers/dailywork-mapper.xml" />
-		
+		<mapper resource="mybatis/mappers/message-mapper.xml"/>
 	</mappers>
 </configuration>

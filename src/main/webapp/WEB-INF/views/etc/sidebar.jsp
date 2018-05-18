@@ -33,8 +33,8 @@
 	      <li><a><i class="fa fa-edit"></i> 영업관리 <span class="fa fa-chevron-down"></span></a>
 	        <ul class="nav child_menu">
 	          <li><a href="#">제품관리</a></li>
-	          <li><a href="MovegoalState.do">목표현황</a></li>
-	          <li><a href="MovedailySales.do">영업일지</a></li>
+	          <li><a href="goalState.do">목표현황</a></li>
+	          <li><a href="dailySales.do">영업일지</a></li>
 	        </ul>
 	      </li>
 	    </ul>
@@ -45,13 +45,13 @@
 	      <li><a><i class="fa fa-file-text-o"></i> 전자결재 <span class="fa fa-chevron-down"></span></a>
 	        <ul class="nav child_menu">
 	          <!-- <li><a href="e_commerce.html">계약제안</a></li> -->
-	          <li><a href="Moveapproval.do">결재신청</a></li>
-	          <li><a href="MoveapprovalList.do">결재목록</a></li>
+	          <li><a href="approval.do">결재신청</a></li>
+	          <li><a href="approvalList.do">결재목록</a></li>
 	         <!--  <li><a href="projects.html">월간보고</a></li> -->
 	        </ul>
 	      </li>
 	      
-	       <li><a href="MovemessageList.do"><i class="fa fa-file-text-o"></i> 쪽지함</a>
+	       <li><a href="messageList.do"><i class="fa fa-file-text-o"></i> 쪽지함</a>
 	      </li>
 	      <!-- </li>
 	      <li><a><i class="fa fa-cog"></i> 설정</a>
