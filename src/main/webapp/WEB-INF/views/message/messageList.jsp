@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -156,6 +157,7 @@ $(document).ready(function() {
 				<div class="">
 					<div class="page-title">
 						<div class="title_left">
+							
 							<h3>쪽지</h3>
 						</div>
 					</div>
@@ -167,9 +169,11 @@ $(document).ready(function() {
 							<div class="x_panel">
 								<div class="x_title">
 									<!-- <div style="text-align:right"> -->
-									<div>
-										<button type="button" class="btn btn-success"
-											data-toggle="modal" data-target=".sendMsg">쪽지보내기</button>
+									<div><form action="login.do" method="post">
+										<%-- <input type="hidden" name="fromEmp" value="${loginEmp.}" --%>
+										<button type="submit" class="btn btn-success"
+											data-toggle="modal" data-target=".sendMsg">쪽지보내기${loginEmp.emp_name }</button>
+									</form>
 									</div>
 									<div class="clearfix"></div>
 								</div>
@@ -345,6 +349,10 @@ $(document).ready(function() {
 					</div>
 				</div>
 			</div>
+			
+			<!-- footer -->
+			<%@ include file="../etc/footer.jsp"%>
+			<!-- /footer -->
 
 			<!-- /page content -->
 		</div>

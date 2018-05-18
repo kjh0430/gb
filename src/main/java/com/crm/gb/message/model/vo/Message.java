@@ -1,105 +1,70 @@
 package com.crm.gb.message.model.vo;
 
-import java.io.Serializable;
-import java.util.Date;
+import java.io.Serializable; 
+import java.sql.Date;
 
 import org.springframework.stereotype.Component;
 
 
 @Component("message")
-public class Message implements Serializable{
-	private static final long serialVersionUID = 222349057L;
-
-
-
-	private int messageNo;
-	private int messageFromNo;
-	private int meassgeToNo;
-	private String messageTitle;
-	private String messageContent;
-	private Date messageDate;
+public class Message implements Serializable  {
 	
-	public Message() {}
+	private static final long serialVersionUID=15L;
 	
-	public Message(int messageNo, int messageFromNo, int meassgeToNo, String messageTitle, String messageContent,
-			Date messageDate) {
-		super();
-		this.messageNo = messageNo;
-		this.messageFromNo = messageFromNo;
-		this.meassgeToNo = meassgeToNo;
-		this.messageTitle = messageTitle;
-		this.messageContent = messageContent;
-		this.messageDate = messageDate;
-		
-		
+	private int message_no;
+	private int message_from_no;
+	private int message_to_no;
+	private String message_title;
+	private String message_content;
+	private Date message_date;
+	public int getMessage_no() {
+		return message_no;
 	}
-
-
-	public int getMessageNo() {
-		return messageNo;
+	public void setMessage_no(int message_no) {
+		this.message_no = message_no;
 	}
-
-
-	public void setMessageNo(int messageNo) {
-		this.messageNo = messageNo;
+	public int getMessage_from_no() {
+		return message_from_no;
 	}
-
-
-	public int getMessageFromNo() {
-		return messageFromNo;
+	public void setMessage_from_no(int message_from_no) {
+		this.message_from_no = message_from_no;
 	}
-
-
-	public void setMessageFromNo(int messageFromNo) {
-		this.messageFromNo = messageFromNo;
+	public int getMessage_to_no() {
+		return message_to_no;
 	}
-
-
-	public int getMeassgeToNo() {
-		return meassgeToNo;
+	public void setMessage_to_no(int message_to_no) {
+		this.message_to_no = message_to_no;
 	}
-
-
-	public void setMeassgeToNo(int meassgeToNo) {
-		this.meassgeToNo = meassgeToNo;
+	public String getMessage_title() {
+		return message_title;
 	}
-
-
-	public String getMessageTitle() {
-		return messageTitle;
+	public void setMessage_title(String message_title) {
+		this.message_title = message_title;
 	}
-
-
-	public void setMessageTitle(String messageTitle) {
-		this.messageTitle = messageTitle;
+	public String getMessage_content() {
+		return message_content;
 	}
-
-
-	public String getMessageContent() {
-		return messageContent;
+	public void setMessage_content(String message_content) {
+		this.message_content = message_content;
 	}
-
-
-	public void setMessageContent(String messageContent) {
-		this.messageContent = messageContent;
+	public Date getMessage_date() {
+		return message_date;
 	}
-
-
-	public Date getMessageDate() {
-		return messageDate;
+	public void setMessage_date(Date message_date) {
+		this.message_date = message_date;
 	}
-
-
-	public void setMessageDate(Date messageDate) {
-		this.messageDate = messageDate;
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
-
 	@Override
 	public String toString() {
-		return "Message [messageNo=" + messageNo + ", messageFromNo=" + messageFromNo + ", meassgeToNo=" + meassgeToNo
-				+ ", messageTitle=" + messageTitle + ", messageContent=" + messageContent + ", messageDate="
-				+ messageDate + "]";
+		return "Message [message_no=" + message_no + ", message_from_no=" + message_from_no + ", message_to_no="
+				+ message_to_no + ", message_title=" + message_title + ", message_content=" + message_content
+				+ ", message_date=" + message_date + "]";
 	}
+	
+	
+	
 	
 	
 	
