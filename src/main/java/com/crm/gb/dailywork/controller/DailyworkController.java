@@ -61,7 +61,7 @@ public class DailyworkController {
 		for(Client client : accountClientList) {
 			JSONObject jclient = new JSONObject();
 			jclient.put("client_no", client.getClient_no());
-			jclient.put("client_name", client.getClient_name());
+			jclient.put("client_company", client.getClient_company());
 			jclient.put("client_loc_x", Double.parseDouble(client.getClient_loc_x()));
 			jclient.put("client_loc_y", Double.parseDouble(client.getClient_loc_y()));
 			
