@@ -37,7 +37,7 @@ public class ClientController {
 	/** 신규고객 등록 화면이동 */
 	@RequestMapping("addClient.do")
 	public String addClient() {
-		return "client/addClient";
+		return "client/addClient2";
 	}
 	
 	/** 신규고객 등록 메소드 */
