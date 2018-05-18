@@ -79,8 +79,62 @@ function Regiemp(){
 		alert("이메일 주소를 제대로 입력해주세요.");
 	}else if(!num.test(emp_mgr)){
 		alert("상사번호는 숫자만 입력해주세요.");
-	}
+	}else{
+		$.ajax({
+			url: "empinsert.do",
+			data:{
+				emp_no : emp_no,
+				emp_pwd : emp_pwd,
+				emp_name : emp_name,
+				emp_addr : emp_addr,
+				emp_phone : emp_phone,
+				job_no : job_no,
+				emp_email : emp_email,
+				emp_mgr : emp_mgr,
+				emp_hiredate : emp_hiredate,
+				emp_firedate : emp_firedate,
+				city : city,
+				county : county,
+				village : village,
+				dept_no : dept_no				
+			},
+			type:"post",
+			success: function(data){
+				console.log("data : " + data);
+				if (data.result == 1) {
+    				alert("사원 등록 성공");
+                    location.href = "MoveempList.do";
+				}else{
+					alert("사원 등록 실패1");
+				}
+			},
+			error: function(request, status, errorData){
+				alert("error code : " + request.status + "\n" + "message : " + request.responseText
+						+ "\n" + "error : " + errorData);
+			}
+		});
+	}	
 }
+
+
+	function checkPhone(){
+		$.ajax({
+			url : "checkPhone.do",
+			type: "post",
+			data: {
+				emp_phone : $('#emp_phone').val()
+			},
+			success:function(data){			
+				if(data.result == "true"){
+					alert("전송 성공!")										
+				}else{
+					alert("이미 등록된 번호 입니다. \n다시 입력하십시오");
+					$('#emp_phone').select();
+				}
+				}
+			});
+	}
+	
 </script>
 
 <body class="nav-md">
@@ -194,7 +248,7 @@ function Regiemp(){
 									
 									
 					<!-- 사원 등록 -->
-					<form class="form-horizontal form-label-left" action="empinsert.do" method="post">
+					<form class="form-horizontal form-label-left">
 					<!-- <form class="form-horizontal form-label-left" action="empinsert.do" method="post"> -->
 
                       <div class="form-group">
@@ -226,6 +280,7 @@ function Regiemp(){
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                           <input class="form-control" id="emp_phone" name="emp_phone" type="tel" placeholder="연락처">
+                         <button class="btn btn-success" type="button" onclick="checkPhone()">Submit</button>
                         </div>
                       </div>
                       <div class="form-group">
