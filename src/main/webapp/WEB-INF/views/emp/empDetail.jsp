@@ -165,7 +165,7 @@ margin-top:6pt;
 								<div class="x_title">
 									<font style="font-size:18px;">상세정보</font>
 									<font style="float:right; font-size:15px;">
-										<a href="moveEmpUpdate.do?emp_no=${ emp.emp_no }">수정</a>&nbsp; &nbsp;<a href="empdelete.do?emp_no=${ emp.emp_no }">삭제</a>
+										<a href="moveEmpUpdate.do?emp_no=${ emp.emp_no }">수정</a>&nbsp; &nbsp;<a href="updateEmpDelete.do?emp_no=${ emp.emp_no }">삭제</a>
 									</font>
 									<div class="clearfix"></div>
 								</div>

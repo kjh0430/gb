@@ -44,9 +44,9 @@ public class EmpDao {
 		return sqlSession.update("empUpdate", emp);
 	}
 
-	/*사원 삭제*/
-	public int deleteEmp(int emp_no) {
-		return sqlSession.delete("empDelete", emp_no);
+	/*사원 삭제여부 수정*/
+	public int updateEmpDelete(int emp_no) {
+		return sqlSession.update("updateEmpDelete", emp_no);
 	}
 
 	/*사원 조회*/
@@ -57,6 +57,12 @@ public class EmpDao {
 	/*사원 전체 조회*/
 	public ArrayList<Emp> selectEmpList() {
 		return (ArrayList)sqlSession.selectList("empList");
+	}
+
+	/*연락처 중복검사*/
+	public int selectCheckPhone(String emp_phone) {
+		System.out.println("emp_phone 진입");
+		return sqlSession.selectOne("selectCheckPhone", emp_phone);
 	}
 	
 }

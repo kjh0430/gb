@@ -23,12 +23,13 @@ public class Emp implements Serializable{
 	private String county;
 	private String village;
 	private int dept_no;
+	private String emp_delete;
 	
 	public Emp() {}
 
 	public Emp(int emp_no, String emp_pwd, String emp_name, String emp_addr, String emp_phone, int job_no,
 			String emp_email, int emp_mgr, Date emp_hiredate, Date emp_firedate, String city, String county,
-			String village, int dept_no) {
+			String village, int dept_no, String emp_delete) {
 		super();
 		this.emp_no = emp_no;
 		this.emp_pwd = emp_pwd;
@@ -44,6 +45,7 @@ public class Emp implements Serializable{
 		this.county = county;
 		this.village = village;
 		this.dept_no = dept_no;
+		this.emp_delete = emp_delete;
 	}
 
 	public int getEmp_no() {
@@ -158,13 +160,21 @@ public class Emp implements Serializable{
 		this.dept_no = dept_no;
 	}
 
+	public String getEmp_delete() {
+		return emp_delete;
+	}
+
+	public void setEmp_delete(String emp_delete) {
+		this.emp_delete = emp_delete;
+	}
+
 	@Override
 	public String toString() {
 		return "Emp [emp_no=" + emp_no + ", emp_pwd=" + emp_pwd + ", emp_name=" + emp_name + ", emp_addr=" + emp_addr
 				+ ", emp_phone=" + emp_phone + ", job_no=" + job_no + ", emp_email=" + emp_email + ", emp_mgr="
 				+ emp_mgr + ", emp_hiredate=" + emp_hiredate + ", emp_firedate=" + emp_firedate + ", city=" + city
-				+ ", county=" + county + ", village=" + village + ", dept_no=" + dept_no + "]";
+				+ ", county=" + county + ", village=" + village + ", dept_no=" + dept_no + ", emp_delete=" + emp_delete
+				+ "]";
 	}
 	
 }
-

@@ -68,10 +68,10 @@ public class EmpServlceImpl implements EmpService{
 		return empDao.updateEmp(emp);
 	}
 
-	/*사원 삭제*/
+	/*사원 삭제여부 수정*/
 	@Override
-	public int deleteEmp(int emp_no) {
-		return empDao.deleteEmp(emp_no);
+	public int updateEmpDelete(int emp_no) {
+		return empDao.updateEmpDelete(emp_no);
 	}
 
 	/*사원 조회*/
@@ -84,6 +84,12 @@ public class EmpServlceImpl implements EmpService{
 	@Override
 	public ArrayList<Emp> selectEmpList() {
 		return empDao.selectEmpList();
+	}
+
+	/*연락처 중복검사*/
+	@Override
+	public int selectCheckPhone(String emp_phone) {
+		return empDao.selectCheckPhone(emp_phone);
 	}	
 	
 }
