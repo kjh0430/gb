@@ -112,7 +112,7 @@ public class ProductController {
 				
 				int result2=productService.insertProductFile(pf);
 				
-			} catch (IllegalStateException | IOException e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}			

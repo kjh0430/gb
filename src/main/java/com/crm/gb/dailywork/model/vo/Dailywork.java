@@ -9,26 +9,23 @@ public class Dailywork implements java.io.Serializable{
 	
 	private static final long serialVersionUID = 1111L;
 
+	
+	
 	private int dailyworkNo;
 	private int clientNo;
 	private int empNo;
 	private String dailyTitle;
-	private String dailyLocX;
-	private String dailyLocY;
 	private String dailyComment;
 	private Date dailyDate;
 	
 	public Dailywork() {}
-	
-	public Dailywork(int dailyworkNo, int clientNo, int empNo, String dailyTitle, String dailyLocX, String dailyLocY,
-			String dailyComment, Date dailyDate) {
+
+	public Dailywork(int dailyworkNo, int clientNo, int empNo, String dailyTitle, String dailyComment, Date dailyDate) {
 		super();
 		this.dailyworkNo = dailyworkNo;
 		this.clientNo = clientNo;
 		this.empNo = empNo;
 		this.dailyTitle = dailyTitle;
-		this.dailyLocX = dailyLocX;
-		this.dailyLocY = dailyLocY;
 		this.dailyComment = dailyComment;
 		this.dailyDate = dailyDate;
 	}
@@ -65,22 +62,6 @@ public class Dailywork implements java.io.Serializable{
 		this.dailyTitle = dailyTitle;
 	}
 
-	public String getDailyLocX() {
-		return dailyLocX;
-	}
-
-	public void setDailyLocX(String dailyLocX) {
-		this.dailyLocX = dailyLocX;
-	}
-
-	public String getDailyLocY() {
-		return dailyLocY;
-	}
-
-	public void setDailyLocY(String dailyLocY) {
-		this.dailyLocY = dailyLocY;
-	}
-
 	public String getDailyComment() {
 		return dailyComment;
 	}
@@ -96,6 +77,12 @@ public class Dailywork implements java.io.Serializable{
 	public void setDailyDate(Date dailyDate) {
 		this.dailyDate = dailyDate;
 	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
+	
 
 	
 }
