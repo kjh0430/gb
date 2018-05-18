@@ -39,14 +39,20 @@ public class ProductController {
 	//main으로 가기
 	@RequestMapping("Movemain.do")
 	public String main() {
-		return "adminmain";
-		
+		return "main";
 	}
 	
 	//상품 리스트 화면으로 이동
 	@RequestMapping("productList.do")
 	public String moveProductList() {
 		return "product/productList";
+	}
+
+	
+	//상품 리스트 화면으로 이동
+	@RequestMapping("moveproductDetail.do")
+	public String moveproductDetail() {
+		return "product/productDetail";
 	}
 	
 	//상품 등록 화면으로 이동
