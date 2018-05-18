@@ -31,7 +31,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="addClient2.do" class="site_title"><i class="fa fa-google"></i> <span>GROUP BEAN</span></a>
+              <a href="Movemain.do" class="site_title"><i class="fa fa-google"></i> <span>GROUP BEAN</span></a>
             </div>
 
             <div class="clearfix"></div>

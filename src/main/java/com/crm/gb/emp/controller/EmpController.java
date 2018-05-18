@@ -61,8 +61,8 @@ public class EmpController {
 			
 			Emp returnEmp=empService.selectEmp(emp);
 
-			model.addAttribute("loginEmp", returnEmp);	
-			//System.out.println("returnEmp"+returnEmp);
+			model.addAttribute("loginEmp", returnEmp);				
+			//System.out.println("returnEmp : "+returnEmp);
 			
 		} catch (EmpLoginFailException e) {
 			model.addAttribute("message", e.getMessage());

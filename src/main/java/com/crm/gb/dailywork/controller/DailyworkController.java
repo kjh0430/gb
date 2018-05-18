@@ -2,6 +2,8 @@ package com.crm.gb.dailywork.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletResponse;
@@ -12,14 +14,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.crm.gb.client.model.service.ClientService;
 import com.crm.gb.client.model.vo.Client;
 import com.crm.gb.dailywork.model.service.DailyworkService;
+import com.crm.gb.dailywork.model.vo.Dailywork;
 import com.crm.gb.emp.model.vo.Emp;
 
 @Controller
@@ -38,7 +40,7 @@ public class DailyworkController {
 	@RequestMapping(value="visit.do" , method=RequestMethod.GET)
 	public String dailyVisit() {
 		
-		return "dailyreport/visit";
+		return "dailywork/visit";
 	}
 	
 	//json 객체 배열 메소드 
@@ -81,8 +83,50 @@ public class DailyworkController {
 	}
 	
 	
-	
-	
+	//영업일지로 이동
+	@RequestMapping("moveDailyReport.do")
+	public String moveProductList() {
+		return "dailywork/dailyReport";
+	}
+
+	//영업일지-방문일지 조회 컨트롤
+	@RequestMapping(value="visitList.do",method=RequestMethod.POST)
+	public void selectDailywork(Dailywork dw,HttpServletResponse response) throws IOException {
+		
+		System.out.println("visitList running!!");	
+		
+		System.out.println(dw.getDaily_date());
+		
+		
+		ArrayList<Dailywork> visitList = dailyworkService.selectVisit(dw);
+		
+		JSONArray jarr = new JSONArray();
+		
+		for(Dailywork daily : visitList) {
+			JSONObject jdw = new JSONObject();
+			jdw.put("dailywork_no",daily.getDailywork_no());
+			jdw.put("client_name", daily.getClient_name());
+			jdw.put("emp_no", daily.getEmp_no());
+			jdw.put("daily_comment", daily.getDaily_comment());
+			jdw.put("daily_date", daily.getDaily_date());
+			jdw.put("client_no", daily.getClient_no());
+			
+			jarr.add(jdw);
+		}
+		
+		JSONObject sendJson = new JSONObject();
+		sendJson.put("visitList", jarr);
+		System.out.println("jarr : " + jarr);
+		
+		response.setContentType("application/json; charset=utf-8");
+		
+		PrintWriter out = response.getWriter();
+		out.println(sendJson.toJSONString());
+		out.flush();
+		out.close();
+		
+		
+	}
 	
 	
 //	@RequestMapping(value="visit.do" , method=RequestMethod.GET)
