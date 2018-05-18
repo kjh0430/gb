@@ -53,8 +53,7 @@ public class DailyworkController {
 		//int emp_no = Integer.parseInt(emp_num);
 		System.out.println("emp_no :" + emp.getEmp_no());
 		
-		ArrayList<Client> accountClientList = clientService.selectAccountClientList(emp_no);
-		
+		ArrayList<Client> accountClientList = clientService.selectAccountClientList(emp_no);		
 		System.out.println("client 객체 : " + accountClientList);
 		
 		JSONArray jarr = new JSONArray();
@@ -94,9 +93,8 @@ public class DailyworkController {
 	public void selectDailywork(Dailywork dw,HttpServletResponse response) throws IOException {
 		
 		System.out.println("visitList running!!");	
-		
-		ArrayList<Dailywork> visitList = dailyworkService.selectVisit(dw);
-		
+		System.out.println(dw.getDaily_date());
+		ArrayList<Dailywork> visitList = dailyworkService.selectVisit(dw);		
 		JSONArray jarr = new JSONArray();
 		
 		for(Dailywork daily : visitList) {
@@ -115,19 +113,13 @@ public class DailyworkController {
 		
 		JSONObject sendJson = new JSONObject();
 		sendJson.put("visitList", jarr);
-		System.out.println("jarr : " + jarr);
+		//System.out.println("jarr : " + jarr);
 		
 		response.setContentType("application/json; charset=utf-8");
-		
 		PrintWriter out = response.getWriter();
-	
-		out.println(sendJson.toJSONString());
-		
+		out.println(sendJson.toJSONString());		
 		out.flush();
 		out.close();
-
-		
-		
 	}
 	
 	

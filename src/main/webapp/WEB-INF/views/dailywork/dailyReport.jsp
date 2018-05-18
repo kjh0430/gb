@@ -36,7 +36,11 @@
 
 		    var today = year + "-" + month + "-" + day;       
 		    $("#daily_date").attr("value", today);
-		
+		    
+		    selectVisit();	
+	});//onload
+	
+	function selectVisit(){
 		$.ajax({
 			url:"visitList.do",
 			type:"post",
@@ -50,9 +54,8 @@
 						+"message : "+request.responseText+"\n"
 						+"error : "+errorData);
 			}	
-		});//ajax
-		
-	});//onload
+		});//ajax		
+	}
 	
 </script>
 <style type="text/css">
@@ -96,7 +99,9 @@
 						<div class="title_right">
 							<div class="control-group" style="float:right">
 								<div class="controls">
-								<input type="date" class="form-control" id="daily_date" name="daily_date" style="width:260px"></div>
+								<input type="date" class="form-control" id="daily_date" name="daily_date" style="width:200px;display:inline-block">
+								<button class="btn btn-dark" onclick="selectVisit()"style="display:inline-block">확인</button>
+								</div>
 							</div>
 
 						</div>
