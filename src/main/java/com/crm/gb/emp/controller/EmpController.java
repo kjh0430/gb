@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
@@ -61,8 +62,8 @@ public class EmpController {
 			
 			Emp returnEmp=empService.selectEmp(emp);
 
-			model.addAttribute("loginEmp", returnEmp);	
-			//System.out.println("returnEmp"+returnEmp);
+			model.addAttribute("loginEmp", returnEmp);				
+			//System.out.println("returnEmp : "+returnEmp);
 			
 		} catch (EmpLoginFailException e) {
 			model.addAttribute("message", e.getMessage());
@@ -139,8 +140,9 @@ public class EmpController {
 	}
 	
 	/*사원 등록*/
-	@RequestMapping(value="empinsert.do")
-	public String insertEmp(Emp emp, Model model) {
+	@RequestMapping(value="empinsert.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String insertEmp(Emp emp, Model model, HttpServletResponse response) throws Exception{
 		logger.info("emp insert 실행");
 		System.out.println("전송온 값 : " + emp);
 		
@@ -148,10 +150,17 @@ public class EmpController {
 		
 		System.out.println("result : " + result);
 		
-		ArrayList<Emp> empList = empService.selectEmpList();
-		model.addAttribute("empList", empList);
+		/*ArrayList<Emp> empList = empService.selectEmpList();
+		model.addAttribute("empList", empList);*/
 		
-		return "emp/empList";
+		String returnValue = null;
+		if(result == 0) {
+			model.addAttribute("returnValue", true);
+			return "returnValue";
+		}else {
+			model.addAttribute("returnValue", false);
+			return "returnValue";
+		}
 		
 	}
 	
@@ -170,20 +179,42 @@ public class EmpController {
 		return "emp/empList";
 	}
 	
-	/*사원 삭제*/
-	@RequestMapping(value="empdelete.do")
-	public String deleteEmp(Emp emp, Model model, @RequestParam(value="emp_no") String emp_num) {
+	/*사원 삭제여부 수정*/
+	@RequestMapping(value="updateEmpDelete.do")
+	public String updateEmpDelete(Emp emp, Model model, @RequestParam(value="emp_no") String emp_num) {
 		
 		logger.info("emp delete 실행");
 		
 		System.out.println("사원 상세정보: "+emp);
 		int emp_no = (Integer.parseInt(emp_num));
 		
-		int result = empService.deleteEmp(emp_no);
+		int result = empService.updateEmpDelete(emp_no);
 		ArrayList<Emp> empList = empService.selectEmpList();
 		model.addAttribute("empList", empList);
 		
 		return "emp/empList";
+	}
+	
+	/*연락처 중복검사*/
+	@RequestMapping(value="checkPhone.do")
+	@ResponseBody
+	public String selectCheckPhone(@RequestParam(value="emp_phone") String emp_phone, Model model) {
+		
+		logger.info("selectCheckPhone 실행");
+		
+		System.out.println("연락처 번호 : "+emp_phone);
+		
+		int result = empService.selectCheckPhone(emp_phone);
+		
+		String returnValue = null;
+		if(result == 0) {
+			model.addAttribute("returnValue", "true");
+			return "returnValue";
+		}else {
+			model.addAttribute("returnValue", "false");
+			return "returnValue";
+		}
+	
 	}
 		
 }

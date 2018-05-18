@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,6 +24,35 @@
 
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
+	$(function(){
+		 var date = new Date();
+
+		    var day = date.getDate();
+		    var month = date.getMonth() + 1;
+		    var year = date.getFullYear();
+
+		    if (month < 10) month = "0" + month;
+		    if (day < 10) day = "0" + day;
+
+		    var today = year + "-" + month + "-" + day;       
+		    $("#daily_date").attr("value", today);
+		
+		$.ajax({
+			url:"visitList.do",
+			type:"post",
+			dataType:"json",
+			data:{emp_no:"${ loginEmp.emp_no }",daily_date:$("#daily_date").val()},
+			success:function(obj){
+				console.log(obj);
+			},
+			error:function(request,status,errorData){
+				console.log("error data : " +request.status+"\n"
+						+"message : "+request.responseText+"\n"
+						+"error : "+errorData);
+			}	
+		});//ajax
+		
+	});//onload
 	
 </script>
 <style type="text/css">
@@ -53,72 +83,7 @@
 			</div>
 
 			<!-- top navigation -->
-			<div class="top_nav">
-				<div class="nav_menu">
-					<nav>
-						<div class="nav toggle">
-							<a id="menu_toggle"><i class="fa fa-bars"></i></a>
-						</div>
-
-						<ul class="nav navbar-nav navbar-right">
-							<li class=""><a href="javascript:;"
-								class="user-profile dropdown-toggle" data-toggle="dropdown"
-								aria-expanded="false"> <img src="images/img.jpg" alt="">John
-									Doe <span class=" fa fa-angle-down"></span>
-							</a>
-								<ul class="dropdown-menu dropdown-usermenu pull-right">
-									<li><a href="javascript:;"> Profile</a></li>
-									<li><a href="javascript:;"> <span
-											class="badge bg-red pull-right">50%</span> <span>Settings</span>
-									</a></li>
-									<li><a href="javascript:;">Help</a></li>
-									<li><a href="login.html"><i
-											class="fa fa-sign-out pull-right"></i> Log Out</a></li>
-								</ul></li>
-
-							<li role="presentation" class="dropdown"><a
-								href="javascript:;" class="dropdown-toggle info-number"
-								data-toggle="dropdown" aria-expanded="false"> <i
-									class="fa fa-envelope-o"></i> <span class="badge bg-green">6</span>
-							</a>
-								<ul id="menu1" class="dropdown-menu list-unstyled msg_list"
-									role="menu">
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li>
-										<div class="text-center">
-											<a> <strong>See All Alerts</strong> <i
-												class="fa fa-angle-right"></i>
-											</a>
-										</div>
-									</li>
-								</ul></li>
-						</ul>
-					</nav>
-				</div>
-			</div>
+			<%@ include file="../etc/topnav.jsp"%>
 			<!-- /top navigation -->
 
 			<!-- page content -->
@@ -131,7 +96,7 @@
 						<div class="title_right">
 							<div class="control-group" style="float:right">
 								<div class="controls">
-								<input type="date" class="form-control" style="width:260px"></div>
+								<input type="date" class="form-control" id="daily_date" name="daily_date" style="width:260px"></div>
 							</div>
 
 						</div>
@@ -149,7 +114,7 @@
 					<div class="row">
 						<div class="col-md-6 col-sm-12 col-xs-12">
 							<div class="x_panel">
-								<div class="x_title">
+								<div class="x_title" style="margin-bottom:0px;">
 									<h2>방문거래처</h2>
 									<div class="clearfix"></div>
 								</div>
@@ -160,7 +125,7 @@
 												<div class="block">
 													<div class="block_content">
 														<h2 class="title">스타벅스 석촌호수 서호</h2>
-														<div class="byline">
+														<div class="daily_time">
 															<span>10:34</span>
 														</div>
 														<p class="excerpt">방문일지에서 코멘트란에 쓴 내용들어갈 자리</p>
@@ -178,18 +143,6 @@
 													</div>
 												</div>
 											</li>
-											<li>
-												<div class="block">
-													<div class="block_content">
-														<h2 class="title">카페 플로레</h2>
-														<div class="byline">
-															<span>14:25</span>
-														</div>
-														<p class="excerpt">모닝커피 메뉴가 없어지면서 주문 원두량이 줄어서 계약금액 조정을
-															원하심. 계약금액 조정시 할인율 변경이 불가피함을 공지하고 계약을 유지하는 방향으로 상담</p>
-													</div>
-												</div>
-											</li>
 										</ul>
 									</div>
 								</div>
@@ -198,7 +151,7 @@
 						<!-- visit end -->
 						<div class="col-md-6 col-sm-12 col-xs-12">
 							<div class="x_panel">
-								<div class="x_title">
+								<div class="x_title" style="margin-bottom:0px;">
 									<h2>주문내역</h2>
 									<div class="clearfix"></div>
 								</div>
@@ -217,21 +170,6 @@
 												<td>프로젝트 413 역삼</td>
 												<td>245,000</td>
 											</tr>
-											<tr>
-												<td><a href="#">215492</a></td>
-												<td>프로젝트 413 역삼</td>
-												<td>129,000</td>
-											</tr>
-											<tr>
-												<td><a href="#">216598</a></td>
-												<td>카페플로레</td>
-												<td>321,000</td>
-											</tr>
-											<tr>
-												<td>합계</td>
-												<td></td>
-												<td>695,000</td>
-											</tr>
 										</tbody>
 									</table>
 								</div>
@@ -243,11 +181,10 @@
 
 				</div>
 			</div>
-		</div>
-		 <!-- footer content -->
-		 <%@ include file="../etc/footer.jsp" %>
-       
-        <!-- /footer content -->
+			<!-- footer content -->
+			<%@ include file="../etc/footer.jsp"%>
+			<!-- /footer content -->
+		</div>		
 	</div>
 	<!-- /page content -->
 
@@ -261,6 +198,8 @@
 	
 	<!-- Custom Theme Scripts -->
 	<script src="resources/build/js/custom.min.js"></script>
+	
+	<!-- daum map script -->
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9847a2e4326a2ca39c99b754b2d4e80c"></script>
 	<script type="text/javascript">
