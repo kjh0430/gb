@@ -11,11 +11,24 @@
 		<result column="client_no" property="client_no"/>
 		<result column="emp_no" property="emp_no"/>
 		<result column="daily_title" property="daily_title"/>
-		<result column="daily_loc_x" property="daily_loc_x"/>
-		<result column="daily_loc_y" property="daily_loc_y"/>
 		<result column="daily_comment" property="daily_commnet"/>
 		<result column="daily_date" property="daily_date"/>
 	</resultMap>
+	
+	<select id="dailyWork" parameterType="dailywork" resultType="dailywork">
+		<![CDATA[
+			select * form dailywork
+			where emp_no = #{emp_no}
+		]]>
+		
+	</select>
+	
+	<insert id="dailyworkInsert" parameterType="Dailywork">
+		<![CDATA[
+			
+		]]>
+		
+	</insert>
 	
 	
 

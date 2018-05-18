@@ -163,7 +163,7 @@ $(document).ready(function() {
 										</thead>
 										<tbody>
 											<tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
+												<td><a href="moveproductDetail.do">이디오피아 예가체프 </a></td>
 												<td>12,000</td>
 												<td>EY2010Z</td>
 												<td>판매</td>

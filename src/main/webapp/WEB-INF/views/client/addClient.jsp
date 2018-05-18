@@ -50,9 +50,20 @@ $(document).ready(function() {
         pageLength:15
     } );
     
+    
 } );
 
 </script>
+<style>
+
+#searchAddr img {
+  max-width: none;
+  height: auto;
+  border: 0;
+  -ms-interpolation-mode: bicubic;
+}
+
+</style>
 
 
 </head>
@@ -197,20 +208,20 @@ $(document).ready(function() {
 							   				  <!-- 지도 스크립트 -->
 									     	 <!-- 다음지도 -->
 										  	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f99f3844ac8886eed3b0155cb0041a70&libraries=services,clusterer,drawing"></script>
-												<script>
-													$(function(){
-															
-														var container = document.getElementById('searchAddr');
-														var options = {
-															center: new daum.maps.LatLng(33.450701, 126.570667),
-															level: 3
-														};
+											<script>
+												$(function(){
 														
-														var map = new daum.maps.Map(container, options);
-															
-														});
+													var container = document.getElementById('searchAddr');
+													var options = {
+														center: new daum.maps.LatLng(33.450701, 126.570667),
+														level: 3
+													};
 													
-												</script>
+													var map = new daum.maps.Map(container, options);
+														
+													});
+												
+											</script>
 										       <!-- 지도부분 끝 -->
 										       
 										      </div>

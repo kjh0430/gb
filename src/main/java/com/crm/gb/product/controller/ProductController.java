@@ -1,7 +1,5 @@
 package com.crm.gb.product.controller;
 
-
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -41,14 +39,20 @@ public class ProductController {
 	//main으로 가기
 	@RequestMapping("Movemain.do")
 	public String main() {
-		return "adminmain";
-		
+		return "main";
 	}
 	
 	//상품 리스트 화면으로 이동
 	@RequestMapping("productList.do")
 	public String moveProductList() {
 		return "product/productList";
+	}
+
+	
+	//상품 리스트 화면으로 이동
+	@RequestMapping("moveproductDetail.do")
+	public String moveproductDetail() {
+		return "product/productDetail";
 	}
 	
 	//상품 등록 화면으로 이동
@@ -104,14 +108,11 @@ public class ProductController {
 	                originFile.delete(); // 원본파일 삭제            
 		            
 				}
-	            ProductFile pf = new ProductFile();
-				pf.setProduct_no(product_no);
-				pf.setProduct_original_file(originFile.getName());
-				pf.setProduct_rename_file(renameFile.getName());				
+	            ProductFile pf = new ProductFile(product_no,originFile.getName(),renameFile.getName());
 				
 				int result2=productService.insertProductFile(pf);
 				
-			} catch (IllegalStateException | IOException e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}			

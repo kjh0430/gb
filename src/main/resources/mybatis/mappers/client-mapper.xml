@@ -40,6 +40,23 @@
 		
 	</resultMap>
 
+	<!-- 거래중인 거래처 목록 상세보기 -->
+	<resultMap type="client" id="resultAccountClient">
+		<id column="client_no" property="client_no"/>
+		<result column="client_name" property="client_name"/>
+		<result column="client_company" property="client_company"/>
+		<result column="client_job" property="client_job"/>
+		<result column="client_email" property="client_email"/>
+		<result column="client_phone" property="client_phone"/>
+		<result column="client_addr" property="client_addr"/>
+		<result column="client_com_tel" property="client_com_tel"/>
+		<result column="client_contract" property="client_contract"/>
+		<result column="client_comment" property="client_comment"/>
+		<result column="emp_no" property="emp_no"/>
+		<result column="client_enroll" property="client_enroll"/>
+	</resultMap>
+
+
 	<!-- 신규고객 등록 mapping -->
 	<insert id="insertClient" parameterType="client">
 		<![CDATA[
@@ -63,6 +80,14 @@
 		<![CDATA[
 			select * from client
 			where client_contract = 'N'
+		]]>
+	</select>
+	
+	<!-- 거래중인 거래처 리스트 mapping -->
+	<select id="selectAccountClient" resultMap="resultAccountClient">
+		<![CDATA[
+			select * from client
+			where emp_no = #{emp_no} and client_contract = 'Y'
 		]]>
 	</select>
 	
