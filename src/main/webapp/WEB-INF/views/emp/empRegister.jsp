@@ -280,7 +280,7 @@ function Regiemp(){
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                           <input class="form-control" id="emp_phone" name="emp_phone" type="tel" placeholder="연락처">
-                         <button class="btn btn-success" type="button" onclick="checkPhone()">Submit</button>
+                         <!-- <button class="btn btn-success" type="button" onclick="checkPhone()">Submit</button> -->
                         </div>
                       </div>
                       <div class="form-group">
