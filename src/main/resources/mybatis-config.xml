@@ -3,8 +3,7 @@
 "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-	<typeAliases>
-		
+	<typeAliases>		
 		<typeAlias type="com.crm.gb.emp.model.vo.Emp" alias="Emp" />
 		<typeAlias type="com.crm.gb.client.model.vo.Client" alias="Client" />
 		<typeAlias type="com.crm.gb.dailywork.model.vo.Dailywork" alias="Dailywork" />
@@ -12,10 +11,9 @@
 		<typeAlias type="com.crm.gb.message.model.vo.Message" alias="Message" />
 		<typeAlias type="com.crm.gb.product.model.vo.Product" alias="Product" />
 		<typeAlias type="com.crm.gb.product.model.vo.ProductFile" alias="ProductFile" />
-		
-		
 	</typeAliases>
-	
+
+
 	<mappers>
 		<mapper resource="mybatis/mappers/emp-mapper.xml" />
 		<mapper resource="mybatis/mappers/client-mapper.xml" />
@@ -23,4 +21,5 @@
 		<mapper resource="mybatis/mappers/dailywork-mapper.xml" />
 		
 	</mappers>
+	
 </configuration>

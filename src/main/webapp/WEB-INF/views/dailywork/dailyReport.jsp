@@ -25,21 +25,32 @@
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 	$(function(){
-		
+		 var date = new Date();
+
+		    var day = date.getDate();
+		    var month = date.getMonth() + 1;
+		    var year = date.getFullYear();
+
+		    if (month < 10) month = "0" + month;
+		    if (day < 10) day = "0" + day;
+
+		    var today = year + "-" + month + "-" + day;       
+		    $("#daily_date").attr("value", today);
 		
 		$.ajax({
 			url:"visitList.do",
 			type:"post",
 			dataType:"json",
-			data:{emp_no:"${ loginEmp.emp_no }"},
+			data:{emp_no:"${ loginEmp.emp_no }",daily_date:$("#daily_date").val()},
 			success:function(obj){
 				console.log(obj);
-			}
-		});
-		
-		
-		
-		
+			},
+			error:function(request,status,errorData){
+				console.log("error data : " +request.status+"\n"
+						+"message : "+request.responseText+"\n"
+						+"error : "+errorData);
+			}	
+		});//ajax
 		
 	});//onload
 	

@@ -95,9 +95,6 @@ public class DailyworkController {
 		
 		System.out.println("visitList running!!");	
 		
-		System.out.println(dw.getDaily_date());
-		
-		
 		ArrayList<Dailywork> visitList = dailyworkService.selectVisit(dw);
 		
 		JSONArray jarr = new JSONArray();
@@ -110,6 +107,8 @@ public class DailyworkController {
 			jdw.put("daily_comment", daily.getDaily_comment());
 			jdw.put("daily_date", daily.getDaily_date());
 			jdw.put("client_no", daily.getClient_no());
+			jdw.put("client_loc_x", daily.getClient_loc_x());
+			jdw.put("client_loc_y", daily.getClient_loc_y());
 			
 			jarr.add(jdw);
 		}
@@ -121,9 +120,12 @@ public class DailyworkController {
 		response.setContentType("application/json; charset=utf-8");
 		
 		PrintWriter out = response.getWriter();
+	
 		out.println(sendJson.toJSONString());
+		
 		out.flush();
 		out.close();
+
 		
 		
 	}
