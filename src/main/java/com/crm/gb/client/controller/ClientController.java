@@ -1,6 +1,9 @@
 package com.crm.gb.client.controller;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.activation.CommandMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.crm.gb.client.model.service.ClientService;
 import com.crm.gb.client.model.vo.Client;
@@ -110,6 +114,9 @@ public class ClientController {
 			
 		return "client/clientList";
 	}
+	
+	
+
 	
 }
 

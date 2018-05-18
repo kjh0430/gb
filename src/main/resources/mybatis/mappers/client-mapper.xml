@@ -85,7 +85,7 @@
 	</select>
 	
 	<!-- 고객정보 상세보기 mapping -->
-	<select id="detailClient" parameterType="int" resultMap="resultDetailClient">
+	<select id="detailClient" parameterType="_int" resultMap="resultDetailClient">
 		<![CDATA[
 			select * from client
 			where client_no = #{client_no}
@@ -93,7 +93,7 @@
 	</select>
 	
 	<!-- 고객정보 삭제 mapping -->
-	<delete id="deleteClient" parameterType="int">
+	<delete id="deleteClient" parameterType="_int">
 		<![CDATA[
 			delete from client
 			where client_no=#{client_no}

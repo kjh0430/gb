@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +24,7 @@
 <link
 	href="resources/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css"
 	rel="stylesheet">
-	
+
 
 
 <!-- Custom Theme Style -->
@@ -152,7 +154,10 @@
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
 								<div class="x_title">
-									<h5>방문처 상세내역 &nbsp;&nbsp;&nbsp;<small>* 방문일지 작성 전 거래처 등록은 필수입니다.</small></h5>
+									<h5>
+										방문처 상세내역 &nbsp;&nbsp;&nbsp;<small>* 방문일지 작성 전 거래처 등록은
+											필수입니다.</small>
+									</h5>
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
@@ -203,7 +208,7 @@
 	<!-- Bootstrap -->
 	<script src="resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
 
-	
+
 
 
 	<!-- Custom Theme Scripts -->
@@ -211,15 +216,115 @@
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9847a2e4326a2ca39c99b754b2d4e80c"></script>
 	<script type="text/javascript">
-		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
 		mapOption = {
-			center : new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+			center : new daum.maps.LatLng(37.503416, 127.034337), // 지도의 중심좌표
 			level : 3
 		// 지도의 확대 레벨
 		};
 
-		// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-		var map = new daum.maps.Map(mapContainer, mapOption);
+		var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+		// 마커를 표시할 위치와 title 객체 배열입니다 
+
+		$(function() {
+			$
+					.ajax({
+						url : "accountlist.do",
+						type : "post",
+						data : {
+							emp_no : "${loginEmp.emp_no}"
+						},
+						dataType : "json",
+						success : function(obj) {
+							//alert("성공!!!!!!!!!");
+							console.log(obj);
+							var objStr = JSON.stringify(obj);
+							var jsonObj = JSON.parse(objStr);
+							
+							
+
+							//alert(jsonObj.accountlist.length+"길이 ");
+							/* for ( var i in jsonObj.accountlist) {
+								loc += {
+										title : +jsonObj.accountlist[i].client_name,
+										latlng : new daum.maps.LatLng(
+												jsonObj.accountlist[i].client_loc_x,
+												jsonObj.accountlist[i].client_loc_y)
+								};
+								if (i < jsonObj.accountlist.length - 1)
+									loc += ",";
+							} */
+							
+							 var loc = new Array(); 
+							for ( var i in jsonObj.accountlist) {
+								loc[i] = {
+										title : jsonObj.accountlist[i].client_name,
+										latlng : new daum.maps.LatLng(
+												jsonObj.accountlist[i].client_loc_x,
+												jsonObj.accountlist[i].client_loc_y)
+								};
+								
+							}
+							alert("loc : "+loc[1]);
+							var positions = '';
+							for( var i in loc){
+								 positions[i]= "{"+loc[i]+"}";
+							}
+							
+							
+							
+							
+
+							// 쉼표(콤마)로 구분된 문자열을, 배열로 분리
+							//positions = s.split("|");
+							//alert("11 :" + positions[0]  +",22 : " + positions[2]);
+
+							//for (i = 0; i < positions.length; i++)
+
+							/* var positions = [ 
+								 {
+									title: '우리집', 
+									latlng:new daum.maps.LatLng(37.503416,127.034337)
+								},
+								{
+									title: '우리집2', 
+									latlng:new daum.maps.LatLng(37.703416,127.034337)
+								} 
+								];  */
+							//alert("3333:" + positions)
+							//var positions = [ loc ];
+							alert("positions : " + positions);
+							alert("p1 : " + positions[1]);
+							
+							var imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+
+							for (var i = 0; i < positions.length; i++) {
+
+								// 마커 이미지의 이미지 크기 입니다
+								var imageSize = new daum.maps.Size(24, 35);
+
+								// 마커 이미지를 생성합니다    
+								var markerImage = new daum.maps.MarkerImage(3
+										imageSrc, imageSize);
+
+								// 마커를 생성합니다
+
+								var marker = new daum.maps.Marker({
+									map : map, // 마커를 표시할 지도
+									position : positions[i].latlng, // 마커를 표시할 위치
+									title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+									image : markerImage
+								// 마커 이미지 
+								});
+							}
+						}
+					});
+
+			
+
+			// 마커 이미지의 이미지 주소입니다
+		});
 	</script>
 
 </body>

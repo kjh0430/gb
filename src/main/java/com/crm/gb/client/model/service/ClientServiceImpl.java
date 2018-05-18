@@ -1,6 +1,8 @@
 package com.crm.gb.client.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,10 +62,13 @@ public class ClientServiceImpl implements ClientService{
 		return clientDao.deleteClient(client_no);
 	}
 	
+	
+	
 	/** 거래처 리스트 메소드 **/
 	@Override
 	public ArrayList<Client> selectAccountClientList(int emp_no) {
 		return clientDao.selectAccountClient(emp_no);
 	}
-
+	
+	
 }

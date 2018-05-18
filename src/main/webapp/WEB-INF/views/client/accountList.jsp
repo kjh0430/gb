@@ -19,23 +19,7 @@
 <!-- Font Awesome -->
 <link href="resources/vendors/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet">
-<!-- NProgress -->
-<link href="resources/vendors/nprogress/nprogress.css" rel="stylesheet">
-<!-- iCheck -->
-<link href="resources/vendors/iCheck/skins/flat/green.css"
-	rel="stylesheet">
 
-<!-- bootstrap-progressbar -->
-<link
-	href="resources/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css"
-	rel="stylesheet">
-<!-- JQVMap -->
-<link href="resources/vendors/jqvmap/dist/jqvmap.min.css"
-	rel="stylesheet" />
-<!-- bootstrap-daterangepicker -->
-<link
-	href="resources/vendors/bootstrap-daterangepicker/daterangepicker.css"
-	rel="stylesheet">
 
 <!-- Custom Theme Style -->
 <link href="resources/build/css/custom.min.css" rel="stylesheet">
@@ -43,6 +27,7 @@
 
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
+
 
 </script>
 
@@ -120,12 +105,12 @@
 										
 										<c:forEach var="list" items="${ accountClientList }">
 											<tr>
-												<td><a href="detailClient.do?client_no=${ accountClientList.client_no }">${ list.client_name }</a></td>
-												<td>${ accountClientList.client_company }</td>
-												<td>${ accountClientList.client_job }</td>
-												<td>${ accountClientList.client_email }</td>
-												<td>${ accountClientList.client_phone }</td>
-												<td>${ accountClientList.client_addr }</td>
+												<td><a href="#">${ list.client_name }</a></td>
+												<td>${ list.client_company }</td>
+												<td>${ list.client_job }</td>
+												<td>${ list.client_email }</td>
+												<td>${ list.client_phone }</td>
+												<td>${ list.client_addr }</td>
 											</tr>
 											
 										</c:forEach>
@@ -138,25 +123,24 @@
 					</div>
 				</div>
 			</div>
+			
+
+
+
+
+				<c:import url="../etc/footer.jsp"></c:import>
 		</div>
 	</div>
-	</div>
+
 	<!-- /page content -->
 
 	
-	</div>
-	</div>
 
 	<!-- jQuery -->
 	<script src="resources/vendors/jquery/dist/jquery.min.js"></script>
 	<!-- Bootstrap -->
 	<script src="resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-	<!-- FastClick -->
-	<script src="resources/vendors/fastclick/lib/fastclick.js"></script>
-	<!-- NProgress -->
-	<script src="resources/vendors/nprogress/nprogress.js"></script>
-	<!-- iCheck -->
-	<script src="resources/vendors/iCheck/icheck.min.js"></script>
+	
 	<!-- Datatables -->
 	<script
 		src="resources/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
@@ -182,10 +166,7 @@
 		src="resources/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
 	<script
 		src="resources/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-	<script src="resources/vendors/jszip/dist/jszip.min.js"></script>
-	<script src="resources/vendors/pdfmake/build/pdfmake.min.js"></script>
-	<script src="resources/vendors/pdfmake/build/vfs_fonts.js"></script>
-
+	
 	<!-- Custom Theme Scripts -->
 	<script src="resources/build/js/custom.min.js"></script>
 
