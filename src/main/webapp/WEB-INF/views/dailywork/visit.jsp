@@ -264,6 +264,7 @@
 								 positions[i]= loc[i];
 							}
 							
+							
 							//지도 중심 좌표 재설정 
 							// 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
 							var bounds = new daum.maps.LatLngBounds();    
