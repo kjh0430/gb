@@ -21,9 +21,8 @@ public class DailyworkDao {
 		return sqlSession.insert("insertDailywork", dailywork);
 	}
 
-	
+	//영업일지 _ 방문일지 선택
 	public ArrayList<Dailywork> selectVisit(Dailywork dw) {
-		//영업일지 _ 방문일지 선택
 		return (ArrayList)sqlSession.selectList("selectVisit", dw);
 	}
 }
