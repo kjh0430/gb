@@ -93,7 +93,7 @@ public class DailyworkController {
 	public void selectDailywork(Dailywork dw,HttpServletResponse response) throws IOException {
 		
 		System.out.println("visitList running!!");	
-		System.out.println(dw.getDaily_date());
+		//System.out.println(dw.getDaily_date());
 		ArrayList<Dailywork> visitList = dailyworkService.selectVisit(dw);		
 		JSONArray jarr = new JSONArray();
 		
@@ -112,7 +112,7 @@ public class DailyworkController {
 		}
 		
 		JSONObject sendJson = new JSONObject();
-		sendJson.put("visitList", jarr);
+		sendJson.put("list", jarr);
 		//System.out.println("jarr : " + jarr);
 		
 		response.setContentType("application/json; charset=utf-8");

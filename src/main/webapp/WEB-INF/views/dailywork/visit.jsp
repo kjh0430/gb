@@ -305,7 +305,7 @@
 								var imageSize = new daum.maps.Size(24, 35);
 
 								// 마커 이미지를 생성합니다    
-								var markerImage = new daum.maps.MarkerImage(3
+								var markerImage = new daum.maps.MarkerImage(3,
 										imageSrc, imageSize);
 
 								// 마커를 생성합니다
