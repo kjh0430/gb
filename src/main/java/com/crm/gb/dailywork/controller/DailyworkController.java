@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.crm.gb.client.model.service.ClientService;
@@ -39,19 +40,19 @@ public class DailyworkController {
 	
 	@RequestMapping(value="visit.do" , method=RequestMethod.GET)
 	public String dailyVisit() {
-		
+		logger.info("방문일지 페이지 run...");
 		return "dailywork/visit";
 	}
 	
-	//json 객체 배열 메소드 
-	@RequestMapping(value="accountlist.do", method=RequestMethod.POST)
+	//방문일지 지도위에 거래처 위치 불러오는 json 객체 배열 메소드 
+	@RequestMapping(value="locationInfo.do", method=RequestMethod.POST)
 	public void clientJsonMethod(Emp emp,HttpServletResponse response) throws IOException{
 		
-		logger.info("json 객체 배열 메소드 실행...");
+		logger.info("방문일지 json 객체 배열 메소드 실행...");
 		
 		int emp_no = emp.getEmp_no();
 		//int emp_no = Integer.parseInt(emp_num);
-		System.out.println("emp_no :" + emp.getEmp_no());
+		System.out.println("emp_no :" + emp_no);
 		
 		ArrayList<Client> accountClientList = clientService.selectAccountClientList(emp_no);		
 		System.out.println("client 객체 : " + accountClientList);
