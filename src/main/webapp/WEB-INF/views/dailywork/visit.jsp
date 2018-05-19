@@ -32,11 +32,7 @@
 <link href="resources/css/main.css" rel="stylesheet">
 
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
-<script type="text/javascript">
-	$(document).ready(function() {
 
-	});
-</script>
 <style type="text/css">
 #table_cl tr td:nth-child(2) {
 	width: 55px;
