@@ -14,7 +14,7 @@ public class Dailywork implements java.io.Serializable{
 	private int emp_no;
 	private String daily_comment;
 	private String daily_date;
-	private String client_name;
+	private String client_company;
 	private String client_loc_x;
 	private String client_loc_y;
 	
@@ -73,12 +73,13 @@ public class Dailywork implements java.io.Serializable{
 		return serialVersionUID;
 	}
 
-	public String getClient_name() {
-		return client_name;
+
+	public String getClient_company() {
+		return client_company;
 	}
 
-	public void setClient_name(String client_name) {
-		this.client_name = client_name;
+	public void setClient_company(String client_company) {
+		this.client_company = client_company;
 	}
 
 	public String getClient_loc_x() {

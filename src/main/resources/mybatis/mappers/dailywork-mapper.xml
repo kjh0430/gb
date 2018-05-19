@@ -18,7 +18,7 @@
 	
 	<select id="selectVisit" parameterType="Dailywork" resultType="dailywork">
 		<![CDATA[
-			select dw.dailywork_no,dw.client_no,to_char(dw.daily_date,'hh24:mi') as daily_date,c.client_name,dw.emp_no,dw.daily_comment,c.client_loc_y,c.client_loc_x  
+			select dw.dailywork_no,dw.client_no,to_char(dw.daily_date,'hh24:mi') as daily_date,c.client_company,dw.emp_no,dw.daily_comment,c.client_loc_y,c.client_loc_x  
 			from dailywork dw,client c where dw.client_no = c.client_no 
 			and dw.emp_no = #{emp_no} and to_char(daily_date,'yyyy-mm-dd') like #{daily_date}
 			order by daily_date
