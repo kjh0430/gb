@@ -6,10 +6,11 @@
 <mapper namespace="Message"> 
 
 
-<select id="selectEmp" parameterType="string" resultType="Emp">
+<select id="selectEmp" parameterType="string" resultType="Message">
 
 <![CDATA[
-select * from emp e,dept d,job h where emp_name=#{emp_name}
+select e.emp_name,d.dept_name,j.job_name,e.emp_email,e.emp_no from emp e,
+dept d,job j where e.emp_name=#{emp_name} and e.dept_no=d.dept_no and j.job_no=e.job_no 
 ]]>
 </select>
 

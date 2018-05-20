@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.crm.gb.emp.model.vo.Emp;
 import com.crm.gb.message.model.dao.MessageDao;
+import com.crm.gb.message.model.vo.Message;
 
 
 
@@ -19,7 +20,7 @@ public class MessageServiceImpl implements MessageService {
 	private MessageDao messageDao;
 	
 	@Override
-	public ArrayList<Emp> selectSearch(String empName) {
+	public ArrayList<Message> selectSearch(String empName) {
 		
 		
 		

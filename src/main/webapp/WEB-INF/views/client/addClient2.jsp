@@ -235,28 +235,63 @@
 										      <div class="modal-header">
 										        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
 										        <h4 class="modal-title" id="myModalLabel">주소검색</h4>
-										      </div>
+										        
+										      <!-- 검색창 -->	
+										      	<input type="text">
+										      	<button id="searchKeywordBtn" type="button" class="btn btn-primary" style="margin-left:10px">검색</button>
+										      	
+										      </div><!-- modal heder end div -->	
+										      
 										      <div class="modal-body">
 										      
 										      <!-- 지도부분 시작 -->
-										     
 										     	<div id="searchAddr" style="width:100%;height:400px;"></div>
+										     	
 							   				  <!-- 지도 스크립트 -->
 									     	 <!-- 다음지도 -->
+										  	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f99f3844ac8886eed3b0155cb0041a70"></script>
 										  	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f99f3844ac8886eed3b0155cb0041a70&libraries=services,clusterer,drawing"></script>
 											<script>
 												$(function(){
-														
-													var container = document.getElementById('searchAddr');
-													var options = {
-														center: new daum.maps.LatLng(33.450701, 126.570667),
-														level: 3
-													};
-													
-													var map = new daum.maps.Map(container, options);
-														
-													});
-												
+														$('#searchMap').on('click', function(){
+															
+															var container = document.getElementById('searchAddr');
+															var options = {
+																center: new daum.maps.LatLng(37.4990734,127.0317662),
+																level: 3
+															};
+															
+															$("#myModal").on('shown.bs.modal', function () {
+																//지도를 생성합니다
+																var map = new daum.maps.Map(container, options);
+																
+
+																// 마커가 표시될 위치입니다 
+																var markerPosition  = new daum.maps.LatLng(37.4989885, 127.0306385); 
+																// 마커를 생성합니다
+																
+																var marker = new daum.maps.Marker({
+																    position: markerPosition
+																});
+																
+																	marker.setMap(map);
+																
+																// 지도에 클릭 이벤트를 등록합니다
+																// 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
+																daum.maps.event.addListener(map, 'click', function(mouseEvent) {  
+																
+																	// 클릭한 위도, 경도 정보를 가져옵니다 
+																    var click = mouseEvent.latLng;
+																	// 클릭한 위치로 마커위치 이동
+																    marker.setPosition(click);
+																
+													   		 }); //지도에 마우스 클릭
+																	
+																
+																
+														}); //모달창에서 지도보여주기
+												}); // 주소검색을 누름
+											});	//onload
 											</script>
 										       <!-- 지도부분 끝 -->
 										       
@@ -269,6 +304,9 @@
 										  </div>
 										</div>
 										<!-- 모달의 끝 -->
+									
+									
+									
 									
 								</div>
 							</div>

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.crm.gb.emp.model.vo.Emp;
+import com.crm.gb.message.model.vo.Message;
 
 @Repository("messageDao")
 public class MessageDao {
@@ -15,7 +16,7 @@ public class MessageDao {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-	public ArrayList<Emp> selectSearch(String empName) {
+	public ArrayList<Message> selectSearch(String empName) {
 		
 		sqlSession.selectList("selectEmp",empName);
 		
