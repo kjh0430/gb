@@ -17,18 +17,18 @@
 <link href="resources/vendors/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet">
 <!-- NProgress -->
-<link href="resources/vendors/nprogress/nprogress.css" rel="stylesheet">
+<!-- <link href="resources/vendors/nprogress/nprogress.css" rel="stylesheet"> -->
 <!-- iCheck -->
-<link href="resources/vendors/iCheck/skins/flat/green.css"
-	rel="stylesheet">
+<!-- <link href="resources/vendors/iCheck/skins/flat/green.css"
+	rel="stylesheet"> -->
 
 <!-- bootstrap-progressbar -->
 <link
 	href="resources/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css"
 	rel="stylesheet">
 <!-- JQVMap -->
-<link href="resources/vendors/jqvmap/dist/jqvmap.min.css"
-	rel="stylesheet" />
+<!-- <link href="resources/vendors/jqvmap/dist/jqvmap.min.css"
+	rel="stylesheet" /> -->
 <!-- bootstrap-daterangepicker -->
 <link
 	href="resources/vendors/bootstrap-daterangepicker/daterangepicker.css"
@@ -39,7 +39,7 @@
 <link href="resources/css/main.css" rel="stylesheet">
 
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 	$(document).ready(function() {
 		$('#table_cl').dataTable({
 			ordering : false,
@@ -47,10 +47,11 @@
 			pageLength : 15
 		});
 	});
-</script> 
+</script>  -->
 </head>
 <script type="text/javascript">
 function Regiemp(){
+	
 	var emp_no = $('#emp_no').val();
 	var emp_pwd = $('#emp_pwd').val();
 	var emp_name = $('#emp_name').val();
@@ -79,7 +80,7 @@ function Regiemp(){
 		alert("이메일 주소를 제대로 입력해주세요.");
 	}else if(!num.test(emp_mgr)){
 		alert("상사번호는 숫자만 입력해주세요.");
-	}else{
+	}else{		
 		$.ajax({
 			url: "empinsert.do",
 			data:{
@@ -101,40 +102,21 @@ function Regiemp(){
 			type:"post",
 			success: function(data){
 				console.log("data : " + data);
-				if (data.result == 1) {
+				if (data) {
     				alert("사원 등록 성공");
-                    location.href = "MoveempList.do";
+                    location.href = "empList.do";
 				}else{
-					alert("사원 등록 실패1");
+					alert("사원 등록 실패");
 				}
 			},
 			error: function(request, status, errorData){
 				alert("error code : " + request.status + "\n" + "message : " + request.responseText
 						+ "\n" + "error : " + errorData);
 			}
-		});
-	}	
+		});		
+	}
 }
 
-
-	function checkPhone(){
-		$.ajax({
-			url : "checkPhone.do",
-			type: "post",
-			data: {
-				emp_phone : $('#emp_phone').val()
-			},
-			success:function(data){			
-				if(data.result == "true"){
-					alert("전송 성공!")										
-				}else{
-					alert("이미 등록된 번호 입니다. \n다시 입력하십시오");
-					$('#emp_phone').select();
-				}
-				}
-			});
-	}
-	
 </script>
 
 <body class="nav-md">
@@ -167,7 +149,7 @@ function Regiemp(){
 						<ul class="nav navbar-nav navbar-right">
 							<li class=""><a href="javascript:;"
 								class="user-profile dropdown-toggle" data-toggle="dropdown"
-								aria-expanded="false"> <img src="images/img.jpg" alt="">John
+								aria-expanded="false"> <!-- <img src="images/img.jpg" alt=""> -->John
 									Doe <span class=" fa fa-angle-down"></span>
 							</a>
 								<ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -248,44 +230,43 @@ function Regiemp(){
 									
 									
 					<!-- 사원 등록 -->
-					<form class="form-horizontal form-label-left">
+					<form class="form-horizontal form-label-left" action="empinsert.do" method="post">
 					<!-- <form class="form-horizontal form-label-left" action="empinsert.do" method="post"> -->
 
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">사원번호</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">사원번호 *</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                           <input class="form-control" id="emp_no" name="emp_no" type="text" placeholder="사원번호">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">비밀번호</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">비밀번호 *</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                           <input class="form-control" id="emp_pwd" name="emp_pwd" type="password" placeholder="비밀번호">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">사원이름 </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">이름 *</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                           <input class="form-control" id="emp_name" name="emp_name" type="text" placeholder="사원이름">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">사원거주지</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">주소 *</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                           <input class="form-control" id="emp_addr" name="emp_addr" type="text"  placeholder="사원거주지">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">연락처
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input class="form-control" id="emp_phone" name="emp_phone" type="tel" placeholder="연락처">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">연락처 *</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                         <input class="form-control" id="emp_phone" name="emp_phone" type="tel" placeholder="연락처">
                          <!-- <button class="btn btn-success" type="button" onclick="checkPhone()">Submit</button> -->
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">직급</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">직급 *</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                           <select class="form-control" id="job_no" name="job_no">
                             <option value="1">사원</option>
                             <option value="2">팀장</option>
@@ -294,50 +275,50 @@ function Regiemp(){
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">이메일</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">이메일 *</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                           <input class="form-control" id="emp_email" name="emp_email" type="email" placeholder="이메일">
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">상사번호</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                           <input class="form-control" id="emp_mgr" name="emp_mgr" type="text" placeholder="상사번호">
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">입사일</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                           <input class="form-control" id="emp_hiredate" name="emp_hiredate" type="date">
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">퇴사일</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                           <input class="form-control" id="emp_firedate" name="emp_firedate" type="date">
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">담당지역</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                           <input class="form-control" id="city" name="city" type="text" placeholder="시">
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                           <input class="form-control" id="county" name="county" type="text" placeholder="구">
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                           <input class="form-control" id="village" name="village" type="text" placeholder="동">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">부서</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">부서 *</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                           <select class="form-control" id="dept_no" name="dept_no">
                             <option value="1">영업1팀</option>
                             <option value="2">영업2팀</option>
@@ -348,10 +329,9 @@ function Regiemp(){
                              
                       <div class="ln_solid"></div>
                       <div class="form-group">
-                        <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">                          
-                          <button class="btn btn-primary" type="button">Cancel</button>
-                          <button class="btn btn-primary" type="reset">Reset</button>
-                          <button class="btn btn-success" type="submit" onclick="Regiemp()">Submit</button>                     
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                          <button class="btn btn-success" type="submit">등록</button>                           
+                          <button class="btn btn-primary" type="button">취소</button>                    
                         </div>
                       </div>
                       </form>
@@ -377,13 +357,13 @@ function Regiemp(){
 	<!-- Bootstrap -->
 	<script src="resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
 	<!-- FastClick -->
-	<script src="resources/vendors/fastclick/lib/fastclick.js"></script>
+	<!-- <script src="resources/vendors/fastclick/lib/fastclick.js"></script> -->
 	<!-- NProgress -->
-	<script src="resources/vendors/nprogress/nprogress.js"></script>
+	<!-- <script src="resources/vendors/nprogress/nprogress.js"></script> -->
 	<!-- iCheck -->
-	<script src="resources/vendors/iCheck/icheck.min.js"></script>
+	<!-- <script src="resources/vendors/iCheck/icheck.min.js"></script> -->
 	<!-- Datatables -->
-	<script
+	<!-- <script
 		src="resources/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
 	<script
 		src="resources/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
@@ -409,7 +389,7 @@ function Regiemp(){
 		src="resources/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
 	<script src="resources/vendors/jszip/dist/jszip.min.js"></script>
 	<script src="resources/vendors/pdfmake/build/pdfmake.min.js"></script>
-	<script src="resources/vendors/pdfmake/build/vfs_fonts.js"></script>
+	<script src="resources/vendors/pdfmake/build/vfs_fonts.js"></script> -->
 
 	<!-- Custom Theme Scripts -->
 	<script src="resources/build/js/custom.min.js"></script>

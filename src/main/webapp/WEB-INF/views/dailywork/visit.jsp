@@ -296,8 +296,7 @@
 							 map.setBounds(bounds);
 							
 							
-							var imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
-							
+						
 							
 
 							//for (var i = 0; i < positions.length; i++) {
@@ -306,12 +305,7 @@
 								for (var i = 0; i < positions.length; i++) {
 								
 
-									// 마커 이미지의 이미지 크기 입니다
-									var imageSize = new daum.maps.Size(24, 35);
-
-									// 마커 이미지를 생성합니다    
-									var markerImage = new daum.maps.MarkerImage (imageSrc, imageSize);
-
+									
 									
 									
 									var marker = new daum.maps.Marker({

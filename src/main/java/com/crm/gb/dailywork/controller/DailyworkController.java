@@ -100,13 +100,13 @@ public class DailyworkController {
 		for(Dailywork daily : visitList) {
 			JSONObject jdw = new JSONObject();
 			jdw.put("dailywork_no",daily.getDailywork_no());
-			jdw.put("client_name", daily.getClient_name());
+			jdw.put("client_name", daily.getClient_company());
 			jdw.put("emp_no", daily.getEmp_no());
 			jdw.put("daily_comment", daily.getDaily_comment());
 			jdw.put("daily_date", daily.getDaily_date());
 			jdw.put("client_no", daily.getClient_no());
-			jdw.put("client_loc_x", daily.getClient_loc_x());
-			jdw.put("client_loc_y", daily.getClient_loc_y());
+			jdw.put("client_loc_x", Double.parseDouble(daily.getClient_loc_x()));
+			jdw.put("client_loc_y", Double.parseDouble(daily.getClient_loc_y()));
 			
 			jarr.add(jdw);
 		}
