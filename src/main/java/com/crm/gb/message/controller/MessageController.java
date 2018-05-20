@@ -2,10 +2,13 @@ package com.crm.gb.message.controller;
 
 
 
+import static org.hamcrest.CoreMatchers.instanceOf;
+
 import java.io.IOException; 
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONArray;
@@ -77,18 +80,28 @@ public class MessageController {
 	
 	@RequestMapping(value="sub.do",method=RequestMethod.POST)
 	@ResponseBody
-			public void submitMessage(Message message,HttpServletResponse response) throws IOException {
+			public void submitMessage(Message message,HttpServletResponse response,HttpServletRequest request) throws IOException {
 		System.out.println("보내는사람 번호"+message.getMessage_from_no());
 		System.out.println("받는사람 번호"+message.getMessage_to_no());
 		System.out.println("제목"+message.getMessage_title());
 		System.out.println("내용"+message.getMessage_content());
+		String no=request.getParameter("no");
+		System.out.println("no"+no);
 		
+		int result=MessageService.insertMessage(message);
 	
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out=response.getWriter();
-		out.append("ok");
+		out.append("메시지가 성공적으로 전송되었습니다.");
 		out.flush();
 		out.close();
+	}
+	
+	@RequestMapping(value="getMessage.do",method=RequestMethod.POST)
+	public void getMessage() {
+		
+		
+		
 	}
 	
 }

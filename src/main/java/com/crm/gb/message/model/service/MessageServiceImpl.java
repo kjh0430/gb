@@ -26,5 +26,12 @@ public class MessageServiceImpl implements MessageService {
 		
 		return messageDao.selectSearch(empName);
 	}
+	
+	@Override
+	public int insertMessage(Message message) {
+	
+		
+		return messageDao.insertMessage(message);
+	}
 
 }

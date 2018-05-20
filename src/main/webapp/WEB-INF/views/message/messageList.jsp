@@ -42,9 +42,19 @@
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 
-/* $(function(){
-	$('#getvalues td:nth-child(3)').hide();
-}) */
+/*  $(function(){
+	
+	
+	 $.ajax({
+		url:""
+		 
+	 })
+	  */
+	 
+	 
+	 
+	 
+/* })  */
 
 
 	function searchEmp() {
@@ -72,6 +82,7 @@
 									+"</td><td>"+jsonl.list[i].emp_no
 									+ "</td></tr>";
 						}
+						
 						
 						
 						value += "</tbody></table>";
@@ -102,7 +113,7 @@
 		var emp_no=td.eq(4).text();
 		$('#myModal2').modal("hide");
 		
-		/* submit하기 위하여 갑 넣기 */
+		
 		$('#searchName').val(emp_name);
 		
 		$ ('#message_to_no').val(emp_no);
@@ -121,7 +132,9 @@
 			data:{ message_from_no : "${loginEmp.emp_no}",
 				message_to_no : $('#message_to_no').val(),
 				message_title : $('#message_title').val(),
-				message_content : $('#message_content').val()
+				message_content : $('#message_content').val(),
+				no :1
+				
 			},
 			success :function(data){
 				alert(data);
