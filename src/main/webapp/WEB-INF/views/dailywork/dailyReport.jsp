@@ -24,41 +24,12 @@
 
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
-	$(function(){
-		 var date = new Date();
 
-		    var day = date.getDate();
-		    var month = date.getMonth() + 1;
-		    var year = date.getFullYear();
-
-		    if (month < 10) month = "0" + month;
-		    if (day < 10) day = "0" + day;
-
-		    var today = year + "-" + month + "-" + day;       
-		    $("#daily_date").attr("value", today);
-		
-		$.ajax({
-			url:"visitList.do",
-			type:"post",
-			dataType:"json",
-			data:{emp_no:"${ loginEmp.emp_no }",daily_date:$("#daily_date").val()},
-			success:function(obj){
-				console.log(obj);
-			},
-			error:function(request,status,errorData){
-				console.log("error data : " +request.status+"\n"
-						+"message : "+request.responseText+"\n"
-						+"error : "+errorData);
-			}	
-		});//ajax
-		
-	});//onload
-	
 </script>
 <style type="text/css">
-#table_sa tbody tr:last-child {
-	border-top: solid #ddd 2px;
-}
+	#table_sa tbody tr:last-child {
+		border-top: solid #ddd 2px;
+	}
 </style>
 </head>
 
@@ -96,7 +67,9 @@
 						<div class="title_right">
 							<div class="control-group" style="float:right">
 								<div class="controls">
-								<input type="date" class="form-control" id="daily_date" name="daily_date" style="width:260px"></div>
+								<input type="date" class="form-control" id="daily_date" name="daily_date" style="width:200px;display:inline-block">
+								<button class="btn btn-dark" onclick="selectVisit()"style="display:inline-block">확인</button>
+								</div>
 							</div>
 
 						</div>
@@ -120,29 +93,8 @@
 								</div>
 								<div class="x_content">
 									<div class="dashboard-widget-content">
-										<ul class="list-unstyled timeline widget">
-											<li>
-												<div class="block">
-													<div class="block_content">
-														<h2 class="title">스타벅스 석촌호수 서호</h2>
-														<div class="daily_time">
-															<span>10:34</span>
-														</div>
-														<p class="excerpt">방문일지에서 코멘트란에 쓴 내용들어갈 자리</p>
-													</div>
-												</div>
-											</li>
-											<li>
-												<div class="block">
-													<div class="block_content">
-														<h2 class="title">프로젝트 413 역삼</h2>
-														<div class="byline">
-															<span>12:30</span>
-														</div>
-														<p class="excerpt"></p>
-													</div>
-												</div>
-											</li>
+										<ul class="list-unstyled timeline widget" id="visitList">
+											
 										</ul>
 									</div>
 								</div>
@@ -203,34 +155,124 @@
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9847a2e4326a2ca39c99b754b2d4e80c"></script>
 	<script type="text/javascript">
-		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-		mapOption = {
-			center : new daum.maps.LatLng(37.498811, 127.038755), // 지도의 중심좌표
-			level : 5
-		// 지도의 확대 레벨
-		};
-
-		// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-		var map = new daum.maps.Map(mapContainer, mapOption);
+	
+	
+	$(function(){
+		var date = new Date();
+		var day = date.getDate();
+		var month = date.getMonth() + 1;
+		var year = date.getFullYear();		
+		if (month < 10) month = "0" + month;
+		if (day < 10) day = "0" + day;		
+		var today = year + "-" + month + "-" + day;       
+		$("#daily_date").attr("value", today);
 		
-		var linePath = [
-		    new daum.maps.LatLng(37.498811, 127.038755),
-		    new daum.maps.LatLng(37.503221, 127.027836),
-		    new daum.maps.LatLng(37.503411, 127.038387),
-		    new daum.maps.LatLng(37.505825, 127.041219)
-		];
+		selectVisit();	
+		
+	});//onload
+	
+	
+	//visitlist ajax
+	function selectVisit(){
+		$.ajax({
+			url:"visitList.do",
+			type:"post",
+			dataType:"json",
+			data:{emp_no:"${ loginEmp.emp_no }",daily_date:$("#daily_date").val()},
+			success:function(obj){
+				console.log(obj);
+				var objStr =JSON.stringify(obj);
+				var visit = JSON.parse(objStr);				
+				var values="";
+				var loc=new Array();
+				var points=new Array();
+				
+				for(var i in visit.list){
+					values+= "<li><div class='block'><div class='block_content'><h2 class='title'>"
+					+visit.list[i].client_name+"</h2><div class='daily_time'><span>"+visit.list[i].daily_date
+					+"</span></div><p class='expert'>"+visit.list[i].daily_comment+"</p></div></div></li>"
+					
+					loc[i]= {title:visit.list[i].client_name,
+							 latlng: new daum.maps.LatLng(visit.list[i].client_loc_x,visit.list[i].client_loc_y)};
+					points[i] = new daum.maps.LatLng(visit.list[i].client_loc_x,visit.list[i].client_loc_y);  
+				}
+				
+				$("#visitList").html(values);
+				
+				//지도시작!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+				var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+			    mapOption = { 
+			        center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+			        level: 3 // 지도의 확대 레벨
+			    };
 
-		// 지도에 표시할 선을 생성합니다
-		var polyline = new daum.maps.Polyline({
-		    path: linePath, // 선을 구성하는 좌표배열 입니다
-		    strokeWeight: 5, // 선의 두께 입니다
-		    strokeColor: '#75B8FA', // 선의 색깔입니다
-		    strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-		    strokeStyle: 'solid' // 선의 스타일입니다
-		});
+				var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성				 
+				var bounds = new daum.maps.LatLngBounds();    
 
-		// 지도에 선을 표시합니다 
-		polyline.setMap(map);  
+			
+				for (i = 0; i < points.length; i++) {				  
+				    bounds.extend(points[i]);
+				}
+				map.setBounds(bounds);
+				
+				
+				// 마커를 표시할 위치와 title 객체 배열입니다 
+				var positions = new Array();
+				
+				for(var i in loc){
+					positions[i] = loc[i];
+				}
+				
+				for (var i = 0; i < positions.length; i ++) {
+				    // 마커를 생성합니다
+				    var marker = new daum.maps.Marker({
+				        map: map, // 마커를 표시할 지도
+				        position: positions[i].latlng, // 마커를 표시할 위치
+				        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다				       
+				    });
+				    
+				    var iwContent = '<div style="padding:5px;text-align:center;width:100%">'+positions[i].title+'</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+				    iwPosition = positions[i].latlng; //인포윈도우 표시 위치입니다
+
+					// 인포윈도우를 생성합니다
+					var infowindow = new daum.maps.InfoWindow({
+					    position : iwPosition, 
+					    content : iwContent 
+					});
+					infowindow.open(map, marker); 
+				    
+				}
+								
+				//선그리기
+				var linePath = new Array();
+				for (i = 0; i < points.length; i++) {					  
+				    linePath[i] = points[i];
+				}
+
+				// 지도에 표시할 선을 생성합니다
+				var polyline = new daum.maps.Polyline({
+				    path: linePath, // 선을 구성하는 좌표배열 입니다
+				    strokeWeight: 5, // 선의 두께 입니다
+				    strokeColor: '#1ABB9C', // 선의 색깔입니다
+				    strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+				    strokeStyle: 'solid' // 선의 스타일입니다
+				});
+
+				// 지도에 선을 표시합니다 
+				polyline.setMap(map);  
+			},
+			error:function(request,status,errorData){
+				console.log("error data : " +request.status+"\n"
+						+"message : "+request.responseText+"\n"
+						+"error : "+errorData);
+			}	
+		});	
+	}//visitlist ajax
+	
+	
+	
+	
+	
 	</script>
 
 </body>

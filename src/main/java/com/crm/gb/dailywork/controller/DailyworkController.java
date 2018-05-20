@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.crm.gb.client.model.service.ClientService;
@@ -39,22 +40,21 @@ public class DailyworkController {
 	
 	@RequestMapping(value="visit.do" , method=RequestMethod.GET)
 	public String dailyVisit() {
-		
+		logger.info("방문일지 페이지 run...");
 		return "dailywork/visit";
 	}
 	
-	//json 객체 배열 메소드 
-	@RequestMapping(value="accountlist.do", method=RequestMethod.POST)
+	//방문일지 지도위에 거래처 위치 불러오는 json 객체 배열 메소드 
+	@RequestMapping(value="locationInfo.do", method=RequestMethod.POST)
 	public void clientJsonMethod(Emp emp,HttpServletResponse response) throws IOException{
 		
-		logger.info("json 객체 배열 메소드 실행...");
+		logger.info("방문일지 json 객체 배열 메소드 실행...");
 		
 		int emp_no = emp.getEmp_no();
 		//int emp_no = Integer.parseInt(emp_num);
-		System.out.println("emp_no :" + emp.getEmp_no());
+		System.out.println("emp_no :" + emp_no);
 		
-		ArrayList<Client> accountClientList = clientService.selectAccountClientList(emp_no);
-		
+		ArrayList<Client> accountClientList = clientService.selectAccountClientList(emp_no);		
 		System.out.println("client 객체 : " + accountClientList);
 		
 		JSONArray jarr = new JSONArray();
@@ -62,7 +62,7 @@ public class DailyworkController {
 		for(Client client : accountClientList) {
 			JSONObject jclient = new JSONObject();
 			jclient.put("client_no", client.getClient_no());
-			jclient.put("client_name", client.getClient_name());
+			jclient.put("client_company", client.getClient_company());
 			jclient.put("client_loc_x", Double.parseDouble(client.getClient_loc_x()));
 			jclient.put("client_loc_y", Double.parseDouble(client.getClient_loc_y()));
 			
@@ -94,40 +94,33 @@ public class DailyworkController {
 	public void selectDailywork(Dailywork dw,HttpServletResponse response) throws IOException {
 		
 		System.out.println("visitList running!!");	
-		
-		ArrayList<Dailywork> visitList = dailyworkService.selectVisit(dw);
-		
+		//System.out.println(dw.getDaily_date());
+		ArrayList<Dailywork> visitList = dailyworkService.selectVisit(dw);		
 		JSONArray jarr = new JSONArray();
 		
 		for(Dailywork daily : visitList) {
 			JSONObject jdw = new JSONObject();
 			jdw.put("dailywork_no",daily.getDailywork_no());
-			jdw.put("client_name", daily.getClient_name());
+			jdw.put("client_name", daily.getClient_company());
 			jdw.put("emp_no", daily.getEmp_no());
 			jdw.put("daily_comment", daily.getDaily_comment());
 			jdw.put("daily_date", daily.getDaily_date());
 			jdw.put("client_no", daily.getClient_no());
-			jdw.put("client_loc_x", daily.getClient_loc_x());
-			jdw.put("client_loc_y", daily.getClient_loc_y());
+			jdw.put("client_loc_x", Double.parseDouble(daily.getClient_loc_x()));
+			jdw.put("client_loc_y", Double.parseDouble(daily.getClient_loc_y()));
 			
 			jarr.add(jdw);
 		}
 		
 		JSONObject sendJson = new JSONObject();
-		sendJson.put("visitList", jarr);
-		System.out.println("jarr : " + jarr);
+		sendJson.put("list", jarr);
+		//System.out.println("jarr : " + jarr);
 		
 		response.setContentType("application/json; charset=utf-8");
-		
 		PrintWriter out = response.getWriter();
-	
-		out.println(sendJson.toJSONString());
-		
+		out.println(sendJson.toJSONString());		
 		out.flush();
 		out.close();
-
-		
-		
 	}
 	
 	

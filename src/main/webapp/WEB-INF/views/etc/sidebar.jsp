@@ -27,7 +27,7 @@
 	        <ul class="nav child_menu">
 	          <li><a href="accountList.do?emp_no=${loginEmp.emp_no}">거래처</a></li>
 	          <li><a href="orderList.do">매출현황</a></li>
-	          <li><a href="visit.do?emp_no=${loginEmp.emp_no }">방문일지</a></li>
+	          <li><a href="visit.do">방문일지</a></li>
 	        </ul>
 	      </li>
 	      <li><a><i class="fa fa-edit"></i> 영업관리 <span class="fa fa-chevron-down"></span></a>

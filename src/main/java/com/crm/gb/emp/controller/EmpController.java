@@ -63,7 +63,7 @@ public class EmpController {
 			Emp returnEmp=empService.selectEmp(emp);
 
 			model.addAttribute("loginEmp", returnEmp);				
-			//System.out.println("returnEmp : "+returnEmp);
+			System.out.println("returnEmp : "+returnEmp);
 			
 		} catch (EmpLoginFailException e) {
 			model.addAttribute("message", e.getMessage());
@@ -141,27 +141,16 @@ public class EmpController {
 	
 	/*사원 등록*/
 	@RequestMapping(value="empinsert.do", method = RequestMethod.POST)
-	@ResponseBody
-	public String insertEmp(Emp emp, Model model, HttpServletResponse response) throws Exception{
+	public String insertEmp(Emp emp, Model model){
 		logger.info("emp insert 실행");
 		System.out.println("전송온 값 : " + emp);
 		
 		int result = empService.insertEmp(emp);
 		
-		System.out.println("result : " + result);
+		ArrayList<Emp> empList = empService.selectEmpList();
+		model.addAttribute("empList", empList);
 		
-		/*ArrayList<Emp> empList = empService.selectEmpList();
-		model.addAttribute("empList", empList);*/
-		
-		String returnValue = null;
-		if(result == 0) {
-			model.addAttribute("returnValue", true);
-			return "returnValue";
-		}else {
-			model.addAttribute("returnValue", false);
-			return "returnValue";
-		}
-		
+		return "emp/empList";
 	}
 	
 	/*사원 정보 수정*/

@@ -32,11 +32,7 @@
 <link href="resources/css/main.css" rel="stylesheet">
 
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
-<script type="text/javascript">
-	$(document).ready(function() {
 
-	});
-</script>
 <style type="text/css">
 #table_cl tr td:nth-child(2) {
 	width: 55px;
@@ -167,13 +163,13 @@
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">거래처명</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
-												<input type="text" class="form-control" placeholder="">
+												<input type="text" class="form-control" id="client_com_name" placeholder="거래처를 선택해 주세요" readonly>
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">방문시간</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
-												<input type="date" class="form-control" readonly="readonly">
+												<input type="time" class="form-control">
 											</div>
 										</div>
 										<div class="form-group">
@@ -190,7 +186,6 @@
 												<button type="submit" class="btn btn-success">Submit</button>
 											</div>
 										</div>
-
 									</form>
 								</div>
 							</div>
@@ -215,11 +210,12 @@
 	<script src="resources/build/js/custom.min.js"></script>
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9847a2e4326a2ca39c99b754b2d4e80c"></script>
+		
 	<script type="text/javascript">
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
-		mapOption = {
-			center : new daum.maps.LatLng(37.503416, 127.034337), // 지도의 중심좌표
-			level : 3
+			mapOption = {
+					center : new daum.maps.LatLng(37.503416, 127.034337), // 지도의 중심좌표
+					level :3
 		// 지도의 확대 레벨
 		};
 
@@ -228,103 +224,118 @@
 		// 마커를 표시할 위치와 title 객체 배열입니다 
 
 		$(function() {
-			$
-					.ajax({
-						url : "accountlist.do",
+			//alert("성공!!!!!!!!!222");
+			$.ajax({
+						url : "locationInfo.do",
 						type : "post",
 						data : {
 							emp_no : "${loginEmp.emp_no}"
 						},
 						dataType : "json",
 						success : function(obj) {
-							//alert("성공!!!!!!!!!");
+						//	alert("성공!!!!!!!!!");
 							console.log(obj);
 							var objStr = JSON.stringify(obj);
 							var jsonObj = JSON.parse(objStr);
+							//중심좌표 재설정에 필요한 배열 객체
+							var points =new Array();
 							
+							//마크 표시에 필요한 배열 객체 
+							var loc = new Array(); 
+							var c_com_name = new Array();
 							
-
-							//alert(jsonObj.accountlist.length+"길이 ");
-							/* for ( var i in jsonObj.accountlist) {
-								loc += {
-										title : +jsonObj.accountlist[i].client_name,
-										latlng : new daum.maps.LatLng(
-												jsonObj.accountlist[i].client_loc_x,
-												jsonObj.accountlist[i].client_loc_y)
-								};
-								if (i < jsonObj.accountlist.length - 1)
-									loc += ",";
-							} */
-							
-							 var loc = new Array(); 
 							for ( var i in jsonObj.accountlist) {
 								loc[i] = {
-										title : jsonObj.accountlist[i].client_name,
+										title : jsonObj.accountlist[i].client_company,
 										latlng : new daum.maps.LatLng(
-												jsonObj.accountlist[i].client_loc_x,
-												jsonObj.accountlist[i].client_loc_y)
-								};
+												jsonObj.accountlist[i].client_loc_x
+												,jsonObj.accountlist[i].client_loc_y)
+										};
 								
+								 points[i] = new daum.maps.LatLng(jsonObj.accountlist[i].client_loc_x
+										,jsonObj.accountlist[i].client_loc_y);  
+								 c_com_name[i] = jsonObj.accountlist[i].client_company;
+						
 							}
-							alert("loc : "+loc[1]);
-							var positions = '';
+							
+							var positions = new Array();
+							
 							for( var i in loc){
-								 positions[i]= "{"+loc[i]+"}";
+								 positions[i]= loc[i];
 							}
 							
 							
+							//지도 중심 좌표 재설정 
+							// 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
+							var bounds = new daum.maps.LatLngBounds();    
 							
 							
-
-							// 쉼표(콤마)로 구분된 문자열을, 배열로 분리
-							//positions = s.split("|");
-							//alert("11 :" + positions[0]  +",22 : " + positions[2]);
-
-							//for (i = 0; i < positions.length; i++)
-
-							/* var positions = [ 
-								 {
-									title: '우리집', 
-									latlng:new daum.maps.LatLng(37.503416,127.034337)
-								},
-								{
-									title: '우리집2', 
-									latlng:new daum.maps.LatLng(37.703416,127.034337)
-								} 
-								];  */
-							//alert("3333:" + positions)
-							//var positions = [ loc ];
-							alert("positions : " + positions);
-							alert("p1 : " + positions[1]);
+							for (var i = 0; i < points.length; i++) {
+							    // 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다							    
+							    // LatLngBounds 객체에 좌표를 추가합니다
+							    bounds.extend(points[i]);
+							}
 							
-							var imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+							    // LatLngBounds 객체에 추가된 좌표들을 기준으로 지도의 범위를 재설정합니다
+							    // 이때 지도의 중심좌표와 레벨이 변경될 수 있습니다						
+							 map.setBounds(bounds);
+							
+							
+						
+							
 
-							for (var i = 0; i < positions.length; i++) {
-
-								// 마커 이미지의 이미지 크기 입니다
-								var imageSize = new daum.maps.Size(24, 35);
-
-								// 마커 이미지를 생성합니다    
-								var markerImage = new daum.maps.MarkerImage(3
-										imageSrc, imageSize);
-
+							//for (var i = 0; i < positions.length; i++) {
+	
 								// 마커를 생성합니다
+								for (var i = 0; i < positions.length; i++) {
+								
 
-								var marker = new daum.maps.Marker({
-									map : map, // 마커를 표시할 지도
-									position : positions[i].latlng, // 마커를 표시할 위치
-									title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-									image : markerImage
-								// 마커 이미지 
+									
+									
+									
+									var marker = new daum.maps.Marker({
+										map : map,
+									    position:  positions[i].latlng,
+									    clickable: true // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
+									});
+									makeMark(i);
+									// 마커에 클릭이벤트를 등록합니다
+									 	 // 마커에 클릭이벤트를 등록합니다
+								 							
+							
+									marker.setMap(map);
+							
+								
+									
+									//마커위에 인포윈도우 생성
+									var iwContent = '<div style="padding:5px;">'+positions[i].title+'</div>';// 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+							  		var iwPosition = positions[i].latlng; //인포윈도우 표시 위치입니다
+							  		//var p = positions[i].title;
+									var infowindow = new daum.maps.InfoWindow({
+									    position : iwPosition, 
+									    content : iwContent 
+									});
+								  
+								 
+									// 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+									infowindow.open(map, marker); 
+								}
+								function makeMark(i){
+								 	daum.maps.event.addListener(marker, 'click', function() {
+								      // 마커 위에 인포윈도우를 표시합니다							     
+								     $('#client_com_name').val(positions[i].title);
+								     
 								});
 							}
 						}
 					});
-
+		});
 			
 
+
+
 			// 마커 이미지의 이미지 주소입니다
-		});
+
 	</script>
 
 </body>
