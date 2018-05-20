@@ -183,7 +183,36 @@ JSONArray jarr=new JSONArray();
 		out.flush();
 		out.close();
 	}
+	@RequestMapping(value="sendAnswer.do",method=RequestMethod.POST)
+
 	
+	public void sendAnswer(Message message,HttpServletResponse response) throws IOException {
+		System.out.println("보내는사람 번호"+message.getMessage_from_no());
+		System.out.println("받는사람 번호"+message.getMessage_to_no());
+		System.out.println("제목"+message.getMessage_title());
+		System.out.println("내용"+message.getMessage_content());
 	
+		
+		
+		SimpleDateFormat format=new SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.KOREA);
+		Date date=new Date();
+		Date time=new Date(date.getTime());
+		String getdate=format.format(time);
+		System.out.println(getdate);
+		
+		
+		message.setMessage_date(getdate);
+		
+		int result=MessageService.insertMessage(message);
+	
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out=response.getWriter();
+		out.append("메시지가 전송되었습니다.");
+		out.flush();
+		out.close();
+		
+		
+		
+	}
 	
 }
