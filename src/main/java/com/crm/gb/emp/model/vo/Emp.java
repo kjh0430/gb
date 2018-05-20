@@ -1,3 +1,4 @@
+
 package com.crm.gb.emp.model.vo;
 
 import java.io.Serializable;
@@ -178,3 +179,4 @@ public class Emp implements Serializable{
 	}
 	
 }
+

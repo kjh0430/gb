@@ -68,7 +68,6 @@ public class ClientServiceImpl implements ClientService{
 	}
 	
 	
-	
 	/** 거래처 리스트 메소드 **/
 	@Override
 	public ArrayList<Client> selectAccountClientList(int emp_no) {

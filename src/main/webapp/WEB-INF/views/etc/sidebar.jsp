@@ -26,15 +26,18 @@
 	      <li><a><i class="fa fa-table"></i> 영업현황 <span class="fa fa-chevron-down"></span></a>
 	        <ul class="nav child_menu">
 	          <li><a href="accountList.do?emp_no=${loginEmp.emp_no}">거래처</a></li>
+	          <li><a href="orderaction.do">발주하기</a>
 	          <li><a href="orderList.do">매출현황</a></li>
 	          <li><a href="visit.do">방문일지</a></li>
 	        </ul>
 	      </li>
 	      <li><a><i class="fa fa-edit"></i> 영업관리 <span class="fa fa-chevron-down"></span></a>
 	        <ul class="nav child_menu">
+
 	          <li><a href="productList.do">제품관리</a></li>
 	          <li><a href="MovegoalState.do">목표현황</a></li>
 	          <li><a href="moveDailyReport.do">영업일지</a></li>
+
 	        </ul>
 	      </li>
 	    </ul>
@@ -45,13 +48,13 @@
 	      <li><a><i class="fa fa-file-text-o"></i> 전자결재 <span class="fa fa-chevron-down"></span></a>
 	        <ul class="nav child_menu">
 	          <!-- <li><a href="e_commerce.html">계약제안</a></li> -->
-	          <li><a href="Moveapproval.do">결재신청</a></li>
-	          <li><a href="MoveapprovalList.do">결재목록</a></li>
+	          <li><a href="approval.do">결재신청</a></li>
+	          <li><a href="approvalList.do">결재목록</a></li>
 	         <!--  <li><a href="projects.html">월간보고</a></li> -->
 	        </ul>
 	      </li>
 	      
-	       <li><a href="MovemessageList.do"><i class="fa fa-file-text-o"></i> 쪽지함</a>
+	       <li><a href="messageList.do"><i class="fa fa-file-text-o"></i> 쪽지함</a>
 	      </li>
 	      <!-- </li>
 	      <li><a><i class="fa fa-cog"></i> 설정</a>

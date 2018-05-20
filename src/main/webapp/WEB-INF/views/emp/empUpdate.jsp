@@ -175,38 +175,37 @@ table tr th, table tr td
 					<form class="form-horizontal form-label-left" action="empupdate.do" method="post">	
 					 <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">사원번호</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                           <input class="form-control" id="emp_no" name="emp_no" type="text" value="${ emp.emp_no }" readonly>
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">비밀번호</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                           <input class="form-control" id="emp_pwd" name="emp_pwd" type="password" value="${ emp.emp_pwd }">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">사원이름 </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">이름</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                           <input class="form-control" id="emp_name" name="emp_name" type="text" value="${ emp.emp_name }">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">사원거주지</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">주소</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                           <input class="form-control" id="emp_addr" name="emp_addr" type="text" value="${ emp.emp_addr }">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">연락처
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">연락처</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                           <input class="form-control" id="emp_phone" name="emp_phone" type="tel" value="${ emp.emp_phone }">
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">직급</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                         <c:choose>
             				<c:when test="${ emp.job_no == 1 }">
             					<select class="form-control" id="job_no" name="job_no">
@@ -234,49 +233,49 @@ table tr th, table tr td
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">이메일</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                           <input class="form-control" id="emp_email" name="emp_email" type="email" value="${ emp.emp_email }">
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">상사번호</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                           <input class="form-control" id="emp_mgr" name="emp_mgr" type="text" value="${ emp.emp_mgr }">
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">입사일</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                           <input class="form-control" id="emp_hiredate" name="emp_hiredate" type="date" value="${ emp.emp_hiredate }">
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">퇴사일</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                           <input class="form-control" id="emp_firedate" name="emp_firedate" type="date" value="${ emp.emp_firedate }">
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">담당지역</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                           <input class="form-control" id="city" name="city" type="text" value="${ emp.city }">
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                           <input class="form-control" id="county" name="county" type="text" value="${ emp.county }">
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                           <input class="form-control" id="village" name="village" type="text" value="${ emp.village }">
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">부서</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                         <c:choose>
             				<c:when test="${ emp.dept_no == 1 }">
             					<select class="form-control" id="dept_no" name="dept_no">
@@ -305,10 +304,9 @@ table tr th, table tr td
                              
                       <div class="ln_solid"></div>
                       <div class="form-group">
-                        <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">                          
-                          <button class="btn btn-primary" type="button">Cancel</button>
-                          <button class="btn btn-primary" type="reset">Reset</button>
-                          <button class="btn btn-success" type="submit" onclick="Regiemp()">Submit</button>                     
+                        <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                          <button class="btn btn-success" type="submit" onclick="Regiemp()">수정</button>                    
+                          <button class="btn btn-primary" type="button">취소</button>                     
                         </div>
                       </div>
 					</form>

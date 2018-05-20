@@ -19,5 +19,4 @@ public interface ClientService {
 	public abstract int deleteClient(int client_no);	// 고객정보삭제
 	public abstract ArrayList<Client> selectAccountClientList(int emp_no); //거래서 정보 조회
 
-
 }
