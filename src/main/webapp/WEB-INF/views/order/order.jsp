@@ -164,7 +164,7 @@
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
 								<div class="x_title">
-									<h2>거래처</h2>
+									<h2>거래처 정보</h2>
 									
 								<!-- client modal start -->
 									<div style="text-align:right">
@@ -189,7 +189,7 @@
 															<label class="col-sm-2 control-label">거래처명</label>
 																<div class="col-sm-10">	
 																	<div class="input-group">
-																		<input type="text" class="form-control"> <span class="input-group-btn">
+																		<input type="text" class="form-control" > <span class="input-group-btn">
 																			<button type="button" class="btn btn-primary">
 																				<i class="fa fa-search"></i>
 																			</button>
@@ -251,19 +251,19 @@
 										<div class="form-group">
 											<label class="col-sm-3 control-label">거래처명</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
-												<input type="text" class="form-control" placeholder="" value="거래처 이름">
+												<input type="text" class="form-control" placeholder="거래처명을 검색해주세요." name="client_name" value="">
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">담당자</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
-												<input type="text" class="form-control" placeholder="" value="담당자 이름">
+												<input type="text" class="form-control" placeholder="담당직원" value="" name="emp_name">
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">전화번호</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
-												<input type="text" class="form-control" placeholder="" value="전화번호 이름">
+												<input type="text" class="form-control" placeholder="연락처" value="" name="client_phone">
 											</div>
 										</div>
 										<div class="form-group">

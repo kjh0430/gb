@@ -158,24 +158,25 @@
 								</div>
 								<div class="x_content">
 									<br />
-									<form class="form-horizontal form-label-left input_mask">
-
-										<div class="form-group">
+									
+ 									<form class="form-horizontal form-label-left input_mask" action="insertDailywork.do" method="post">
+ 									
+										<div class="form-group" id="form_info">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">거래처명</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
-												<input type="text" class="form-control" id="client_com_name" placeholder="거래처를 선택해 주세요" readonly>
+												<input type="text" class="form-control" id="client_name" name="client_name" placeholder="거래처를 선택해 주세요" readonly>
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">방문시간</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
-												<input type="time" class="form-control">
+												<input type="time" class="form-control" value="now" id="daily_date" name="daily_date">
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">방문내용</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
-												<textarea class="form-control" rows="3"> </textarea>
+												<textarea class="form-control" rows="3" id="daily_comment" name="daily_comment"> </textarea>
 											</div>
 										</div>
 										<div class="ln_solid"></div>
@@ -225,6 +226,19 @@
 
 		$(function() {
 			//alert("성공!!!!!!!!!222");
+			$('input[type="time"][value="now"]').each(function(){  
+											  
+						var d = new Date(),        
+						 h = d.getHours(),
+						 m = d.getMinutes();
+						 s = d.getSeconds();
+						if(h < 10) h = '0' + h; 
+						if(m < 10) m = '0' + m; 
+												   
+						$(this).attr({
+						'value': h + ':' + m + ':' + s
+						});
+			}); 
 			$.ajax({
 						url : "locationInfo.do",
 						type : "post",
@@ -242,7 +256,7 @@
 							
 							//마크 표시에 필요한 배열 객체 
 							var loc = new Array(); 
-							var c_com_name = new Array();
+							var c_com_num = new Array();
 							
 							for ( var i in jsonObj.accountlist) {
 								loc[i] = {
@@ -254,7 +268,8 @@
 								
 								 points[i] = new daum.maps.LatLng(jsonObj.accountlist[i].client_loc_x
 										,jsonObj.accountlist[i].client_loc_y);  
-								 c_com_name[i] = jsonObj.accountlist[i].client_company;
+								 
+								 c_com_num[i] = jsonObj.accountlist[i].client_no;
 						
 							}
 							
@@ -298,7 +313,7 @@
 									    position:  positions[i].latlng,
 									    clickable: true // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
 									});
-									makeMark(i);
+									makeMarkName(i);
 									// 마커에 클릭이벤트를 등록합니다
 									 	 // 마커에 클릭이벤트를 등록합니다
 								 							
@@ -320,13 +335,26 @@
 									// 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
 									infowindow.open(map, marker); 
 								}
-								function makeMark(i){
+								function makeMarkName(i){
 								 	daum.maps.event.addListener(marker, 'click', function() {
+								 		
+								 	//alert("no ::::" + c_com_num[i]);
 								      // 마커 위에 인포윈도우를 표시합니다							     
-								     $('#client_com_name').val(positions[i].title);
-								     
+								     $('#client_name').val(positions[i].title);
+								     addInfo(i);
+								    /*  //jstl param으로 바꿀것...
+								     $("#form_info").prependTo("<input type='hidden' name='client_no' value='"+c_com_num[i]+"'>"); */
+								      
 								});
-							}
+								}
+								//방문 시간을 설정하는 함수
+								function addInfo(i){
+									
+										   $("#form_info").append("<input type='hidden' name='client_no' value='"+c_com_num[i]+"'>"
+										    		 +"<input type='hidden' name='emp_no' value='${loginEmp.emp_no}'>"); 
+		  			
+								}
+								
 						}
 					});
 		});

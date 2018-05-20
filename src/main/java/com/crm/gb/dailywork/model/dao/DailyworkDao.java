@@ -18,7 +18,7 @@ public class DailyworkDao {
 	
 	/** 방문일지 등록 메소드 Dao**/
 	public int insertDailywork(Dailywork dailywork) {
-		return sqlSession.insert("insertDailywork", dailywork);
+		return sqlSession.insert("dailyworkInsert", dailywork);
 	}
 
 	//영업일지 _ 방문일지 선택
