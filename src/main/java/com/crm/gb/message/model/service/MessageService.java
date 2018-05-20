@@ -10,5 +10,9 @@ public interface MessageService {
 
 	int insertMessage(Message message);
 
+	ArrayList<Message> selectReceiveMessage(Message message);
+
+	ArrayList<Message> selectSendMessage(Message message);
+
 	
 }

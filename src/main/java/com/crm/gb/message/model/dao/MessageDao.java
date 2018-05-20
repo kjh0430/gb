@@ -29,5 +29,16 @@ public class MessageDao {
 		
 		return result;
 	}
+	public ArrayList<Message> selectReceiveMessage(Message message) {
+		
+		
+		
+		return (ArrayList)sqlSession.selectList("selectReceiveMessage",message);
+	}
+	public ArrayList<Message> selectSendMessage(Message message) {
+		
+		
+		return (ArrayList)sqlSession.selectList("selectSendMessage",message);
+	}
 
 }
