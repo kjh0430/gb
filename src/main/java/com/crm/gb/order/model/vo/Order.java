@@ -1,8 +1,8 @@
-package com.crm.gb.order.vo;
+package com.crm.gb.order.model.vo;
 
 import org.springframework.stereotype.Component;
 
-@Component("order")
+/*@Component("order")*/
 public class Order {
 
 }

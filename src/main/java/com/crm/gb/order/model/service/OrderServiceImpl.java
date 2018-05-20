@@ -1,18 +1,18 @@
-package com.crm.gb.order.service;
+package com.crm.gb.order.model.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.crm.gb.order.dao.OrderDao;
+import com.crm.gb.order.model.dao.OrderDao;
 
 
 
-@Service("OrderService")
+/*@Service("OrderService")*/
 public class OrderServiceImpl {
 
 	
 	
-	@Autowired 
+	/*@Autowired 
 	private OrderDao orderDao;
-	
+	*/
 }
