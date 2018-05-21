@@ -170,7 +170,7 @@
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">방문시간</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
-												<input type="time" class="form-control" value="now" id="daily_time" name="daily_time">
+												<input type="time" class="form-control" value="now" id="daily_date" name="daily_date">
 											</div>
 										</div>
 										<div class="form-group">
@@ -211,12 +211,12 @@
 	<script src="resources/build/js/custom.min.js"></script>
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9847a2e4326a2ca39c99b754b2d4e80c"></script>
-		
+
 	<script type="text/javascript">
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
-			mapOption = {
-					center : new daum.maps.LatLng(37.503416, 127.034337), // 지도의 중심좌표
-					level :3
+		mapOption = {
+			center : new daum.maps.LatLng(37.503416, 127.034337), // 지도의 중심좌표
+			level : 3
 		// 지도의 확대 레벨
 		};
 
@@ -226,19 +226,19 @@
 
 		$(function() {
 			//alert("성공!!!!!!!!!222");
-			$('input[type="time"][value="now"]').each(function(){  
-											  
-						var d = new Date(),        
-						 h = d.getHours(),
-						 m = d.getMinutes();
-						 s = d.getSeconds();
-						if(h < 10) h = '0' + h; 
-						if(m < 10) m = '0' + m; 
-												   
-						$(this).attr({
-						'value': h + ':' + m + ':' + s
-						});
-			}); 
+			$('input[type="time"][value="now"]').each(function() {
+
+				var d = new Date(), h = d.getHours(), m = d.getMinutes();
+				s = d.getSeconds();
+				if (h < 10)
+					h = '0' + h;
+				if (m < 10)
+					m = '0' + m;
+
+				$(this).attr({
+					'value' : h + ':' + m + ':' + s
+				});
+			});
 			$.ajax({
 						url : "locationInfo.do",
 						type : "post",
@@ -247,125 +247,111 @@
 						},
 						dataType : "json",
 						success : function(obj) {
-						//	alert("성공!!!!!!!!!");
+							//	alert("성공!!!!!!!!!");
 							console.log(obj);
 							var objStr = JSON.stringify(obj);
 							var jsonObj = JSON.parse(objStr);
 							//중심좌표 재설정에 필요한 배열 객체
-							var points =new Array();
-							
+							var points = new Array();
+
 							//마크 표시에 필요한 배열 객체 
-							var loc = new Array(); 
+							var loc = new Array();
 							var c_com_num = new Array();
-							
+
 							for ( var i in jsonObj.accountlist) {
 								loc[i] = {
-										title : jsonObj.accountlist[i].client_company,
-										latlng : new daum.maps.LatLng(
-												jsonObj.accountlist[i].client_loc_x
-												,jsonObj.accountlist[i].client_loc_y)
-										};
-								
-								 points[i] = new daum.maps.LatLng(jsonObj.accountlist[i].client_loc_x
-										,jsonObj.accountlist[i].client_loc_y);  
-								 
-								 c_com_num[i] = jsonObj.accountlist[i].client_no;
-						
+									title : jsonObj.accountlist[i].client_company,
+									latlng : new daum.maps.LatLng(
+											jsonObj.accountlist[i].client_loc_x,
+											jsonObj.accountlist[i].client_loc_y)
+								};
+
+								points[i] = new daum.maps.LatLng(
+										jsonObj.accountlist[i].client_loc_x,
+										jsonObj.accountlist[i].client_loc_y);
+
+								c_com_num[i] = jsonObj.accountlist[i].client_no;
+
 							}
-							
+
 							var positions = new Array();
-							
-							for( var i in loc){
-								 positions[i]= loc[i];
+
+							for ( var i in loc) {
+								positions[i] = loc[i];
 							}
-							
-							
+
 							//지도 중심 좌표 재설정 
 							// 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
-							var bounds = new daum.maps.LatLngBounds();    
-							
-							
+							var bounds = new daum.maps.LatLngBounds();
+
 							for (var i = 0; i < points.length; i++) {
-							    // 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다							    
-							    // LatLngBounds 객체에 좌표를 추가합니다
-							    bounds.extend(points[i]);
+								// 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다							    
+								// LatLngBounds 객체에 좌표를 추가합니다
+								bounds.extend(points[i]);
 							}
-							
-							    // LatLngBounds 객체에 추가된 좌표들을 기준으로 지도의 범위를 재설정합니다
-							    // 이때 지도의 중심좌표와 레벨이 변경될 수 있습니다						
-							 map.setBounds(bounds);
-							
-							
-						
-							
-							
-							
+
+							// LatLngBounds 객체에 추가된 좌표들을 기준으로 지도의 범위를 재설정합니다
+							// 이때 지도의 중심좌표와 레벨이 변경될 수 있습니다						
+							map.setBounds(bounds);
 
 							//for (var i = 0; i < positions.length; i++) {
-	
-								// 마커를 생성합니다
-								for (var i = 0; i < positions.length; i++) {
-								
 
-									
-									
-									
-									var marker = new daum.maps.Marker({
-										map : map,
-									    position:  positions[i].latlng,
-									    clickable: true // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
-									});
-									makeMarkName(i);
-									// 마커에 클릭이벤트를 등록합니다
-									 	 // 마커에 클릭이벤트를 등록합니다
-								 							
-							
-									marker.setMap(map);
-							
-								
-									
-									//마커위에 인포윈도우 생성
-									var iwContent = '<div style="padding:5px;">'+positions[i].title+'</div>';// 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-							  		var iwPosition = positions[i].latlng; //인포윈도우 표시 위치입니다
-							  		//var p = positions[i].title;
-									var infowindow = new daum.maps.InfoWindow({
-									    position : iwPosition, 
-									    content : iwContent 
-									});
-								  
-								 
-									// 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
-									infowindow.open(map, marker); 
-								}
-								function makeMarkName(i){
-								 	daum.maps.event.addListener(marker, 'click', function() {
-								 		
-								 	//alert("no ::::" + c_com_num[i]);
-								      // 마커 위에 인포윈도우를 표시합니다							     
-								     $('#client_name').val(positions[i].title);
-								     addInfo(i);
-								    /*  //jstl param으로 바꿀것...
-								     $("#form_info").prependTo("<input type='hidden' name='client_no' value='"+c_com_num[i]+"'>"); */
-								      
+							// 마커를 생성합니다
+							for (var i = 0; i < positions.length; i++) {
+
+								var marker = new daum.maps.Marker({
+									map : map,
+									position : positions[i].latlng,
+									clickable : true
+								// 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
 								});
-								}
-								//방문 시간을 설정하는 함수
-								function addInfo(i){
-									
-										   $("#form_info").append("<input type='hidden' name='client_no' value='"+c_com_num[i]+"'>"
-										    		 +"<input type='hidden' name='emp_no' value='${loginEmp.emp_no}'>"); 
-		  			
-								}
-								
+								makeMarkName(i);
+								// 마커에 클릭이벤트를 등록합니다
+								// 마커에 클릭이벤트를 등록합니다
+
+								marker.setMap(map);
+
+								//마커위에 인포윈도우 생성
+								var iwContent = '<div style="padding:5px;">'
+										+ positions[i].title + '</div>';// 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+								var iwPosition = positions[i].latlng; //인포윈도우 표시 위치입니다
+								//var p = positions[i].title;
+								var infowindow = new daum.maps.InfoWindow({
+									position : iwPosition,
+									content : iwContent
+								});
+
+								// 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+								infowindow.open(map, marker);
+							}
+							function makeMarkName(i) {
+								daum.maps.event.addListener(marker, 'click',
+										function() {
+
+											//alert("no ::::" + c_com_num[i]);
+											// 마커 위에 인포윈도우를 표시합니다							     
+											$('#client_name').val(
+													positions[i].title);
+											addInfo(i);
+											/*  //jstl param으로 바꿀것...
+											 $("#form_info").prependTo("<input type='hidden' name='client_no' value='"+c_com_num[i]+"'>"); */
+
+										});
+							}
+							//방문 시간을 설정하는 함수
+							function addInfo(i) {
+
+								$("#form_info")
+										.append("<input type='hidden' name='client_no' value='"+c_com_num[i]+"'>"
+														+ "<input type='hidden' name='emp_no' value='${loginEmp.emp_no}'>");
+
+							}
+
 						}
 					});
 		});
-			
 
-
-
-			// 마커 이미지의 이미지 주소입니다
-
+		// 마커 이미지의 이미지 주소입니다
 	</script>
 
 </body>

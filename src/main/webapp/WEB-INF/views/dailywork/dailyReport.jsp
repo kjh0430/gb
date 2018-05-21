@@ -157,8 +157,6 @@
 	
 	$(function(){
 		document.getElementById("daily_date").valueAsDate = new Date();
-
-		
 		
 		selectVisit();	
 		

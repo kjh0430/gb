@@ -122,16 +122,6 @@ public class DailyworkController {
 		out.close();
 	}
 	
-	
-//	@RequestMapping(value="visit.do" , method=RequestMethod.GET)
-//	public String dailyVisit(Dailywork dailywork,Model model) {
-//		
-//		logger.info("방문일지 등록 메소드 실행!!!!!!");
-//		int result = dailyworkService.insertDailywork(dailywork);
-//		
-//		return "dailyreport/visit";
-//	}
-	
 	/** 방문일지 등록 메소드 **/
 	
 	@RequestMapping(value="insertDailywork.do", method=RequestMethod.POST)
@@ -140,9 +130,14 @@ public class DailyworkController {
 		SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy-MM-dd", Locale.KOREA );
 		Date currentTime = new Date ();
 		String mTime = mSimpleDateFormat.format ( currentTime );
-		//System.out.println ( mTime );
+		
+		System.out.println ( "현재 날짜 : " + mTime );
+		
 		String time = dailywork.getDaily_date();
 		
+		
+		System.out.println("currenttime : " + currentTime);
+		System.out.println ( "현재 시간 : " +  time );
 		
 		dailywork.setDaily_date(mTime +" "+time);
 		

@@ -16,28 +16,10 @@
 <!-- Font Awesome -->
 <link href="resources/vendors/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet">
-<!-- NProgress -->
-<link href="resources/vendors/nprogress/nprogress.css" rel="stylesheet">
-<!-- iCheck -->
-<link href="resources/vendors/iCheck/skins/flat/green.css"
-	rel="stylesheet">
-
-<!-- bootstrap-progressbar -->
-<link
-	href="resources/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css"
-	rel="stylesheet">
-<!-- JQVMap -->
-<link href="resources/vendors/jqvmap/dist/jqvmap.min.css"
-	rel="stylesheet" />
-<!-- bootstrap-daterangepicker -->
-<link
-	href="resources/vendors/bootstrap-daterangepicker/daterangepicker.css"
-	rel="stylesheet">
 
 <!-- Custom Theme Style -->
 <link href="resources/build/css/custom.min.css" rel="stylesheet">
 <link href="resources/css/main.css" rel="stylesheet">
-
 
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
@@ -119,12 +101,11 @@
 			});
 		
 	});
-//답장 확인 버튼 modal4 열기
+	//답장 확인 버튼 modal4 열기
 	function answerMessage(){
 		
-		$('#modal4').modal("show");
-	
-}
+		$('#modal4').modal("show");	
+	}
 	//쪽지 확인 창 닫기
 	function closeModal3(){
 		
@@ -235,8 +216,6 @@
 						+ "message :" + request.responseText + "\n"
 						+ "error :" + errorData);
 						}
-	
-		
 		});
 		
 		
@@ -477,18 +456,14 @@ display: none;
 																			</span>
 																		</div>
 																	</div>
-																	<label
-																		class="control-label col-md-3 col-sm-3 col-xs-12">제목</label>
+																	<label class="control-label col-md-3 col-sm-3 col-xs-12">제목</label>
 																	<div class="col-md-9 col-sm-9 col-xs-12">
-																		<div class="input-group">
+																		<div class="input-group" style="width:100%">
 																			<input type="text" class="form-control"
 																				name="message_title" id="message_title"
 																				placeholder="제목을 입력해주세요.">
 																		</div>
 																	</div>
-
-
-
 																	<div class="form-group">
 
 																		<label
@@ -708,12 +683,7 @@ display: none;
 	<script src="resources/vendors/jquery/dist/jquery.min.js"></script>
 	<!-- Bootstrap -->
 	<script src="resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-	<!-- FastClick -->
-	<script src="resources/vendors/fastclick/lib/fastclick.js"></script>
-	<!-- NProgress -->
-	<script src="resources/vendors/nprogress/nprogress.js"></script>
-	<!-- iCheck -->
-	<script src="resources/vendors/iCheck/icheck.min.js"></script>
+	
 	<!-- Datatables -->
 	<script
 		src="resources/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
@@ -739,9 +709,7 @@ display: none;
 		src="resources/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
 	<script
 		src="resources/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-	<script src="resources/vendors/jszip/dist/jszip.min.js"></script>
-	<script src="resources/vendors/pdfmake/build/pdfmake.min.js"></script>
-	<script src="resources/vendors/pdfmake/build/vfs_fonts.js"></script>
+
 
 	<!-- Custom Theme Scripts -->
 	<script src="resources/build/js/custom.min.js"></script>
