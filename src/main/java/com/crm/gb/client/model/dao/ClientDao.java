@@ -64,7 +64,11 @@ public class ClientDao {
 		return sqlSession.update("client.updateClientEmp", client);
 	}
 	
-	
+	/** 거래처 이름 검색 결과 리스트 메소드 **/
+	public ArrayList<Client> selectSearchAccount(String client_company){
+		
+		return (ArrayList)sqlSession.selectList("selectSearchAccount", client_company);
+	}
 	
 
 	
