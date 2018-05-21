@@ -23,6 +23,74 @@
     <!-- Custom Theme Style -->
     <link href="resources/build/css/custom.min.css" rel="stylesheet">
     <link href="resources/css/main.css" rel="stylesheet">
+    
+    <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript">
+	
+    /*
+    $(function(){
+    	
+    	var city = '${loginEmp.getCity()}';
+		var county = '${loginEmp.getCounty()}';
+		var village = '${loginEmp.getVillage()}';
+
+		var headers = {};
+		headers["Accept"]="application/json";
+		headers["Content-Type"]="application/json; charset=UTF-8";
+		headers["appKey"]="c73d9878-1921-4214-b7a2-1a0653b6c0a1";
+		
+		$.ajax({
+			type:'get',
+			headers:headers,
+			data:{city:city,county:county,village:village},
+			url:'https://api2.sktelecom.com/weather/current/hourly?version=1&callback=result',
+			async:false,
+			success : function(data){
+				console.log(data);
+				var todayDate = data["weather"]["hourly"][0]['timeRelease'];
+				var todayTemp = Math.round(data["weather"]["hourly"][0]['temperature']['tc']);
+				var todayMinTemp = Math.round(data["weather"]["hourly"][0]['temperature']['tmin']);
+				var todayMaxTemp = Math.round(data["weather"]["hourly"][0]['temperature']['tmax']);
+				var todayDesc = data["weather"]["hourly"][0]['sky']['name'];
+				var todayIcon = data["weather"]["hourly"][0]['sky']['code'];
+				var todayTimeRelease = data["weather"]["hourly"][0]['timeRelease'];
+										
+					$(".todayMinTemp").append(todayMinTemp);		
+					$(".todayMaxTemp").append(todayMaxTemp);		
+					$(".todayTemp").append(todayTemp);
+					$(".todayDesc").html(todayDesc);
+				var icon;
+				switch(todayIcon){
+					case "SKY_O01" : icon = "<img src='resources/images/weather/SKY_O01.png'/>";break;
+					case "SKY_O02" : icon = "<img src='resources/images/weather/SKY_O02.png'/>";break;
+					case "SKY_O03" : icon = "<img src='resources/images/weather/SKY_O03.png'/>";break;
+					case "SKY_O04" : icon = "<img src='resources/images/weather/SKY_O04.png'/>";break;
+					case "SKY_O05" : icon = "<img src='resources/images/weather/SKY_O05.png'/>";break;
+					case "SKY_O06" : icon = "<img src='resources/images/weather/SKY_O06.png'/>";break;
+					case "SKY_O07" : icon = "<img src='resources/images/weather/SKY_O07.png'/>";break;
+					case "SKY_O08" : icon = "<img src='resources/images/weather/SKY_O08.png'/>";break;
+					case "SKY_O09" : icon = "<img src='resources/images/weather/SKY_O09.png'/>";break;
+					case "SKY_O10" : icon = "<img src='resources/images/weather/SKY_O10.png'/>";break;
+					case "SKY_O11" : icon = "<img src='resources/images/weather/SKY_O11.png'/>";break;
+					case "SKY_O12" : icon = "<img src='resources/images/weather/SKY_O12.png'/>";break;
+					case "SKY_O13" : icon = "<img src='resources/images/weather/SKY_O13.png'/>";break;
+					case "SKY_O14" : icon = "<img src='resources/images/weather/SKY_O14.png'/>";break;				
+				}
+				$(".weather-icon").append(icon);
+				},
+				complete: function(){
+				},
+				error	: function(xhr, status, error){
+					alert(error);
+				}
+			
+		}); //end of ajax
+		
+	});    
+	*/
+	</script>	
+    
+    
   </head>
 
   <body class="nav-md">
@@ -130,22 +198,6 @@
                             <p>
                               <input type="checkbox" class="flat"> Food truck fixie locavors mcsweeney</p>
                           </li>
-                          <li>
-                            <p>
-                              <input type="checkbox" class="flat"> Food truck fixie locavors mcsweeney</p>
-                          </li>
-                          <li>
-                            <p>
-                              <input type="checkbox" class="flat"> Create email address for new intern</p>
-                          </li>
-                          <li>
-                            <p>
-                              <input type="checkbox" class="flat"> Have IT fix the network printer</p>
-                          </li>
-                          <li>
-                            <p>
-                              <input type="checkbox" class="flat"> Copy backups to offsite location</p>
-                          </li>
                         </ul>
                       </div>
                     </div>
@@ -157,13 +209,13 @@
 	          <div class="col-md-6 col-sm-6 col-xs-12">
 	            <div class="x_panel">
 	              <div class="x_title">
-	                <h2>Daily active users <small>Sessions</small></h2>
+	                <h2>오늘의 날씨</h2>
 	                <div class="clearfix"></div>
 	              </div>
 	              <div class="x_content">
 	                <div class="row">
 	                  <div class="col-sm-12">
-	                    <div class="temperature"><b>Monday</b>, 07:30 AM
+	                    <div class="temperature" style="margin-bottom:5px;"><b>현재날짜들어갈 부분</b>, 지역들어갈 부분
 	                      <span>F</span>
 	                      <span><b>C</b></span>
 	                    </div>
@@ -171,19 +223,22 @@
 	                </div>
 	                <div class="row">
 	                  <div class="col-sm-4">
-	                    <div class="weather-icon">
-	                      <canvas height="84" width="84" id="partly-cloudy-day"></canvas>
+	                    <div class="weather-icon" style="padding-left:10px;">
+	                      
 	                    </div>
 	                  </div>
 	                  <div class="col-sm-8">
 	                    <div class="weather-text">
-	                      <h2>Texas <br><i>Partly Cloudy Day</i></h2>
+	                      <h2 class="degrees todayTemp">현재기온 : </h2>
+	                      <h2 class="todayDesc"></h2>
 	                    </div>
 	                  </div>
 	                </div>
 	                <div class="col-sm-12">
 	                  <div class="weather-text pull-right">
-	                    <h3 class="degrees">23</h3>
+	                  	<img src="resources/images/weather/thermo.png" style="width:12px;"/>&nbsp;&nbsp;&nbsp; 
+	                    <h4 class="degrees todayMinTemp" style="display:inline-block">최저기온 : </h4> /
+	                    <h4 class="degrees todayMaxTemp" style="display:inline-block">최고기온 : </h4>
 	                  </div>
 	                </div>	
 	                <div class="clearfix"></div>
@@ -321,4 +376,5 @@
     <script src="resources/build/js/custom.min.js"></script>
 	
   </body>
+  
 </html>

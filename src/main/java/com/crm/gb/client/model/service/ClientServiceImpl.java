@@ -82,5 +82,16 @@ public class ClientServiceImpl implements ClientService{
 		return 0;
 	}
 	
+	/** 거래처 이름 검색 결과 리스트 메소드 **/
+	public ArrayList<Client> selectSearchAccount(String client_company){
+		return clientDao.selectSearchAccount(client_company);
+	}
 	
+	
+	/** 방문일지용 고객정보 조회 메소드 */
+	@Override
+	public ArrayList<Client> selectAllAccountClient(int emp_no) {
+		return clientDao.selectAllAccountClient(emp_no);
+	}
+		
 }

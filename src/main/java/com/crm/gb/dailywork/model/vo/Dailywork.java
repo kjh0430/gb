@@ -1,24 +1,26 @@
 package com.crm.gb.dailywork.model.vo;
 
-import java.sql.Date;
+
 
 import org.springframework.stereotype.Component;
 
 @Component("Dailywork")
 public class Dailywork implements java.io.Serializable{
 	
-	private static final long serialVersionUID = 1111L;
+	private static final long serialVersionUID = 111L;
 
 	private int dailywork_no;
 	private int client_no;
 	private int emp_no;
 	private String daily_comment;
-	private Date daily_date;
-	private String client_name;
+	private String daily_date;
+	private String client_company;
+	private String client_loc_x;
+	private String client_loc_y;
 	
 	public Dailywork() {}
 
-	public Dailywork(int dailywork_no, int client_no, int emp_no, String daily_comment, Date daily_date) {
+	public Dailywork(int dailywork_no, int client_no, int emp_no, String daily_comment, String daily_date) {
 		super();
 		this.dailywork_no = dailywork_no;
 		this.client_no = client_no;
@@ -59,11 +61,11 @@ public class Dailywork implements java.io.Serializable{
 		this.daily_comment = daily_comment;
 	}
 
-	public Date getDaily_date() {
+	public String getDaily_date() {
 		return daily_date;
 	}
 
-	public void setDaily_date(Date daily_date) {
+	public void setDaily_date(String daily_date) {
 		this.daily_date = daily_date;
 	}
 
@@ -71,15 +73,30 @@ public class Dailywork implements java.io.Serializable{
 		return serialVersionUID;
 	}
 
-	public String getClient_name() {
-		return client_name;
+
+	public String getClient_company() {
+		return client_company;
 	}
 
-	public void setClient_name(String client_name) {
-		this.client_name = client_name;
+	public void setClient_company(String client_company) {
+		this.client_company = client_company;
+	}
+
+	public String getClient_loc_x() {
+		return client_loc_x;
+	}
+
+	public void setClient_loc_x(String client_loc_x) {
+		this.client_loc_x = client_loc_x;
+	}
+
+	public String getClient_loc_y() {
+		return client_loc_y;
+	}
+
+	public void setClient_loc_y(String client_loc_y) {
+		this.client_loc_y = client_loc_y;
 	}
 	
 	
-	
-
 }

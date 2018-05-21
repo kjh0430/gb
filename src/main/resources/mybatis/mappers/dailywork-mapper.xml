@@ -18,29 +18,23 @@
 	
 	<select id="selectVisit" parameterType="Dailywork" resultType="dailywork">
 		<![CDATA[
-			select dw.dailywork_no,c.client_name,dw.emp_no,dw.daily_comment 
-			from dailywork dw,client c where dw.client_no = c.client_no and dw.emp_no = #{emp_no} 
-			and dw.daily_date like sysdate
-		]]>
-		
+			select dw.dailywork_no,dw.client_no,to_char(dw.daily_date,'hh24:mi') as daily_date,c.client_company,dw.emp_no,dw.daily_comment,c.client_loc_y,c.client_loc_x  
+			from dailywork dw,client c where dw.client_no = c.client_no 
+			and dw.emp_no = #{emp_no} and to_char(daily_date,'yyyy-mm-dd') like #{daily_date}
+			order by daily_date
+		]]>		
 	</select>
 	
 	<insert id="dailyworkInsert" parameterType="Dailywork">
 		<![CDATA[
-			
+			insert into dailywork values(
+			(select max(dailywork_no)+1 from dailywork), #{client_no}, #{emp_no}, #{daily_comment}, to_date(#{daily_date},'yyyy-mm-dd hh24:mi:ss'))
 		]]>
-		
+
 	</insert>
 	
 	
 
 
 </mapper>
-			<!-- <choose>
-			    <when test="daily_date != null">
-			      AND dw.daily_date like #{daily_date}
-			    </when>
-			    <otherwise>
-			      and dw.daily_date like sysdate
-			    </otherwise>
-		  	</choose> -->
+			
