@@ -9,7 +9,7 @@
 			select max(product_no)+1 from product
 		</selectKey>
 		<![CDATA[
-		     insert into product values(${product_no},#{product_name},#{product_price},#{product_availavility},#{product_amount},
+		     insert into product values(${product_no},#{product_name},#{product_price},#{product_availability},#{product_amount},
 		     #{product_comment},sysdate,default)
 	     ]]>
 	</insert>

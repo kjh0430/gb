@@ -66,10 +66,10 @@ public class ProductController {
 	public ModelAndView insertProduct(Product product,ModelAndView mv,HttpServletRequest request,
 			MultipartHttpServletRequest mtfRequest) {
 				
-		if(product.getProduct_availavility().equals("sale_n")) {
-			product.setProduct_availavility("N");
+		if(product.getProduct_availability().equals("sale_n")) {
+			product.setProduct_availability("N");
 		}else {
-			product.setProduct_availavility("Y");
+			product.setProduct_availability("Y");
 		}		
 		//System.out.println(product);
 		
