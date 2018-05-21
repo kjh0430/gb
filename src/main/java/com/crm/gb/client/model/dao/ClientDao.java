@@ -64,8 +64,11 @@ public class ClientDao {
 		return sqlSession.update("client.updateClientEmp", client);
 	}
 	
-	
-	
+	/** 방문일지용 모든 거래처 정보 확인 메소드 Dao **/
+	public ArrayList<Client> selectAllAccountClient(int emp_no){
+		
+		return (ArrayList)sqlSession.selectList("selectAllAccountClient", emp_no);
+	}
 
 	
 }

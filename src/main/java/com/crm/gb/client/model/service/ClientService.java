@@ -18,5 +18,6 @@ public interface ClientService {
 	public abstract int updateClientEmp(Client client);		// 고객담당 사원정보변경
 	public abstract int deleteClient(int client_no);	// 고객정보삭제
 	public abstract ArrayList<Client> selectAccountClientList(int emp_no); //거래서 정보 조회
+	ArrayList<Client> selectAllAccountClient(int emp_no); // 방문일지용 거래처목록
 
 }
