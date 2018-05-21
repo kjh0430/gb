@@ -11,6 +11,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="images/favicon.ico" type="image/ico" />
 
+<!-- 지도 스크립트 -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9b9e69b801fea9fcd5736922a07d3042&libraries=services"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9b9e69b801fea9fcd5736922a07d3042"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f99f3844ac8886eed3b0155cb0041a70"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f99f3844ac8886eed3b0155cb0041a70&libraries=services,clusterer,drawing"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fcb9e8376572459c3de1e762d06d382a&libraries=services,clusterer,drawing"></script>
+
 <title>고객등록</title>
 
 <!-- Bootstrap -->
@@ -62,7 +69,139 @@
 		float:right;
 		display:inline-block;
 	}
+	
+    .bAddr {
+    	padding: 5px;
+    	text-overflow: ellipsis;
+    	overflow: hidden;
+    	white-space: nowrap;
+    }
+	
 </style>
+
+	<!-- 다음지도 -->
+							   				
+	<script>
+		$(function(){
+			var loc_y="";	//위도정보
+			var loc_x="";	//경도정보
+			var getAddr="";	//클릭한 주소명
+			
+				$('#searchMap').on('click', function(){
+					var container = document.getElementById('searchAddr');
+					var options = {
+						center: new daum.maps.LatLng(37.4990734,127.0317662),
+						level: 3
+					};
+					
+					$("#myModal").on('shown.bs.modal', function () {
+						//지도를 생성합니다
+						var map = new daum.maps.Map(container, options);
+						
+						// 주소-좌표 변환 객체를 생성합니다
+			   		  	 var geocoder = new daum.maps.services.Geocoder();
+
+
+						// 마커가 표시될 위치입니다 
+						//var markerPosition  = new daum.maps.LatLng(37.4989885, 127.0306385); 
+						// 마커를 생성합니다
+						var marker = new daum.maps.Marker();
+						 infowindow = new daum.maps.InfoWindow({zindex:1}); // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
+						
+							//marker.setMap(map);
+						
+						// 지도에 클릭 이벤트를 등록합니다
+						// 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
+							// 지도를 클릭했을 때 클릭 위치 좌표에 대한 주소정보를 표시하도록 이벤트를 등록합니다
+							daum.maps.event.addListener(map, 'click', function(mouseEvent) {
+							    searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
+							    	
+							    	// 클릭한 위도, 경도 정보를 가져옵니다 
+									loc_y = mouseEvent.latLng.getLat();
+									loc_x = mouseEvent.latLng.getLng();
+									
+									//alert(loc_y + "\n" + loc_x);
+							    	
+							        if (status === daum.maps.services.Status.OK) {
+							            var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
+							            detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
+							            
+							            getAddr = result[0].address.address_name;
+							            //alert("받아온 지번주소 : "+getAddr);
+							            var content = '<div class="bAddr">' +
+							                            detailAddr + 
+							                        '</div>';
+
+							            // 마커를 클릭한 위치에 표시합니다 
+							            marker.setPosition(mouseEvent.latLng);
+							            marker.setMap(map);
+			
+							            // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
+							            infowindow.setContent(content);
+							            infowindow.open(map, marker);
+							        }   
+							    });
+							});//지도에 마우스 클릭
+
+				   		         
+				$('#searchKeywordBtn').on('click', function(){
+					//alert($('#searchKeywordText').val());
+					
+			   		// 장소 검색 객체를 생성합니다
+			   		var ps = new daum.maps.services.Places(); 
+			   	
+			   		// 키워드로 장소를 검색합니다
+			   		ps.keywordSearch(""+$('#searchKeywordText').val()+"", placesSearchCB); 
+
+			   		// 키워드 검색 완료 시 호출되는 콜백함수 입니다
+			   		function placesSearchCB (data, status, pagination) {
+			   		    if (status === daum.maps.services.Status.OK) {
+
+			   		        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+			   		        // LatLngBounds 객체에 좌표를 추가합니다
+			   		        var bounds = new daum.maps.LatLngBounds();
+
+			   		        for (var i=0; i<data.length; i++) {
+			   		            bounds.extend(new daum.maps.LatLng(data[i].y, data[i].x));
+			   		        }       
+
+			   		        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+			   		        map.setBounds(bounds);
+			   		        
+			   		    } 
+			   		}
+				});	// 검색하기 버튼클릭
+				
+				//검색완료 확인버튼 클릭시 실행될 메소드
+				$('#searchConfirm').on('click', function(){
+					$('#search_client_addr').val(getAddr);
+					$('input[name=client_loc_y]').val(loc_y);
+					$('input[name=client_loc_x]').val(loc_x);
+					
+				});
+				//검색창 취소시 실행메소드
+				$('#searchCancel').on('click', function(){
+					$('#search_client_addr').val("");
+					$('input[name=client_loc_y]').val("");
+					$('input[name=client_loc_x]').val("");
+				});
+				
+				function searchAddrFromCoords(coords, callback) {
+				    // 좌표로 행정동 주소 정보를 요청합니다
+				    geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);         
+				}
+				
+				function searchDetailAddrFromCoords(coords, callback) {
+				    // 좌표로 법정동 상세 주소 정보를 요청합니다
+				    geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
+				}
+				
+						
+				}); //모달창에서 지도보여주기
+		}); // 주소검색을 누름
+	});	//onload
+	
+	</script>
 
 
 </head>
@@ -113,8 +252,8 @@
 										class="form-horizontal form-label-left">
 									
 										<input type="hidden" name="emp_no" value="${ loginEmp.emp_no }">
-										<input type="hidden" name="client_loc_x" value="">
-										<input type="hidden" name="client_loc_y" value="">
+										<input type="hidden" name="client_loc_x" value="$('input[name=client_loc_y]').val()">
+										<input type="hidden" name="client_loc_y" value="$('input[name=client_loc_y]').val()">
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12"
 												for="client_name">고객명 *
@@ -165,7 +304,8 @@
 												for="client_addr">주소 *
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<input name="client_addr" type="tel" id="client_addr" style="width:75%"
+												<input name="client_addr" type="text" id="search_client_addr" 
+													style="width:75%"
 													class="form-control col-md-7 col-xs-12" required>
 												<button id="searchMap" type="button" class="btn btn-primary" style="margin-left:10px;float:right" data-toggle="modal" data-target="#myModal">검색</button>	
 													
@@ -207,7 +347,7 @@
 											<div class="col-md-6 col-sm-6 col-xs-12" >
 											<ul class="c_file">
 												<li id="cFile-0">
-													<input type="file" id="firstFile" name="client_file" class="form-control">
+													<input type="file" id="firstFile" name="client_original_file" class="form-control">
 													<a href="javascript:resetFile()" title="삭제">&nbsp;<i class='fa fa-times'></i></a>	
 													<input type="button" class="btn btn-dark add_btn" onclick="addFile()" value="추가"/>
 												</li>
@@ -237,9 +377,9 @@
 										        <h4 class="modal-title" id="myModalLabel">주소검색</h4>
 										        
 										      <!-- 검색창 -->	
-										      	<input type="text">
+										      	<input id="searchKeywordText" type="text">
 										      	<button id="searchKeywordBtn" type="button" class="btn btn-primary" style="margin-left:10px">검색</button>
-										      	
+										      	<span id="centerAddr"></span>
 										      </div><!-- modal heder end div -->	
 										      
 										      <div class="modal-body">
@@ -247,58 +387,12 @@
 										      <!-- 지도부분 시작 -->
 										     	<div id="searchAddr" style="width:100%;height:400px;"></div>
 										     	
-							   				  <!-- 지도 스크립트 -->
-									     	 <!-- 다음지도 -->
-										  	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f99f3844ac8886eed3b0155cb0041a70"></script>
-										  	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f99f3844ac8886eed3b0155cb0041a70&libraries=services,clusterer,drawing"></script>
-											<script>
-												$(function(){
-														$('#searchMap').on('click', function(){
-															
-															var container = document.getElementById('searchAddr');
-															var options = {
-																center: new daum.maps.LatLng(37.4990734,127.0317662),
-																level: 3
-															};
-															
-															$("#myModal").on('shown.bs.modal', function () {
-																//지도를 생성합니다
-																var map = new daum.maps.Map(container, options);
-																
-
-																// 마커가 표시될 위치입니다 
-																var markerPosition  = new daum.maps.LatLng(37.4989885, 127.0306385); 
-																// 마커를 생성합니다
-																
-																var marker = new daum.maps.Marker({
-																    position: markerPosition
-																});
-																
-																	marker.setMap(map);
-																
-																// 지도에 클릭 이벤트를 등록합니다
-																// 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
-																daum.maps.event.addListener(map, 'click', function(mouseEvent) {  
-																
-																	// 클릭한 위도, 경도 정보를 가져옵니다 
-																    var click = mouseEvent.latLng;
-																	// 클릭한 위치로 마커위치 이동
-																    marker.setPosition(click);
-																
-													   		 }); //지도에 마우스 클릭
-																	
-																
-																
-														}); //모달창에서 지도보여주기
-												}); // 주소검색을 누름
-											});	//onload
-											</script>
 										       <!-- 지도부분 끝 -->
 										       
 										      </div>
 										      <div class="modal-footer">
-										        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-										        <button id="" type="submit" class="btn btn-primary" data-dismiss="modal">확인</button>
+										        <button id="searchCancel" type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+										        <button id="searchConfirm" type="submit" class="btn btn-primary" data-dismiss="modal">확인</button>
 										      </div>
 										    </div>
 										  </div>

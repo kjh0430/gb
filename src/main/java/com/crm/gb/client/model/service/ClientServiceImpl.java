@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.crm.gb.client.model.dao.ClientDao;
 import com.crm.gb.client.model.vo.Client;
+import com.crm.gb.client.model.vo.ClientFile;
 import com.crm.gb.emp.model.vo.Emp;
 
 @Service("clientService")
@@ -72,6 +73,13 @@ public class ClientServiceImpl implements ClientService{
 	@Override
 	public ArrayList<Client> selectAccountClientList(int emp_no) {
 		return clientDao.selectAccountClient(emp_no);
+	}
+	
+	/** 고객관련 파일 추가 메소드 */
+	@Override
+	public int insertClientFile(ClientFile clientFile) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	/** 거래처 이름 검색 결과 리스트 메소드 **/
