@@ -15,7 +15,6 @@
 		<result column="client_email" property="client_email"/>
 		<result column="client_phone" property="client_phone"/>
 		<result column="client_addr" property="client_addr"/>
-
 	</resultMap>
 
 	<!-- 고객정보 상세보기 -->
