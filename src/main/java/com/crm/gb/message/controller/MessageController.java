@@ -2,9 +2,14 @@ package com.crm.gb.message.controller;
 
 
 
+
+
 import java.io.IOException; 
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -35,7 +40,7 @@ public class MessageController {
 		
 	}
 	
-	
+	//사원 검색
 	@RequestMapping(value="searchEmp.do" ,method=RequestMethod.POST)
 	@ResponseBody
 	public void searchEmp(@RequestParam(name="searchName") String empName,HttpServletResponse  response) throws IOException {
@@ -74,21 +79,140 @@ public class MessageController {
 	
 	}
 	
-	
+	//메시지 보내기
 	@RequestMapping(value="sub.do",method=RequestMethod.POST)
 	@ResponseBody
-			public void submitMessage(Message message,HttpServletResponse response) throws IOException {
+			public void submitMessage(Message message,HttpServletResponse response,@RequestParam("no") int no) throws IOException {
 		System.out.println("보내는사람 번호"+message.getMessage_from_no());
 		System.out.println("받는사람 번호"+message.getMessage_to_no());
 		System.out.println("제목"+message.getMessage_title());
 		System.out.println("내용"+message.getMessage_content());
+		System.out.println("no"+no);
 		
+		
+		SimpleDateFormat format=new SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.KOREA);
+		Date date=new Date();
+		Date time=new Date(date.getTime());
+		String getdate=format.format(time);
+		System.out.println(getdate);
+		
+		
+		message.setMessage_date(getdate);
+		
+		int result=MessageService.insertMessage(message);
 	
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out=response.getWriter();
-		out.append("ok");
+		out.append("메시지가 성공적으로 전송되었습니다.");
 		out.flush();
 		out.close();
+	}
+	//받은 메시지함
+	@RequestMapping(value="getMessage.do",method=RequestMethod.GET)
+	public void getMessage(Message message ,HttpServletResponse  response) throws IOException {
+		
+		
+		ArrayList<Message> receiveMessage=MessageService.selectReceiveMessage(message);
+		
+JSONArray jarr=new JSONArray();
+
+		for(Message msg : receiveMessage) {
+			
+			JSONObject jsonobject=new JSONObject();
+			
+			System.out.println("받은 메시지함:"+msg.getEmp_name()+","+msg.getMessage_from_no());
+			jsonobject.put("from_empName",msg.getEmp_name());
+			jsonobject.put("from_empNo",msg.getMessage_from_no());
+			jsonobject.put("message_title",msg.getMessage_title());
+			jsonobject.put("message_date",msg.getMessage_date());
+			jsonobject.put("message_content", msg.getMessage_content());
+			
+			jarr.add(jsonobject);
+			
+			}
+		
+		JSONObject send=new JSONObject();
+		send.put("list",jarr);
+		
+		
+		
+	
+		response.setContentType("application/json; charset=utf-8");	
+		System.out.println("messageController:"+send);
+		PrintWriter out=response.getWriter();
+		out.println(send.toJSONString());
+		out.flush();
+		out.close();
+		System.out.println("컨트롤러 나감");
+	}
+	
+	
+	//보낸 메시지함
+	@RequestMapping(value="sendMessage.do",method=RequestMethod.GET)
+	public void sendMessage(Message message ,HttpServletResponse  response) throws IOException {
+		
+		
+		ArrayList<Message> sendMessage=MessageService.selectSendMessage(message);
+		
+JSONArray jarr=new JSONArray();
+
+		for(Message msg : sendMessage) {
+			
+			JSONObject jsonobject=new JSONObject();
+			System.out.println("보낸 메시지함"+msg.getEmp_name()+","+msg.getMessage_to_no());
+			jsonobject.put("to_empName",msg.getEmp_name());
+			jsonobject.put("to_emp_no", msg.getMessage_to_no());
+			jsonobject.put("message_title",msg.getMessage_title());
+			jsonobject.put("message_date",msg.getMessage_date());
+			jsonobject.put("message_content", msg.getMessage_content());
+			
+			jarr.add(jsonobject);
+			
+			}
+		
+		JSONObject send=new JSONObject();
+		send.put("list",jarr);
+		
+		
+		
+	
+		response.setContentType("application/json; charset=utf-8");	
+		System.out.println("messageController:"+send);
+		PrintWriter out=response.getWriter();
+		out.println(send.toJSONString());
+		out.flush();
+		out.close();
+	}
+	@RequestMapping(value="sendAnswer.do",method=RequestMethod.POST)
+
+	
+	public void sendAnswer(Message message,HttpServletResponse response) throws IOException {
+		System.out.println("보내는사람 번호"+message.getMessage_from_no());
+		System.out.println("받는사람 번호"+message.getMessage_to_no());
+		System.out.println("제목"+message.getMessage_title());
+		System.out.println("내용"+message.getMessage_content());
+	
+		
+		
+		SimpleDateFormat format=new SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.KOREA);
+		Date date=new Date();
+		Date time=new Date(date.getTime());
+		String getdate=format.format(time);
+		System.out.println(getdate);
+		
+		
+		message.setMessage_date(getdate);
+		
+		int result=MessageService.insertMessage(message);
+	
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out=response.getWriter();
+		out.append("메시지가 전송되었습니다.");
+		out.flush();
+		out.close();
+		
+		
+		
 	}
 	
 }

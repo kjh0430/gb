@@ -170,13 +170,13 @@
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">방문시간</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
-												<input type="time" class="form-control" value="now" id="daily_date" name="daily_date">
+												<input type="time" class="form-control" value="now" id="daily_time" name="daily_time">
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">방문내용</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
-												<textarea class="form-control" rows="3" id="daily_comment" name="daily_comment"> </textarea>
+												<textarea class="form-control" rows="3" id="daily_comment" name="daily_comment"></textarea>
 											</div>
 										</div>
 										<div class="ln_solid"></div>
@@ -297,6 +297,8 @@
 							
 							
 						
+							
+							
 							
 
 							//for (var i = 0; i < positions.length; i++) {

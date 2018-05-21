@@ -80,4 +80,10 @@ public class ClientServiceImpl implements ClientService{
 	}
 	
 	
+	/** 방문일지용 고객정보 조회 메소드 */
+	@Override
+	public ArrayList<Client> selectAllAccountClient(int emp_no) {
+		return clientDao.selectAllAccountClient(emp_no);
+	}
+		
 }

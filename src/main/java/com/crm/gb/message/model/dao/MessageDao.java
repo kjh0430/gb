@@ -18,10 +18,27 @@ public class MessageDao {
 	private SqlSessionTemplate sqlSession;
 	public ArrayList<Message> selectSearch(String empName) {
 		
-		sqlSession.selectList("selectEmp",empName);
-		
 		
 		return (ArrayList)sqlSession.selectList("selectEmp",empName);
+	}
+	public int insertMessage(Message message) {
+		
+		int result=0;
+		
+		result= sqlSession.insert("insertMessage",message);
+		
+		return result;
+	}
+	public ArrayList<Message> selectReceiveMessage(Message message) {
+		
+		
+		
+		return (ArrayList)sqlSession.selectList("selectReceiveMessage",message);
+	}
+	public ArrayList<Message> selectSendMessage(Message message) {
+		
+		
+		return (ArrayList)sqlSession.selectList("selectSendMessage",message);
 	}
 
 }

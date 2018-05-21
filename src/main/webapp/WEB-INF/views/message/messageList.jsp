@@ -41,100 +41,234 @@
 
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
+	$(function() {
 
-/* $(function(){
-	$('#getvalues td:nth-child(3)').hide();
-}) */
-
-
-	function searchEmp() {
-
-	
-				$.ajax({
-					url : "searchEmp.do",
-					type : "post",
-					dataType : "json",
+		//받은 쪽지함
+			$.ajax({
+					url : "getMessage.do",
 					data : {
-						searchName : $('#searchName').val()
+						message_to_no : "${loginEmp.emp_no}"
 					},
-					success : function(obj) {
+					type : "get",
+					success : function(data) {
+						
+						var jsonSt = JSON.stringify(data);
+						var json = JSON.parse(jsonSt);
+						var size = Object.keys(json.list).length;
 
-						var objStr = JSON.stringify(obj);
-						var jsonl = JSON.parse(objStr);
-						var value = "<table class='table table-hover' id='getvalues'><thead><tr><th>이름</th><th>직급</th><th>부서</th><th>e-mail</th><th>사원번호</th></tr></thead><tbody>";
-					
-						for ( var i in jsonl.list) {
+						var values = "<table class='table table-hover' id='table_rec'><thead><tr><th>보낸사람</th><th>제목</th><th>받은날짜</th><th>사번</th><th>내용</th></thead>"
+								+ "<tbody>"
 
-							value += "<tr onclick='selectEmp(this);' style='cusor:hand'><td>" + jsonl.list[i].emp_name
-									+ "</td><td>" + jsonl.list[i].dept_name
-									+ "</td><td>" + jsonl.list[i].emp_job
-									+ "</td><td>" + jsonl.list[i].emp_email
-									+"</td><td>"+jsonl.list[i].emp_no
-									+ "</td></tr>";
+						for ( var i in json.list) {
+
+							values += "<tr onclick='confirm(this);' style='cusor:hand'><td>" + json.list[i].from_empName
+									+ "</td><td>" + json.list[i].message_title
+									+ "</td><td>" + json.list[i].message_date
+									+ "</td><td>"+json.list[i].from_empNo+"</td><td>"
+												+json.list[i].message_content+"</td></tr>";
+
 						}
-						
-						
-						value += "</tbody></table>";
-							
-							
-						 	$('#myModal2').modal("show"); 
-						 	$('#searchTable').html(value);
-						 	
-					}/* ,error : function(request, status, errorData) {
-								alert("error code : " + request.status + "\n"
-										+ "message :" + request.responseText + "\n"
-										+ "error :" + errorData);
-							} */
 
+						values += "</tbody></table>"
+
+						$('#receive_msg').html(values);
+
+					},
+					error : function(request, status, errorData) {
+						alert("error code : " + request.status + "\n"
+								+ "message :" + request.responseText + "\n"
+								+ "error :" + errorData);
+					}
 				});
 
-	}
+		//보낸쪽지함
+			$.ajax({
+				url : "sendMessage.do",
+				data : {
+					message_from_no : "${loginEmp.emp_no}"
+				},
+				type : "get",
+				success : function(data) {
+				
+					var jsonSt = JSON.stringify(data);
+					var json = JSON.parse(jsonSt);
+					var size = Object.keys(json.list).length;
 
+					var values = "<table class='table' id='table_sm'><thead><tr><th>받은사람</th><th>제목</th><th>받은날짜</th><thead>"
+							+ "<tbody>"
+
+					for ( var i in json.list) {
+
+						values += "<tr><td>" + json.list[i].to_empName
+								+ "</td><td>" + json.list[i].message_title
+								+ "</td><td>" + json.list[i].message_date
+								+ "</td></tr>";
+
+					}
+
+					values += "</tbody></table>"
+
+					$('#send_msg').html(values);
+
+				},
+				error : function(request, status, errorData) {
+					alert("error code : " + request.status + "\n"
+							+ "message :" + request.responseText + "\n"
+							+ "error :" + errorData);
+				}
+			});
+		
+	});
+//답장 확인 버튼 modal4 열기
+	function answerMessage(){
+		
+		$('#modal4').modal("show");
 	
-	function selectEmp(obj){
+}
+	//쪽지 확인 창 닫기
+	function closeModal3(){
+		
+		$('#modal3').modal("hide");
+	}
+	//답장 창 닫기
+	function closeModal4(){
+		$('#closeModal4').modal("hide");
+	}
+	
+	
+	//사원 검색하기
+	function searchEmp() {
+
+		$.ajax({
+			url : "searchEmp.do",
+			type : "post",
+			dataType : "json",
+			data : {
+			searchName : $('#searchName').val()
+				},
+				success : function(obj) {
+					var objStr = JSON.stringify(obj);
+					var jsonl = JSON.parse(objStr);
+					var value = "<table class='table table-hover' id='getvalues'><thead><tr><th>이름</th><th>직급</th><th>부서</th><th>e-mail</th><th>사원번호</th></tr></thead><tbody>";
+
+						for ( var i in jsonl.list) {
+
+							value += "<tr onclick='selectEmp(this);' style='cusor:hand'><td>"
+									+ jsonl.list[i].emp_name
+									+ "</td><td>"
+									+ jsonl.list[i].dept_name
+									+ "</td><td>"
+									+ jsonl.list[i].emp_job
+									+ "</td><td>"
+									+ jsonl.list[i].emp_email
+									+ "</td><td>"
+									+ jsonl.list[i].emp_no + "</td></tr>";
+						}
+
+						value += "</tbody></table>";
+
+						$('#myModal2').modal("show");
+						$('#searchTable').html(value);
+
+					},error : function(request, status, errorData) {
+						alert("error code : " + request.status + "\n"
+						+ "message :" + request.responseText + "\n"
+						+ "error :" + errorData);
+						}
+			});
+	}
+	//테이블에서 보낼 사원 선택
+	function selectEmp(obj) {
+		var tr = $(obj);
+		var td = tr.children();
+
+		var emp_name = td.eq(0).text();
+		var dept_name = td.eq(1).text();
+		var emp_job = td.eq(2).text();
+		var emp_email = td.eq(3).text();
+		var emp_no = td.eq(4).text();
+		$('#myModal2').modal("hide");
+		$('#searchName').val(emp_name);
+
+		$('#message_to_no').val(emp_no);
+	}
+	//쪽지확인
+	function confirm(obj){
 		var tr=$(obj);
 		var td=tr.children();
 		
-		var emp_name=td.eq(0).text();
-		var dept_name=td.eq(1).text();
-		var emp_job=td.eq(2).text();
-		var emp_email=td.eq(3).text();
-		var emp_no=td.eq(4).text();
-		$('#myModal2').modal("hide");
+		var a_from_empName=td.eq(0).text();
+		var a_message_title=td.eq(1).text();
+		var a_message_date=td.eq(2).text();
+		var a_message_from_empNo=td.eq(3).text();
+		var a_message_content=td.eq(4).text();
+	
+		alert(a_message_content);
+		$('#modal3').modal("show");
+		//답장 확인란에 값 추가
+		$('#a_from_empName').val(a_from_empName);
+		$('#a_message_title').val(a_message_title);
+		$('#a_message_content').val(a_message_content);
 		
-		/* submit하기 위하여 갑 넣기 */
-		$('#searchName').val(emp_name);
-		
-		$ ('#message_to_no').val(emp_no);
+		//답장 보낼 때 추가
+		$('#a_to_emp').val(a_from_empName); 
+		$('#to_emp_no').val(a_message_from_empNo);
 	}
 	
-	
+	//답장하기
+	function answerSubmit(){
+		$('#modal4').modal("hide");
 		
-		function modalSubmit(){
-			
-			
-			$('#modal1').modal("hide");
-			
-			$.ajax({
-			url:"sub.do",
+		$.ajax({
+			url:"sendAnswer.do",
 			type:"post",
-			data:{ message_from_no : "${loginEmp.emp_no}",
-				message_to_no : $('#message_to_no').val(),
-				message_title : $('#message_title').val(),
-				message_content : $('#message_content').val()
-			},
-			success :function(data){
+			data:{
+				message_from_no : "${loginEmp.emp_no}",
+				message_to_no : $('#to_emp_no').val(),
+				message_title : $('#anwer_title').val(),
+				message_content :$('#answer_content').val(),
+				
+			},success: function(data){
 				alert(data);
-			}
-		
+			},error : function(request, status, errorData) {
+						alert("error code : " + request.status + "\n"
+						+ "message :" + request.responseText + "\n"
+						+ "error :" + errorData);
+						}
+	
 		
 		});
+		
+		
+	}
 	
-		}
-	
-	
-	
+	//쪽지 보내기
+	function modalSubmit() {
 
+		$('#modal1').modal("hide");
+
+		$.ajax({
+			url : "sub.do",
+			type : "post",
+			data : {
+				message_from_no : "${loginEmp.emp_no}",
+				message_to_no : $('#message_to_no').val(),
+				message_title : $('#message_title').val(),
+				message_content : $('#message_content').val(),
+				no : 1
+
+			},
+			success : function(data) {
+				alert(data);
+			},error : function(request, status, errorData) {
+						alert("error code : " + request.status + "\n"
+						+ "message :" + request.responseText + "\n"
+						+ "error :" + errorData);
+						}
+
+		});
+
+	}
 </script>
 <style type="text/css">
 .btn-modify {
@@ -151,9 +285,21 @@
 	border-bottom: 1px solid #ddd;
 }
 
-#getvalues th:nth-child(5),td:nth-child(5){
+#getvalues th:nth-child(5), td:nth-child(5) {
+	display: none;
+}
+
+#table_rec th:nth-child(4){
+	display: none;
+}
+#table_rec td:nth-child(4){
 display:none;
 }
+
+#table_rec th:nth-child(5), td:nth-child(5){
+display: none;
+}
+
 </style>
 </head>
 
@@ -282,112 +428,20 @@ display:none;
 										<!-- start of receive msg tab -->
 										<div id="myTabContent" class="tab-content">
 											<div role="tabpanel" class="tab-pane fade active in"
-												id="receive_msg" aria-labelledby="home-tab">
-												<table class="table" id="table_rm">
-													<thead>
-														<tr>
-															<th>보낸사람</th>
-															<th>제목</th>
-															<th>받은날짜</th>
-														</tr>
-													</thead>
-													<tbody>
-														<tr>
-															<td>서태웅</td>
-															<td><a href="#">지각좀그만하세요...</a></td>
-															<td>2018.04.15</td>
-														</tr>
-														<tr>
-															<td>서태웅</td>
-															<td><a href="#">지각좀그만하세요...</a></td>
-															<td>2018.04.15</td>
-														</tr>
-														<tr>
-															<td>서태웅</td>
-															<td><a href="#">지각좀그만하세요...</a></td>
-															<td>2018.04.15</td>
-														</tr>
-														<tr>
-															<td>서태웅</td>
-															<td><a href="#">지각좀그만하세요...</a></td>
-															<td>2018.04.15</td>
-														</tr>
-														<tr>
-															<td>서태웅</td>
-															<td><a href="#">지각좀그만하세요...</a></td>
-															<td>2018.04.15</td>
-														</tr>
-														<tr>
-															<td>서태웅</td>
-															<td><a href="#">지각좀그만하세요...</a></td>
-															<td>2018.04.15</td>
-														</tr>
-														<tr>
-															<td>서태웅</td>
-															<td><a href="#">지각좀그만하세요...</a></td>
-															<td>2018.04.15</td>
-														</tr>
-													</tbody>
-												</table>
-											</div>
+												id="receive_msg" aria-labelledby="home-tab"></div>
 											<!-- end of receive msg tab -->
 
 											<!-- start of send msg tab -->
 											<div role="tabpanel" class="tab-pane fade" id="send_msg"
 												aria-labelledby="profile-tab">
-												<table class="table" id="table_rm">
-													<thead>
-														<tr>
-															<th>받는사람</th>
-															<th>제목</th>
-															<th>보낸날짜</th>
-														</tr>
-													</thead>
-													<tbody>
-														<tr>
-															<td>정대만</td>
-															<td><a href="#">지각좀그만하세요...</a></td>
-															<td>2018.04.15</td>
-														</tr>
-														<tr>
-															<td>정대만</td>
-															<td><a href="#">지각좀그만하세요...</a></td>
-															<td>2018.04.15</td>
-														</tr>
-														<tr>
-															<td>정대만</td>
-															<td><a href="#">지각좀그만하세요...</a></td>
-															<td>2018.04.15</td>
-														</tr>
-														<tr>
-															<td>정대만</td>
-															<td><a href="#">지각좀그만하세요...</a></td>
-															<td>2018.04.15</td>
-														</tr>
-														<tr>
-															<td>서태웅</td>
-															<td><a href="#">지각좀그만하세요...</a></td>
-															<td>2018.04.15</td>
-														</tr>
-														<tr>
-															<td>정대만</td>
-															<td><a href="#">지각좀그만하세요...</a></td>
-															<td>2018.04.15</td>
-														</tr>
-														<tr>
-															<td>송태섭</td>
-															<td><a href="#">지각좀그만하세요...</a></td>
-															<td>2018.04.15</td>
-														</tr>
-													</tbody>
-												</table>
+											
 											</div>
 											<!-- end of send msg tab -->
 										</div>
 
 										<!-- message modal -->
-										<div class="modal fade sendMsg" tabindex="-1" role="dialog" id="modal1"
-											aria-hidden="true">
+										<div class="modal fade sendMsg" tabindex="-1" role="dialog"
+											id="modal1" aria-hidden="true">
 											<div class="modal-dialog modal-lg">
 												<div class="modal-content">
 													<form class="form-horizontal form-label-left input_mask">
@@ -397,50 +451,51 @@ display:none;
 															</button>
 															<h4 class="modal-title" id="myModalLabel">쪽지보내기</h4>
 														</div>
-														
+
 														<div class="modal-body">
 															<div class="form-group" style="margin: 0px;">
 																<div class="row">
 																	<label
 																		class="control-label col-md-3 col-sm-3 col-xs-12">받는사람</label>
-																	
+
 																	<div class="col-md-9 col-sm-9 col-xs-12">
 																		<div class="input-group">
-																		
-																			<input type="text" class="form-control" 
+
+																			<input type="text" class="form-control"
 																				placeholder="받는이의 이름을 입력해주세요." id="searchName">
-																				
-																			<input type="hidden" name="message_from_no" value="${loginEmp.emp_no}">
-			
-																		 	<input type="hidden" name="message_to_no" id="message_to_no">
-																			
-																			
-																			<span class="input-group-btn">
-																				 <button type="button" class="btn btn-primary"
+
+																			<input type="hidden" name="message_from_no"
+																				value="${loginEmp.emp_no}"> <input
+																				type="hidden" name="message_to_no"
+																				id="message_to_no"> <span
+																				class="input-group-btn">
+																				<button type="button" class="btn btn-primary"
 																					onclick="searchEmp();">
 																					<i class="fa fa-search"></i>
-																				</button> 
-																				
+																				</button>
+
 																			</span>
-																		</div>				
-																	</div>														
+																		</div>
+																	</div>
 																	<label
-																			class="control-label col-md-3 col-sm-3 col-xs-12">제목</label>
+																		class="control-label col-md-3 col-sm-3 col-xs-12">제목</label>
 																	<div class="col-md-9 col-sm-9 col-xs-12">
 																		<div class="input-group">
-																		<input type="text" class="form-control" name="message_title" id="message_title"
+																			<input type="text" class="form-control"
+																				name="message_title" id="message_title"
 																				placeholder="제목을 입력해주세요.">
-																				</div>
-																				</div>
-																	
-																
-																	
+																		</div>
+																	</div>
+
+
+
 																	<div class="form-group">
-																	
+
 																		<label
 																			class="control-label col-md-3 col-sm-3 col-xs-12">내용</label>
 																		<div class="col-md-9 col-sm-9 col-xs-12">
-																			<textarea class="form-control" rows="8" name="message_content" id="message_content"></textarea>
+																			<textarea class="form-control" rows="8"
+																				name="message_content" id="message_content"></textarea>
 																		</div>
 																	</div>
 																</div>
@@ -448,10 +503,11 @@ display:none;
 															</div>
 														</div>
 														<div class="modal-footer">
-															<button  onclick="modalSubmit();" type="button" class="btn btn-primary">전송</button>
+															<button onclick="modalSubmit();" type="button"
+																class="btn btn-primary">전송</button>
 														</div>
-														</form>
-													
+													</form>
+
 												</div>
 											</div>
 										</div>
@@ -474,50 +530,162 @@ display:none;
 																		class="control-label col-md-3 col-sm-3 col-xs-12"></label>
 																	<div class="col-md-9 col-sm-9 col-xs-12">
 																		<div class="input-group">
-																			
-																		
-																			<span class="input-group-btn">
-																				
-																			</span>
+
+
+																			<span class="input-group-btn"> </span>
 
 																		</div>
 																	</div>
-																	
+
 																	<div id="searchTable"></div>
-
-
-
-
-
-
-
 
 																	<div class="form-group">
 
 
-
-
-
-																		
-																		<div class="col-md-9 col-sm-9 col-xs-12">
-																			
-																		</div>
+																		<div class="col-md-9 col-sm-9 col-xs-12"></div>
 																	</div>
 																</div>
-																
+
 															</div>
 														</div>
-														<div class="modal-footer">
-															
-														</div>
+														<div class="modal-footer"></div>
 													</form>
 												</div>
 											</div>
 										</div>
 										<!--  end modal2 -->
+										<!-- modal3 start -->
+										<!-- 답장 및 내용확인처리-->
+										<div class="modal fade sendMsg3" tabindex="-1" role="dialog"
+											id="modal3" aria-hidden="true">
+											<div class="modal-dialog modal-lg">
+												<div class="modal-content">
+													<form class="form-horizontal form-label-left input_mask">
+														<div class="modal-header">
+															<button type="button" class="close" data-dismiss="modal">
+																<span aria-hidden="true">×</span>
+															</button>
+															<h4 class="modal-title" id="myModalLabel3">쪽지 확인</h4>
+														</div>
+
+														<div class="modal-body">
+															<div class="form-group" style="margin: 0px;">
+																<div class="row">
+																	<label
+																		class="control-label col-md-3 col-sm-3 col-xs-12">보낸사람</label>
+
+																	<div class="col-md-9 col-sm-9 col-xs-12">
+																		<div class="input-group">
+
+																			<input type="text" class="form-control"
+																				id="a_from_empName" readonly>
+																					
+																		</div>
+																	</div>
+																	<label
+																		class="control-label col-md-3 col-sm-3 col-xs-12">제목</label>
+																	<div class="col-md-9 col-sm-9 col-xs-12">
+																		<div class="input-group">
+																			<input type="text" class="form-control"
+																				name="message_title" id="a_message_title" readonly
+																				>
+																		</div>
+																	</div>
 
 
 
+																	<div class="form-group">
+
+																		<label
+																			class="control-label col-md-3 col-sm-3 col-xs-12">내용</label>
+																		<div class="col-md-9 col-sm-9 col-xs-12">
+																			<textarea class="form-control" rows="8"
+																				id="a_message_content" readonly></textarea>
+																		</div>
+																	</div>
+																</div>
+																<!-- end of row -->
+															</div>
+														</div>
+														<div class="modal-footer">
+															<button onclick="closeModal3();" type="button"
+																class="btn btn-primary">확인</button>
+																
+																<button onclick="answerMessage();" type="button"
+																class="btn btn-primary">답장</button>
+														</div>
+													</form>
+
+												</div>
+											</div>
+										</div>
+									<!-- 	답장하기 modal -->
+									<div class="modal fade sendMsg4" tabindex="-1" role="dialog"
+											id="modal4" aria-hidden="true">
+											<div class="modal-dialog modal-lg">
+												<div class="modal-content">
+													<form class="form-horizontal form-label-left input_mask">
+														<div class="modal-header">
+															<button type="button" class="close" data-dismiss="modal">
+																<span aria-hidden="true">×</span>
+															</button>
+															<h4 class="modal-title" id="myModalLabel4">답장하기</h4>
+														</div>
+
+														<div class="modal-body">
+															<div class="form-group" style="margin: 0px;">
+																<div class="row">
+																	<label
+																		class="control-label col-md-3 col-sm-3 col-xs-12">받는사람</label>
+
+																	<div class="col-md-9 col-sm-9 col-xs-12">
+																		<div class="input-group">
+
+																			<input type="text" class="form-control"
+																				 id="a_to_emp" readonly>
+
+																			
+																		</div>
+																	</div>
+																	<label
+																		class="control-label col-md-3 col-sm-3 col-xs-12">제목</label>
+																	<div class="col-md-9 col-sm-9 col-xs-12">
+																		<div class="input-group">
+																			<input type="text" class="form-control"
+																				 id="anwer_title"
+																				placeholder="제목을 입력해주세요.">
+																				<input type="hidden" id="to_emp_no">
+																		</div>
+																	</div>
+
+
+
+																	<div class="form-group">
+
+																		<label
+																			class="control-label col-md-3 col-sm-3 col-xs-12">내용</label>
+																		<div class="col-md-9 col-sm-9 col-xs-12">
+																			<textarea class="form-control" rows="8"
+																				 id="answer_content"></textarea>
+																		</div>
+																	</div>
+																</div>
+																<!-- end of row -->
+															</div>
+														</div>
+														<div class="modal-footer">
+															<button onclick="closeModal4();" type="button"
+																class="btn btn-primary">취소</button>
+															<button onclick="answerSubmit();" type="button"
+																class="btn btn-primary">전송</button>
+														</div>
+													</form>
+
+												</div>
+											</div>
+										</div>
+										
+										
 										<!-- message modal -->
 									</div>
 
@@ -527,6 +695,8 @@ display:none;
 					</div>
 				</div>
 			</div>
+			
+			<c:import url="../etc/footer.jsp"></c:import>
 
 			<!-- /page content -->
 		</div>

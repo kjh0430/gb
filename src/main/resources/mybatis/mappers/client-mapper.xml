@@ -157,4 +157,12 @@
 				
 		]]>
 	</update> -->
+	
+	<!-- 방문일지용 모든 거래처 리스트 mapping -->
+	<select id="selectAllAccountClient" resultMap="resultAccountClient">
+		<![CDATA[
+			select * from client
+			where emp_no = #{emp_no}
+		]]>
+	</select>
 </mapper>

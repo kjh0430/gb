@@ -53,7 +53,7 @@ public class DailyworkController {
 		//int emp_no = Integer.parseInt(emp_num);
 		System.out.println("emp_no :" + emp_no);
 		
-		ArrayList<Client> accountClientList = clientService.selectAccountClientList(emp_no);		
+		ArrayList<Client> accountClientList = clientService.selectAllAccountClient(emp_no);		
 		System.out.println("client 객체 : " + accountClientList);
 		
 		JSONArray jarr = new JSONArray();
