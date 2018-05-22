@@ -40,6 +40,57 @@
 
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
+	function searchCom(){
+		$.ajax({
+			url: "searchCom.do",
+			type : "post",
+			dataType : "json",
+			data : {
+				searchComName : $('#searchComName').val()
+			},
+			success : function(obj){
+				var objStr = JSON.stringify(obj);
+				var jsonl = JSON.parse(objStr);
+				var value = "<table id='table_items' class='table table-striped table-bordered'>"
+				+"<tr><th>거래처번호</th><th>거래처명</th><th>전화번호</th><th>주소</th></tr>";
+				
+				for(var i in jsonl.list){
+					value += "<tr onclick='selectCom(this);'>"
+					+"<td>"+jsonl.list[i].client_no+"</td>"
+					+"<td>"+jsonl.list[i].client_company+"</td>"
+					+"<td>"+jsonl.list[i].client_phone+"</td>"
+					+"<td>"+jsonl.list[i].client_addr+"</td>"
+					+"</tr>";		
+				}
+				
+				value += "</table>";
+			//	alert("value : " + value);
+				$('#searchResult').html(value);
+			}
+			
+		});//ajax complete
+	}
+	
+	function selectCom(obj){
+		var tr=$(obj);
+		var td=tr.children();
+		
+		var client_no=td.eq(0).text();
+		var client_company=td.eq(1).text();
+		var client_phone=td.eq(2).text();
+		var client_addr=td.eq(3).text();
+		
+		$('#searchModal').modal("hide");
+		
+		/* submit하기 위하여 갑 넣기 */
+	//	$('#searchComName').val(client_company);
+		
+		$ ('#searchComName2').val(client_company);
+		$ ('#searchEmpName').val('${loginEmp.emp_name}');
+		$ ('#searchClientPhone').val(client_phone);
+		$ ('#searchClientAddr').val(client_addr);
+		
+	}
 	
 </script>
 <style type="text/css">
@@ -168,10 +219,11 @@
 									
 								<!-- client modal start -->
 									<div style="text-align:right">
-									<button type="button" class="btn btn-primary"data-toggle="modal" data-target=".cl-example-modal-lg">거래처선택</button>
+									<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".cl-example-modal-lg">거래처선택</button>
 									</div>
+									<!-- 고객 모달 검색창... -->
 									<div class="modal fade cl-example-modal-lg" tabindex="-1"
-										role="dialog" aria-hidden="true">
+										id="searchModal" role="dialog" aria-hidden="true">
 										<div class="modal-dialog modal-lg">
 											<div class="modal-content">
 
@@ -183,14 +235,16 @@
 												</div>
 												<div class="modal-body">
 													
-													<form class="form-horizontal form-label-left input_mask">
+													<form class="form-horizontal form-label-left input_mask" >
 														<div class="form-group">
 															<div class="row">
 															<label class="col-sm-2 control-label">거래처명</label>
 																<div class="col-sm-10">	
 																	<div class="input-group">
-																		<input type="text" class="form-control" > <span class="input-group-btn">
-																			<button type="button" class="btn btn-primary">
+																		<input type="text" class="form-control" placeholder="상호명을 입력해주세요." id="searchComName"> <span class="input-group-btn">
+																			<input type="hidden" name="client_no" value="">
+																			
+																			<button type="button" class="btn btn-primary" onclick="searchCom();">
 																				<i class="fa fa-search"></i>
 																			</button>
 																		</span>
@@ -198,7 +252,7 @@
 																</div>
 															</div>
 														</div>
-														<div class="row">
+														<div class="row" id="searchResult">
 															<table id="table_items" class="table table-striped table-bordered">
 																<tr>
 																	<th>거래처번호</th>
@@ -206,24 +260,15 @@
 																	<th>전화번호</th>
 																	<th>주소</th>
 																</tr>
-																<tr>
-																	<td>15</td>
-																	<td>프로젝트 413</td>
-																	<td>070-4587-8569</td>
-																	<td>서울특별시 강남구 역삼1동 논현로97길 19-11</td>
-																</tr>
-																<tr>
-																	<td>15</td>
-																	<td>프로젝트 413</td>
-																	<td>070-4587-8569</td>
-																	<td>서울특별시 강남구 역삼1동 논현로97길 19-11</td>
-																</tr>
-																<tr>
-																	<td>15</td>
-																	<td>프로젝트 413</td>
-																	<td>070-4587-8569</td>
-																	<td>서울특별시 강남구 역삼1동 논현로97길 19-11</td>
-																</tr>
+																<%-- <c:forEach var="list" items="${ accountClientList }">
+																	<tr>
+																		<td><a href="#">${ list.client_no }</a></td>
+																		<td>${ list.client_company }</td>
+																		<td>${ list.client_phone }</td>
+																		<td>${ list.client_addr }</td>
+																	</tr>
+											
+																</c:forEach> --%>
 															
 															</table>
 														</div>
@@ -251,25 +296,25 @@
 										<div class="form-group">
 											<label class="col-sm-3 control-label">거래처명</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
-												<input type="text" class="form-control" placeholder="거래처명을 검색해주세요." name="client_name" value="">
+												<input type="text" class="form-control" placeholder="거래처명을 검색해주세요." name="client_name" id="searchComName2" value="">
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">담당자</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
-												<input type="text" class="form-control" placeholder="담당직원" value="" name="emp_name">
+												<input type="text" class="form-control" placeholder="담당직원" id="searchEmpName" value="" name="emp_name">
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">전화번호</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
-												<input type="text" class="form-control" placeholder="연락처" value="" name="client_phone">
+												<input type="text" class="form-control" placeholder="연락처" id="searchClientPhone" value="" name="client_phone">
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">주소</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
-												<input type="text" class="form-control" placeholder="" value="주소">
+												<input type="text" class="form-control" id="searchClientAddr" value="" placeholder="주소">
 											</div>
 										</div>
 										<div class="form-group">

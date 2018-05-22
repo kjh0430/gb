@@ -1,9 +1,14 @@
 package com.crm.gb.client.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
-import javax.activation.CommandMap;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,12 +18,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.crm.gb.client.model.service.ClientService;
 import com.crm.gb.client.model.vo.Client;
-import com.crm.gb.emp.model.vo.Emp;
+import com.crm.gb.product.model.vo.ProductFile;
 
 /**
  * Handles requests for the application home page.
@@ -42,13 +47,19 @@ public class ClientController {
 	
 	/** 신규고객 등록 메소드 */
 	@RequestMapping(value="insertClient.do", method=RequestMethod.POST)
-	public String insertClient(Client client, Model model) {
+	public String insertClient(Client client, Model model, HttpServletRequest request,
+			MultipartHttpServletRequest mtfRequest) {
 		
 		logger.info("고객등록 메소드 실행됨");
 			System.out.println("client객체 확인: "+client);
+		//고객정보 추가부분	
 		int result=clientService.insertClient(client);
 		ArrayList<Client> clientList=clientService.selectAllClient();
 		model.addAttribute("clientList", clientList);
+		
+		//고객관련 파일추가부분
+		
+		
 		
 		return "client/clientList";
 	}
