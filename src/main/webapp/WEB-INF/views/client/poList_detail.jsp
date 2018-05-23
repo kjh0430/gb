@@ -76,9 +76,15 @@ $(document).ready(function() {
 				<div class="">
 					<div class="page-title">
 						<div class="title_left">
-							<h3>
-								잠재고객
-							</h3>
+						<c:choose>
+							<c:when test="${ detailClient.client_contract eq 'N' }">
+								<h3>잠재고객</h3>
+							</c:when>
+							<c:otherwise>
+								<h3>등록고객</h3>
+							</c:otherwise>
+						</c:choose>
+							
 						</div>
 					</div>
 
@@ -204,6 +210,23 @@ $(document).ready(function() {
 													required="required" type="text" 
 													value="${ detailClient.client_comment }" >
 											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12">
+												첨부파일
+											</label>
+											
+											<div class="col-md-6 col-sm-6 col-xs-12">
+												<c:forEach var="list" items="${ clientFileList }">
+												<a href="clientFileDown.do?clientFileName=${ list.client_rename_file }">
+													<input style="cursor:pointer;" name="client_original_file" id="client_original_file"
+														class="date-picker form-control col-md-7 col-xs-12"
+														required="required" type="text" 
+														value="${ list.client_original_file }" >
+												</a>	
+												</c:forEach>
+											</div>
+												
 										</div>
 										<div class="ln_solid"></div>
 										<div class="form-group">

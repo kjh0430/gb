@@ -91,7 +91,7 @@
 					var container = document.getElementById('searchAddr');
 					var options = {
 						center: new daum.maps.LatLng(37.4990734,127.0317662),
-						level: 3
+						level: 2
 					};
 					
 					$("#myModal").on('shown.bs.modal', function () {
@@ -249,7 +249,7 @@
 								<div class="x_content">
 									 <br />
 									<form action="insertClient.do" method="post" ata-parsley-validate
-										class="form-horizontal form-label-left">
+										class="form-horizontal form-label-left" enctype="multipart/form-data">
 									
 										<input type="hidden" name="emp_no" value="${ loginEmp.emp_no }">
 										<input type="hidden" name="client_loc_x" value="$('input[name=client_loc_y]').val()">
@@ -347,7 +347,7 @@
 											<div class="col-md-6 col-sm-6 col-xs-12" >
 											<ul class="c_file">
 												<li id="cFile-0">
-													<input type="file" id="firstFile" name="client_original_file" class="form-control">
+													<input type="file" id="firstFile" name="client_file" class="form-control">
 													<a href="javascript:resetFile()" title="삭제">&nbsp;<i class='fa fa-times'></i></a>	
 													<input type="button" class="btn btn-dark add_btn" onclick="addFile()" value="추가"/>
 												</li>
