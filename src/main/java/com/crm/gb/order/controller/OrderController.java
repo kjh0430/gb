@@ -16,12 +16,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.crm.gb.client.controller.ClientController;
 import com.crm.gb.client.model.service.ClientService;
 import com.crm.gb.client.model.vo.Client;
-import com.crm.gb.message.model.vo.Message;
+import com.crm.gb.product.model.service.ProductService;
+import com.crm.gb.product.model.vo.Product;
 
 
 @Controller
@@ -33,6 +33,9 @@ public class OrderController {
 	
 	@Autowired
 	private ClientService clientService;
+	
+	@Autowired
+	private ProductService productService;
 //	
 //	@RequestMapping(value="orderaction.do")
 //	public String orderPageMethod() {
@@ -74,6 +77,39 @@ public class OrderController {
 		
 		response.setContentType("application/json; charset=utf-8");	
 		System.out.println("orderController:"+sendJson);
+		PrintWriter out=response.getWriter();
+		out.println(sendJson.toJSONString());
+		out.flush();
+		out.close();
+	
+	}
+	
+	@RequestMapping(value="searchProduct.do", method=RequestMethod.POST)
+	public void searchProduct(@RequestParam(name="searchProductName") String product_name, HttpServletResponse response) throws IOException{
+		logger.info("발주하기-상품 검색 메소드 run....");
+
+		ArrayList<Product> SearchProduct = productService.selectSearchProduct(product_name);
+		JSONArray jarr = new JSONArray();
+		
+		for(Product product : SearchProduct) {
+			JSONObject jsonobject = new JSONObject();
+			jsonobject.put("product_no", product.getProduct_no());
+			jsonobject.put("product_name", product.getProduct_name());
+			jsonobject.put("product_price", product.getProduct_price());
+			jsonobject.put("product_amount", product.getProduct_amount());
+			jsonobject.put("contract_discount", product.getContract_discount());
+			//jsonobject.put("product_availability", product.getProduct_availavility());
+			
+			jarr.add(jsonobject);
+		}
+		
+		JSONObject sendJson = new JSONObject();
+		sendJson.put("plist", jarr);
+		
+
+		
+		response.setContentType("application/json; charset=utf-8");	
+		System.out.println("orderProductController:"+sendJson);
 		PrintWriter out=response.getWriter();
 		out.println(sendJson.toJSONString());
 		out.flush();

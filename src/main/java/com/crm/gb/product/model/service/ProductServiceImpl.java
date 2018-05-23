@@ -1,8 +1,9 @@
 package com.crm.gb.product.model.service;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.crm.gb.product.model.dao.ProductDao;
 import com.crm.gb.product.model.vo.Product;
@@ -26,6 +27,11 @@ public class ProductServiceImpl implements ProductService {
 		return productDao.insertProductFile(pf);
 	}
 	
+	@Override
+	public ArrayList<Product> selectSearchProduct(String product_name){
+		//제품 검색 
+		return productDao.selectSearchProduct(product_name);
+	}
 	
 
 }
