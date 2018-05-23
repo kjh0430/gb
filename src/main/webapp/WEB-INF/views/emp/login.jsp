@@ -44,19 +44,19 @@
 						
 						<div>
 							<input type="text" name="emp_no" class="form-control" placeholder="Username"
-								required=""/>
+								required>
 						</div>
 						<div>
 							<input type="password" name="emp_pwd" class="form-control"
-								placeholder="Password" required="" />
+								placeholder="Password"/>
 						</div>
 						<div>
 							<input type="button" class="btn btn-default submit" 
 								style="background:#344659;width:100%;color:#fff; left-margin:0px;" 
 									value="LOGIN" onclick="login()"/>							
 						</div><br/>
-						<a class="reset_pass" href="#">Lost your password?</a>
-						<!-- <a class="reset_pass" href="main.do">main보기</a> -->
+						<!-- <a class="reset_pass" href="#">Lost your password?</a> -->
+						<a class="reset_pass" href="adminmain.do">관리자main보기</a> 
 	
 						<div class="clearfix"></div>
 						<br />

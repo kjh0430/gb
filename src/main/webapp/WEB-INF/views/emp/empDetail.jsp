@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="images/favicon.ico" type="image/ico" />
 
-<title>잠재고객 상세페이지</title>
+<title>GROUP BEAN |</title>
 
 <!-- Bootstrap -->
 <link href="resources/vendors/bootstrap/dist/css/bootstrap.min.css"
@@ -49,6 +50,11 @@ $(document).ready(function() {
 } );
 
 </script>
+<style type="text/css">
+#style1{
+margin-top:6pt;
+}
+</style>
 </head>
 
 
@@ -159,7 +165,7 @@ $(document).ready(function() {
 								<div class="x_title">
 									<font style="font-size:18px;">상세정보</font>
 									<font style="float:right; font-size:15px;">
-										<a href="moveEmpUpdate.do">수정</a>&nbsp; &nbsp;<a href="moveEmpDelete.do">삭제</a>
+										<a href="moveEmpUpdate.do?emp_no=${ emp.emp_no }">수정</a>&nbsp; &nbsp;<a href="updateEmpDelete.do?emp_no=${ emp.emp_no }">삭제</a>
 									</font>
 									<div class="clearfix"></div>
 								</div>
@@ -167,102 +173,102 @@ $(document).ready(function() {
 								
 								
 					<!-- 사원 상세폼 -->
-					<table class="table form-horizontal form-label-left">
-                      <tbody>
-                        <tr>
-                          <!-- <th class="control-label col-md-3 col-sm-3 col-xs-12">사원번호</th>
-                          <td class="col-md-9 col-sm-9 col-xs-12">9973</td> -->
-                          <th class="control-label col-md-3 col-sm-3 col-xs-12">사원번호</th>
-                          <td class="col-md-9 col-sm-9 col-xs-12">9973</td>
-                        </tr>
-                        <tr>
-                          <th class="control-label col-md-3 col-sm-3 col-xs-12">사원이름</th>
-                          <td class="col-md-9 col-sm-9 col-xs-12">강석호</td>
-                        </tr>
-                        <tr>
-                          <th class="control-label col-md-3 col-sm-3 col-xs-12">사원거주지</th>
-                          <td class="col-md-9 col-sm-9 col-xs-12">서울특별시 강남구</td>
-                        </tr>
-                        <tr>
-                          <th class="control-label col-md-3 col-sm-3 col-xs-12">연락처</th>
-                          <td class="col-md-9 col-sm-9 col-xs-12">010-1111-1111</td>
-                        </tr>
-                        <tr>
-                          <th class="control-label col-md-3 col-sm-3 col-xs-12">직급번호</th>
-                          <td class="col-md-9 col-sm-9 col-xs-12">사원</td>
-                        <tr>
-                          <th class="control-label col-md-3 col-sm-3 col-xs-12">이메일</th>
-                          <td class="col-md-9 col-sm-9 col-xs-12">lee@naver.com</td>
-                        </tr>
-                        <tr>
-                          <th class="control-label col-md-3 col-sm-3 col-xs-12">상사번호</th>
-                          <td class="col-md-9 col-sm-9 col-xs-12">9000</td>
-                        </tr>
-                        <tr>
-                          <th class="control-label col-md-3 col-sm-3 col-xs-12">입사일</th>
-                          <td class="col-md-9 col-sm-9 col-xs-12">2012-05-21</td>
-                        </tr>
-                        <tr>
-                          <th class="control-label col-md-3 col-sm-3 col-xs-12">퇴사일</th>
-                          <td class="col-md-9 col-sm-9 col-xs-12">2017-12-28</td>
-                        </tr>
-                        <tr>
-                          <th class="control-label col-md-3 col-sm-3 col-xs-12">담당지역</th>
-                          <td class="col-md-9 col-sm-9 col-xs-12">서울</td>
-                        </tr>
-                        <tr>
-                          <th class="control-label col-md-3 col-sm-3 col-xs-12">부서</th>
-                          <td class="col-md-9 col-sm-9 col-xs-12">05</td>
-                        </tr>
-                      </tbody>
-                    </table>
+					<form class="form-horizontal form-label-left">
+					<div class="form-group">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12">사원번호</label>
+                        <div class="col-md-8 col-sm-8 col-xs-12" id="style1">
+                        ${ emp.emp_no }
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12">이름 </label>
+                        <div class="col-md-8 col-sm-8 col-xs-12" id="style1">
+                          ${ emp.emp_name }
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12">주소</label>
+                        <div class="col-md-8 col-sm-8 col-xs-12" id="style1">
+                          ${ emp.emp_addr }
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12">연락처</label>
+                        <div class="col-md-8 col-sm-8 col-xs-12" id="style1">
+                          ${ emp.emp_phone }
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12">직급</label>
+                        <div class="col-md-8 col-sm-8 col-xs-12" id="style1">
+                         <c:choose>
+            				<c:when test="${ emp.job_no == 1 }">
+            					사원		        		   
+            				</c:when>
+            				<c:when test="${ emp.job_no == 2 }">
+            					팀장		        		   
+            				</c:when>
+            				<c:when test="${ emp.job_no == 3 }">
+            					관리자					
+            				</c:when>
+            			</c:choose>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12">이메일</label>
+                        <div class="col-md-8 col-sm-8 col-xs-12" id="style1">
+                          ${ emp.emp_email }
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12">상사</label>
+                        <div class="col-md-8 col-sm-8 col-xs-12" id="style1">
+                         ${ mgr.emp_name }
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12">입사일</label>
+                        <div class="col-md-8 col-sm-8 col-xs-12" id="style1">
+                         ${ emp.emp_hiredate }
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12">퇴사일</label>
+                        <div class="col-md-8 col-sm-8 col-xs-12" id="style1">
+                         ${ emp.emp_firedate }
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12">담당지역</label>
+                        <div class="col-md-8 col-sm-8 col-xs-12" id="style1">
+                         ${ emp.city }&nbsp;${ emp.county }&nbsp;${ emp.village }
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12">부서</label>
+                        <div class="col-md-8 col-sm-8 col-xs-12" id="style1">
+                        <c:choose>
+            				<c:when test="${ emp.dept_no == 1 }">
+            					영업1팀		        		   
+            				</c:when>
+            				<c:when test="${ emp.dept_no == 2 }">
+            					영업2팀	        		   
+            				</c:when>
+            				<c:when test="${ emp.dept_no == 3 }">
+            					관리자				
+            				</c:when>
+            			</c:choose>
+                        </div>
+                      </div>
+                      </form>
+                             
+                      <div class="ln_solid"></div>
+                      <div class="form-group">
+                        
+                      </div>
                   </div>
                 </div>
-              </div>
-									
-			  <!-- <div class="col-md-12 col-sm-6 col-xs-12">
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2>접촉이력</h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
-                          </li>
-                          <li><a href="#">Settings 2</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
-                    <table class="table table-hover">
-                      <thead>
-                        <tr>
-                          <th>접촉일</th>
-                          <th>접촉구분</th>
-                          <th>접촉내용</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>2018/05/05</td>
-                          <td></td>
-                          <td></td>
-                        </tr>
-                      </tbody>
-                    </table>
-
-                  </div>
-                </div>
-              </div> -->
-									
+              </div>									
 									
 								</div>
 							</div>

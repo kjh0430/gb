@@ -50,9 +50,21 @@ $(document).ready(function() {
         pageLength:15
     } );
     
+    
 } );
 
 </script>
+<style>
+
+#searchAddr img {
+  max-width: none;
+  height: auto;
+  border: 0;
+  -ms-interpolation-mode: bicubic;
+}
+
+</style>
+
 
 </head>
 
@@ -105,6 +117,8 @@ $(document).ready(function() {
 									<form action="insertClient.do" method="post" clear="both">
 									<table id="table_cl" class="table table-striped table-bordered" style="min-width:650px;">
 										<input type="hidden" name="emp_no" value="${ loginEmp.emp_no }">
+										<input type="hidden" name="client_loc_x" value="">
+										<input type="hidden" name="client_loc_y" value="">
 										<tbody>
 										
 											<tr>
@@ -132,7 +146,14 @@ $(document).ready(function() {
 											</tr>
 											<tr>
 												<th width="100px;">주소</th>
-												<td><input style="width:300px;" type="text" name="client_addr"></td>
+												<td>
+													<input style="width:300px;" type="text" name="client_addr">
+													<a href="#myModal" data-toggle="modal">
+														<input id="searchMap" type="button" value="검색">
+													</a>
+
+												</td>
+												
 											</tr>
 											<tr>
 												<th width="100px;">회사 전화번호</th>
@@ -170,7 +191,49 @@ $(document).ready(function() {
 									<input style="float:right;" type="submit" value="등록">
 									
 								</form>
-								<!-- -------------------------------------- -->
+									<!-- 모달의 시작 -->
+										<!-- Modal -->
+										<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+										  <div class="modal-dialog">
+										    <div class="modal-content">
+										      <div class="modal-header">
+										        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+										        <h4 class="modal-title" id="myModalLabel">주소검색</h4>
+										      </div>
+										      <div class="modal-body">
+										      
+										      <!-- 지도부분 시작 -->
+										     
+										     	<div id="searchAddr" style="max-width:none;height:350px;"></div>
+							   				  <!-- 지도 스크립트 -->
+									     	 <!-- 다음지도 -->
+										  	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f99f3844ac8886eed3b0155cb0041a70&libraries=services,clusterer,drawing"></script>
+											<script>
+												$(function(){
+														
+													var container = document.getElementById('searchAddr');
+													var options = {
+														center: new daum.maps.LatLng(33.450701, 126.570667),
+														level: 3
+													};
+													
+													var map = new daum.maps.Map(container, options);
+														
+													});
+												
+											</script>
+										       <!-- 지도부분 끝 -->
+										       
+										      </div>
+										      <div class="modal-footer">
+										        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+										        <button id="" type="submit" class="btn btn-primary" data-dismiss="modal">확인</button>
+										      </div>
+										    </div>
+										  </div>
+										</div>
+										<!-- 모달의 끝 -->
+								
 								
 									
 								</div>
@@ -179,6 +242,12 @@ $(document).ready(function() {
 					</div>
 				</div>
 			</div>
+			
+			
+			<!-- start footer -->
+				<c:import url="../etc/footer.jsp"></c:import>
+			<!-- end footer -->
+			
 		</div>
 	</div>
 	</div>
@@ -229,6 +298,7 @@ $(document).ready(function() {
 
 	<!-- Custom Theme Scripts -->
 	<script src="resources/build/js/custom.min.js"></script>
+	
 
 </body>
 </html>

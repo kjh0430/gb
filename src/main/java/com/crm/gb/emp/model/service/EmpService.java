@@ -17,8 +17,13 @@ public interface EmpService {
 //	public abstract int deleteEmp(String emp_no);	// 사원정보삭제
 	
 
-	int insertEmp(Emp emp);
-	int updateEmp(Emp emp);
-	int deleteEmp(Emp emp);
+	int insertEmp(Emp emp); //사원 등록
+	int updateEmp(Emp emp); //사원 정보 수정
+	int updateEmpDelete(int emp_no); //사원 삭제여부 수정
+	public abstract Emp selectEmpNo(int emp_no); //사원 조회
+	public abstract ArrayList<Emp> selectEmpList(); //사원 전체 조회
+	public abstract int selectCheckPhone(String emp_phone); //연락처 중복검사
+	public abstract int selectCheckEmail(String emp_email); //이메일 중복검사
+	public abstract Emp selectMgrNo(int emp_no); //상사이름 조회
 	
 }

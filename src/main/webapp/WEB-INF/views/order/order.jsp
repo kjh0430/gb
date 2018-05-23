@@ -40,6 +40,115 @@
 
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
+	function searchCom(){
+		$.ajax({
+			url: "searchCom.do",
+			type : "post",
+			dataType : "json",
+			data : {
+				searchComName : $('#searchComName').val()
+			},
+			success : function(obj){
+				var objStr = JSON.stringify(obj);
+				var jsonl = JSON.parse(objStr);
+				var value = "<table id='table_items' class='table table-striped table-bordered'>"
+				+"<tr><th>거래처번호</th><th>거래처명</th><th>전화번호</th><th>주소</th></tr>";
+				
+				for(var i in jsonl.list){
+					value += "<tr onclick='selectCom(this);'>"
+					+"<td>"+jsonl.list[i].client_no+"</td>"
+					+"<td>"+jsonl.list[i].client_company+"</td>"
+					+"<td>"+jsonl.list[i].client_phone+"</td>"
+					+"<td>"+jsonl.list[i].client_addr+"</td>"
+					+"</tr>";		
+				}
+				
+				value += "</table>";
+			//	alert("value : " + value);
+				$('#searchResult').html(value);
+			}
+			
+		});//ajax complete
+	}
+	
+	function selectCom(obj){
+		var tr=$(obj);
+		var td=tr.children();
+		
+		var client_no=td.eq(0).text();
+		var client_company=td.eq(1).text();
+		var client_phone=td.eq(2).text();
+		var client_addr=td.eq(3).text();
+		
+		$('#searchModal').modal("hide");
+		
+		/* submit하기 위하여 갑 넣기 */
+	//	$('#searchComName').val(client_company);
+		
+		$('#searchComName2').val(client_company);
+		$('#searchEmpName').val('${loginEmp.emp_name}');
+		$('#searchClientPhone').val(client_phone);
+		$('#searchClientAddr').val(client_addr);
+		
+	}
+	
+	function searchProduct(){
+		$.ajax({
+			url: "searchProduct.do",
+			type : "post",
+			dataType : "json",
+			data : {
+				searchProductName : $('#searchProductName').val()
+			},
+			success : function(obj){
+				var objStr = JSON.stringify(obj);
+				var json = JSON.parse(objStr);
+				var value = "<table id='table_items' class='table table-striped table-bordered'>"
+				+"<tr><th>제품번호</th><th>제품명</th><th>단가</th></tr>";
+				
+				for(var i in json.plist){
+					value += "<tr onclick='selectProduct(this);'>"
+					+"<td>"+json.plist[i].product_no+"</td>"
+					+"<td>"+json.plist[i].product_name+"</td>"
+					+"<td>"+json.plist[i].product_price+"</td>"
+					+"</tr>";		
+				}
+				
+				value += "</table>";
+			//	alert("value : " + value);
+				$('#searchProductList').html(value);
+			}
+			
+		});//ajax complete
+	}
+	
+	function selectProduct(obj){
+		var tr=$(obj);
+		var td=tr.children();
+		
+		var product_no=td.eq(0).text();
+		var product_name=td.eq(1).text();
+		var product_price=td.eq(2).text();
+		//var product_=td.eq(3).text();
+		
+		$('#searchModal2').modal("hide");
+		
+		var value = $('.order_body').html();
+		console.log("value : "+ value)
+		
+		/* submit하기 위하여 갑 넣기 */
+		value += "<tr>"
+		+"<td>"+product_no+"</td>"
+		+"<td>"+product_name+"</td>"
+		+"<td><input type='text' name='order_price' class='form-control' value='"+product_price+"'/></td>"
+		+"<td><input type='number' name='order_amount' class='form-control' min='1'/></td>"
+		+"<td><button class='btn btn-danger btn-order'>&nbsp;&nbsp;<i class='fa fa-trash-o'></i>&nbsp;&nbsp;</button></td>"
+		+"</tr>";
+		
+		$('.order_body').html(value);
+		
+		
+	}
 	
 </script>
 <style type="text/css">
@@ -164,14 +273,15 @@
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
 								<div class="x_title">
-									<h2>거래처</h2>
+									<h2>거래처 정보</h2>
 									
 								<!-- client modal start -->
 									<div style="text-align:right">
-									<button type="button" class="btn btn-primary"data-toggle="modal" data-target=".cl-example-modal-lg">거래처선택</button>
+									<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".cl-example-modal-lg">거래처선택</button>
 									</div>
+									<!-- 고객 모달 검색창... -->
 									<div class="modal fade cl-example-modal-lg" tabindex="-1"
-										role="dialog" aria-hidden="true">
+										id="searchModal" role="dialog" aria-hidden="true">
 										<div class="modal-dialog modal-lg">
 											<div class="modal-content">
 
@@ -183,14 +293,16 @@
 												</div>
 												<div class="modal-body">
 													
-													<form class="form-horizontal form-label-left input_mask">
+													<form class="form-horizontal form-label-left input_mask" >
 														<div class="form-group">
 															<div class="row">
 															<label class="col-sm-2 control-label">거래처명</label>
 																<div class="col-sm-10">	
 																	<div class="input-group">
-																		<input type="text" class="form-control"> <span class="input-group-btn">
-																			<button type="button" class="btn btn-primary">
+																		<input type="text" class="form-control" placeholder="상호명을 입력해주세요." id="searchComName" name="client_company"> <span class="input-group-btn">
+																			<input type="hidden" name="client_no" value="">
+																			
+																			<button type="button" class="btn btn-primary" onclick="searchCom();">
 																				<i class="fa fa-search"></i>
 																			</button>
 																		</span>
@@ -198,7 +310,7 @@
 																</div>
 															</div>
 														</div>
-														<div class="row">
+														<div class="row" id="searchResult">
 															<table id="table_items" class="table table-striped table-bordered">
 																<tr>
 																	<th>거래처번호</th>
@@ -206,25 +318,7 @@
 																	<th>전화번호</th>
 																	<th>주소</th>
 																</tr>
-																<tr>
-																	<td>15</td>
-																	<td>프로젝트 413</td>
-																	<td>070-4587-8569</td>
-																	<td>서울특별시 강남구 역삼1동 논현로97길 19-11</td>
-																</tr>
-																<tr>
-																	<td>15</td>
-																	<td>프로젝트 413</td>
-																	<td>070-4587-8569</td>
-																	<td>서울특별시 강남구 역삼1동 논현로97길 19-11</td>
-																</tr>
-																<tr>
-																	<td>15</td>
-																	<td>프로젝트 413</td>
-																	<td>070-4587-8569</td>
-																	<td>서울특별시 강남구 역삼1동 논현로97길 19-11</td>
-																</tr>
-															
+																
 															</table>
 														</div>
 													</form>
@@ -251,25 +345,25 @@
 										<div class="form-group">
 											<label class="col-sm-3 control-label">거래처명</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
-												<input type="text" class="form-control" placeholder="" value="거래처 이름">
+												<input type="text" class="form-control" placeholder="거래처명을 검색해주세요." name="client_name" id="searchComName2" value="">
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">담당자</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
-												<input type="text" class="form-control" placeholder="" value="담당자 이름">
+												<input type="text" class="form-control" placeholder="담당직원" id="searchEmpName" value="" name="emp_name">
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">전화번호</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
-												<input type="text" class="form-control" placeholder="" value="전화번호 이름">
+												<input type="text" class="form-control" placeholder="연락처" id="searchClientPhone" value="" name="client_phone">
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">주소</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
-												<input type="text" class="form-control" placeholder="" value="주소">
+												<input type="text" class="form-control" id="searchClientAddr" value="" placeholder="주소">
 											</div>
 										</div>
 										<div class="form-group">
@@ -295,10 +389,11 @@
 								<div class="x_content">
 								<!-- product modal start -->
 									<div style="text-align:right">
-									<button type="button" class="btn btn-primary"data-toggle="modal" data-target=".bs-example-modal-lg">품목추가</button>
+									
+									<button type="button" class="btn btn-primary"data-toggle="modal" data-target=".bs-example-modal-lg" >품목추가</button>
 									</div>
 									<div class="modal fade bs-example-modal-lg" tabindex="-1"
-										role="dialog" aria-hidden="true">
+										id="searchModal2" role="dialog" aria-hidden="true">
 										<div class="modal-dialog modal-lg">
 											<div class="modal-content">
 
@@ -316,8 +411,8 @@
 															<label class="col-sm-2 control-label">품목명</label>
 																<div class="col-sm-10">	
 																	<div class="input-group">
-																		<input type="text" class="form-control"> <span class="input-group-btn">
-																			<button type="button" class="btn btn-primary">
+																		<input type="text" class="form-control" placeholder="제품명을 입력해주세요." id="searchProductName" name="product_name"> <span class="input-group-btn">
+																			<button type="button" class="btn btn-primary" onclick="searchProduct();">
 																				<i class="fa fa-search"></i>
 																			</button>
 																		</span>
@@ -325,7 +420,7 @@
 																</div>
 															</div>
 														</div>
-														<div class="row">
+														<div class="row" id="searchProductList">
 															<table id="table_items" class="table table-striped table-bordered">
 																<tr>
 																	<th>품번</th>
@@ -333,24 +428,7 @@
 																	<th>단가</th>
 																	<th>선택</th>
 																</tr>
-																<tr>
-																	<td>21549874</td>
-																	<td>예가체프 500g</td>
-																	<td>15,000</td>
-																	<td><input type="button" class="btn btn-success btn-order" value="선택"/></td>
-																</tr>
-																<tr>
-																	<td>21549874</td>
-																	<td>예가체프500g</td>
-																	<td>15,000</td>
-																	<td><input type="button" class="btn btn-success btn-order" value="선택"/></td>
-																</tr>
-																<tr>
-																	<td>21549874</td>
-																	<td>예가체프 500g</td>
-																	<td>15,000</td>
-																	<td><input type="button" class="btn btn-success btn-order" value="선택"/></td>
-																</tr>
+																
 															
 															</table>
 														</div>
@@ -368,8 +446,9 @@
 										</div>
 									</div>
 									<!-- product modal end -->
+									
 
-									<table id="table_od" class="table table-striped table-bordered">
+									<table class="table table-striped table-bordered">
 										<thead>
 											<tr>
 												<th>제품번호</th>
@@ -379,7 +458,18 @@
 												<th>삭제</th>
 											</tr>
 										</thead>
-										<tbody>
+										<tbody class="order_body">
+										</tbody>	
+										<!-- <thead>
+											<tr>
+												<th>제품번호</th>
+												<th>제품명</th>
+												<th>단가</th>
+												<th>수량</th>
+												<th>삭제</th>
+											</tr>
+										</thead>
+										<tbody id="order_tbody">
 											<tr>
 												<td>21549871</td>
 												<td>예가체프 아라비카 500g</td>
@@ -387,8 +477,9 @@
 												<td><input type="number" name="order_amount" class="form-control" min="1"/></td>
 												<td><button class="btn btn-danger btn-order">&nbsp;&nbsp;<i class="fa fa-trash-o"></i>&nbsp;&nbsp;</button></td>
 											</tr>
-										<tbody>
+										<tbody> -->
 									</table>
+								
 									<div class="ln_solid"></div>
 									<div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-3" style="margin:0px">
 											<button type="button" class="btn btn-primary">Cancel</button>
