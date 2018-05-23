@@ -85,10 +85,68 @@
 		/* submit하기 위하여 갑 넣기 */
 	//	$('#searchComName').val(client_company);
 		
-		$ ('#searchComName2').val(client_company);
-		$ ('#searchEmpName').val('${loginEmp.emp_name}');
-		$ ('#searchClientPhone').val(client_phone);
-		$ ('#searchClientAddr').val(client_addr);
+		$('#searchComName2').val(client_company);
+		$('#searchEmpName').val('${loginEmp.emp_name}');
+		$('#searchClientPhone').val(client_phone);
+		$('#searchClientAddr').val(client_addr);
+		
+	}
+	
+	function searchProduct(){
+		$.ajax({
+			url: "searchProduct.do",
+			type : "post",
+			dataType : "json",
+			data : {
+				searchProductName : $('#searchProductName').val()
+			},
+			success : function(obj){
+				var objStr = JSON.stringify(obj);
+				var json = JSON.parse(objStr);
+				var value = "<table id='table_items' class='table table-striped table-bordered'>"
+				+"<tr><th>제품번호</th><th>제품명</th><th>단가</th></tr>";
+				
+				for(var i in json.plist){
+					value += "<tr onclick='selectProduct(this);'>"
+					+"<td>"+json.plist[i].product_no+"</td>"
+					+"<td>"+json.plist[i].product_name+"</td>"
+					+"<td>"+json.plist[i].product_price+"</td>"
+					+"</tr>";		
+				}
+				
+				value += "</table>";
+			//	alert("value : " + value);
+				$('#searchProductList').html(value);
+			}
+			
+		});//ajax complete
+	}
+	
+	function selectProduct(obj){
+		var tr=$(obj);
+		var td=tr.children();
+		
+		var product_no=td.eq(0).text();
+		var product_name=td.eq(1).text();
+		var product_price=td.eq(2).text();
+		//var product_=td.eq(3).text();
+		
+		$('#searchModal2').modal("hide");
+		
+		var value = $('.order_body').html();
+		console.log("value : "+ value)
+		
+		/* submit하기 위하여 갑 넣기 */
+		value += "<tr>"
+		+"<td>"+product_no+"</td>"
+		+"<td>"+product_name+"</td>"
+		+"<td><input type='text' name='order_price' class='form-control' value='"+product_price+"'/></td>"
+		+"<td><input type='number' name='order_amount' class='form-control' min='1'/></td>"
+		+"<td><button class='btn btn-danger btn-order'>&nbsp;&nbsp;<i class='fa fa-trash-o'></i>&nbsp;&nbsp;</button></td>"
+		+"</tr>";
+		
+		$('.order_body').html(value);
+		
 		
 	}
 	
@@ -241,7 +299,7 @@
 															<label class="col-sm-2 control-label">거래처명</label>
 																<div class="col-sm-10">	
 																	<div class="input-group">
-																		<input type="text" class="form-control" placeholder="상호명을 입력해주세요." id="searchComName"> <span class="input-group-btn">
+																		<input type="text" class="form-control" placeholder="상호명을 입력해주세요." id="searchComName" name="client_company"> <span class="input-group-btn">
 																			<input type="hidden" name="client_no" value="">
 																			
 																			<button type="button" class="btn btn-primary" onclick="searchCom();">
@@ -260,16 +318,7 @@
 																	<th>전화번호</th>
 																	<th>주소</th>
 																</tr>
-																<%-- <c:forEach var="list" items="${ accountClientList }">
-																	<tr>
-																		<td><a href="#">${ list.client_no }</a></td>
-																		<td>${ list.client_company }</td>
-																		<td>${ list.client_phone }</td>
-																		<td>${ list.client_addr }</td>
-																	</tr>
-											
-																</c:forEach> --%>
-															
+																
 															</table>
 														</div>
 													</form>
@@ -340,10 +389,11 @@
 								<div class="x_content">
 								<!-- product modal start -->
 									<div style="text-align:right">
-									<button type="button" class="btn btn-primary"data-toggle="modal" data-target=".bs-example-modal-lg">품목추가</button>
+									
+									<button type="button" class="btn btn-primary"data-toggle="modal" data-target=".bs-example-modal-lg" >품목추가</button>
 									</div>
 									<div class="modal fade bs-example-modal-lg" tabindex="-1"
-										role="dialog" aria-hidden="true">
+										id="searchModal2" role="dialog" aria-hidden="true">
 										<div class="modal-dialog modal-lg">
 											<div class="modal-content">
 
@@ -361,8 +411,8 @@
 															<label class="col-sm-2 control-label">품목명</label>
 																<div class="col-sm-10">	
 																	<div class="input-group">
-																		<input type="text" class="form-control"> <span class="input-group-btn">
-																			<button type="button" class="btn btn-primary">
+																		<input type="text" class="form-control" placeholder="제품명을 입력해주세요." id="searchProductName" name="product_name"> <span class="input-group-btn">
+																			<button type="button" class="btn btn-primary" onclick="searchProduct();">
 																				<i class="fa fa-search"></i>
 																			</button>
 																		</span>
@@ -370,7 +420,7 @@
 																</div>
 															</div>
 														</div>
-														<div class="row">
+														<div class="row" id="searchProductList">
 															<table id="table_items" class="table table-striped table-bordered">
 																<tr>
 																	<th>품번</th>
@@ -378,24 +428,7 @@
 																	<th>단가</th>
 																	<th>선택</th>
 																</tr>
-																<tr>
-																	<td>21549874</td>
-																	<td>예가체프 500g</td>
-																	<td>15,000</td>
-																	<td><input type="button" class="btn btn-success btn-order" value="선택"/></td>
-																</tr>
-																<tr>
-																	<td>21549874</td>
-																	<td>예가체프500g</td>
-																	<td>15,000</td>
-																	<td><input type="button" class="btn btn-success btn-order" value="선택"/></td>
-																</tr>
-																<tr>
-																	<td>21549874</td>
-																	<td>예가체프 500g</td>
-																	<td>15,000</td>
-																	<td><input type="button" class="btn btn-success btn-order" value="선택"/></td>
-																</tr>
+																
 															
 															</table>
 														</div>
@@ -413,8 +446,9 @@
 										</div>
 									</div>
 									<!-- product modal end -->
+									
 
-									<table id="table_od" class="table table-striped table-bordered">
+									<table class="table table-striped table-bordered">
 										<thead>
 											<tr>
 												<th>제품번호</th>
@@ -424,7 +458,18 @@
 												<th>삭제</th>
 											</tr>
 										</thead>
-										<tbody>
+										<tbody class="order_body">
+										</tbody>	
+										<!-- <thead>
+											<tr>
+												<th>제품번호</th>
+												<th>제품명</th>
+												<th>단가</th>
+												<th>수량</th>
+												<th>삭제</th>
+											</tr>
+										</thead>
+										<tbody id="order_tbody">
 											<tr>
 												<td>21549871</td>
 												<td>예가체프 아라비카 500g</td>
@@ -432,8 +477,9 @@
 												<td><input type="number" name="order_amount" class="form-control" min="1"/></td>
 												<td><button class="btn btn-danger btn-order">&nbsp;&nbsp;<i class="fa fa-trash-o"></i>&nbsp;&nbsp;</button></td>
 											</tr>
-										<tbody>
+										<tbody> -->
 									</table>
+								
 									<div class="ln_solid"></div>
 									<div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-3" style="margin:0px">
 											<button type="button" class="btn btn-primary">Cancel</button>
