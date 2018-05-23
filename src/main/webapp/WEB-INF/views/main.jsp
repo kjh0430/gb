@@ -81,13 +81,14 @@
 				complete: function(){
 				},
 				error	: function(xhr, status, error){
-					alert(error);
+					console.log(error);
 				}
 			
 		}); //end of ajax
 		
-	});    
-	*/
+	}); 
+    */
+	
 	</script>	
     
     

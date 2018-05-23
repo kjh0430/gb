@@ -97,6 +97,7 @@ public class DailyworkController {
 	public void selectDailywork(Dailywork dw,HttpServletResponse response) throws IOException {
 		logger.info("visitList running!!");
 		//System.out.println(dw.getDaily_date());
+		
 		ArrayList<Dailywork> visitList = dailyworkService.selectVisit(dw);		
 		JSONArray jarr = new JSONArray();
 		
