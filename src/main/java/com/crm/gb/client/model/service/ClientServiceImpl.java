@@ -34,7 +34,7 @@ public class ClientServiceImpl implements ClientService{
 	@Override
 	public Client selectClient(Client client) {
 		
-		return null;
+		return clientDao.selectClient(client);
 	}
 
 	/** 고객번호로 정보조회 메소드 */
@@ -64,7 +64,7 @@ public class ClientServiceImpl implements ClientService{
 	
 	/** 고객정보 삭제 메소드 */
 	@Override
-	public int deleteClient(int client_no) {
+	public int updateDelClient(int client_no) {
 		return clientDao.deleteClient(client_no);
 	}
 	
@@ -78,8 +78,13 @@ public class ClientServiceImpl implements ClientService{
 	/** 고객관련 파일 추가 메소드 */
 	@Override
 	public int insertClientFile(ClientFile clientFile) {
-		// TODO Auto-generated method stub
-		return 0;
+		return clientDao.insertClientFile(clientFile);
+	}
+	
+	/** 고객이 갖고있는 첨부파일 조회 메소드 */
+	@Override
+	public ArrayList<ClientFile> selectClientFileList(int client_no) {
+		return clientDao.selectClientFile(client_no);
 	}
 	
 	/** 거래처 이름 검색 결과 리스트 메소드 **/

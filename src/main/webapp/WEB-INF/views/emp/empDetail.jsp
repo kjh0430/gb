@@ -221,9 +221,9 @@ margin-top:6pt;
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12">상사번호</label>
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12">상사</label>
                         <div class="col-md-8 col-sm-8 col-xs-12" id="style1">
-                         ${ emp.emp_mgr }
+                         ${ mgr.emp_name }
                         </div>
                       </div>
                       <div class="form-group">

@@ -26,16 +26,11 @@ public class Client implements Serializable{
 	private String client_comment;
 	private int emp_no;
 	private Date client_enroll;
-
 	private String client_delete;
-	
 	private Emp emp;
 	
 	public Client() {}
 	
-	
-
-
 
 	public Client(int client_no, String client_name, String client_company, String client_job, String client_email,
 			String client_phone, String client_addr, String client_com_tel, String client_loc_x, String client_loc_y,

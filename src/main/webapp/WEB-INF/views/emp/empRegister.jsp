@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -283,7 +284,8 @@ function Regiemp(){
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">상사번호</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input class="form-control" id="emp_mgr" name="emp_mgr" type="text" placeholder="상사번호">
+                          <input class="form-control col-md-7 col-xs-12" id="emp_mgr" name="emp_mgr" type="text" placeholder="상사">
+                          <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm" style="float:right;">조회</button> -->
                         </div>
                       </div>
                       <div class="form-group">
@@ -346,6 +348,47 @@ function Regiemp(){
 		</div>
 	</div>
 	</div>
+	
+	
+	<!-- modal -->
+	<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+       <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+
+             <div class="modal-header">
+             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+             </button>
+             <h4 class="modal-title" id="myModalLabel">사원조회</h4>
+             </div>
+             <div class="modal-body">
+             <h4></h4>
+             <table class="table">
+               <thead>
+                 <tr>
+                 <th>사원번호</th>
+				 <th>이름</th>
+				 <th></th>
+                 </tr>
+              </thead>
+              <tbody>
+                <c:forEach items="${ empList }" var="empList">
+				<tr>
+				<td><a href="empDetail.do?emp_no=${ empList.emp_no }">${ empList.emp_no }</a></td>
+				<td>${ empList.emp_name }</td>
+				<td><button type="button" class="btn btn-info">Info</button></td>
+				</tr>	
+				</c:forEach>		
+               </tbody>
+             </table>
+             </div>
+             <div class="modal-footer">
+             <!-- <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+             <button type="button" class="btn btn-primary">등록</button> -->
+             </div>
+
+           </div>
+       </div>
+    </div>
 	<!-- /page content -->
 
 

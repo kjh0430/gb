@@ -35,6 +35,11 @@
              <li><a href="orderList.do">매출현황</a></li>
            </ul>
          </li>
+         <li><a><i class="fa fa-clone"></i> 공지사항 <span class="fa fa-chevron-down"></span></a>
+           <ul class="nav child_menu">
+             <li><a href="noticeList.do">공지사항</a></li>             
+           </ul>
+         </li>
        </ul>
      </div>
      <div class="menu_section">
@@ -48,8 +53,10 @@
 	      </li>
 	     
 
+
 	      <li><a href="messageList.do"><i class="fa fa-file-text-o"></i> 쪽지함</a>
 	      </li>
+
 
 	     <!--  <li><a><i class="fa fa-cog"></i> 설정</a> </li> -->
 	    </ul>
