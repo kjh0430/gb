@@ -282,10 +282,10 @@ function Regiemp(){
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">상사</label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">상사번호</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input class="form-control col-md-7 col-xs-12" id="emp_mgr" name="emp_mgr" type="text" placeholder="상사" style="width:85%;">
-                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm" style="float:right;">조회</button>
+                          <input class="form-control col-md-7 col-xs-12" id="emp_mgr" name="emp_mgr" type="text" placeholder="상사">
+                          <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm" style="float:right;">조회</button> -->
                         </div>
                       </div>
                       <div class="form-group">
