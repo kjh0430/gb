@@ -3,13 +3,28 @@
 "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Product">
+
+	<!-- 상품 리스트 -->
+	
+	
+	<resultMap type="product" id="resultSelectAllProduct">
+		<id column="product_no" property="product_no"/>
+		<result column="product_name" property="product_name"/>
+		<result column="product_price" property="product_price"/>
+		<result column="product_availability" property="product_availability"/>
+		<result column="product_amount" property="product_amount"/>
+		<result column="product_comment" property="product_comment"/>
+		<result column="product_register" property="product_register"/>
+		<result column="product_delete" property="product_delete"/>
+		<result column="contract_discount" property="contract_discount"/>
+	</resultMap>
 	
 	<insert id="insertProduct" parameterType="Product" useGeneratedKeys="true" keyProperty="product_no">
 		<selectKey keyProperty="product_no" resultType="int" order="BEFORE">
 			select max(product_no)+1 from product
 		</selectKey>
 		<![CDATA[
-		     insert into product values(${product_no},#{product_name},#{product_price},#{product_availavility},#{product_amount},
+		     insert into product values(${product_no},#{product_name},#{product_price},#{product_availability},#{product_amount},
 		     #{product_comment},sysdate,default)
 	     ]]>
 	</insert>
@@ -23,4 +38,12 @@
 	     ]]>
 	</insert>
 	
+	<!-- 상품검색 mapping  -->
+	<select id="selectSearchProduct" resultMap="resultSelectAllProduct">
+		<![CDATA[
+			select * from product, contract
+			where product_name like '%'||#{product_name}||'%' and product_delete ='N' and product_availability ='Y' and 
+		]]>
+		
+	</select>
 </mapper>
