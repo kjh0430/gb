@@ -26,11 +26,19 @@ public class Emp implements Serializable{
 	private int dept_no;
 	private String emp_delete;
 	
+	//MrgName,adminName, approval에 가져오기 위한 vo 추가
+	private String emp_mgr_name;
+	private String emp_admin_name;
+	
+	
+	
 	public Emp() {}
+
+
 
 	public Emp(int emp_no, String emp_pwd, String emp_name, String emp_addr, String emp_phone, int job_no,
 			String emp_email, int emp_mgr, Date emp_hiredate, Date emp_firedate, String city, String county,
-			String village, int dept_no, String emp_delete) {
+			String village, int dept_no, String emp_delete, String emp_mgr_name, String emp_admin_name) {
 		super();
 		this.emp_no = emp_no;
 		this.emp_pwd = emp_pwd;
@@ -47,7 +55,11 @@ public class Emp implements Serializable{
 		this.village = village;
 		this.dept_no = dept_no;
 		this.emp_delete = emp_delete;
+		this.emp_mgr_name = emp_mgr_name;
+		this.emp_admin_name = emp_admin_name;
 	}
+
+
 
 	public int getEmp_no() {
 		return emp_no;
@@ -168,6 +180,32 @@ public class Emp implements Serializable{
 	public void setEmp_delete(String emp_delete) {
 		this.emp_delete = emp_delete;
 	}
+	
+	
+
+	public String getEmp_mgr_name() {
+		return emp_mgr_name;
+	}
+
+
+
+	public void setEmp_mgr_name(String emp_mgr_name) {
+		this.emp_mgr_name = emp_mgr_name;
+	}
+
+
+
+	public String getEmp_admin_name() {
+		return emp_admin_name;
+	}
+
+
+
+	public void setEmp_admin_name(String emp_admin_name) {
+		this.emp_admin_name = emp_admin_name;
+	}
+
+
 
 	@Override
 	public String toString() {
@@ -175,8 +213,12 @@ public class Emp implements Serializable{
 				+ ", emp_phone=" + emp_phone + ", job_no=" + job_no + ", emp_email=" + emp_email + ", emp_mgr="
 				+ emp_mgr + ", emp_hiredate=" + emp_hiredate + ", emp_firedate=" + emp_firedate + ", city=" + city
 				+ ", county=" + county + ", village=" + village + ", dept_no=" + dept_no + ", emp_delete=" + emp_delete
-				+ "]";
+				+ ", emp_mgr_name=" + emp_mgr_name + ", emp_admin_name=" + emp_admin_name + "]";
 	}
+
+
+
+
 	
 }
 
