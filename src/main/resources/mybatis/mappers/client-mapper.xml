@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="client">
+
+	<!-- 고객 리스트 -->
+	<resultMap type="client" id="resultSelectAllClient">
+		<result column="client_no" property="client_no"/>
+		<result column="client_name" property="client_name"/>
+		<result column="client_company" property="client_company"/>
+		<result column="client_job" property="client_job"/>
+		<result column="client_email" property="client_email"/>
+		<result column="client_phone" property="client_phone"/>
+		<result column="client_addr" property="client_addr"/>
+	</resultMap>
+
+	<!-- 고객정보 상세보기 -->
+	<resultMap type="client" id="resultDetailClient">
+		<id column="client_no" property="client_no"/>
+		<result column="client_name" property="client_name"/>
+		<result column="client_company" property="client_company"/>
+		<result column="client_job" property="client_job"/>
+		<result column="client_email" property="client_email"/>
+		<result column="client_phone" property="client_phone"/>
+		<result column="client_addr" property="client_addr"/>
+		<result column="client_com_tel" property="client_com_tel"/>
+		<result column="client_contract" property="client_contract"/>
+		<result column="client_comment" property="client_comment"/>
+	</resultMap>
+
+	<!-- 신규고객 등록 mapping -->
+	<insert id="insertClient" parameterType="client">
+		<![CDATA[
+			insert into client values(
+				(select max(client_no)+1 from client), #{client_name}, #{client_company}, #{client_job}, #{client_email},
+				#{client_phone}, #{client_addr}, #{client_com_tel}, #{client_contract}, #{client_comment},
+				#{emp_no}, sysdate
+			)
+		]]>
+	</insert>
+	
+	<!-- 등록된 고객정보 리스트 mapping -->
+	<select id="selectAllClient" resultMap="resultSelectAllClient">
+		<![CDATA[
+			select * from client
+		]]>	
+	</select>
+	
+	<!-- 등록된 잠재고객 리스트 mapping -->
+	<select id="selectPoList" resultMap="resultSelectAllClient">
+		<![CDATA[
+			select * from client
+			where client_contract = 'N'
+		]]>
+	</select>
+	
+	<!-- 고객정보 상세보기 mapping -->
+	<select id="detailClient" parameterType="int" resultMap="resultDetailClient">
+		<![CDATA[
+			select * from client
+			where client_no = #{client_no}
+		]]>
+	</select>
+	
+	<!-- 고객정보 삭제 mapping -->
+	<delete id="deleteClient" parameterType="int">
+		<![CDATA[
+			delete from client
+			where client_no=#{client_no}
+		]]>
+	</delete>
+	
+</mapper>
