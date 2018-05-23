@@ -41,8 +41,11 @@
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		
+
+	
 	});
+	
+
 </script>
 </head>
 
@@ -162,7 +165,7 @@
 												for="first-name">일자 <span class="required">*</span>
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<input type="date" required="required" name="startDate"
+												<input type="date" required="required" name="startDate" id="startDate"
 													class="form-date col-md-5 col-xs-12">
 												<input type="date" required="required" name="endDate"
 													class="form-date col-md-5 col-xs-12">
@@ -174,11 +177,11 @@
 											</label> 
 											<div class="col-md-2 col-sm-4 col-xs-12">
 												<select class="form-control">
-													<option>1</option>
-													<option>2</option>
-													<option>3</option>
-													<option>4</option>
-													<option>5</option>
+													<option>휴가</option>
+													<option>경조사</option>
+													<option>병가</option>
+													<option>비고</option>
+													
 												</select>
 											</div>
 										</div>
@@ -189,7 +192,7 @@
 												<div class="input-group" style="margin-bottom:0px;">
 													<input type="text" class="form-control"> <span
 														class="input-group-btn">
-														<button type="button" class="btn btn-default" data-toggle="modal" data-target=".ap1-modal-lg"><i class="fa fa-search"></i></button>
+														<!-- <button type="button" class="btn btn-default" data-toggle="modal" data-target=".ap1-modal-lg"><i class="fa fa-search"></i></button> -->
 													</span>
 												</div>
 											</div>
@@ -201,7 +204,7 @@
 												<div class="input-group" style="margin-bottom:0px;">
 													<input type="text" class="form-control"> <span
 														class="input-group-btn">
-														<button type="button" class="btn btn-default" data-toggle="modal" data-target=".ap1-modal-lg"><i class="fa fa-search"></i></button>
+														<!-- <button type="button" class="btn btn-default" data-toggle="modal" data-target=".ap1-modal-lg"><i class="fa fa-search"></i></button> -->
 													</span>
 												</div>
 											</div>
@@ -217,7 +220,7 @@
 										<div class="form-group">
 											<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
 												<button class="btn btn-danger" type="reset">Reset</button>
-												<button type="submit" class="btn btn-primary">Submit</button>
+												<button type="button" class="btn btn-primary" onclick="zxc();">Submit</button>
 											</div>
 										</div>
 									</form>
