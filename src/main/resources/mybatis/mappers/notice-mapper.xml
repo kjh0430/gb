@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="notice_mapper">
+
+	<!-- 고객 리스트 -->
+	<resultMap type="notice" id="resultSelectAllNotice">
+		<result column="notice_no" property="notice_no"/>
+		<result column="emp_no" property="emp_no"/>
+		<result column="notice_title" property="notice_title"/>
+		<result column="notice_content" property="notice_content"/>
+		<result column="notice_date" property="notice_date"/>
+	</resultMap>
+
+
+	
+	<!-- 등록된 공지사항 리스트 mapping -->
+	<select id="selectAllNotice" resultMap="resultSelectAllNotice">
+		<![CDATA[
+			select * from notice
+		]]>	
+	</select>
+	
+	<!-- 공지사항 상세정보 -->
+	<select id="detailNotice" parameterType="int" resultMap="resultSelectAllNotice">
+		<![CDATA[
+			select * from notice
+			where notice_no = #{notice_no}
+		]]>	
+	</select>
+	<!-- <insert id="insertNoitce">
+		<![CDATA[
+			insert into notice values 
+			((select max(notice_no)+1 from notice)
+			,1,'곧 업데이트할 예정입니다.'
+			,'업데이트 할 예정이오니 참고 바랍니다.',sysdate,0);
+		]]>
+	</insert> -->
+	
+	
+</mapper>

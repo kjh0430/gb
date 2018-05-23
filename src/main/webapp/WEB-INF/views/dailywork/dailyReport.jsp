@@ -233,8 +233,7 @@
 						    position : iwPosition, 
 						    content : iwContent 
 						});
-						infowindow.open(map, marker); 
-					    
+						infowindow.open(map, marker); 					    
 					}
 									
 					//선그리기
@@ -286,10 +285,6 @@
 			}	
 		});	
 	}//visitlist ajax
-	
-	
-	
-	
 	
 	</script>
 

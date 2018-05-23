@@ -100,9 +100,10 @@ $(document).ready(function() {
 								</div>
 								<div class="x_content">
                    					 <br />
-									<form action="updateClient.do" method="post" id="updateClient" data-parsley-validate
+									<form action="updateClientView.do" method="post" id="updateClientView" data-parsley-validate
 										class="form-horizontal form-label-left">
 									<input type="hidden" name="emp_no" value="${ detailClient.emp.emp_no }">
+									<input type="hidden" name="client_no" value="${ detailClient.client_no }">
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12"
 												for="first-name">고객번호
@@ -120,12 +121,12 @@ $(document).ready(function() {
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<input name="client_name" type="text" id="client_name" required="required"
 													class="form-control col-md-7 col-xs-12" 
-													value="${ detailClient.client_name }" >
+													value="${ detailClient.client_name }" readonly>
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12"
-												for="last-name">담당자명 
+												for="last-name">담당자명 *
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<input type="text" id="" name="emp.emp_name"
@@ -142,7 +143,7 @@ $(document).ready(function() {
 												<input id="client_job"
 													class="form-control col-md-7 col-xs-12" type="text"
 													name="client_job" 
-													value="${ detailClient.client_job }" >
+													value="${ detailClient.client_job }" readonly>
 											</div>
 										</div>
 										<div class="form-group">
@@ -153,12 +154,12 @@ $(document).ready(function() {
 												<input name="client_email" id="client_email"
 													class="date-picker form-control col-md-7 col-xs-12"
 													required="required" type="text" 
-													value="${ detailClient.client_email }" >
+													value="${ detailClient.client_email }" readonly>
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">
-												담당자 연락처
+												담당자 연락처 *
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<input name="emp.emp_phone" id=""
@@ -175,7 +176,7 @@ $(document).ready(function() {
 												<input name="client_addr" id="client_addr"
 													class="date-picker form-control col-md-7 col-xs-12"
 													required="required" type="text" 
-													value="${ detailClient.client_addr }" >
+													value="${ detailClient.client_addr }" readonly>
 											</div>
 										</div>
 										<div class="form-group">
@@ -186,7 +187,7 @@ $(document).ready(function() {
 												<input name="client_phone" id="client_phone"
 													class="date-picker form-control col-md-7 col-xs-12"
 													required="required" type="text" 
-													value="${ detailClient.client_phone }" >
+													value="${ detailClient.client_phone }" readonly>
 											</div>
 										</div>
 										<div class="form-group">
@@ -197,7 +198,7 @@ $(document).ready(function() {
 												<input name="client_contract" id="client_contract"
 													class="date-picker form-control col-md-7 col-xs-12"
 													required="required" type="text" 
-													value="${ detailClient.client_contract }" >
+													value="${ detailClient.client_contract }" readonly>
 											</div>
 										</div>
 										<div class="form-group">
@@ -208,7 +209,7 @@ $(document).ready(function() {
 												<input name="client_comment" id="client_contract"
 													class="date-picker form-control col-md-7 col-xs-12"
 													required="required" type="text" 
-													value="${ detailClient.client_comment }" >
+													value="${ detailClient.client_comment }" readonly>
 											</div>
 										</div>
 										<div class="form-group">
@@ -222,7 +223,7 @@ $(document).ready(function() {
 													<input style="cursor:pointer;" name="client_original_file" id="client_original_file"
 														class="date-picker form-control col-md-7 col-xs-12"
 														required="required" type="text" 
-														value="${ list.client_original_file }" >
+														value="${ list.client_original_file }" readonly>
 												</a>	
 												</c:forEach>
 											</div>

@@ -185,12 +185,19 @@ public class ClientController {
 		return "client/clientList";
 	}
 	
+	/** 고객정보 수정페이지 이동 */
+	@RequestMapping(value="updateClientView.do", method=RequestMethod.POST)
+	public String updateClientView(Client client, Model model, @RequestParam("client_no") int client_no) {
+		Client returnClient=clientService.selectClient(client_no);
+		model.addAttribute("detailClient", returnClient);
+		
+		return "client/updateClient";
+	}
 
 	/** 고객정보 수정 메소드 */
 	@RequestMapping("updateClient.do")
-	public String updateClient(Client client, Model model, @RequestParam("client_no") String cNum) {
+	public String updateClient(Client client, Model model, @RequestParam("client_no") int client_no) {
 		logger.info("고객정보 수정메소드 실행됨");
-		int client_no=Integer.parseInt(cNum);
 			System.out.println("받아온 고객번호: "+client_no);
 		
 		int resultClient=clientService.updateClient(client);	//고객정보 수정
