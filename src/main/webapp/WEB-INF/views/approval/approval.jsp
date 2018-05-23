@@ -204,7 +204,7 @@
 												<div class="input-group" style="margin-bottom:0px;">
 													<input type="text" class="form-control"> <span
 														class="input-group-btn">
-														<!-- <button type="button" class="btn btn-default" data-toggle="modal" data-target=".ap1-modal-lg"><i class="fa fa-search"></i></button> -->
+														<button type="button" class="btn btn-default" data-toggle="modal" data-target=".ap1-modal-lg"><i class="fa fa-search"></i></button>
 													</span>
 												</div>
 											</div>
