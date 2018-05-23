@@ -25,6 +25,7 @@ public class Emp implements Serializable{
 	private String village;
 	private int dept_no;
 	private String emp_delete;
+	private String dept_name; //부서별 사원조회 
 	
 	public Emp() {}
 
@@ -167,6 +168,15 @@ public class Emp implements Serializable{
 
 	public void setEmp_delete(String emp_delete) {
 		this.emp_delete = emp_delete;
+	}
+
+	
+	public String getDept_name() {
+		return dept_name;
+	}
+
+	public void setDept_name(String dept_name) {
+		this.dept_name = dept_name;
 	}
 
 	@Override

@@ -23,5 +23,6 @@ public interface EmpService {
 	public abstract Emp selectEmpNo(int emp_no); //사원 조회
 	public abstract ArrayList<Emp> selectEmpList(); //사원 전체 조회
 	public abstract int selectCheckPhone(String emp_phone); //연락처 중복검사
+	public abstract ArrayList<Emp> selectDeptEmp(Emp emp); //부서별 사원리스트
 	
 }

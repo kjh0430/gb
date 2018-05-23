@@ -90,6 +90,11 @@ public class EmpServlceImpl implements EmpService{
 	@Override
 	public int selectCheckPhone(String emp_phone) {
 		return empDao.selectCheckPhone(emp_phone);
+	}
+	/* 부서별 사원리스트 */
+	@Override
+	public ArrayList<Emp> selectDeptEmp(Emp emp) {
+		return empDao.selectDeptEmp(emp);
 	}	
 	
 }

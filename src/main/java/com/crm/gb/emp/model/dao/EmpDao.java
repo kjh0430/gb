@@ -64,5 +64,9 @@ public class EmpDao {
 		System.out.println("emp_phone 진입");
 		return sqlSession.selectOne("selectCheckPhone", emp_phone);
 	}
+
+	public ArrayList<Emp> selectDeptEmp(Emp emp) {
+		return (ArrayList)sqlSession.selectList("selectDeptEmp",emp);
+	}
 	
 }
