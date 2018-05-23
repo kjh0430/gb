@@ -6,6 +6,7 @@
 	<typeAliases>		
 		<typeAlias type="com.crm.gb.emp.model.vo.Emp" alias="Emp" />
 		<typeAlias type="com.crm.gb.client.model.vo.Client" alias="Client" />
+		<typeAlias type="com.crm.gb.client.model.vo.ClientFile" alias="ClientFile" />
 		<typeAlias type="com.crm.gb.dailywork.model.vo.Dailywork" alias="Dailywork" />
 		<typeAlias type="com.crm.gb.goal.model.vo.Goal" alias="Goal" />
 		<typeAlias type="com.crm.gb.product.model.vo.Product" alias="Product" />
