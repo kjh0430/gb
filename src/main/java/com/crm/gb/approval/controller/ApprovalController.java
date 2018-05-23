@@ -8,7 +8,12 @@ public class ApprovalController {
 
 	@RequestMapping("approval.do")
 	public String approval() {
+		
+	
+		
 		return "approval/approval";
 	}
+	
+	
 	
 }
