@@ -17,5 +17,11 @@ public class NoticeDao {
 	public ArrayList<Notice> selectAllNotice() {
 		return (ArrayList)sqlSession.selectList("notice_mapper.selectAllNotice");
 	}
+	//공지사항 상세정보
+	public Notice detailNotice(int notice_no) {
+		
+		return sqlSession.selectOne("detailNotice",notice_no);
+		
+	}
 
 }

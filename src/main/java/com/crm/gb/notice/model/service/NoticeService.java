@@ -8,4 +8,6 @@ public interface NoticeService {
 
 	public abstract ArrayList<Notice> selectAllNoticeList();//공지사항 리스트 조회
 
+	public abstract Notice selectNotice(int notice_no);//공지사항 상세정보
+
 }

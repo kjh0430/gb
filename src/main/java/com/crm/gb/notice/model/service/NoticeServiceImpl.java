@@ -20,6 +20,13 @@ public class NoticeServiceImpl implements NoticeService{
 		
 		return noticeDao.selectAllNotice();
 	}
+
+	//공지사항 상세정보
+	@Override
+	public Notice selectNotice(int notice_no) {
+		
+		return noticeDao.detailNotice(notice_no);
+	}
 	
 	
 	
