@@ -119,7 +119,7 @@ function Regiemp(){
 }
 
 function moveMgr(){
-	var msg = window.dialogArguments[];
+	
 }
 
 </script>
