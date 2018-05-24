@@ -10,4 +10,12 @@ public interface NoticeService {
 
 	public abstract Notice selectNotice(int notice_no);//공지사항 상세정보
 
+	public abstract int updateNotice(Notice notice);
+
+	public abstract int insertNotice(Notice notice);
+
+	public abstract int countUpdate(int notice_no);
+
+	public abstract int deleteNotice(int notice_no);
+
 }

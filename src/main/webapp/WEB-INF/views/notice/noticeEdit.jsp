@@ -46,6 +46,17 @@ $(document).ready(function() {
 } );
 
 </script>
+<script type="text/javascript">
+	$(function(){
+		$('#edit_add').click(function(){
+			alert('수정합니다.');
+			
+		});
+	});
+
+</script>
+
+
 <style type="text/css">
 	.btn-modify{
 		padding:3px 6px;
@@ -142,7 +153,7 @@ $(document).ready(function() {
 										<div class="ln_solid"></div>
 										<div class="form-group">
 											<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-												<button type="submit" class="btn btn-success">수정</button>
+												<button  id="edit_add"type="submit" class="btn btn-success">수정</button>
 											</div>
 											<!-- 수정화면
 											<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">

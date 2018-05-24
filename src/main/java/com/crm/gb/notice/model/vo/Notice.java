@@ -20,8 +20,6 @@ public class Notice {
 
 	
 	
-	
-	
 	public Notice(int notice_no, int emp_no, String notice_title, String notice_content, Date notice_date,
 			int notice_count) {
 		super();
