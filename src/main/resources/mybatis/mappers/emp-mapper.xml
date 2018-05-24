@@ -121,12 +121,6 @@
 	]]>
 	</select>
 
-    <!-- 결재리스트 팀장,관리자 이름 가져오기 -->
- <select id="getName" parameterType="int">
- <![CDATA[
- select 
- ]]>
  
- </select>
 
 </mapper>
