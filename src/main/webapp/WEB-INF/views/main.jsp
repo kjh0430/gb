@@ -116,7 +116,6 @@
 		            <%@ include file="etc/sidebar.jsp" %>
 		            <!-- /sidebar menu --> 
             	</c:otherwise>
-
             </c:choose>
             
           </div>
