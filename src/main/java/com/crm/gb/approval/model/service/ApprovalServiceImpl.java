@@ -1,6 +1,6 @@
 package com.crm.gb.approval.model.service;
 
-import java.util.ArrayList;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,9 +17,17 @@ private ApprovalDao ApprovalDao;
 	
 	
 	@Override
-	public Approval selectName(int empNo) {
+	public Approval selectName(int emp_no) {
 		
-		return ApprovalDao.selectName(empNo);
+		return ApprovalDao.selectName(emp_no);
+	}
+
+
+
+	@Override
+	public int insertApproval(Approval apr) {
+		// TODO Auto-generated method stub
+		return ApprovalDao.insertApproval(apr);
 	}
 
 	

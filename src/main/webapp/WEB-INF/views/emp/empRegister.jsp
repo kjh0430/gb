@@ -49,7 +49,7 @@
 		});
 	});
 </script>  -->
-</head>
+
 <script type="text/javascript">
 function Regiemp(){
 	
@@ -119,22 +119,25 @@ function Regiemp(){
 }
 
 function moveMgr(){
-	/* console.log("moveMgr 실행");
-	var click_id = $('button').attr('id');
-	console.log(click_id);
-	 */
 	$('button').click(function(){
 		console.log("moveMgr 실행");
 	    var mgr_id = $(this).attr('id');
 	    console.log(mgr_id);
 	    $('#emp_mgr').val(mgr_id);
-	    
-
+	    $('#mgrModal').modal('hide');
 	});
 	
 }
 
 </script>
+
+<style type="text/css">
+#mgrTable{
+text-align:center;
+}
+</style>
+
+</head>
 
 <body class="nav-md">
 	<div class="container body">
@@ -298,10 +301,10 @@ function moveMgr(){
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">상사</label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">상사번호</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input class="form-control col-md-7 col-xs-12" id="emp_mgr" name="emp_mgr" type="text" placeholder="상사" style="width:85%;">
-                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm" style="float:right;">조회</button>
+                          <input class="form-control col-md-7 col-xs-12" id="emp_mgr" name="emp_mgr" type="text" placeholder="상사번호" style="width:85%;">
+                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm" style="float:right;" onclick="moveMgr()">조회</button>
                         </div>
                       </div>
                       <div class="form-group">
@@ -367,7 +370,7 @@ function moveMgr(){
 	
 	
 	<!-- modal -->
-	<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal fade bs-example-modal-sm" id="mgrModal" tabindex="-1" role="dialog" aria-hidden="true">
        <div class="modal-dialog modal-sm">
           <div class="modal-content">
 
@@ -378,11 +381,11 @@ function moveMgr(){
              </div>
              <div class="modal-body" style="overflow-y:auto; overflow-x:hidden; height:400px;">
              <h4></h4>
-             <table class="table">
+             <table class="table" id="mgrTable">
                <thead>
                  <tr>
-                 <th>사원번호</th>
-				 <th>이름</th>
+                 <th style="text-align:center">사원번호</th>
+				 <th style="text-align:center">이름</th>
 				 <th></th>
                  </tr>
               </thead>
@@ -391,7 +394,7 @@ function moveMgr(){
 				<tr>
 				<td>${ empList.emp_no }</td>
 				<td>${ empList.emp_name }</td>
-				<td><button type="button" class="btn btn-info" id="${ empList.emp_no }" value="${ empList.emp_no }" onclick="moveMgr()">test${status.index }</button></td>
+				<td><button type="button" class="btn btn-info" id="${ empList.emp_no }" value="${ empList.emp_no }">선택</button></td>
 				</tr>	
 				</c:forEach>		
                </tbody>

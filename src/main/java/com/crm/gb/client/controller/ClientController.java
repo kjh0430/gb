@@ -68,6 +68,8 @@ public class ClientController {
 				List<MultipartFile> filelist=mtfRequest.getFiles("client_file");
 				//MultipartFile mfile = mtfRequest.getFile("client_file");
 				int idx=0;
+				if(filelist != null) {
+					
 				for(MultipartFile mfile : filelist) {
 					
 					try {
@@ -114,6 +116,7 @@ public class ClientController {
 					}			
 				}
 				
+			}//if close
 				ArrayList<Client> clientList=clientService.selectAllClient();
 				model.addAttribute("clientList", clientList);
 		
@@ -187,9 +190,12 @@ public class ClientController {
 	
 	/** 고객정보 수정페이지 이동 */
 	@RequestMapping(value="updateClientView.do", method=RequestMethod.POST)
-	public String updateClientView(Client client, Model model, @RequestParam("client_no") int client_no) {
+	public String updateClientView(Client client, Model model, @RequestParam("client_no") int client_no,
+			ArrayList <ClientFile> clientFile) {
 		Client returnClient=clientService.selectClient(client_no);
+		clientFile = clientService.selectClientFileList(client_no);	//고객 첨부파일 조회
 		model.addAttribute("detailClient", returnClient);
+		model.addAttribute("clientFileList", clientFile);
 		
 		return "client/updateClient";
 	}
@@ -223,7 +229,6 @@ public class ClientController {
 								//viewname(bean id명)과 modelname, model객체(저장한 파일객체)를 입력한다
 								//string: downfile, object : downFile로 filedownview클래스로 전송됨
 		return new ModelAndView("clientFileDown", "clientFile", downFile );
-		
 		
 	}
 	
