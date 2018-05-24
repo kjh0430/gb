@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -71,7 +72,7 @@ $(document).ready(function() {
 					<div class="clearfix"></div>
 
 					<!-- sidebar menu -->
-					<%@ include file="../etc/sidebar.jsp"%>
+					 <%@ include file="../etc/adminsidebar.jsp" %>
 					<!-- /sidebar menu -->
 
 				</div>
@@ -155,6 +156,7 @@ $(document).ready(function() {
 								공지사항
 							</h3>
 						</div>
+						
 					</div>
 
 					<div class="clearfix"></div>
@@ -162,9 +164,9 @@ $(document).ready(function() {
 					<div class="row">
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
-								
-								
-								<div class="x_content table-responsive">									
+								<div class="x_content table-responsive">	
+									<button type="button" class="btn btn-default btn-sm" style="float:right;"><a href="noticeWrite.do">글쓰기</a></button>
+										
 									<table id="table_notice" class="table table-striped table-responsive table-bordered" style="min-width:600px;">
 										<thead>
 											<tr>
@@ -175,6 +177,16 @@ $(document).ready(function() {
 											</tr>
 										</thead>
 										<tbody>
+											<c:forEach var="notice" items="${ noticeList }">
+												<tr>
+													<th>${ notice.notice_no }</th>
+													<%-- <th><a href="detailClient.do?client_no= ">${ list.client_name }</a></th> --%>
+													<th><a href="noticeDetail.do?notice_no=${notice.notice_no}" >${ notice.notice_title }</a></th>
+													<th>${ notice.notice_date }</th>
+													<th>${ notice.notice_count }</th>
+												</tr>
+											</c:forEach>										
+										
 											<tr>
 												<td>1</td>
 												<td><a href="#">첫번째 공지사항 테스트</a></td>
@@ -187,12 +199,7 @@ $(document).ready(function() {
 												<td>2018-04-18</td>
 												<td>32</td>
 											</tr>
-											<tr>
-												<td>1</td>
-												<td>첫번째 공지사항 테스트</td>
-												<td>2018-04-18</td>
-												<td>32</td>
-											</tr>
+											
 											<tr>
 												<td>1</td>
 												<td>두번째 공지사항 테스트 정기점검 알림 </td>
@@ -280,8 +287,8 @@ $(document).ready(function() {
 										<tbody>
 									</table>
 								</div>
+							<nav aria-label="Page navigation example">
 								
-								<nav aria-label="Page navigation example">
 									<ul class="pagination">
 										<li class="page-item"><a class="page-link" href="#">Previous</a></li>
 										<li class="page-item"><a class="page-link" href="#">1</a></li>

@@ -81,13 +81,14 @@
 				complete: function(){
 				},
 				error	: function(xhr, status, error){
-					alert(error);
+					console.log(error);
 				}
 			
 		}); //end of ajax
 		
-	});    
-	*/
+	}); 
+    */
+	
 	</script>	
     
     
@@ -115,7 +116,6 @@
 		            <%@ include file="etc/sidebar.jsp" %>
 		            <!-- /sidebar menu --> 
             	</c:otherwise>
-
             </c:choose>
             
           </div>

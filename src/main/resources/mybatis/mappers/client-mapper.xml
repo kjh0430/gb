@@ -5,6 +5,7 @@
 
 <mapper namespace="client">
 
+
 	
 	<!-- 고객 리스트 -->
 	<resultMap type="client" id="resultSelectAllClient">
@@ -197,3 +198,4 @@
 		]]>
 	</select>
 </mapper>
+

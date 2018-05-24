@@ -1,5 +1,29 @@
 package com.crm.gb.approval.model.dao;
 
+
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.crm.gb.approval.model.vo.Approval;
+
+
+@Repository("ApprovalDao")
 public class ApprovalDao {
+
+	@Autowired
+	private SqlSessionTemplate sqlSession;
+	
+	public Approval selectName(int emp_No) {
+		
+	return sqlSession.selectOne("getName",emp_No);
+	}
+
+	public int insertApproval(Approval apr) {
+		
+		
+		return sqlSession.insert("ApprovalSubmit",apr);
+	}
 
 }

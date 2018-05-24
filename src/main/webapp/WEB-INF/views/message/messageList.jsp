@@ -92,7 +92,9 @@
                values += "</tbody></table>"
 
                $('#send_msg').html(values);
-
+							
+               
+               
             },
             error : function(request, status, errorData) {
                alert("error code : " + request.status + "\n"
@@ -104,7 +106,13 @@
    });
    
    function modal1Close(){
-	   $('#modal1').modal("close");
+	   $('#modal1').modal("hide");
+	   $('#searchName').val("");
+	   $('#message_to_no').val("");
+	   $('#message_title').val("");
+	   $('#message_content').val("");
+	   
+	 
    }
    
    //답장 확인 버튼 modal4 열기
@@ -120,6 +128,9 @@
    //답장 창 닫기
    function closeModal4(){
       $('#modal4').modal("hide");
+      $('#anwer_title').val("");
+      $('#answer_content').val("");
+      
    }
    	//보낸 메시지 확인 모달 닫기
   function closeModal5(){
@@ -169,7 +180,6 @@
          });
 	}else{
 		alert("검색할 사원을 입력해주세요");
-		
 	}
 	
    }
@@ -198,7 +208,7 @@
       var a_message_date=td.eq(2).text();
       var a_message_from_empNo=td.eq(3).text();
       var a_message_content=td.eq(4).text();
-   
+   	
       alert(a_message_content);
       $('#modal3').modal("show");
       //답장 확인란에 값 추가
@@ -242,6 +252,49 @@
             
          },success: function(data){
             alert(data);
+            //보낸쪽지함
+            $.ajax({
+               url : "sendMessage.do",
+               data : {
+                  message_from_no : "${loginEmp.emp_no}"
+               },
+               type : "get",
+               success : function(data) {
+               
+                  var jsonSt = JSON.stringify(data);
+                  var json = JSON.parse(jsonSt);
+                  var size = Object.keys(json.list).length;
+
+                  var values = "<table class='table table-hover' id='table_sm'><thead><tr><th>받은사람</th><th style='width:40%;'>제목</th><th>받은날짜</th><th>내용</th><thead>"
+                        + "<tbody>"
+
+                  for ( var i in json.list) {
+
+                     values += "<tr onclick='confirmSend(this);' style='cusor:hand'><td>" + json.list[i].to_empName
+                           + "</td><td>" + json.list[i].message_title
+                           + "</td><td>" + json.list[i].message_date
+                           + "</td><td>"+json.list[i].message_content
+                           +"</td></tr>";
+
+                  }
+
+                  values += "</tbody></table>"
+
+                  $('#send_msg').html(values);
+   							
+                  
+                  
+               },
+               error : function(request, status, errorData) {
+                  alert("error code : " + request.status + "\n"
+                        + "message :" + request.responseText + "\n"
+                        + "error :" + errorData);
+               }
+            });
+            
+            
+            
+            
          },error : function(request, status, errorData) {
                   alert("error code : " + request.status + "\n"
                   + "message :" + request.responseText + "\n"
@@ -274,6 +327,54 @@
          },
          success : function(data) {
             alert(data);
+            //보낸쪽지함
+            $.ajax({
+               url : "sendMessage.do",
+               data : {
+                  message_from_no : "${loginEmp.emp_no}"
+               },
+               type : "get",
+               success : function(data) {
+               
+                  var jsonSt = JSON.stringify(data);
+                  var json = JSON.parse(jsonSt);
+                  var size = Object.keys(json.list).length;
+
+                  var values = "<table class='table table-hover' id='table_sm'><thead><tr><th>받은사람</th><th style='width:40%;'>제목</th><th>받은날짜</th><th>내용</th><thead>"
+                        + "<tbody>"
+
+                  for ( var i in json.list) {
+
+                     values += "<tr onclick='confirmSend(this);' style='cusor:hand'><td>" + json.list[i].to_empName
+                           + "</td><td>" + json.list[i].message_title
+                           + "</td><td>" + json.list[i].message_date
+                           + "</td><td>"+json.list[i].message_content
+                           +"</td></tr>";
+
+                  }
+
+                  values += "</tbody></table>"
+
+                  $('#send_msg').html(values);
+   							
+                  
+                  
+               },
+               error : function(request, status, errorData) {
+                  alert("error code : " + request.status + "\n"
+                        + "message :" + request.responseText + "\n"
+                        + "error :" + errorData);
+               }
+            });
+            
+            
+            
+            
+            
+            
+            
+            
+            
          },error : function(request, status, errorData) {
                  /*  alert("error code : " + request.status + "\n"
                   + "message :" + request.responseText + "\n"
@@ -671,7 +772,7 @@ display:none;
                                                          <input type="text" class="form-control"
                                                              id="a_to_emp" readonly>
 
-                                                         
+                                                        
                                                       </div>
                                                    </div>
                                                    <label

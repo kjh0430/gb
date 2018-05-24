@@ -19,6 +19,7 @@ public class Product implements java.io.Serializable{
 	private String product_delete;
 	private Double contract_discount;
 	
+	
 	public Product() {}
 	
 	public Product(int product_no, String product_name, int product_price, String product_availability,

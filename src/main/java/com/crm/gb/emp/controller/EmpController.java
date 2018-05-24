@@ -89,7 +89,11 @@ public class EmpController {
 	
 	/*사원 등록화면*/
 	@RequestMapping(value = "empRegister.do")
-	public String empRegister() {
+	public String empRegister(Emp emp, Model model) {
+		
+		ArrayList<Emp> empList = empService.selectEmpList();
+		System.out.println("empList : " + empList);
+		model.addAttribute("empList", empList);
 				
 		return "emp/empRegister";
 	}	

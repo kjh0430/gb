@@ -46,18 +46,17 @@ $(document).ready(function() {
 } );
 
 </script>
-
 <script type="text/javascript">
 	$(function(){
-		$('#notice_add_1').click(function(){
-			alert('공지사항을 추가합니다.');
+		$('#edit_add').click(function(){
+			alert('수정합니다.');
 			
 		});
-		
 	});
 
-
 </script>
+
+
 <style type="text/css">
 	.btn-modify{
 		padding:3px 6px;
@@ -112,40 +111,34 @@ $(document).ready(function() {
 							<div class="x_panel">
 								<div class="x_title">
 									<h2>
-										공지사항 작성
+										공지사항 수정
 									</h2>
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
 									<br />
 									<form id="demo-form2" data-parsley-validate
-										class="form-horizontal form-label-left" action="noticeAdd.do" method="post">
-
+										class="form-horizontal form-label-left" action="noticeEditUpdate.do">
+											
+										<input type="hidden" name="notice_no" value="${detailNotice.notice_no} ">	
+										
+										
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12"
 												for="first-name">제목
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<input type="text" id="first-name" name="notice_title" required="required"
-													class="form-control col-md-7 col-xs-12" >
+												<input type="text" id="first-name" required="required"
+													class="form-control col-md-7 col-xs-12" name ="notice_title" value="${detailNotice.notice_title}">
 											</div>
 										</div>
-										<!-- 상세화면
-										<div class="form-group">
-											<label class="control-label col-md-3 col-sm-3 col-xs-12"
-												for="last-name">
-											</label>
-											<div class="col-md-3 col-sm-3 col-xs-6">게시일 : 2018-06-05</div>
-											<div class="col-md-3 col-sm-3 col-xs-6" style="text-align:right">조회수 : 25</div>
-												
-										</div>
-										 -->
+										
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12"
 												for="last-name">내용
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<textarea class="form-control col-md-7 col-xs-12" rows="8" name="notice_content"></textarea>
+												<textarea class="form-control col-md-7 col-xs-12" name="notice_content" rows="8">${detailNotice.notice_content}</textarea>
 											</div>
 										</div>
 										<div class="form-group">
@@ -160,7 +153,7 @@ $(document).ready(function() {
 										<div class="ln_solid"></div>
 										<div class="form-group">
 											<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-												<button type="submit" id="notice_add_1"class="btn btn-success">등록</button>
+												<button  id="edit_add"type="submit" class="btn btn-success">수정</button>
 											</div>
 											<!-- 수정화면
 											<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
