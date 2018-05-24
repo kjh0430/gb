@@ -16,7 +16,7 @@ private ApprovalDao ApprovalDao;
 	
 	
 	@Override
-	public ArrayList<Emp> selectName(int empNo) {
+	public Emp selectName(int empNo) {
 		
 		return ApprovalDao.selectName(empNo);
 	}

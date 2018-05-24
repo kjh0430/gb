@@ -10,6 +10,6 @@ import com.crm.gb.emp.model.vo.Emp;
 
 public interface ApprovalService {
 
-	ArrayList<Emp> selectName(int empNo);
+	Emp selectName(int empNo);
 	
 }

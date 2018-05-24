@@ -14,11 +14,11 @@ public class ApprovalDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
-	public ArrayList<Emp> selectName(int empNo) {
+	public Emp selectName(int empNo) {
 		
 		
 		
-		return (ArrayList)sqlSession.selectList("getName",empNo);
+		return sqlSession.selectOne("getName",empNo);
 	}
 
 }

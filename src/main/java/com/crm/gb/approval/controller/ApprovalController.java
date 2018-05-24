@@ -32,7 +32,7 @@ public class ApprovalController {
 		System.out.println("emp_no"+emp_no);
 	
 		
-		ArrayList<Emp> returnName=ApprovalService.selectName(emp_no);
+		Emp returnName=ApprovalService.selectName(emp_no);
 		
 	
 	}
