@@ -119,10 +119,6 @@ function Regiemp(){
 }
 
 function moveMgr(){
-	/* console.log("moveMgr 실행");
-	var click_id = $('button').attr('id');
-	console.log(click_id);
-	 */
 	$('button').click(function(){
 		console.log("moveMgr 실행");
 	    var mgr_id = $(this).attr('id');
