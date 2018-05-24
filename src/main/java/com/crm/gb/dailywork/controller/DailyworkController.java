@@ -22,6 +22,7 @@ import com.crm.gb.client.model.service.ClientService;
 import com.crm.gb.client.model.vo.Client;
 import com.crm.gb.dailywork.model.service.DailyworkService;
 import com.crm.gb.dailywork.model.vo.Dailywork;
+import com.crm.gb.emp.model.service.EmpService;
 import com.crm.gb.emp.model.vo.Emp;
 
 @Controller
@@ -34,6 +35,9 @@ public class DailyworkController {
 	
 	@Autowired
 	public ClientService clientService;
+	
+	@Autowired
+	public EmpService empService;
 	
 	/** 방문일지 페이지 이동 메소드 **/
 	
@@ -91,9 +95,9 @@ public class DailyworkController {
 	//영업일지-방문일지 조회 컨트롤
 	@RequestMapping(value="visitList.do",method=RequestMethod.POST)
 	public void selectDailywork(Dailywork dw,HttpServletResponse response) throws IOException {
-		
-		System.out.println("visitList running!!");	
+		logger.info("visitList running!!");
 		//System.out.println(dw.getDaily_date());
+		
 		ArrayList<Dailywork> visitList = dailyworkService.selectVisit(dw);		
 		JSONArray jarr = new JSONArray();
 		
@@ -142,10 +146,55 @@ public class DailyworkController {
 		
 		//System.out.println("시간 : " + mTime +" "+time);
 		System.out.println("emp_no: " + dailywork.getEmp_no()+" ,client_no: "+dailywork.getClient_no()
-	+"comment : "+dailywork.getDaily_comment()+", time : " + dailywork.getDaily_date());
+		+"comment : "+dailywork.getDaily_comment()+", time : " + dailywork.getDaily_date());
 		System.out.println("dailywork: " + dailywork);
 		dailyworkService.insertDailywork(dailywork);
 		
 		return "dailywork/visit";
+	}
+	
+	/* 방문일지 어드민 페이지 이동 */
+	@RequestMapping(value="moveAdminDailyReport.do",method=RequestMethod.GET)
+	public String moveAdminDailyReport() {
+		return "dailywork/dailyReportAdmin";
+	}
+	
+	/* 해당 사원 팀원 불러오는 메소드*/
+	@RequestMapping(value="selectDeptEmp.do",method=RequestMethod.POST)
+	public void selectDeptEmp(Emp emp,HttpServletResponse response) throws IOException {
+		logger.info("selectDept running!!");
+		int dept_no = emp.getDept_no();
+		int job_no = emp.getJob_no();
+		System.out.println("detp_no : "+dept_no+", job_no : "+job_no);
+		ArrayList<Emp> deptEmplist=null;
+		if(job_no == 3) {
+			emp.setDept_no(0);		
+			deptEmplist = empService.selectDeptEmp(emp);			
+		}else {
+			deptEmplist = empService.selectDeptEmp(emp);		
+		}
+		JSONArray jarr = new JSONArray();
+		//System.out.println(deptEmplist);
+		for(Emp e : deptEmplist) {
+			JSONObject job= new JSONObject();
+			job.put("emp_no",e.getEmp_no());
+			job.put("emp_name", e.getEmp_name());
+			job.put("dept_no", e.getDept_no());
+			job.put("dept_name", e.getDept_name());
+			job.put("job_no", e.getJob_no());
+			
+			jarr.add(job);
+		}
+		
+		JSONObject sendJson = new JSONObject();
+		sendJson.put("list", jarr);
+		//System.out.println("jarr : " + jarr);
+		
+		response.setContentType("application/json; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		out.println(sendJson.toJSONString());		
+		out.flush();
+		out.close();		
+	
 	}
 }

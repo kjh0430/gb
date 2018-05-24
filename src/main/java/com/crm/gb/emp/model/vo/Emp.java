@@ -25,6 +25,7 @@ public class Emp implements Serializable{
 	private String village;
 	private int dept_no;
 	private String emp_delete;
+	private String dept_name; //부서별 사원조회 
 	
 	//MrgName,adminName, approval에 가져오기 위한 vo 추가
 	private String emp_mgr_name;
@@ -206,6 +207,15 @@ public class Emp implements Serializable{
 	}
 
 
+
+	
+	public String getDept_name() {
+		return dept_name;
+	}
+
+	public void setDept_name(String dept_name) {
+		this.dept_name = dept_name;
+	}
 
 	@Override
 	public String toString() {

@@ -64,6 +64,10 @@ public class EmpDao {
 		System.out.println("emp_phone dao 실행");
 		return sqlSession.selectOne("selectCheckPhone", emp_phone);
 	}
+
+	public ArrayList<Emp> selectDeptEmp(Emp emp) {
+		return (ArrayList)sqlSession.selectList("selectDeptEmp",emp);
+	}
 	
 	/*이메일 중복검사*/
 	public int selectCheckEmail(String emp_email) {

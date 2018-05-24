@@ -32,7 +32,6 @@
 		+"<a href='javascript:delFile(\"pFile-"+index+"\")' title='삭제'>&nbsp;&nbsp;<i class='fa fa-times'></i></a></li>";
 		$(".p_file").append(value);
 		var firstFile = $("#firstFile").val(); 
-		console.log(firstFile +"," + typeof(firstFile));
 		if(index==1 && firstFile==("")){
 			$(".fileSpan").html("");
 			index++;
@@ -43,7 +42,6 @@
 	
 	function delFile(idx){
 		var firstFile = $("#firstFile").val(); 
-		console.log(firstFile +"," + typeof(firstFile));
 		if(idx==1 && firstFile !=("")){
 			$(".fileSpan").html("<a href='javascript:resetFile()' title='삭제'>&nbsp;<i class='fa fa-times'></i></a>");
 			$("#"+idx).remove();
