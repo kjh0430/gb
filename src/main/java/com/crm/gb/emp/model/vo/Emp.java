@@ -25,10 +25,8 @@ public class Emp implements Serializable{
 	private String village;
 	private int dept_no;
 	private String emp_delete;
+	private String dept_name; //부서별 사원조회 
 	
-	//MrgName,adminName, approval에 가져오기 위한 vo 추가
-	private String emp_mgr_name;
-	private String emp_admin_name;
 	
 	
 	
@@ -36,9 +34,10 @@ public class Emp implements Serializable{
 
 
 
+
 	public Emp(int emp_no, String emp_pwd, String emp_name, String emp_addr, String emp_phone, int job_no,
 			String emp_email, int emp_mgr, Date emp_hiredate, Date emp_firedate, String city, String county,
-			String village, int dept_no, String emp_delete, String emp_mgr_name, String emp_admin_name) {
+			String village, int dept_no, String emp_delete, String dept_name) {
 		super();
 		this.emp_no = emp_no;
 		this.emp_pwd = emp_pwd;
@@ -55,9 +54,9 @@ public class Emp implements Serializable{
 		this.village = village;
 		this.dept_no = dept_no;
 		this.emp_delete = emp_delete;
-		this.emp_mgr_name = emp_mgr_name;
-		this.emp_admin_name = emp_admin_name;
+		this.dept_name = dept_name;
 	}
+
 
 
 
@@ -65,145 +64,230 @@ public class Emp implements Serializable{
 		return emp_no;
 	}
 
+
+
+
 	public void setEmp_no(int emp_no) {
 		this.emp_no = emp_no;
 	}
+
+
+
 
 	public String getEmp_pwd() {
 		return emp_pwd;
 	}
 
+
+
+
 	public void setEmp_pwd(String emp_pwd) {
 		this.emp_pwd = emp_pwd;
 	}
+
+
+
 
 	public String getEmp_name() {
 		return emp_name;
 	}
 
+
+
+
 	public void setEmp_name(String emp_name) {
 		this.emp_name = emp_name;
 	}
+
+
+
 
 	public String getEmp_addr() {
 		return emp_addr;
 	}
 
+
+
+
 	public void setEmp_addr(String emp_addr) {
 		this.emp_addr = emp_addr;
 	}
+
+
+
 
 	public String getEmp_phone() {
 		return emp_phone;
 	}
 
+
+
+
 	public void setEmp_phone(String emp_phone) {
 		this.emp_phone = emp_phone;
 	}
+
+
+
 
 	public int getJob_no() {
 		return job_no;
 	}
 
+
+
+
 	public void setJob_no(int job_no) {
 		this.job_no = job_no;
 	}
+
+
+
 
 	public String getEmp_email() {
 		return emp_email;
 	}
 
+
+
+
 	public void setEmp_email(String emp_email) {
 		this.emp_email = emp_email;
 	}
+
+
+
 
 	public int getEmp_mgr() {
 		return emp_mgr;
 	}
 
+
+
+
 	public void setEmp_mgr(int emp_mgr) {
 		this.emp_mgr = emp_mgr;
 	}
+
+
+
 
 	public Date getEmp_hiredate() {
 		return emp_hiredate;
 	}
 
+
+
+
 	public void setEmp_hiredate(Date emp_hiredate) {
 		this.emp_hiredate = emp_hiredate;
 	}
+
+
+
 
 	public Date getEmp_firedate() {
 		return emp_firedate;
 	}
 
+
+
+
 	public void setEmp_firedate(Date emp_firedate) {
 		this.emp_firedate = emp_firedate;
 	}
+
+
+
 
 	public String getCity() {
 		return city;
 	}
 
+
+
+
 	public void setCity(String city) {
 		this.city = city;
 	}
+
+
+
 
 	public String getCounty() {
 		return county;
 	}
 
+
+
+
 	public void setCounty(String county) {
 		this.county = county;
 	}
+
+
+
 
 	public String getVillage() {
 		return village;
 	}
 
+
+
+
 	public void setVillage(String village) {
 		this.village = village;
 	}
+
+
+
 
 	public int getDept_no() {
 		return dept_no;
 	}
 
+
+
+
 	public void setDept_no(int dept_no) {
 		this.dept_no = dept_no;
 	}
+
+
+
 
 	public String getEmp_delete() {
 		return emp_delete;
 	}
 
+
+
+
 	public void setEmp_delete(String emp_delete) {
 		this.emp_delete = emp_delete;
 	}
-	
-	
 
-	public String getEmp_mgr_name() {
-		return emp_mgr_name;
+
+
+
+	public String getDept_name() {
+		return dept_name;
 	}
 
 
 
-	public void setEmp_mgr_name(String emp_mgr_name) {
-		this.emp_mgr_name = emp_mgr_name;
+
+	public void setDept_name(String dept_name) {
+		this.dept_name = dept_name;
 	}
 
 
 
-	public String getEmp_admin_name() {
-		return emp_admin_name;
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
-
-
-	public void setEmp_admin_name(String emp_admin_name) {
-		this.emp_admin_name = emp_admin_name;
-	}
 
 
 
@@ -213,8 +297,17 @@ public class Emp implements Serializable{
 				+ ", emp_phone=" + emp_phone + ", job_no=" + job_no + ", emp_email=" + emp_email + ", emp_mgr="
 				+ emp_mgr + ", emp_hiredate=" + emp_hiredate + ", emp_firedate=" + emp_firedate + ", city=" + city
 				+ ", county=" + county + ", village=" + village + ", dept_no=" + dept_no + ", emp_delete=" + emp_delete
-				+ ", emp_mgr_name=" + emp_mgr_name + ", emp_admin_name=" + emp_admin_name + "]";
+				+ ", dept_name=" + dept_name + "]";
 	}
+
+
+	
+
+	
+
+
+
+	
 
 
 

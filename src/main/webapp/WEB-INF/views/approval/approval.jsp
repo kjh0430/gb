@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
+	
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,6 +43,27 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 
+
+		//팀장 이름, 및 관리자 이름 가져오기
+		$.ajax({
+			url:"getName.do",
+			data:{emp_no :"${loginEmp.emp_no}"
+			},
+			type:"get",
+			success:function(data){
+				 
+		
+			}
+		
+		
+		});
+		
+		
+		
+		
+		
+		
+		
 	
 	});
 	
@@ -213,7 +235,7 @@ function resetContent(){
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<div class="input-group" style="margin-bottom:0px;">
 													<input type="text" class="form-control"> <span
-														class="input-group-btn" value="${loginEmp. }" readonly>
+														class="input-group-btn" value="${loginEmp.emp_no}" readonly>
 														<!-- <button type="button" class="btn btn-default" data-toggle="modal" data-target=".ap1-modal-lg"><i class="fa fa-search"></i></button> -->
 													</span>
 												</div>
