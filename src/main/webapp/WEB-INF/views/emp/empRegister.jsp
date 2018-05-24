@@ -119,6 +119,18 @@ function Regiemp(){
 }
 
 function moveMgr(){
+	/* console.log("moveMgr 실행");
+	var click_id = $('button').attr('id');
+	console.log(click_id);
+	 */
+	$('button').click(function(){
+		console.log("moveMgr 실행");
+	    var mgr_id = $(this).attr('id');
+	    console.log(mgr_id);
+	    $('#emp_mgr').val(mgr_id);
+	    
+
+	});
 	
 }
 
@@ -375,11 +387,11 @@ function moveMgr(){
                  </tr>
               </thead>
               <tbody>
-                <c:forEach items="${ empList }" var="empList">
+                <c:forEach items="${ empList }" var="empList" varStatus="status">
 				<tr>
 				<td>${ empList.emp_no }</td>
 				<td>${ empList.emp_name }</td>
-				<td><button type="button" class="btn btn-info" id="${ empList.emp_name }" name="${ empList.emp_name }" onclick="moveMgr()">선택</button></td>
+				<td><button type="button" class="btn btn-info" id="${ empList.emp_no }" value="${ empList.emp_no }" onclick="moveMgr()">test${status.index }</button></td>
 				</tr>	
 				</c:forEach>		
                </tbody>
