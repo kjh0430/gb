@@ -7,6 +7,7 @@
 		<typeAlias type="com.crm.gb.emp.model.vo.Emp" alias="Emp" />
 		<typeAlias type="com.crm.gb.client.model.vo.Client" alias="Client" />
 		<typeAlias type="com.crm.gb.client.model.vo.ClientFile" alias="ClientFile" />
+		<typeAlias type="com.crm.gb.contract.model.vo.Contract" alias="Contract" />
 		<typeAlias type="com.crm.gb.dailywork.model.vo.Dailywork" alias="Dailywork" />
 		<typeAlias type="com.crm.gb.goal.model.vo.Goal" alias="Goal" />
 		<typeAlias type="com.crm.gb.product.model.vo.Product" alias="Product" />
@@ -14,8 +15,6 @@
 		<typeAlias type="com.crm.gb.message.model.vo.Message" alias="Message" />
 		<typeAlias type="com.crm.gb.order.model.vo.Order" alias="Order"/>
 	</typeAliases>
-
- 	
 
 
 	<mappers>
@@ -25,6 +24,7 @@
 		<mapper resource="mybatis/mappers/dailywork-mapper.xml" />
 		<mapper resource="mybatis/mappers/message-mapper.xml"/>
 		<mapper resource="mybatis/mappers/order-mapper.xml"/>
+		<mapper resource="mybatis/mappers/contract-mapper.xml"/>
 	</mappers>
 
 

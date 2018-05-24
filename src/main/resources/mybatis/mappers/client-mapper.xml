@@ -68,7 +68,7 @@
 		<![CDATA[
 			insert into client values(
 				(select max(client_no)+1 from client), #{client_name}, #{client_company}, #{client_job}, #{client_email},
-				#{client_phone}, #{client_addr}, #{client_com_tel}, #{client_loc_x}, #{client_loc_y}, default, #{client_comment},
+				#{client_phone}, #{client_addr}, #{client_com_tel}, #{client_loc_x}, #{client_loc_y}, #{client_contract}, #{client_comment},
 				#{emp_no}, sysdate, default
 			)
 		]]>
@@ -111,7 +111,7 @@
 	<!-- 고객정보 상세보기 mapping -->
 	<select id="detailClient" parameterType="_int" resultMap="resultDetailClient">
 		<![CDATA[
-			select c.client_no, c.client_name, c.emp_no, e.emp_name, c.client_job, c.client_email, e.emp_phone,
+			select c.client_no, c.client_name, c.client_company, c.emp_no, e.emp_name, c.client_job, c.client_email, e.emp_phone,
 			c.client_addr, c.client_phone, c.client_contract, c.client_comment
 			from emp e, client c
 			where e.emp_no = c.emp_no

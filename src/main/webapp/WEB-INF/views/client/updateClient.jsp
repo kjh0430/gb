@@ -39,10 +39,29 @@
 		
 		//정보수정 취소
 		$('#cancelClientBtn').on('click', function(){
-			
+			location.href="detailClient.do?client_no="+""+${ detailClient.client_no }+"";
 		});
 		
 	});
+</script>
+<script type="text/javascript">
+
+	function addFile(){
+		var index=1;
+		var value="<li id='cFile-"+index+"' class='added'><input type='file' class='form-control' name='client_file'>"
+		+"<a href='javascript:delFile(\"cFile-"+index+"\")' title='삭제'>&nbsp;&nbsp;<i class='fa fa-times'></i></a></li>";
+		$(".c_file").append(value);
+		index++;
+	};
+	
+	function delFile(idx){
+		$("#"+idx).remove();
+	}
+	
+	function resetFile(){
+		$("#firstFile").val("");
+	}
+
 </script>
 
 </head>
@@ -218,14 +237,15 @@
 											
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<c:forEach var="list" items="${ clientFileList }">
-												<a href="clientFileDown.do?clientFileName=${ list.client_rename_file }">
-													<input style="cursor:pointer;" name="client_original_file" id="client_original_file"
+													<input name="client_original_file" id="client_original_file"
 														class="date-picker form-control col-md-7 col-xs-12"
 														required="required" type="text" 
-														value="${ list.client_original_file }" >
-												</a>	
+														value="${ list.client_original_file }" readonly>
+														<a href="#">파일삭제</a> / <a href="#">파일추가</a>
 												</c:forEach>
 											</div>
+											
+											
 												
 										</div>
 										<div class="ln_solid"></div>
