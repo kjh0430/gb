@@ -1,3 +1,4 @@
+
 package com.crm.gb.approval.model.vo;
 
 import java.io.Serializable;
@@ -147,3 +148,4 @@ public class Approval implements Serializable {
 	
 	
 }
+

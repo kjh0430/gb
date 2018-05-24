@@ -14,7 +14,6 @@
 		<typeAlias type="com.crm.gb.product.model.vo.ProductFile" alias="ProductFile" />
 		<typeAlias type="com.crm.gb.message.model.vo.Message" alias="Message" />
 		<typeAlias type="com.crm.gb.order.model.vo.Order" alias="Order"/>
-		<typeAlias type="com.crm.gb.order.model.vo.Approval" alias="Approval"/>
 
 	</typeAliases>
 
@@ -29,7 +28,6 @@
 		<mapper resource="mybatis/mappers/dailywork-mapper.xml" />
 		<mapper resource="mybatis/mappers/message-mapper.xml"/>
 		<mapper resource="mybatis/mappers/order-mapper.xml"/>
-		<mapper resource="mybatis/mappers/approval-mapper.xml"/>
 
 	</mappers>
 

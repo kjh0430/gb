@@ -166,13 +166,8 @@ public class DailyworkController {
 		int dept_no = emp.getDept_no();
 		int job_no = emp.getJob_no();
 		System.out.println("detp_no : "+dept_no+", job_no : "+job_no);
-		ArrayList<Emp> deptEmplist=null;
-		if(job_no == 3) {
-			emp.setDept_no(0);		
-			deptEmplist = empService.selectDeptEmp(emp);			
-		}else {
-			deptEmplist = empService.selectDeptEmp(emp);		
-		}
+		ArrayList<Emp> deptEmplist = empService.selectDeptEmp(emp);	
+		
 		JSONArray jarr = new JSONArray();
 		//System.out.println(deptEmplist);
 		for(Emp e : deptEmplist) {
