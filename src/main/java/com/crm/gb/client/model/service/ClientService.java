@@ -20,6 +20,7 @@ public interface ClientService {
 	
 	public abstract int insertClientFile(ClientFile clientFile);	//고객관련 파일추가
 	public abstract ArrayList<ClientFile> selectClientFileList(int client_no);	//해당고객이 갖고있는 첨부파일 조회
+	public abstract int updateClientContract(int client_no);	// 계약 후 계약상태 변경
 
 	ArrayList<Client> selectAllAccountClient(int emp_no); // 방문일지용 거래처목록
 

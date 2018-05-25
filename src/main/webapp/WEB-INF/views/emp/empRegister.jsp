@@ -119,14 +119,51 @@ function Regiemp(){
 }
 
 function moveMgr(){
-	$('button').click(function(){
-		console.log("moveMgr 실행");
-	    var mgr_id = $(this).attr('id');
-	    console.log(mgr_id);
-	    $('#emp_mgr').val(mgr_id);
-	    $('#mgrModal').modal('hide');
-	});
+		
+	var mgr_id = $(".btn.btn-info").attr("id");
+	console.log("mgr_id : " + mgr_id);
 	
+	$('#emp_mgr').val(mgr_id);
+    $('#mgrModal').modal('hide');
+    
+}
+
+function checkPhone(){
+	$.ajax({
+		url : "checkPhone.do",
+		type: "post",
+		dataType: "json",
+		data: {
+			emp_phone : $('#emp_phone').val()
+		},
+		success:function(jsonData){
+			console.log("jsonData : " + jsonData);
+			alert("이미 등록된 번호 입니다. \n다시 입력하십시오");
+			$('#emp_phone').select();
+			},
+			error: function(){
+				alert("사용할 수 있는 연락처");
+			}
+		});
+}
+
+function checkEmail(){
+	$.ajax({
+		url : "checkEmail.do",
+		type: "post",
+		dataType: "json",
+		data: {
+			emp_email : $('#emp_email').val()
+		},
+		success:function(jsonData){
+			console.log("jsonData : " + jsonData);
+			alert("이미 등록된 이메일 입니다. \n다시 입력하십시오");
+			$('#emp_phone').select();
+			},
+			error: function(){
+				alert("사용할 수 있는 이메일");
+			}
+		});
 }
 
 </script>
@@ -298,13 +335,14 @@ text-align:center;
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">이메일 *</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input class="form-control" id="emp_email" name="emp_email" type="email" placeholder="이메일">
+                          <!-- <button class="btn btn-success" type="button" onclick="checkEmail()">Submit</button> -->
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">상사번호</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input class="form-control col-md-7 col-xs-12" id="emp_mgr" name="emp_mgr" type="text" placeholder="상사번호" style="width:85%;">
-                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm" style="float:right;" onclick="moveMgr()">조회</button>
+                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm" style="float:right;">조회</button>
                         </div>
                       </div>
                       <div class="form-group">
@@ -382,22 +420,18 @@ text-align:center;
              <div class="modal-body" style="overflow-y:auto; overflow-x:hidden; height:400px;">
              <h4></h4>
              <table class="table" id="mgrTable">
-               <thead>
                  <tr>
                  <th style="text-align:center">사원번호</th>
 				 <th style="text-align:center">이름</th>
 				 <th></th>
                  </tr>
-              </thead>
-              <tbody>
                 <c:forEach items="${ empList }" var="empList" varStatus="status">
 				<tr>
 				<td>${ empList.emp_no }</td>
 				<td>${ empList.emp_name }</td>
-				<td><button type="button" class="btn btn-info" id="${ empList.emp_no }" value="${ empList.emp_no }">선택</button></td>
+				<td><button type="button" class="btn btn-info" id="${ empList.emp_no }" onclick="moveMgr()">선택</button></td>
 				</tr>	
-				</c:forEach>		
-               </tbody>
+				</c:forEach>
              </table>
              </div>
              <div class="modal-footer">

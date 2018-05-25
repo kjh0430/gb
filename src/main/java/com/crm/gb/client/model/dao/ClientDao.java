@@ -94,5 +94,10 @@ public class ClientDao {
 		return (ArrayList)sqlSession.selectList("selectClientFile", client_no);
 	}
 
+	/** 고객 계약상태 변경 메소드 Dao */
+	public int updateClientContract(int client_no) {
+		return sqlSession.update("updateClientContract", client_no);
+	}
+
 	
 }

@@ -92,9 +92,16 @@
 	</update>
 	
 	<!-- 연락처 중복검사 -->
-	<select id="selectCheckPhone" parameterType="String" resultMap="resultEmpList">
+	<select id="selectCheckPhone" parameterType="emp" resultMap="resultEmpList">	
 	<![CDATA[
-		select count(*) from emp where emp_phone = #{emp_phone}
+		select * from emp where emp_phone = #{emp_phone}
+	]]>	
+	</select>
+	
+	<!-- 이메일 중복검사 -->
+	<select id="selectCheckEmail" parameterType="String" resultMap="resultEmpList">
+	<![CDATA[
+		select * from emp where emp_email = #{emp_email}
 	]]>
 	</select>
 	
@@ -102,22 +109,15 @@
 	<select id="selectDeptEmp" resultMap="resultEmpList">	
 		select e.emp_no,e.emp_name,e.dept_no,d.dept_name,e.job_no from emp e,dept d 
 		where e.dept_no = d.dept_no and e.emp_no not in #{emp_no}
-		<if test="dept_no != 3">
+		<if test="job_no != 3">
 	   		AND e.dept_no = #{dept_no}
 	    </if>	
-	</select>	
-		
-	<!-- 이메일 중복검사 -->
-	<select id="selectCheckEmail" parameterType="String" resultMap="resultEmpList">
-	<![CDATA[
-		select count(*) from emp where emp_email = #{emp_email}
-	]]>
 	</select>
 	
 	<!-- 상사이름 조회 -->
 	<select id="selectMgrNo" parameterType="int" resultMap="resultEmp">
 	<![CDATA[
-		select emp_name from emp where emp_no=#{emp_no} and emp_delete='N'
+		select * from emp where emp_no=#{emp_no} and emp_delete='N'
 	]]>
 	</select>
 

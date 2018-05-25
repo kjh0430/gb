@@ -49,9 +49,34 @@ $(document).ready(function() {
     } );
 } );
 
+$(function(){
+	$.ajax({
+		url : "mgrName.do",
+		type: "post",
+		dataType: "json",
+		data: {
+			emp_mgr : $('#emp_mgr').val()
+		},
+		success:function(obj){
+			var objStr = JSON.stringify(obj);
+			var jsonl = JSON.parse(objStr);
+			
+			console.log(jsonl.emp_name);
+			$('#style1_mgr').html(jsonl.emp_name);
+			},
+			error: function(){
+				console.log("상사이름 가져오기 에러");
+			}
+		});
+});
+
 </script>
 <style type="text/css">
 #style1{
+margin-top:6pt;
+}
+
+#style1_mgr{
 margin-top:6pt;
 }
 </style>
@@ -222,8 +247,8 @@ margin-top:6pt;
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-4 col-sm-4 col-xs-12">상사</label>
-                        <div class="col-md-8 col-sm-8 col-xs-12" id="style1">
-                         ${ mgr.emp_name }
+                        <div class="col-md-8 col-sm-8 col-xs-12" id="style1_mgr">
+                         <input type="hidden" id="emp_mgr" name="emp_mgr" value="${ emp.emp_mgr }">
                         </div>
                       </div>
                       <div class="form-group">

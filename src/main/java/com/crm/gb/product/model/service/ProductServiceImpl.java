@@ -1,10 +1,9 @@
 package com.crm.gb.product.model.service;
 
+import java.util.List;
 import java.util.ArrayList;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.crm.gb.product.model.dao.ProductDao;
 import com.crm.gb.product.model.vo.Product;
 import com.crm.gb.product.model.vo.ProductFile;
@@ -27,6 +26,12 @@ public class ProductServiceImpl implements ProductService {
 		return productDao.insertProductFile(pf);
 	}
 	
+
+	//권성훈 전체 제품 리스트 목록
+	@Override
+	public List<Product> selectAllList() {
+		return productDao.productList();
+}
 	@Override
 	public ArrayList<Product> selectSearchProduct(String product_name){
 		//제품 검색 

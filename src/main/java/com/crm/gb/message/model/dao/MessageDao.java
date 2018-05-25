@@ -16,10 +16,10 @@ public class MessageDao {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-	public ArrayList<Message> selectSearch(String empName) {
+	public ArrayList<Message> selectSearch(Message message) {
 		
 		
-		return (ArrayList)sqlSession.selectList("selectEmp",empName);
+		return (ArrayList)sqlSession.selectList("selectEmp",message);
 	}
 	public int insertMessage(Message message) {
 		
@@ -39,6 +39,10 @@ public class MessageDao {
 		
 		
 		return (ArrayList)sqlSession.selectList("selectSendMessage",message);
+	}
+	public int updateReadMessage(Message message) {
+		
+		return sqlSession.update("updateReadMessage",message);
 	}
 
 }
