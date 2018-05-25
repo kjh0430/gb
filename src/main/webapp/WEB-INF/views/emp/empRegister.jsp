@@ -109,6 +109,10 @@ function Regiemp(){
 				}else{
 					alert("사원 등록 실패");
 				}
+			},
+			error: function(request, status, errorData){
+				alert("error code : " + request.status + "\n" + "message : " + request.responseText
+						+ "\n" + "error : " + errorData);
 			}
 		});		
 	}
@@ -295,7 +299,7 @@ text-align:center;
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">연락처 *</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                          <input class="form-control" id="emp_phone" name="emp_phone" type="tel" placeholder="연락처">
-                         <button class="btn btn-success" type="button" onclick="checkPhone()">Submit</button>
+                         <!-- <button class="btn btn-success" type="button" onclick="checkPhone()">Submit</button> -->
                         </div>
                       </div>
                       <div class="form-group">
@@ -312,7 +316,7 @@ text-align:center;
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">이메일 *</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input class="form-control" id="emp_email" name="emp_email" type="email" placeholder="이메일">
-                          <button class="btn btn-success" type="button" onclick="checkEmail()">Submit</button>
+                          <!-- <button class="btn btn-success" type="button" onclick="checkEmail()">Submit</button> -->
                         </div>
                       </div>
                       <div class="form-group">
