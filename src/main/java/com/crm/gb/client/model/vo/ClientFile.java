@@ -2,6 +2,9 @@ package com.crm.gb.client.model.vo;
 
 import java.io.Serializable;
 
+import org.springframework.stereotype.Component;
+
+@Component("clientFile")
 public class ClientFile implements Serializable{
 	private static final long serialVersionUID = 1805211430L;
 	
@@ -23,7 +26,14 @@ public class ClientFile implements Serializable{
 		this.client_rename_file = client_rename_file;
 		this.client = client;
 	}
-
+	
+	public ClientFile(int client_no, String client_original_file, String client_rename_file) {
+		super();
+		this.client_no = client_no;
+		this.client_original_file = client_original_file;
+		this.client_rename_file = client_rename_file;
+	}
+	
 	public int getClient_file_no() {
 		return client_file_no;
 	}

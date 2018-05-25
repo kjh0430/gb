@@ -1,4 +1,3 @@
-
 package com.crm.gb.emp.model.vo;
 
 import java.io.Serializable;
@@ -25,12 +24,13 @@ public class Emp implements Serializable{
 	private String village;
 	private int dept_no;
 	private String emp_delete;
+	private String dept_name; //부서별 사원조회 
 	
 	public Emp() {}
 
 	public Emp(int emp_no, String emp_pwd, String emp_name, String emp_addr, String emp_phone, int job_no,
 			String emp_email, int emp_mgr, Date emp_hiredate, Date emp_firedate, String city, String county,
-			String village, int dept_no, String emp_delete) {
+			String village, int dept_no, String emp_delete, String dept_name) {
 		super();
 		this.emp_no = emp_no;
 		this.emp_pwd = emp_pwd;
@@ -47,6 +47,7 @@ public class Emp implements Serializable{
 		this.village = village;
 		this.dept_no = dept_no;
 		this.emp_delete = emp_delete;
+		this.dept_name = dept_name;
 	}
 
 	public int getEmp_no() {
@@ -169,14 +170,21 @@ public class Emp implements Serializable{
 		this.emp_delete = emp_delete;
 	}
 
+	public String getDept_name() {
+		return dept_name;
+	}
+
+	public void setDept_name(String dept_name) {
+		this.dept_name = dept_name;
+	}
+
 	@Override
 	public String toString() {
 		return "Emp [emp_no=" + emp_no + ", emp_pwd=" + emp_pwd + ", emp_name=" + emp_name + ", emp_addr=" + emp_addr
 				+ ", emp_phone=" + emp_phone + ", job_no=" + job_no + ", emp_email=" + emp_email + ", emp_mgr="
 				+ emp_mgr + ", emp_hiredate=" + emp_hiredate + ", emp_firedate=" + emp_firedate + ", city=" + city
 				+ ", county=" + county + ", village=" + village + ", dept_no=" + dept_no + ", emp_delete=" + emp_delete
-				+ "]";
+				+ ", dept_name=" + dept_name + "]";
 	}
 	
 }
-

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Approval">
+
+<select id="getName" parameterType="int" resultType="approval">
+<![CDATA[
+select t.emp_name as team_mgr_name,t.emp_no as team_mgr_no,a.emp_name as mgr_name,a.emp_no as mgr_no from
+(select emp_name,emp_no from emp where emp_no = (select emp_mgr from emp where emp_no=#{emp_no})) t,
+(select emp_name,emp_no from emp where job_no=3) a
+
+]]>
+
+</select>
+
+<insert id="ApprovalSubmit" parameterType="approval" flushCache="true">
+<![CDATA[
+insert into approval values((select max(approval_no)+1 
+from approval),#{emp_no},#{approval_choose_no},sysdate,
+#{approval_start_date},#{approval_end_date},#{approval_comment},null,null)
+]]>
+
+</insert>
+
+
+</mapper>

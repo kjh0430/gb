@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.crm.gb.client.model.vo.Client;
+import com.crm.gb.client.model.vo.ClientFile;
 import com.crm.gb.emp.model.vo.Emp;
 
 @Repository("clientDao")
@@ -51,7 +52,7 @@ public class ClientDao {
 
 	/** 고객정보 삭제 메소드 Dao */
 	public int deleteClient(int client_no) {
-		return sqlSession.delete("client.deleteClient", client_no);
+		return sqlSession.update("client.deleteClient", client_no);
 	}
 
 	/** 고객정보 수정 메소드 Dao */
@@ -76,6 +77,26 @@ public class ClientDao {
 	public ArrayList<Client> selectAllAccountClient(int emp_no){
 		
 		return (ArrayList)sqlSession.selectList("selectAllAccountClient", emp_no);
+	}
+
+	/** 고객관련 첨부파일 추가 메소드 Dao */
+	public int insertClientFile(ClientFile clientFile) {
+		return sqlSession.insert("client.insertClientFile", clientFile);
+	}
+
+	/** 고객정보 조회 메소드 Dao */
+	public Client selectClient(Client client) {
+		return sqlSession.selectOne("selectClient", client);
+	}
+
+	/** 고객 첨부파일 조회 메소드 Dao */
+	public ArrayList<ClientFile> selectClientFile(int client_no) {
+		return (ArrayList)sqlSession.selectList("selectClientFile", client_no);
+	}
+
+	/** 고객 계약상태 변경 메소드 Dao */
+	public int updateClientContract(int client_no) {
+		return sqlSession.update("updateClientContract", client_no);
 	}
 
 	

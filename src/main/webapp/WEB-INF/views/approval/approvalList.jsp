@@ -39,13 +39,9 @@
 <link href="resources/css/main.css" rel="stylesheet">
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
-$(document).ready(function() {
-    $('#table_cl').dataTable( {
-        ordering:false,
-        lengthChange:false,
-        pageLength:15
-    } );
-} );
+
+
+
 
 </script>
 <style type="text/css">
