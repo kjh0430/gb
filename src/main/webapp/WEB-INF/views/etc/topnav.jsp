@@ -9,7 +9,7 @@
 </head>
 <script type="text/javascript">
 	var eventSource = new EventSource("notify.do");
-	eventSource.onopen = function(e){
+	eventSource.onopen = function(){
 		console.log("연결중");
 		
 	}

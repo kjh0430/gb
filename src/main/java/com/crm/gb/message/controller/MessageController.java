@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import com.crm.gb.message.model.service.MessageService;
@@ -204,7 +205,7 @@ public class MessageController {
 		out.close();		
 	}
 	
-	@RequestMapping(value="notify.do")
+/*	@RequestMapping(value="notify.do")
 	public void getNotify(Message message,HttpServletResponse response) throws IOException {
 		response.setContentType("text/event-stream;charset=UTF-8");
 		response.setHeader("Cache-Control", "no-cache");
@@ -213,17 +214,15 @@ public class MessageController {
 		
 		
 		
-	}
-/*	@RequestMapping(value="notify.do")
-	public SseEmitter getNotify(Message message) {
+	}*/
+	@RequestMapping(value="notify.do")
+	public ResponseBodyEmitter getNotify(Message message) {
 		 final SseEmitter emitter = new SseEmitter();
 	        ExecutorService service = Executors.newSingleThreadExecutor();
 	        service.execute(() -> {
 	           message.setEmp_no(1);
 	                try {
 	                    emitter.send(message, MediaType.TEXT_PLAIN);
-
-	                    Thread.sleep(200);
 	                } catch (Exception e) {
 	                    e.printStackTrace();
 	                    emitter.completeWithError(e);
@@ -233,7 +232,7 @@ public class MessageController {
 	            emitter.complete();
 	        });
 	        return emitter;	
-	}*/
+	}
 	
 	
 }
