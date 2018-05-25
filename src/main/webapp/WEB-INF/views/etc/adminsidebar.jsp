@@ -27,7 +27,7 @@
             
 
              <li><a href="productList.do">제품관리</a></li>
-             <li><a href="dailySales.do">영업일지</a></li>
+             <li><a href="moveDailyReport.do">영업일지</a></li>
            </ul>
            
          </li>
@@ -44,7 +44,7 @@
          <ul class="nav side-menu">
 	      <li><a><i class="fa fa-file-text-o"></i> 전자결재 <span class="fa fa-chevron-down"></span></a>
 	        <ul class="nav child_menu">
-	          <li><a href="MoveapprovalListAdmin.do">결재리스트</a></li>
+	          <li><a href="approvalListAdmin.do">결재리스트</a></li>
 	         
 	        </ul>
 	      </li>

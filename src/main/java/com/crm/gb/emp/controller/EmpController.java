@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
@@ -61,8 +62,8 @@ public class EmpController {
 			
 			Emp returnEmp=empService.selectEmp(emp);
 
-			model.addAttribute("loginEmp", returnEmp);	
-			System.out.println("returnEmp"+returnEmp);
+			model.addAttribute("loginEmp", returnEmp);				
+			System.out.println("returnEmp : "+returnEmp);
 			
 		} catch (EmpLoginFailException e) {
 			model.addAttribute("message", e.getMessage());
@@ -93,22 +94,28 @@ public class EmpController {
 		return "main";
 	}		
 	
-	@RequestMapping(value = "empRegister.do", method = RequestMethod.GET)
+	/*사원 등록화면*/
+	@RequestMapping(value = "empRegister.do")
 	public String empRegister() {
 				
 		return "emp/empRegister";
 	}	
 
-	@RequestMapping(value = "moveEmpUpdate.do", method = RequestMethod.GET)
-	public String moveEmpUpdate() {				
+	/*사원 수정화면 이동*/
+	@RequestMapping(value = "moveEmpUpdate.do")
+	public String moveEmpUpdate(Emp emp, Model model, @RequestParam(value="emp_no") String emp_num) {
+		logger.info("수정 페이지로 넘어감");
+		System.out.println("수정페이지로 넘어가면서 : " + emp);
+		int emp_no = (Integer.parseInt(emp_num));
+		
+		Emp detailEmp = empService.selectEmpNo(emp_no);
+		model.addAttribute("emp", detailEmp);
+		System.out.println("detailEmp : " + detailEmp);
 		return "emp/empUpdate";
 	}
-	@RequestMapping(value = "moveEmpDelete.do", method = RequestMethod.GET)
-	public String moveEmpDelete() {
-		return "emp/empList";
-	}
 	
-	@RequestMapping(value = "empList.do", method = RequestMethod.GET)
+	/*사원 목록*/
+	@RequestMapping(value = "empList.do")
 	public String empList(Emp emp, Model model) {
 		logger.info("사원 목록 실행");
 		ArrayList<Emp> empList = empService.selectEmpList();
@@ -117,7 +124,8 @@ public class EmpController {
 		return "emp/empList";
 	}
 	
-	@RequestMapping(value = "empDetail.do", method = RequestMethod.GET)
+	/*사원 목록 상세보기*/
+	@RequestMapping(value = "empDetail.do")
 	public String empDetail(Emp emp, Model model, @RequestParam(value="emp_no") String emp_num) {
 		logger.info("사원 상세보기 실행");
 		
@@ -131,53 +139,71 @@ public class EmpController {
 		return "emp/empDetail";
 	}
 	
-	
-	@RequestMapping(value="empinsert.do", method=RequestMethod.POST)
-	public void insertEmp(Emp emp, ModelAndView mv, HttpServletResponse response) throws IOException{
-		
+	/*사원 등록*/
+	@RequestMapping(value="empinsert.do", method = RequestMethod.POST)
+	public String insertEmp(Emp emp, Model model){
+		logger.info("emp insert 실행");
 		System.out.println("전송온 값 : " + emp);
-		
-		response.setContentType("text/html; charset=utf-8");
-		
-		
 		
 		int result = empService.insertEmp(emp);
 		
-		System.out.println("result : " + result);
+		ArrayList<Emp> empList = empService.selectEmpList();
+		model.addAttribute("empList", empList);
 		
-		PrintWriter out = response.getWriter();
-		
-		out.append("ok");
-		out.flush();
-		out.close();
-		
+		return "emp/empList";
 	}
 	
-	@RequestMapping(value="empupdate.do", method=RequestMethod.POST)
-	public ModelAndView updateEmp(Emp emp, ModelAndView mv) {
+	/*사원 정보 수정*/
+	@RequestMapping(value="empupdate.do")
+	public String updateEmp(Emp emp, Model model) {
+		
+		logger.info("emp update 실행");
 		
 		System.out.println("전송온값 : " + emp);
 		
 		int result = empService.updateEmp(emp);
+		ArrayList<Emp> empList = empService.selectEmpList();
+		model.addAttribute("empList", empList);
 		
-		mv.setViewName("emp/empList");
-		
-		return mv;
+		return "emp/empList";
 	}
 	
-	@RequestMapping(value="empdelete.do", method=RequestMethod.POST)
-	public ModelAndView deleteEmp(Emp emp, ModelAndView mv) {
+	/*사원 삭제여부 수정*/
+	@RequestMapping(value="updateEmpDelete.do")
+	public String updateEmpDelete(Emp emp, Model model, @RequestParam(value="emp_no") String emp_num) {
 		
-		System.out.println("전송온값 : " + emp);
+		logger.info("emp delete 실행");
 		
-		int result = empService.deleteEmp(emp);
+		System.out.println("사원 상세정보: "+emp);
+		int emp_no = (Integer.parseInt(emp_num));
 		
-		mv.setViewName("emp/empList");
+		int result = empService.updateEmpDelete(emp_no);
+		ArrayList<Emp> empList = empService.selectEmpList();
+		model.addAttribute("empList", empList);
 		
-		return mv;
+		return "emp/empList";
 	}
 	
+	/*연락처 중복검사*/
+	@RequestMapping(value="checkPhone.do")
+	@ResponseBody
+	public String selectCheckPhone(@RequestParam(value="emp_phone") String emp_phone, Model model) {
+		
+		logger.info("selectCheckPhone 실행");
+		
+		System.out.println("연락처 번호 : "+emp_phone);
+		
+		int result = empService.selectCheckPhone(emp_phone);
+		
+		String returnValue = null;
+		if(result == 0) {
+			model.addAttribute("returnValue", "true");
+			return "returnValue";
+		}else {
+			model.addAttribute("returnValue", "false");
+			return "returnValue";
+		}
 	
-	
+	}
+		
 }
-

@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="images/favicon.ico" type="image/ico" />
 
-<title>잠재고객 상세페이지</title>
+<title>GROUP BEAN |</title>
 
 <!-- Bootstrap -->
 <link href="resources/vendors/bootstrap/dist/css/bootstrap.min.css"
@@ -50,6 +50,11 @@ $(document).ready(function() {
 } );
 
 </script>
+<style type="text/css">
+#style1{
+margin-top:6pt;
+}
+</style>
 </head>
 
 
@@ -160,7 +165,7 @@ $(document).ready(function() {
 								<div class="x_title">
 									<font style="font-size:18px;">상세정보</font>
 									<font style="float:right; font-size:15px;">
-										<a href="moveEmpUpdate.do">수정</a>&nbsp; &nbsp;<a href="moveEmpDelete.do">삭제</a>
+										<a href="moveEmpUpdate.do?emp_no=${ emp.emp_no }">수정</a>&nbsp; &nbsp;<a href="updateEmpDelete.do?emp_no=${ emp.emp_no }">삭제</a>
 									</font>
 									<div class="clearfix"></div>
 								</div>
@@ -170,70 +175,89 @@ $(document).ready(function() {
 					<!-- 사원 상세폼 -->
 					<form class="form-horizontal form-label-left">
 					<div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">사원번호</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12">사원번호</label>
+                        <div class="col-md-8 col-sm-8 col-xs-12" id="style1">
                         ${ emp.emp_no }
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">사원이름 </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                          
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12">이름 </label>
+                        <div class="col-md-8 col-sm-8 col-xs-12" id="style1">
+                          ${ emp.emp_name }
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">사원거주지</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                          
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12">주소</label>
+                        <div class="col-md-8 col-sm-8 col-xs-12" id="style1">
+                          ${ emp.emp_addr }
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">연락처
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                          
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12">연락처</label>
+                        <div class="col-md-8 col-sm-8 col-xs-12" id="style1">
+                          ${ emp.emp_phone }
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">직급</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                         
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12">직급</label>
+                        <div class="col-md-8 col-sm-8 col-xs-12" id="style1">
+                         <c:choose>
+            				<c:when test="${ emp.job_no == 1 }">
+            					사원		        		   
+            				</c:when>
+            				<c:when test="${ emp.job_no == 2 }">
+            					팀장		        		   
+            				</c:when>
+            				<c:when test="${ emp.job_no == 3 }">
+            					관리자					
+            				</c:when>
+            			</c:choose>
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">이메일</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                          
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12">이메일</label>
+                        <div class="col-md-8 col-sm-8 col-xs-12" id="style1">
+                          ${ emp.emp_email }
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">상사번호</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                         
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12">상사번호</label>
+                        <div class="col-md-8 col-sm-8 col-xs-12" id="style1">
+                         ${ emp.emp_mgr }
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">입사일</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                         
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12">입사일</label>
+                        <div class="col-md-8 col-sm-8 col-xs-12" id="style1">
+                         ${ emp.emp_hiredate }
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">퇴사일</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                         
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12">퇴사일</label>
+                        <div class="col-md-8 col-sm-8 col-xs-12" id="style1">
+                         ${ emp.emp_firedate }
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">담당지역</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                         
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12">담당지역</label>
+                        <div class="col-md-8 col-sm-8 col-xs-12" id="style1">
+                         ${ emp.city }&nbsp;${ emp.county }&nbsp;${ emp.village }
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">부서</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                          
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12">부서</label>
+                        <div class="col-md-8 col-sm-8 col-xs-12" id="style1">
+                        <c:choose>
+            				<c:when test="${ emp.dept_no == 1 }">
+            					영업1팀		        		   
+            				</c:when>
+            				<c:when test="${ emp.dept_no == 2 }">
+            					영업2팀	        		   
+            				</c:when>
+            				<c:when test="${ emp.dept_no == 3 }">
+            					관리자				
+            				</c:when>
+            			</c:choose>
                         </div>
                       </div>
                       </form>

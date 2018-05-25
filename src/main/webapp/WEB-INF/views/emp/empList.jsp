@@ -169,16 +169,16 @@ $(document).ready(function() {
 										<thead>
 											<tr>
 												<th>사원번호</th>
-												<th>사원이름</th>
-												<th>사원거주지</th>
+												<th>이름</th>
+												<th>주소</th>
 												<th>연락처</th>
 												<th>이메일</th>
 											</tr>											
 										</thead>
 										<tbody>
-										<c:forEach items="${ empList }" var="category">
+										<c:forEach items="${ empList }" var="empList">
 											<tr>
-												<td>${ empList.emp_no }</td>
+												<td><a href="empDetail.do?emp_no=${ empList.emp_no }">${ empList.emp_no }</a></td>
 												<td>${ empList.emp_name }</td>
 												<td>${ empList.emp_addr }</td>
 												<td>${ empList.emp_phone }</td>

@@ -1,4 +1,4 @@
-/*package com.crm.gb.aatest;
+package com.crm.gb.aatest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,13 +14,13 @@ public class MovePageController {
 	
 	//approval
 	//결재신청
-	@RequestMapping("Moveapproval.do")
-	public String approval() {
+	@RequestMapping("addClient2.do")
+	public String addClient2() {
 		
-		return "approval/approval";
+		return "client/addClient2";
 	}
 	
-	//결재목록
+/*	//결재목록
 	@RequestMapping("MoveapprovalList.do")
 	public String approvalList() {
 		
@@ -208,9 +208,9 @@ public class MovePageController {
 		public String main() {
 			return "adminmain";
 			
-		}
+		}*/
 		
 		
 		
 		
-}*/
+}

@@ -4,6 +4,13 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Product">
 	
+	<resultMap type="Product" id="selectAllProductList">
+		<result column="product_no" property="product_no"/>
+		<result column="product_name" property="product_name"/>
+		<result column="product_price" property="product_price"/>
+		<result column="product_availability" property="product_availability"/>
+	</resultMap>
+	
 	<insert id="insertProduct" parameterType="Product" useGeneratedKeys="true" keyProperty="product_no">
 		<selectKey keyProperty="product_no" resultType="int" order="BEFORE">
 			select max(product_no)+1 from product
@@ -14,4 +21,23 @@
 	     ]]>
 	</insert>
 	
+	<insert id="insertProductFile" parameterType="ProductFile">
+		<selectKey keyProperty="product_file_no" resultType="int" order="BEFORE">
+			select max(product_file_no)+1 from product_file
+		</selectKey>		
+		<![CDATA[
+		     insert into product_file values(${product_file_no},${product_no},#{product_original_file},#{product_rename_file})
+	     ]]>
+	</insert>
+	
+	<select id="productList" resultType="arraylist" resultMap="selectAllProductList">
+	<![CDATA[
+	select product_no, product_name, product_price, product_availability from product
+	]]>
+	</select>
+
+
+
+
+
 </mapper>
