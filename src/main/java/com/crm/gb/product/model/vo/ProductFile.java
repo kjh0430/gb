@@ -7,10 +7,10 @@ public class ProductFile implements java.io.Serializable{
 	
 	private static final long serialVersionUID = 99L;
 	
-	private int product_file_no;
-	private int product_no;
-	private String product_original_file;
-	private String product_rename_file;
+	private int product_file_no; 
+	private int product_no; 
+	private String product_original_file; 
+	private String product_rename_file; 
 	
 	
 	public ProductFile(){}
