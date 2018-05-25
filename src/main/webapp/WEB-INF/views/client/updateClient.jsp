@@ -216,7 +216,7 @@
 												<input name="client_contract" id="client_contract"
 													class="date-picker form-control col-md-7 col-xs-12"
 													required="required" type="text" 
-													value="${ detailClient.client_contract }" >
+													value="${ detailClient.client_contract }" readonly>
 											</div>
 										</div>
 										<div class="form-group">

@@ -48,13 +48,16 @@ public class ContractController {
 	
 	/** 게약서 등록 메소드 */
 	@RequestMapping("insertContract.do")
-	public String insertContract(Contract contract, Model model, 
-			@RequestParam(value="emp_no") int emp_no) {
+	public String insertContract(Client client, Contract contract, Model model, 
+			@RequestParam(value="emp_no") int emp_no,
+			@RequestParam(value="client_no") int client_no) {
 		logger.info("계약서 등록버든 실행됨");
 			
 			System.out.println("받아온 계약정보: "+contract);
-			
-		contractService.insertContract(contract);
+		
+		contractService.insertContract(contract);	// 계약등록
+		clientService.updateClientContract(client_no);	// 계약상태 Y로 변경
+		
 		ArrayList<Contract> returnList=contractService.selectAllList(emp_no);
 		model.addAttribute("contractList", returnList );
 		
