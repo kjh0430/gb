@@ -176,6 +176,14 @@
 		]]>
 	</select>
 	
+	<update id="updateClientContract" parameterType="_int">
+		<![CDATA[
+			update client
+			set client_contract = 'Y'
+			where client_no = #{client_no}
+		]]>
+	</update>
+	
 	<!-- 담당사원 정보관련 -->
 	<!-- <update id="updateClientEmp" parameterType="client">
 		<![CDATA[

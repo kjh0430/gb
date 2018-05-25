@@ -124,7 +124,8 @@
                            <h2>거래처</h2>
                            <!-- client modal start -->
                            <div style="text-align:right">
-                           <button type="button" class="btn btn-primary"data-toggle="modal" data-target=".cl-example-modal-lg">거래처선택</button>
+                           <br><br>
+                           <!-- <button type="button" class="btn btn-primary"data-toggle="modal" data-target=".cl-example-modal-lg">거래처선택</button> -->
                            </div>
                            <div class="modal fade cl-example-modal-lg" tabindex="-1"
                               role="dialog" aria-hidden="true">
@@ -284,7 +285,7 @@
                                     placeholder="사업자등록번호" name="business_no">
                                  </div>
                               </div>
-                              <div class="form-group">
+                            <!-- <div class="form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">
 									첨부파일
 								</label>
@@ -297,7 +298,7 @@
 									</li>
 								</ul>								
 								</div>
-							</div>
+							</div> -->
                     
                            
                            <div class="ln_solid"></div>
