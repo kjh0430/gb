@@ -93,7 +93,16 @@
 	
 	<!-- 연락처 중복검사 -->
 	<select id="selectCheckPhone" parameterType="emp" resultMap="resultEmpList">	
-		select * from emp where emp_phone = #{emp_phone}	
+	<![CDATA[
+		select * from emp where emp_phone = #{emp_phone}
+	]]>	
+	</select>
+	
+	<!-- 이메일 중복검사 -->
+	<select id="selectCheckEmail" parameterType="String" resultMap="resultEmpList">
+	<![CDATA[
+		select * from emp where emp_email = #{emp_email}
+	]]>
 	</select>
 	
 	<!-- 부서별 사원 조회 -->
@@ -103,19 +112,12 @@
 		<if test="job_no != 3">
 	   		AND e.dept_no = #{dept_no}
 	    </if>	
-	</select>	
-		
-	<!-- 이메일 중복검사 -->
-	<select id="selectCheckEmail" parameterType="String" resultMap="resultEmpList">
-	<![CDATA[
-		select count(*) from emp where emp_email = #{emp_email}
-	]]>
 	</select>
 	
 	<!-- 상사이름 조회 -->
 	<select id="selectMgrNo" parameterType="int" resultMap="resultEmp">
 	<![CDATA[
-		select emp_name from emp where emp_no=#{emp_no} and emp_delete='N'
+		select * from emp where emp_no=#{emp_no} and emp_delete='N'
 	]]>
 	</select>
 

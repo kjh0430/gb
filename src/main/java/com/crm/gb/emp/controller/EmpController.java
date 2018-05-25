@@ -1,6 +1,7 @@
 package com.crm.gb.emp.controller;
 
 import java.io.IOException;
+
 import java.io.PrintWriter;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -9,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -133,10 +133,6 @@ public class EmpController {
 			Emp detailEmp = empService.selectEmpNo(emp_no);
 			model.addAttribute("emp", detailEmp);
 			System.out.println("detailEmp : " + detailEmp);
-			
-			Emp detailMgr = empService.selectMgrNo(emp_no);
-			model.addAttribute("mgr", detailMgr);
-			System.out.println("detailMgr : " + detailMgr);
 		
 		return "emp/empDetail";
 	}
@@ -187,56 +183,95 @@ public class EmpController {
 	}
 	
 	/*연락처 중복검사*/
-	@RequestMapping(value="checkPhone.do")
+	@RequestMapping(value="checkPhone.do", method=RequestMethod.POST)
 	@ResponseBody
-	public String selectCheckPhone(@RequestParam(value="emp_phone") String emp_phone, Model model) {
+	public String selectCheckPhone(@RequestParam(value="emp_phone") String emp_phone, HttpServletResponse response) throws IOException{
 		
 		logger.info("selectCheckPhone 실행");
 		
 		System.out.println("연락처 번호 : "+emp_phone);
 		
-		Emp detailEmp = empService.selectCheckPhone(emp_phone);
-		model.addAttribute("emp", detailEmp);
+		Emp checkPhone = empService.selectCheckPhone(emp_phone);
 		
-		/*JSONParser jparser = new JSONParser();
-		JSONObject job = (JSONObject)jparser.parse(detailEmp);*/
+		if(checkPhone != null) {		
+			
+		JSONObject job = new JSONObject();
+		job.put("emp_phone", emp_phone);
 		
-		System.out.println("detailEmp : " + detailEmp);
+		System.out.println("checkPhone 값 있음");
+		System.out.println("emp : " + checkPhone);
+		System.out.println("emp_phone : " + emp_phone);
+
+		return job.toJSONString();
 		
-		return "emp/empList";
+		}else {
+			System.out.println("checkPhone null");
+			return null;
+		}
 			
 	}
 	
 	/*이메일 중복검사*/
-	@RequestMapping(value="checkEmail.do")
+	@RequestMapping(value="checkEmail.do", method=RequestMethod.POST)
 	@ResponseBody
-	public String selectCheckEmail(@RequestParam(value="emp_email") String emp_email, Model model) {
+	public String selectCheckEmail(@RequestParam(value="emp_email") String emp_email, HttpServletResponse response) throws IOException{
 		
-		logger.info("selectCheckPhone 실행");
+		logger.info("selectCheckEmail 실행");
 		
-		System.out.println("연락처 번호 : "+emp_email);
+		System.out.println("이메일 주소 : "+emp_email);
 		
-		int result = empService.selectCheckEmail(emp_email);
+		Emp checkEmail = empService.selectCheckEmail(emp_email);
 		
-		String returnValue = null;
-		if(result == 0) {
-			model.addAttribute("returnValue", "true");
-			return "returnValue";
+		if(checkEmail != null) {
+			
+		JSONObject job = new JSONObject();
+		job.put("emp_email", emp_email);
+		
+		System.out.println("checkEmail 값 있음");
+		System.out.println("emp : " + checkEmail);
+		System.out.println("emp_email : " + emp_email);
+
+		return job.toJSONString();
+		
 		}else {
-			model.addAttribute("returnValue", "false");
-			return "returnValue";
+			System.out.println("checkEmail null");
+			return null;
 		}
-	
+			
 	}
 	
-	
-	@RequestMapping(value = "moveMgr.do")
-	public String moveMgr(Emp emp, Model model) {
-		logger.info("사원 목록 실행");
-		ArrayList<Emp> empList = empService.selectEmpList();
-		System.out.println("empList : " + empList);
-		model.addAttribute("empList", empList);
-		return "emp/empList";
-	}	
+	/*상사번호로 이름 가져오기*/
+	@RequestMapping(value="mgrName.do", method=RequestMethod.POST)
+	@ResponseBody
+	public void selectMgrNo(@RequestParam(value="emp_mgr") String emp_mgr, HttpServletResponse response) throws IOException{
+		
+		logger.info("selectMgrNo 실행");
+		
+		System.out.println("상사번호 : "+emp_mgr);
+		
+		int emp_no = (Integer.parseInt(emp_mgr));
+		
+		Emp mgrName = empService.selectMgrNo(emp_no);
+		
+		if(mgrName != null) {
+			
+		JSONObject job = new JSONObject();
+		job.put("emp_name", mgrName.getEmp_name());
+		
+		System.out.println("mgrName 값 있음");
+		System.out.println("emp : " + mgrName);
+		System.out.println("mgrName : " + mgrName.getEmp_name());
+
+		response.setContentType("application/json; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		out.println(job.toJSONString());
+		out.flush();
+		out.close();
+		
+		}else {
+			System.out.println("mgrName null");
+		}
+			
+	}
 		
 }
