@@ -20,6 +20,10 @@
 			<name>ORACLE JDBC Repository</name>
 			<url>https://maven.atlassian.com/3rdparty/</url>
 		</repository>
+        <repository>
+            <id>Springframework Milestone</id>
+            <url>http://repo.spring.io/milestone</url>
+        </repository>
 	</repositories>
 
 	<dependencies>
@@ -229,7 +233,6 @@
 		    <artifactId>jackson-mapper-asl</artifactId>
 		    <version>1.9.13</version>
 		</dependency>
-		
 		
 		<!-- Test -->
 		<dependency>

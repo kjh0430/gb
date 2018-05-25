@@ -35,6 +35,8 @@ $(document).ready(function() {
 
 <script type="text/javascript">
 	$(function(){
+		
+		//거래처 삭제하기
 		$('#deleteClient').on('click', function(){
 			if(confirm("해당 거래처를 삭제하시겠습니까?")==true) {
 				location.href="deleteClient.do?client_no="+""+${ detailClient.client_no }+"";
@@ -42,6 +44,13 @@ $(document).ready(function() {
 				return false;
 			}
 		});
+		
+		//계약하기
+		$('#contractBtn').on('click', function(){
+			location.href="contractView.do?client_no="+""+${ detailClient.client_no }+"";
+			
+		});
+		
 	});
 </script>
 
@@ -225,6 +234,7 @@ $(document).ready(function() {
 														required="required" type="text" 
 														value="${ list.client_original_file }" readonly>
 												</a>	
+										
 												</c:forEach>
 											</div>
 												
@@ -233,7 +243,8 @@ $(document).ready(function() {
 										<div class="form-group">
 											<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
 												<button type="submit" class="btn btn-primary">정보수정</button>
-												<button id="deleteClient" class="btn" type="button">거래처 삭제</button>
+												<button id="contractBtn" class="btn btn-primary" type="button">계약하기</button>
+												<button id="deleteClient" class="btn btn-primary" type="button">거래처 삭제</button>
 											</div>
 										</div>
 
