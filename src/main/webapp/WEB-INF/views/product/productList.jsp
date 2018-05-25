@@ -41,7 +41,6 @@ $(document).ready(function() {
 </script>
 </head>
 
-
 <body class="nav-md">
 	<div class="container body">
 		<div class="main_container">

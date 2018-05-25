@@ -1,11 +1,10 @@
 package com.crm.gb.product.model.dao;
 
+import java.util.List;
 import java.util.ArrayList;
-
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import com.crm.gb.product.model.vo.Product;
 import com.crm.gb.product.model.vo.ProductFile;
 
@@ -31,4 +30,9 @@ public class ProductDao {
 		return (ArrayList)sqlSession.selectList("selectSearchProduct", product_name);
 	}
 
+	//권성훈 : 제품 목록 리스트 호출 파일
+	public List<Product> productList(){
+		return sqlSession.selectList("productList");
+	}
+	
 }
