@@ -51,6 +51,28 @@
    }
 
 </style>
+
+<script type="text/javascript">
+
+
+	function addFile(){
+		var index=1;
+		var value="<li id='cFile-"+index+"' class='added'><input type='file' class='form-control' name='client_file'>"
+		+"<a href='javascript:delFile(\"cFile-"+index+"\")' title='삭제'>&nbsp;&nbsp;<i class='fa fa-times'></i></a></li>";
+		$(".c_file").append(value);
+		index++;
+	};
+	
+	function delFile(idx){
+		$("#"+idx).remove();
+	}
+	
+	function resetFile(){
+		$("#firstFile").val("");
+	}
+
+</script>
+
 </head>
 
 
@@ -73,74 +95,9 @@
             </div>
          </div>
 
-         <!-- top navigation -->
-         <div class="top_nav">
-            <div class="nav_menu">
-               <nav>
-                  <div class="nav toggle">
-                     <a id="menu_toggle"><i class="fa fa-bars"></i></a>
-                  </div>
-
-                  <ul class="nav navbar-nav navbar-right">
-                     <li class=""><a href="javascript:;"
-                        class="user-profile dropdown-toggle" data-toggle="dropdown"
-                        aria-expanded="false"> <img src="images/img.jpg" alt="">John
-                           Doe <span class=" fa fa-angle-down"></span>
-                     </a>
-                        <ul class="dropdown-menu dropdown-usermenu pull-right">
-                           <li><a href="javascript:;"> Profile</a></li>
-                           <li><a href="javascript:;"> <span
-                                 class="badge bg-red pull-right">50%</span> <span>Settings</span>
-                           </a></li>
-                           <li><a href="javascript:;">Help</a></li>
-                           <li><a href="login.html"><i
-                                 class="fa fa-sign-out pull-right"></i> Log Out</a></li>
-                        </ul></li>
-
-                     <li role="presentation" class="dropdown"><a
-                        href="javascript:;" class="dropdown-toggle info-number"
-                        data-toggle="dropdown" aria-expanded="false"> <i
-                           class="fa fa-envelope-o"></i> <span class="badge bg-green">6</span>
-                     </a>
-                        <ul id="menu1" class="dropdown-menu list-unstyled msg_list"
-                           role="menu">
-                           <li><a> <span class="image"><img
-                                    src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-                                       Smith</span> <span class="time">3 mins ago</span>
-                              </span> <span class="message"> Film festivals used to be
-                                    do-or-die moments for movie makers. They were where... </span>
-                           </a></li>
-                           <li><a> <span class="image"><img
-                                    src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-                                       Smith</span> <span class="time">3 mins ago</span>
-                              </span> <span class="message"> Film festivals used to be
-                                    do-or-die moments for movie makers. They were where... </span>
-                           </a></li>
-                           <li><a> <span class="image"><img
-                                    src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-                                       Smith</span> <span class="time">3 mins ago</span>
-                              </span> <span class="message"> Film festivals used to be
-                                    do-or-die moments for movie makers. They were where... </span>
-                           </a></li>
-                           <li><a> <span class="image"><img
-                                    src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-                                       Smith</span> <span class="time">3 mins ago</span>
-                              </span> <span class="message"> Film festivals used to be
-                                    do-or-die moments for movie makers. They were where... </span>
-                           </a></li>
-                           <li>
-                              <div class="text-center">
-                                 <a> <strong>See All Alerts</strong> <i
-                                    class="fa fa-angle-right"></i>
-                                 </a>
-                              </div>
-                           </li>
-                        </ul></li>
-                  </ul>
-               </nav>
-            </div>
-         </div>
-         <!-- /top navigation -->
+       		<!-- top navigation -->
+			<c:import url="../etc/topnav.jsp"></c:import>
+			<!-- /top navigation -->
 
          <!-- page content -->
          <div class="right_col" role="main">
@@ -242,28 +199,33 @@
                         </div>
                         <div class="x_content">                                                   
                            <form class="form-horizontal form-label-left input_mask">
+                           			
                               <div class="form-group">
                                  <label class="col-sm-3 control-label">거래처명</label>
                                  <div class="col-md-9 col-sm-9 col-xs-12">
-                                    <input type="text" class="form-control" placeholder="" value="거래처 이름">
+                                    <input type="text" class="form-control" 
+                                    value="${ detailClient.client_company }" readonly>
                                  </div>
                               </div>
                               <div class="form-group">
                                  <label class="control-label col-md-3 col-sm-3 col-xs-12">담당자</label>
                                  <div class="col-md-9 col-sm-9 col-xs-12">
-                                    <input type="text" class="form-control" placeholder="" value="담당자 이름">
+                                    <input type="text" class="form-control" 
+                                    value="${ detailClient.client_name }" readonly>
                                  </div>
                               </div>
                               <div class="form-group">
                                  <label class="control-label col-md-3 col-sm-3 col-xs-12">전화번호</label>
                                  <div class="col-md-9 col-sm-9 col-xs-12">
-                                    <input type="text" class="form-control" placeholder="" value="전화번호 이름">
+                                    <input type="text" class="form-control" 
+                                    value="${ detailClient.client_phone }" readonly>
                                  </div>
                               </div>
                               <div class="form-group">
                                  <label class="control-label col-md-3 col-sm-3 col-xs-12">주소</label>
                                  <div class="col-md-9 col-sm-9 col-xs-12">
-                                    <input type="text" class="form-control" placeholder="" value="주소">
+                                    <input type="text" class="form-control" 
+                                    value="${ detailClient.client_addr }" readonly>
                                  </div>
                               </div>
                            </form>
@@ -281,52 +243,71 @@
                            <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                           <form class="form-horizontal form-label-left input_mask">
+                           <form class="form-horizontal form-label-left input_mask"
+                           	action="insertContract.do" method="post">
+                           
+                           <input type="hidden" name="emp_no" value="${ detailClient.emp_no }">
+                           <input type="hidden" name="client_no" value="${ detailClient.client_no }">	
+                           	
                               <div class="form-group">
                                  <label class="col-sm-3 control-label">계약금액</label>
                                  <div class="col-md-9 col-sm-9 col-xs-12">
-                                    <input type="text" class="form-control" placeholder="" value="최소 500,000">
+                                    <input type="text" class="form-control" 
+                                    placeholder="최소 500,000" name="contract_money">
                                  </div>
                               </div>
                               <div class="form-group">
                                  <label class="control-label col-md-3 col-sm-3 col-xs-12">할인율</label>
                                  <div class="col-md-9 col-sm-9 col-xs-12">
-                                    <input type="text" class="form-control" placeholder="" value="기본 10%">
+                                    <input type="text" class="form-control" 
+                                    placeholder="기본 10%" name="contract_discount">
                                  </div>
                               </div>
                               <div class="form-group">
                                  <label class="control-label col-md-3 col-sm-3 col-xs-12">계약 시작일</label>
                                  <div class="col-md-9 col-sm-9 col-xs-12">
-                                    <input type="date" class="form-control" placeholder="">
+                                    <input type="date" class="form-control" 
+                                    placeholder="" name="contract_date_start">
                                  </div>
                               </div>
                               <div class="form-group">
                                  <label class="control-label col-md-3 col-sm-3 col-xs-12">계약 종료일</label>
                                  <div class="col-md-9 col-sm-9 col-xs-12">
-                                    <input type="date" class="form-control" placeholder="">
+                                    <input type="date" class="form-control" 
+                                    placeholder="" name="contract_date_end">
                                  </div>
                               </div>
                               <div class="form-group">
                                  <label class="control-label col-md-3 col-sm-3 col-xs-12">사업자등록번호</label>
                                  <div class="col-md-9 col-sm-9 col-xs-12">
-                                    <input type="text" class="form-control" placeholder="" value="사업자 등록 번호">
+                                    <input type="text" class="form-control" 
+                                    placeholder="사업자등록번호" name="business_no">
                                  </div>
                               </div>
                               <div class="form-group">
-                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">첨부파일</label>
-                                 <div class="col-md-9 col-sm-9 col-xs-12">
-                                    <input type="file"/>
-                                 </div>
-                              </div>
-                           </form>
-                           
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">
+									첨부파일
+								</label>
+								<div class="col-md-6 col-sm-6 col-xs-12" >
+								<ul class="c_file">
+									<li id="cFile-0">
+										<input type="file" id="firstFile" name="client_file" onchange="firstChange()" class="form-control">
+										<span class="fileSpan"></span>	
+										<input type="button" class="btn btn-dark add_btn" onclick="addFile()" value="추가"/>
+									</li>
+								</ul>								
+								</div>
+							</div>
+                    
                            
                            <div class="ln_solid"></div>
                            <div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-3" style="margin:0px">
-                                 <button type="button" class="btn btn-primary">Cancel</button>
-                                 <button class="btn btn-primary" type="reset">Reset</button>
-                                 <button type="submit" class="btn btn-success">Submit</button>
+                                 <button type="button" class="btn btn-primary">취소</button>
+                                 <button type="submit" class="btn btn-success">확인</button>
                            </div>
+                           
+                           </form>
+                           
                         </div>
                      </div>
                   </div>

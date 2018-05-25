@@ -5,6 +5,7 @@
 
 <mapper namespace="client">
 
+
 	
 	<!-- 고객 리스트 -->
 	<resultMap type="client" id="resultSelectAllClient">
@@ -15,7 +16,6 @@
 		<result column="client_email" property="client_email"/>
 		<result column="client_phone" property="client_phone"/>
 		<result column="client_addr" property="client_addr"/>
-
 	</resultMap>
 
 	<!-- 고객정보 상세보기 -->
@@ -56,13 +56,20 @@
 		<result column="client_enroll" property="client_enroll"/>
 	</resultMap>
 
+	<!-- 첨부파일 리스트 조회  -->
+	<resultMap type="clientFile" id="resultClientFileList">
+		<id column="client_file_no" property="client_file_no"/>
+		<result column="client_no" property="client_no"/>
+		<result column="client_original_file" property="client_original_file"/>
+		<result column="client_rename_file" property="client_rename_file"/>
+	</resultMap>
 
 	<!-- 신규고객 등록 mapping -->
 	<insert id="insertClient" parameterType="client">
 		<![CDATA[
 			insert into client values(
 				(select max(client_no)+1 from client), #{client_name}, #{client_company}, #{client_job}, #{client_email},
-				#{client_phone}, #{client_addr}, #{client_com_tel}, #{client_loc_x}, #{client_loc_y}, default, #{client_comment},
+				#{client_phone}, #{client_addr}, #{client_com_tel}, #{client_loc_x}, #{client_loc_y}, #{client_contract}, #{client_comment},
 				#{emp_no}, sysdate, default
 			)
 		]]>
@@ -72,6 +79,7 @@
 	<select id="selectAllClient" resultMap="resultSelectAllClient">
 		<![CDATA[
 			select * from client
+			where client_delete <> 'Y'
 		]]>	
 	</select>
 	
@@ -80,6 +88,7 @@
 		<![CDATA[
 			select * from client
 			where client_contract = 'N'
+			and client_delete <> 'Y'
 		]]>
 	</select>
 	
@@ -91,10 +100,19 @@
 		]]>
 	</select>
 	
+	<!-- 거래처 이름 검색 mapping -->
+	<select id="selectSearchAccount" resultMap="resultAccountClient">
+		<![CDATA[
+			select * from client
+			where client_company like '%'||#{client_company}||'%'
+		]]>
+	</select>
+	
+	
 	<!-- 고객정보 상세보기 mapping -->
 	<select id="detailClient" parameterType="_int" resultMap="resultDetailClient">
 		<![CDATA[
-			select c.client_no, c.client_name, c.emp_no, e.emp_name, c.client_job, c.client_email, e.emp_phone,
+			select c.client_no, c.client_name, c.client_company, c.emp_no, e.emp_name, c.client_job, c.client_email, e.emp_phone,
 			c.client_addr, c.client_phone, c.client_contract, c.client_comment
 			from emp e, client c
 			where e.emp_no = c.emp_no
@@ -105,8 +123,9 @@
 	<!-- 고객정보 삭제 mapping -->
 	<delete id="deleteClient" parameterType="_int">
 		<![CDATA[
-			delete from client
-			where client_no=#{client_no}
+			update client
+			set client_delete='Y'
+			where client_no = #{client_no}
 		]]>
 	</delete>
 	
@@ -130,6 +149,33 @@
 				
 		]]>
 	</update>
+	
+	<!-- 이메일 조회로 특정고객 조회 -->
+	<select id="selectClient" parameterType="string" resultMap="resultAccountClient">
+		<![CDATA[
+			select * from client
+			where client_email = #{client_email}
+		]]>
+	</select>
+	
+	<!-- 고객 첨부파일 추가 -->
+	<insert id="insertClientFile" parameterType="clientFile">
+		<![CDATA[
+			insert into client_file values(
+				(select max(client_file_no)+1 from client_file), #{client_no},
+				#{client_original_file}, #{client_rename_file}
+			)
+		]]>
+	</insert>
+	
+	<!-- 고객 첨부파일 조회 -->
+	<select id="selectClientFile" parameterType="_int" resultMap="resultClientFileList">
+		<![CDATA[
+			select * from client_file
+			where client_no = #{client_no}
+		]]>
+	</select>
+	
 	<!-- 담당사원 정보관련 -->
 	<!-- <update id="updateClientEmp" parameterType="client">
 		<![CDATA[
@@ -152,3 +198,4 @@
 		]]>
 	</select>
 </mapper>
+

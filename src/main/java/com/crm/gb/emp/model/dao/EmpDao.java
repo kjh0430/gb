@@ -61,8 +61,23 @@ public class EmpDao {
 
 	/*연락처 중복검사*/
 	public int selectCheckPhone(String emp_phone) {
-		System.out.println("emp_phone 진입");
+		System.out.println("emp_phone dao 실행");
 		return sqlSession.selectOne("selectCheckPhone", emp_phone);
+	}
+
+	public ArrayList<Emp> selectDeptEmp(Emp emp) {
+		return (ArrayList)sqlSession.selectList("selectDeptEmp",emp);
+	}
+	
+	/*이메일 중복검사*/
+	public int selectCheckEmail(String emp_email) {
+		System.out.println("emp_email dao 실행");
+		return sqlSession.selectOne("selectCheckEmail", emp_email);
+	}
+
+	/*상사이름 조회*/
+	public Emp selectMgrNo(int emp_no) {
+		return sqlSession.selectOne("selectMgrNo", emp_no);
 	}
 	
 }

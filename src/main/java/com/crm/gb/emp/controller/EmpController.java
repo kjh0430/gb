@@ -79,14 +79,7 @@ public class EmpController {
 	public String logoutView(SessionStatus session) {
 		session.setComplete();
 		return "emp/login";
-	}	
-	/* 2018.05.15 17:30 여기까지 */
-	
-	/*@RequestMapping(value="login.do")
-		public String loginPage() {			
-			return "emp/login";
-		}*/
-	
+	}
 	
 	@RequestMapping(value="main.do")
 	public String main() {
@@ -96,7 +89,11 @@ public class EmpController {
 	
 	/*사원 등록화면*/
 	@RequestMapping(value = "empRegister.do")
-	public String empRegister() {
+	public String empRegister(Emp emp, Model model) {
+		
+		ArrayList<Emp> empList = empService.selectEmpList();
+		System.out.println("empList : " + empList);
+		model.addAttribute("empList", empList);
 				
 		return "emp/empRegister";
 	}	
@@ -135,6 +132,10 @@ public class EmpController {
 			Emp detailEmp = empService.selectEmpNo(emp_no);
 			model.addAttribute("emp", detailEmp);
 			System.out.println("detailEmp : " + detailEmp);
+			
+			Emp detailMgr = empService.selectMgrNo(emp_no);
+			model.addAttribute("mgr", detailMgr);
+			System.out.println("detailMgr : " + detailMgr);
 		
 		return "emp/empDetail";
 	}
@@ -205,5 +206,37 @@ public class EmpController {
 		}
 	
 	}
+	
+	/*이메일 중복검사*/
+	@RequestMapping(value="checkEmail.do")
+	@ResponseBody
+	public String selectCheckEmail(@RequestParam(value="emp_email") String emp_email, Model model) {
+		
+		logger.info("selectCheckPhone 실행");
+		
+		System.out.println("연락처 번호 : "+emp_email);
+		
+		int result = empService.selectCheckEmail(emp_email);
+		
+		String returnValue = null;
+		if(result == 0) {
+			model.addAttribute("returnValue", "true");
+			return "returnValue";
+		}else {
+			model.addAttribute("returnValue", "false");
+			return "returnValue";
+		}
+	
+	}
+	
+	
+	@RequestMapping(value = "moveMgr.do")
+	public String moveMgr(Emp emp, Model model) {
+		logger.info("사원 목록 실행");
+		ArrayList<Emp> empList = empService.selectEmpList();
+		System.out.println("empList : " + empList);
+		model.addAttribute("empList", empList);
+		return "emp/empList";
+	}	
 		
 }

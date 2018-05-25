@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="notice_mapper">
+
+	<!-- 고객 리스트 -->
+	<resultMap type="notice" id="resultSelectAllNotice">
+		<result column="notice_no" property="notice_no"/>
+		<result column="emp_no" property="emp_no"/>
+		<result column="notice_title" property="notice_title"/>
+		<result column="notice_content" property="notice_content"/>
+		<result column="notice_date" property="notice_date"/>
+		<result column="notice_count" property="notice_count"/>		
+	</resultMap>
+
+
+	
+	<!-- 등록된 공지사항 리스트 mapping -->
+	<select id="selectAllNotice" resultMap="resultSelectAllNotice">
+		<![CDATA[
+			select * from notice order by notice_no desc
+		]]>	
+	</select>
+	
+	<!-- 공지사항 상세정보 -->
+	<select id="detailNotice" parameterType="int" resultMap="resultSelectAllNotice">
+		<![CDATA[
+			select * from notice
+			where notice_no = #{notice_no}
+		]]>	
+	</select>
+	
+	<!--공지사항 카운트 추가  -->
+	<update id="updateCountNotice" parameterType="int">
+		<![CDATA[
+			update notice 
+				set 
+					notice_count=(select max(notice_count)+1 from notice) 
+					where notice_no=#{notice_no}
+		
+		]]>
+	
+	
+	</update>
+	
+	
+	<!-- 공지사항 수정하기 -->
+	<update id="updateNotice" parameterType="notice">
+		<![CDATA[
+			update notice 
+				set 
+					notice_no=#{notice_no},					
+					notice_title=#{notice_title},
+					notice_content=#{notice_content},
+					notice_date=sysdate
+					where notice_no=#{notice_no}
+		]]>
+	
+	</update>
+	
+	<!--공지사항 추가하기  -->
+	<insert id="insertNotice" parameterType="notice">
+		<![CDATA[
+			insert into notice values 
+			((select max(notice_no)+1 from notice),
+			1,
+			#{notice_title},
+			#{notice_content},
+			sysdate,
+			0)
+
+		]]>
+	</insert>
+	<!-- 공지사항 삭제 -->
+	<delete id="deleteNotice" parameterType="int">
+		<![CDATA[
+			
+			delete from notice 
+			where notice_no=#{notice_no}
+			
+		]]>
+	
+	</delete>
+	
+</mapper>

@@ -12,27 +12,42 @@ public class Product implements java.io.Serializable{
 	private int product_no;
 	private String product_name;
 	private int product_price;
-	private String product_availavility;
+	private String product_availability;
 	private int product_amount;
 	private String product_comment;
 	private Date product_register;
 	private String product_delete;
+	private Double contract_discount;
+	
 	
 	public Product() {}
 	
-	public Product(int product_no, String product_name, int product_price, String product_availavility,
+	public Product(int product_no, String product_name, int product_price, String product_availability,
 			int product_amount, String product_comment, Date product_register, String product_delete) {
 		super();
 		this.product_no = product_no;
 		this.product_name = product_name;
 		this.product_price = product_price;
-		this.product_availavility = product_availavility;
+		this.product_availability = product_availability;
 		this.product_amount = product_amount;
 		this.product_comment = product_comment;
 		this.product_register = product_register;
 		this.product_delete = product_delete;
 	}
 	
+	public Product(int product_no, String product_name, int product_price, String product_availability,
+			int product_amount, String product_comment, Date product_register, String product_delete , Double contract_discount) {
+		super();
+		this.product_no = product_no;
+		this.product_name = product_name;
+		this.product_price = product_price;
+		this.product_availability = product_availability;
+		this.product_amount = product_amount;
+		this.product_comment = product_comment;
+		this.product_register = product_register;
+		this.product_delete = product_delete;
+		this.contract_discount = contract_discount;
+	}
 
 	public int getProduct_no() {
 		return product_no;
@@ -58,12 +73,12 @@ public class Product implements java.io.Serializable{
 		this.product_price = product_price;
 	}
 
-	public String getProduct_availavility() {
-		return product_availavility;
+	public String getProduct_availability() {
+		return product_availability;
 	}
 
-	public void setProduct_availavility(String product_availavility) {
-		this.product_availavility = product_availavility;
+	public void setProduct_availability(String product_availability) {
+		this.product_availability = product_availability;
 	}
 
 	public int getProduct_amount() {
@@ -102,12 +117,20 @@ public class Product implements java.io.Serializable{
 		return serialVersionUID;
 	}
 
+	public Double getContract_discount() {
+		return contract_discount;
+	}
+
+	public void setContract_discount(Double contract_discount) {
+		this.contract_discount = contract_discount;
+	}
+
 	@Override
 	public String toString() {
 		return "Product [product_no=" + product_no + ", product_name=" + product_name + ", product_price="
-				+ product_price + ", product_availavility=" + product_availavility + ", product_amount="
+				+ product_price + ", product_availavility=" + product_availability + ", product_amount="
 				+ product_amount + ", product_comment=" + product_comment + ", product_register=" + product_register
-				+ ", product_delete=" + product_delete + "]";
+				+ ", product_delete=" + product_delete + ", contract_discount = " + contract_discount + "]";
 	}
 	
 	

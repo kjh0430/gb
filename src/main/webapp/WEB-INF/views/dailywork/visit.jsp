@@ -170,7 +170,7 @@
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">방문시간</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
-												<input type="time" class="form-control" value="now" id="daily_time" name="daily_time">
+												<input type="time" class="form-control" value="now" id="daily_date" name="daily_date">
 											</div>
 										</div>
 										<div class="form-group">

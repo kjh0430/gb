@@ -17,7 +17,7 @@ dept d,job j where e.emp_name=#{emp_name} and e.dept_no=d.dept_no and j.job_no=e
 <insert id="insertMessage" parameterType="message" flushCache="true">
 <![CDATA[
 insert into message values((select max(message_no)+1 from message),
-#{message_from_no},#{message_to_no},#{message_title},#{message_content},to_date(#{message_date},'yyyy-mm-dd hh24:mi:ss'))
+#{message_from_no},#{message_to_no},#{message_title},#{message_content},to_date(#{message_date},'yyyy-mm-dd hh24:mi:ss'),default)
 
 ]]>
 

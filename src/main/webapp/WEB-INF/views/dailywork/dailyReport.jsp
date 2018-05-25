@@ -156,10 +156,7 @@
 	<script type="text/javascript">
 	
 	$(function(){
-		document.getElementById("daily_date").valueAsDate = new Date();
-
-		
-		
+		document.getElementById("daily_date").valueAsDate = new Date();		
 		selectVisit();	
 		
 	});//onload
@@ -235,8 +232,7 @@
 						    position : iwPosition, 
 						    content : iwContent 
 						});
-						infowindow.open(map, marker); 
-					    
+						infowindow.open(map, marker); 					    
 					}
 									
 					//선그리기
@@ -288,10 +284,6 @@
 			}	
 		});	
 	}//visitlist ajax
-	
-	
-	
-	
 	
 	</script>
 
