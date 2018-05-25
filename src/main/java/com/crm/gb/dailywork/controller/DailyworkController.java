@@ -131,19 +131,19 @@ public class DailyworkController {
 		Date currentTime = new Date ();
 		String mTime = mSimpleDateFormat.format ( currentTime );
 		
-		System.out.println ( "현재 날짜 : " + mTime );
+		//System.out.println ( "현재 날짜 : " + mTime );
 		
 		String time = dailywork.getDaily_date();		
 		
-		System.out.println("currenttime : " + currentTime);
-		System.out.println ( "현재 시간 : " +  time );
+		//System.out.println("currenttime : " + currentTime);
+		//System.out.println ( "현재 시간 : " +  time );
 		
 		dailywork.setDaily_date(mTime +" "+time);
 		
 		//System.out.println("시간 : " + mTime +" "+time);
-		System.out.println("emp_no: " + dailywork.getEmp_no()+" ,client_no: "+dailywork.getClient_no()
-	+"comment : "+dailywork.getDaily_comment()+", time : " + dailywork.getDaily_date());
-		System.out.println("dailywork: " + dailywork);
+//		System.out.println("emp_no: " + dailywork.getEmp_no()+" ,client_no: "+dailywork.getClient_no()
+//	+"comment : "+dailywork.getDaily_comment()+", time : " + dailywork.getDaily_date());
+//		System.out.println("dailywork: " + dailywork);
 		dailyworkService.insertDailywork(dailywork);
 		
 		return "dailywork/visit";
