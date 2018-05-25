@@ -2,6 +2,8 @@ package com.crm.gb.approval.model.dao;
 
 
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -24,6 +26,12 @@ public class ApprovalDao {
 		
 		
 		return sqlSession.insert("ApprovalSubmit",apr);
+	}
+
+	public ArrayList<Approval> selectapprovalListE(Approval apr) {
+	
+		return (ArrayList)sqlSession.selectList("approvalListE",apr);
+		
 	}
 
 }

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -83,9 +84,29 @@ public class ApprovalController {
 		
 		int result=ApprovalService.insertApproval(apr);
 		if(result>0) {
-		System.out.println("전송이 완료");
+		System.out.println("전송 완료");
 		}
 		
 		return "approval/approvalList";
 	}
+	
+	@RequestMapping(value="approvalListE.do")
+	
+	public String approvalListE(Approval apr,Model model,@RequestParam(name="emp_no") int emp_no) {
+		apr.setEmp_no(emp_no);
+
+		ArrayList<Approval> approvalListE= ApprovalService.selectapprovalListE(apr);
+
+		model.addAttribute("approvalListE",approvalListE);
+		System.out.println("approvalListE"+approvalListE);
+		return "approval/approvalList";
+	}
+/*	@RequestMapping(value="approvalProcess.do")
+	public String approvalListE() {
+		
+		return "approval/approvalProcess";
+	}*/
+		
+	
+	
 }

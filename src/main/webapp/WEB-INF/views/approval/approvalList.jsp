@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,7 +40,29 @@
 <link href="resources/css/main.css" rel="stylesheet">
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
-
+/* $(function() {
+	
+	$.ajax({
+		url:"approvalListE.do",
+		data:{
+			emp_no:"${loginEmp.emp_no}"
+		},
+		type : "get",
+		dataType:"json",
+		success : function(data) {
+		
+			
+			 
+		 },error : function(request, status, errorData) {
+             alert("error code : " + request.status + "\n"
+                     + "message :" + request.responseText + "\n"
+                     + "error :" + errorData);
+            }
+	});
+	
+	
+	
+}); */
 
 
 
@@ -146,7 +169,7 @@
 					<div class="page-title">
 						<div class="title_left">
 							<h3>
-								전자결재
+								전자결재 리스트
 							</h3>
 						</div>
 					</div>
@@ -162,133 +185,46 @@
 									<table id="table_ap" class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<th>결재번호</th>
+											
 												<th>결재유형</th>
 												<th>일자</th>
 												<th>진행상황</th>
 											</tr>
 										</thead>
 										<tbody>
+										<c:forEach items="${approvalListE}" var="approval">
+											<c:if test="${approval.approval_choose_no eq '1'}">
+											<c:set var="approval_choose_no" value="휴가"/>
+											</c:if>
+											<c:if test="${approval.approval_choose_no eq '2'}">
+											<c:set var="approval_choose_no" value="경조사"/>
+											</c:if>
+											<c:if test="${approval.approval_choose_no eq '3'}">
+											<c:set var="approval_choose_no" value="병가"/>
+											</c:if>
+											<c:if test="${approval.approval_choose_no eq '4'}">
+											<c:set var="approval_choose_no" value="비고"/>
+											</c:if>
+											<c:if test="${approval.approval_mgr_date eq null && approval.approval_team_date eq null}">
+											 <c:set var="approval_process" value="미진행 "/>
+											</c:if>
+											<c:if test="${approval.approval_mgr_date eq null && approval.approval_team_date ne null}">
+											<c:set var="approval_process" value="팀장 승인 "/>
+											</c:if>
+											<c:if test="${approval.approval_mgr_date ne null}">
+											<c:set var="approval_process" value="결재 완료"/>
+											</c:if>
+											
+											
+										
+											
 											<tr>
-												<td><a href="#">05</a></td>
-												<td>휴가신청</td>
-												<td>2018.05.15</td>
-												<td>진행중</td>
+												
+												<td>${approval_choose_no}</td>
+												<td style="width:30%;">${approval.approval_submit_date}</td>
+												<td>${approval_process}</td>
 											</tr>
-											<tr>
-												<td><a href="#">05</a></td>
-												<td>휴가신청</td>
-												<td>2018.05.15</td>
-												<td>진행중</td>
-											</tr>
-											<tr>
-												<td><a href="#">05</a></td>
-												<td>휴가신청</td>
-												<td>2018.05.15</td>
-												<td>진행중</td>
-											</tr>
-											<tr>
-												<td><a href="#">05</a></td>
-												<td>휴가신청</td>
-												<td>2018.05.15</td>
-												<td>진행중</td>
-											</tr>
-											<tr>
-												<td><a href="#">05</a></td>
-												<td>휴가신청</td>
-												<td>2018.05.15</td>
-												<td>진행중</td>
-											</tr>
-											<tr>
-												<td><a href="#">05</a></td>
-												<td>휴가신청</td>
-												<td>2018.05.15</td>
-												<td>진행중</td>
-											</tr>
-											<tr>
-												<td><a href="#">05</a></td>
-												<td>휴가신청</td>
-												<td>2018.05.15</td>
-												<td>진행중</td>
-											</tr>
-											<tr>
-												<td><a href="#">05</a></td>
-												<td>휴가신청</td>
-												<td>2018.05.15</td>
-												<td>진행중</td>
-											</tr>
-											<tr>
-												<td><a href="#">05</a></td>
-												<td>휴가신청</td>
-												<td>2018.05.15</td>
-												<td>진행중</td>
-											</tr>
-											<tr>
-												<td><a href="#">05</a></td>
-												<td>휴가신청</td>
-												<td>2018.05.15</td>
-												<td>진행중</td>
-											</tr>
-											<tr>
-												<td><a href="#">05</a></td>
-												<td>휴가신청</td>
-												<td>2018.05.15</td>
-												<td>진행중</td>
-											</tr>
-											<tr>
-												<td><a href="#">05</a></td>
-												<td>휴가신청</td>
-												<td>2018.05.15</td>
-												<td>진행중</td>
-											</tr>
-											<tr>
-												<td><a href="#">05</a></td>
-												<td>휴가신청</td>
-												<td>2018.05.15</td>
-												<td>진행중</td>
-											</tr>
-											<tr>
-												<td><a href="#">05</a></td>
-												<td>휴가신청</td>
-												<td>2018.05.15</td>
-												<td>진행중</td>
-											</tr>
-											<tr>
-												<td><a href="#">05</a></td>
-												<td>휴가신청</td>
-												<td>2018.05.15</td>
-												<td>진행중</td>
-											</tr>
-											<tr>
-												<td><a href="#">05</a></td>
-												<td>휴가신청</td>
-												<td>2018.05.15</td>
-												<td>진행중</td>
-											</tr>
-											<tr>
-												<td><a href="#">05</a></td>
-												<td>휴가신청</td>
-												<td>2018.05.15</td>
-												<td>진행중</td>
-											</tr>
-											<tr>
-												<td><a href="#">05</a></td>
-												<td>휴가신청</td>
-												<td>2018.05.15</td>
-												<td>진행중</td>
-											</tr>
-											<tr>
-												<td><a href="#">05</a></td>
-												<td>휴가신청</td>
-												<td>2018.05.15</td>
-												<td>진행중</td>
-											</tr>
-											<tr>
-												<td><a href="#">05</a></td>
-												<td>휴가신청</td>
-												<td>2018.05.15</td>
-												<td>진행중</td>
-											</tr>
+												</c:forEach>
 										<tbody>
 									</table>
 								</div>

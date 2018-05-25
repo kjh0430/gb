@@ -32,12 +32,13 @@
                   message_to_no : "${loginEmp.emp_no}"
                },
                type : "get",
+               dataType:"json",
                success : function(data) {
                   
                   var jsonSt = JSON.stringify(data);
                   var json = JSON.parse(jsonSt);
                   var size = Object.keys(json.list).length;
-if(size>0) {
+				if(size>0) {
                   var values = "<table class='table table-hover' id='table_rec'><thead><tr><th>보낸사람</th><th style='width:40%;'>제목</th><th>받은날짜</th><th>사번</th><th>내용</th><th>mnumber</th></thead>"
                         + "<tbody>"
 
@@ -73,8 +74,9 @@ if(size>0) {
 
                   
 }else{
-values="<br><br><br><br><br><br><h2 style='text-align:center;'>받은 쪽지가 없습니다.</h2><br><br><br><br><br><br>"
-	$('#receive_msg').html(values);
+	values="<br><br><br><br><br><br><h2 style='text-align:center;'>받은 쪽지가 없습니다."+
+	"</h2><br><br><br><br><br><br>"
+		$('#receive_msg').html(values);	
 	
 }
                },
@@ -92,12 +94,13 @@ values="<br><br><br><br><br><br><h2 style='text-align:center;'>받은 쪽지가 
                message_from_no : "${loginEmp.emp_no}"
             },
             type : "get",
+            dataType:"json",
             success : function(data) {
             
                var jsonSt = JSON.stringify(data);
                var json = JSON.parse(jsonSt);
                var size = Object.keys(json.list).length;
-
+			if(size>0){
                var values = "<table class='table table-hover' id='table_sm'><thead><tr><th>받은사람</th><th style='width:40%;'>제목</th><th>받은날짜</th><th>내용</th><thead>"
                      + "<tbody>"
 
@@ -114,7 +117,13 @@ values="<br><br><br><br><br><br><h2 style='text-align:center;'>받은 쪽지가 
                values += "</tbody></table>"
 
                $('#send_msg').html(values);
-							
+	}else{
+	values="<br><br><br><br><br><br><h2 style='text-align:center;'>보낸 쪽지가 없습니다."+
+	"</h2><br><br><br><br><br><br>"
+		$('#send_msg').html(values);	
+	
+	
+}					
                
                
             },
@@ -168,12 +177,16 @@ values="<br><br><br><br><br><br><h2 style='text-align:center;'>받은 쪽지가 
          type : "post",
          dataType : "json",
          data : {
-        	 emp_name : $('#searchName').val(),
+        emp_name : $('#searchName').val(),
          message_from_no :"${loginEmp.emp_no}"
             },
             success : function(obj) {
-               var objStr = JSON.stringify(obj);
+               
+            	var objStr = JSON.stringify(obj);
                var jsonl = JSON.parse(objStr);
+               var size = Object.keys(jsonl.list).length;
+             
+               if(size>0){
                var value = "<table class='table table-hover' id='getvalues'><thead><tr><th>이름</th><th>직급</th><th>부서</th><th>e-mail</th><th>사원번호</th></tr></thead><tbody>";
 
                   for ( var i in jsonl.list) {
@@ -195,6 +208,15 @@ values="<br><br><br><br><br><br><h2 style='text-align:center;'>받은 쪽지가 
                   $('#myModal2').modal("show");
                   $('#searchTable').html(value);
 
+                  
+               }else{
+            	   value="<br><br><h2 style='text-align:center;'>검색 결과가 없습니다."+
+            		"</h2><br><br>";
+            			$('#myModal2').modal("show");
+            			$('#searchTable').html(value);	
+            	   
+            	   
+               }
                },error : function(request, status, errorData) {
                   alert("error code : " + request.status + "\n"
                   + "message :" + request.responseText + "\n"
@@ -223,9 +245,7 @@ values="<br><br><br><br><br><br><h2 style='text-align:center;'>받은 쪽지가 
    }
    //쪽지확인
    function confirm(obj){
-      
-	   
-	   
+     
 	  var content=$(obj);
       var td=content.children();
       
