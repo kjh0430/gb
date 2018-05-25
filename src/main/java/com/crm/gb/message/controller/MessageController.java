@@ -214,7 +214,7 @@ public class MessageController {
 		
 		
 	}*/
-	@RequestMapping(value="notify.do")
+/*	@RequestMapping(value="notify.do")
 	public ResponseBodyEmitter getNotify(Message message) {
 		 final SseEmitter emitter = new SseEmitter();
 	        ExecutorService service = Executors.newSingleThreadExecutor();
@@ -231,7 +231,7 @@ public class MessageController {
 	            emitter.complete();
 	        });
 	        return emitter;	
-	}
+	}*/
 	
 	
 }
