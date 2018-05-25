@@ -88,20 +88,19 @@ public class EmpServlceImpl implements EmpService{
 
 	/*연락처 중복검사*/
 	@Override
-	public int selectCheckPhone(String emp_phone) {
+	public Emp selectCheckPhone(String emp_phone) {
 		return empDao.selectCheckPhone(emp_phone);
 	}
 	
 	/*이메일 중복검사*/
 	@Override
-	public int selectCheckEmail(String emp_email) {
+	public Emp selectCheckEmail(String emp_email) {
 		return empDao.selectCheckEmail(emp_email);
 	}	
 
 	/*상사이름 조회*/
 	@Override
 	public Emp selectMgrNo(int emp_no) {
-		// TODO Auto-generated method stub
 		return empDao.selectMgrNo(emp_no);
 	}
 	
