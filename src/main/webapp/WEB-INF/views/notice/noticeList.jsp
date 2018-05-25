@@ -186,115 +186,48 @@ $(document).ready(function() {
 													<th>${ notice.notice_count }</th>
 												</tr>
 											</c:forEach>										
-										
-											<tr>
-												<td>1</td>
-												<td><a href="#">첫번째 공지사항 테스트</a></td>
-												<td>2018-04-18</td>
-												<td>32</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>두번째 공지사항 테스트 정기점검 알림 </td>
-												<td>2018-04-18</td>
-												<td>32</td>
-											</tr>
 											
-											<tr>
-												<td>1</td>
-												<td>두번째 공지사항 테스트 정기점검 알림 </td>
-												<td>2018-04-18</td>
-												<td>32</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>첫번째 공지사항 테스트</td>
-												<td>2018-04-18</td>
-												<td>32</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>두번째 공지사항 테스트 정기점검 알림 </td>
-												<td>2018-04-18</td>
-												<td>32</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>첫번째 공지사항 테스트</td>
-												<td>2018-04-18</td>
-												<td>32</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>두번째 공지사항 테스트 정기점검 알림 </td>
-												<td>2018-04-18</td>
-												<td>32</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>첫번째 공지사항 테스트</td>
-												<td>2018-04-18</td>
-												<td>32</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>두번째 공지사항 테스트 정기점검 알림 </td>
-												<td>2018-04-18</td>
-												<td>32</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>첫번째 공지사항 테스트</td>
-												<td>2018-04-18</td>
-												<td>32</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>두번째 공지사항 테스트 정기점검 알림 </td>
-												<td>2018-04-18</td>
-												<td>32</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>두번째 공지사항 테스트 정기점검 알림 </td>
-												<td>2018-04-18</td>
-												<td>32</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>두번째 공지사항 테스트 정기점검 알림 </td>
-												<td>2018-04-18</td>
-												<td>32</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>두번째 공지사항 테스트 정기점검 알림 </td>
-												<td>2018-04-18</td>
-												<td>32</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>두번째 공지사항 테스트 정기점검 알림 </td>
-												<td>2018-04-18</td>
-												<td>32</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>두번째 공지사항 테스트 정기점검 알림 </td>
-												<td>2018-04-18</td>
-												<td>32</td>
-											</tr>
 										<tbody>
 									</table>
 								</div>
 							<nav aria-label="Page navigation example">
 								
 									<ul class="pagination">
-										<li class="page-item"><a class="page-link" href="#">Previous</a></li>
-										<li class="page-item"><a class="page-link" href="#">1</a></li>
-										<li class="page-item"><a class="page-link" href="#">2</a></li>
-										<li class="page-item"><a class="page-link" href="#">3</a></li>
-										<li class="page-item"><a class="page-link" href="#">Next</a></li>
+									<!-- if문 -->
+									<%-- <c:if test="${currentPage}<=1">
+										<li class="page-item"><a class="page-link" href="noticeList.do?page=1">처음으로</a></li>
+									
+									</c:if> --%>
+									
+									<!--if else문 형식임  -->
+									<c:choose>
+										<%--if --%>
+										<c:when test="${currentPage}<=1">
+											<li class="page-item"><a class="page-link">처음으로</a></li>									
+										</c:when>
+										<%--else --%>
+										<c:otherwise>
+											<li class="page-item"><a class="page-link" href="noticeList.do?page=1">처음으로</a></li>									
+										</c:otherwise>
+									</c:choose>
+									
+									
+									<!--숫자 페이지   -->
+									<c:forEach var="page" begin="${startPage} " end="${endPage}">
+									
+									</c:forEach>
+									
+									<c:choose>
+										<%--if --%>
+										<c:when test="${currentPage}>=${maxPage} ">
+											<li class="page-item"><a class="page-link">맨끝</a></li>									
+										</c:when>
+										<%--else --%>
+										<c:otherwise>
+											<li class="page-item"><a class="page-link" href="noticeList.do?page=${maxPage}">맨끝</a></li>									
+										</c:otherwise>
+									</c:choose>										
+										
 									</ul>
 								</nav>
 							</div>

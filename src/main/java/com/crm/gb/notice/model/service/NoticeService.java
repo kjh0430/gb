@@ -18,4 +18,6 @@ public interface NoticeService {
 
 	public abstract int deleteNotice(int notice_no);
 
+	public abstract Notice noticeListCount();
+
 }

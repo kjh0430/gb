@@ -44,5 +44,10 @@ public class NoticeDao {
 		
 		return sqlSession.delete("deleteNotice", notice_no);
 	}
+	//공지사항 게시물 갯수
+	public Notice countNoticeList() {
+		
+		return sqlSession.selectOne("notice_mapper.countNotice");
+	}
 
 }

@@ -15,13 +15,19 @@ public class Notice {
 	private String notice_content;//공지내용
 	private Date notice_date;//공지날짜
 	private int notice_count;//공지사항조회수
+	private int notice_list_count;//공지사항 리스트 갯수 
 	
 	public Notice() {}
 
-	
-	
+	@Override
+	public String toString() {
+		return "Notice [notice_no=" + notice_no + ", emp_no=" + emp_no + ", notice_title=" + notice_title
+				+ ", notice_content=" + notice_content + ", notice_date=" + notice_date + ", notice_count="
+				+ notice_count + ", notice_list_count=" + notice_list_count + "]";
+	}
+
 	public Notice(int notice_no, int emp_no, String notice_title, String notice_content, Date notice_date,
-			int notice_count) {
+			int notice_count, int notice_list_count) {
 		super();
 		this.notice_no = notice_no;
 		this.emp_no = emp_no;
@@ -29,22 +35,8 @@ public class Notice {
 		this.notice_content = notice_content;
 		this.notice_date = notice_date;
 		this.notice_count = notice_count;
+		this.notice_list_count = notice_list_count;
 	}
-
-
-
-
-
-	@Override
-	public String toString() {
-		return "Notice [notice_no=" + notice_no + ", emp_no=" + emp_no + ", notice_title=" + notice_title
-				+ ", notice_content=" + notice_content + ", notice_date=" + notice_date + ", notice_count="
-				+ notice_count + "]";
-	}
-
-
-
-
 
 	public int getNotice_no() {
 		return notice_no;
@@ -94,10 +86,19 @@ public class Notice {
 		this.notice_count = notice_count;
 	}
 
+	public int getNotice_list_count() {
+		return notice_list_count;
+	}
+
+	public void setNotice_list_count(int notice_list_count) {
+		this.notice_list_count = notice_list_count;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
+	
 	
 	
 	

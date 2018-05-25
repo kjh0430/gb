@@ -54,6 +54,12 @@ public class NoticeServiceImpl implements NoticeService{
 		
 		return noticeDao.delectNotice(notice_no);
 	}
+	//공지사항 리스트 갯수
+	@Override
+	public Notice noticeListCount() {
+		
+		return noticeDao.countNoticeList();
+	}
 	
 	
 	

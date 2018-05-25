@@ -12,7 +12,8 @@
 		<result column="notice_title" property="notice_title"/>
 		<result column="notice_content" property="notice_content"/>
 		<result column="notice_date" property="notice_date"/>
-		<result column="notice_count" property="notice_count"/>		
+		<result column="notice_count" property="notice_count"/>	
+		<result column="notice_list_count" property="notice_list_count"/>		
 	</resultMap>
 
 
@@ -83,5 +84,14 @@
 		]]>
 	
 	</delete>
+	
+	<select id="countNotice" parameterType="int" resultType="notice">
+		<![CDATA[
+			
+			select count(*) as notice_list_count from notice
+			
+		]]>
+	
+	</select>
 	
 </mapper>

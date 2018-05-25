@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.GenericApplicationContextExtensionsKt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,8 +29,47 @@ public class NoticeController {
 	@RequestMapping("noticeList.do")
 	public String NoticeList(Notice notice, Model model) {
 		logger.info("공지사항 리스트 메소드 실행됨");
+		
+		//페이지 기본값 지정
+				int currentPage=1;				
+				
+				//한 페이지당 출력할 목록갯수 지정
+				int pageSize=10;
+				
+				//페이지 번호 갯수 출력 
+				int pageGroupSize=5;
+				
+				Notice listCount_1=(noticeService.noticeListCount());
+				int listCount_2=listCount_1.getNotice_list_count();
+				
+				//페이지수 계산 
+				int maxPage=(int)((double)listCount_2/pageSize+0.9);
+				
+				int startPage=((int)((double)currentPage/pageSize+0.9)-1)*pageSize+1;
+				
+				int endPage=startPage+pageSize-1;
+				
+				System.out.println("startPage 시작페이지"+startPage);
+				
+				System.out.println("endPage 마지막 페이지"+endPage);
+				
+				System.out.println("maxPage 페이지수 계산"+maxPage);
+				
+				System.out.println("게시판 갯수 숫자"+listCount_2);
+				
+				if(maxPage<endPage)
+					endPage=maxPage;
+		
 		ArrayList<Notice> noticeList=noticeService.selectAllNoticeList();
-		model.addAttribute("noticeList",noticeList);
+		model.addAttribute("noticeList",noticeList);		
+		model.addAttribute("listCount",listCount_2);
+		model.addAttribute("currentPage",currentPage);
+		model.addAttribute("pageGroupSize",pageGroupSize);		
+		model.addAttribute("startPage",startPage);
+		model.addAttribute("endPage",endPage);
+		model.addAttribute("maxPage",maxPage);
+		
+		
 		
 		/*System.out.println(noticeList.get(0));*/
 		return "notice/noticeList";
@@ -48,6 +88,8 @@ public class NoticeController {
 	public String NoticeAdd(Notice notice, Model model,HttpServletRequest request ) {
 		
 		int result=noticeService.insertNotice(notice);
+		
+		
 		
 		ArrayList<Notice> noticeList=noticeService.selectAllNoticeList();
 		model.addAttribute("noticeList",noticeList);
