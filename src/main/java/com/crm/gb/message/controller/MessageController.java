@@ -47,12 +47,12 @@ public class MessageController {
 	//사원 검색
 	@RequestMapping(value="searchEmp.do" ,method=RequestMethod.POST)
 	@ResponseBody
-	public void searchEmp(@RequestParam(name="searchName") String empName,HttpServletResponse  response) throws IOException {	
+	public void searchEmp(Message message,HttpServletResponse  response) throws IOException {	
 		
 	
-		ArrayList<Message> SearchEmp=MessageService.selectSearch(empName);		
+		ArrayList<Message> SearchEmp=MessageService.selectSearch(message);		
 		JSONArray jarr=new JSONArray();
-		
+		System.out.println("사원검색"+message.getMessage_from_no());
 		for(Message msg : SearchEmp) {
 			
 			JSONObject jsonobject=new JSONObject();
@@ -83,7 +83,7 @@ public class MessageController {
 	
 	//메시지 보내기
 	@RequestMapping(value="sub.do",method=RequestMethod.POST)
-	@ResponseBody
+
 			public void submitMessage(Message message,HttpServletResponse response,@RequestParam("no") int no) throws IOException {
 		System.out.println("보내는사람 번호"+message.getMessage_from_no());
 		System.out.println("받는사람 번호"+message.getMessage_to_no());
@@ -128,7 +128,8 @@ public class MessageController {
 			jsonobject.put("message_title",msg.getMessage_title());
 			jsonobject.put("message_date",msg.getMessage_date());
 			jsonobject.put("message_content", msg.getMessage_content());
-			
+			jsonobject.put("message_no",msg.getMessage_no());
+			jsonobject.put("message_confirm",msg.getMessage_confirm());
 			jarr.add(jsonobject);
 			
 			}
@@ -204,7 +205,22 @@ public class MessageController {
 		out.close();		
 	}
 	
-/*	@RequestMapping(value="notify.do")
+	
+	@RequestMapping(value="readMessage.do")
+	public void readMessage(Message message,HttpServletResponse response) throws IOException {
+		
+		int result=MessageService.updateReadMessage(message);
+		
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out=response.getWriter();
+		out.append("");
+		out.flush();
+		out.close();
+	}
+	
+	
+	
+	@RequestMapping(value="notify.do")
 	public void getNotify(Message message,HttpServletResponse response) throws IOException {
 		response.setContentType("text/event-stream;charset=UTF-8");
 		response.setHeader("Cache-Control", "no-cache");
@@ -213,15 +229,18 @@ public class MessageController {
 		
 		
 		
-	}*/
-	@RequestMapping(value="notify.do")
-	public ResponseBodyEmitter getNotify(Message message) {
+	}
+	
+/*	@RequestMapping(value="notify.do")
+	public SseEmitter getNotify(Message message) {
 		 final SseEmitter emitter = new SseEmitter();
 	        ExecutorService service = Executors.newSingleThreadExecutor();
 	        service.execute(() -> {
 	           message.setEmp_no(1);
 	                try {
 	                    emitter.send(message, MediaType.TEXT_PLAIN);
+
+	                    Thread.sleep(200);
 	                } catch (Exception e) {
 	                    e.printStackTrace();
 	                    emitter.completeWithError(e);
@@ -231,7 +250,7 @@ public class MessageController {
 	            emitter.complete();
 	        });
 	        return emitter;	
-	}
+	}*/
 	
 	
 }
