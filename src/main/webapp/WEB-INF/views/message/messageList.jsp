@@ -201,13 +201,6 @@
    //쪽지확인
    function confirm(obj){
       
-	   $.ajax({
-		  
-		   
-		   
-	   });
-	   
-	   
 	   
 	   
 	  var content=$(obj);
