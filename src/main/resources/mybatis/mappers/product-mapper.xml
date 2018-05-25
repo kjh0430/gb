@@ -41,7 +41,7 @@
 			select max(product_file_no)+1 from product_file
 		</selectKey>		
 		<![CDATA[
-		     insert into product_file values(${product_file_no},${product_no},#{product_original_file},#{product_rename_file})
+		     insert into product_file values(#{product_file_no},#{product_no},#{product_original_file},#{product_rename_file})
 	     ]]>
 	</insert>
 	
@@ -54,9 +54,16 @@
 	<!-- 상품검색 mapping  -->
 	<select id="selectSearchProduct" resultMap="resultSelectAllProduct">
 		<![CDATA[
-			select * from product, contract
-			where product_name like '%'||#{product_name}||'%' and product_delete ='N' and product_availability ='Y' and 
+			select * from product
+			where product_name like '%'||#{product_name}||'%' and product_delete ='N' and product_availability ='Y'
 		]]>
 		
 	</select>
+	
+	<!-- <select id="orderProduct" resultMap="resultSelectAllProduct">
+		<![CDATA[
+			select product_no, product_name, product_price, product_amount, contract_discount from product, contract 
+			where contract.client_no = #{client_no} and product.product_no = #{product_no}
+		]]>
+	</select> -->
 </mapper>
