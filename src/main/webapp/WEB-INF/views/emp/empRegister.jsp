@@ -109,10 +109,6 @@ function Regiemp(){
 				}else{
 					alert("사원 등록 실패");
 				}
-			},
-			error: function(request, status, errorData){
-				alert("error code : " + request.status + "\n" + "message : " + request.responseText
-						+ "\n" + "error : " + errorData);
 			}
 		});		
 	}
