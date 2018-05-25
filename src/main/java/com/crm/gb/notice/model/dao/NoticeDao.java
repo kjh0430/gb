@@ -23,5 +23,26 @@ public class NoticeDao {
 		return sqlSession.selectOne("detailNotice",notice_no);
 		
 	}
+	//공지사항 업데이트
+	public int updateNotice(Notice notice) {
+		
+		return sqlSession.update("updateNotice",notice);
+	}
+	//공지사항 추가
+	public int insertNotice(Notice notice) {
+		
+		return sqlSession.insert("insertNotice",notice);
+	}
+	
+	//공지사항 조횟수
+	public int countUpdate(int notice_no) {
+		
+		return sqlSession.update("updateCountNotice", notice_no);
+	}
+	//공지사항 삭제
+	public int delectNotice(int notice_no) {
+		
+		return sqlSession.delete("deleteNotice", notice_no);
+	}
 
 }

@@ -15,13 +15,15 @@ public class ApprovalDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
-	public Approval selectName(int empNo) {
+	public Approval selectName(int emp_No) {
 		
-	Approval approval=new Approval();
-	
+	return sqlSession.selectOne("getName",emp_No);
+	}
+
+	public int insertApproval(Approval apr) {
 		
-	
-	return sqlSession.selectOne("getName",empNo);
+		
+		return sqlSession.insert("ApprovalSubmit",apr);
 	}
 
 }

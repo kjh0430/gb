@@ -10,18 +10,23 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import com.crm.gb.message.model.service.MessageService;
 import com.crm.gb.message.model.vo.Message;
@@ -29,7 +34,6 @@ import com.crm.gb.message.model.vo.Message;
 
 @Controller
 public class MessageController {
-
 	
 	@Autowired
 	private MessageService MessageService;
@@ -43,12 +47,10 @@ public class MessageController {
 	//사원 검색
 	@RequestMapping(value="searchEmp.do" ,method=RequestMethod.POST)
 	@ResponseBody
-	public void searchEmp(@RequestParam(name="searchName") String empName,HttpServletResponse  response) throws IOException {
-	
+	public void searchEmp(@RequestParam(name="searchName") String empName,HttpServletResponse  response) throws IOException {	
 		
 	
-		ArrayList<Message> SearchEmp=MessageService.selectSearch(empName);
-		
+		ArrayList<Message> SearchEmp=MessageService.selectSearch(empName);		
 		JSONArray jarr=new JSONArray();
 		
 		for(Message msg : SearchEmp) {
@@ -100,6 +102,7 @@ public class MessageController {
 		message.setMessage_date(getdate);
 		
 		int result=MessageService.insertMessage(message);
+		
 	
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out=response.getWriter();
@@ -112,9 +115,8 @@ public class MessageController {
 	public void getMessage(Message message ,HttpServletResponse  response) throws IOException {
 		
 		
-		ArrayList<Message> receiveMessage=MessageService.selectReceiveMessage(message);
-		
-JSONArray jarr=new JSONArray();
+		ArrayList<Message> receiveMessage=MessageService.selectReceiveMessage(message);		
+		JSONArray jarr=new JSONArray();
 
 		for(Message msg : receiveMessage) {
 			
@@ -133,10 +135,7 @@ JSONArray jarr=new JSONArray();
 		
 		JSONObject send=new JSONObject();
 		send.put("list",jarr);
-		
-		
-		
-	
+			
 		response.setContentType("application/json; charset=utf-8");	
 		System.out.println("messageController:"+send);
 		PrintWriter out=response.getWriter();
@@ -152,9 +151,8 @@ JSONArray jarr=new JSONArray();
 	public void sendMessage(Message message ,HttpServletResponse  response) throws IOException {
 		
 		
-		ArrayList<Message> sendMessage=MessageService.selectSendMessage(message);
-		
-JSONArray jarr=new JSONArray();
+		ArrayList<Message> sendMessage=MessageService.selectSendMessage(message);		
+		JSONArray jarr=new JSONArray();
 
 		for(Message msg : sendMessage) {
 			
@@ -172,9 +170,6 @@ JSONArray jarr=new JSONArray();
 		
 		JSONObject send=new JSONObject();
 		send.put("list",jarr);
-		
-		
-		
 	
 		response.setContentType("application/json; charset=utf-8");	
 		System.out.println("messageController:"+send);
@@ -191,9 +186,6 @@ JSONArray jarr=new JSONArray();
 		System.out.println("받는사람 번호"+message.getMessage_to_no());
 		System.out.println("제목"+message.getMessage_title());
 		System.out.println("내용"+message.getMessage_content());
-	
-		
-		
 		SimpleDateFormat format=new SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.KOREA);
 		Date date=new Date();
 		Date time=new Date(date.getTime());
@@ -209,10 +201,39 @@ JSONArray jarr=new JSONArray();
 		PrintWriter out=response.getWriter();
 		out.append("메시지가 전송되었습니다.");
 		out.flush();
-		out.close();
+		out.close();		
+	}
+	
+	@RequestMapping(value="notify.do")
+	public void getNotify(Message message,HttpServletResponse response) throws IOException {
+		response.setContentType("text/event-stream;charset=UTF-8");
+		response.setHeader("Cache-Control", "no-cache");
+		response.setHeader("Connection", "keep-alive");
+		
 		
 		
 		
 	}
+/*	@RequestMapping(value="notify.do")
+	public SseEmitter getNotify(Message message) {
+		 final SseEmitter emitter = new SseEmitter();
+	        ExecutorService service = Executors.newSingleThreadExecutor();
+	        service.execute(() -> {
+	           message.setEmp_no(1);
+	                try {
+	                    emitter.send(message, MediaType.TEXT_PLAIN);
+
+	                    Thread.sleep(200);
+	                } catch (Exception e) {
+	                    e.printStackTrace();
+	                    emitter.completeWithError(e);
+	                    return;
+	                }
+	           
+	            emitter.complete();
+	        });
+	        return emitter;	
+	}*/
+	
 	
 }

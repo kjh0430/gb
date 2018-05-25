@@ -48,10 +48,15 @@ $(document).ready(function() {
 </script>
 
 <script type="text/javascript">
-	
-
-
-
+		$(function(){
+				$('#deleteNotice').on('click', function(){
+					if(confirm("해당 공지사항을 삭제하시겠습니까?")==true) {
+						location.href="noticeDelete.do?notice_no="+""+${ detailNotice.notice_no }+"";
+					}else{
+						return false;
+					}
+				});
+			});
 </script>
 
 
@@ -152,6 +157,7 @@ $(document).ready(function() {
 										<div class="form-group">
 											<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
 												<button type="submit" class="btn btn-success">수정하기</button>
+												<button id="deleteNotice" class="btn" type="button">공지사항 삭제하기</button>
 											</div>
 											<!-- 수정화면
 											<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">

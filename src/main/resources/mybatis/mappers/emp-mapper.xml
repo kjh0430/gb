@@ -100,7 +100,7 @@
 	<select id="selectDeptEmp" resultMap="resultEmpList">	
 		select e.emp_no,e.emp_name,e.dept_no,d.dept_name,e.job_no from emp e,dept d 
 		where e.dept_no = d.dept_no and e.emp_no not in #{emp_no}
-		<if test="dept_no != 3">
+		<if test="job_no != 3">
 	   		AND e.dept_no = #{dept_no}
 	    </if>	
 	</select>	

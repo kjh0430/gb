@@ -33,22 +33,44 @@
 <link href="resources/css/main.css" rel="stylesheet">
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
-
-
+	
+	
 	function addFile(){
-		var index=1;
+		var index=1;		
 		var value="<li id='cFile-"+index+"' class='added'><input type='file' class='form-control' name='client_file'>"
 		+"<a href='javascript:delFile(\"cFile-"+index+"\")' title='삭제'>&nbsp;&nbsp;<i class='fa fa-times'></i></a></li>";
 		$(".c_file").append(value);
-		index++;
+		var firstFile = $("#firstFile").val(); 
+		console.log(firstFile +"," + typeof(firstFile));
+		if(index==1 && firstFile==("")){
+			$(".fileSpan").html("");
+			index++;
+		}else{
+			index++;
+		}		
 	};
 	
 	function delFile(idx){
-		$("#"+idx).remove();
+		var firstFile = $("#firstFile").val(); 
+		console.log(firstFile +"," + typeof(firstFile));
+		if(idx==1 && firstFile !=("")){
+			$(".fileSpan").html("<a href='javascript:resetFile()' title='삭제'>&nbsp;<i class='fa fa-times'></i></a>");
+			$("#"+idx).remove();
+		}else{
+			$("#"+idx).remove();
+		}		
 	}
 	
 	function resetFile(){
 		$("#firstFile").val("");
+		$(".fileSpan").html("");		
+	}
+	
+	function firstChange(){
+		var firstFile = $("#firstFile").val(); 
+		if(firstFile!=""){
+			$(".fileSpan").html("<a href='javascript:resetFile()' title='삭제'>&nbsp;<i class='fa fa-times'></i></a>");
+		}
 	}
 
 </script>
@@ -325,9 +347,9 @@
 												계약여부
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12" style="height:34px;padding:6px 12px">												
-													<input class="form-check-input" type="radio" name="client_contract" id="Y" value="Y" checked>
+													<input class="form-check-input" type="radio" name="client_contract" id="Y" value="Y">
 													<label class="form-check-label" for="sale_yn">계약 </label>
-													<input class="form-check-input" type="radio" name="client_contract" id="N" value="N">
+													<input class="form-check-input" type="radio" name="client_contract" id="N" value="N" checked>
 													<label class="form-check-label" for="sale_n">미계약 </label>
 											</div>
 										</div>
@@ -347,13 +369,14 @@
 											<div class="col-md-6 col-sm-6 col-xs-12" >
 											<ul class="c_file">
 												<li id="cFile-0">
-													<input type="file" id="firstFile" name="client_file" class="form-control">
-													<a href="javascript:resetFile()" title="삭제">&nbsp;<i class='fa fa-times'></i></a>	
+													<input type="file" id="firstFile" name="client_file" onchange="firstChange()" class="form-control">
+													<span class="fileSpan"></span>	
 													<input type="button" class="btn btn-dark add_btn" onclick="addFile()" value="추가"/>
 												</li>
 											</ul>								
 											</div>
 										</div>
+										
 										<div class="ln_solid"></div>
 										<div class="form-group">
 											<!-- <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">

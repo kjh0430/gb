@@ -5,10 +5,15 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.logging.impl.Log4JLogger;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,14 +47,28 @@ public class ProductController {
 		return "main";
 	}
 	
-	//상품 리스트 화면으로 이동
+	//상품 리스트 화면으로 이동: 권성훈
 	@RequestMapping("productList.do")
-	public String moveProductList() {
+	public String moveProductList(HttpServletResponse response) throws IOException{
+		System.out.println("test moveProductList run...");
+		ArrayList<Product> list = new ArrayList<Product>();	
+		for(int i=0; i<productService.selectAllList().size(); i++) {
+			list.add(i, productService.selectAllList().get(i));
+		}
+		
+		JSONObject sendJson = new JSONObject();
+		JSONArray jarr = new JSONArray();
+		
+		/*for(Product product : list) {
+			JSONObject jp = new JSONObject();
+			jp.put("", )
+		}*/
+		
 		return "product/productList";
 	}
 
 	
-	//상품 리스트 화면으로 이동
+	//상품 상세보기 화면으로 이동
 	@RequestMapping("moveproductDetail.do")
 	public String moveproductDetail() {
 		return "product/productDetail";
