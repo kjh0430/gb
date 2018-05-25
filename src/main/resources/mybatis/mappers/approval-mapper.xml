@@ -5,6 +5,19 @@
 
 <mapper namespace="Approval">
 
+<resultMap id="approvalListE" type="approval">
+<id column="approval_no" property="approval_no"/>
+<result column="emp_no" property="emp_no"/>
+<result column="approval_choose_no" property="approval_choose_no"/>
+<result column="approval_submit_date" property="approval_submit_date"/>
+<result column="approval_start_date" property="approval_start_date"/>
+<result column="approval_end_date" property="approval_end_date"/>
+<result column="approval_comment" property="approval_comment"/>
+<result column="approval_team_date" property="approval_team_date"/>
+<result column="apporval_mgr_date" property="apporval_mgr_date"/>
+
+</resultMap>
+
 <select id="getName" parameterType="int" resultType="approval">
 <![CDATA[
 select t.emp_name as team_mgr_name,t.emp_no as team_mgr_no,a.emp_name as mgr_name,a.emp_no as mgr_no from
@@ -22,7 +35,13 @@ from approval),#{emp_no},#{approval_choose_no},sysdate,
 #{approval_start_date},#{approval_end_date},#{approval_comment},null,null)
 ]]>
 
-</insert>
+</insert> 
 
+<select id="approvalListE" parameterType="approval" resultType="approval" resultMap="approvalListE">
+<![CDATA[
+select * from approval where emp_no=#{emp_no}
+
+]]>
+</select>
 
 </mapper>

@@ -49,7 +49,7 @@
 			url:"getName.do",
 			data:{emp_no :"${loginEmp.emp_no}"
 			},
-			type:"get",
+			type:"post",
 			dataType:"json",
 			success:function(data){
 			
