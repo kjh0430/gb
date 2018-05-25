@@ -167,40 +167,29 @@ $(document).ready(function() {
 									<table id="table_cl" class="table table-striped table-bordered" style="min-width:650px;">
 										<thead>
 											<tr>
-												<th>거래처</th>
-												<th>제품번호</th>
-												<th>제품명</th>
-												<th>단가(1kg)</th>
-												<th>수량</th>
-												<th>총금액</th>
+												<th>주문번호</th>
+												<th>회사명</th>
+												<th>합계</th>
 												<th>발주날짜</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td><a href="#">카페 413 프로젝트</a></td>
-												<td>23632</td>
-												<td>에티오피아 예가체프</td>
-												<td>13000</td>
-												<td>5</td>
+											<tr>												
+												<td>23632</td>										
+												<td>커피공장</td>
 												<td>65000</td>
 												<td>2018-05-12</td>
 											</tr>
 											<tr>
-												<td><a href="#">카페 413 프로젝트</a></td>
 												<td>10631</td>
-												<td>콜롬비아 수프리모</td>
-												<td>12000</td>
-												<td>3</td>
+												<td><a href="#">카페 413 프로젝트</a></td>												
 												<td>36000</td>
 												<td>2018-05-02</td>
 											</tr>
 											<tr>
-												<td><a href="#">황카페</a></td>
 												<td>12624</td>
-												<td>과테말라 안티구아</td>
-												<td>11000</td>
-												<td>3</td>
+												<td><a href="#">황카페</a></td>												
+												
 												<td>33000</td>
 												<td>2018-05-15</td>
 											</tr>

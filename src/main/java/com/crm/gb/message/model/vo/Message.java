@@ -18,15 +18,34 @@ public class Message implements Serializable {
 	private String message_title;
 	private String message_content;
 	private String message_date;
-
-	// 사원 검색 용
+	private String message_confirm;
+	
+	// 사원 검색 용 
 	private String emp_email;
 	private String dept_name;
 	private String emp_name;
 	private String job_name;
 	private int emp_no; // 검색시 사원테이블의 사원넘버를 갖고 오기 위한 변수
-
+	
 	public Message() {
+	}
+	
+	public Message(int message_no, int message_from_no, int message_to_no, String message_title, String message_content,
+			String message_date, String message_confirm, String emp_email, String dept_name, String emp_name,
+			String job_name, int emp_no) {
+		super();
+		this.message_no = message_no;
+		this.message_from_no = message_from_no;
+		this.message_to_no = message_to_no;
+		this.message_title = message_title;
+		this.message_content = message_content;
+		this.message_date = message_date;
+		this.message_confirm = message_confirm;
+		this.emp_email = emp_email;
+		this.dept_name = dept_name;
+		this.emp_name = emp_name;
+		this.job_name = job_name;
+		this.emp_no = emp_no;
 	}
 
 	public int getMessage_no() {
@@ -77,6 +96,14 @@ public class Message implements Serializable {
 		this.message_date = message_date;
 	}
 
+	public String getMessage_confirm() {
+		return message_confirm;
+	}
+
+	public void setMessage_confirm(String message_confirm) {
+		this.message_confirm = message_confirm;
+	}
+
 	public String getEmp_email() {
 		return emp_email;
 	}
@@ -125,9 +152,14 @@ public class Message implements Serializable {
 	public String toString() {
 		return "Message [message_no=" + message_no + ", message_from_no=" + message_from_no + ", message_to_no="
 				+ message_to_no + ", message_title=" + message_title + ", message_content=" + message_content
-				+ ", message_date=" + message_date + ", emp_email=" + emp_email + ", dept_name=" + dept_name
-				+ ", emp_name=" + emp_name + ", job_name=" + job_name + ", emp_no=" + emp_no + "]";
-	};
+				+ ", message_date=" + message_date + ", message_confirm=" + message_confirm + ", emp_email=" + emp_email
+				+ ", dept_name=" + dept_name + ", emp_name=" + emp_name + ", job_name=" + job_name + ", emp_no="
+				+ emp_no + "]";
+	}
+
+	
+
+	
 
 	
 	

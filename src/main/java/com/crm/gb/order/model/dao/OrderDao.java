@@ -7,8 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.crm.gb.client.model.vo.Client;
+import com.crm.gb.order.model.vo.Order;
 
-/*@Repository("orderDao")*/
+@Repository("orderDao")
 public class OrderDao {
 
 	@Autowired
@@ -20,4 +21,12 @@ public class OrderDao {
 		return (ArrayList)sqlSession.selectList("selectAccountClient", emp_no);
 	}
 	
+	public int insertOrderList(Order orderlist) {
+		System.out.println("orderlist22222:" + orderlist.toString());
+		return sqlSession.insert("insertOrderList",orderlist);
+	}
+	
+	public int selectOrderMaxNo() {
+		return sqlSession.selectOne("selectOrderMaxNo");
+	}
 }

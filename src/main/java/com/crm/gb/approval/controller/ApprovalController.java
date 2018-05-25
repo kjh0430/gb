@@ -83,7 +83,7 @@ public class ApprovalController {
 		
 		int result=ApprovalService.insertApproval(apr);
 		if(result>0) {
-		System.out.println("전송이 완료 되었습니다");
+		System.out.println("전송이 완료");
 		}
 		
 		return "approval/approvalList";

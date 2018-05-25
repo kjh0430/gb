@@ -136,13 +136,32 @@ function checkPhone(){
 		data: {
 			emp_phone : $('#emp_phone').val()
 		},
-		success:function(data){			
-			if(data.result == "true"){
-				alert("전송 성공!")										
-			}else{
-				alert("이미 등록된 번호 입니다. \n다시 입력하십시오");
-				$('#emp_phone').select();
+		success:function(jsonData){
+			console.log("jsonData : " + jsonData);
+			alert("이미 등록된 번호 입니다. \n다시 입력하십시오");
+			$('#emp_phone').select();
+			},
+			error: function(){
+				alert("사용할 수 있는 연락처");
 			}
+		});
+}
+
+function checkEmail(){
+	$.ajax({
+		url : "checkEmail.do",
+		type: "post",
+		dataType: "json",
+		data: {
+			emp_email : $('#emp_email').val()
+		},
+		success:function(jsonData){
+			console.log("jsonData : " + jsonData);
+			alert("이미 등록된 이메일 입니다. \n다시 입력하십시오");
+			$('#emp_phone').select();
+			},
+			error: function(){
+				alert("사용할 수 있는 이메일");
 			}
 		});
 }

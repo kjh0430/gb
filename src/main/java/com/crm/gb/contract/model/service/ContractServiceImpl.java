@@ -25,4 +25,10 @@ public class ContractServiceImpl implements ContractService {
 	public int insertContract(Contract contract) {
 		return contractDao.insertContract(contract);
 	}
+	
+	/**  고객할인율 검색 **/
+	@Override
+	public int selectDiscount(int client_no) {
+		return contractDao.selectDiscount(client_no);
+	}
 }

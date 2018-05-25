@@ -94,7 +94,7 @@ public class EmpServlceImpl implements EmpService{
 	
 	/*이메일 중복검사*/
 	@Override
-	public int selectCheckEmail(String emp_email) {
+	public Emp selectCheckEmail(String emp_email) {
 		return empDao.selectCheckEmail(emp_email);
 	}	
 

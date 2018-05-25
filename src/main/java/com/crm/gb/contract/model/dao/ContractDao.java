@@ -23,4 +23,9 @@ public class ContractDao {
 	public int insertContract(Contract contract) {
 		return sqlSession.insert("contract.insertContract", contract);
 	}
+	
+	/** 고객 할인율 검색 메소드 **/
+	public int selectDiscount(int client_no) {
+		return sqlSession.selectOne("selectDiscount", client_no);
+	}
 }
