@@ -60,8 +60,9 @@ public class EmpDao {
 	}
 
 	/*연락처 중복검사*/
-	public int selectCheckPhone(String emp_phone) {
-		System.out.println("emp_phone dao 실행");
+	public Emp selectCheckPhone(String emp_phone) {
+		System.out.println("emp_phone dao 실행");	
+		System.out.println("emp_phone : " + emp_phone);
 		return sqlSession.selectOne("selectCheckPhone", emp_phone);
 	}
 

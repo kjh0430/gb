@@ -92,10 +92,8 @@
 	</update>
 	
 	<!-- 연락처 중복검사 -->
-	<select id="selectCheckPhone" parameterType="String" resultMap="resultEmpList">
-	<![CDATA[
-		select count(*) from emp where emp_phone = #{emp_phone}
-	]]>
+	<select id="selectCheckPhone" parameterType="emp" resultMap="resultEmpList">	
+		select * from emp where emp_phone = #{emp_phone}	
 	</select>
 	
 	<!-- 부서별 사원 조회 -->

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -194,17 +195,16 @@ public class EmpController {
 		
 		System.out.println("연락처 번호 : "+emp_phone);
 		
-		int result = empService.selectCheckPhone(emp_phone);
+		Emp detailEmp = empService.selectCheckPhone(emp_phone);
+		model.addAttribute("emp", detailEmp);
 		
-		String returnValue = null;
-		if(result == 0) {
-			model.addAttribute("returnValue", "true");
-			return "returnValue";
-		}else {
-			model.addAttribute("returnValue", "false");
-			return "returnValue";
-		}
-	
+		/*JSONParser jparser = new JSONParser();
+		JSONObject job = (JSONObject)jparser.parse(detailEmp);*/
+		
+		System.out.println("detailEmp : " + detailEmp);
+		
+		return "emp/empList";
+			
 	}
 	
 	/*이메일 중복검사*/
