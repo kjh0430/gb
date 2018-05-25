@@ -105,7 +105,7 @@
 										
 										<c:forEach var="list" items="${ accountClientList }">
 											<tr>
-												<td><a href="#">${ list.client_name }</a></td>
+												<td><a href="detailClient.do?client_no=${list.client_no }">${ list.client_name }</a></td>
 												<td>${ list.client_company }</td>
 												<td>${ list.client_job }</td>
 												<td>${ list.client_email }</td>

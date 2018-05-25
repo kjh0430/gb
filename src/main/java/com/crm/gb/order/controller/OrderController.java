@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.crm.gb.client.controller.ClientController;
 import com.crm.gb.client.model.service.ClientService;
 import com.crm.gb.client.model.vo.Client;
+import com.crm.gb.contract.model.service.ContractService;
 import com.crm.gb.order.model.service.OrderService;
 import com.crm.gb.order.model.vo.Order;
 import com.crm.gb.product.model.service.ProductService;
@@ -40,6 +41,9 @@ public class OrderController {
 	
 	@Autowired
 	private OrderService orderService;
+	
+	@Autowired
+	private ContractService contractService;
 
 	//발주하기-페이지이동과 고객검색용 메소드
 	@RequestMapping(value="selectOrderClient.do")
@@ -47,6 +51,12 @@ public class OrderController {
 		logger.info("발주하기 페이지  run....");
 
 		return "order/order";
+	}
+	
+	//매출현황 페이지 이동 메소드 
+	@RequestMapping(value="orderList.do")
+	public String orderListPage() {
+		return "order/orderList";
 	}
 	
 	@RequestMapping(value="searchCom.do", method=RequestMethod.POST)
@@ -122,6 +132,9 @@ public class OrderController {
 		int emp_no = Integer.parseInt(request.getParameter("emp_no"));
 		int client_no = Integer.parseInt(request.getParameter("client_no"));
 		
+		int contract_discount = contractService.selectDiscount(client_no);
+	//	System.out.println("contract_discount : " + contract_discount);
+		
 		String productNo[] = request.getParameterValues("product_no");
 		String orderPrice[] = request.getParameterValues("order_price");
 		String amountlist[] = request.getParameterValues("order_amount");
@@ -131,7 +144,7 @@ public class OrderController {
 		
 			orderlist.setOrder_no(order_no);
 			orderlist.setOrder_amount(Integer.parseInt(amountlist[i]));
-			orderlist.setOrder_price(Integer.parseInt(orderPrice[i]));
+			orderlist.setOrder_price(Integer.parseInt(orderPrice[i])*(1-contract_discount/100.0));
 			orderlist.setProduct_no(Integer.parseInt(productNo[i]));
 			
 		

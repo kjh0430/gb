@@ -14,12 +14,12 @@ private static final long serialVersionUID = 1111L;
 	private int client_no;
 	private int product_no;
 	private int order_amount;
-	private int order_price;
+	private Double order_price;
 	private Date order_date;
 	
 	public Order() {}
 	
-	public Order(int orderlist_no, int order_no, int emp_no, int client_no, int product_no, int order_amount, int order_price,
+	public Order(int orderlist_no, int order_no, int emp_no, int client_no, int product_no, int order_amount, Double order_price,
 			Date order_date) {
 		super();
 		this.orderlist_no = orderlist_no;
@@ -80,11 +80,11 @@ private static final long serialVersionUID = 1111L;
 		this.order_amount = order_amount;
 	}
 
-	public int getOrder_price() {
+	public Double getOrder_price() {
 		return order_price;
 	}
 
-	public void setOrder_price(int order_price) {
+	public void setOrder_price(Double order_price) {
 		this.order_price = order_price;
 	}
 
