@@ -20,11 +20,11 @@ public class MessageServiceImpl implements MessageService {
 	private MessageDao messageDao;
 	
 	@Override
-	public ArrayList<Message> selectSearch(String empName) {
+	public ArrayList<Message> selectSearch(Message message) {
 		
 		
 		
-		return messageDao.selectSearch(empName);
+		return messageDao.selectSearch(message);
 	}
 	
 	@Override
@@ -44,6 +44,12 @@ public class MessageServiceImpl implements MessageService {
 	public ArrayList<Message> selectSendMessage(Message message) {
 		
 		return messageDao.selectSendMessage(message);
+	}
+
+	@Override
+	public int updateReadMessage(Message message) {
+		
+		return messageDao.updateReadMessage(message);
 	}
 
 }
