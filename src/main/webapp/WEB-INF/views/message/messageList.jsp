@@ -200,7 +200,17 @@
    }
    //쪽지확인
    function confirm(obj){
-      var content=$(obj);
+      
+	   $.ajax({
+		  
+		   
+		   
+	   });
+	   
+	   
+	   
+	   
+	  var content=$(obj);
       var td=content.children();
       
       var a_from_empName=td.eq(0).text();
