@@ -220,19 +220,15 @@ public class MessageController {
 	
 	
 	
-	@RequestMapping(value="notify.do")
+/*	@RequestMapping(value="notify.do")
 	public void getNotify(Message message,HttpServletResponse response) throws IOException {
 		response.setContentType("text/event-stream;charset=UTF-8");
 		response.setHeader("Cache-Control", "no-cache");
 		response.setHeader("Connection", "keep-alive");
 		
-		
-		
-		
 	}
-	
 /*	@RequestMapping(value="notify.do")
-	public SseEmitter getNotify(Message message) {
+	public ResponseBodyEmitter getNotify(Message message) {
 		 final SseEmitter emitter = new SseEmitter();
 	        ExecutorService service = Executors.newSingleThreadExecutor();
 	        service.execute(() -> {
