@@ -13,9 +13,11 @@
 		console.log("연결중");
 		
 	}
-	eventSource.onmessage = function(event) {
+	 eventSource.onmessage = function(event) {
 	    console.log("received event data : " + event.data);
+<<<<<<< HEAD
 	}; */
+
 		
 </script>
 <body>
