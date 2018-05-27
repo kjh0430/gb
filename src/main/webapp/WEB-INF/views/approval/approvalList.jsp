@@ -47,7 +47,7 @@
 		data:{
 			emp_no:"${loginEmp.emp_no}"
 		},
-		type : "post",
+		type :"post",
 		dataType:"json",
 		success : function(data) {
 		

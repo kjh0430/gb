@@ -8,14 +8,14 @@
 <title>sidebar</title>
 </head>
 <script type="text/javascript">
-	var eventSource = new EventSource("notify.do");
+/* 	var eventSource = new EventSource("notify.do");
 	eventSource.onopen = function(){
 		console.log("연결중");
 		
 	}
 	eventSource.onmessage = function(event) {
 	    console.log("received event data : " + event.data);
-	};
+	}; */
 		
 </script>
 <body>
