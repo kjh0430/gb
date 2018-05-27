@@ -15,6 +15,7 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,7 +41,7 @@ public class ApprovalController {
 	}
 	
 	
-	@RequestMapping(value="getName.do", method=RequestMethod.GET)
+	@RequestMapping(value="getName.do", method=RequestMethod.POST)
 	@ResponseBody
 	public String getName(@RequestParam(name="emp_no") int emp_no,HttpServletResponse response) throws UnsupportedEncodingException {
 		System.out.println("emp_no"+emp_no);
@@ -74,23 +75,17 @@ public class ApprovalController {
 		System.out.println("관리자번호"+apr.getMgr_no());
 		System.out.println("비고"+apr.getApproval_comment());
 		
-		SimpleDateFormat format=new SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.KOREA);
-		Date date=new Date();
-		Date time=new Date(date.getTime());
-		String getdate=format.format(time);
-		System.out.println(getdate);
-		
-		apr.setApproval_submit_date(getdate);
+	
 		
 		int result=ApprovalService.insertApproval(apr);
 		if(result>0) {
 		System.out.println("전송 완료");
 		}
 		
-		return "approval/approvalList";
+		return "approval/approval";
 	}
 	
-	@RequestMapping(value="approvalListE.do")
+	@RequestMapping(value="approvalListE.do", method=RequestMethod.POST)
 	
 	public String approvalListE(Approval apr,Model model,@RequestParam(name="emp_no") int emp_no) {
 		apr.setEmp_no(emp_no);
@@ -105,8 +100,8 @@ public class ApprovalController {
 	public String approvalListE() {
 		
 		return "approval/approvalProcess";
-	}*/
-		
+	}
+		*/
 	
 	
 }

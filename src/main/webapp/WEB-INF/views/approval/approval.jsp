@@ -231,7 +231,7 @@ function resetContent(){
 												class="control-label col-md-3 col-sm-3 col-xs-12">결재자(팀장)<span class="required">*</span></label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<div class="input-group" style="margin-bottom:0px;">
-													<input type="text" class="form-control" id="team_mgr" name readonly> <span
+													<input type="text" class="form-control" id="team_mgr" readonly> <span
 														class="input-group-btn">
 														<input type="hidden" name="team_mgr_no" id="team_mgr_no"/>	
 														

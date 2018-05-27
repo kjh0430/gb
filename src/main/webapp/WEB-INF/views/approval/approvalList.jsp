@@ -40,14 +40,14 @@
 <link href="resources/css/main.css" rel="stylesheet">
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
-/* $(function() {
+ $(function() {
 	
 	$.ajax({
 		url:"approvalListE.do",
 		data:{
 			emp_no:"${loginEmp.emp_no}"
 		},
-		type : "get",
+		type : "post",
 		dataType:"json",
 		success : function(data) {
 		
@@ -62,7 +62,7 @@
 	
 	
 	
-}); */
+}); 
 
 
 
