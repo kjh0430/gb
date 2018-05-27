@@ -40,37 +40,62 @@
 <link href="resources/css/main.css" rel="stylesheet">
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
- $(function() {
+
+function modalUp(obj){
+	var content=$(obj);
+	var td=content.children();
+
+	var approval_choose_no=td.eq(0).text();
+	var approval_process=td.eq(2).text();
+	var approval_start_date=td.eq(4).text();
+	var approval_end_date=td.eq(5).text();
+	var approval_comment=td.eq(6).text();
+	var approval_team_date=td.eq(7).text();
+	var approval_mgr_date=td.eq(8).text();
 	
-	$.ajax({
-		url:"approvalListE.do",
-		data:{
-			emp_no:"${loginEmp.emp_no}"
-		},
-		type :"post",
-		dataType:"json",
-		success : function(data) {
+	$('#startDate').val(approval_start_date);
+	$('#endDate').val(approval_end_date);
+	$('#reason').val(approval_choose_no);
+	alert(approval_team_date);
+	$('#team').val(approval_team_date);
+	$('#admin').val(approval_mgr_date);
+	$('#textarea').val(approval_comment);
+	var value="";
+	  if(approval_team_date!=""){
 		
-			
+		value="<a class='selected'><span class='step_no'>2</span><span class='step_descr'>팀장<br></span></a></li>"	
+		$('#processA').html(value);	
+			}  
+	
+	 if(approval_mgr_date!=""){
+		value="<a class='selected'><span class='step_no'>3</span><span class='step_descr'>관리자<br></span></a></li>"	
+			$('#processB').html(value);	
+	} 
+	 $('#modal1').modal("show");
+}
+
+function modal1Close(){
+	value="";
+	value="<a class='disabled'><span class='step_no'>5</span><span class='step_descr'>팀장<br></span></a></li>"	
+		$('#processA').html(value);	
 			 
-		 },error : function(request, status, errorData) {
-             alert("error code : " + request.status + "\n"
-                     + "message :" + request.responseText + "\n"
-                     + "error :" + errorData);
-            }
-	});
+		value="<a class='disabled'><span class='step_no'>3</span><span class='step_descr'>관리자<br></span></a></li>"	
+	$('#processB').html(value);	
 	
-	
-	
-}); 
-
-
-
+	$('#modal1').modal("hide");
+}
 </script>
 <style type="text/css">
 
+#table_ap th:nth-child(4),th:nth-child(5),th:nth-child(6),
+th:nth-child(7),th:nth-child(8),th:nth-child(9){
+display:none;
+}
 
-
+#table_ap td:nth-child(4),td:nth-child(5),td:nth-child(6),
+td:nth-child(7),td:nth-child(8),td:nth-child(9){
+display:none;
+}
 </style>
 </head>
 
@@ -189,6 +214,12 @@
 												<th>결재유형</th>
 												<th>일자</th>
 												<th>진행상황</th>
+												<th>사원번호</th>
+												<th>start</th>
+												<th>end</th>
+												<th>comment</th>
+												<th>team</th>
+												<th>mgr</th> 
 											</tr>
 										</thead>
 										<tbody>
@@ -214,19 +245,139 @@
 											<c:if test="${approval.approval_mgr_date ne null}">
 											<c:set var="approval_process" value="결재 완료"/>
 											</c:if>
-											
-											
 										
 											
-											<tr>
+											<tr onclick="modalUp(this);">
 												
-												<td>${approval_choose_no}</td>
+												<td style="width:50%;">${approval_choose_no}</td>
 												<td style="width:30%;">${approval.approval_submit_date}</td>
 												<td>${approval_process}</td>
+												<td>${approval.emp_no }</td>
+												<td>${approval.approval_start_date}</td>
+												<td>${approval.approval_end_date}</td>
+												<td>${approval.approval_comment}</td>
+												<td>${approval.approval_team_date}</td>
+												<td>${approval.approval_mgr_date }</td> 
+												
 											</tr>
 												</c:forEach>
 										<tbody>
 									</table>
+									
+									  <div class="modal fade sendMsg" tabindex="-1" role="dialog"
+                                 id="modal1" aria-hidden="true">
+                                 <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                       <form class="form-horizontal form-label-left input_mask">
+                                          <div class="modal-header">
+                                             <button type="button" class="close" data-dismiss="modal">
+                                                <span aria-hidden="true">×</span>
+                                             </button>
+                                             <h4 class="modal-title" id="myModalLabel">결재 내용</h4>
+                                          </div>
+
+                                          <div class="modal-body">
+                                          	<div id="wizard" class="form_wizard wizard_horizontal">
+										<ul class="wizard_steps anchor" style="margin:0px;padding:0px">
+											<li><a  class="selected"
+												> <span class="step_no">1</span> <span
+													class="step_descr"> 사원<br> <!-- <small>Step 1 description</small> -->
+												</span>
+											</a></li>
+											
+											<li id="processA"><a  class="disabled" 
+												> <span class="step_no">2</span> <span
+													class="step_descr"> 팀장<br> <!-- <small>Step 2 description</small> -->
+												</span>
+											</a></li>
+											<li id="processB"><a  class="disabled"
+												> <span class="step_no">3</span> <span
+													class="step_descr"> 관리자<br> <!--  <small>Step 3 description</small> -->
+												</span>
+											</a></li>
+
+										</ul>
+									</div>
+										<div class="row">
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							<div class="x_panel">
+								<div class="x_title">
+									<h2>결재 내용</h2>
+									<div class="clearfix"></div>
+								</div>
+								<div class="x_content">
+									<form class="form-horizontal form-label-left">
+
+										<div class="form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12"
+												for="first-name">일자 
+											</label>
+											<div class="col-md-6 col-sm-6 col-xs-12">
+												<input type="date" required="required" id="startDate"
+													class="form-date col-md-5 col-xs-12" readonly>
+												<input type="date" required="required" id="endDate"
+													class="form-date col-md-5 col-xs-12" readonly>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12"
+												for="last-name">사유 
+											</label> 
+											<div class="col-md-2 col-sm-4 col-xs-12">
+												<input type="text" class="form-control"  id="reason" readonly>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="middle-name"
+												class="control-label col-md-3 col-sm-3 col-xs-12">팀장 </label>
+											<div class="col-md-6 col-sm-6 col-xs-12">
+												<div class="input-group" style="margin-bottom:0px;">
+													
+													
+													
+													<input type="text" required="required" id="team"
+													class="form-date col-md-5 col-xs-12" readonly>
+														
+														
+													
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="middle-name"
+												class="control-label col-md-3 col-sm-3 col-xs-12">관리자 </label>
+											<div class="col-md-6 col-sm-6 col-xs-12">
+												<div class="input-group" style="margin-bottom:0px;">
+													<input type="text" required="required" id="admin"
+													class="form-date col-md-5 col-xs-12" readonly>
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12">비고
+											</label>
+											<div class="col-md-6 col-sm-6 col-xs-12">
+												<textarea rows="3" class="form-control col-md-7 col-xs-12" id="textarea" readonly></textarea>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+									
+									
+                                          </div>
+                                          <div class="modal-footer">
+                                          	 <button onclick="modal1Close()" type="button"
+                                                class="btn btn-primary">확인</button>
+                                             
+                                          </div>
+                                       </form>
+
+                                    </div>
+                                 </div>
+                              </div>
 								</div>
 							</div>
 						</div>

@@ -43,6 +43,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 
+		
 
 		//팀장 이름, 및 관리자 이름 가져오기
 		$.ajax({
@@ -65,9 +66,9 @@
 		});
 		
 		
-		
-		
-		
+	
+			
+			
 		
 		
 	
@@ -82,7 +83,7 @@ function resetContent(){
 	$('#approval_choose_no').val()="선택";
 }
 	
-	
+
 </script>
 </head>
 
@@ -202,9 +203,9 @@ function resetContent(){
 												for="first-name">일자 <span class="required">*</span>
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<input type="date" required="required" name="approval_start_date" id="startDate"
+												<input type="date" required="required" name="approval_start_date" id="startDate" 
 													class="form-date col-md-5 col-xs-12" id="startDate">
-												<input type="date" required="required" name="approval_end_date" id="endDate"
+												<input type="date" required="required" name="approval_end_date" id="endDate" 
 													class="form-date col-md-5 col-xs-12">
 											</div>
 										</div>

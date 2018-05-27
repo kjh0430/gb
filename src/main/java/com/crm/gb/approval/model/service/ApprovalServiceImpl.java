@@ -40,5 +40,13 @@ private ApprovalDao ApprovalDao;
 		return ApprovalDao.selectapprovalListE(apr);
 	}
 
+
+
+	@Override
+	public ArrayList<Approval> selectapprovalListA(Approval apr) {
+		
+		return ApprovalDao.selectapprovalListA(apr);
+	}
+
 	
 }
