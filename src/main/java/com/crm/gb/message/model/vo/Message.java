@@ -47,6 +47,15 @@ public class Message implements Serializable {
 		this.job_name = job_name;
 		this.emp_no = emp_no;
 	}
+	
+	
+	
+	public Message(int message_from_no, int message_to_no, String message_date) {
+		super();
+		this.message_from_no = message_from_no;
+		this.message_to_no = message_to_no;
+		this.message_date = message_date;
+	}
 
 	public int getMessage_no() {
 		return message_no;
