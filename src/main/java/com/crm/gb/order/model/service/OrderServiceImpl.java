@@ -38,4 +38,12 @@ public class OrderServiceImpl implements OrderService{
 	public int selectOrderMaxNo() {
 		return orderDao.selectOrderMaxNo();
 	}
+
+	/* 영업일지에 나오는 orderList 메소드 */
+	@Override
+	public ArrayList<Order> selectOrderlist(Order order) {		
+		return orderDao.selectOrderlist(order);
+	}
+	
+	
 }

@@ -27,7 +27,7 @@
 
 </script>
 <style type="text/css">
-	#table_sa tbody tr:last-child {
+	#table_ol tbody tr:last-child {
 		border-top: solid #ddd 2px;
 	}
 </style>
@@ -107,8 +107,8 @@
 									<h2>주문내역</h2>
 									<div class="clearfix"></div>
 								</div>
-								<div class="x_content">
-									<table class="table" id="table_sa">
+								<div class="x_content" id="orderlist">
+									<table class="table" id="table_ol">
 										<thead>
 											<tr>
 												<th>주문번호</th>
@@ -158,9 +158,45 @@
 	$(function(){
 		document.getElementById("daily_date").valueAsDate = new Date();		
 		selectVisit();	
+		selectOrder();
 		
 	});//onload
 	
+	//orderlist ajax
+	function selectOrder(){
+		$.ajax({
+			url:"orderList.do",
+			type:"post",
+			dataType:"json",
+			data:{emp_no:"${ loginEmp.emp_no }",daily_date:$("#daily_date").val()},
+			success:function(obj){
+				console.log(obj);
+				
+ 				var objStr =JSON.stringify(obj);
+				var order = JSON.parse(objStr);		
+				var size =Object.keys(order.list).length;
+				
+				if(size>0){
+					var value="<thead><tr><th>주문번호</th><th>거래처명</th><th>금액</th></tr></thead><tbody>";	
+					for(var i in order.list){	
+						value+="<tr><td><a>"++"</a></td><td>"+프로젝트 413 역삼+"</td><td>"+245,000+"</td></tr>
+				
+					}
+					value+="</tbody>"
+
+
+				}else{
+						
+				
+				} //else 끝 */
+			},
+			error:function(request,status,errorData){
+				console.log("error data : " +request.status+"\n"
+						+"message : "+request.responseText+"\n"
+						+"error : "+errorData);
+			}	
+		});	
+	}
 	
 	//visitlist ajax
 	function selectVisit(){

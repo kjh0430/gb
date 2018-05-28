@@ -115,8 +115,7 @@ public class MessageController {
 	}
 	//받은 메시지함
 	@RequestMapping(value="getMessage.do",method=RequestMethod.GET)
-	public void getMessage(Message message ,HttpServletResponse  response) throws IOException {
-		
+	public void getMessage(Message message ,HttpServletResponse  response) throws IOException {		
 		
 		ArrayList<Message> receiveMessage=MessageService.selectReceiveMessage(message);		
 		JSONArray jarr=new JSONArray();

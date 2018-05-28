@@ -16,17 +16,20 @@ public class OrderDao {
 	private SqlSessionTemplate sqlSession;
 	
 	/** (거래중인)거래처 목록 메소드 Dao **/
-	public ArrayList<Client> selectAccountClient(int emp_no){
-		
+	public ArrayList<Client> selectAccountClient(int emp_no){		
 		return (ArrayList)sqlSession.selectList("selectAccountClient", emp_no);
 	}
 	
 	public int insertOrderList(Order orderlist) {
-		System.out.println("orderlist22222:" + orderlist.toString());
 		return sqlSession.insert("insertOrderList",orderlist);
 	}
 	
 	public int selectOrderMaxNo() {
 		return sqlSession.selectOne("selectOrderMaxNo");
+	}
+	
+	/* 방문일지를 위한 주문 목록 */
+	public ArrayList<Order> selectOrderlist(Order order) {
+		return (ArrayList)sqlSession.selectList("selectOrderlist",order);
 	}
 }
