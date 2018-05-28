@@ -61,26 +61,16 @@ function modalUp(obj){
 	$('#admin').val(approval_mgr_date);
 	$('#textarea').val(approval_comment);
 	var value="";
-	  if(approval_team_date!=""){
-		
-		value="<a class='selected'><span class='step_no'>2</span><span class='step_descr'>팀장<br></span></a></li>"	
-		$('#processA').html(value);	
-			}  
+
+
 	
-	 if(approval_mgr_date!=""){
-		value="<a class='selected'><span class='step_no'>3</span><span class='step_descr'>관리자<br></span></a></li>"	
-			$('#processB').html(value);	
-	} 
+	
 	 $('#modal1').modal("show");
 }
 
 function modal1Close(){
-	value="";
-	value="<a class='disabled'><span class='step_no'>5</span><span class='step_descr'>팀장<br></span></a></li>"	
-		$('#processA').html(value);	
-			 
-		value="<a class='disabled'><span class='step_no'>3</span><span class='step_descr'>관리자<br></span></a></li>"	
-	$('#processB').html(value);	
+	
+	
 	
 	$('#modal1').modal("hide");
 }
@@ -96,6 +86,19 @@ display:none;
 td:nth-child(7),td:nth-child(8),td:nth-child(9){
 display:none;
 }
+
+.circle {
+width:50px;
+height:50px;
+ line-height:50px; 
+border-radius:50%;
+display:block;
+background-color:#ddd;
+color:white;
+font-weight:bold;
+}
+
+
 </style>
 </head>
 
@@ -278,23 +281,23 @@ display:none;
 
                                           <div class="modal-body">
                                           	<div id="wizard" class="form_wizard wizard_horizontal">
-										<ul class="wizard_steps anchor" style="margin:0px;padding:0px">
-											<li><a  class="selected"
-												> <span class="step_no">1</span> <span
-													class="step_descr"> 사원<br> <!-- <small>Step 1 description</small> -->
-												</span>
-											</a></li>
+										<ul class="wizard_steps anchor" style="margin:0px;padding:0px;">
+											<li>
+												 <div style = "width:100%" align = "center">
+												 <div class="circle">사원</div>
+												 </div>
+											</li>
 											
-											<li id="processA"><a  class="disabled" 
-												> <span class="step_no">2</span> <span
-													class="step_descr"> 팀장<br> <!-- <small>Step 2 description</small> -->
-												</span>
-											</a></li>
-											<li id="processB"><a  class="disabled"
-												> <span class="step_no">3</span> <span
-													class="step_descr"> 관리자<br> <!--  <small>Step 3 description</small> -->
-												</span>
-											</a></li>
+											<li>
+											<div style = "width:100%" align = "center">
+											<div class="circle">팀장</div>
+											</div>
+											</li>
+											<li>
+											<div style = "width:100%" align = "center">
+												<div class="circle">관리자</div>
+												</div>
+											</li>
 
 										</ul>
 									</div>
