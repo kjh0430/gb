@@ -209,6 +209,7 @@ public class DailyworkController {
 			job.put("order_no",od.getOrder_no());
 			job.put("emp_no",od.getEmp_no());
 			job.put("client_no", od.getClient_no());
+			job.put("client_company", od.getClient_company());
 			job.put("total", od.getTotal());
 			jarr.add(job);
 		}

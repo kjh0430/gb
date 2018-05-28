@@ -104,7 +104,7 @@
 	<select id="selectSearchAccount" resultMap="resultAccountClient">
 		<![CDATA[
 			select * from client
-			where client_company like '%'||#{client_company}||'%'
+			where client_company like '%'||#{client_company}||'%' and emp_no = #{emp_no} and client_contract = 'Y'
 		]]>
 	</select>
 	

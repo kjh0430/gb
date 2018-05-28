@@ -23,14 +23,6 @@
 <link href="resources/css/main.css" rel="stylesheet">
 
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
-<script type="text/javascript">
-
-</script>
-<style type="text/css">
-	#table_ol tbody tr:last-child {
-		border-top: solid #ddd 2px;
-	}
-</style>
 </head>
 
 
@@ -68,7 +60,7 @@
 							<div class="control-group" style="float:right">
 								<div class="controls">
 								<input type="date" class="form-control" id="daily_date" name="daily_date" style="width:200px;display:inline-block">
-								<button class="btn btn-dark" onclick="selectVisit()"style="display:inline-block">확인</button>
+								<button class="btn btn-dark" onclick="selectDailyreport()"style="display:inline-block">확인</button>
 								</div>
 							</div>
 
@@ -108,22 +100,12 @@
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content" id="orderlist">
-									<table class="table" id="table_ol">
-										<thead>
-											<tr>
-												<th>주문번호</th>
-												<th>거래처명</th>
-												<th>금액</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td><a href="#">215487</a></td>
-												<td>프로젝트 413 역삼</td>
-												<td>245,000</td>
-											</tr>
-										</tbody>
+									<div class="dashboard-widget-content">
+									<table class="table" id="table_ol" style="margin-bottom:10px;">
+									
+									
 									</table>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -162,6 +144,11 @@
 		
 	});//onload
 	
+	function selectDailyreport(){		
+		selectVisit();	
+		selectOrder();
+	}
+	
 	//orderlist ajax
 	function selectOrder(){
 		$.ajax({
@@ -175,18 +162,18 @@
  				var objStr =JSON.stringify(obj);
 				var order = JSON.parse(objStr);		
 				var size =Object.keys(order.list).length;
+				var sum=0;
 				
 				if(size>0){
 					var value="<thead><tr><th>주문번호</th><th>거래처명</th><th>금액</th></tr></thead><tbody>";	
 					for(var i in order.list){	
-						value+="<tr><td><a>"++"</a></td><td>"+프로젝트 413 역삼+"</td><td>"+245,000+"</td></tr>
-				
-					}
-					value+="</tbody>"
-
-
+						value+="<tr><td><a>"+order.list[i].order_no+"</a></td><td>"+order.list[i].client_company+"</td><td>"+order.list[i].total+"</td></tr>";
+						sum+=order.list[i].total;
+					}					
+					value+="<tr style='border-top:solid 2px #ddd;font-weight:bold'><td>합계</td><td></td><td>"+sum+"</td></tbody>";
+					$("#table_ol").html(value);
 				}else{
-						
+					$("#table_ol").html("주문 내역이 없습니다.");	
 				
 				} //else 끝 */
 			},
@@ -306,7 +293,7 @@
 					    // 정상적으로 검색이 완료됐으면 
 					     if (status === daum.maps.services.Status.OK) {	
 					        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
-					        map.setCenter(coords);
+					        map.setCenter(coords);able_
 					    } 
 					});  
 					

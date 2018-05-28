@@ -4,20 +4,18 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Order" >
 
-
-		<resultMap type="order" id="resultOrderlist2">
-			<id column="orderlist_no" property="orderlist_no"/>
-			<result column="order_no" property="order_no"/>
-			<result column="emp_no" property="emp_no"/>
-			<result column="client_no" property="client_no"/>
-			<result column="product_no" property="product_no"/>
-			<result column="order_amount" property="order_amount"/>
-			<result column="order_price" property="order_price"/>
-			<result column="order_date" property="order_date"/>
-			<result column="client_company" property="client_company"/>
-					
-		</resultMap>
-
+	<resultMap type="order" id="resultOrderlist">
+		<id column="orderlist_no" property="orderlist_no"/>
+		<result column="order_no" property="order_no"/>
+		<result column="emp_no" property="emp_no"/>
+		<result column="client_no" property="client_no"/>
+		<result column="product_no" property="product_no"/>
+		<result column="order_amount" property="order_amount"/>
+		<result column="order_price" property="order_price"/>
+		<result column="order_date" property="order_date"/>
+		<result column="client_company" property="client_company"/>
+		<result column="total" property="total"/>					
+	</resultMap>
 		
    <insert id="insertOrderList" parameterType="order">   
       <![CDATA[
@@ -26,20 +24,19 @@
         ]]>
    </insert>
 
-
    <select id="selectOrderMaxNo" resultType="_int">
-   <![CDATA[
-      select max(order_no)+1 from orderlist
-   ]]>
+	   <![CDATA[
+	      select max(order_no)+1 from orderlist
+	   ]]>
    </select>
    
    <select id="selectOrderlist" parameterType="order"  resultMap="resultOrderlist">
-   <![CDATA[
-      select ol.order_no,ol.emp_no,ol.order_date,ol.client_no,c.client_name,sum((ol.order_price*ol.order_amount)) as total 
-      from orderlist ol,client c where ol.CLIENT_NO=c.client_no 
-      and ol.emp_no = #{emp_no} and to_char(ol.order_date,'yyyy-mm-dd') like #{order_date} 
-      group by c.client_name,ol.order_no,ol.client_no,ol.emp_no,ol.order_date order by order_date
-   ]]>
+	   <![CDATA[
+	      select ol.order_no,ol.emp_no,ol.order_date,ol.client_no,c.client_company,sum((ol.order_price*ol.order_amount)) as total 
+	      from orderlist ol,client c where ol.CLIENT_NO=c.client_no 
+	      and ol.emp_no = #{emp_no} and to_char(ol.order_date,'yyyy-mm-dd') like #{order_date} 
+	      group by c.client_company,ol.order_no,ol.client_no,ol.emp_no,ol.order_date order by order_date
+	   ]]>
    </select>
 
 

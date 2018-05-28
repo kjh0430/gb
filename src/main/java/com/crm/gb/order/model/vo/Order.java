@@ -127,7 +127,7 @@ private static final long serialVersionUID = 1111L;
 
 
 	public int getTotal() {
-		return total;
+	 	return total;
 	}
 
 	public void setTotal(int total) {
