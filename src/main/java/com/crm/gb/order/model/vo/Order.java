@@ -15,13 +15,14 @@ private static final long serialVersionUID = 1111L;
 	private int product_no;
 	private int order_amount;
 	private Double order_price;
-	private Date order_date;
 	private String client_company;
+	private String order_date;
+	private int total;
 	
 	public Order() {}
 	
 	public Order(int orderlist_no, int order_no, int emp_no, int client_no, int product_no, int order_amount, Double order_price,
-			Date order_date) {
+			String order_date) {
 		super();
 		this.orderlist_no = orderlist_no;
 		this.order_no = order_no;
@@ -34,7 +35,7 @@ private static final long serialVersionUID = 1111L;
 	}
 	
 	public Order(int orderlist_no, int order_no, int emp_no, int client_no, int product_no, int order_amount, Double order_price,
-			Date order_date, String client_company) {
+			String order_date, String client_company) {
 		super();
 		this.orderlist_no = orderlist_no;
 		this.order_no = order_no;
@@ -103,18 +104,17 @@ private static final long serialVersionUID = 1111L;
 		this.order_price = order_price;
 	}
 
-	public Date getOrder_date() {
+	public String getOrder_date() {
 		return order_date;
 	}
 
-	public void setOrder_date(Date order_date) {
+	public void setOrder_date(String order_date) {
 		this.order_date = order_date;
 	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
 	
 	
 	public String getClient_company() {
@@ -125,10 +125,25 @@ private static final long serialVersionUID = 1111L;
 		this.client_company = client_company;
 	}
 
-	public String toString() {
-		return "orderlist_no : " + orderlist_no +  " ,order_no : " +order_no+ " , emp_no : " + emp_no 
-				+" , client_no : " + client_no + " , product_no : " + product_no 
-				+" , order_amount : " + order_amount + " , order_price : " + order_price
-				+" , order_date : " + order_date;
+
+	public int getTotal() {
+		return total;
 	}
+
+	public void setTotal(int total) {
+		this.total = total;
+	}
+
+	@Override
+	public String toString() {
+		return "Order [orderlist_no=" + orderlist_no + ", order_no=" + order_no + ", emp_no=" + emp_no + ", client_no="
+				+ client_no + ", product_no=" + product_no + ", order_amount=" + order_amount + ", order_price="
+				+ order_price + ", client_company=" + client_company + ", order_date=" + order_date + ", total=" + total
+				+ "]";
+	}
+
+
+
+
+	
 }

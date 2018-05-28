@@ -31,7 +31,7 @@ select t.emp_name as team_mgr_name,t.emp_no as team_mgr_no,a.emp_name as mgr_nam
 <insert id="ApprovalSubmit" parameterType="approval" flushCache="true">
 <![CDATA[
 insert into approval values((select max(approval_no)+1 
-from approval),#{emp_no},#{approval_choose_no},sysdate,
+from approval),#{emp_no},#{approval_choose_no},to_date(#{approval_submit_date},'yyyy-mm-dd hh24:mi:ss'),
 #{approval_start_date},#{approval_end_date},#{approval_comment},null,null)
 ]]>
 
@@ -39,9 +39,30 @@ from approval),#{emp_no},#{approval_choose_no},sysdate,
 
 <select id="approvalListE" parameterType="approval" resultType="approval" resultMap="approvalListE">
 <![CDATA[
-select * from approval where emp_no=#{emp_no}
+select approval_no,emp_no,approval_choose_no,to_char(approval_submit_date,'yyyy-mm-dd hh24:mi:ss') as approval_submit_date,approval_start_date,approval_end_date,approval_comment,
+to_char(approval_team_date,'yyyy-mm-dd hh24:mi:ss') as approval_team_date,approval_mgr_date from approval where emp_no=#{emp_no}
+
 
 ]]>
 </select>
 
+<select id="approvalListA" parameterType="approval" resultType="approval">
+
+
+<![CDATA[
+
+select approval_no,a.emp_no,approval_choose_no,to_char(approval_submit_date,'yyyy-mm-dd hh24:mi:ss') as approval_submit_date,approval_start_date,approval_end_date,approval_comment,
+to_char(approval_team_date,'yyyy-mm-dd hh24:mi:ss') as approval_team_date,approval_mgr_date
+]]>
+<choose>
+<when test="job_no==3">
+from approval
+</when>
+<otherwise>
+from approval a where a.emp_no=(select emp_no from emp where emp_mgr=#{emp_no})
+</otherwise>
+</choose>
+
+
+</select>
 </mapper>

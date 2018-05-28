@@ -3,9 +3,8 @@
 "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Dailywork">
-
 	
-<!-- dailywork -->
+	<!-- dailywork -->
 	<resultMap type="dailywork" id="resultDailywork">
 		<id column="dailywork_no" property="dailywork_no"/>
 		<result column="client_no" property="client_no"/>

@@ -38,6 +38,7 @@ public class OrderServiceImpl implements OrderService{
 	public int selectOrderMaxNo() {
 		return orderDao.selectOrderMaxNo();
 	}
+
 	
 	@Override
 	public ArrayList<Order> selectAllOrder(int emp_no){
@@ -45,7 +46,15 @@ public class OrderServiceImpl implements OrderService{
 	}
 	
 	@Override
-	public ArrayList<Order> selectOrderList(int order_no){
-		return orderDao.selectOrderList(order_no);
+	public ArrayList<Order> selectOrderList2(int order_no){
+		return orderDao.selectOrderList2(order_no);
 	}
+
+	/* 영업일지에 나오는 orderList 메소드 */
+	@Override
+	public ArrayList<Order> selectOrderlist(Order order) {		
+		return orderDao.selectOrderlist(order);
+	}
+	
+	
 }

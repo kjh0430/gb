@@ -13,4 +13,5 @@ public interface ApprovalService {
 	Approval selectName(int emp_no);
 	int insertApproval(Approval apr);
 	ArrayList<Approval> selectapprovalListE(Approval apr);
+	ArrayList<Approval> selectapprovalListA(Approval apr);
 }

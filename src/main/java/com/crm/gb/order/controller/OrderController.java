@@ -74,8 +74,6 @@ public class OrderController {
 		JSONObject sendJson = new JSONObject();
 		sendJson.put("list", jarr);
 		
-
-		
 		response.setContentType("application/json; charset=utf-8");	
 		//System.out.println("orderController:"+sendJson);
 		PrintWriter out=response.getWriter();
@@ -105,8 +103,6 @@ public class OrderController {
 		
 		JSONObject sendJson = new JSONObject();
 		sendJson.put("plist", jarr);
-		
-
 		
 		response.setContentType("application/json; charset=utf-8");	
 		//System.out.println("orderProductController:"+sendJson);
@@ -141,9 +137,7 @@ public class OrderController {
 			orderlist.setOrder_no(order_no);
 			orderlist.setOrder_amount(Integer.parseInt(amountlist[i]));
 			orderlist.setOrder_price(Integer.parseInt(orderPrice[i])*(1-contract_discount/100.0));
-			orderlist.setProduct_no(Integer.parseInt(productNo[i]));
-			
-		
+			orderlist.setProduct_no(Integer.parseInt(productNo[i]));		
 
 			System.out.println("orderlist 111: " + orderlist.toString());
 			int result = orderService.insertOrderList(orderlist);
@@ -177,7 +171,7 @@ public class OrderController {
 			
 			int order_no = Integer.parseInt(orderNo);
 			
-			ArrayList<Order> orderList = orderService.selectOrderList(order_no);
+			ArrayList<Order> orderList = orderService.selectOrderList2(order_no);
 			
 			return "order/orderDetail";
 		}

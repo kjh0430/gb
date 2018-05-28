@@ -34,4 +34,9 @@ public class ApprovalDao {
 		
 	}
 
+	public ArrayList<Approval> selectapprovalListA(Approval apr) {
+		
+		return (ArrayList)sqlSession.selectList("approvalListA",apr);
+	}
+
 }

@@ -24,6 +24,8 @@ import com.crm.gb.dailywork.model.service.DailyworkService;
 import com.crm.gb.dailywork.model.vo.Dailywork;
 import com.crm.gb.emp.model.service.EmpService;
 import com.crm.gb.emp.model.vo.Emp;
+import com.crm.gb.order.model.service.OrderService;
+import com.crm.gb.order.model.vo.Order;
 
 @Controller
 public class DailyworkController {
@@ -39,8 +41,10 @@ public class DailyworkController {
 	@Autowired
 	public EmpService empService;
 	
-	/** 방문일지 페이지 이동 메소드 **/
+	@Autowired
+	public OrderService orderService;
 	
+	/** 방문일지 페이지 이동 메소드 **/	
 	@RequestMapping(value="visit.do" , method=RequestMethod.GET)
 	public String dailyVisit() {
 		logger.info("방문일지 페이지 run...");
@@ -126,8 +130,7 @@ public class DailyworkController {
 		out.close();
 	}
 	
-	/** 방문일지 등록 메소드 **/
-	
+	/** 방문일지 등록 메소드 **/	
 	@RequestMapping(value="insertDailywork.do", method=RequestMethod.POST)
 	public String insertDailywork(Dailywork dailywork) {
 		logger.info("방문일지 등록 메소드 실행..");
@@ -187,7 +190,39 @@ public class DailyworkController {
 		PrintWriter out = response.getWriter();
 		out.println(sendJson.toJSONString());		
 		out.flush();
-		out.close();		
+		out.close();	
 	
+	}
+	
+	/* 주문리스트 조회 */
+	@RequestMapping(value="orderList.do",method=RequestMethod.POST)
+	public void selectOrderlist(Dailywork dw,Order order,HttpServletResponse response) throws IOException {
+		logger.info("visitList running!!");
+		order.setOrder_date(dw.getDaily_date());
+		
+		ArrayList<Order> orderList = orderService.selectOrderlist(order);	
+		System.out.println("orderList : " + orderList);
+		JSONArray jarr = new JSONArray();
+		
+		for(Order od : orderList) {
+			JSONObject job = new JSONObject();
+			job.put("order_no",od.getOrder_no());
+			job.put("emp_no",od.getEmp_no());
+			job.put("client_no", od.getClient_no());
+			job.put("client_name", od.getClient_name());
+			job.put("total", od.getTotal());
+			jarr.add(job);
+		}
+		
+		JSONObject sendJson = new JSONObject();
+		sendJson.put("list", jarr);
+		//System.out.println("jarr : " + jarr);
+		
+		response.setContentType("application/json; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		out.println(sendJson.toJSONString());		
+		out.flush();
+		out.close();
+		
 	}
 }
