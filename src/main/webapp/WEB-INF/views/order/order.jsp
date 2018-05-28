@@ -33,7 +33,8 @@ var orderInfo = new Array();
 			type : "post",
 			dataType : "json",
 			data : {
-				searchComName : $('#searchComName').val()
+				searchComName : $('#searchComName').val(),
+				emp_no : ${loginEmp.emp_no}
 			},
 			success : function(obj){
 				var objStr = JSON.stringify(obj);
