@@ -61,17 +61,15 @@ public class ClientController {
 		client=clientService.selectClient(client);
 		
 		//고객관련 파일추가부분
-				int client_no = client.getClient_no();
-				clientFile.setClient_no(client_no);
-				
-				String path = request.getSession().getServletContext().getRealPath("resources/upload/client");
 				List<MultipartFile> filelist=mtfRequest.getFiles("client_file");
-				//MultipartFile mfile = mtfRequest.getFile("client_file");
+				String path = request.getSession().getServletContext().getRealPath("resources/upload/client");
 				int idx=0;
 				if(filelist != null) {
+				
+					int client_no = client.getClient_no();
+					clientFile.setClient_no(client_no);
 					
 				for(MultipartFile mfile : filelist) {
-					
 					try {
 						mfile.transferTo(new File(path+"/"+mfile.getOriginalFilename()));
 						String originalFileName = mfile.getOriginalFilename();
@@ -120,6 +118,7 @@ public class ClientController {
 				ArrayList<Client> clientList=clientService.selectAllClient();
 				model.addAttribute("clientList", clientList);
 		
+				
 		return "client/clientList";
 	}
 	

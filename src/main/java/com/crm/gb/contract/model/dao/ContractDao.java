@@ -23,4 +23,9 @@ public class ContractDao {
 	public int insertContract(Contract contract) {
 		return sqlSession.insert("contract.insertContract", contract);
 	}
+
+	/** 계약서 상세보기 메소드 */
+	public Contract selectContractDetail(int client_no) {
+		return sqlSession.selectOne("contract.contractDetail", client_no);
+	}
 }
