@@ -17,6 +17,25 @@
 		<result column="client_company" property="client_company"/>
 		<result column="total" property="total"/>					
 	</resultMap>
+	
+	
+	<resultMap type="order" id="resultOrderlist2">
+			<result column="order_no" property="order_no"/>
+			<result column="emp_no" property="emp_no"/>
+			<result column="emp_name" property="emp_name"/>
+			<result column="client_no" property="client_no"/>
+			<result column="client_phone" property="client_phone"/>
+			<result column="client_addr" property="client_addr"/>
+			<result column="client_comment" property="client_comment"/>
+			<result column="product_no" property="product_no"/>
+			<result column="order_amount" property="order_amount"/>
+			<result column="order_price" property="order_price"/>
+			<result column="order_date" property="order_date"/>
+			<result column="client_company" property="client_company"/>
+			<result column="total" property="total"/>
+			
+		</resultMap>
+		
 		
    <insert id="insertOrderList" parameterType="order">   
       <![CDATA[
@@ -24,6 +43,7 @@
           #{product_no},#{order_amount},#{order_price},sysdate)
         ]]>
    </insert>
+   
 
    <select id="selectOrderMaxNo" resultType="_int">
 	   <![CDATA[
@@ -38,6 +58,13 @@
 	      and ol.emp_no = #{emp_no} and to_char(ol.order_date,'yyyy-mm-dd') like #{order_date} 
 	      group by c.client_company,ol.order_no,ol.client_no,ol.emp_no,ol.order_date order by order_date
 	   ]]>
+   </select>
+   
+   <select id="selectOrderList2" resultMap="resultOrderlist2">
+   		<![CDATA[
+   			selcet
+   		]]>	
+   	
    </select>
 
 
