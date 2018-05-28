@@ -2,22 +2,28 @@ package com.crm.gb.order.model.vo;
 
 import java.util.Date;
 
-/*@Component("order")*/
+import org.springframework.stereotype.Component;
+
+@Component("order")
 public class Order {
 private static final long serialVersionUID = 1111L;	
 	
 	private int orderlist_no;
+	private int order_no;
 	private int emp_no;
 	private int client_no;
 	private int product_no;
 	private int order_amount;
-	private int order_price;
+	private Double order_price;
 	private Date order_date;
 	
-	public Order(int orderlist_no, int emp_no, int client_no, int product_no, int order_amount, int order_price,
+	public Order() {}
+	
+	public Order(int orderlist_no, int order_no, int emp_no, int client_no, int product_no, int order_amount, Double order_price,
 			Date order_date) {
 		super();
 		this.orderlist_no = orderlist_no;
+		this.order_no = order_no;
 		this.emp_no = emp_no;
 		this.client_no = client_no;
 		this.product_no = product_no;
@@ -32,6 +38,14 @@ private static final long serialVersionUID = 1111L;
 
 	public void setOrderlist_no(int orderlist_no) {
 		this.orderlist_no = orderlist_no;
+	}
+
+	public int getOrder_no() {
+		return order_no;
+	}
+
+	public void setOrder_no(int order_no) {
+		this.order_no = order_no;
 	}
 
 	public int getEmp_no() {
@@ -66,11 +80,11 @@ private static final long serialVersionUID = 1111L;
 		this.order_amount = order_amount;
 	}
 
-	public int getOrder_price() {
+	public Double getOrder_price() {
 		return order_price;
 	}
 
-	public void setOrder_price(int order_price) {
+	public void setOrder_price(Double order_price) {
 		this.order_price = order_price;
 	}
 
@@ -86,10 +100,10 @@ private static final long serialVersionUID = 1111L;
 		return serialVersionUID;
 	}
 	
-//	public String toString() {
-//		return "orderlist_no : " + orderlist_no + " , emp_no : " + emp_no 
-//				+" , client_no : " + client_no + " , product_no : " + product_no 
-//				+" , order_amount : " + order_amount + " , order_price : " + order_price
-//				+" , order_date : " + order_date;
-//	}
+	public String toString() {
+		return "orderlist_no : " + orderlist_no +  " ,order_no : " +order_no+ " , emp_no : " + emp_no 
+				+" , client_no : " + client_no + " , product_no : " + product_no 
+				+" , order_amount : " + order_amount + " , order_price : " + order_price
+				+" , order_date : " + order_date;
+	}
 }

@@ -2,8 +2,24 @@
 <!DOCTYPE mapper PUBLIC
 "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="Order">
+<mapper namespace="Order" >
+
+		<insert id="insertOrderList" parameterType="order" >
+	
+			<![CDATA[
+			    insert into orderlist values((select max(orderlist_no)+1 from orderlist),#{order_no}, #{emp_no},#{client_no},
+			    #{product_no},#{order_amount},#{order_price},sysdate)
+		     ]]>
+		</insert>
+
+	
+		<select id="selectOrderMaxNo" resultType="_int">
+		<![CDATA[
+			select max(order_no)+1 from orderlist
+		]]>
+		</select>
 
 
-			
+
+
 </mapper>

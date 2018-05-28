@@ -6,7 +6,7 @@ import com.crm.gb.message.model.vo.Message;
 
 public interface MessageService {
 
-	ArrayList<Message> selectSearch(String empName);
+	ArrayList<Message> selectSearch(Message message);
 
 	int insertMessage(Message message);
 
@@ -14,5 +14,5 @@ public interface MessageService {
 
 	ArrayList<Message> selectSendMessage(Message message);
 
-	
+	int updateReadMessage(Message message);
 }

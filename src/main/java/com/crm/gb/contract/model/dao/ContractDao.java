@@ -28,4 +28,9 @@ public class ContractDao {
 	public Contract selectContractDetail(int client_no) {
 		return sqlSession.selectOne("contract.contractDetail", client_no);
 	}
+	
+	/** 고객 할인율 검색 메소드 **/
+	public int selectDiscount(int client_no) {
+		return sqlSession.selectOne("selectDiscount", client_no);
+	}
 }

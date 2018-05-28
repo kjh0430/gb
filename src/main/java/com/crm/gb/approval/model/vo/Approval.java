@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class Approval implements Serializable {
 
 	private static final long serialVersionUID = 16L;
-
+	private int approval_no;
 	private int emp_no;
 	private String approval_choose_no;
 	private String approval_submit_date;
@@ -25,15 +25,19 @@ public class Approval implements Serializable {
 	private int team_mgr_no;
 	private String mgr_name;
 	private int mgr_no;
-	// 결재 사유를 위한 vo 추가
+	
+	//효율적인 쿼리를 위한 job_no 추가
+	private String job_no;
 
 	public Approval() {
 	}
 
-	public Approval(int emp_no, String approval_choose_no, String approval_submit_date, Date approval_start_date,
-			Date approval_end_date, String approval_comment, String approval_team_date, String approval_mgr_date,
-			String team_mgr_name, int team_mgr_no, String mgr_name, int mgr_no) {
+	public Approval(int approval_no, int emp_no, String approval_choose_no, String approval_submit_date,
+			Date approval_start_date, Date approval_end_date, String approval_comment, String approval_team_date,
+			String approval_mgr_date, String team_mgr_name, int team_mgr_no, String mgr_name, int mgr_no,
+			String job_no) {
 		super();
+		this.approval_no = approval_no;
 		this.emp_no = emp_no;
 		this.approval_choose_no = approval_choose_no;
 		this.approval_submit_date = approval_submit_date;
@@ -46,6 +50,15 @@ public class Approval implements Serializable {
 		this.team_mgr_no = team_mgr_no;
 		this.mgr_name = mgr_name;
 		this.mgr_no = mgr_no;
+		this.job_no = job_no;
+	}
+
+	public int getApproval_no() {
+		return approval_no;
+	}
+
+	public void setApproval_no(int approval_no) {
+		this.approval_no = approval_no;
 	}
 
 	public int getEmp_no() {
@@ -144,13 +157,33 @@ public class Approval implements Serializable {
 		this.mgr_no = mgr_no;
 	}
 
-	@Override
-	public String toString() {
-		return "Approval [emp_no=" + emp_no + ", approval_choose_no=" + approval_choose_no + ", approval_submit_date="
-				+ approval_submit_date + ", approval_start_date=" + approval_start_date + ", approval_end_date="
-				+ approval_end_date + ", approval_comment=" + approval_comment + ", approval_team_date="
-				+ approval_team_date + ", approval_mgr_date=" + approval_mgr_date + ", team_mgr_name=" + team_mgr_name
-				+ ", team_mgr_no=" + team_mgr_no + ", mgr_name=" + mgr_name + ", mgr_no=" + mgr_no + "]";
+	public String getJob_no() {
+		return job_no;
 	}
 
+	public void setJob_no(String job_no) {
+		this.job_no = job_no;
+	}
+
+	@Override
+	public String toString() {
+		return "Approval [approval_no=" + approval_no + ", emp_no=" + emp_no + ", approval_choose_no="
+				+ approval_choose_no + ", approval_submit_date=" + approval_submit_date + ", approval_start_date="
+				+ approval_start_date + ", approval_end_date=" + approval_end_date + ", approval_comment="
+				+ approval_comment + ", approval_team_date=" + approval_team_date + ", approval_mgr_date="
+				+ approval_mgr_date + ", team_mgr_name=" + team_mgr_name + ", team_mgr_no=" + team_mgr_no
+				+ ", mgr_name=" + mgr_name + ", mgr_no=" + mgr_no + ", job_no=" + job_no + "]";
+	}
+
+
+	
+	
+	
+	
+	
+	
+
+	
+
+	
 }

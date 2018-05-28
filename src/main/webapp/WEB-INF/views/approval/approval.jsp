@@ -43,13 +43,14 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 
+		
 
 		//팀장 이름, 및 관리자 이름 가져오기
 		$.ajax({
 			url:"getName.do",
 			data:{emp_no :"${loginEmp.emp_no}"
 			},
-			type:"get",
+			type:"post",
 			dataType:"json",
 			success:function(data){
 			
@@ -65,9 +66,9 @@
 		});
 		
 		
-		
-		
-		
+	
+			
+			
 		
 		
 	
@@ -82,7 +83,7 @@ function resetContent(){
 	$('#approval_choose_no').val()="선택";
 }
 	
-	
+
 </script>
 </head>
 
@@ -202,9 +203,9 @@ function resetContent(){
 												for="first-name">일자 <span class="required">*</span>
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<input type="date" required="required" name="approval_start_date" id="startDate"
+												<input type="date" required="required" name="approval_start_date" id="startDate" 
 													class="form-date col-md-5 col-xs-12" id="startDate">
-												<input type="date" required="required" name="approval_end_date" id="endDate"
+												<input type="date" required="required" name="approval_end_date" id="endDate" 
 													class="form-date col-md-5 col-xs-12">
 											</div>
 										</div>
@@ -231,7 +232,7 @@ function resetContent(){
 												class="control-label col-md-3 col-sm-3 col-xs-12">결재자(팀장)<span class="required">*</span></label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<div class="input-group" style="margin-bottom:0px;">
-													<input type="text" class="form-control" id="team_mgr" name readonly> <span
+													<input type="text" class="form-control" id="team_mgr" readonly> <span
 														class="input-group-btn">
 														<input type="hidden" name="team_mgr_no" id="team_mgr_no"/>	
 														

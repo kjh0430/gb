@@ -60,6 +60,12 @@
 				#{contract_date_end}, #{business_no}, #{client_sign}, #{emp_sign} 
 			)
 		]]>
-	</insert>		
+	</insert>	
+	
+	<select id="selectDiscount" resultType="_int">
+		<![CDATA[
+			select contract_discount from contract where client_no = #{client_no}
+		]]>
+		</select>	
 			
 </mapper>
