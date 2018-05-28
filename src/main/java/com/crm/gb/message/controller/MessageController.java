@@ -183,7 +183,7 @@ public class MessageController {
 	}
 	
 	//답장하기
-	@RequestMapping(value="sendAnswer.do",method=RequestMethod.POST)
+	/*@RequestMapping(value="sendAnswer.do",method=RequestMethod.POST)
 	public void sendAnswer(Message message,HttpServletResponse response) throws IOException {
 		System.out.println("보내는사람 번호"+message.getMessage_from_no());
 		System.out.println("받는사람 번호"+message.getMessage_to_no());
@@ -205,7 +205,7 @@ public class MessageController {
 		out.append("메시지가 전송되었습니다.");
 		out.flush();
 		out.close();		
-	}
+	}*/
 	
 	
 	@RequestMapping(value="readMessage.do")

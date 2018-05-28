@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONObject;
@@ -40,7 +41,7 @@ public class ApprovalController {
 		return "approval/approval";
 	}
 	
-	
+	//팀장,관리자 이름 가져오기
 	@RequestMapping(value="getName.do", method=RequestMethod.POST)
 	@ResponseBody
 	public String getName(@RequestParam(name="emp_no") int emp_no,HttpServletResponse response) throws UnsupportedEncodingException {
@@ -64,7 +65,7 @@ public class ApprovalController {
 	return job.toJSONString();
 	}
 	
-	
+	//결재 제출
 	@RequestMapping(value="submitApproval.do",method=RequestMethod.POST)
 	public String submitApproval(Approval apr) {
 		System.out.println("시작날짜"+apr.getApproval_start_date());
@@ -75,7 +76,14 @@ public class ApprovalController {
 		System.out.println("관리자번호"+apr.getMgr_no());
 		System.out.println("비고"+apr.getApproval_comment());
 		
-	
+		SimpleDateFormat format=new SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.KOREA);
+		Date date=new Date();
+		Date time=new Date(date.getTime());
+		String getdate=format.format(time);
+		System.out.println(getdate);
+		
+		
+		apr.setApproval_submit_date(getdate);
 		
 		int result=ApprovalService.insertApproval(apr);
 		if(result>0) {
@@ -84,24 +92,37 @@ public class ApprovalController {
 		
 		return "approval/approval";
 	}
+	//결재한 리스트
+	@RequestMapping(value="approvalListE.do", method=RequestMethod.GET)
 	
-	@RequestMapping(value="approvalListE.do", method=RequestMethod.POST)
-	
-	public String approvalListE(Approval apr,Model model,@RequestParam(name="emp_no") int emp_no) {
+	public String approvalListE(Approval apr,Model model,@RequestParam(name="emp_no") int emp_no,HttpServletResponse response) {
+		
 		apr.setEmp_no(emp_no);
 
 		ArrayList<Approval> approvalListE= ApprovalService.selectapprovalListE(apr);
 
 		model.addAttribute("approvalListE",approvalListE);
 		System.out.println("approvalListE"+approvalListE);
+		
 		return "approval/approvalList";
 	}
-/*	@RequestMapping(value="approvalProcess.do")
-	public String approvalListE() {
+	
+
+	@RequestMapping(value="approvalListAdmin.do")
+	public String approvalListE(Approval apr,Model model,@RequestParam(name="emp_no") int emp_no ,@RequestParam(name="job_no") String job_no ) {
+		apr.setEmp_no(emp_no);
+		apr.setJob_no(job_no);
 		
-		return "approval/approvalProcess";
+		System.out.println(apr.getEmp_no());
+		System.out.println(apr.getJob_no());
+		ArrayList<Approval> approvalListA=ApprovalService.selectapprovalListA(apr);
+		
+		model.addAttribute("approvalListA",approvalListA);
+		System.out.println(approvalListA);
+		
+		return "approval/approvalListAdmin";
 	}
-		*/
+		
 	
 	
 }

@@ -365,7 +365,7 @@
       $('#modal4').modal("hide");
       
       $.ajax({
-         url:"sendAnswer.do",
+         url:"sub.do",
          type:"post",
          data:{
             message_from_no : "${loginEmp.emp_no}",
