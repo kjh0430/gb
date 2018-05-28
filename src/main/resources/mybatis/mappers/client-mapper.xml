@@ -101,7 +101,7 @@
 	</select>
 	
 	<!-- 거래처 이름 검색 mapping -->
-	<select id="selectSearchAccount" resultMap="resultAccountClient">
+	<select id="selectSearchAccount" resultMap="resultAccountClient" parameterType="client">
 		<![CDATA[
 			select * from client
 			where client_company like '%'||#{client_company}||'%' and emp_no = #{emp_no} and client_contract = 'Y'

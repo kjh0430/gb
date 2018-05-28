@@ -4,6 +4,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Order" >
 
+
 	<resultMap type="order" id="resultOrderlist">
 		<id column="orderlist_no" property="orderlist_no"/>
 		<result column="order_no" property="order_no"/>

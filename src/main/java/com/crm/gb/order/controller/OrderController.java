@@ -56,10 +56,17 @@ public class OrderController {
 	
 	
 	@RequestMapping(value="searchCom.do", method=RequestMethod.POST)
-	public void searchCom(@RequestParam(name="searchComName") String client_company, HttpServletResponse response) throws IOException{
+	public void searchCom(@RequestParam(name="searchComName") String client_company,@RequestParam(name="emp_no") String empNo, Client clientInfo ,HttpServletResponse response) throws IOException{
 		logger.info("발주하기-고객검색 메소드 run....");
+		
+		int emp_no = Integer.parseInt(empNo);
+		
+		clientInfo.setClient_company(client_company);
+		clientInfo.setEmp_no(emp_no);
+		
+		//System.out.println("clientInfo : " + clientInfo);
 
-		ArrayList<Client> SearchCom = clientService.selectSearchAccount(client_company);
+		ArrayList<Client> SearchCom = clientService.selectSearchAccount(clientInfo);
 		JSONArray jarr = new JSONArray();
 		
 		for(Client client : SearchCom) {
