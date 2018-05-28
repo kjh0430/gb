@@ -135,13 +135,13 @@ public class ClientController {
 	
 	/** 거래중인 거래처 리스트 메소드 **/
 	@RequestMapping("accountList.do")
-	public String shoeAccountClient(@RequestParam("emp_no") String emp_num, Model model) {
+	public String showAccountClient(@RequestParam("emp_no") String emp_num, Model model) {
 		logger.info("거래처 리스트 메소드 실행됨!!");
 		int emp_no = Integer.parseInt(emp_num);
-		System.out.println("emp_no : " + emp_no);
+		//System.out.println("emp_no : " + emp_no);
 		ArrayList<Client> accountClientList = clientService.selectAccountClientList(emp_no);
 		model.addAttribute("accountClientList", accountClientList);
-		System.out.println("accountClientList : " +accountClientList.toString());
+		//System.out.println("accountClientList : " +accountClientList.toString());
 		return "client/accountList";
 	}
 	

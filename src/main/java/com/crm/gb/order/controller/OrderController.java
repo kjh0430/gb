@@ -53,11 +53,7 @@ public class OrderController {
 		return "order/order";
 	}
 	
-	//매출현황 페이지 이동 메소드 
-	@RequestMapping(value="orderList.do")
-	public String orderListPage() {
-		return "order/orderList";
-	}
+	
 	
 	@RequestMapping(value="searchCom.do", method=RequestMethod.POST)
 	public void searchCom(@RequestParam(name="searchComName") String client_company, HttpServletResponse response) throws IOException{
@@ -160,6 +156,34 @@ public class OrderController {
 		
 		return "order/order";
 	}
+	
+	//매출현황 페이지 이동 메소드 
+		@RequestMapping(value="orderList.do")
+		public String orderListPage(@RequestParam("emp_no") String empNo,Model model){
+			
+			logger.info("매출현황 메소드 run...");
+			int emp_no = Integer.parseInt(empNo);
+			
+			ArrayList<Order> orderList = orderService.selectAllOrder(emp_no);
+			model.addAttribute("orderList", orderList);
+			
+			return "order/orderList";
+		}
+		
+	//orderlist 상세보기 	
+		@RequestMapping(value="orderdetail.do")
+		public String orderDetailPage(@RequestParam("order_no") String orderNo) {
+			logger.info("주문 상세보기 메소드 run...");
+			
+			int order_no = Integer.parseInt(orderNo);
+			
+			ArrayList<Order> orderList = orderService.selectOrderList(order_no);
+			
+			return "order/orderDetail";
+		}
+		
+		
+	
 	
 	
 

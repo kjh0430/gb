@@ -14,4 +14,8 @@ public interface OrderService {
 	public abstract int insertOrderList(Order orderlist); //주문 등록 
 	
 	public abstract int selectOrderMaxNo();
+	
+	public abstract ArrayList<Order> selectAllOrder(int emp_no);
+	
+	public abstract ArrayList<Order> selectOrderList(int order_no);
 }

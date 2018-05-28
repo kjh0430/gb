@@ -160,7 +160,7 @@ var orderInfo = new Array();
 	//삭제버튼 클릭시 추가된 상품의 ROW삭제 
 	function deleteRow(idx){
 		
-		alert("idc : " + idx);
+	//	alert("idc : " + idx);
 		
 		$('#'+idx).remove();
 		

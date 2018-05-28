@@ -38,6 +38,8 @@
 <link href="resources/build/css/custom.min.css" rel="stylesheet">
 <link href="resources/css/main.css" rel="stylesheet">
 
+
+
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -47,6 +49,9 @@ $(document).ready(function() {
         pageLength:15
     } );
 } );
+
+
+
 
 </script>
 </head>
@@ -174,25 +179,18 @@ $(document).ready(function() {
 											</tr>
 										</thead>
 										<tbody>
-											<tr>												
-												<td>23632</td>										
-												<td>커피공장</td>
-												<td>65000</td>
-												<td>2018-05-12</td>
-											</tr>
-											<tr>
-												<td>10631</td>
-												<td><a href="#">카페 413 프로젝트</a></td>												
-												<td>36000</td>
-												<td>2018-05-02</td>
-											</tr>
-											<tr>
-												<td>12624</td>
-												<td><a href="#">황카페</a></td>												
-												
-												<td>33000</td>
-												<td>2018-05-15</td>
-											</tr>
+										
+											<c:forEach var="list" items="${orderList }">
+											
+												<tr>												
+													<td>${list.order_no }</td>										
+													<td><a href="#">${list.client_company }</td>
+													<td>${list.order_price }</td>
+													<td>${list.order_date }</td>
+												</tr>
+											
+											</c:forEach>
+										
 											
 
 										<tbody>

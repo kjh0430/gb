@@ -4,6 +4,19 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Order" >
 
+		<resultMap type="order" id="resultOrderlist">
+			<id column="orderlist_no" property="orderlist_no"/>
+			<result column="order_no" property="order_no"/>
+			<result column="emp_no" property="emp_no"/>
+			<result column="client_no" property="client_no"/>
+			<result column="product_no" property="product_no"/>
+			<result column="order_amount" property="order_amount"/>
+			<result column="order_price" property="order_price"/>
+			<result column="order_date" property="order_date"/>
+			<result column="client_company" property="client_company"/>
+					
+		</resultMap>
+
 		<insert id="insertOrderList" parameterType="order" >
 	
 			<![CDATA[
@@ -11,6 +24,8 @@
 			    #{product_no},#{order_amount},#{order_price},sysdate)
 		     ]]>
 		</insert>
+		
+		
 
 	
 		<select id="selectOrderMaxNo" resultType="_int">
@@ -18,6 +33,19 @@
 			select max(order_no)+1 from orderlist
 		]]>
 		</select>
+		
+		
+		<select id="selectAllOrderList" resultMap="resultOrderlist">
+			<![CDATA[
+				select * from orderlist ,client 
+				where orderlist.emp_no = #{emp_no} and orderlist.client_no = client.client_no
+			
+			]]>
+			
+		
+		</select>
+		
+	
 
 
 

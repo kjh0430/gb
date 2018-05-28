@@ -16,6 +16,7 @@ private static final long serialVersionUID = 1111L;
 	private int order_amount;
 	private Double order_price;
 	private Date order_date;
+	private String client_company;
 	
 	public Order() {}
 	
@@ -30,6 +31,20 @@ private static final long serialVersionUID = 1111L;
 		this.order_amount = order_amount;
 		this.order_price = order_price;
 		this.order_date = order_date;
+	}
+	
+	public Order(int orderlist_no, int order_no, int emp_no, int client_no, int product_no, int order_amount, Double order_price,
+			Date order_date, String client_company) {
+		super();
+		this.orderlist_no = orderlist_no;
+		this.order_no = order_no;
+		this.emp_no = emp_no;
+		this.client_no = client_no;
+		this.product_no = product_no;
+		this.order_amount = order_amount;
+		this.order_price = order_price;
+		this.order_date = order_date;
+		this.client_company = client_company;
 	}
 
 	public int getOrderlist_no() {
@@ -100,6 +115,16 @@ private static final long serialVersionUID = 1111L;
 		return serialVersionUID;
 	}
 	
+	
+	
+	public String getClient_company() {
+		return client_company;
+	}
+
+	public void setClient_company(String client_company) {
+		this.client_company = client_company;
+	}
+
 	public String toString() {
 		return "orderlist_no : " + orderlist_no +  " ,order_no : " +order_no+ " , emp_no : " + emp_no 
 				+" , client_no : " + client_no + " , product_no : " + product_no 

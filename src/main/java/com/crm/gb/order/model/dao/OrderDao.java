@@ -29,4 +29,12 @@ public class OrderDao {
 	public int selectOrderMaxNo() {
 		return sqlSession.selectOne("selectOrderMaxNo");
 	}
+	
+	public ArrayList<Order> selectAllOrder(int emp_no){
+		return (ArrayList)sqlSession.selectList("selectAllOrderList",emp_no);
+	}
+	
+	public ArrayList<Order> selectOrderList(int order_no){
+		return (ArrayList)sqlSession.selectList("selectOrderList", order_no);
+	}
 }
