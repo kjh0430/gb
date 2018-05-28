@@ -233,8 +233,7 @@ public class MessageController {
 		if(sendmsg != null) {
 			out.write("data: " + "새 공지글이 등록되었습니다." + "\n\n");
 			out.flush();
-		}
-		
+		}	
 		
 	}
 	

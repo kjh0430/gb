@@ -102,32 +102,48 @@ public class DailyworkController {
 		logger.info("visitList running!!");
 		//System.out.println(dw.getDaily_date());
 		
-		ArrayList<Dailywork> visitList = dailyworkService.selectVisit(dw);		
-		JSONArray jarr = new JSONArray();
+		ArrayList<Dailywork> visitList = dailyworkService.selectVisit(dw);	
+		JSONArray jarr = new JSONArray();	
 		
-		for(Dailywork daily : visitList) {
-			JSONObject jdw = new JSONObject();
-			jdw.put("dailywork_no",daily.getDailywork_no());
-			jdw.put("client_name", daily.getClient_company());
-			jdw.put("emp_no", daily.getEmp_no());
-			jdw.put("daily_comment", daily.getDaily_comment());
-			jdw.put("daily_date", daily.getDaily_date());
-			jdw.put("client_no", daily.getClient_no());
-			jdw.put("client_loc_x", Double.parseDouble(daily.getClient_loc_x()));
-			jdw.put("client_loc_y", Double.parseDouble(daily.getClient_loc_y()));
+		if(visitList.size()>0) {					
+			for(Dailywork daily : visitList) {
+				JSONObject jdw = new JSONObject();
+				jdw.put("dailywork_no",daily.getDailywork_no());
+				jdw.put("client_name", daily.getClient_company());
+				jdw.put("emp_no", daily.getEmp_no());
+				jdw.put("daily_comment", daily.getDaily_comment());
+				jdw.put("daily_date", daily.getDaily_date());
+				jdw.put("client_no", daily.getClient_no());
+				jdw.put("client_loc_x", Double.parseDouble(daily.getClient_loc_x()));
+				jdw.put("client_loc_y", Double.parseDouble(daily.getClient_loc_y()));				
+				jarr.add(jdw);
+				
+			}	
+			JSONObject sendJson = new JSONObject();
+			sendJson.put("list", jarr);
 			
-			jarr.add(jdw);
+			response.setContentType("application/json; charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println(sendJson.toJSONString());		
+			out.flush();
+			out.close();
+			
+		}else {
+			Emp emp = empService.selectEmpNo(dw.getEmp_no());
+			
+			JSONObject jdw = new JSONObject();
+			jdw.put("emp_no",emp.getEmp_no());
+			jdw.put("city", emp.getCity());
+			jdw.put("county", emp.getCounty());
+			
+			response.setContentType("application/json; charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println(jdw.toJSONString());		
+			out.flush();
+			out.close();
 		}
 		
-		JSONObject sendJson = new JSONObject();
-		sendJson.put("list", jarr);
-		//System.out.println("jarr : " + jarr);
 		
-		response.setContentType("application/json; charset=utf-8");
-		PrintWriter out = response.getWriter();
-		out.println(sendJson.toJSONString());		
-		out.flush();
-		out.close();
 	}
 	
 	/** 방문일지 등록 메소드 **/	
@@ -166,7 +182,6 @@ public class DailyworkController {
 		logger.info("selectDept running!!");
 		int dept_no = emp.getDept_no();
 		int job_no = emp.getJob_no();
-		System.out.println("detp_no : "+dept_no+", job_no : "+job_no);
 		ArrayList<Emp> deptEmplist = empService.selectDeptEmp(emp);	
 		
 		JSONArray jarr = new JSONArray();
@@ -201,7 +216,7 @@ public class DailyworkController {
 		order.setOrder_date(dw.getDaily_date());
 		
 		ArrayList<Order> orderList = orderService.selectOrderlist(order);	
-		System.out.println("orderList : " + orderList);
+		
 		JSONArray jarr = new JSONArray();
 		
 		for(Order od : orderList) {
@@ -216,7 +231,6 @@ public class DailyworkController {
 		
 		JSONObject sendJson = new JSONObject();
 		sendJson.put("list", jarr);
-		//System.out.println("jarr : " + jarr);
 		
 		response.setContentType("application/json; charset=utf-8");
 		PrintWriter out = response.getWriter();

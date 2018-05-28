@@ -97,6 +97,16 @@ public class Dailywork implements java.io.Serializable{
 	public void setClient_loc_y(String client_loc_y) {
 		this.client_loc_y = client_loc_y;
 	}
+
+	@Override
+	public String toString() {
+		return "Dailywork [dailywork_no=" + dailywork_no + ", client_no=" + client_no + ", emp_no=" + emp_no
+				+ ", daily_comment=" + daily_comment + ", daily_date=" + daily_date + ", client_company="
+				+ client_company + ", client_loc_x=" + client_loc_x + ", client_loc_y=" + client_loc_y +"]";
+	}
+
+	
+	
 	
 	
 }
