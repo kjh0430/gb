@@ -71,89 +71,47 @@ function Regiemp(){
 	var en1 = new RegExp("[A-Z]");
 	var en2 = new RegExp("[a-z]");
 	var num = new RegExp("[0-9]");
+	var binkan = /\s/g;
+	var phone_check = /^\d{3}-\d{3,4}-\d{4}$/;
 	var email_check = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 	
-	if(!num.test(emp_no)){
+	if(emp_no.length < 1){
+		alert("사원번호를 입력해주세요.");
+	}else if(!num.test(emp_no)){
 		alert("사원번호는 숫자만 입력해주세요.");
 	}else if(emp_pwd.length < 4){
 		alert("비밀번호는 4자리 이상 입력해주세요.");
-	}else if(emp_email.match(email_check) == null){
-		alert("이메일 주소를 제대로 입력해주세요.");
-	}else if(!num.test(emp_mgr)){
-		alert("상사번호는 숫자만 입력해주세요.");
-	}else{		
+	}else if(emp_phone.match(phone_check) == null){
+		alert("연락처를 제대로 입력해주세요.");
+	}else{
 		$.ajax({
-			url: "empinsert.do",
-			data:{
-				emp_no : emp_no,
-				emp_pwd : emp_pwd,
-				emp_name : emp_name,
-				emp_addr : emp_addr,
-				emp_phone : emp_phone,
-				job_no : job_no,
-				emp_email : emp_email,
-				emp_mgr : emp_mgr,
-				emp_hiredate : emp_hiredate,
-				emp_firedate : emp_firedate,
-				city : city,
-				county : county,
-				village : village,
-				dept_no : dept_no				
+			url : "checkPhone.do",
+			type: "post",
+			dataType: "json",
+			data: {
+				emp_phone : $('#emp_phone').val()
 			},
-			type:"post",
-			success: function(data){
-				console.log("data : " + data);
-				if (data) {
-    				alert("사원 등록 성공");
-                    location.href = "empList.do";
-				}else{
-					alert("사원 등록 실패");
+			success:function(jsonData){
+				console.log("jsonData : " + jsonData);
+				alert("이미 등록된 번호 입니다. \n다시 입력하십시오");
+				$('#emp_phone').select();
+				},
+				error: function(){
+					alert("사용할 수 있는 번호 입니다.");
 				}
-			},
-			error: function(request, status, errorData){
-				alert("error code : " + request.status + "\n" + "message : " + request.responseText
-						+ "\n" + "error : " + errorData);
-			}
-		});		
+			});
 	}
-}
-
-function moveMgr(){
-		
-	var mgr_id = $(".btn.btn-info").attr("id");
-	console.log("mgr_id : " + mgr_id);
 	
-	$('#emp_mgr').val(mgr_id);
-    $('#mgrModal').modal('hide');
-    
-}
-
-function checkPhone(){
-	$.ajax({
-		url : "checkPhone.do",
-		type: "post",
-		dataType: "json",
-		data: {
-			emp_phone : $('#emp_phone').val()
-		},
-		success:function(jsonData){
-			console.log("jsonData : " + jsonData);
-			alert("이미 등록된 번호 입니다. \n다시 입력하십시오");
-			$('#emp_phone').select();
-			},
-			error: function(){
-				alert("사용할 수 있는 연락처");
-			}
-		});
-}
-
-function checkEmail(){
+	if(emp_email.match(email_check) == null){
+		alert("이메일 주소를 제대로 입력하십시오.");
+	}else{
+	
 	$.ajax({
 		url : "checkEmail.do",
 		type: "post",
 		dataType: "json",
 		data: {
-			emp_email : $('#emp_email').val()
+			emp_email : emp_email
 		},
 		success:function(jsonData){
 			console.log("jsonData : " + jsonData);
@@ -161,10 +119,54 @@ function checkEmail(){
 			$('#emp_phone').select();
 			},
 			error: function(){
-				alert("사용할 수 있는 이메일");
+				alert("사용할 수 있는 이메일 입니다");
 			}
 		});
+	}
 }
+</script>
+
+<script type="text/javascript">
+
+function mgrList(){
+	$.ajax({
+		url: "selectMgrList.do",
+		type : "post",
+		dataType : "json",
+		success : function(obj){
+			console.log("selectMgrList.do 실행");
+			var objStr = JSON.stringify(obj);
+			var jsonObj = JSON.parse(objStr);
+			var outValues = "<table id='mgrTable'><tr><th>사원번호</th><th>사원이름</th></tr>";
+			
+			for(var i in jsonObj.mgrList){
+				outValues += "<tr><td>" + jsonObj.mgrList[i].emp_no + "</td><td>" 
+				+ decodeURIComponent(jsonObj.mgrList[i].emp_name) + "</td>"
+				+ "</tr>";
+			}
+			
+			outValues += "</table>";
+			
+			console.log("outValues : " + outValues);
+			
+			$("#mgrTable").html(outValues);
+		},
+		error: function(request, status, errorData){
+			alert("error code : " + request.status + "\n"
+					+ "message : " + request.responseText + "\n"
+					+ "error : " + errorData);
+			}
+		
+	});
+		
+	/* var mgr_id = $(".btn.btn-info").attr("id");
+	console.log("mgr_id : " + mgr_id);
+	
+	$('#emp_mgr').val(mgr_id);
+    $('#mgrModal').modal('hide'); */
+    
+};
+
 
 </script>
 
@@ -342,7 +344,7 @@ text-align:center;
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">상사번호</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input class="form-control col-md-7 col-xs-12" id="emp_mgr" name="emp_mgr" type="text" placeholder="상사번호" style="width:85%;">
-                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm" style="float:right;">조회</button>
+                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm" style="float:right;" onclick="mgrList()">조회</button>
                         </div>
                       </div>
                       <div class="form-group">
@@ -390,12 +392,8 @@ text-align:center;
                       <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                           <button class="btn btn-success" type="submit">등록</button>                           
-                          <button class="btn btn-primary" type="button">취소</button>                    
-                        </div>
-                      </div>
-                      </form>
-                 
-									<!-- 사원 등록 -->
+                          <button class="btn btn-primary" type="button">취소</button>
+                          <button type="button" class="btn btn-info" onclick="Regiemp()">임시</button>
 								</div>
 							</div>
 						</div>
@@ -418,20 +416,7 @@ text-align:center;
              <h4 class="modal-title" id="myModalLabel">사원조회</h4>
              </div>
              <div class="modal-body" style="overflow-y:auto; overflow-x:hidden; height:400px;">
-             <h4></h4>
              <table class="table" id="mgrTable">
-                 <tr>
-                 <th style="text-align:center">사원번호</th>
-				 <th style="text-align:center">이름</th>
-				 <th></th>
-                 </tr>
-                <c:forEach items="${ empList }" var="empList" varStatus="status">
-				<tr>
-				<td>${ empList.emp_no }</td>
-				<td>${ empList.emp_name }</td>
-				<td><button type="button" class="btn btn-info" id="${ empList.emp_no }" onclick="moveMgr()">선택</button></td>
-				</tr>	
-				</c:forEach>
              </table>
              </div>
              <div class="modal-footer">
