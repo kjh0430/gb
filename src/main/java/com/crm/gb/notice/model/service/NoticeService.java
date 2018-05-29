@@ -6,7 +6,7 @@ import com.crm.gb.notice.model.vo.Notice;
 
 public interface NoticeService {
 
-	public abstract ArrayList<Notice> selectAllNoticeList();//공지사항 리스트 조회
+	public abstract ArrayList<Notice> selectAllNoticeList(Notice notice);//공지사항 리스트 조회
 
 	public abstract Notice selectNotice(int notice_no);//공지사항 상세정보
 
@@ -19,5 +19,7 @@ public interface NoticeService {
 	public abstract int deleteNotice(int notice_no);
 
 	public abstract Notice noticeListCount();
+
+	
 
 }

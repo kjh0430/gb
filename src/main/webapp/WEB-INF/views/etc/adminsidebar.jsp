@@ -37,7 +37,7 @@
          </li>
          <li><a><i class="fa fa-clone"></i> 공지사항 <span class="fa fa-chevron-down"></span></a>
            <ul class="nav child_menu">
-             <li><a href="noticeList.do">공지사항</a></li>             
+             <li><a href="noticeList.do?page=1">공지사항</a></li>             
            </ul>
          </li>
        </ul>

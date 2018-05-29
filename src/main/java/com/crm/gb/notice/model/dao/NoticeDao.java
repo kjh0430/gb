@@ -14,8 +14,8 @@ public class NoticeDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	//공지사항 리스트 출력 메소드 
-	public ArrayList<Notice> selectAllNotice() {
-		return (ArrayList)sqlSession.selectList("notice_mapper.selectAllNotice");
+	public ArrayList<Notice> selectAllNotice(Notice notice) {
+		return (ArrayList)sqlSession.selectList("notice_mapper.selectAllNotice",notice);
 	}
 	//공지사항 상세정보
 	public Notice detailNotice(int notice_no) {
