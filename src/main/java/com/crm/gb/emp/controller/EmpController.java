@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -276,6 +277,33 @@ public class EmpController {
 			System.out.println("mgrName null");
 		}
 			
+	}
+	
+	@RequestMapping(value="selectMgrList.do", method=RequestMethod.POST)
+	@ResponseBody
+	public void selectMgrList(HttpServletResponse response) throws IOException{
+		logger.info("selectMgrList 실행");
+		
+		ArrayList<Emp> selectMgrList = empService.selectEmpList();
+		JSONArray jarr = new JSONArray();
+		
+		for(Emp emp : selectMgrList) {
+			JSONObject jsonobject = new JSONObject();
+			jsonobject.put("emp_no", emp.getEmp_no());
+			jsonobject.put("emp_name", emp.getEmp_name());
+			jarr.add(jsonobject);
+		}
+		
+		JSONObject sendJson = new JSONObject();
+		sendJson.put("mgrList", jarr);
+		
+		response.setContentType("application/json; charset=utf-8");
+		System.out.println("selectMgrList : " + sendJson);
+		PrintWriter out = response.getWriter();
+		out.println(sendJson.toJSONString());
+		out.flush();
+		out.close();
+		
 	}
 		
 }

@@ -67,9 +67,9 @@ public class ClientDao {
 	
 
 	/** 거래처 이름 검색 결과 리스트 메소드 **/
-	public ArrayList<Client> selectSearchAccount(String client_company){
+	public ArrayList<Client> selectSearchAccount(Client clientInfo){
 		
-		return (ArrayList)sqlSession.selectList("selectSearchAccount", client_company);
+		return (ArrayList)sqlSession.selectList("selectSearchAccount", clientInfo);
 	}
 	
 

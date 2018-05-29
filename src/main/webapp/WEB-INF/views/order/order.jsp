@@ -33,7 +33,8 @@ var orderInfo = new Array();
 			type : "post",
 			dataType : "json",
 			data : {
-				searchComName : $('#searchComName').val()
+				searchComName : $('#searchComName').val(),
+				emp_no : ${loginEmp.emp_no}
 			},
 			success : function(obj){
 				var objStr = JSON.stringify(obj);
@@ -160,7 +161,7 @@ var orderInfo = new Array();
 	//삭제버튼 클릭시 추가된 상품의 ROW삭제 
 	function deleteRow(idx){
 		
-		alert("idc : " + idx);
+	//	alert("idc : " + idx);
 		
 		$('#'+idx).remove();
 		

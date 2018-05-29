@@ -100,8 +100,8 @@ public class ClientServiceImpl implements ClientService{
 	}
 	
 	/** 거래처 이름 검색 결과 리스트 메소드 **/
-	public ArrayList<Client> selectSearchAccount(String client_company){
-		return clientDao.selectSearchAccount(client_company);
+	public ArrayList<Client> selectSearchAccount(Client clientInfo){
+		return clientDao.selectSearchAccount(clientInfo);
 	}
 	
 	
