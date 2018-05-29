@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,14 +57,31 @@ public class ProductController {
 			list.add(i, productService.selectAllList().get(i));
 		}
 		
-		JSONObject sendJson = new JSONObject();
+		/*JSONObject sendJson = new JSONObject();
 		JSONArray jarr = new JSONArray();
 		
-		/*for(Product product : list) {
+		for(Product product : list) {
 			JSONObject jp = new JSONObject();
-			jp.put("", )
-		}*/
+			jp.put("productno",product.getProduct_no());
+			jp.put("productname",product.getProduct_name());
+			jp.put("productprice", product.getProduct_price());
+			jp.put("productavailability", product.getProduct_availability());
+			jp.put("productamount", product.getProduct_amount());
+			jp.put("productcomment", product.getProduct_comment());
+			jp.put("productregister", product.getProduct_register());
+			jp.put("productdelete", product.getProduct_delete());
+			
+			jarr.add(jp);
+		}
+		JSONObject sendjson = new JSONObject();
+		sendjson.put("list",jarr);
 		
+		response.setContentType("application/json; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		out.print(sendJson.toJSONString());
+		out.flush();
+		out.close();
+		*/
 		return "product/productList";
 	}
 

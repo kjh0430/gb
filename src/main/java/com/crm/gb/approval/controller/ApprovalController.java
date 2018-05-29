@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.crm.gb.approval.model.service.ApprovalService;
 import com.crm.gb.approval.model.vo.Approval;
 import com.crm.gb.emp.model.vo.Emp;
+import com.crm.gb.message.model.vo.Message;
 
 @Controller
 public class ApprovalController {
@@ -53,15 +54,15 @@ public class ApprovalController {
 	response.setContentType("application/json; charset=utf-8");	
 	
 	System.out.println(returnMgr.getTeam_mgr_name());
-	System.out.println(returnMgr.getTeam_mgr_no());
+	System.out.println(returnMgr.getApproval_team_no());
 	System.out.println(returnMgr.getMgr_name());
-	System.out.println(returnMgr.getMgr_no());
+	System.out.println(returnMgr.getApproval_mgr_no());
 	JSONObject job=new JSONObject();
 	
 	job.put("team_mgr_name",URLEncoder.encode(returnMgr.getTeam_mgr_name(),"utf-8"));
-	job.put("team_mgr_no",returnMgr.getTeam_mgr_no());
+	job.put("team_mgr_no",returnMgr.getApproval_team_no());
 	job.put("mgr_name",URLEncoder.encode(returnMgr.getMgr_name(),"utf-8"));
-	job.put("mgr_no",returnMgr.getMgr_no());
+	job.put("mgr_no",returnMgr.getApproval_mgr_no());
 	return job.toJSONString();
 	}
 	
@@ -72,8 +73,8 @@ public class ApprovalController {
 		System.out.println("종료날짜"+apr.getApproval_end_date());
 		System.out.println("사원번호"+apr.getEmp_no());
 		System.out.println("결재사유번호"+apr.getApproval_choose_no());
-		System.out.println("팀장번호"+apr.getTeam_mgr_no());
-		System.out.println("관리자번호"+apr.getMgr_no());
+		System.out.println("팀장번호"+apr.getApproval_team_no());
+		System.out.println("관리자번호"+apr.getApproval_mgr_no());
 		System.out.println("비고"+apr.getApproval_comment());
 		
 		SimpleDateFormat format=new SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.KOREA);
@@ -107,7 +108,7 @@ public class ApprovalController {
 		return "approval/approvalList";
 	}
 	
-
+	//admin 결재 리스트
 	@RequestMapping(value="approvalListAdmin.do")
 	public String approvalListE(Approval apr,Model model,@RequestParam(name="emp_no") int emp_no ,@RequestParam(name="job_no") String job_no ) {
 		apr.setEmp_no(emp_no);
@@ -123,6 +124,47 @@ public class ApprovalController {
 		return "approval/approvalListAdmin";
 	}
 		
+	@RequestMapping(value="teamManager.do",method=RequestMethod.POST)
+	public void String(Approval apr,HttpServletResponse  response) throws IOException {
+		
+		SimpleDateFormat format=new SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.KOREA);
+		Date date=new Date();
+		Date time=new Date(date.getTime());
+		String getdate=format.format(time);
+		System.out.println(getdate);
+		
+		apr.setApproval_team_date(getdate);
+		
+		
+		int result=ApprovalService.updateTeamApproval(apr);
+		
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out=response.getWriter();
+		out.append("팀장 승인 완료");
+		out.flush();
+		out.close();
+		
+		
+	}
 	
-	
+	@RequestMapping(value="adminManager.do", method=RequestMethod.POST)
+	public void adminManager(Approval apr,HttpServletResponse response) throws IOException {
+		SimpleDateFormat format=new SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.KOREA);
+		Date date=new Date();
+		Date time=new Date(date.getTime());
+		String getdate=format.format(time);
+		System.out.println(getdate);
+		
+		apr.setApproval_mgr_date(getdate);
+		
+		
+		int result=ApprovalService.updateMgrApproval(apr);
+		
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out=response.getWriter();
+		out.append("관리자 승인 완료");
+		out.flush();
+		out.close();
+		
+	}
 }

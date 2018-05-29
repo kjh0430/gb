@@ -101,5 +101,15 @@ public class ClientDao {
 	public Client selectOrderClient(Order order) {
 		return sqlSession.selectOne("selectOrderClient", order);
 	}
+	/** 거래처 이름으로 검색 메소드 Dao */
+	public ArrayList<Client> selectSearchClient(String client_name) {
+		return (ArrayList)sqlSession.selectList("searchClientList", client_name);
+	}
+
+	/** 잠재고객 이름으로 검색 메소드 Dao */
+	public ArrayList<Client> selectPoList(String client_name) {
+		return (ArrayList)sqlSession.selectList("searchPoList", client_name);
+	}
+
 	
 }

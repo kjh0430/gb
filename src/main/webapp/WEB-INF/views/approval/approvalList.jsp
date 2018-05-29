@@ -52,25 +52,34 @@ function modalUp(obj){
 	var approval_comment=td.eq(6).text();
 	var approval_team_date=td.eq(7).text();
 	var approval_mgr_date=td.eq(8).text();
+	var approval_team_name=td.eq(9).text();
+	var approval_mgr_name=td.eq(10).text();
 	
 	$('#startDate').val(approval_start_date);
 	$('#endDate').val(approval_end_date);
 	$('#reason').val(approval_choose_no);
-	alert(approval_team_date);
+	alert("approval_team_date"+approval_team_date);
 	$('#team').val(approval_team_date);
 	$('#admin').val(approval_mgr_date);
 	$('#textarea').val(approval_comment);
+	$('#teamname').text("팀장"+"("+approval_team_name+")");
+	$('#mgrname').text("관리자"+"("+approval_mgr_name+")");
 	var value="";
+if(approval_team_date!=""){
+	$('#circle2').css('background-color','#2A3F54');
+}
 
-
+ if(approval_mgr_date!=""){
+	$('#circle3').css('background-color','#2A3F54');
 	
+} 
 	
 	 $('#modal1').modal("show");
 }
 
 function modal1Close(){
-	
-	
+	$('#circle2').css('background-color','#ddd');
+	$('#circle3').css('background-color','#ddd');
 	
 	$('#modal1').modal("hide");
 }
@@ -78,12 +87,12 @@ function modal1Close(){
 <style type="text/css">
 
 #table_ap th:nth-child(4),th:nth-child(5),th:nth-child(6),
-th:nth-child(7),th:nth-child(8),th:nth-child(9){
+th:nth-child(7),th:nth-child(8),th:nth-child(9),th:nth-child(10),th:nth-child(11){
 display:none;
 }
 
 #table_ap td:nth-child(4),td:nth-child(5),td:nth-child(6),
-td:nth-child(7),td:nth-child(8),td:nth-child(9){
+td:nth-child(7),td:nth-child(8),td:nth-child(9),td:nth-child(10),td:nth-child(11){
 display:none;
 }
 
@@ -98,6 +107,9 @@ color:white;
 font-weight:bold;
 }
 
+#circle1{
+background-color:#2A3F54;
+}
 
 </style>
 </head>
@@ -133,8 +145,8 @@ font-weight:bold;
 						<ul class="nav navbar-nav navbar-right">
 							<li class=""><a href="javascript:;"
 								class="user-profile dropdown-toggle" data-toggle="dropdown"
-								aria-expanded="false"> <img src="images/img.jpg" alt="">John
-									Doe <span class=" fa fa-angle-down"></span>
+								aria-expanded="false"> <img src="images/img.jpg" alt="">${loginEmp.emp_name}
+								<span class=" fa fa-angle-down"></span>
 							</a>
 								<ul class="dropdown-menu dropdown-usermenu pull-right">
 									<li><a href="javascript:;"> Profile</a></li>
@@ -142,7 +154,7 @@ font-weight:bold;
 											class="badge bg-red pull-right">50%</span> <span>Settings</span>
 									</a></li>
 									<li><a href="javascript:;">Help</a></li>
-									<li><a href="login.html"><i
+									<li><a href="logout.do"><i
 											class="fa fa-sign-out pull-right"></i> Log Out</a></li>
 								</ul></li>
 
@@ -223,6 +235,8 @@ font-weight:bold;
 												<th>comment</th>
 												<th>team</th>
 												<th>mgr</th> 
+												<th>team_name</th>
+												<th>mgr_name</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -261,7 +275,8 @@ font-weight:bold;
 												<td>${approval.approval_comment}</td>
 												<td>${approval.approval_team_date}</td>
 												<td>${approval.approval_mgr_date }</td> 
-												
+												<td>${approval.team_mgr_name}</td>
+												<td>${approval.mgr_name}</td>
 											</tr>
 												</c:forEach>
 										<tbody>
@@ -273,7 +288,7 @@ font-weight:bold;
                                     <div class="modal-content">
                                        <form class="form-horizontal form-label-left input_mask">
                                           <div class="modal-header">
-                                             <button type="button" class="close" data-dismiss="modal">
+                                             <button type="button" class="close" data-dismiss="modal" onclick="modal1Close();">
                                                 <span aria-hidden="true">×</span>
                                              </button>
                                              <h4 class="modal-title" id="myModalLabel">결재 내용</h4>
@@ -284,22 +299,23 @@ font-weight:bold;
 										<ul class="wizard_steps anchor" style="margin:0px;padding:0px;">
 											<li>
 												 <div style = "width:100%" align = "center">
-												 <div class="circle">사원</div>
+												 <div class="circle" id="circle1">사원</div>
 												 </div>
 											</li>
 											
 											<li>
 											<div style = "width:100%" align = "center">
-											<div class="circle">팀장</div>
+											<div class="circle" id="circle2">팀장</div>
 											</div>
 											</li>
 											<li>
 											<div style = "width:100%" align = "center">
-												<div class="circle">관리자</div>
+												<div class="circle" id="circle3">관리자</div>
 												</div>
 											</li>
 
 										</ul>
+										<br>
 									</div>
 										<div class="row">
 						<div class="col-md-12 col-sm-12 col-xs-12">
@@ -332,14 +348,14 @@ font-weight:bold;
 										</div>
 										<div class="form-group">
 											<label for="middle-name"
-												class="control-label col-md-3 col-sm-3 col-xs-12">팀장 </label>
+												class="control-label col-md-3 col-sm-3 col-xs-12" id="teamname">팀장</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<div class="input-group" style="margin-bottom:0px;">
 													
 													
 													
 													<input type="text" required="required" id="team"
-													class="form-date col-md-5 col-xs-12" readonly>
+													class="form-date col-md-5 col-xs-12" readonly style="width:163px;">
 														
 														
 													
@@ -348,11 +364,11 @@ font-weight:bold;
 										</div>
 										<div class="form-group">
 											<label for="middle-name"
-												class="control-label col-md-3 col-sm-3 col-xs-12">관리자 </label>
+												class="control-label col-md-3 col-sm-3 col-xs-12" id="mgrname">관리자 </label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<div class="input-group" style="margin-bottom:0px;">
 													<input type="text" required="required" id="admin"
-													class="form-date col-md-5 col-xs-12" readonly>
+													class="form-date col-md-5 col-xs-12" readonly style="width:163px;">
 												</div>
 											</div>
 										</div>
