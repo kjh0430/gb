@@ -20,37 +20,18 @@ public class Approval implements Serializable {
 	private String approval_team_date;
 	private String approval_mgr_date;
 
-	// 팀장, 관리자 이름을 가져오기 위한 vo 추가
+	// 팀장, 관리자 이름을 가져오기 위한 vo 추가 및 결재 신청한 사원 이름및 부서명
 	private String team_mgr_name;
-	private int team_mgr_no;
+	private int approval_team_no;
 	private String mgr_name;
-	private int mgr_no;
-	
+	private int approval_mgr_no;
+	private String emp_name;
+	private int dept_no;
+
 	//효율적인 쿼리를 위한 job_no 추가
 	private String job_no;
 
 	public Approval() {
-	}
-
-	public Approval(int approval_no, int emp_no, String approval_choose_no, String approval_submit_date,
-			Date approval_start_date, Date approval_end_date, String approval_comment, String approval_team_date,
-			String approval_mgr_date, String team_mgr_name, int team_mgr_no, String mgr_name, int mgr_no,
-			String job_no) {
-		super();
-		this.approval_no = approval_no;
-		this.emp_no = emp_no;
-		this.approval_choose_no = approval_choose_no;
-		this.approval_submit_date = approval_submit_date;
-		this.approval_start_date = approval_start_date;
-		this.approval_end_date = approval_end_date;
-		this.approval_comment = approval_comment;
-		this.approval_team_date = approval_team_date;
-		this.approval_mgr_date = approval_mgr_date;
-		this.team_mgr_name = team_mgr_name;
-		this.team_mgr_no = team_mgr_no;
-		this.mgr_name = mgr_name;
-		this.mgr_no = mgr_no;
-		this.job_no = job_no;
 	}
 
 	public int getApproval_no() {
@@ -133,12 +114,12 @@ public class Approval implements Serializable {
 		this.team_mgr_name = team_mgr_name;
 	}
 
-	public int getTeam_mgr_no() {
-		return team_mgr_no;
+	public int getApproval_team_no() {
+		return approval_team_no;
 	}
 
-	public void setTeam_mgr_no(int team_mgr_no) {
-		this.team_mgr_no = team_mgr_no;
+	public void setApproval_team_no(int approval_team_no) {
+		this.approval_team_no = approval_team_no;
 	}
 
 	public String getMgr_name() {
@@ -149,12 +130,28 @@ public class Approval implements Serializable {
 		this.mgr_name = mgr_name;
 	}
 
-	public int getMgr_no() {
-		return mgr_no;
+	public int getApproval_mgr_no() {
+		return approval_mgr_no;
 	}
 
-	public void setMgr_no(int mgr_no) {
-		this.mgr_no = mgr_no;
+	public void setApproval_mgr_no(int approval_mgr_no) {
+		this.approval_mgr_no = approval_mgr_no;
+	}
+
+	public String getEmp_name() {
+		return emp_name;
+	}
+
+	public void setEmp_name(String emp_name) {
+		this.emp_name = emp_name;
+	}
+
+	public int getDept_no() {
+		return dept_no;
+	}
+
+	public void setDept_no(int dept_no) {
+		this.dept_no = dept_no;
 	}
 
 	public String getJob_no() {
@@ -171,9 +168,31 @@ public class Approval implements Serializable {
 				+ approval_choose_no + ", approval_submit_date=" + approval_submit_date + ", approval_start_date="
 				+ approval_start_date + ", approval_end_date=" + approval_end_date + ", approval_comment="
 				+ approval_comment + ", approval_team_date=" + approval_team_date + ", approval_mgr_date="
-				+ approval_mgr_date + ", team_mgr_name=" + team_mgr_name + ", team_mgr_no=" + team_mgr_no
-				+ ", mgr_name=" + mgr_name + ", mgr_no=" + mgr_no + ", job_no=" + job_no + "]";
+				+ approval_mgr_date + ", team_mgr_name=" + team_mgr_name + ", approval_team_no=" + approval_team_no
+				+ ", mgr_name=" + mgr_name + ", approval_mgr_no=" + approval_mgr_no + ", emp_name=" + emp_name
+				+ ", dept_no=" + dept_no + ", job_no=" + job_no + "]";
 	}
+
+	
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+	
+
+
 
 
 	

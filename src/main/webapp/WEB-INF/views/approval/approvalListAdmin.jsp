@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,11 +41,145 @@
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 
+
+function modalUp(obj){
+	var content=$(obj);
+	var td=content.children();
+	
+	var emp_name=td.eq(0).text();
+	var dept_no=td.eq(1).text();
+	var approval_choose_no=td.eq(2).text();
+	var approval_submmit_date=td.eq(3).text();
+	var approval_process=td.eq(4).text();
+	var emp_no=td.eq(5).text();
+	var approval_start_date=td.eq(6).text();
+	var approval_end_date=td.eq(7).text();
+	var approval_comment=td.eq(8).text();
+	var approval_team_date=td.eq(9).text();
+	var approval_mgr_date=td.eq(10).text();
+	var team_mgr_name=td.eq(11).text();
+	var mgr_name=td.eq(12).text();
+	 approval_no=td.eq(13).text();
+	
+	 	
+	
+	 	
+	 	
+	 	
+	 	
+	 	
+	 	
+	 	$('#startDate').val(approval_start_date);
+	$('#endDate').val(approval_end_date);
+	$('#reason').val(approval_choose_no);
+	
+	$('#team').val(approval_team_date);
+	$('#admin').val(approval_mgr_date);
+	$('#textarea').val(approval_comment);
+	$('#teamname').text("팀장"+"("+team_mgr_name+")");
+	$('#mgrname').text("관리자"+"("+mgr_name+")");
+	
+	var value="";
+	if(approval_team_date=="" && ${loginEmp.job_no==2}){
+		
+		
+        value="<button onclick='teamapproval();' type='button' class='btn btn-primary' style='float:right;'>승인</button>";
+	
+	
+             $('#manager').html(value);
+             
+	
+}
+	if(approval_team_date!=""  && ${loginEmp.job_no==3}) {
+		
+		 value="<button onclick='adminapproval();' type='button' class='btn btn-primary' style='float:right;'>승인</button>";
+	
+		 	$('#manager').html(value);
+	}
+	
+	if(approval_team_date!=""){
+		$('#circle2').css('background-color','#2A3F54');
+	}
+
+	 if(approval_mgr_date!=""){
+		$('#circle3').css('background-color','#2A3F54');
+		
+	} 
+	
+	 $('#modal1').modal("show");
+}
+	 function modal1Close(){
+	
+	$('#circle2').css('background-color','#ddd');
+	$('#circle3').css('background-color','#ddd');
+	
+	$('#modal1').modal("hide");
+	 }
+	 
+	 function teamapproval(){
+			
+		 $.ajax({
+			url:"teamManager.do",
+			data:{ approval_no:approval_no},
+			type:"post",
+		 	success : function(data){
+				alert(data);
+				
+				$('#modal1').modal("hide");
+			
+				location.href="approvalListAdmin.do?emp_no=${loginEmp.emp_no}&job_no=${loginEmp.job_no}";
+			}
+		 });
+		 
+			
+		}
+	
+	 function adminapproval(){
+		 
+		 $.ajax({
+			 url:"adminManager.do",
+				data:{ approval_no:approval_no},
+				type:"post",
+			 	success : function(data){
+					alert(data);
+					
+					$('#modal1').modal("hide");
+				
+					location.href="approvalListAdmin.do?emp_no=${loginEmp.emp_no}&job_no=${loginEmp.job_no}";
+				}
+		 })
+		 
+		 
+	 }
+
 </script>
 <style type="text/css">
 
+#table_ap th:nth-child(6),th:nth-child(7),th:nth-child(8),
+th:nth-child(9),th:nth-child(10),th:nth-child(11),th:nth-child(12),th:nth-child(13),th:nth-child(14){
+display:none;
+}
+
+#table_ap td:nth-child(6),td:nth-child(7),td:nth-child(8),
+td:nth-child(9),td:nth-child(10),td:nth-child(11),td:nth-child(12),td:nth-child(13),td:nth-child(14){
+display:none;
+}
 
 
+.circle {
+width:50px;
+height:50px;
+ line-height:50px; 
+border-radius:50%;
+display:block;
+background-color:#ddd;
+color:white;
+font-weight:bold;
+}
+
+#circle1{
+background-color:#2A3F54;
+}
 </style>
 </head>
 
@@ -159,128 +294,192 @@
 									<table id="table_ap" class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<th>결재번호</th>
+												<th>사원 이름</th>
+												<th>직급</th>
 												<th>결재유형</th>
 												<th>일자</th>
-												<th>신청자</th>
 												<th>진행상황</th>
+												<th>사원번호</th>
+												<th>start</th>
+												<th>end</th>
+												<th>comment</th>
+												<th>team</th>
+												<th>mgr</th> 
+												<th>team_name</th>
+												<th>mgr_name</th>
+												<th>no</th>
+												
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td><a href="#">05</a></td>
-												<td>휴가신청</td>
-												<td>2018.05.15</td>
-												<td>강백호</td>
-												<td>진행중</td>
+										<c:forEach items="${approvalListA}" var="approval">
+											<c:if test="${approval.approval_choose_no eq '1'}">
+											<c:set var="approval_choose_no" value="휴가"/>
+											</c:if>
+											<c:if test="${approval.approval_choose_no eq '2'}">
+											<c:set var="approval_choose_no" value="경조사"/>
+											</c:if>
+											<c:if test="${approval.approval_choose_no eq '3'}">
+											<c:set var="approval_choose_no" value="병가"/>
+											</c:if>
+											<c:if test="${approval.approval_choose_no eq '4'}">
+											<c:set var="approval_choose_no" value="비고"/>
+											</c:if>
+											<c:if test="${approval.approval_mgr_date eq null && approval.approval_team_date eq null}">
+											 <c:set var="approval_process" value="미진행 "/>
+											</c:if>
+											<c:if test="${approval.approval_mgr_date eq null && approval.approval_team_date ne null}">
+											<c:set var="approval_process" value="팀장 승인 "/>
+											</c:if>
+											<c:if test="${approval.approval_mgr_date ne null}">
+											<c:set var="approval_process" value="결재 완료"/>
+											</c:if>
+											<c:if test="${approval.dept_no eq '1'}">
+											 <c:set var="approval_dept_name" value="영업1팀"/>
+											</c:if>
+											<c:if test="${approval.dept_no eq '2'}">
+											 <c:set var="approval_dept_name" value="영업2팀"/>
+											</c:if>
+											
+											<tr onclick="modalUp(this);">
+												
+												<td>${approval.emp_name}</td>
+												<td>${approval_dept_name}</td>
+												
+												<td style="width:30%;">${approval_choose_no}</td>
+												<td style="width:30%;">${approval.approval_submit_date}</td>
+												<td>${approval_process}</td>
+												<td>${approval.emp_no }</td>
+												<td>${approval.approval_start_date}</td>
+												<td>${approval.approval_end_date}</td>
+												<td>${approval.approval_comment}</td>
+												<td>${approval.approval_team_date}</td>
+												<td>${approval.approval_mgr_date }</td> 
+												<td>${approval.team_mgr_name}</td>
+												<td>${approval.mgr_name}</td>
+												<td>${approval.approval_no}</td>
+												
 											</tr>
-											<tr>
-												<td><a href="#">05</a></td>
-												<td>휴가신청</td>
-												<td>2018.05.15</td>
-												<td>강백호</td>
-												<td>진행중</td>
-											</tr>
-											<tr>
-												<td><a href="#">05</a></td>
-												<td>휴가신청</td>
-												<td>2018.05.15</td>
-												<td>강백호</td>
-												<td>진행중</td>
-											</tr>
-											<tr>
-												<td><a href="#">05</a></td>
-												<td>휴가신청</td>
-												<td>2018.05.15</td>
-												<td>강백호</td>
-												<td>진행중</td>
-											</tr>
-											<tr>
-												<td><a href="#">05</a></td>
-												<td>휴가신청</td>
-												<td>2018.05.15</td>
-												<td>강백호</td>
-												<td>진행중</td>
-											</tr>
-											<tr>
-												<td><a href="#">05</a></td>
-												<td>휴가신청</td>
-												<td>2018.05.15</td>
-												<td>강백호</td>
-												<td>진행중</td>
-											</tr>
-											<tr>
-												<td><a href="#">05</a></td>
-												<td>휴가신청</td>
-												<td>2018.05.15</td>
-												<td>강백호</td>
-												<td>진행중</td>
-											</tr>
-											<tr>
-												<td><a href="#">05</a></td>
-												<td>휴가신청</td>
-												<td>2018.05.15</td>
-												<td>강백호</td>
-												<td>진행중</td>
-											</tr>
-											<tr>
-												<td><a href="#">05</a></td>
-												<td>휴가신청</td>
-												<td>2018.05.15</td>
-												<td>강백호</td>
-												<td>진행중</td>
-											</tr>
-											<tr>
-												<td><a href="#">05</a></td>
-												<td>휴가신청</td>
-												<td>2018.05.15</td>
-												<td>강백호</td>
-												<td>진행중</td>
-											</tr>
-											<tr>
-												<td><a href="#">05</a></td>
-												<td>휴가신청</td>
-												<td>2018.05.15</td>
-												<td>강백호</td>
-												<td>진행중</td>
-											</tr>
-											<tr>
-												<td><a href="#">05</a></td>
-												<td>휴가신청</td>
-												<td>2018.05.15</td>
-												<td>강백호</td>
-												<td>진행중</td>
-											</tr>
-											<tr>
-												<td><a href="#">05</a></td>
-												<td>휴가신청</td>
-												<td>2018.05.15</td>
-												<td>강백호</td>
-												<td>진행중</td>
-											</tr>
-											<tr>
-												<td><a href="#">05</a></td>
-												<td>휴가신청</td>
-												<td>2018.05.15</td>
-												<td>강백호</td>
-												<td>진행중</td>
-											</tr>
-											<tr>
-												<td><a href="#">05</a></td>
-												<td>휴가신청</td>
-												<td>2018.05.15</td>
-												<td>강백호</td>
-												<td>진행중</td>
-											</tr>
-											<tr>
-												<td><a href="#">05</a></td>
-												<td>휴가신청</td>
-												<td>2018.05.15</td>
-												<td>강백호</td>
-												<td>진행중</td>
-											</tr>
+												</c:forEach>
 										<tbody>
 									</table>
+									<div class="modal fade sendMsg" tabindex="-1" role="dialog"
+                                 id="modal1" aria-hidden="true">
+                                 <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                       <form class="form-horizontal form-label-left input_mask">
+                                          <div class="modal-header">
+                                             <button type="button" class="close" data-dismiss="modal" onclick="modal1Close();">
+                                                <span aria-hidden="true">×</span>
+                                             </button>
+                                             <h4 class="modal-title" id="myModalLabel">결재 내용</h4>
+                                          </div>
+
+                                          <div class="modal-body">
+                                          	<div id="wizard" class="form_wizard wizard_horizontal">
+										<ul class="wizard_steps anchor" style="margin:0px;padding:0px;">
+											<li>
+												 <div style = "width:100%" align = "center">
+												 <div class="circle" id="circle1">사원</div>
+												 </div>
+											</li>
+											
+											<li>
+											<div style = "width:100%" align = "center">
+											<div class="circle" id="circle2">팀장</div>
+											</div>
+											</li>
+											<li>
+											<div style = "width:100%" align = "center">
+												<div class="circle" id="circle3">관리자</div>
+												</div>
+											</li>
+
+										</ul>
+										<br>
+									</div>
+										<div class="row">
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							<div class="x_panel">
+								<div class="x_title">
+									<h2>결재 내용</h2>
+									<div class="clearfix"></div>
+								</div>
+								<div class="x_content">
+									<form class="form-horizontal form-label-left">
+
+										<div class="form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12"
+												for="first-name">일자 
+											</label>
+											<div class="col-md-6 col-sm-6 col-xs-12">
+												<input type="date" required="required" id="startDate"
+													class="form-date col-md-5 col-xs-12" readonly>
+												<input type="date" required="required" id="endDate"
+													class="form-date col-md-5 col-xs-12" readonly>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12"
+												for="last-name">사유 
+											</label> 
+											<div class="col-md-2 col-sm-4 col-xs-12">
+												<input type="text" class="form-control"  id="reason" readonly>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="middle-name"
+												class="control-label col-md-3 col-sm-3 col-xs-12" id="teamname">팀장 </label>
+											<div class="col-md-6 col-sm-6 col-xs-12">
+												<div class="input-group" style="margin-bottom:0px;">
+													
+													
+													
+													<input type="text" required="required" id="team"
+													class="form-date col-md-5 col-xs-12" readonly style="width:163px;">
+														
+														
+													
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="middle-name"
+												class="control-label col-md-3 col-sm-3 col-xs-12" id="mgrname">관리자 </label>
+											<div class="col-md-6 col-sm-6 col-xs-12">
+												<div class="input-group" style="margin-bottom:0px;">
+													<input type="text" required="required" id="admin"
+													class="form-date col-md-5 col-xs-12" readonly style="width:163px;">
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12">비고
+											</label>
+											<div class="col-md-6 col-sm-6 col-xs-12">
+												<textarea rows="3" class="form-control col-md-7 col-xs-12" id="textarea" readonly></textarea>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+									
+									
+                                          </div>
+                                          <div class="modal-footer">
+                                          	 <button onclick="modal1Close()" type="button"
+                                                class="btn btn-primary" style="float:right;">확인</button>
+                                                <div id="manager">
+                                           
+                                             </div>
+                                          </div>
+                                       </form>
+
+                                    </div>
+                                 </div>
+                              </div>
 								</div>
 							</div>
 						</div>

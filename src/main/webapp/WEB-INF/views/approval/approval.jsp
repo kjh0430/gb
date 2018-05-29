@@ -40,11 +40,12 @@
 <link href="resources/css/main.css" rel="stylesheet">
 
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
+
+
 <script type="text/javascript">
 	$(document).ready(function() {
-
-		
-
+	
+			
 		//팀장 이름, 및 관리자 이름 가져오기
 		$.ajax({
 			url:"getName.do",
@@ -58,7 +59,8 @@
 				$('#mgr_name').val(decodeURIComponent(data.mgr_name.replace(/\+/g," ")));
 				$('#team_mgr_no').val(data.team_mgr_no);
 				$('#mgr_no').val(data.mgr_no); //관리자의 사원번호
-		
+				alert("data.mgr_no"+data.mgr_no);
+				alert("team_mgr_no"+data.team_mgr_no);
 			
 			}
 		
@@ -234,7 +236,7 @@ function resetContent(){
 												<div class="input-group" style="margin-bottom:0px;">
 													<input type="text" class="form-control" id="team_mgr" readonly> <span
 														class="input-group-btn">
-														<input type="hidden" name="team_mgr_no" id="team_mgr_no"/>	
+														<input type="hidden" name="approval_team_no" id="team_mgr_no"/>	
 														
 													</span>
 												</div>
@@ -247,7 +249,7 @@ function resetContent(){
 												<div class="input-group" style="margin-bottom:0px;">
 													<input type="text" class="form-control" id="mgr_name" readonly> <span
 														class="input-group-btn">
-													<input type="hidden" name="mgr_no" id="mgr_no"/>
+													<input type="hidden" name="approval_mgr_no" id="mgr_no"/>
 													</span>
 												</div>
 											</div>
