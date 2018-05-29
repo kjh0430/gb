@@ -5,8 +5,6 @@
 <mapper namespace="Product">
 
 	<!-- 상품 리스트 -->
-	
-	
 	<resultMap type="product" id="resultSelectAllProduct">
 		<id column="product_no" property="product_no"/>
 		<result column="product_name" property="product_name"/>
@@ -20,7 +18,7 @@
 	</resultMap>
 	
 	
-	<resultMap type="Product" id="selectAllProductList">
+	<resultMap type="product" id="selectAllProductList">
 		<result column="product_no" property="product_no"/>
 		<result column="product_name" property="product_name"/>
 		<result column="product_price" property="product_price"/>

@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@page import="com.crm.gb.product.controller.ProductController"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,6 +44,7 @@ $(document).ready(function() {
 
 </script>
 </head>
+
 
 <body class="nav-md">
 	<div class="container body">
@@ -161,42 +166,15 @@ $(document).ready(function() {
 											</tr>
 										</thead>
 										<tbody>
+											<c:forEach items="${list}" var="li"> 
+											
 											<tr>
-												<td><a href="moveproductDetail.do">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
+												<td><a href="moveproductDetail.do">${li.product_no}</a></td>
+												<td><a href="moveproductDetail.do">${li.product_name}</a></td>
+												<td>${li.product_price}</td>
+												<td>${li.product_availability}</td>
 											</tr>
-											<tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr>
-											<tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr>
-											<tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr>
-											<tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr>
-											<tr>
-												<td><a href="#">이디오피아 예가체프 </a></td>
-												<td>12,000</td>
-												<td>EY2010Z</td>
-												<td>판매</td>
-											</tr>
+											</c:forEach>
 										<tbody>
 									</table>
 								</div>
