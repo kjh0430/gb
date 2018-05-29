@@ -62,6 +62,7 @@ public class OrderController {
 	public void searchCom(@RequestParam(name="searchComName") String client_company,@RequestParam(name="emp_no") String empNo, Client clientInfo ,HttpServletResponse response) throws IOException{
 		logger.info("발주하기-고객검색 메소드 run....");
 		
+		
 		int emp_no = Integer.parseInt(empNo);
 		
 		clientInfo.setClient_company(client_company);
@@ -78,6 +79,7 @@ public class OrderController {
 			jsonobject.put("client_company", client.getClient_company());
 			jsonobject.put("client_phone", client.getClient_phone());
 			jsonobject.put("client_addr", client.getClient_addr());
+			jsonobject.put("contract_discount", client.getContract_discount());
 			jarr.add(jsonobject);
 		}
 		
@@ -85,20 +87,22 @@ public class OrderController {
 		sendJson.put("list", jarr);
 		
 		response.setContentType("application/json; charset=utf-8");	
-		//System.out.println("orderController:"+sendJson);
+		System.out.println("orderController:"+sendJson);
 		PrintWriter out=response.getWriter();
 		out.println(sendJson.toJSONString());
 		out.flush();
 		out.close();
 	
+		
 	}
 	
 	@RequestMapping(value="searchProduct.do", method=RequestMethod.POST)
-	public void searchProduct(@RequestParam(name="searchProductName") String product_name, HttpServletResponse response) throws IOException{
+	public void searchProduct(@RequestParam(name="searchProductName") String product_name,@RequestParam(name="client_no") String clientNo, HttpServletResponse response) throws IOException{
 		logger.info("발주하기-상품 검색 메소드 run....");
-
+		
 		ArrayList<Product> SearchProduct = productService.selectSearchProduct(product_name);
 		JSONArray jarr = new JSONArray();
+		
 		
 		for(Product product : SearchProduct) {
 			JSONObject jsonobject = new JSONObject();
@@ -106,6 +110,7 @@ public class OrderController {
 			jsonobject.put("product_name", product.getProduct_name());
 			jsonobject.put("product_price", product.getProduct_price());
 			jsonobject.put("product_amount", product.getProduct_amount());
+			
 			//jsonobject.put("product_availability", product.getProduct_availavility());
 			
 			jarr.add(jsonobject);

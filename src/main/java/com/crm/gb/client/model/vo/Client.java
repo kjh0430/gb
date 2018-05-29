@@ -29,6 +29,7 @@ public class Client implements Serializable{
 	private Date client_enroll;
 	private String client_delete;
 	private Emp emp;
+	private int contract_discount;
 	
 	public Client() {}
 	
@@ -37,7 +38,7 @@ public class Client implements Serializable{
 			String client_phone, String client_addr, String client_com_tel, String client_loc_x, String client_loc_y,
 
 			String client_contract, String client_comment, int emp_no, Date client_enroll, String client_delete,
-			Emp emp, String emp_name) {
+			Emp emp, String emp_name, int contract_discount) {
 		super();
 		this.client_no = client_no;
 		this.client_name = client_name;
@@ -57,6 +58,7 @@ public class Client implements Serializable{
 		this.client_delete = client_delete;
 		this.emp = emp;
 		this.emp_name = emp_name;
+		this.contract_discount = contract_discount;
 	}
 	
 	
@@ -312,6 +314,17 @@ public class Client implements Serializable{
 	}
 
 
+	
+	public int getContract_discount() {
+		return contract_discount;
+	}
+
+
+	public void setContract_discount(int contract_discount) {
+		this.contract_discount = contract_discount;
+	}
+
+
 	@Override
 	public String toString() {
 		return "Client [client_no=" + client_no + ", client_name=" + client_name + ", client_company=" + client_company
@@ -319,7 +332,7 @@ public class Client implements Serializable{
 				+ ", client_addr=" + client_addr + ", client_com_tel=" + client_com_tel + ", client_loc_x="
 				+ client_loc_x + ", client_loc_y=" + client_loc_y + ", client_contract=" + client_contract
 				+ ", client_comment=" + client_comment + ", emp_no=" + emp_no + ", emp_name=" + emp_name
-				+ ", client_enroll=" + client_enroll + ", client_delete=" + client_delete + ", emp=" + emp + "]";
+				+ ", client_enroll=" + client_enroll + ", client_delete=" + client_delete + ", emp=" + emp + "contract_discount : "+contract_discount+"]";
 	}
 
 

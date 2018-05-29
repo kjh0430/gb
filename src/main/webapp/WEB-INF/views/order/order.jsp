@@ -27,7 +27,11 @@
 var idx = 1;
 var amount = new Array();
 var orderInfo = new Array();
-	function searchCom(){
+var client_no;
+var discount =  new Array();
+var c_discount;
+	function searchCom(){	
+		
 		$.ajax({
 			url: "searchCom.do",
 			type : "post",
@@ -48,7 +52,8 @@ var orderInfo = new Array();
 					+"<td>"+jsonl.list[i].client_company+"</td>"
 					+"<td>"+jsonl.list[i].client_phone+"</td>"
 					+"<td>"+jsonl.list[i].client_addr+"</td>"
-					+"</tr>";		
+					+"</tr>";	
+					discount[i] = jsonl.list[i].contract_discount;
 				}
 				
 				value += "</table>";
@@ -60,10 +65,13 @@ var orderInfo = new Array();
 	}
 	
 	function selectCom(obj){
+		$('.order_body').html("");
 		var tr=$(obj);
+		//alert("obj : " + $(obj).index());
+		c_discount = discount[$(obj).index()-1];
+		//alert("discount: "  + c_discount);
 		var td=tr.children();
-		
-		var client_no=td.eq(0).text();
+		 client_no=td.eq(0).text();
 		var client_company=td.eq(1).text();
 		var client_phone=td.eq(2).text();
 		var client_addr=td.eq(3).text();
@@ -88,9 +96,11 @@ var orderInfo = new Array();
 			type : "post",
 			dataType : "json",
 			data : {
-				searchProductName : $('#searchProductName').val()
+				searchProductName : $('#searchProductName').val(),
+				client_no : client_no
 			},
 			success : function(obj){
+				
 				var objStr = JSON.stringify(obj);
 				var json = JSON.parse(objStr);
 				var value = "<table id='table_items' class='table table-striped table-bordered'>"
@@ -117,10 +127,10 @@ var orderInfo = new Array();
 		//alert("obj : " + $(obj));
 		var tr=$(obj);
 		var td=tr.children();
-		
+		//alert("ㅎㅇㅎㅇㅎ: " + discount);
 		var product_no=td.eq(0).text();
 		var product_name=td.eq(1).text();
-		var product_price=td.eq(2).text();
+		var product_price=td.eq(2).text()*(1-c_discount/100);
 		//var product_=td.eq(3).text();
 		
 		$('#searchModal2').modal("hide");
@@ -128,13 +138,14 @@ var orderInfo = new Array();
 		var value = $('.order_body').html();
 		
 
+		
 		console.log(amount[1]);
 		/* submit하기 위하여 갑 넣기 */
 		value += "<tr id='tr"+idx+"'>"
 		+"<td><input type='text' id='productNo"+idx+"' name='product_no' class='form-control' value='"+product_no+"' readonly/></td>"
 		+"<td>"+product_name+"</td>"
 		+"<td><input type='text' id='orderPrice"+idx+"' name='order_price' class='form-control' value='"+product_price+"'/></td>"
-		+"<td><input type='number' onblur='saveAmount("+idx+");' id='orderAmount"+idx+"' name='order_amount' class='form-control' min='1'/></td>"
+		+"<td><input type='number' onblur='saveAmount("+idx+");' id='orderAmount"+idx+"' name='order_amount' class='form-control' min='1' value='1'/></td>"
 		+"<td><button type='button' class='btn btn-danger btn-order' onclick='deleteRow(\"tr"+idx+"\");'>&nbsp;&nbsp;<i class='fa fa-trash-o'></i>&nbsp;&nbsp;</button></td>"
 		+"</tr>";
 		
@@ -468,8 +479,7 @@ var orderInfo = new Array();
 												<div class="modal-footer">
 													<button type="button" class="btn btn-default"
 														data-dismiss="modal">Close</button>
-													<button type="button" class="btn btn-primary">Save
-														changes</button>
+													
 												</div>
 
 											</div>

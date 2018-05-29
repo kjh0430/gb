@@ -38,7 +38,46 @@
 <link href="resources/build/css/custom.min.css" rel="stylesheet">
 <link href="resources/css/main.css" rel="stylesheet">
 
+<style type="text/css">
 
+#table_rm tr:last-child {
+   border-bottom: 1px solid #ddd;
+}
+
+#getvalues th:nth-child(5), td:nth-child(5) {
+   display: none;
+}
+
+#table_rec th:nth-child(4){
+   display: none;
+}
+#table_rec td:nth-child(4){
+display:none;
+}
+
+#table_rec th:nth-child(5){
+display: none;
+}
+
+#table_rec td:nth-child(5){
+display: none;
+}
+#table_rec th:nth-child(6){
+display:none;
+}
+
+#table_rec td:nth-child(6){
+display:none;
+}
+
+#table_sm th:nth-child(4){
+display:none;
+}
+
+#table_sm td:nth-child(4){
+display:none;
+}
+</style>
 
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
@@ -151,7 +190,7 @@ $(document).ready(function() {
 					<div class="page-title">
 						<div class="title_left">
 							<h3>
-								발주 리스트
+								매출현황
 							</h3>
 						</div>
 					</div>
@@ -163,7 +202,7 @@ $(document).ready(function() {
 							<div class="x_panel">
 								<div class="x_title">
 									<h2>
-										발주 리스트
+										발주 목록
 									</h2>
 									<div class="clearfix"></div>
 								</div>
@@ -203,12 +242,9 @@ $(document).ready(function() {
 			</div>
 		</div>
 	</div>
-	</div>
+
 	<!-- /page content -->
 
-	
-	</div>
-	</div>
 
 	<!-- jQuery -->
 	<script src="resources/vendors/jquery/dist/jquery.min.js"></script>
