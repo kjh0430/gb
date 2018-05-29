@@ -1,28 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>sidebar</title>
+<style type="text/css">
+ #menu1 li{
+ 	padding:10px;
+ }
+ #menu1 li a{
+ 	text-align:right;
+ }
+</style>
 </head>
-<script type="text/javascript">
-/* 	var eventSource = new EventSource("notify.do");
-	eventSource.onopen = function(){
-		console.log("연결중");
-		
-	}
-	 eventSource.onmessage = function(event) {
-	    console.log("received event data : " + event.data);
-<<<<<<< HEAD
-	}; */
 
-		
-</script>
 <body>
-
-
 	<div class="top_nav">
 		<div class="nav_menu">
 			<nav>
@@ -44,31 +39,112 @@
 									class="fa fa-sign-out pull-right"></i> 로그아웃</a></li>
 						</ul></li>
 
-					<li role="presentation" class="dropdown"><a
+					<li role="presentation" class="dropdown" id="pst"><a
 						href="javascript:;" class="dropdown-toggle info-number"
 						data-toggle="dropdown" aria-expanded="false"> <i
-							class="fa fa-bell-o"></i> <span class="badge bg-green">6</span>
+							class="fa fa-bell-o"></i> <span class="badge bg-green"></span>
 					</a>
 						<ul id="menu1" class="dropdown-menu list-unstyled msg_list"
 							role="menu">
-							<li><a> <span class="image"><img
-										src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-											Smith</span> <span class="time">3 mins ago</span>
-								</span> <span class="message"> Film festivals used to be
-										do-or-die moments for movie makers. They were where... </span>
-							</a></li>
-							<li><a> <span class="image"><img
-										src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-											Smith</span> <span class="time">3 mins ago</span>
-								</span> <span class="message"> Film festivals used to be
-										do-or-die moments for movie makers. They were where... </span>
-							</a></li>
-							
 						</ul></li>
 				</ul>
 			</nav>
 		</div>
 	</div>
+	
+	
+	<!-- <script src="resources/js/eventsource.js"></script> -->
+	<script type="text/javascript">
+	$(function(){
+		selectNotify();
+	})//onload
+	
+	function selectNotify(){
+		$.ajax({
+			url:"selectNofity.do",
+			type:"post",
+			dataType:"json",
+			data:{emp_no:'${loginEmp.emp_no}'},
+			success:function(obj){
+				var objStr =JSON.stringify(obj);
+				var notify = JSON.parse(objStr);
+				var size =  Object.keys(notify.list).length;	
+				
+				var value="";
+				if(size>0){
+					for(var i in notify.list){								
+						value+="<li><p>"+notify.list[i].notify_date+"<a href='javascript:confirmNotify(\""+notify.list[i].notify_no+"\")'>"
+						+"<i class='fa fa-times'></i></a></p>"
+						+notify.list[i].from_name+"님이 보낸 쪽지가 도착했습니다.</li>"
+					}	
+					$("#menu1").html(value);
+					$(".badge").html(size);
+				}else{
+					$("#menu1").html("<li>새로운 알림이 없습니다.</li>");
+					$(".badge").css('display','none');
+				}
+				
+			}			
+			
+		});//ajax
+	}
+	
+	function confirmNotify(notify_no){
+		
+		$("#pst").addClass("open");
+		$('.info_number').attr('aria-expanded', 'true');
+		
+		$.ajax({
+			url:"updateNofity.do",
+			type:"post",
+			data:{notify_no:notify_no},
+			success:function(result){
+				if(result == "OK"){
+					selectNotify();
+				}else{
+					alert("실패")
+				}		
+			}			
+			
+		});//ajax
+		
+	}
+	
+	if (window.Notification && Notification.permission !== "granted") {
+	    Notification.requestPermission(function (status) {
+	      if (Notification.permission !== status) {
+	        Notification.permission = status;
+	      }
+	    });
+	}
+	
+  	var eventSource = new EventSource("notify.do?emp_no=${loginEmp.emp_no}");
+	eventSource.onopen = function(){
+		console.log("연결중");		
+	}
+	var from_no;
+	eventSource.addEventListener('from_name', function(event) {		
+		console.log("from_name : "+ event.data);
+		from_name = event.data;
+		
+	}, false);
+
+	eventSource.addEventListener('to_no', function(event) {	
+		console.log("to_no : "+ event.data);
+		
+		if( ${loginEmp.emp_no} == event.data){			
+			 var img = 'resources/images/msg2.png';
+			 var text = from_name+"님이 보낸 쪽지가 도착하였습니다.";
+			
+			 if (window.Notification && Notification.permission === "granted") {
+				var notification = new Notification('Message', { body: text, icon: img });
+    		}
+			
+		}
+		 
+	}, false);
+		
+</script>
 
 
 </body>
