@@ -137,10 +137,10 @@ function mgrList(){
 			console.log("selectMgrList.do 실행");
 			var objStr = JSON.stringify(obj);
 			var jsonObj = JSON.parse(objStr);
-			var outValues = "<table id='mgrTable'><tr><th>사원번호</th><th>사원이름</th></tr>";
+			var outValues = "<table id='mgrTable'><tr><th style='text-align:center;'>사원번호</th><th style='text-align:center;'>사원이름</th></tr>";
 			
 			for(var i in jsonObj.mgrList){
-				outValues += "<tr onclick='selectMgrNo(this);' style='text-align:center;'><td>" + jsonObj.mgrList[i].emp_no + "</td><td>" 
+				outValues += "<tr onclick='selectMgrNo(this);'><td>" + jsonObj.mgrList[i].emp_no + "</td><td>" 
 				+ decodeURIComponent(jsonObj.mgrList[i].emp_name) + "</td></tr>";
 			}
 			
@@ -420,7 +420,7 @@ text-align:center;
              <h4 class="modal-title" id="myModalLabel">사원조회</h4>
              </div>
              <div class="modal-body" style="overflow-y:auto; overflow-x:hidden; height:400px;">
-             <table class="table" id="mgrTable">
+             <table class="table table-hover" id="mgrTable">
              </table>
              </div>
              <div class="modal-footer">
