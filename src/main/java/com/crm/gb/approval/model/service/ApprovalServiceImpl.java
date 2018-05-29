@@ -2,6 +2,8 @@ package com.crm.gb.approval.model.service;
 
 
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.crm.gb.approval.model.dao.ApprovalDao;
@@ -28,6 +30,39 @@ private ApprovalDao ApprovalDao;
 	public int insertApproval(Approval apr) {
 		// TODO Auto-generated method stub
 		return ApprovalDao.insertApproval(apr);
+	}
+
+
+
+	@Override
+	public ArrayList<Approval> selectapprovalListE(Approval apr) {
+	
+		return ApprovalDao.selectapprovalListE(apr);
+	}
+
+
+
+	@Override
+	public ArrayList<Approval> selectapprovalListA(Approval apr) {
+		
+		return ApprovalDao.selectapprovalListA(apr);
+	}
+
+
+
+	@Override
+	public int updateTeamApproval(Approval apr) {
+		
+		
+		return ApprovalDao.updateTeamApproval(apr);
+	}
+
+
+
+	@Override
+	public int updateMgrApproval(Approval apr) {
+	
+		return ApprovalDao.updateMgrApproval(apr);
 	}
 
 	

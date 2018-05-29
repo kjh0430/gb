@@ -44,6 +44,8 @@ public class MessageController {
 		
 	}
 	
+	Message sendmsg;
+	
 	//사원 검색
 	@RequestMapping(value="searchEmp.do" ,method=RequestMethod.POST)
 	@ResponseBody
@@ -83,13 +85,11 @@ public class MessageController {
 	
 	//메시지 보내기
 	@RequestMapping(value="sub.do",method=RequestMethod.POST)
-
-			public void submitMessage(Message message,HttpServletResponse response,@RequestParam("no") int no) throws IOException {
+	public void submitMessage(Message message,HttpServletResponse response) throws IOException {
 		System.out.println("보내는사람 번호"+message.getMessage_from_no());
 		System.out.println("받는사람 번호"+message.getMessage_to_no());
 		System.out.println("제목"+message.getMessage_title());
 		System.out.println("내용"+message.getMessage_content());
-		System.out.println("no"+no);
 		
 		
 		SimpleDateFormat format=new SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.KOREA);
@@ -112,8 +112,7 @@ public class MessageController {
 	}
 	//받은 메시지함
 	@RequestMapping(value="getMessage.do",method=RequestMethod.GET)
-	public void getMessage(Message message ,HttpServletResponse  response) throws IOException {
-		
+	public void getMessage(Message message ,HttpServletResponse  response) throws IOException {		
 		
 		ArrayList<Message> receiveMessage=MessageService.selectReceiveMessage(message);		
 		JSONArray jarr=new JSONArray();
@@ -181,7 +180,7 @@ public class MessageController {
 	}
 	
 	//답장하기
-	@RequestMapping(value="sendAnswer.do",method=RequestMethod.POST)
+	/*@RequestMapping(value="sendAnswer.do",method=RequestMethod.POST)
 	public void sendAnswer(Message message,HttpServletResponse response) throws IOException {
 		System.out.println("보내는사람 번호"+message.getMessage_from_no());
 		System.out.println("받는사람 번호"+message.getMessage_to_no());
@@ -203,7 +202,7 @@ public class MessageController {
 		out.append("메시지가 전송되었습니다.");
 		out.flush();
 		out.close();		
-	}
+	}*/
 	
 	
 	@RequestMapping(value="readMessage.do")
@@ -226,13 +225,17 @@ public class MessageController {
 		response.setHeader("Cache-Control", "no-cache");
 		response.setHeader("Connection", "keep-alive");
 		
-		
-		
+
+		PrintWriter out = response.getWriter();		
+		if(sendmsg != null) {
+			out.write("data: " + "새 공지글이 등록되었습니다." + "\n\n");
+			out.flush();
+		}	
 		
 	}
 	
 /*	@RequestMapping(value="notify.do")
-	public SseEmitter getNotify(Message message) {
+	public ResponseBodyEmitter getNotify(Message message) {
 		 final SseEmitter emitter = new SseEmitter();
 	        ExecutorService service = Executors.newSingleThreadExecutor();
 	        service.execute(() -> {

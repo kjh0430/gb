@@ -47,7 +47,9 @@ $(document).ready(function() {
     $('#table_cl').dataTable( {
         ordering:false,
         lengthChange:false,
-        pageLength:15
+        paging: false,
+        info: false,
+        searching: false
     } );
 } );
 
@@ -64,13 +66,47 @@ function clientList(){
 }
 </script>
 
-<!-- ----------------------스크립트관련 작업영역 시작------------------------ -->
+<!-- ---------------------- 고객리스트 검색 Ajax ------------------------ -->
+
+	<script type="text/javascript">
+		$(function(){
+			
+			$('#searchClientList').keyup(function() {
+				
+				$.ajax({
+					url: "searchClientList.do",
+					type: "post",
+					data: {
+						client_name: $('#searchClientList').val()
+					},
+					dataType: "json",
+					success: function(data) {
+						var obj = JSON.stringify(data);
+						var json = JSON.parse(obj);
+						var clientList = "";
+						
+							for(var i in json.searchList) {
+								clientList += 
+									"<tr>"+
+										"<td>"+"<a href="+"detailClient.do?client_no="+json.searchList[i].client_no+">"+decodeURIComponent(json.searchList[i].client_name)+"</a>"+"</td>"+
+										"<td>"+decodeURIComponent(json.searchList[i].client_company)+"</td>"+
+										"<td>"+decodeURIComponent(json.searchList[i].client_job)+"</td>"+
+										"<td>"+json.searchList[i].client_email+"</td>"+
+										"<td>"+json.searchList[i].client_phone+"</td>"+
+										"<td>"+decodeURIComponent(json.searchList[i].client_addr.replace(/\+/g, " "))+"</td>"+
+									"</tr>";	
+							}
+									
+									$('table tbody').html(clientList);
+						}	//success
+				});	//ajax
+			});	//keyup				
+		});	//onload
+	</script>
 
 
 
-
-
-<!-- ----------------------스크립트관련 작업영역 끝------------------------ -->
+<!-- ---------------------- 고객리스트 검색 Ajax ------------------------ -->
 
 </head>
 
@@ -119,6 +155,12 @@ function clientList(){
 									<h2>
 										등록된 모든고객
 									</h2>
+								<form onsubmit="return false;">
+									<input style="float:right;"
+										type="text" id="searchClientList">
+										<button style="float:right" id="cSearch">검색</button>
+								</form>
+										
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
@@ -148,7 +190,7 @@ function clientList(){
 											
 										</c:forEach>
 
-										<tbody>
+										</tbody>
 									</table>
 								</div>
 							</div>

@@ -40,16 +40,18 @@
 <link href="resources/css/main.css" rel="stylesheet">
 
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
+
+
 <script type="text/javascript">
 	$(document).ready(function() {
-
-
+	
+			
 		//팀장 이름, 및 관리자 이름 가져오기
 		$.ajax({
 			url:"getName.do",
 			data:{emp_no :"${loginEmp.emp_no}"
 			},
-			type:"get",
+			type:"post",
 			dataType:"json",
 			success:function(data){
 			
@@ -57,7 +59,8 @@
 				$('#mgr_name').val(decodeURIComponent(data.mgr_name.replace(/\+/g," ")));
 				$('#team_mgr_no').val(data.team_mgr_no);
 				$('#mgr_no').val(data.mgr_no); //관리자의 사원번호
-		
+				alert("data.mgr_no"+data.mgr_no);
+				alert("team_mgr_no"+data.team_mgr_no);
 			
 			}
 		
@@ -65,9 +68,9 @@
 		});
 		
 		
-		
-		
-		
+	
+			
+			
 		
 		
 	
@@ -82,7 +85,7 @@ function resetContent(){
 	$('#approval_choose_no').val()="선택";
 }
 	
-	
+
 </script>
 </head>
 
@@ -117,8 +120,8 @@ function resetContent(){
 						<ul class="nav navbar-nav navbar-right">
 							<li class=""><a href="javascript:;"
 								class="user-profile dropdown-toggle" data-toggle="dropdown"
-								aria-expanded="false"> <img src="images/img.jpg" alt="">John
-									Doe <span class=" fa fa-angle-down"></span>
+								aria-expanded="false"> <img src="images/img.jpg" alt="">${loginEmp.emp_name}
+								<span class=" fa fa-angle-down"></span>
 							</a>
 								<ul class="dropdown-menu dropdown-usermenu pull-right">
 									<li><a href="javascript:;"> Profile</a></li>
@@ -126,7 +129,7 @@ function resetContent(){
 											class="badge bg-red pull-right">50%</span> <span>Settings</span>
 									</a></li>
 									<li><a href="javascript:;">Help</a></li>
-									<li><a href="login.html"><i
+									<li><a href="logout.do"><i
 											class="fa fa-sign-out pull-right"></i> Log Out</a></li>
 								</ul></li>
 
@@ -202,9 +205,9 @@ function resetContent(){
 												for="first-name">일자 <span class="required">*</span>
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<input type="date" required="required" name="approval_start_date" id="startDate"
+												<input type="date" required="required" name="approval_start_date" id="startDate" 
 													class="form-date col-md-5 col-xs-12" id="startDate">
-												<input type="date" required="required" name="approval_end_date" id="endDate"
+												<input type="date" required="required" name="approval_end_date" id="endDate" 
 													class="form-date col-md-5 col-xs-12">
 											</div>
 										</div>
@@ -231,9 +234,9 @@ function resetContent(){
 												class="control-label col-md-3 col-sm-3 col-xs-12">결재자(팀장)<span class="required">*</span></label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<div class="input-group" style="margin-bottom:0px;">
-													<input type="text" class="form-control" id="team_mgr" name readonly> <span
+													<input type="text" class="form-control" id="team_mgr" readonly> <span
 														class="input-group-btn">
-														<input type="hidden" name="team_mgr_no" id="team_mgr_no"/>	
+														<input type="hidden" name="approval_team_no" id="team_mgr_no"/>	
 														
 													</span>
 												</div>
@@ -246,7 +249,7 @@ function resetContent(){
 												<div class="input-group" style="margin-bottom:0px;">
 													<input type="text" class="form-control" id="mgr_name" readonly> <span
 														class="input-group-btn">
-													<input type="hidden" name="mgr_no" id="mgr_no"/>
+													<input type="hidden" name="approval_mgr_no" id="mgr_no"/>
 													</span>
 												</div>
 											</div>

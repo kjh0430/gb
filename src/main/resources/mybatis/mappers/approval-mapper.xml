@@ -5,9 +5,22 @@
 
 <mapper namespace="Approval">
 
+<resultMap id="approvalListE" type="approval">
+<id column="approval_no" property="approval_no"/>
+<result column="emp_no" property="emp_no"/>
+<result column="approval_choose_no" property="approval_choose_no"/>
+<result column="approval_submit_date" property="approval_submit_date"/>
+<result column="approval_start_date" property="approval_start_date"/>
+<result column="approval_end_date" property="approval_end_date"/>
+<result column="approval_comment" property="approval_comment"/>
+<result column="approval_team_date" property="approval_team_date"/>
+<result column="apporval_mgr_date" property="apporval_mgr_date"/>
+
+</resultMap>
+
 <select id="getName" parameterType="int" resultType="approval">
 <![CDATA[
-select t.emp_name as team_mgr_name,t.emp_no as team_mgr_no,a.emp_name as mgr_name,a.emp_no as mgr_no from
+select t.emp_name as team_mgr_name,t.emp_no as approval_team_no,a.emp_name as mgr_name,a.emp_no as approval_mgr_no from
 (select emp_name,emp_no from emp where emp_no = (select emp_mgr from emp where emp_no=#{emp_no})) t,
 (select emp_name,emp_no from emp where job_no=3) a
 
@@ -18,11 +31,64 @@ select t.emp_name as team_mgr_name,t.emp_no as team_mgr_no,a.emp_name as mgr_nam
 <insert id="ApprovalSubmit" parameterType="approval" flushCache="true">
 <![CDATA[
 insert into approval values((select max(approval_no)+1 
-from approval),#{emp_no},#{approval_choose_no},sysdate,
-#{approval_start_date},#{approval_end_date},#{approval_comment},null,null)
+from approval),#{emp_no},#{approval_choose_no},to_date(#{approval_submit_date},'yyyy-mm-dd hh24:mi:ss'),
+#{approval_start_date},#{approval_end_date},#{approval_comment},null,null,#{approval_team_no},#{approval_mgr_no})
 ]]>
 
-</insert>
+</insert> 
+
+<select id="approvalListE" parameterType="approval" resultType="approval" resultMap="approvalListE">
+<![CDATA[
+select t.emp_name as team_mgr_name,s.emp_name as mgr_name, a.approval_no,a.emp_no,a.approval_choose_no,to_char(a.approval_submit_date,'yyyy-mm-dd hh24:mi:ss') 
+as approval_submit_date,a.approval_start_date,a.approval_end_date,a.approval_comment,
+to_char(a.approval_team_date,'yyyy-mm-dd hh24:mi:ss') as 
+approval_team_date,a.approval_mgr_date from approval a,
+(select emp_name from emp where emp_no = (select emp_mgr from emp where emp_no=#{emp_no})) t,
+(select emp_name from emp where job_no=3) s where a.emp_no=#{emp_no}
+
+]]>
+</select>
+
+<select id="approvalListA" parameterType="approval" resultType="approval">
+
+
+<![CDATA[
+select h.emp_name as emp_name,h.dept_no as dept_no,a.approval_no,t.emp_name as team_mgr_name,s.emp_name as mgr_name,a.approval_no,a.emp_no,a.approval_choose_no,
+to_char(a.approval_submit_date,'yyyy-mm-dd hh24:mi:ss') as approval_submit_date,a.approval_start_date,
+a.approval_end_date,a.approval_comment,
+to_char(a.approval_team_date,'yyyy-mm-dd hh24:mi:ss') 
+as approval_team_date,a.approval_mgr_date from approval a
+
+]]>
+
+<choose>
+<when test="job_no==2">
+,(select emp_name,dept_no,emp_no from emp) h,
+(select emp_name,emp_no from emp where emp_no=#{emp_no}) t,(select emp_name,emp_no from emp where job_no=3) s 
+where t.emp_no=a.approval_team_no and h.emp_no=a.emp_no
+</when>
+<when test="job_no==3">
+,(select emp_name,dept_no,emp_no from emp) h,
+(select emp_name,emp_no from emp where emp_mgr is null) t,(select emp_name,emp_no from emp where job_no=3) s
+where a.approval_team_no=t.emp_no and a.approval_team_date is not null and h.emp_no=a.emp_no
+
+</when>
+
+</choose> 
+
+</select>
+
+<update id="updateTeamApproval" parameterType="approval">
+<![CDATA[
+update approval set approval_team_date =to_date(#{approval_team_date},'yyyy-mm-dd hh24:mi:ss') where approval_no=#{approval_no}
+
+]]>
+</update>
+<update id="updateMgrApproval" parameterType="approval">
+<![CDATA[
+update approval set approval_mgr_date =to_date(#{approval_mgr_date},'yyyy-mm-dd hh24:mi:ss') where approval_no=#{approval_no}
+]]>
+</update>
 
 
 </mapper>

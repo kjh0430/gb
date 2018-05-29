@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
+   	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,12 +33,13 @@
                   message_to_no : "${loginEmp.emp_no}"
                },
                type : "get",
+               dataType:"json",
                success : function(data) {
                   
                   var jsonSt = JSON.stringify(data);
                   var json = JSON.parse(jsonSt);
                   var size = Object.keys(json.list).length;
-if(size>0) {
+				if(size>0) {
                   var values = "<table class='table table-hover' id='table_rec'><thead><tr><th>보낸사람</th><th style='width:40%;'>제목</th><th>받은날짜</th><th>사번</th><th>내용</th><th>mnumber</th></thead>"
                         + "<tbody>"
 
@@ -73,8 +75,9 @@ if(size>0) {
 
                   
 }else{
-values="<br><br><br><br><br><br><h2 style='text-align:center;'>받은 쪽지가 없습니다.</h2><br><br><br><br><br><br>"
-	$('#receive_msg').html(values);
+	values="<br><br><br><br><br><br><h2 style='text-align:center;'>받은 쪽지가 없습니다."+
+	"</h2><br><br><br><br><br><br>"
+		$('#receive_msg').html(values);	
 	
 }
                },
@@ -92,12 +95,13 @@ values="<br><br><br><br><br><br><h2 style='text-align:center;'>받은 쪽지가 
                message_from_no : "${loginEmp.emp_no}"
             },
             type : "get",
+            dataType:"json",
             success : function(data) {
             
                var jsonSt = JSON.stringify(data);
                var json = JSON.parse(jsonSt);
                var size = Object.keys(json.list).length;
-
+			if(size>0){
                var values = "<table class='table table-hover' id='table_sm'><thead><tr><th>받은사람</th><th style='width:40%;'>제목</th><th>받은날짜</th><th>내용</th><thead>"
                      + "<tbody>"
 
@@ -114,7 +118,13 @@ values="<br><br><br><br><br><br><h2 style='text-align:center;'>받은 쪽지가 
                values += "</tbody></table>"
 
                $('#send_msg').html(values);
-							
+	}else{
+	values="<br><br><br><br><br><br><h2 style='text-align:center;'>보낸 쪽지가 없습니다."+
+	"</h2><br><br><br><br><br><br>"
+		$('#send_msg').html(values);	
+	
+	
+}					
                
                
             },
@@ -168,12 +178,16 @@ values="<br><br><br><br><br><br><h2 style='text-align:center;'>받은 쪽지가 
          type : "post",
          dataType : "json",
          data : {
-        	 emp_name : $('#searchName').val(),
+        emp_name : $('#searchName').val(),
          message_from_no :"${loginEmp.emp_no}"
             },
             success : function(obj) {
-               var objStr = JSON.stringify(obj);
+               
+            	var objStr = JSON.stringify(obj);
                var jsonl = JSON.parse(objStr);
+               var size = Object.keys(jsonl.list).length;
+             
+               if(size>0){
                var value = "<table class='table table-hover' id='getvalues'><thead><tr><th>이름</th><th>직급</th><th>부서</th><th>e-mail</th><th>사원번호</th></tr></thead><tbody>";
 
                   for ( var i in jsonl.list) {
@@ -195,6 +209,15 @@ values="<br><br><br><br><br><br><h2 style='text-align:center;'>받은 쪽지가 
                   $('#myModal2').modal("show");
                   $('#searchTable').html(value);
 
+                  
+               }else{
+            	   value="<br><br><h2 style='text-align:center;'>검색 결과가 없습니다."+
+            		"</h2><br><br>";
+            			$('#myModal2').modal("show");
+            			$('#searchTable').html(value);	
+            	   
+            	   
+               }
                },error : function(request, status, errorData) {
                   alert("error code : " + request.status + "\n"
                   + "message :" + request.responseText + "\n"
@@ -215,24 +238,22 @@ values="<br><br><br><br><br><br><h2 style='text-align:center;'>받은 쪽지가 
       var dept_name = td.eq(1).text();
       var emp_job = td.eq(2).text();
       var emp_email = td.eq(3).text();
-      var emp_no = td.eq(4).text();
+       emp_no = td.eq(4).text();
       $('#myModal2').modal("hide");
       $('#searchName').val(emp_name);
 
-      $('#message_to_no').val(emp_no);
+      
    }
    //쪽지확인
    function confirm(obj){
-      
-	   
-	   
+     
 	  var content=$(obj);
       var td=content.children();
       
       var a_from_empName=td.eq(0).text();
       var a_message_title=td.eq(1).text();
       var a_message_date=td.eq(2).text();
-      var a_message_from_empNo=td.eq(3).text();
+     	 a_message_from_empNo=td.eq(3).text();
       var a_message_content=td.eq(4).text();
    	  //읽음처리를 위해 가져온 message_no
       var a_message_no=td.eq(5).text();
@@ -321,7 +342,7 @@ values="<br><br><br><br><br><br><h2 style='text-align:center;'>받은 쪽지가 
       
       //답장 보낼 때 추가
       $('#a_to_emp').val(a_from_empName); 
-      $('#to_emp_no').val(a_message_from_empNo);
+    
    }
    
    function confirmSend(obj){
@@ -345,16 +366,22 @@ values="<br><br><br><br><br><br><h2 style='text-align:center;'>받은 쪽지가 
       $('#modal4').modal("hide");
       
       $.ajax({
-         url:"sendAnswer.do",
+         url:"sub.do",
          type:"post",
          data:{
             message_from_no : "${loginEmp.emp_no}",
-            message_to_no : $('#to_emp_no').val(),
-            message_title : $('#anwer_title').val(),
+            message_to_no : a_message_from_empNo,
+            message_title : $('#answer_title').val(),
             message_content :$('#answer_content').val(),
             
          },success: function(data){
             alert(data);
+           
+            $('#answer_title').val("");
+            $('#answer_content').val("");
+           
+ 
+     	   
             //보낸쪽지함
             $.ajax({
                url : "sendMessage.do",
@@ -422,14 +449,22 @@ values="<br><br><br><br><br><br><h2 style='text-align:center;'>받은 쪽지가 
          type : "post",
          data : {
             message_from_no : "${loginEmp.emp_no}",
-            message_to_no : $('#message_to_no').val(),
+            message_to_no : emp_no,
             message_title : $('#message_title').val(),
             message_content : $('#message_content').val(),
             no : 1
 
          },
          success : function(data) {
-            alert(data);
+           
+        	 //닫으면 내용 지워주기
+        	   $('#searchName').val("");
+        	   $('#message_to_no').val("");
+        	   $('#message_title').val("");
+        	   $('#message_content').val("");
+        	 
+        	 
+        	 alert(data);
             //보낸쪽지함
             $.ajax({
                url : "sendMessage.do",
@@ -565,9 +600,15 @@ font-weight:900;
                <div class="clearfix"></div>
 
                <!-- sidebar menu -->
+              <c:if test="${loginEmp.job_no eq 1}">
                <%@ include file="../etc/sidebar.jsp"%>
+                </c:if> 
                <!-- /sidebar menu -->
-
+             
+              <c:if test="${loginEmp.job_no eq 2 || loginEmp.job_no eq 3}">
+                 <%@ include file="../etc/adminsidebar.jsp"%>
+              </c:if>
+              
             </div>
          </div>
 
@@ -647,10 +688,7 @@ font-weight:900;
                                                          <input type="text" class="form-control"
                                                             placeholder="받는이의 이름을 입력해주세요." id="searchName" required>
 
-                                                         <input type="hidden" name="message_from_no"
-                                                            value="${loginEmp.emp_no}"> <input
-                                                            type="hidden" name="message_to_no"
-                                                            id="message_to_no"> <span
+                                                        <span
                                                             class="input-group-btn">
                                                             <button type="button" class="btn btn-primary"
                                                                onclick="searchEmp();">
@@ -833,9 +871,9 @@ font-weight:900;
                                                    <div class="col-md-9 col-sm-9 col-xs-12">
                                                       <div class="input-group" style="width:100%">
                                                          <input type="text" class="form-control" 
-                                                             id="anwer_title"
+                                                             id="answer_title"
                                                             placeholder="제목을 입력해주세요." required>
-                                                            <input type="hidden" id="to_emp_no">
+                                                          
                                                       </div>
                                                    </div>
 

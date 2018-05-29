@@ -16,44 +16,18 @@
 <!-- Font Awesome -->
 <link href="resources/vendors/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet">
-<!-- NProgress -->
-<link href="resources/vendors/nprogress/nprogress.css" rel="stylesheet">
-<!-- iCheck -->
-<link href="resources/vendors/iCheck/skins/flat/green.css"
-	rel="stylesheet">
-
-<!-- bootstrap-progressbar -->
-<link
-	href="resources/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css"
-	rel="stylesheet">
-<!-- JQVMap -->
-<link href="resources/vendors/jqvmap/dist/jqvmap.min.css"
-	rel="stylesheet" />
-<!-- bootstrap-daterangepicker -->
-<link
-	href="resources/vendors/bootstrap-daterangepicker/daterangepicker.css"
-	rel="stylesheet">
 
 <!-- Custom Theme Style -->
 <link href="resources/build/css/custom.min.css" rel="stylesheet">
 <link href="resources/css/main.css" rel="stylesheet">
 
-
-
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
-$(document).ready(function() {
-    $('#table_cl').dataTable( {
-        ordering:false,
-        lengthChange:false,
-        pageLength:15
-    } );
-} );
-
-
-
 
 </script>
+
+
+</style>
 </head>
 
 
@@ -150,106 +124,165 @@ $(document).ready(function() {
 				<div class="">
 					<div class="page-title">
 						<div class="title_left">
-							<h3>
-								발주 리스트
-							</h3>
+							<h3>매출현황</h3>
 						</div>
 					</div>
-
 					<div class="clearfix"></div>
+					<!-- map start -->
+					<div class="row">
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							
 
+						</div>
+					</div>
+					<div class="clearfix"></div>
+					<br>
+					
+					 <form id="formTag" class="form-horizontal form-label-left input_mask" >
+					
+					<div class="row">
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							<div class="x_panel">
+						
+							<div class="x_title">
+									<h2>거래처 정보</h2>
+									
+									<div style="text-align:right">
+									<h4>${orderList.get(0).order_date.substring(0,10) }</h4>
+									</div>
+														
+								</div>
+							
+								<div class="x_content">
+									<br />
+									
+										
+										<div class="form-group">
+											<label class="col-sm-3 control-label">거래처명</label>
+											<div class="col-md-9 col-sm-9 col-xs-12">
+												<input type="text" class="form-control" name="client_name" id="searchComName2" value="${clientInfo.client_company }">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-3 control-label">거래처번호</label>
+											<div class="col-md-9 col-sm-9 col-xs-12">
+												<input type="text" class="form-control" name="client_no" id="clientNo" value="${clientInfo.client_no }">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12">담당자</label>
+											<div class="col-md-9 col-sm-9 col-xs-12">
+												<input type="text" class="form-control" id="searchEmpName" value="${clientInfo.emp_name}" name="emp_name">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12">전화번호</label>
+											<div class="col-md-9 col-sm-9 col-xs-12">
+												<input type="text" class="form-control" id="searchClientPhone" value="${clientInfo.client_phone }" name="client_phone">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12">주소</label>
+											<div class="col-md-9 col-sm-9 col-xs-12">
+												<input type="text" class="form-control" id="searchClientAddr" value="${clientInfo.client_addr }" >
+											</div>
+										</div>
+										
+								</div>
+								
+							</div>
+						</div>
+					</div><!-- row -->
 					<div class="row">
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
 								<div class="x_title">
 									<h2>
-										발주 리스트
+										주문제품
 									</h2>
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
-									
-									<table id="table_cl" class="table table-striped table-bordered" style="min-width:650px;">
+							
+
+									<table class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<th>주문번호</th>
-												<th>회사명</th>
-												<th>합계</th>
-												<th>발주날짜</th>
+												<th>제품번호</th>
+												<th>제품명</th>
+												<th>단가</th>
+												<th>수량</th>
 											</tr>
 										</thead>
-										<tbody>
+										<tbody class="order_body">
+										</tbody>	
 										
-											
-											
+											<c:forEach var="list" items="${orderList }">
 												<tr>												
-													<td></td>										
-													<td><a href="#"></td>
-													<td></td>
-													<td></td>
+													<td>${list.order_no }</td>										
+													<td><a href="#">${list.product_no}</td>
+													<td>${list.order_price }</td>
+													<td>${list.order_amount }</td>
 												</tr>
-											
-																
-											
-
-										<tbody>
+											</c:forEach>
+											<tr>
+											<td>합계</td>
+											<td></td>
+											<td></td>
+											<td>${price }</td>
+											</tr>
+										<!-- <thead>
+											<tr>
+												<th>제품번호</th>
+												<th>제품명</th>
+												<th>단가</th>
+												<th>수량</th>
+												<th>삭제</th>
+											</tr>
+										</thead>
+										<tbody id="order_tbody">
+											<tr>
+												<td>21549871</td>
+												<td>예가체프 아라비카 500g</td>
+												<td><input type="text" name="order_amount" class="form-control" value="13,000"/></td>
+												<td><input type="number" name="order_amount" class="form-control" min="1"/></td>
+												<td><button class="btn btn-danger btn-order">&nbsp;&nbsp;<i class="fa fa-trash-o"></i>&nbsp;&nbsp;</button></td>
+											</tr>
+										<tbody> -->
 									</table>
+								
+									<div class="ln_solid"></div>
+									<div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-3" style="margin:0px; text-align:right">
+											
+											<button type="button" class="btn btn-success" onclick="orderList.do">목록</button>
+									</div>
 								</div>
 							</div>
 						</div>
+					
+					
 					</div>
+					 </form> 
 				</div>
 			</div>
 		</div>
 	</div>
-	</div>
-	<!-- /page content -->
 
+	<!-- /page content
 	
-	</div>
-	</div>
+ -->
+
+
+
 
 	<!-- jQuery -->
 	<script src="resources/vendors/jquery/dist/jquery.min.js"></script>
 	<!-- Bootstrap -->
 	<script src="resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-	<!-- FastClick -->
-	<script src="resources/vendors/fastclick/lib/fastclick.js"></script>
-	<!-- NProgress -->
-	<script src="resources/vendors/nprogress/nprogress.js"></script>
-	<!-- iCheck -->
-	<script src="resources/vendors/iCheck/icheck.min.js"></script>
-	<!-- Datatables -->
-	<script
-		src="resources/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-	<script
-		src="resources/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-	<script src="resources/vendors/jszip/dist/jszip.min.js"></script>
-	<script src="resources/vendors/pdfmake/build/pdfmake.min.js"></script>
-	<script src="resources/vendors/pdfmake/build/vfs_fonts.js"></script>
-
+	
 	<!-- Custom Theme Scripts -->
 	<script src="resources/build/js/custom.min.js"></script>
+	
 
 </body>
 </html>
