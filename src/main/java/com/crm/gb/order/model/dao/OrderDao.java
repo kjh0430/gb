@@ -32,8 +32,8 @@ public class OrderDao {
 		return (ArrayList)sqlSession.selectList("selectAllOrderList",emp_no);
 	}
 	
-	public ArrayList<Order> selectOrderList2(int order_no){
-		return (ArrayList)sqlSession.selectList("selectOrderList2", order_no);
+	public ArrayList<Order> selectOrderList2(Order order){
+		return (ArrayList)sqlSession.selectList("selectOrderList2", order);
 	}
 	/* 방문일지를 위한 주문 목록 */
 	public ArrayList<Order> selectOrderlist(Order order) {

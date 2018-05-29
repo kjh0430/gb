@@ -34,7 +34,7 @@ var orderInfo = new Array();
 			dataType : "json",
 			data : {
 				searchComName : $('#searchComName').val(),
-				emp_no : ${loginEmp.emp_no}
+				emp_no : '${loginEmp.emp_no}'
 			},
 			success : function(obj){
 				var objStr = JSON.stringify(obj);
@@ -402,12 +402,7 @@ var orderInfo = new Array();
 												<input type="text" class="form-control" id="searchClientAddr" value="" placeholder="주소">
 											</div>
 										</div>
-										<div class="form-group">
-											<label class="control-label col-md-3 col-sm-3 col-xs-12">비고</label>
-											<div class="col-md-9 col-sm-9 col-xs-12">
-												<textarea class="form-control" rows="3"> </textarea>
-											</div>
-										</div>
+										
 								</div>
 								
 							</div>

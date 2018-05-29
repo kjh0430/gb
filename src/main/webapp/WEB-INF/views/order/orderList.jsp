@@ -180,17 +180,16 @@ $(document).ready(function() {
 										</thead>
 										<tbody>
 										
-											<c:forEach var="list" items="${orderList }">
+											
 											
 												<tr>												
-													<td>${list.order_no }</td>										
-													<td><a href="#">${list.client_company }</td>
-													<td>${list.order_price }</td>
-													<td>${list.order_date }</td>
+													<td></td>										
+													<td><a href="#"></td>
+													<td></td>
+													<td></td>
 												</tr>
 											
-											</c:forEach>
-										
+																
 											
 
 										<tbody>
