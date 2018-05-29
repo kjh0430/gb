@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,14 +15,20 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.impl.Log4JLogger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.crm.gb.client.controller.ClientController;
+import com.crm.gb.notice.controller.NoticeController;
+import com.crm.gb.notice.model.vo.Notice;
 import com.crm.gb.product.model.service.ProductService;
 import com.crm.gb.product.model.vo.Product;
 import com.crm.gb.product.model.vo.ProductFile;
@@ -29,6 +36,8 @@ import com.crm.gb.product.model.vo.ProductFile;
 
 @Controller
 public class ProductController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
 	
 	@Autowired
 	ProductService productService;
@@ -47,23 +56,44 @@ public class ProductController {
 		return "main";
 	}
 	
+	
+	
 	//상품 리스트 화면으로 이동: 권성훈
 	@RequestMapping("productList.do")
-	public String moveProductList(HttpServletResponse response) throws IOException{
+	public String moveProductList(HttpServletResponse response, Model model) throws IOException{
 		System.out.println("test moveProductList run...");
 		ArrayList<Product> list = new ArrayList<Product>();	
 		for(int i=0; i<productService.selectAllList().size(); i++) {
-			list.add(i, productService.selectAllList().get(i));
+			list.add(i, ((ArrayList<Product>)productService.selectAllList()).get(i));
 		}
 		
-		JSONObject sendJson = new JSONObject();
+		model.addAttribute("list",list);
+		
+		
+		/*JSONObject sendJson = new JSONObject();
 		JSONArray jarr = new JSONArray();
 		
-		/*for(Product product : list) {
+		for(Product product : list) {
 			JSONObject jp = new JSONObject();
-			jp.put("", )
-		}*/
+			jp.put("productno",product.getProduct_no());
+			jp.put("productname",product.getProduct_name());
+			jp.put("productprice", product.getProduct_price());
+			jp.put("productavailability", product.getProduct_availability());
+			jp.put("productamount", product.getProduct_amount());
+			jp.put("productcomment", product.getProduct_comment());
+			jp.put("productregister", product.getProduct_register());
+			jp.put("productdelete", product.getProduct_delete());
+			jarr.add(jp);
+		}
+		JSONObject sendjson = new JSONObject();
+		sendjson.put("list",jarr);
 		
+		response.setContentType("application/json; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		out.print(sendJson.toJSONString());
+		out.flush();
+		out.close();
+*/		
 		return "product/productList";
 	}
 

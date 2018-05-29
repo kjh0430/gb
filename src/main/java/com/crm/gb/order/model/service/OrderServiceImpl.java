@@ -46,8 +46,8 @@ public class OrderServiceImpl implements OrderService{
 	}
 	
 	@Override
-	public ArrayList<Order> selectOrderList2(int order_no){
-		return orderDao.selectOrderList2(order_no);
+	public ArrayList<Order> selectOrderList2(Order order){
+		return orderDao.selectOrderList2(order);
 	}
 
 	/* 영업일지에 나오는 orderList 메소드 */
@@ -56,5 +56,9 @@ public class OrderServiceImpl implements OrderService{
 		return orderDao.selectOrderlist(order);
 	}
 	
-	
+	/** 매출현황 전체 리스트 출력 메소드 **/
+	@Override
+	public ArrayList<Order> selectAllOrderList(){
+		return orderDao.selectAllOrderList();
+	}
 }

@@ -25,13 +25,7 @@
 <script type="text/javascript">
 
 </script>
-<style type="text/css">
-	.table > tbody > tr > td{
-		vertical-align:middle;
-	}
-	.btn-order{
-		padding:3px 6px;
-	}
+
 
 </style>
 </head>
@@ -149,10 +143,16 @@
 					<div class="row">
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
-							<h2>거래처 정보</h2>
-							<hr>
-
-								
+						
+							<div class="x_title">
+									<h2>거래처 정보</h2>
+									
+									<div style="text-align:right">
+									<h4>${orderList.get(0).order_date.substring(0,10) }</h4>
+									</div>
+														
+								</div>
+							
 								<div class="x_content">
 									<br />
 									
@@ -160,39 +160,34 @@
 										<div class="form-group">
 											<label class="col-sm-3 control-label">거래처명</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
-												<input type="text" class="form-control" name="client_name" id="searchComName2" value="">
+												<input type="text" class="form-control" name="client_name" id="searchComName2" value="${clientInfo.client_company }">
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="col-sm-3 control-label">거래처번호</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
-												<input type="text" class="form-control" name="client_no" id="clientNo">
+												<input type="text" class="form-control" name="client_no" id="clientNo" value="${clientInfo.client_no }">
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">담당자</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
-												<input type="text" class="form-control" id="searchEmpName" value="" name="emp_name">
+												<input type="text" class="form-control" id="searchEmpName" value="${clientInfo.emp_name}" name="emp_name">
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">전화번호</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
-												<input type="text" class="form-control" id="searchClientPhone" value="" name="client_phone">
+												<input type="text" class="form-control" id="searchClientPhone" value="${clientInfo.client_phone }" name="client_phone">
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">주소</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
-												<input type="text" class="form-control" id="searchClientAddr" value="" >
+												<input type="text" class="form-control" id="searchClientAddr" value="${clientInfo.client_addr }" >
 											</div>
 										</div>
-										<div class="form-group">
-											<label class="control-label col-md-3 col-sm-3 col-xs-12">비고</label>
-											<div class="col-md-9 col-sm-9 col-xs-12">
-												<textarea class="form-control" rows="3"></textarea>
-											</div>
-										</div>
+										
 								</div>
 								
 							</div>
@@ -217,11 +212,25 @@
 												<th>제품명</th>
 												<th>단가</th>
 												<th>수량</th>
-												<th>삭제</th>
 											</tr>
 										</thead>
 										<tbody class="order_body">
 										</tbody>	
+										
+											<c:forEach var="list" items="${orderList }">
+												<tr>												
+													<td>${list.product_no }</td>										
+													<td><a href="#">${list.product_name}</td>													
+													<td>${list.order_amount }</td>
+													<td>${list.order_price }</td>
+												</tr>
+											</c:forEach>
+											<tr>
+											<td>합계</td>
+											<td></td>
+											<td></td>
+											<td>${price }</td>
+											</tr>
 										<!-- <thead>
 											<tr>
 												<th>제품번호</th>
