@@ -39,4 +39,14 @@ public class ApprovalDao {
 		return (ArrayList)sqlSession.selectList("approvalListA",apr);
 	}
 
+	public int updateTeamApproval(Approval apr) {
+		
+		return sqlSession.update("updateTeamApproval",apr);
+	}
+
+	public int updateMgrApproval(Approval apr) {
+	
+		return sqlSession.update("updateMgrApproval",apr);
+	}
+
 }

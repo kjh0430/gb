@@ -52,6 +52,7 @@
 		<result column="client_comment" property="client_comment"/>
 		<result column="emp_no" property="emp_no"/>
 		<result column="client_enroll" property="client_enroll"/>
+		<result column="emp_name" property="emp_name"/>
 	</resultMap>
 
 	<!-- 첨부파일 리스트 조회  -->
@@ -225,6 +226,13 @@
 		<![CDATA[
 			select * from client
 			where emp_no = #{emp_no}
+		]]>
+	</select>
+	
+	<select id="selectOrderClient" parameterType="order" resultMap="resultAccountClient">
+		<![CDATA[
+			select * from client, emp
+			where client_no = #{client_no} and client.emp_no = emp.emp_no
 		]]>
 	</select>
 </mapper>

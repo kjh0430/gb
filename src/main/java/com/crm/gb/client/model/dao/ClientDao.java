@@ -1,8 +1,6 @@
 package com.crm.gb.client.model.dao;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.crm.gb.client.model.vo.Client;
 import com.crm.gb.client.model.vo.ClientFile;
-import com.crm.gb.emp.model.vo.Emp;
+import com.crm.gb.order.model.vo.Order;
 
 @Repository("clientDao")
 public class ClientDao {
@@ -99,6 +97,10 @@ public class ClientDao {
 		return sqlSession.update("updateClientContract", client_no);
 	}
 
+	/** 발주정보 상세보기 메소드 DAO**/
+	public Client selectOrderClient(Order order) {
+		return sqlSession.selectOne("selectOrderClient", order);
+	}
 	/** 거래처 이름으로 검색 메소드 Dao */
 	public ArrayList<Client> selectSearchClient(String client_name) {
 		return (ArrayList)sqlSession.selectList("searchClientList", client_name);

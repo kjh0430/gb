@@ -59,13 +59,14 @@
 	      group by c.client_company,ol.order_no,ol.client_no,ol.emp_no,ol.order_date order by order_date
 	   ]]>
    </select>
-   
-   <select id="selectOrderList2" resultMap="resultOrderlist2">
+
+   <select id="selectOrderList2" resultMap="resultOrderlist2" parameterType="_int">
    		<![CDATA[
-   			selcet
-   		]]>	
-   	
+ 			select * from orderlist
+			where order_no = #{order_no}  			
+   		]]>	  	
    </select>
+   
 
 
 

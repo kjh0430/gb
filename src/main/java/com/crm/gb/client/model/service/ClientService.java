@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.crm.gb.client.model.vo.Client;
 import com.crm.gb.client.model.vo.ClientFile;
+import com.crm.gb.order.model.vo.Order;
 
 public interface ClientService {
 	
@@ -26,4 +27,5 @@ public interface ClientService {
 
 	ArrayList<Client> selectAllAccountClient(int emp_no); // 방문일지용 거래처목록
 
+	public abstract Client selectOrderClient(Order order); //발주정보 상세보기
 }

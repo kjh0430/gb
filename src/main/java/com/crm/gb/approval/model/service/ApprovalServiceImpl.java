@@ -48,5 +48,22 @@ private ApprovalDao ApprovalDao;
 		return ApprovalDao.selectapprovalListA(apr);
 	}
 
+
+
+	@Override
+	public int updateTeamApproval(Approval apr) {
+		
+		
+		return ApprovalDao.updateTeamApproval(apr);
+	}
+
+
+
+	@Override
+	public int updateMgrApproval(Approval apr) {
+	
+		return ApprovalDao.updateMgrApproval(apr);
+	}
+
 	
 }

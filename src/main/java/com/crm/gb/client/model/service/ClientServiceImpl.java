@@ -1,8 +1,6 @@
 package com.crm.gb.client.model.service;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.crm.gb.client.model.dao.ClientDao;
 import com.crm.gb.client.model.vo.Client;
 import com.crm.gb.client.model.vo.ClientFile;
-import com.crm.gb.emp.model.vo.Emp;
+import com.crm.gb.order.model.vo.Order;
 
 @Service("clientService")
 public class ClientServiceImpl implements ClientService{
@@ -100,10 +98,16 @@ public class ClientServiceImpl implements ClientService{
 	}
 	
 	/** 거래처 이름 검색 결과 리스트 메소드 **/
+	@Override
 	public ArrayList<Client> selectSearchAccount(Client clientInfo){
 		return clientDao.selectSearchAccount(clientInfo);
 	}
 	
+	/** 발주정보 상세보기 메소드 **/
+	@Override
+	public Client selectOrderClient(Order order) {
+		return clientDao.selectOrderClient(order);
+	}
 	
 	/** 방문일지용 고객정보 조회 메소드 */
 	@Override

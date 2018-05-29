@@ -22,6 +22,7 @@ import com.crm.gb.client.controller.ClientController;
 import com.crm.gb.client.model.service.ClientService;
 import com.crm.gb.client.model.vo.Client;
 import com.crm.gb.contract.model.service.ContractService;
+import com.crm.gb.emp.model.service.EmpService;
 import com.crm.gb.order.model.service.OrderService;
 import com.crm.gb.order.model.vo.Order;
 import com.crm.gb.product.model.service.ProductService;
@@ -44,6 +45,9 @@ public class OrderController {
 	
 	@Autowired
 	private ContractService contractService;
+	
+	@Autowired
+	private EmpService empService;
 
 	//발주하기-페이지이동과 고객검색용 메소드
 	@RequestMapping(value="selectOrderClient.do")
@@ -126,7 +130,7 @@ public class OrderController {
 		request.getParameter("order_price");
 		
 		int order_no = orderService.selectOrderMaxNo();
-		System.out.println("orderNo : " + order_no);
+	//	System.out.println("orderNo : " + order_no);
 		//System.out.println(request.getParameter("emp_no")+","+request.getParameter("client_no"));
 		int emp_no = Integer.parseInt(request.getParameter("emp_no"));
 		int client_no = Integer.parseInt(request.getParameter("client_no"));
@@ -143,12 +147,12 @@ public class OrderController {
 		
 			orderlist.setOrder_no(order_no);
 			orderlist.setOrder_amount(Integer.parseInt(amountlist[i]));
-			orderlist.setOrder_price(Integer.parseInt(orderPrice[i])*(1-contract_discount/100.0));
+			orderlist.setOrder_price((int)(Integer.parseInt(orderPrice[i])*(1-contract_discount/100.0)));
 			orderlist.setProduct_no(Integer.parseInt(productNo[i]));		
 
-			System.out.println("orderlist 111: " + orderlist.toString());
+			//System.out.println("orderlist 111: " + orderlist.toString());
 			int result = orderService.insertOrderList(orderlist);
-			System.out.println("등록!!!  : " + result);
+			//System.out.println("등록!!!  : " + result);
 		
 		}
 		
@@ -165,20 +169,40 @@ public class OrderController {
 			logger.info("매출현황 메소드 run...");
 			int emp_no = Integer.parseInt(empNo);
 			
-			ArrayList<Order> orderList = orderService.selectAllOrder(emp_no);
-			model.addAttribute("orderList", orderList);
-			
+//			ArrayList<Order> orderList = orderService.selectAllOrder(emp_no);
+//			model.addAttribute("orderList", orderList);
+//			
 			return "order/orderList";
 		}
 		
 	//orderlist 상세보기 	
 		@RequestMapping(value="orderdetail.do")
-		public String orderDetailPage(@RequestParam("order_no") String orderNo) {
+		public String orderDetailPage(Order order, Model model ,Model model2, Model model3) {
 			logger.info("주문 상세보기 메소드 run...");
 			
-			int order_no = Integer.parseInt(orderNo);
+		
+			ArrayList<Order> orderList = orderService.selectOrderList2(order);
+			//System.out.println("orderList : " + orderList);
+			model.addAttribute("orderList",orderList);
+		
+			order.setClient_no(orderList.get(0).getClient_no());
+			//order.setEmp_name(orderList.get(0).getEmp_name());
 			
-			ArrayList<Order> orderList = orderService.selectOrderList2(order_no);
+			//System.out.println("order : " + order);			
+	
+			//고객 정보 전달용 
+			Client clientInfo = clientService.selectOrderClient(order);
+			//System.out.println("clientInfo : " + clientInfo);
+			model2.addAttribute("clientInfo",clientInfo);
+			
+			//주문 상품 금액 합계 전달용 
+			int price=0;
+			for(int i=0; i < orderList.size(); i++) {
+				price += orderList.get(i).getOrder_price() * orderList.get(i).getOrder_amount();
+			}
+			
+			//System.out.println("price : " + price);
+			model3.addAttribute("price",price);
 			
 			return "order/orderDetail";
 		}
