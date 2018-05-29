@@ -28,7 +28,7 @@
 		<mapper resource="mybatis/mappers/dailywork-mapper.xml" />
 		<mapper resource="mybatis/mappers/message-mapper.xml"/>
 		<mapper resource="mybatis/mappers/order-mapper.xml"/>
-		<!-- <mapper resource="mybatis/mappers/contract-mapper.xml"/> -->
+		<mapper resource="mybatis/mappers/contract-mapper.xml"/>
 		<mapper resource="mybatis/mappers/approval-mapper.xml"/>
 
 	</mappers>

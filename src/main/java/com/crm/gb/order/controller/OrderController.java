@@ -46,8 +46,7 @@ public class OrderController {
 	@Autowired
 	private ContractService contractService;
 	
-	@Autowired
-	private EmpService empService;
+
 
 	//발주하기-페이지이동과 고객검색용 메소드
 	@RequestMapping(value="selectOrderClient.do")
@@ -130,20 +129,21 @@ public class OrderController {
 		request.getParameter("order_price");
 		
 		int order_no = orderService.selectOrderMaxNo();
-	//	System.out.println("orderNo : " + order_no);
+		//System.out.println("orderNo : " + order_no);
 		//System.out.println(request.getParameter("emp_no")+","+request.getParameter("client_no"));
 		int emp_no = Integer.parseInt(request.getParameter("emp_no"));
+		//System.out.println("emp_no : " + emp_no);
 		int client_no = Integer.parseInt(request.getParameter("client_no"));
-		
+		//System.out.println("client_no : " + client_no);
 		int contract_discount = contractService.selectDiscount(client_no);
-	//	System.out.println("contract_discount : " + contract_discount);
+		//System.out.println("contract_discount : " + contract_discount);
 		
 		String productNo[] = request.getParameterValues("product_no");
 		String orderPrice[] = request.getParameterValues("order_price");
 		String amountlist[] = request.getParameterValues("order_amount");
 		
 		for(int i=0; i < orderPrice.length; i++) {
-			System.out.println("no:"+productNo[i]+" ,price : " + orderPrice[i] + " , amount : " + amountlist[i]);
+			//System.out.println("no:"+productNo[i]+" ,price : " + orderPrice[i] + " , amount : " + amountlist[i]);
 		
 			orderlist.setOrder_no(order_no);
 			orderlist.setOrder_amount(Integer.parseInt(amountlist[i]));
@@ -162,15 +162,16 @@ public class OrderController {
 		return "order/order";
 	}
 	
-	//매출현황 페이지 이동 메소드 
+	//매출현황 페이지 메소드 
 		@RequestMapping(value="orderList.do")
-		public String orderListPage(@RequestParam("emp_no") String empNo,Model model){
+		public String orderListPage(Model model){
 			
 			logger.info("매출현황 메소드 run...");
-			int emp_no = Integer.parseInt(empNo);
+			//int emp_no = Integer.parseInt(empNo);
 			
-//			ArrayList<Order> orderList = orderService.selectAllOrder(emp_no);
-//			model.addAttribute("orderList", orderList);
+			ArrayList<Order> orderList = orderService.selectAllOrderList();
+			System.out.println("orderList: " + orderList.get(0).toString());
+			model.addAttribute("orderList", orderList);
 //			
 			return "order/orderList";
 		}

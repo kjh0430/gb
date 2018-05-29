@@ -181,13 +181,14 @@ $(document).ready(function() {
 										<tbody>
 										
 											
-											
+											<c:forEach var="list" items="${orderList }"> 
 												<tr>												
-													<td></td>										
-													<td><a href="#"></td>
-													<td></td>
-													<td></td>
+													<td>${list.order_no }</td>										
+													<td><a href="orderdetail.do?order_no=${list.order_no}">${list.client_company }</td>
+													<td>${list.total }</td>
+													<td>${list.order_date }</td>
 												</tr>
+											</c:forEach>	
 											
 																
 											

@@ -220,9 +220,9 @@
 											<c:forEach var="list" items="${orderList }">
 												<tr>												
 													<td>${list.order_no }</td>										
-													<td><a href="#">${list.product_no}</td>
-													<td>${list.order_price }</td>
+													<td><a href="#">${list.product_name}</td>													
 													<td>${list.order_amount }</td>
+													<td>${list.order_price }</td>
 												</tr>
 											</c:forEach>
 											<tr>
