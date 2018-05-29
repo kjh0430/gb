@@ -20,11 +20,34 @@
 
 <script type="text/javascript">
 	
-		/** 로그인 submit */
-		function login() {
-			$('#loginForm').submit();
-		}
-			
+			/** 로그인 submit */
+			/* function login() {
+				$('#loginForm').submit();
+			} */
+		
+		$(function(){
+			$('#mainLoginBtn').on('click', function(){
+				$.ajax({
+					url: "login.do",
+					data: {
+						emp_no: $('#emp_no').val(),
+						emp_pwd: $('#emp_pwd').val()
+					},
+					type: "post",
+					success: function(data) {
+						if(data == "correct") {
+							location.href="mainView.do"	
+						}else {
+							alert("사원번호와 비밀번호를 확인하시기 바랍니다.");
+							$('#emp_no').val("");
+							$('#emp_pwd').val("");
+							return false;
+						}
+					}
+				});	//ajax
+			});	//click
+		}); //onload
+		
 	
 </script>
 
@@ -43,17 +66,17 @@
 						<img src="resources/images/login.png" style="margin-bottom:20px;"/>
 						
 						<div>
-							<input type="text" name="emp_no" class="form-control" placeholder="Username"
+							<input id="emp_no" type="text" name="emp_no" class="form-control" placeholder="Username"
 								required>
 						</div>
 						<div>
-							<input type="password" name="emp_pwd" class="form-control"
+							<input id="emp_pwd" type="password" name="emp_pwd" class="form-control"
 								placeholder="Password"/>
 						</div>
 						<div>
-							<input type="button" class="btn btn-default submit" 
+							<input id="mainLoginBtn" type="button" class="btn btn-default submit" 
 								style="background:#344659;width:100%;color:#fff; left-margin:0px;" 
-									value="LOGIN" onclick="login()"/>							
+									value="LOGIN" />							
 						</div><br/>
 						<!-- <a class="reset_pass" href="#">Lost your password?</a> -->
 						<a class="reset_pass" href="adminmain.do">관리자main보기</a> 

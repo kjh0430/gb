@@ -87,6 +87,12 @@ public class ClientServiceImpl implements ClientService{
 		return clientDao.insertClientFile(clientFile);
 	}
 	
+	/** 거래처 이름 검색 메소드 */
+	@Override
+	public ArrayList<Client> selectClientList(String client_name) {
+		return clientDao.selectSearchClient(client_name);
+	}
+	
 	/** 고객이 갖고있는 첨부파일 조회 메소드 */
 	@Override
 	public ArrayList<ClientFile> selectClientFileList(int client_no) {
@@ -105,4 +111,10 @@ public class ClientServiceImpl implements ClientService{
 		return clientDao.selectAllAccountClient(emp_no);
 	}
 		
+	/** 잠재고객 이름으로 검색 */
+	@Override
+	public ArrayList<Client> selectPoList(String client_name) {
+		return clientDao.selectPoList(client_name);
+	}
+	
 }

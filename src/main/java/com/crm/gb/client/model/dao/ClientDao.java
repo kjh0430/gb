@@ -99,5 +99,15 @@ public class ClientDao {
 		return sqlSession.update("updateClientContract", client_no);
 	}
 
+	/** 거래처 이름으로 검색 메소드 Dao */
+	public ArrayList<Client> selectSearchClient(String client_name) {
+		return (ArrayList)sqlSession.selectList("searchClientList", client_name);
+	}
+
+	/** 잠재고객 이름으로 검색 메소드 Dao */
+	public ArrayList<Client> selectPoList(String client_name) {
+		return (ArrayList)sqlSession.selectList("searchPoList", client_name);
+	}
+
 	
 }
