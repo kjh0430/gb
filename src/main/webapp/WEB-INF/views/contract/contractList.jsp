@@ -139,7 +139,7 @@ function clientList(){
 										
 										<c:forEach var="list" items="${ contractList }">
 											<tr>
-												<td><a href="detailContract.do?client_no=${ list.client_no }">${ list.client.client_name }</a></td>
+												<td><a href="contractDetail.do?client_no=${ list.client.client_no }">${ list.client.client_name }</a></td>
 												<td>${ list.client.client_company }</td>
 												<td>${ list.client.client_phone }</td>
 												<td>${ list.contract_discount }</td>

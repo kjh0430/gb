@@ -39,7 +39,8 @@
 		
 		//정보수정 취소
 		$('#cancelClientBtn').on('click', function(){
-			location.href="detailClient.do?client_no="+""+${ detailClient.client_no }+"";
+			//location.href="detailClient.do?client_no="+""+${ detailClient.client_no }+"";
+			history.go(-1);
 		});
 		
 	});

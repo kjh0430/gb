@@ -48,7 +48,7 @@ $(document).ready(function() {
 		//계약하기
 		$('#contractBtn').on('click', function(){
 			location.href="contractView.do?client_no="+""+${ detailClient.client_no }+"";
-			
+			return false;
 		});
 		
 	});
@@ -245,7 +245,7 @@ $(document).ready(function() {
 												<button type="submit" class="btn btn-primary">정보수정</button>
 												
 												<c:if test="${ detailClient.client_contract eq 'N' }">
-													<button id="contractBtn" class="btn btn-primary" type="button">계약하기</button>
+													<button id="contractBtn" class="btn btn-primary" type="button" onsumbit="return false">계약하기</button>
 												</c:if>
 												
 												<button id="deleteClient" class="btn btn-primary" type="button">거래처 삭제</button>

@@ -16,19 +16,11 @@
 <!-- Font Awesome -->
 <link href="resources/vendors/font-awesome/css/font-awesome.min.css"
    rel="stylesheet">
-<!-- NProgress -->
-<link href="resources/vendors/nprogress/nprogress.css" rel="stylesheet">
-<!-- iCheck -->
-<link href="resources/vendors/iCheck/skins/flat/green.css"
-   rel="stylesheet">
 
 <!-- bootstrap-progressbar -->
 <link
    href="resources/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css"
    rel="stylesheet">
-<!-- JQVMap -->
-<link href="resources/vendors/jqvmap/dist/jqvmap.min.css"
-   rel="stylesheet" />
 <!-- bootstrap-daterangepicker -->
 <link
    href="resources/vendors/bootstrap-daterangepicker/daterangepicker.css"
@@ -50,6 +42,13 @@
       padding:3px 6px;
    }
 
+	.jSignature{
+		width: 200px;
+		height: 100px;
+	}
+	.client_resetBtn{ cursor: pointer;}
+	.emp_resetBtn{ cursor: pointer;}
+	
 </style>
 
 <script type="text/javascript">
@@ -70,7 +69,13 @@
 	function resetFile(){
 		$("#firstFile").val("");
 	}
-
+	
+	$(function(){
+		document.getElementById("to_date").valueAsDate = new Date();		
+		selectVisit();	
+		
+	});
+	
 </script>
 
 </head>
@@ -258,7 +263,7 @@
                                  </div>
                               </div>
                               <div class="form-group">
-                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">할인율</label>
+                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">할인율 (%)</label>
                                  <div class="col-md-9 col-sm-9 col-xs-12">
                                     <input type="text" class="form-control" 
                                     placeholder="기본 10%" name="contract_discount">
@@ -268,7 +273,7 @@
                                  <label class="control-label col-md-3 col-sm-3 col-xs-12">계약 시작일</label>
                                  <div class="col-md-9 col-sm-9 col-xs-12">
                                     <input type="date" class="form-control" 
-                                    placeholder="" name="contract_date_start">
+                                    id="to_date" name="contract_date_start">
                                  </div>
                               </div>
                               <div class="form-group">
@@ -284,6 +289,24 @@
                                     <input type="text" class="form-control" 
                                     placeholder="사업자등록번호" name="business_no">
                                  </div>
+                              </div>
+                              <div class="form-group">
+                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                 주문자 서명 &nbsp; 
+                                 <a href="javascript:clientReset();">reset</a></label>
+                                 
+                                <span id="clientSignature_input"></span>
+                                	<input type="hidden" id="clientSign" name="client_Sign">
+							     
+                              </div>
+                              <div class="form-group">
+                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                 납품자 서명 &nbsp; 
+                                 <a href="javascript:empReset();">reset</a></label>
+                                 
+                                 <span id="empSignature_input"></span>
+                                	<input type="hidden" id="empSign" name="emp_Sign">
+                                 
                               </div>
                             <!-- <div class="form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">
@@ -303,11 +326,12 @@
                            
                            <div class="ln_solid"></div>
                            <div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-3" style="margin:0px">
-                                 <button type="button" class="btn btn-primary">취소</button>
-                                 <button type="submit" class="btn btn-success">확인</button>
+                                 <button id="cancelContractBtn" type="button" class="btn btn-primary">취소</button>
+                                 <button id="firmContractBtn" type="submit" class="btn btn-success">확인</button>
                            </div>
                            
                            </form>
+                               
                            
                         </div>
                      </div>
@@ -322,22 +346,48 @@
    </div>
 
    <!-- /page content -->
+   
+   <!-- 서명관련 스크립트 시작-->
+   <script src="resources/jSignature/jSignature.min.js"></script>
+	<script>
+	    $(document).ready(function() {
+	        $("#clientSignature_input").jSignature();
+	        $("#empSignature_input").jSignature();
+	       		
+	        
+	        $('#firmContractBtn').on('click', function(){
+	        	
+	        	var clientSign = $("#clientSignature_input").jSignature("getData", "svgbase64");
+	        	var empSign = $("#empSignature_input").jSignature("getData", "svgbase64");
+	        	
+	        	//$('#clientSign').val(cimg.src);
+	        	//$('#empSign').val(eimg.src);
+	        	$('#clientSign').val(clientSign[0]+","+clientSign[1]);
+	        	$('#empSign').val(empSign[0]+","+empSign[1]);
+	        	
+	        
+	        });
+	    });
+	    
+		function clientReset(){
+        	$("#clientSignature_input").jSignature("reset");
+		}	        
+        function empReset(){
+        	$("#empSignature_input").jSignature("reset");
+        }
+	        
+	        
+	    $('#cancelContractBtn').on('click', function(){
+	    	history.go(-1);
+	    });
+	    
+	</script>
+	<!-- 서명관련 스크립트 끝 -->
 
-
-
-
-   <!-- jQuery -->
-   <script src="resources/vendors/jquery/dist/jquery.min.js"></script>
+   
    <!-- Bootstrap -->
    <script src="resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-   <!-- FastClick -->
-   <script src="resources/vendors/fastclick/lib/fastclick.js"></script>
-   <!-- NProgress -->
-   <script src="resources/vendors/nprogress/nprogress.js"></script>
-   <!-- iCheck -->
-   <script src="resources/vendors/iCheck/icheck.min.js"></script>
-
-
+   
    <!-- Custom Theme Scripts -->
    <script src="resources/build/js/custom.min.js"></script>
    
