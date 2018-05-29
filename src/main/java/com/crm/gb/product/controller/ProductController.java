@@ -57,7 +57,7 @@ public class ProductController {
 			list.add(i, productService.selectAllList().get(i));
 		}
 		
-		JSONObject sendJson = new JSONObject();
+		/*JSONObject sendJson = new JSONObject();
 		JSONArray jarr = new JSONArray();
 		
 		for(Product product : list) {
@@ -81,7 +81,7 @@ public class ProductController {
 		out.print(sendJson.toJSONString());
 		out.flush();
 		out.close();
-		
+		*/
 		return "product/productList";
 	}
 
