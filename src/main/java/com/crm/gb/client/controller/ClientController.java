@@ -3,12 +3,18 @@ package com.crm.gb.client.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,17 +67,15 @@ public class ClientController {
 		client=clientService.selectClient(client);
 		
 		//고객관련 파일추가부분
-				int client_no = client.getClient_no();
-				clientFile.setClient_no(client_no);
-				
-				String path = request.getSession().getServletContext().getRealPath("resources/upload/client");
 				List<MultipartFile> filelist=mtfRequest.getFiles("client_file");
-				//MultipartFile mfile = mtfRequest.getFile("client_file");
+				String path = request.getSession().getServletContext().getRealPath("resources/upload/client");
 				int idx=0;
 				if(filelist != null) {
+				
+					int client_no = client.getClient_no();
+					clientFile.setClient_no(client_no);
 					
 				for(MultipartFile mfile : filelist) {
-					
 					try {
 						mfile.transferTo(new File(path+"/"+mfile.getOriginalFilename()));
 						String originalFileName = mfile.getOriginalFilename();
@@ -120,6 +124,7 @@ public class ClientController {
 				ArrayList<Client> clientList=clientService.selectAllClient();
 				model.addAttribute("clientList", clientList);
 		
+				
 		return "client/clientList";
 	}
 	
@@ -135,13 +140,13 @@ public class ClientController {
 	
 	/** 거래중인 거래처 리스트 메소드 **/
 	@RequestMapping("accountList.do")
-	public String shoeAccountClient(@RequestParam("emp_no") String emp_num, Model model) {
+	public String showAccountClient(@RequestParam("emp_no") String emp_num, Model model) {
 		logger.info("거래처 리스트 메소드 실행됨!!");
 		int emp_no = Integer.parseInt(emp_num);
-		System.out.println("emp_no : " + emp_no);
+		//System.out.println("emp_no : " + emp_no);
 		ArrayList<Client> accountClientList = clientService.selectAccountClientList(emp_no);
 		model.addAttribute("accountClientList", accountClientList);
-		System.out.println("accountClientList : " +accountClientList.toString());
+		//System.out.println("accountClientList : " +accountClientList.toString());
 		return "client/accountList";
 	}
 	
@@ -229,6 +234,77 @@ public class ClientController {
 								//viewname(bean id명)과 modelname, model객체(저장한 파일객체)를 입력한다
 								//string: downfile, object : downFile로 filedownview클래스로 전송됨
 		return new ModelAndView("clientFileDown", "clientFile", downFile );
+		
+	}
+	
+	/** 등록된 고객리스트 검색 메소드 */
+	@RequestMapping(value="searchClientList.do", method=RequestMethod.POST)
+	public void searchClientList(Client client, HttpServletResponse response,
+			@RequestParam(value="client_name") String client_name) throws IOException{
+		logger.info("고객검색 메소드 실행됨");
+		
+		List<Client> cList = clientService.selectClientList(client_name);
+		
+		JSONArray jarr = new JSONArray();
+			
+			for(Client c : cList) {
+				JSONObject job = new JSONObject();
+					job.put("client_no", c.getClient_no());
+					job.put("client_name", URLEncoder.encode(c.getClient_name(), "utf-8"));
+					job.put("client_company", URLEncoder.encode(c.getClient_company(), "utf-8"));
+					job.put("client_job", URLEncoder.encode(c.getClient_job(), "utf-8"));
+					job.put("client_email", c.getClient_email());
+					job.put("client_phone", c.getClient_phone());
+					job.put("client_addr", URLEncoder.encode(c.getClient_addr(), "utf-8"));
+					
+					jarr.add(job);
+					System.out.println(c.getClient_name());
+			}
+				JSONObject resultJob = new JSONObject();
+					resultJob.put("searchList", jarr);
+					
+					response.setContentType("application/json; charset=utf-8");
+					PrintWriter out = response.getWriter();
+					
+					out.print(resultJob.toJSONString());
+					out.flush();
+					out.close();
+			
+	}
+	
+	/** 등록된 잠재고객리스트 검색용 */
+	@RequestMapping(value="searchPoList.do", method=RequestMethod.POST)
+	public void searchPoList(Client client, HttpServletResponse response,
+			@RequestParam(value="client_name") String client_name) throws IOException{
+		
+		logger.info("잠재고객리스트 검색용");
+		
+		List<Client> poList = clientService.selectPoList(client_name);
+		
+		JSONArray jarr = new JSONArray();
+		
+		for(Client c : poList) {
+			JSONObject job = new JSONObject();
+				job.put("client_no", c.getClient_no());
+				job.put("client_name", URLEncoder.encode(c.getClient_name(), "utf-8"));
+				job.put("client_company", URLEncoder.encode(c.getClient_company(), "utf-8"));
+				job.put("client_job", URLEncoder.encode(c.getClient_job(), "utf-8"));
+				job.put("client_email", c.getClient_email());
+				job.put("client_phone", c.getClient_phone());
+				job.put("client_addr", URLEncoder.encode(c.getClient_addr(), "utf-8"));
+				
+				jarr.add(job);
+				System.out.println(c.getClient_name());
+		}
+			JSONObject resultJob = new JSONObject();
+				resultJob.put("searchList", jarr);
+				
+				response.setContentType("application/json; charset=utf-8");
+				PrintWriter out = response.getWriter();
+				
+				out.print(resultJob.toJSONString());
+				out.flush();
+				out.close();
 		
 	}
 	

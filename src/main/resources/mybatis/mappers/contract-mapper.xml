@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="contract">
+
+	<resultMap type="contract" id="resultContractList">
+		<id column="contract_no" property="contract_no"/>
+		<result column="contract_discount" property="contract_discount"/>
+		<result column="contract_money" property="contract_money"/>
+		<result column="contract_date_start" property="contract_date_start"/>
+		<result column="contract_date_end" property="contract_date_end"/>
+		<result column="business_no" property="business_no"/>
+		<result column="client_sign" property="client_sign"/>
+		<result column="emp_sign" property="emp_sign"/>
+		
+		<association property="client" javaType="Client">
+			<id column="client_no" property="client_no"/>
+			<result column="client_name" property="client_name"/>
+			<result column="client_job" property="client_job"/>
+			<result column="client_phone" property="client_phone"/>
+			<result column="client_company" property="client_company"/>
+			<result column="client_addr" property="client_addr"/>
+		</association>
+		
+	</resultMap>
+
+	<!-- 계약된 고객리스트 -->
+	<select id="contractList" parameterType="_int" resultMap="resultContractList">
+		<![CDATA[
+			select *
+			from client cl, contract co
+			where cl.client_no = co.client_no
+			and cl.emp_no = #{emp_no}
+			and co.emp_no = #{emp_no}
+			and client_sign is not null
+			and emp_sign is not null
+			and client_delete = 'N'
+		]]>
+	</select>
+	
+	<!-- 계약서 상세보기 -->
+	<select id="contractDetail" parameterType="_int" resultMap="resultContractList">
+		<![CDATA[
+			select *
+			from client cl, contract co
+			where cl.client_no = co.client_no
+			and cl.client_no = #{client_no}
+			and cl.client_delete = 'N'
+		]]>
+	</select>
+			
+	<!-- 계약하기 -->		
+	<insert id="insertContract" parameterType="Contract">
+		<![CDATA[
+			insert into contract values(
+				(select max(contract_no) from contract)+1,
+				#{emp_no}, #{client_no}, #{contract_discount},
+				#{contract_money}, #{contract_date_start},
+				#{contract_date_end}, #{business_no}, #{client_sign}, #{emp_sign} 
+			)
+		]]>
+	</insert>	
+	
+	<select id="selectDiscount" resultType="_int">
+		<![CDATA[
+			select contract_discount from contract where client_no = #{client_no}
+		]]>
+		</select>	
+			
+</mapper>

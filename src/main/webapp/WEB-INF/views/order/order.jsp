@@ -16,23 +16,6 @@
 <!-- Font Awesome -->
 <link href="resources/vendors/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet">
-<!-- NProgress -->
-<link href="resources/vendors/nprogress/nprogress.css" rel="stylesheet">
-<!-- iCheck -->
-<link href="resources/vendors/iCheck/skins/flat/green.css"
-	rel="stylesheet">
-
-<!-- bootstrap-progressbar -->
-<link
-	href="resources/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css"
-	rel="stylesheet">
-<!-- JQVMap -->
-<link href="resources/vendors/jqvmap/dist/jqvmap.min.css"
-	rel="stylesheet" />
-<!-- bootstrap-daterangepicker -->
-<link
-	href="resources/vendors/bootstrap-daterangepicker/daterangepicker.css"
-	rel="stylesheet">
 
 <!-- Custom Theme Style -->
 <link href="resources/build/css/custom.min.css" rel="stylesheet">
@@ -40,13 +23,18 @@
 
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
+
+var idx = 1;
+var amount = new Array();
+var orderInfo = new Array();
 	function searchCom(){
 		$.ajax({
 			url: "searchCom.do",
 			type : "post",
 			dataType : "json",
 			data : {
-				searchComName : $('#searchComName').val()
+				searchComName : $('#searchComName').val(),
+				emp_no : ${loginEmp.emp_no}
 			},
 			success : function(obj){
 				var objStr = JSON.stringify(obj);
@@ -85,13 +73,15 @@
 		/* submit하기 위하여 갑 넣기 */
 	//	$('#searchComName').val(client_company);
 		
+		$('#clientNo').val(client_no);
 		$('#searchComName2').val(client_company);
 		$('#searchEmpName').val('${loginEmp.emp_name}');
 		$('#searchClientPhone').val(client_phone);
 		$('#searchClientAddr').val(client_addr);
 		
 	}
-	
+
+	//상품 검색용.
 	function searchProduct(){
 		$.ajax({
 			url: "searchProduct.do",
@@ -107,22 +97,24 @@
 				+"<tr><th>제품번호</th><th>제품명</th><th>단가</th></tr>";
 				
 				for(var i in json.plist){
+					this.row = i;
 					value += "<tr onclick='selectProduct(this);'>"
 					+"<td>"+json.plist[i].product_no+"</td>"
 					+"<td>"+json.plist[i].product_name+"</td>"
 					+"<td>"+json.plist[i].product_price+"</td>"
-					+"</tr>";		
+					+"</tr>";
+					
 				}
 				
+				
 				value += "</table>";
-			//	alert("value : " + value);
 				$('#searchProductList').html(value);
 			}
-			
 		});//ajax complete
 	}
 	
 	function selectProduct(obj){
+		//alert("obj : " + $(obj));
 		var tr=$(obj);
 		var td=tr.children();
 		
@@ -134,21 +126,56 @@
 		$('#searchModal2').modal("hide");
 		
 		var value = $('.order_body').html();
-		console.log("value : "+ value)
 		
+
+		console.log(amount[1]);
 		/* submit하기 위하여 갑 넣기 */
-		value += "<tr>"
-		+"<td>"+product_no+"</td>"
+		value += "<tr id='tr"+idx+"'>"
+		+"<td><input type='text' id='productNo"+idx+"' name='product_no' class='form-control' value='"+product_no+"' readonly/></td>"
 		+"<td>"+product_name+"</td>"
-		+"<td><input type='text' name='order_price' class='form-control' value='"+product_price+"'/></td>"
-		+"<td><input type='number' name='order_amount' class='form-control' min='1'/></td>"
-		+"<td><button class='btn btn-danger btn-order'>&nbsp;&nbsp;<i class='fa fa-trash-o'></i>&nbsp;&nbsp;</button></td>"
+		+"<td><input type='text' id='orderPrice"+idx+"' name='order_price' class='form-control' value='"+product_price+"'/></td>"
+		+"<td><input type='number' onblur='saveAmount("+idx+");' id='orderAmount"+idx+"' name='order_amount' class='form-control' min='1'/></td>"
+		+"<td><button type='button' class='btn btn-danger btn-order' onclick='deleteRow(\"tr"+idx+"\");'>&nbsp;&nbsp;<i class='fa fa-trash-o'></i>&nbsp;&nbsp;</button></td>"
 		+"</tr>";
 		
+		idx++;
+		//alert($('#productName').val());
 		$('.order_body').html(value);
+
+		for(i=1; i<amount.length; i++){
+			 $('#orderAmount'+i).val(amount[i]);
+			
+		}
+		
 		
 		
 	}
+	
+	//상품 수량 유지 함수 
+	function saveAmount(idx){
+		
+		amount[idx] = $('#orderAmount'+idx).val();		
+		
+	}
+	
+	//삭제버튼 클릭시 추가된 상품의 ROW삭제 
+	function deleteRow(idx){
+		
+	//	alert("idc : " + idx);
+		
+		$('#'+idx).remove();
+		
+		
+	}
+	
+	/* 
+	function submitInfo(){
+		var value = $('#formTag').html();
+		value += "<input type='hidden' name='emp_no' value='${loginEmp.emp_no }'/>"
+				+"<input type='hidden' name='client_no' value='"+$('#clientNo').val()+"'/>";
+		$('#formTag').html(value);		
+	} */
+	
 	
 </script>
 <style type="text/css">
@@ -269,6 +296,10 @@
 					</div>
 					<div class="clearfix"></div>
 					<br>
+					
+					 <form id="formTag" class="form-horizontal form-label-left input_mask" action="insertorder.do" method="post">
+					<input type="hidden" name="emp_no" value="${loginEmp.emp_no }"/>
+										
 					<div class="row">
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
@@ -293,14 +324,13 @@
 												</div>
 												<div class="modal-body">
 													
-													<form class="form-horizontal form-label-left input_mask" >
 														<div class="form-group">
 															<div class="row">
 															<label class="col-sm-2 control-label">거래처명</label>
 																<div class="col-sm-10">	
 																	<div class="input-group">
 																		<input type="text" class="form-control" placeholder="상호명을 입력해주세요." id="searchComName" name="client_company"> <span class="input-group-btn">
-																			<input type="hidden" name="client_no" value="">
+																			
 																			
 																			<button type="button" class="btn btn-primary" onclick="searchCom();">
 																				<i class="fa fa-search"></i>
@@ -321,15 +351,14 @@
 																
 															</table>
 														</div>
-													</form>
 													
 												</div>
-												<div class="modal-footer">
+												<!-- <div class="modal-footer">
 													<button type="button" class="btn btn-default"
 														data-dismiss="modal">Close</button>
 													<button type="button" class="btn btn-primary">Save
 														changes</button>
-												</div>
+												</div> -->
 
 											</div>
 										</div>
@@ -338,14 +367,21 @@
 									
 									
 								</div>
+								
 								<div class="x_content">
 									<br />
 									
-									<form class="form-horizontal form-label-left input_mask">
+										
 										<div class="form-group">
 											<label class="col-sm-3 control-label">거래처명</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
 												<input type="text" class="form-control" placeholder="거래처명을 검색해주세요." name="client_name" id="searchComName2" value="">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-3 control-label">거래처번호</label>
+											<div class="col-md-9 col-sm-9 col-xs-12">
+												<input type="text" class="form-control" placeholder="거래처 번호" name="client_no" id="clientNo">
 											</div>
 										</div>
 										<div class="form-group">
@@ -372,8 +408,8 @@
 												<textarea class="form-control" rows="3"> </textarea>
 											</div>
 										</div>
-									</form>
 								</div>
+								
 							</div>
 						</div>
 					</div><!-- row -->
@@ -404,8 +440,7 @@
 													<h4 class="modal-title" id="myModalLabel">품목</h4>
 												</div>
 												<div class="modal-body">
-													
-													<form class="form-horizontal form-label-left input_mask">
+									<!--       -->				
 														<div class="form-group">
 															<div class="row">
 															<label class="col-sm-2 control-label">품목명</label>
@@ -432,7 +467,7 @@
 															
 															</table>
 														</div>
-													</form>
+													
 													
 												</div>
 												<div class="modal-footer">
@@ -481,10 +516,9 @@
 									</table>
 								
 									<div class="ln_solid"></div>
-									<div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-3" style="margin:0px">
-											<button type="button" class="btn btn-primary">Cancel</button>
-											<button class="btn btn-primary" type="reset">Reset</button>
-											<button type="submit" class="btn btn-success">Submit</button>
+									<div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-3" style="margin:0px; text-align:right">
+											
+											<button type="submit" class="btn btn-success">주문</button>
 									</div>
 								</div>
 							</div>
@@ -492,13 +526,15 @@
 					
 					
 					</div>
-
+					 </form> 
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<!-- /page content -->
+	<!-- /page content
+	
+ -->
 
 
 
@@ -507,14 +543,7 @@
 	<script src="resources/vendors/jquery/dist/jquery.min.js"></script>
 	<!-- Bootstrap -->
 	<script src="resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-	<!-- FastClick -->
-	<script src="resources/vendors/fastclick/lib/fastclick.js"></script>
-	<!-- NProgress -->
-	<script src="resources/vendors/nprogress/nprogress.js"></script>
-	<!-- iCheck -->
-	<script src="resources/vendors/iCheck/icheck.min.js"></script>
-
-
+	
 	<!-- Custom Theme Scripts -->
 	<script src="resources/build/js/custom.min.js"></script>
 	

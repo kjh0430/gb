@@ -32,29 +32,53 @@
                   message_to_no : "${loginEmp.emp_no}"
                },
                type : "get",
+               dataType:"json",
                success : function(data) {
                   
                   var jsonSt = JSON.stringify(data);
                   var json = JSON.parse(jsonSt);
                   var size = Object.keys(json.list).length;
-
-                  var values = "<table class='table table-hover' id='table_rec'><thead><tr><th>보낸사람</th><th style='width:40%;'>제목</th><th>받은날짜</th><th>사번</th><th>내용</th></thead>"
+				if(size>0) {
+                  var values = "<table class='table table-hover' id='table_rec'><thead><tr><th>보낸사람</th><th style='width:40%;'>제목</th><th>받은날짜</th><th>사번</th><th>내용</th><th>mnumber</th></thead>"
                         + "<tbody>"
 
                   for ( var i in json.list) {
-
-                     values += "<tr onclick='confirm(this);' style='cusor:hand'><td>" + json.list[i].from_empName
+						if(json.list[i].message_confirm=="Y") {
+                     values += "<tr onclick='confirm(this);' style='cusor:hand' class='read'><td>" + json.list[i].from_empName
                            + "</td><td>" + json.list[i].message_title
                            + "</td><td>" + json.list[i].message_date
-                           + "</td><td>"+json.list[i].from_empNo+"</td><td>"
-                                    +json.list[i].message_content+"</td></tr>";
+                           + "</td><td>"+json.list[i].from_empNo
+                           +"</td><td>"+json.list[i].message_content
+                           +"</td><td>"+json.list[i].message_no
+                           +"</td></tr>";
 
+                  }else{
+                	  values += "<tr onclick='confirm(this);' style='cusor:hand' class='readx'><td>" + json.list[i].from_empName
+                      + "</td><td>" + json.list[i].message_title
+                      + "</td><td>" + json.list[i].message_date
+                      + "</td><td>"+json.list[i].from_empNo
+                      +"</td><td>"+json.list[i].message_content
+                      +"</td><td>"+json.list[i].message_no
+                      +"</td></tr>";
+                	  
+                	  
+                	  
+                	  
+                  }
+						
                   }
 
                   values += "</tbody></table>"
 
                   $('#receive_msg').html(values);
 
+                  
+}else{
+	values="<br><br><br><br><br><br><h2 style='text-align:center;'>받은 쪽지가 없습니다."+
+	"</h2><br><br><br><br><br><br>"
+		$('#receive_msg').html(values);	
+	
+}
                },
                error : function(request, status, errorData) {
                   alert("error code : " + request.status + "\n"
@@ -70,12 +94,13 @@
                message_from_no : "${loginEmp.emp_no}"
             },
             type : "get",
+            dataType:"json",
             success : function(data) {
             
                var jsonSt = JSON.stringify(data);
                var json = JSON.parse(jsonSt);
                var size = Object.keys(json.list).length;
-
+			if(size>0){
                var values = "<table class='table table-hover' id='table_sm'><thead><tr><th>받은사람</th><th style='width:40%;'>제목</th><th>받은날짜</th><th>내용</th><thead>"
                      + "<tbody>"
 
@@ -92,7 +117,13 @@
                values += "</tbody></table>"
 
                $('#send_msg').html(values);
-							
+	}else{
+	values="<br><br><br><br><br><br><h2 style='text-align:center;'>보낸 쪽지가 없습니다."+
+	"</h2><br><br><br><br><br><br>"
+		$('#send_msg').html(values);	
+	
+	
+}					
                
                
             },
@@ -146,11 +177,16 @@
          type : "post",
          dataType : "json",
          data : {
-         searchName : $('#searchName').val()
+        emp_name : $('#searchName').val(),
+         message_from_no :"${loginEmp.emp_no}"
             },
             success : function(obj) {
-               var objStr = JSON.stringify(obj);
+               
+            	var objStr = JSON.stringify(obj);
                var jsonl = JSON.parse(objStr);
+               var size = Object.keys(jsonl.list).length;
+             
+               if(size>0){
                var value = "<table class='table table-hover' id='getvalues'><thead><tr><th>이름</th><th>직급</th><th>부서</th><th>e-mail</th><th>사원번호</th></tr></thead><tbody>";
 
                   for ( var i in jsonl.list) {
@@ -158,9 +194,9 @@
                      value += "<tr onclick='selectEmp(this);' style='cusor:hand'><td>"
                            + jsonl.list[i].emp_name
                            + "</td><td>"
-                           + jsonl.list[i].dept_name
-                           + "</td><td>"
                            + jsonl.list[i].emp_job
+                           + "</td><td>"
+                           + jsonl.list[i].dept_name
                            + "</td><td>"
                            + jsonl.list[i].emp_email
                            + "</td><td>"
@@ -172,6 +208,15 @@
                   $('#myModal2').modal("show");
                   $('#searchTable').html(value);
 
+                  
+               }else{
+            	   value="<br><br><h2 style='text-align:center;'>검색 결과가 없습니다."+
+            		"</h2><br><br>";
+            			$('#myModal2').modal("show");
+            			$('#searchTable').html(value);	
+            	   
+            	   
+               }
                },error : function(request, status, errorData) {
                   alert("error code : " + request.status + "\n"
                   + "message :" + request.responseText + "\n"
@@ -200,7 +245,8 @@
    }
    //쪽지확인
    function confirm(obj){
-      var content=$(obj);
+     
+	  var content=$(obj);
       var td=content.children();
       
       var a_from_empName=td.eq(0).text();
@@ -208,8 +254,85 @@
       var a_message_date=td.eq(2).text();
       var a_message_from_empNo=td.eq(3).text();
       var a_message_content=td.eq(4).text();
-   	
-      alert(a_message_content);
+   	  //읽음처리를 위해 가져온 message_no
+      var a_message_no=td.eq(5).text();
+      alert(a_message_no);
+      
+      
+      $.ajax({
+    	  url:"readMessage.do",
+    	  type:"post",
+    	  data:{message_no:a_message_no},
+    	  success:function(data){
+    		  alert("readMessage success");
+    		  
+    		//받은 쪽지함
+    	         $.ajax({
+    	               url : "getMessage.do",
+    	               data : {
+    	                  message_to_no : "${loginEmp.emp_no}"
+    	               },
+    	               type : "get",
+    	               success : function(data) {
+    	                  
+    	                  var jsonSt = JSON.stringify(data);
+    	                  var json = JSON.parse(jsonSt);
+    	                  var size = Object.keys(json.list).length;
+
+    	                  var values = "<table class='table table-hover' id='table_rec'><thead><tr><th>보낸사람</th><th style='width:40%;'>제목</th><th>받은날짜</th><th>사번</th><th>내용</th><th>mnumber</th></thead>"
+    	                        + "<tbody>"
+
+    	                  for ( var i in json.list) {
+    							if(json.list[i].message_confirm=="Y") {
+    	                     values += "<tr onclick='confirm(this);' style='cusor:hand' class='read'><td>" + json.list[i].from_empName
+    	                           + "</td><td>" + json.list[i].message_title
+    	                           + "</td><td>" + json.list[i].message_date
+    	                           + "</td><td>"+json.list[i].from_empNo
+    	                           +"</td><td>"+json.list[i].message_content
+    	                           +"</td><td>"+json.list[i].message_no
+    	                           +"</td></tr>";
+
+    	                  }else{
+    	                	  values += "<tr onclick='confirm(this);' style='cusor:hand' class='readx'><td>" + json.list[i].from_empName
+    	                      + "</td><td>" + json.list[i].message_title
+    	                      + "</td><td>" + json.list[i].message_date
+    	                      + "</td><td>"+json.list[i].from_empNo
+    	                      +"</td><td>"+json.list[i].message_content
+    	                      +"</td><td>"+json.list[i].message_no
+    	                      +"</td></tr>";
+    	                	  
+    	                	  
+    	                	  
+    	                	  
+    	                  }
+    							
+    	                  }
+
+    	                  values += "</tbody></table>"
+
+    	                  $('#receive_msg').html(values);
+
+    	               },
+    	               error : function(request, status, errorData) {
+    	                  alert("error code : " + request.status + "\n"
+    	                        + "message :" + request.responseText + "\n"
+    	                        + "error :" + errorData);
+    	               }
+    	            });
+    		  
+    	  },
+          error : function(request, status, errorData) {
+              alert("error code : " + request.status + "\n"
+                    + "message :" + request.responseText + "\n"
+                    + "error :" + errorData);
+           }
+    	  
+    	  
+      });
+      
+      
+      
+      
       $('#modal3').modal("show");
       //답장 확인란에 값 추가
       $('#a_from_empName').val(a_from_empName);
@@ -242,7 +365,7 @@
       $('#modal4').modal("hide");
       
       $.ajax({
-         url:"sendAnswer.do",
+         url:"sub.do",
          type:"post",
          data:{
             message_from_no : "${loginEmp.emp_no}",
@@ -421,6 +544,13 @@ display: none;
 #table_rec td:nth-child(5){
 display: none;
 }
+#table_rec th:nth-child(6){
+display:none;
+}
+
+#table_rec td:nth-child(6){
+display:none;
+}
 
 #table_sm th:nth-child(4){
 display:none;
@@ -430,6 +560,14 @@ display:none;
 display:none;
 }
 
+.read {
+font-weight:100;
+
+}
+
+.readx{
+font-weight:900;
+}
 </style>
 </head>
 

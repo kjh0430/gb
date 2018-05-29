@@ -24,6 +24,8 @@ import com.crm.gb.dailywork.model.service.DailyworkService;
 import com.crm.gb.dailywork.model.vo.Dailywork;
 import com.crm.gb.emp.model.service.EmpService;
 import com.crm.gb.emp.model.vo.Emp;
+import com.crm.gb.order.model.service.OrderService;
+import com.crm.gb.order.model.vo.Order;
 
 @Controller
 public class DailyworkController {
@@ -39,8 +41,10 @@ public class DailyworkController {
 	@Autowired
 	public EmpService empService;
 	
-	/** 방문일지 페이지 이동 메소드 **/
+	@Autowired
+	public OrderService orderService;
 	
+	/** 방문일지 페이지 이동 메소드 **/	
 	@RequestMapping(value="visit.do" , method=RequestMethod.GET)
 	public String dailyVisit() {
 		logger.info("방문일지 페이지 run...");
@@ -98,36 +102,51 @@ public class DailyworkController {
 		logger.info("visitList running!!");
 		//System.out.println(dw.getDaily_date());
 		
-		ArrayList<Dailywork> visitList = dailyworkService.selectVisit(dw);		
-		JSONArray jarr = new JSONArray();
+		ArrayList<Dailywork> visitList = dailyworkService.selectVisit(dw);	
+		JSONArray jarr = new JSONArray();	
 		
-		for(Dailywork daily : visitList) {
-			JSONObject jdw = new JSONObject();
-			jdw.put("dailywork_no",daily.getDailywork_no());
-			jdw.put("client_name", daily.getClient_company());
-			jdw.put("emp_no", daily.getEmp_no());
-			jdw.put("daily_comment", daily.getDaily_comment());
-			jdw.put("daily_date", daily.getDaily_date());
-			jdw.put("client_no", daily.getClient_no());
-			jdw.put("client_loc_x", Double.parseDouble(daily.getClient_loc_x()));
-			jdw.put("client_loc_y", Double.parseDouble(daily.getClient_loc_y()));
+		if(visitList.size()>0) {					
+			for(Dailywork daily : visitList) {
+				JSONObject jdw = new JSONObject();
+				jdw.put("dailywork_no",daily.getDailywork_no());
+				jdw.put("client_name", daily.getClient_company());
+				jdw.put("emp_no", daily.getEmp_no());
+				jdw.put("daily_comment", daily.getDaily_comment());
+				jdw.put("daily_date", daily.getDaily_date());
+				jdw.put("client_no", daily.getClient_no());
+				jdw.put("client_loc_x", Double.parseDouble(daily.getClient_loc_x()));
+				jdw.put("client_loc_y", Double.parseDouble(daily.getClient_loc_y()));				
+				jarr.add(jdw);
+				
+			}	
+			JSONObject sendJson = new JSONObject();
+			sendJson.put("list", jarr);
 			
-			jarr.add(jdw);
+			response.setContentType("application/json; charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println(sendJson.toJSONString());		
+			out.flush();
+			out.close();
+			
+		}else {
+			Emp emp = empService.selectEmpNo(dw.getEmp_no());
+			
+			JSONObject jdw = new JSONObject();
+			jdw.put("emp_no",emp.getEmp_no());
+			jdw.put("city", emp.getCity());
+			jdw.put("county", emp.getCounty());
+			
+			response.setContentType("application/json; charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println(jdw.toJSONString());		
+			out.flush();
+			out.close();
 		}
 		
-		JSONObject sendJson = new JSONObject();
-		sendJson.put("list", jarr);
-		//System.out.println("jarr : " + jarr);
 		
-		response.setContentType("application/json; charset=utf-8");
-		PrintWriter out = response.getWriter();
-		out.println(sendJson.toJSONString());		
-		out.flush();
-		out.close();
 	}
 	
-	/** 방문일지 등록 메소드 **/
-	
+	/** 방문일지 등록 메소드 **/	
 	@RequestMapping(value="insertDailywork.do", method=RequestMethod.POST)
 	public String insertDailywork(Dailywork dailywork) {
 		logger.info("방문일지 등록 메소드 실행..");
@@ -135,19 +154,17 @@ public class DailyworkController {
 		Date currentTime = new Date ();
 		String mTime = mSimpleDateFormat.format ( currentTime );
 		
-		System.out.println ( "현재 날짜 : " + mTime );
+		//System.out.println ( "현재 날짜 : " + mTime );
 		
 		String time = dailywork.getDaily_date();		
 		
-		System.out.println("currenttime : " + currentTime);
-		System.out.println ( "현재 시간 : " +  time );
+		//System.out.println("currenttime : " + currentTime);
+		//System.out.println ( "현재 시간 : " +  time );
 		
 		dailywork.setDaily_date(mTime +" "+time);
 		
 		//System.out.println("시간 : " + mTime +" "+time);
-		System.out.println("emp_no: " + dailywork.getEmp_no()+" ,client_no: "+dailywork.getClient_no()
-		+"comment : "+dailywork.getDaily_comment()+", time : " + dailywork.getDaily_date());
-		System.out.println("dailywork: " + dailywork);
+
 		dailyworkService.insertDailywork(dailywork);
 		
 		return "dailywork/visit";
@@ -165,7 +182,6 @@ public class DailyworkController {
 		logger.info("selectDept running!!");
 		int dept_no = emp.getDept_no();
 		int job_no = emp.getJob_no();
-		System.out.println("detp_no : "+dept_no+", job_no : "+job_no);
 		ArrayList<Emp> deptEmplist = empService.selectDeptEmp(emp);	
 		
 		JSONArray jarr = new JSONArray();
@@ -189,7 +205,38 @@ public class DailyworkController {
 		PrintWriter out = response.getWriter();
 		out.println(sendJson.toJSONString());		
 		out.flush();
-		out.close();		
+		out.close();	
 	
+	}
+	
+	/* 주문리스트 조회 */
+	@RequestMapping(value="orderList.do",method=RequestMethod.POST)
+	public void selectOrderlist(Dailywork dw,Order order,HttpServletResponse response) throws IOException {
+		logger.info("visitList running!!");
+		order.setOrder_date(dw.getDaily_date());
+		
+		ArrayList<Order> orderList = orderService.selectOrderlist(order);	
+		
+		JSONArray jarr = new JSONArray();
+		
+		for(Order od : orderList) {
+			JSONObject job = new JSONObject();
+			job.put("order_no",od.getOrder_no());
+			job.put("emp_no",od.getEmp_no());
+			job.put("client_no", od.getClient_no());
+			job.put("client_company", od.getClient_company());
+			job.put("total", od.getTotal());
+			jarr.add(job);
+		}
+		
+		JSONObject sendJson = new JSONObject();
+		sendJson.put("list", jarr);
+		
+		response.setContentType("application/json; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		out.println(sendJson.toJSONString());		
+		out.flush();
+		out.close();
+		
 	}
 }

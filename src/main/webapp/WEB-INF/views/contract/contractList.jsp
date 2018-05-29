@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="images/favicon.ico" type="image/ico" />
 
-<title>잠재고객</title>
+<title>GROUP BEAN |</title>
 
 <!-- Bootstrap -->
 <link href="resources/vendors/bootstrap/dist/css/bootstrap.min.css"
@@ -47,55 +47,30 @@ $(document).ready(function() {
     $('#table_cl').dataTable( {
         ordering:false,
         lengthChange:false,
-        paging: false,
-        info: false,
-        searching: false
+        pageLength:15
     } );
 } );
 
+function clientList(){
+	$.ajax({
+		url : "/classKing/clentlist",
+		data : {empNo : ""},
+		type : "get",
+		datatype : "json",
+		success : function(data){
+			var jsonStr = JSON.stringfy
+		}
+	});
+}
 </script>
 
-<!-- ---------------------- 고객리스트 검색 Ajax ------------------------ -->
-
-	<script type="text/javascript">
-		$(function(){
-			
-			$('#searchPoList').keyup(function() {
-				
-				$.ajax({
-					url: "searchPoList.do",
-					type: "post",
-					data: {
-						client_name: $('#searchPoList').val()
-					},
-					dataType: "json",
-					success: function(data) {
-						var obj = JSON.stringify(data);
-						var json = JSON.parse(obj);
-						var clientList = "";
-						
-							for(var i in json.searchList) {
-								clientList += 
-									"<tr>"+
-										"<td>"+"<a href="+"detailClient.do?client_no="+json.searchList[i].client_no+">"+decodeURIComponent(json.searchList[i].client_name)+"</a>"+"</td>"+
-										"<td>"+decodeURIComponent(json.searchList[i].client_company)+"</td>"+
-										"<td>"+decodeURIComponent(json.searchList[i].client_job)+"</td>"+
-										"<td>"+json.searchList[i].client_email+"</td>"+
-										"<td>"+json.searchList[i].client_phone+"</td>"+
-										"<td>"+decodeURIComponent(json.searchList[i].client_addr.replace(/\+/g, " "))+"</td>"+
-									"</tr>";	
-							}
-									
-									$('table tbody').html(clientList);
-						}	//success
-				});	//ajax
-			});	//keyup				
-		});	//onload
-	</script>
+<!-- ----------------------스크립트관련 작업영역 시작------------------------ -->
 
 
 
-<!-- ---------------------- 고객리스트 검색 Ajax ------------------------ -->
+
+
+<!-- ----------------------스크립트관련 작업영역 끝------------------------ -->
 
 </head>
 
@@ -122,6 +97,7 @@ $(document).ready(function() {
 			<!-- top navigation -->
 			<c:import url="../etc/topnav.jsp"></c:import>
 			<!-- /top navigation -->
+			
 
 			<!-- page content -->
 			<div class="right_col" role="main">
@@ -129,7 +105,7 @@ $(document).ready(function() {
 					<div class="page-title">
 						<div class="title_left">
 							<h3>
-								잠재고객
+								계약
 							</h3>
 						</div>
 					</div>
@@ -141,14 +117,8 @@ $(document).ready(function() {
 							<div class="x_panel">
 								<div class="x_title">
 									<h2>
-										거래예정 고객목록
+										계약리스트
 									</h2>
-								<form onsubmit="return false;">
-									<input style="float:right;"
-										type="text" id="searchPoList">
-										<button style="float:right" id="poSearch">검색</button>
-								</form>
-									
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
@@ -158,27 +128,29 @@ $(document).ready(function() {
 											<tr>
 												<th>고객명</th>
 												<th>회사명</th>
-												<th>직 급</th>
-												<th>이메일</th>
 												<th>연락처</th>
-												<th>주 소</th>
+												<th>할인률 (%)</th>
+												<th>계약금</th>
+												<th>계약시작일</th>
+												<th>계약종료일</th>
 											</tr>
 										</thead>
 										<tbody>
 										
-										<c:forEach var="list" items="${ poList }">
-										
+										<c:forEach var="list" items="${ contractList }">
 											<tr>
-												<td><a href="detailClient.do?client_no=${ list.client_no }">${ list.client_name }</a></td>
-												<td>${ list.client_company }</td>
-												<td>${ list.client_job }</td>
-												<td>${ list.client_email }</td>
-												<td>${ list.client_phone }</td>
-												<td>${ list.client_addr }</td>
+												<td><a href="contractDetail.do?client_no=${ list.client.client_no }">${ list.client.client_name }</a></td>
+												<td>${ list.client.client_company }</td>
+												<td>${ list.client.client_phone }</td>
+												<td>${ list.contract_discount }</td>
+												<td>${ list.contract_money }</td>
+												<td>${ list.contract_date_start }</td>
+												<td>${ list.contract_date_end }</td>
 											</tr>
+											
 										</c:forEach>
 
-										</tbody>
+										<tbody>
 									</table>
 								</div>
 							</div>

@@ -67,9 +67,9 @@ public class ClientDao {
 	
 
 	/** 거래처 이름 검색 결과 리스트 메소드 **/
-	public ArrayList<Client> selectSearchAccount(String client_company){
+	public ArrayList<Client> selectSearchAccount(Client clientInfo){
 		
-		return (ArrayList)sqlSession.selectList("selectSearchAccount", client_company);
+		return (ArrayList)sqlSession.selectList("selectSearchAccount", clientInfo);
 	}
 	
 
@@ -92,6 +92,21 @@ public class ClientDao {
 	/** 고객 첨부파일 조회 메소드 Dao */
 	public ArrayList<ClientFile> selectClientFile(int client_no) {
 		return (ArrayList)sqlSession.selectList("selectClientFile", client_no);
+	}
+
+	/** 고객 계약상태 변경 메소드 Dao */
+	public int updateClientContract(int client_no) {
+		return sqlSession.update("updateClientContract", client_no);
+	}
+
+	/** 거래처 이름으로 검색 메소드 Dao */
+	public ArrayList<Client> selectSearchClient(String client_name) {
+		return (ArrayList)sqlSession.selectList("searchClientList", client_name);
+	}
+
+	/** 잠재고객 이름으로 검색 메소드 Dao */
+	public ArrayList<Client> selectPoList(String client_name) {
+		return (ArrayList)sqlSession.selectList("searchPoList", client_name);
 	}
 
 	
