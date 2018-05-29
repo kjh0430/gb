@@ -19,6 +19,7 @@
 		<result column="contract_discount" property="contract_discount"/>
 	</resultMap>
 	
+	
 	<resultMap type="Product" id="selectAllProductList">
 		<result column="product_no" property="product_no"/>
 		<result column="product_name" property="product_name"/>
