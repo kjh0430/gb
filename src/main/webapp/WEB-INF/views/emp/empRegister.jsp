@@ -140,9 +140,8 @@ function mgrList(){
 			var outValues = "<table id='mgrTable'><tr><th>사원번호</th><th>사원이름</th></tr>";
 			
 			for(var i in jsonObj.mgrList){
-				outValues += "<tr><td>" + jsonObj.mgrList[i].emp_no + "</td><td>" 
-				+ decodeURIComponent(jsonObj.mgrList[i].emp_name) + "</td>"
-				+ "</tr>";
+				outValues += "<tr onclick='selectMgrNo(this);' style='text-align:center;'><td>" + jsonObj.mgrList[i].emp_no + "</td><td>" 
+				+ decodeURIComponent(jsonObj.mgrList[i].emp_name) + "</td></tr>";
 			}
 			
 			outValues += "</table>";
@@ -152,20 +151,25 @@ function mgrList(){
 			$("#mgrTable").html(outValues);
 		},
 		error: function(request, status, errorData){
-			alert("error code : " + request.status + "\n"
+			console.log("error code : " + request.status + "\n"
 					+ "message : " + request.responseText + "\n"
 					+ "error : " + errorData);
 			}
 		
-	});
-		
-	/* var mgr_id = $(".btn.btn-info").attr("id");
-	console.log("mgr_id : " + mgr_id);
-	
-	$('#emp_mgr').val(mgr_id);
-    $('#mgrModal').modal('hide'); */
-    
+	});    
 };
+
+function selectMgrNo(obj){
+	var tr = $(obj);
+	var td = tr.children();
+	
+	var emp_no = td.eq(0).text();
+	var emp_name = td.eq(1).text();
+	
+	$('#mgrModal').modal('hide');
+	$('#emp_mgr').val(emp_no);
+	
+}
 
 
 </script>
