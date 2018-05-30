@@ -4,10 +4,13 @@ import java.util.ArrayList;
 
 import com.crm.gb.client.model.vo.Client;
 import com.crm.gb.client.model.vo.ClientFile;
+import com.crm.gb.order.model.vo.Order;
 
 public interface ClientService {
 	
 	public abstract ArrayList<Client> selectAllClient(); 	// 모든 고객정보조회
+	public abstract ArrayList<Client> selectAllClient(Client client);	//등록고객 페이징 처리 조회용
+	public abstract ArrayList<Client> selectPoClient(Client client);	//잠재고객 페이징 처리 조회용
 	public abstract ArrayList<Client> selectPoList();	// 잠재고객 정보조회
 	public abstract ArrayList<Client> selectClientList(String client_name);	// 거래처 이름으로 검색
 	public abstract ArrayList<Client> selectPoList(String client_name);	// 잠재고객 이름으로 검색
@@ -26,4 +29,5 @@ public interface ClientService {
 
 	ArrayList<Client> selectAllAccountClient(int emp_no); // 방문일지용 거래처목록
 
+	public abstract Client selectOrderClient(Order order); //발주정보 상세보기
 }

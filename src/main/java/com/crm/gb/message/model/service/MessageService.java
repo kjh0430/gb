@@ -2,17 +2,21 @@ package com.crm.gb.message.model.service;
 
 import java.util.ArrayList;
 
-import com.crm.gb.message.model.vo.Message;
+import org.springframework.stereotype.Service;
 
+import com.crm.gb.emp.model.vo.Emp;
+import com.crm.gb.message.model.vo.Message;
+import com.crm.gb.message.model.vo.Notify;
+
+@Service
 public interface MessageService {
 
-	ArrayList<Message> selectSearch(Message message);
-
-	int insertMessage(Message message);
-
-	ArrayList<Message> selectReceiveMessage(Message message);
-
-	ArrayList<Message> selectSendMessage(Message message);
-
-	int updateReadMessage(Message message);
+	public abstract ArrayList<Message> selectSearch(Message message);
+	public abstract int insertMessage(Message message);
+	public abstract ArrayList<Message> selectReceiveMessage(Message message);
+	public abstract ArrayList<Message> selectSendMessage(Message message);
+	public abstract int updateReadMessage(Message message);	
+	public abstract int insertNotify(Notify notify);
+	public abstract ArrayList<Notify> selectNotify(Emp emp);
+	public abstract int updateNotify(Notify notify);
 }

@@ -46,6 +46,16 @@ $(document).ready(function() {
 } );
 
 </script>
+
+<script type="text/javascript">
+function list(page){
+	
+	location.href="noticeList.do?page="+page;
+}
+
+
+</script>
+
 <style type="text/css">
 	.btn-modify{
 		padding:3px 6px;
@@ -177,124 +187,146 @@ $(document).ready(function() {
 											</tr>
 										</thead>
 										<tbody>
-											<c:forEach var="notice" items="${ noticeList }">
+											 <c:forEach var="notice" items="${ noticeList }">
 												<tr>
-													<th>${ notice.notice_no }</th>
-													<%-- <th><a href="detailClient.do?client_no= ">${ list.client_name }</a></th> --%>
+													<th>${ notice.notice_no }</th>													
 													<th><a href="noticeDetail.do?notice_no=${notice.notice_no}" >${ notice.notice_title }</a></th>
 													<th>${ notice.notice_date }</th>
 													<th>${ notice.notice_count }</th>
 												</tr>
-											</c:forEach>										
-										
-											<tr>
-												<td>1</td>
-												<td><a href="#">첫번째 공지사항 테스트</a></td>
-												<td>2018-04-18</td>
-												<td>32</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>두번째 공지사항 테스트 정기점검 알림 </td>
-												<td>2018-04-18</td>
-												<td>32</td>
-											</tr>
+											</c:forEach>
 											
-											<tr>
-												<td>1</td>
-												<td>두번째 공지사항 테스트 정기점검 알림 </td>
-												<td>2018-04-18</td>
-												<td>32</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>첫번째 공지사항 테스트</td>
-												<td>2018-04-18</td>
-												<td>32</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>두번째 공지사항 테스트 정기점검 알림 </td>
-												<td>2018-04-18</td>
-												<td>32</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>첫번째 공지사항 테스트</td>
-												<td>2018-04-18</td>
-												<td>32</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>두번째 공지사항 테스트 정기점검 알림 </td>
-												<td>2018-04-18</td>
-												<td>32</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>첫번째 공지사항 테스트</td>
-												<td>2018-04-18</td>
-												<td>32</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>두번째 공지사항 테스트 정기점검 알림 </td>
-												<td>2018-04-18</td>
-												<td>32</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>첫번째 공지사항 테스트</td>
-												<td>2018-04-18</td>
-												<td>32</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>두번째 공지사항 테스트 정기점검 알림 </td>
-												<td>2018-04-18</td>
-												<td>32</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>두번째 공지사항 테스트 정기점검 알림 </td>
-												<td>2018-04-18</td>
-												<td>32</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>두번째 공지사항 테스트 정기점검 알림 </td>
-												<td>2018-04-18</td>
-												<td>32</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>두번째 공지사항 테스트 정기점검 알림 </td>
-												<td>2018-04-18</td>
-												<td>32</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>두번째 공지사항 테스트 정기점검 알림 </td>
-												<td>2018-04-18</td>
-												<td>32</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>두번째 공지사항 테스트 정기점검 알림 </td>
-												<td>2018-04-18</td>
-												<td>32</td>
-											</tr>
+											
+											
+											  <%-- <c:forEach items="${noticeList}" var="vo" varStatus="idx">
+									 
+									             <tr class="${idx.count % 2 == 1 ? 'trOdd' : 'trEven'}">
+									              <td><c:choose>
+									                  <c:when test="${listCount > pageSize}"> <!-- ex) count= 11, pageSize=10 -->
+									                    <c:out
+									                      value="${listCount - pageSize*(currentPage-1) - idx.count +1}" /> <!-- 11,10,9,8.......... -->
+									                  </c:when>
+									                  <c:otherwise>
+									                    <c:out value="${listCount  - idx.count +1}" />
+									                  </c:otherwise>
+									 
+									                </c:choose>
+									              </td> 
+									 
+									              <td>
+									              <a href="noticeDetail.do?notice_no=${vo.notice_no}" >${ vo.notice_title }</a>
+									              </td>
+									              <td><c:out value="${vo.notice_date}"/></td>									              
+									              <td><c:out value="${vo.notice_count}"/></td>
+									            </tr>
+									         </c:forEach> --%>
+
+
 										<tbody>
 									</table>
 								</div>
 							<nav aria-label="Page navigation example">
 								
 									<ul class="pagination">
-										<li class="page-item"><a class="page-link" href="#">Previous</a></li>
-										<li class="page-item"><a class="page-link" href="#">1</a></li>
-										<li class="page-item"><a class="page-link" href="#">2</a></li>
-										<li class="page-item"><a class="page-link" href="#">3</a></li>
-										<li class="page-item"><a class="page-link" href="#">Next</a></li>
+									<!-- if문 -->
+									 <c:if test="${curBlock>1}">
+										<li class="page-item"><a class="page-link" href="noticeList.do?page=1">처음으로</a></li>
+									
+									</c:if> 
+									
+									<!--첫페이지로 이동  -->
+									<!--if else문 형식임  -->
+								
+									 <%-- <c:choose>
+										if 
+										<c:when test="${currentPage}<=1">
+											<li class="page-item"><a class="page-link">처음으로</a></li>									
+										</c:when>
+										else
+										<c:otherwise>
+											<li class="page-item"><a class="page-link" href="noticeList.do?page=1">처음으로</a></li>									
+										</c:otherwise>
+									</c:choose> --%>
+									
+									
+									
+									
+									<%-- <c:choose>
+										<c:when test="${(currentPage-5)<startPage && curentPage-5>1 }">
+											<li class="page-item"><a class="page-link" href="noticeList.do?page=${startPage-5}">이전</a></li>
+										</c:when>
+											
+										<c:otherwise>
+											<li class="page-item"><a class="page-link">이전</a></li>
+										
+										</c:otherwise>
+									</c:choose>  --%>
+									
+									 <c:if test="${curBlock>1}">
+										<li class="page-item"><a class="page-link" href="noticeList.do?page=${blockBegin-1}">이전</a></li>
+									
+									</c:if> 
+									
+									
+									
+									<!-- 페이지 리스트var="page"   -->
+									 <c:forEach var ="page" begin="${blockBegin}" end="${blockEnd}">
+									 	
+										  <c:choose>
+											<c:when test="${page==currentPage}">
+												
+												 <li class="page-item" class="page-link" ><a class="page-link" style="color:red;">${page}</a></li>
+											</c:when> 
+										
+											<c:otherwise> 
+												<%-- <li class="page-item"><a class="page-link" href="noticeList.do?page=${page}">${page}</a></li> --%>	
+									
+													<li class="page-item"><a class="page-link" href="#" onclick="list('${page}')">${page}</a></li>	
+													
+											
+											 </c:otherwise> 
+										
+										 </c:choose> 
+									
+									</c:forEach>  
+									
+										
+									 <%-- <c:choose>
+										<c:when test="${(currentPage-5)>endPage && curentPage-5> maxPage }">
+											<li class="page-item"><a class="page-link" href="noticeList.do?page=${startPage+5}">다음</a></li>
+										</c:when>
+											
+										<c:otherwise>
+											<li class="page-item"><a class="page-link">다음</a></li>
+										
+										</c:otherwise>
+									
+									
+									</c:choose> --%>
+									
+									 <c:if test="${curBlock!=totBlock}">
+										<li class="page-item"><a class="page-link" href="noticeList.do?page=${blockEnd+1}">다음</a></li>
+									
+									</c:if> 
+									
+									
+									<!-- 다음페이지 next -->
+									<%-- <c:choose>
+										if
+										<c:when test="${currentPage}>=${maxPage} ">
+											<li class="page-item"><a class="page-link">맨끝</a></li>									
+										</c:when>
+										else
+										<c:otherwise>
+											<li class="page-item"><a class="page-link" href="noticeList.do?page=${maxPage}">맨끝</a></li>									
+										</c:otherwise>
+									</c:choose>  --%>
+									
+									<c:if test="${curBlock!=totBlock}">
+										<li class="page-item"><a class="page-link" href="noticeList.do?page=${maxPage}">맨끝</a></li>	
+									
+									</c:if> 										
+										
 									</ul>
 								</nav>
 							</div>

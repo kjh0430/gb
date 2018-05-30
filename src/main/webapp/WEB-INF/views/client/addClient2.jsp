@@ -166,7 +166,7 @@
 							});//지도에 마우스 클릭
 
 				   		         
-				$('#searchKeywordBtn').on('click', function(){
+				$('#searchKeywordText').keyup(function(){
 					//alert($('#searchKeywordText').val());
 					
 			   		// 장소 검색 객체를 생성합니다

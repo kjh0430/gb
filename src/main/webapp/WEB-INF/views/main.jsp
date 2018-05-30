@@ -24,9 +24,13 @@
     <link href="resources/build/css/custom.min.css" rel="stylesheet">
     <link href="resources/css/main.css" rel="stylesheet">
     
+       
+    
     <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript">
-
+    $(function() {
+     
+    });
 
 
 
@@ -90,8 +94,8 @@
 			
 		}); //end of ajax
 		
-	}); 
-    */
+	}); */
+    
 	
 	</script>	
     <style>
@@ -376,6 +380,8 @@
          </div>
         <!-- /page content -->
       </div>
+      <!-- footer content -->
+		 <%@ include file="etc/footer.jsp" %>
       <!-- footer content -->
        <%@ include file="etc/footer.jsp" %>
       <!-- /footer content -->

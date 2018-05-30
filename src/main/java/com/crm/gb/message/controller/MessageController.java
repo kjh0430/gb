@@ -1,35 +1,27 @@
 package com.crm.gb.message.controller;
-
-
-
-
-
-import java.io.IOException; 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import com.crm.gb.emp.model.service.EmpService;
+import com.crm.gb.emp.model.vo.Emp;
 import com.crm.gb.message.model.service.MessageService;
 import com.crm.gb.message.model.vo.Message;
+import com.crm.gb.message.model.vo.Notify;
 
 
 @Controller
@@ -38,6 +30,9 @@ public class MessageController {
 	@Autowired
 	private MessageService MessageService;
 
+	@Autowired
+	private EmpService empService;
+	
 	@RequestMapping("messageList.do")
 	public String messageList() {
 		return "message/messageList";
@@ -220,18 +215,84 @@ public class MessageController {
 	
 	
 	@RequestMapping(value="notify.do")
-	public void getNotify(Message message,HttpServletResponse response) throws IOException {
+	public void getNotify(Message message,Notify notify,HttpServletResponse response,@RequestParam("emp_no") int emp_no) throws IOException {
 		response.setContentType("text/event-stream;charset=UTF-8");
 		response.setHeader("Cache-Control", "no-cache");
 		response.setHeader("Connection", "keep-alive");
 		
-
+		//System.out.println("notify : "+emp_no);
 		PrintWriter out = response.getWriter();		
-		if(sendmsg != null) {
-			out.write("data: " + "새 공지글이 등록되었습니다." + "\n\n");
-			out.flush();
-		}	
+		int from_no = 0;
+		int to_no = 0;
 		
+		if(sendmsg != null) {
+			from_no = sendmsg.getMessage_from_no();
+			to_no = sendmsg.getMessage_to_no();
+			Emp from = empService.selectEmpNo(from_no);
+			String sender = from.getEmp_name();
+			if(to_no == emp_no) {
+				out.write("event:from_name\n");
+				out.write("data: " + sender + "\n\n");
+				out.write("event:to_no\n");
+				out.write("data: " + to_no + "\n\n");				
+					
+			}else {
+				notify.setNotify_from(from_no);
+				notify.setNotify_to(to_no);
+				if(notify!=null) {
+					int result = MessageService.insertNotify(notify);
+					System.out.println("insert Notify : "+result);
+				}				
+			}			
+			sendmsg=null;
+			
+			out.flush();
+			out.close();
+		}			
+	}
+	
+	@RequestMapping(value="selectNofity.do",method=RequestMethod.POST)
+	public void selectNotify(Emp emp,HttpServletResponse response) throws IOException {
+		ArrayList<Notify> notifyList = MessageService.selectNotify(emp);
+		JSONArray jarr= new JSONArray();
+		
+		for(Notify notify : notifyList) {
+			JSONObject job = new JSONObject();
+			job.put("notify_no", notify.getNotify_no());
+			job.put("from_name", notify.getEmp_name());
+			job.put("notify_to", notify.getNotify_to());
+			job.put("notify_date", notify.getNotify_date());
+			job.put("notify_read", notify.getNotify_read());
+			
+			jarr.add(job);
+		}
+		
+		JSONObject sendJson = new JSONObject();
+		sendJson.put("list", jarr);
+		System.out.println("jarr : " + jarr);
+		
+		response.setContentType("application/json; charset=utf-8");		
+		PrintWriter out = response.getWriter();
+		out.println(sendJson.toJSONString());
+		out.flush();
+		out.close();
+		
+	}
+	
+	@RequestMapping(value="updateNofity.do",method=RequestMethod.POST)
+	public void updateNofity(Notify notify,HttpServletResponse response) throws IOException {
+		int result = MessageService.updateNotify(notify);
+		
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		if(result>0) {
+			out.append("OK");
+			out.flush();	
+		}else {
+			out.append("FAIL");
+			out.flush();	
+		}
+		out.close();
 	}
 	
 /*	@RequestMapping(value="notify.do")

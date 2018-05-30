@@ -52,6 +52,8 @@
 		<result column="client_comment" property="client_comment"/>
 		<result column="emp_no" property="emp_no"/>
 		<result column="client_enroll" property="client_enroll"/>
+		<result column="emp_name" property="emp_name"/>
+		<result column="contract_discount" property="contract_discount"/>
 	</resultMap>
 
 	<!-- 첨부파일 리스트 조회  -->
@@ -81,12 +83,41 @@
 		]]>	
 	</select>
 	
+	<!-- 고객리스트 페이지처리 -->
+	<select id="pageList" parameterType="client" resultMap="resultSelectAllClient">
+		<![CDATA[
+			select * from
+	    				(select rownum rnum, cl.*
+	    					from
+	       			 			(select * from client
+	        						order by client_no desc) cl
+	   						where rownum >= 1)
+				where rnum >= #{startRow} and rnum <= #{endRow}
+				and client_delete <> 'Y'	
+		]]>
+	</select>
+	
 	<!-- 등록된 잠재고객 리스트 mapping -->
 	<select id="selectPoList" resultMap="resultSelectAllClient">
 		<![CDATA[
 			select * from client
 			where client_contract = 'N'
 			and client_delete <> 'Y'
+		]]>
+	</select>
+	
+	<!-- 잠재고객 리스트 페이지 처리  -->
+	<select id="pagePoList" parameterType="client" resultMap="resultSelectAllClient">
+		<![CDATA[
+			select * from
+	    				(select rownum rnum, cl.*
+	    					from
+	       			 			(select * from client
+	       			 				where client_contract <> 'Y'
+	        						order by client_no desc) cl
+	   						where rownum >= 1)
+				where rnum >= #{startRow} and rnum <= #{endRow}
+				and client_delete <> 'Y'
 		]]>
 	</select>
 	
@@ -101,8 +132,9 @@
 	<!-- 거래처 이름 검색 mapping -->
 	<select id="selectSearchAccount" resultMap="resultAccountClient" parameterType="client">
 		<![CDATA[
-			select * from client
-			where client_company like '%'||#{client_company}||'%' and emp_no = #{emp_no} and client_contract = 'Y'
+			select * from client c, contract ct
+			where c.client_company like '%'||#{client_company}||'%' and c.emp_no = #{emp_no} and c.client_contract = 'Y' 
+			and c.client_no = ct.client_no
 		]]>
 	</select>
 	
@@ -186,22 +218,31 @@
 	<!-- 이름으로 거래처 검색 -->
 	<select id="searchClientList" parameterType="string" resultMap="resultSelectAllClient">
 		<![CDATA[
-			select *
-			from client
-			where (client_delete <> 'Y' and client_name like '%'||#{client_name}||'%')
-			or (client_delete <> 'Y' and client_company like '%'||#{client_name}||'%')
+			select * from
+				(select rownum rnum, cl.*
+				from
+					(select *
+					from client
+					where (client_delete <> 'Y' and client_name like '%'||#{client_name}||'%')
+					or (client_delete <> 'Y' and client_company like '%'||#{client_name}||'%')) cl)
+			where rnum >= 1 and rnum <= 10	
 		]]>
 	</select>
 	
 	<!-- 잠재고객 이름검색 mapping -->
 	<select id="searchPoList" parameterType="string" resultMap="resultSelectAllClient">
 		<![CDATA[
-			select *
-			from client
-			where (client_contract = 'N' and client_delete <> 'Y'
-					and client_name like '%'||#{client_name}||'%')
-			or (client_contract = 'N' and client_delete <> 'Y'
-					and client_company like '%'||#{client_name}||'%')
+			select * 
+			from
+				(select rownum rnum, cl.*
+				from
+					(select *
+					from client
+					where (client_contract = 'N' and client_delete <> 'Y'
+							and client_name like '%'||#{client_name}||'%')
+					or (client_contract = 'N' and client_delete <> 'Y'
+							and client_company like '%'||#{client_name}||'%')) cl)
+			where rnum >= 1 and rnum <= 10				
 		]]>
 	</select>
 	
@@ -225,6 +266,13 @@
 		<![CDATA[
 			select * from client
 			where emp_no = #{emp_no}
+		]]>
+	</select>
+	
+	<select id="selectOrderClient" parameterType="order" resultMap="resultAccountClient">
+		<![CDATA[
+			select * from client, emp
+			where client_no = #{client_no} and client.emp_no = emp.emp_no
 		]]>
 	</select>
 </mapper>

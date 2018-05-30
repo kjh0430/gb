@@ -16,9 +16,12 @@ public class NoticeServiceImpl implements NoticeService{
 
 	/*공지사항 목록 조회*/
 	@Override
-	public ArrayList<Notice> selectAllNoticeList() {
+	public ArrayList<Notice> selectAllNoticeList(Notice notice) {
+		System.out.println("service"+notice.getStartPage());
+		System.out.println(notice.getEndPage());
 		
-		return noticeDao.selectAllNotice();
+		
+		return noticeDao.selectAllNotice(notice);
 	}
 
 	//공지사항 상세정보
@@ -54,6 +57,14 @@ public class NoticeServiceImpl implements NoticeService{
 		
 		return noticeDao.delectNotice(notice_no);
 	}
+	//공지사항 리스트 갯수
+	@Override
+	public Notice noticeListCount() {
+		
+		return noticeDao.countNoticeList();
+	}
+
+	
 	
 	
 	
