@@ -32,6 +32,11 @@ public class ProductServiceImpl implements ProductService {
 	public List<Product> selectAllList() {
 		return productDao.productList();
 }
+	//권성훈 제품 상세보기가서 제품 상세 뿌리기
+	@Override
+	public Product selectProductDetail(String product_no) {
+		return productDao.productDetail(product_no);
+	}
 	@Override
 	public ArrayList<Product> selectSearchProduct(String product_name){
 		//제품 검색 
