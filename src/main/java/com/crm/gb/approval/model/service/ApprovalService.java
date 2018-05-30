@@ -14,4 +14,6 @@ public interface ApprovalService {
 	int insertApproval(Approval apr);
 	ArrayList<Approval> selectapprovalListE(Approval apr);
 	ArrayList<Approval> selectapprovalListA(Approval apr);
+	int updateTeamApproval(Approval apr);
+	int updateMgrApproval(Approval apr);
 }
