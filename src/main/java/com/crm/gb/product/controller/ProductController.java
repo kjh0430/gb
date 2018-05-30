@@ -68,8 +68,7 @@ public class ProductController {
 		}
 		
 		model.addAttribute("list",list);
-		
-		
+					
 		/*JSONObject sendJson = new JSONObject();
 		JSONArray jarr = new JSONArray();
 		
@@ -97,11 +96,14 @@ public class ProductController {
 		return "product/productList";
 	}
 
-	
+		
 	//상품 상세보기 화면으로 이동
-	@RequestMapping("moveproductDetail.do")
-	public String moveproductDetail() {
-		return "product/productDetail";
+	@RequestMapping(value="moveproductDetail.do", method=RequestMethod.GET)
+	public ModelAndView moveproductDetail(ModelAndView mv,HttpServletRequest request, HttpServletResponse response) {
+		/*System.out.println("데이터="+request.getParameter("data"));*/
+		Product pd = productService.selectProductDetail(request.getParameter("data"));
+		System.out.println(pd.toString());
+		return mv;
 	}
 	
 	//상품 등록 화면으로 이동
