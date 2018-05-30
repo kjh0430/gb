@@ -26,71 +26,62 @@
     
     <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript">
-	
-    /*
-    $(function(){
-    	
-    	var city = '${loginEmp.getCity()}';
-		var county = '${loginEmp.getCounty()}';
-		var village = '${loginEmp.getVillage()}';
-
-		var headers = {};
-		headers["Accept"]="application/json";
-		headers["Content-Type"]="application/json; charset=UTF-8";
-		headers["appKey"]="c73d9878-1921-4214-b7a2-1a0653b6c0a1";
-		
-		$.ajax({
-			type:'get',
-			headers:headers,
-			data:{city:city,county:county,village:village},
-			url:'https://api2.sktelecom.com/weather/current/hourly?version=1&callback=result',
-			async:false,
-			success : function(data){
-				console.log(data);
-				var todayDate = data["weather"]["hourly"][0]['timeRelease'];
-				var todayTemp = Math.round(data["weather"]["hourly"][0]['temperature']['tc']);
-				var todayMinTemp = Math.round(data["weather"]["hourly"][0]['temperature']['tmin']);
-				var todayMaxTemp = Math.round(data["weather"]["hourly"][0]['temperature']['tmax']);
-				var todayDesc = data["weather"]["hourly"][0]['sky']['name'];
-				var todayIcon = data["weather"]["hourly"][0]['sky']['code'];
-				var todayTimeRelease = data["weather"]["hourly"][0]['timeRelease'];
-										
-					$(".todayMinTemp").append(todayMinTemp);		
-					$(".todayMaxTemp").append(todayMaxTemp);		
-					$(".todayTemp").append(todayTemp);
-					$(".todayDesc").html(todayDesc);
-				var icon;
-				switch(todayIcon){
-					case "SKY_O01" : icon = "<img src='resources/images/weather/SKY_O01.png'/>";break;
-					case "SKY_O02" : icon = "<img src='resources/images/weather/SKY_O02.png'/>";break;
-					case "SKY_O03" : icon = "<img src='resources/images/weather/SKY_O03.png'/>";break;
-					case "SKY_O04" : icon = "<img src='resources/images/weather/SKY_O04.png'/>";break;
-					case "SKY_O05" : icon = "<img src='resources/images/weather/SKY_O05.png'/>";break;
-					case "SKY_O06" : icon = "<img src='resources/images/weather/SKY_O06.png'/>";break;
-					case "SKY_O07" : icon = "<img src='resources/images/weather/SKY_O07.png'/>";break;
-					case "SKY_O08" : icon = "<img src='resources/images/weather/SKY_O08.png'/>";break;
-					case "SKY_O09" : icon = "<img src='resources/images/weather/SKY_O09.png'/>";break;
-					case "SKY_O10" : icon = "<img src='resources/images/weather/SKY_O10.png'/>";break;
-					case "SKY_O11" : icon = "<img src='resources/images/weather/SKY_O11.png'/>";break;
-					case "SKY_O12" : icon = "<img src='resources/images/weather/SKY_O12.png'/>";break;
-					case "SKY_O13" : icon = "<img src='resources/images/weather/SKY_O13.png'/>";break;
-					case "SKY_O14" : icon = "<img src='resources/images/weather/SKY_O14.png'/>";break;				
-				}
-				$(".weather-icon").append(icon);
-				},
-				complete: function(){
-				},
-				error	: function(xhr, status, error){
-					console.log(error);
-				}
-			
-		}); //end of ajax
-		
-	}); 
-    */
-	
-	</script>	
     
+    var count = 1;
+    
+    function addKeywordForm(){    	
+
+    	var addedFormDiv = document.getElementById("addedTodo");
+
+    	var str = '<input type="text" id="todo_keyword'+count+'" name="todo_keyword'+count+'" class="form-control" placeholder="할일을 입력해주세요">'
+    	+ '<a onclick="delKeywordForm('+count+')"/><i class="fa fa-times"></i></a>';
+
+    	if(count<5){
+    	var addedDiv = document.createElement("div");
+    	addedDiv.setAttribute("id", "keyword_Frm"+count);
+    	addedDiv.innerHTML = str;
+    	addedFormDiv.appendChild(addedDiv);
+    	
+    	console.log("todo_keyword : " + str);
+
+    	count++;
+
+    	}else{
+    	alert("5개까지 입력하실 수 있습니다");
+    	}
+
+    	}
+
+    	function delKeywordForm(thisCount){
+    		
+    	var addedFormDiv = document.getElementById("addedTodo");
+
+    	if(count>1){
+    	var thisDiv = document.getElementById("keyword_Frm"+thisCount);
+    	addedFormDiv.removeChild(thisDiv);
+    	console.log("addedFormDiv : " + addedFormDiv);
+    	}else{
+    	document.addedFormDiv.reset();
+    	}
+    	count--;
+    	}
+    </script>
+    
+    <script type="text/javascript">
+    
+    </script>
+    
+	<style type="text/css">
+	input[type=text]{
+		display:inline-block;
+		width:90%;
+		margin-top:10px;
+	}
+	
+	.fa.fa-times{
+		margin-left:10px;
+	}
+	</style> 
     
   </head>
 
@@ -161,21 +152,10 @@
                   <div class="x_panel">
                     <div class="x_title">
                       <h2>To Do List <small>Sample tasks</small></h2>
-                      <ul class="nav navbar-right panel_toolbox">
-                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                        <li class="dropdown">
-                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                          <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Settings 1</a>
-                            </li>
-                            <li><a href="#">Settings 2</a>
-                            </li>
-                          </ul>
-                        </li>
-                        <li><a class="close-link"><i class="fa fa-close"></i></a>
-                        </li>
-                      </ul>
+                      <ul class="nav navbar-right panel_toolbox">	                 
+	                  <li><button type="button" class="btn btn-link" data-toggle="modal" data-target=".bs-example-modal-lg" style="float:right;">등록</button>
+	                  </li>
+	                </ul>
                       <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
@@ -208,6 +188,32 @@
                   </div>
                 </div>
                 <!-- End to do list -->
+                
+                <!-- modal -->    			
+    			<div class="modal fade bs-example-modal-lg" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
+      			<div class="modal-dialog modal-lg">
+          		<div class="modal-content">
+
+            	<div class="modal-header">
+             	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+             	</button>
+             	<h4 class="modal-title" id="myModalLabel">To Do List</h4>
+             	</div>
+             	<div class="modal-body" style="height:270px;">
+             	<div class="col-md-12 col-sm-6 col-xs-12" id="addedTodo">
+             	<input type="text" id="todo_keyword0" name="todo_keyword0" class="form-control" placeholder="할일을 입력해주세요"/>
+				<a onclick="addKeywordForm()"><input type="button" class="btn btn-info" value="추가"/></a>
+				<div class="col-md-12 col-sm-6 col-xs-12" id="addedTodo"></div>             	
+             	</div>
+             	</div>
+             	<div class="modal-footer">
+             	<button type="button" class="btn btn-primary" onclick="todoInsert()">등록</button>
+             	<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>             	
+             	</div>
+           		</div>
+       			</div>
+    			</div>
+				<!-- /page content -->
                 
 				<!-- start of weather widget -->
 	          <div class="col-md-6 col-sm-6 col-xs-12">

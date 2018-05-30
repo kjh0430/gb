@@ -166,8 +166,7 @@ $(document).ready(function() {
 										</thead>
 										<tbody>
 										
-										<c:forEach var="list" items="${ poList }">
-										
+										<c:forEach var="list" items="${ pageList }">
 											<tr>
 												<td><a href="detailClient.do?client_no=${ list.client_no }">${ list.client_name }</a></td>
 												<td>${ list.client_company }</td>
@@ -176,11 +175,20 @@ $(document).ready(function() {
 												<td>${ list.client_phone }</td>
 												<td>${ list.client_addr }</td>
 											</tr>
+											
 										</c:forEach>
 
 										</tbody>
 									</table>
 								</div>
+								
+								<!-- 페이징 처리 -->
+								<div style="text-align:center;">
+									<c:forEach var="i" begin="${ start }" end="${ end }">
+										<a id="listNumber" href="poList.do?startPage=${ i }">${ i }</a>
+									</c:forEach>
+								</div>
+								
 							</div>
 						</div>
 					</div>
