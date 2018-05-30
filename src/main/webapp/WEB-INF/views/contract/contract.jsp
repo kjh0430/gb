@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
+   
+   <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+   
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,28 +15,26 @@
 
 <!-- Bootstrap -->
 <link href="resources/vendors/bootstrap/dist/css/bootstrap.min.css"
-   rel="stylesheet">
+	rel="stylesheet">
 <!-- Font Awesome -->
 <link href="resources/vendors/font-awesome/css/font-awesome.min.css"
-   rel="stylesheet">
+	rel="stylesheet">
 
 <!-- bootstrap-progressbar -->
 <link
-   href="resources/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css"
-   rel="stylesheet">
+	href="resources/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css"
+	rel="stylesheet">
+
 <!-- bootstrap-daterangepicker -->
 <link
-   href="resources/vendors/bootstrap-daterangepicker/daterangepicker.css"
-   rel="stylesheet">
+	href="resources/vendors/bootstrap-daterangepicker/daterangepicker.css"
+	rel="stylesheet">
 
 <!-- Custom Theme Style -->
 <link href="resources/build/css/custom.min.css" rel="stylesheet">
 <link href="resources/css/main.css" rel="stylesheet">
 
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
-<script type="text/javascript">
-   
-</script>
 <style type="text/css">
    .table > tbody > tr > td{
       vertical-align:middle;
@@ -70,14 +71,17 @@
 		$("#firstFile").val("");
 	}
 	
-	$(function(){
-		document.getElementById("to_date").valueAsDate = new Date();		
-		selectVisit();	
-		
-	});
 	
 </script>
 
+<script type="text/javascript">
+	$(function(){
+		document.getElementById("to_date").valueAsDate = new Date();		
+		selectVisit();	
+	});
+</script>
+
+	
 </head>
 
 
@@ -94,8 +98,23 @@
                <div class="clearfix"></div>
 
                <!-- sidebar menu -->
-               <%@ include file="../etc/sidebar.jsp"%>
-               <!-- /sidebar menu -->
+						<c:choose>
+			            	<c:when test="${ loginEmp.job_no == 3}">
+					            <!-- sidebar menu -->
+					            <%@ include file="../etc/adminsidebar.jsp" %>
+					            <!-- /sidebar menu -->
+			            	</c:when>
+			            	<c:when test="${ loginEmp.job_no == 2}">
+			            	<%@ include file="../etc/adminsidebar.jsp" %>
+			            	
+			            	</c:when>
+			            	<c:otherwise>
+								<!-- sidebar menu -->
+					            <%@ include file="../etc/sidebar.jsp" %>
+					            <!-- /sidebar menu --> 
+			            	</c:otherwise>
+			            </c:choose>
+					<!-- /sidebar menu -->
 
             </div>
          </div>
@@ -346,10 +365,45 @@
    </div>
 
    <!-- /page content -->
-   
-   <!-- 서명관련 스크립트 시작-->
+   <!-- jQuery -->
+	<script src="resources/vendors/jquery/dist/jquery.min.js"></script>
+	<!-- Bootstrap -->
+	<script src="resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+	
+	<!-- Datatables -->
+	<script
+		src="resources/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+	<script
+		src="resources/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+	<script
+		src="resources/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+	<script
+		src="resources/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+	<script
+		src="resources/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+	<script
+		src="resources/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+	<script
+		src="resources/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+	<script
+		src="resources/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+	<script
+		src="resources/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+	<script
+		src="resources/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+	<script
+		src="resources/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+	<script
+		src="resources/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+
+	<!-- Custom Theme Scripts -->
+	<script src="resources/build/js/custom.min.js"></script>
+
+	 <!-- 서명관련 스크립트 시작-->
    <script src="resources/jSignature/jSignature.min.js"></script>
+ 
 	<script>
+	
 	    $(document).ready(function() {
 	        $("#clientSignature_input").jSignature();
 	        $("#empSignature_input").jSignature();
@@ -383,14 +437,5 @@
 	    
 	</script>
 	<!-- 서명관련 스크립트 끝 -->
-
-   
-   <!-- Bootstrap -->
-   <script src="resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-   
-   <!-- Custom Theme Scripts -->
-   <script src="resources/build/js/custom.min.js"></script>
-   
-
 </body>
 </html>

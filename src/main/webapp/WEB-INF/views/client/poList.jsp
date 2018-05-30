@@ -19,19 +19,12 @@
 <!-- Font Awesome -->
 <link href="resources/vendors/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet">
-<!-- NProgress -->
-<link href="resources/vendors/nprogress/nprogress.css" rel="stylesheet">
-<!-- iCheck -->
-<link href="resources/vendors/iCheck/skins/flat/green.css"
-	rel="stylesheet">
 
 <!-- bootstrap-progressbar -->
 <link
 	href="resources/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css"
 	rel="stylesheet">
-<!-- JQVMap -->
-<link href="resources/vendors/jqvmap/dist/jqvmap.min.css"
-	rel="stylesheet" />
+
 <!-- bootstrap-daterangepicker -->
 <link
 	href="resources/vendors/bootstrap-daterangepicker/daterangepicker.css"
@@ -212,12 +205,7 @@ $(document).ready(function() {
 	<script src="resources/vendors/jquery/dist/jquery.min.js"></script>
 	<!-- Bootstrap -->
 	<script src="resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-	<!-- FastClick -->
-	<script src="resources/vendors/fastclick/lib/fastclick.js"></script>
-	<!-- NProgress -->
-	<script src="resources/vendors/nprogress/nprogress.js"></script>
-	<!-- iCheck -->
-	<script src="resources/vendors/iCheck/icheck.min.js"></script>
+	
 	<!-- Datatables -->
 	<script
 		src="resources/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
@@ -243,9 +231,6 @@ $(document).ready(function() {
 		src="resources/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
 	<script
 		src="resources/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-	<script src="resources/vendors/jszip/dist/jszip.min.js"></script>
-	<script src="resources/vendors/pdfmake/build/pdfmake.min.js"></script>
-	<script src="resources/vendors/pdfmake/build/vfs_fonts.js"></script>
 
 	<!-- Custom Theme Scripts -->
 	<script src="resources/build/js/custom.min.js"></script>
