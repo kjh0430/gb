@@ -68,8 +68,7 @@ public class ProductController {
 		}
 		
 		model.addAttribute("list",list);
-		
-		
+					
 		/*JSONObject sendJson = new JSONObject();
 		JSONArray jarr = new JSONArray();
 		
@@ -97,7 +96,7 @@ public class ProductController {
 		return "product/productList";
 	}
 
-	
+		
 	//상품 상세보기 화면으로 이동
 	@RequestMapping("moveproductDetail.do")
 	public String moveproductDetail() {
