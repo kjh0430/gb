@@ -302,7 +302,7 @@ public class EmpController {
 		
 	}
 	
-	//todoList
+	
 	@RequestMapping(value="todoInsert.do", method=RequestMethod.POST)
 	@ResponseBody
 	public void todoInsert(@RequestParam(value="firstTodo") String firstTodo, @RequestParam(value="todoList") String todoList, HttpServletResponse response) throws IOException{
