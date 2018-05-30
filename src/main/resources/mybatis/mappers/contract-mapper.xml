@@ -64,7 +64,8 @@
 	
 	<select id="selectDiscount" resultType="_int">
 		<![CDATA[
-			select contract_discount from contract where client_no = #{client_no}
+			select contract_discount from contract
+			where client_no = #{client_no}
 		]]>
 		</select>	
 			

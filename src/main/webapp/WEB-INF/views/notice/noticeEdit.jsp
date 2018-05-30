@@ -83,7 +83,7 @@ $(document).ready(function() {
 					<div class="clearfix"></div>
 
 					<!-- sidebar menu -->
-					<%@ include file="../etc/sidebar.jsp"%>
+					 <%@ include file="../etc/adminsidebar.jsp" %>
 					<!-- /sidebar menu -->
 
 				</div>
