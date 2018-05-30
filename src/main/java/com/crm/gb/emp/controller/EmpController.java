@@ -301,5 +301,27 @@ public class EmpController {
 		out.close();
 		
 	}
+	
+	//todoList
+	@RequestMapping(value="todoInsert.do", method=RequestMethod.POST)
+	@ResponseBody
+	public void todoInsert(@RequestParam(value="firstTodo") String firstTodo, @RequestParam(value="todoList") String todoList, HttpServletResponse response) throws IOException{
+		
+		logger.info("todoInsert 실행");
+		
+		JSONObject job = new JSONObject();
+		job.put("firstTodo", firstTodo);
+		job.put("todoList", todoList);
+		
+		System.out.println("firstTodo : " + firstTodo);
+		System.out.println("todoList : " + todoList);
+
+		response.setContentType("application/json; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		out.println(job.toJSONString());
+		out.flush();
+		out.close();
+			
+	}
 		
 }
