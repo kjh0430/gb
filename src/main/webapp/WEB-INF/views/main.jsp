@@ -9,7 +9,7 @@
 <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="icon" href="images/favicon.ico" type="image/ico" />
+   <link rel="icon" href="images/favicon.ico" type="image/ico" />
 
     <title>GROUP BEAN | </title>
 
@@ -19,14 +19,18 @@
     <link href="resources/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- iCheck -->
     <link href="resources/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
-	
+   
     <!-- Custom Theme Style -->
     <link href="resources/build/css/custom.min.css" rel="stylesheet">
     <link href="resources/css/main.css" rel="stylesheet">
     
     <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript">
-	
+
+
+
+
+    	
     /*
     $(function(){
     	
@@ -90,7 +94,14 @@
     */
 	
 	</script>	
+    <style>
+   
+   
+    #calendar { max-width: 900px; margin: 0 auto; }
+
+
     
+    </style>
     
   </head>
 
@@ -155,9 +166,10 @@
             </div>
           </div>
           <!-- /top tiles -->
-          <div class="row">          	
+           <div class="row">       	
                 <!-- Start to do list -->
-                <div class="col-md-6 col-sm-6 col-xs-12">
+                 <div class="col-md-6 col-sm-6 col-xs-12" style="padding:0px;">
+                <div class="col-xs-12">
                   <div class="x_panel">
                     <div class="x_title">
                       <h2>To Do List <small>Sample tasks</small></h2>
@@ -208,9 +220,21 @@
                   </div>
                 </div>
                 <!-- End to do list -->
-                
-				<!-- start of weather widget -->
-	          <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="col-xs-12">
+              <div class="x_panel tile">
+                <div class="x_title">
+                  <h2>App Versions</h2>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content" id="calendar">
+
+                </div>
+              </div>
+            </div>
+            </div>
+             <div class="col-md-6 col-sm-6 col-xs-12" style="padding:0px;">
+			<!-- start of weather widget -->
+	          <div class="col-xs-12">
 	            <div class="x_panel">
 	              <div class="x_title">
 	                <h2>오늘의 날씨</h2>
@@ -225,7 +249,7 @@
 	                    </div>
 	                  </div>
 	                </div>
-	                <div class="row">
+	               <!--  <div class="row"> -->
 	                  <div class="col-sm-4">
 	                    <div class="weather-icon" style="padding-left:10px;">
 	                      
@@ -248,11 +272,11 @@
 	                <div class="clearfix"></div>
 	              </div>
 	            </div>	
-	          </div>
+	          <!-- </div> -->
 	          <!-- end of weather widget -->
 	          <!-- start of notice widget -->
 	          
-	          <div class="col-md-6 col-sm-6 col-xs-12">
+	          <div class="col-xs-12">
 	            <div class="x_panel">
 	              <div class="x_title">
 	                <h2>Notice </h2> 
@@ -277,23 +301,13 @@
 	            </div>	
 	          </div>
 	           <!-- end of notice widget -->
-          </div>
+          <!-- </div> -->
 
-          <div class="row">
+          <!-- <div class="row"> -->
 
-            <div class="col-md-6 col-sm-6 col-xs-12">
-              <div class="x_panel tile fixed_height_320">
-                <div class="x_title">
-                  <h2>App Versions</h2>
-                  <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
+            
 
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="col-xs-12">
               <div class="x_panel tile fixed_height_320 overflow_hidden">
                 <div class="x_title">
                   <h2>Device Usage</h2>
@@ -363,7 +377,7 @@
         <!-- /page content -->
       </div>
       <!-- footer content -->
-		 <%@ include file="etc/footer.jsp" %>
+       <%@ include file="etc/footer.jsp" %>
       <!-- /footer content -->
       
     </div>
@@ -378,7 +392,7 @@
   
     <!-- Custom Theme Scripts -->
     <script src="resources/build/js/custom.min.js"></script>
-	
+   
   </body>
   
 </html>

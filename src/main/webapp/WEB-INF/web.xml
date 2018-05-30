@@ -39,6 +39,8 @@
       <url-pattern>*.do</url-pattern>
    </servlet-mapping>
    
+   
+   
   	<!-- post 방식으로 전송온 한글값들에 대한 깨짐 방지 처리 -->
 	<filter>
 		<filter-name>charEncodingFilter</filter-name>
