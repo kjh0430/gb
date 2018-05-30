@@ -39,4 +39,8 @@ public class OrderDao {
 	public ArrayList<Order> selectOrderlist(Order order) {
 		return (ArrayList)sqlSession.selectList("selectOrderlist",order);
 	}
+	
+	public ArrayList<Order> selectAllOrderList(){
+		return (ArrayList)sqlSession.selectList("selectAllOrderList");
+	}
 }

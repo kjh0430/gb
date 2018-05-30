@@ -14,7 +14,6 @@
 		<result column="product_comment" property="product_comment"/>
 		<result column="product_register" property="product_register"/>
 		<result column="product_delete" property="product_delete"/>
-		<result column="contract_discount" property="contract_discount"/>
 	</resultMap>
 	
 	

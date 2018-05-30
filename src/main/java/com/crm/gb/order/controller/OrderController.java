@@ -46,8 +46,7 @@ public class OrderController {
 	@Autowired
 	private ContractService contractService;
 	
-	@Autowired
-	private EmpService empService;
+
 
 	//발주하기-페이지이동과 고객검색용 메소드
 	@RequestMapping(value="selectOrderClient.do")
@@ -62,6 +61,7 @@ public class OrderController {
 	@RequestMapping(value="searchCom.do", method=RequestMethod.POST)
 	public void searchCom(@RequestParam(name="searchComName") String client_company,@RequestParam(name="emp_no") String empNo, Client clientInfo ,HttpServletResponse response) throws IOException{
 		logger.info("발주하기-고객검색 메소드 run....");
+		
 		
 		int emp_no = Integer.parseInt(empNo);
 		
@@ -79,6 +79,7 @@ public class OrderController {
 			jsonobject.put("client_company", client.getClient_company());
 			jsonobject.put("client_phone", client.getClient_phone());
 			jsonobject.put("client_addr", client.getClient_addr());
+			jsonobject.put("contract_discount", client.getContract_discount());
 			jarr.add(jsonobject);
 		}
 		
@@ -86,20 +87,22 @@ public class OrderController {
 		sendJson.put("list", jarr);
 		
 		response.setContentType("application/json; charset=utf-8");	
-		//System.out.println("orderController:"+sendJson);
+		System.out.println("orderController:"+sendJson);
 		PrintWriter out=response.getWriter();
 		out.println(sendJson.toJSONString());
 		out.flush();
 		out.close();
 	
+		
 	}
 	
 	@RequestMapping(value="searchProduct.do", method=RequestMethod.POST)
-	public void searchProduct(@RequestParam(name="searchProductName") String product_name, HttpServletResponse response) throws IOException{
+	public void searchProduct(@RequestParam(name="searchProductName") String product_name,@RequestParam(name="client_no") String clientNo, HttpServletResponse response) throws IOException{
 		logger.info("발주하기-상품 검색 메소드 run....");
-
+		
 		ArrayList<Product> SearchProduct = productService.selectSearchProduct(product_name);
 		JSONArray jarr = new JSONArray();
+		
 		
 		for(Product product : SearchProduct) {
 			JSONObject jsonobject = new JSONObject();
@@ -107,6 +110,7 @@ public class OrderController {
 			jsonobject.put("product_name", product.getProduct_name());
 			jsonobject.put("product_price", product.getProduct_price());
 			jsonobject.put("product_amount", product.getProduct_amount());
+			
 			//jsonobject.put("product_availability", product.getProduct_availavility());
 			
 			jarr.add(jsonobject);
@@ -130,20 +134,21 @@ public class OrderController {
 		request.getParameter("order_price");
 		
 		int order_no = orderService.selectOrderMaxNo();
-	//	System.out.println("orderNo : " + order_no);
+		//System.out.println("orderNo : " + order_no);
 		//System.out.println(request.getParameter("emp_no")+","+request.getParameter("client_no"));
 		int emp_no = Integer.parseInt(request.getParameter("emp_no"));
+		//System.out.println("emp_no : " + emp_no);
 		int client_no = Integer.parseInt(request.getParameter("client_no"));
-		
+		//System.out.println("client_no : " + client_no);
 		int contract_discount = contractService.selectDiscount(client_no);
-	//	System.out.println("contract_discount : " + contract_discount);
+		//System.out.println("contract_discount : " + contract_discount);
 		
 		String productNo[] = request.getParameterValues("product_no");
 		String orderPrice[] = request.getParameterValues("order_price");
 		String amountlist[] = request.getParameterValues("order_amount");
 		
 		for(int i=0; i < orderPrice.length; i++) {
-			System.out.println("no:"+productNo[i]+" ,price : " + orderPrice[i] + " , amount : " + amountlist[i]);
+			//System.out.println("no:"+productNo[i]+" ,price : " + orderPrice[i] + " , amount : " + amountlist[i]);
 		
 			orderlist.setOrder_no(order_no);
 			orderlist.setOrder_amount(Integer.parseInt(amountlist[i]));
@@ -162,15 +167,16 @@ public class OrderController {
 		return "order/order";
 	}
 	
-	//매출현황 페이지 이동 메소드 
+	//매출현황 페이지 메소드 
 		@RequestMapping(value="orderList.do")
-		public String orderListPage(@RequestParam("emp_no") String empNo,Model model){
+		public String orderListPage(Model model){
 			
 			logger.info("매출현황 메소드 run...");
-			int emp_no = Integer.parseInt(empNo);
+			//int emp_no = Integer.parseInt(empNo);
 			
-//			ArrayList<Order> orderList = orderService.selectAllOrder(emp_no);
-//			model.addAttribute("orderList", orderList);
+			ArrayList<Order> orderList = orderService.selectAllOrderList();
+			System.out.println("orderList: " + orderList.get(0).toString());
+			model.addAttribute("orderList", orderList);
 //			
 			return "order/orderList";
 		}

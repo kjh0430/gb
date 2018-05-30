@@ -6,54 +6,66 @@
 <mapper namespace="Message"> 
 
 
-<select id="selectEmp" parameterType="message" resultType="Message">
+	<select id="selectEmp" parameterType="message" resultType="Message">		
+		<![CDATA[
+		select e.emp_name,d.dept_name,j.job_name,e.emp_email,e.emp_no from emp e,
+		dept d,job j where e.emp_name like '%'||#{emp_name}||'%'  and e.dept_no=d.dept_no and j.job_no=e.job_no 
+		and e.emp_no != #{message_from_no}
+		]]>		
+	</select>
 
-<![CDATA[
-select e.emp_name,d.dept_name,j.job_name,e.emp_email,e.emp_no from emp e,
-dept d,job j where e.emp_name like '%'||#{emp_name}||'%'  and e.dept_no=d.dept_no and j.job_no=e.job_no 
-and e.emp_no != #{message_from_no}
-]]>
-</select>
+	<insert id="insertMessage" parameterType="message" flushCache="true">	
+		<![CDATA[
+		insert into message values((select max(message_no)+1 from message),
+		#{message_from_no},#{message_to_no},#{message_title},#{message_content},
+		to_date(#{message_date},'yyyy-mm-dd hh24:mi:ss'),default)		
+		]]>	
+	</insert>
 
-<insert id="insertMessage" parameterType="message" flushCache="true">
-<![CDATA[
-insert into message values((select max(message_no)+1 from message),
-#{message_from_no},#{message_to_no},#{message_title},#{message_content},
-to_date(#{message_date},'yyyy-mm-dd hh24:mi:ss'),default)
+	<select id="selectReceiveMessage" parameterType="message" resultType="Message">	
+		 <![CDATA[
+		select emp_name,message_from_no,message_title,message_content,
+		to_char(message_date,'yyyy-mm-dd hh24:mi:ss') 
+		as message_date,message_no,message_confirm 
+		from message m,emp e where m.message_to_no=#{message_to_no}  
+		and e.emp_no=m.message_from_no
+		]]> 		
+	</select>
 
-]]>
+	<select id="selectSendMessage" parameterType="message" resultType="Message">	
+		 <![CDATA[
+		select emp_name,message_to_no,message_title,message_content,
+		to_char(message_date,'yyyy-mm-dd hh24:mi:ss') 
+		as message_date from message m,emp e where m.message_from_no=#{message_from_no}  
+		and e.emp_no=m.message_to_no
+		]]> 			
+	</select>
 
-</insert>
-
-<select id="selectReceiveMessage" parameterType="message" resultType="Message">
- <![CDATA[
-select emp_name,message_from_no,message_title,message_content,
-to_char(message_date,'yyyy-mm-dd hh24:mi:ss') 
-as message_date,message_no,message_confirm 
-from message m,emp e where m.message_to_no=#{message_to_no}  
-and e.emp_no=m.message_from_no
-]]> 
-
-
-</select>
-
-<select id="selectSendMessage" parameterType="message" resultType="Message">
- <![CDATA[
-select emp_name,message_to_no,message_title,message_content,
-to_char(message_date,'yyyy-mm-dd hh24:mi:ss') 
-as message_date from message m,emp e where m.message_from_no=#{message_from_no}  
-and e.emp_no=m.message_to_no
-]]> 
-
-
-</select>
-
-<update id="updateReadMessage" parameterType="message">
-<![CDATA[
-update message set message_confirm='Y' where message_no=#{message_no}
-]]> 
-
-</update>
+	<update id="updateReadMessage" parameterType="message">	
+		<![CDATA[
+		update message set message_confirm='Y' where message_no=#{message_no}
+		]]> 
+	</update>
+	
+	<insert id="insertNotify" parameterType="notify">
+		<![CDATA[
+		insert into notify values((select max(notify_no)+1 from notify),
+		#{notify_from},#{notify_to},default,default)		
+		]]>	
+	</insert>
+	
+	<select id="selectNotify" parameterType="notify" resultType="notify">
+		<![CDATA[
+		select * from(select rownum,notify_no,emp_name,notify_from,notify_to,to_char(notify_date,'yyyy-mm-dd hh24:mi') as notify_date,notify_read from notify n, emp e where n.notify_from = e.emp_no 
+		and notify_to = ${emp_no} and notify_read like 'N' order by notify_date) where rownum >=1 and rownum <=5
+		]]>	
+	</select>
+	
+	<update id="updateNotify" parameterType="notify">
+		<![CDATA[
+		update notify set notify_read='Y' where notify_no=#{notify_no}
+		]]> 
+	</update>
 
 
 </mapper>
