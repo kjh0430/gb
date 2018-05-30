@@ -16,7 +16,7 @@
 		<typeAlias type="com.crm.gb.message.model.vo.Message" alias="Message" />
 		<typeAlias type="com.crm.gb.order.model.vo.Order" alias="Order"/>
 		<typeAlias type="com.crm.gb.approval.model.vo.Approval" alias="Approval"/>
-		
+		<typeAlias type="com.crm.gb.message.model.vo.Notify" alias="Notify"/>		
 	</typeAliases>
 
 
