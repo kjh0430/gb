@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@page import="com.crm.gb.product.controller.ProductController"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -41,6 +41,11 @@ $(document).ready(function() {
         info:false
     } );
 } );
+
+/*  function goToDetail(page){
+   var index=page;
+return index;
+} */
 
 </script>
 </head>
@@ -167,10 +172,10 @@ $(document).ready(function() {
 										</thead>
 										<tbody>
 											<c:forEach items="${list}" var="li"> 
-											
+			
 											<tr>
-												<td><a href="moveproductDetail.do">${li.product_no}</a></td>
-												<td><a href="moveproductDetail.do">${li.product_name}</a></td>
+												<td>${li.product_no}</td>
+												<td><a href=moveproductDetail.do?data=${li.product_no}>${li.product_name}</a></td>
 												<td>${li.product_price}</td>
 												<td>${li.product_availability}</td>
 											</tr>

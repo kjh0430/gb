@@ -20,6 +20,9 @@
     <!-- iCheck -->
     <link href="resources/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
    
+   
+   <link href="resources/fullcalendar-3.9.0/fullcalendar.css" rel="stylesheet">
+   <link href="resources/fullcalendar-3.9.0/fullcalendar.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="resources/build/css/custom.min.css" rel="stylesheet">
     <link href="resources/css/main.css" rel="stylesheet">
@@ -27,9 +30,36 @@
        
     
     <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
+    <script src="resources/fullcalendar-3.9.0/lib/jquery.min.js"></script>
     <script type="text/javascript">
     $(function() {
      
+    	
+    	
+    	$('#calendar2').fullCalendar({
+    		events: [
+    		    {
+    		      title  : '09:00 영업팀 회의',
+    		      start  : '2018-05-23',
+    		      end : '2018-05-30'
+    		    },
+    		    
+    		    { title:'09:00 영업 회의',
+    		      start:'2018-05-01',
+    		    },
+    		    {
+    		    	title:'event3',
+    		    	start:'2018-05-01'
+    		    }
+    		   
+    		  ]
+    	});
+    	
+    	
+    	
+    	
+    	
+    	
     });
 
 
@@ -97,7 +127,42 @@
 	}); */
     
 	
-	</script>	
+	</script>
+	<script type="text/javascript">
+    
+    var count = 1;    
+    function addKeywordForm(){
+       var addedFormDiv = document.getElementById("addedTodo");
+       var str = '<input type="text" id="todo_keyword'+count+'" name="todo_keyword'+count+'" class="form-control" placeholder="할일을 입력해주세요">'
+       + '<a onclick="delKeywordForm('+count+')"/><i class="fa fa-times"></i></a>';
+       
+       if(count<5){
+       var addedDiv = document.createElement("div");
+       addedDiv.setAttribute("id", "keyword_Frm"+count);
+       addedDiv.innerHTML = str;
+       addedFormDiv.appendChild(addedDiv);       
+       console.log("todo_keyword : " + str);
+       count++;
+       }else{
+       alert("5개까지 입력하실 수 있습니다");
+       }
+
+       }
+
+       function delKeywordForm(thisCount){          
+       var addedFormDiv = document.getElementById("addedTodo");
+       
+       if(count>1){
+       var thisDiv = document.getElementById("keyword_Frm"+thisCount);
+       addedFormDiv.removeChild(thisDiv);
+       console.log("addedFormDiv : " + addedFormDiv);
+       }else{
+       document.addedFormDiv.reset();
+       }
+       count--;
+       }
+       
+    </script>
     <style>
    
    
@@ -106,6 +171,17 @@
 
     
     </style>
+        <style type="text/css">
+   .form-control{
+      display:inline-block;
+      width:90%;
+      margin-top:10px;
+   }
+   
+   .fa.fa-times{
+      margin-left:10px;
+   }
+   </style>  
     
   </head>
 
@@ -230,7 +306,7 @@
                   <h2>App Versions</h2>
                   <div class="clearfix"></div>
                 </div>
-                <div class="x_content" id="calendar">
+                <div class="x_content" id="calendar2">
 
                 </div>
               </div>
@@ -380,8 +456,7 @@
          </div>
         <!-- /page content -->
       </div>
-      <!-- footer content -->
-		 <%@ include file="etc/footer.jsp" %>
+    
       <!-- footer content -->
        <%@ include file="etc/footer.jsp" %>
       <!-- /footer content -->
@@ -397,8 +472,15 @@
     <script src="resources/vendors/iCheck/icheck.min.js"></script>
   
     <!-- Custom Theme Scripts -->
+     <script src="resources/fullcalendar-3.9.0/lib/tooltipster.bundle.min.js"></script>
     <script src="resources/build/js/custom.min.js"></script>
-   
+    	
+    	<script src="resources/fullcalendar-3.9.0/lib/moment.min.js"></script>
+   	
+   	  
+    	
+   	<script src="resources/fullcalendar-3.9.0/fullcalendar.js"></script>
+   	
   </body>
   
 </html>
