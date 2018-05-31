@@ -1,27 +1,21 @@
 package com.crm.gb.message.controller;
-import java.io.IOException; 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import com.crm.gb.emp.model.service.EmpService;
 import com.crm.gb.emp.model.vo.Emp;
@@ -72,9 +66,6 @@ public class MessageController {
 		JSONObject send=new JSONObject();
 		send.put("list",jarr);
 		
-		
-		
-	
 		response.setContentType("application/json; charset=utf-8");	
 		System.out.println("messageController:"+send);
 		PrintWriter out=response.getWriter();
@@ -103,8 +94,10 @@ public class MessageController {
 		message.setMessage_date(getdate);
 		
 		int result=MessageService.insertMessage(message);
+		if(result>0) {
+			sendmsg = new Message(message.getMessage_from_no(),message.getMessage_to_no(),message.getMessage_date());
+		}
 		
-	
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out=response.getWriter();
 		out.append("메시지가 성공적으로 전송되었습니다.");
@@ -224,14 +217,14 @@ public class MessageController {
 	public void getNotify(Message message,Notify notify,HttpServletResponse response,@RequestParam("emp_no") int emp_no) throws IOException {
 		response.setContentType("text/event-stream;charset=UTF-8");
 		response.setHeader("Cache-Control", "no-cache");
-		response.setHeader("Connection", "keep-alive");
+		response.setHeader("Connection", "keep-alive");		
 		
-		//System.out.println("notify : "+emp_no);
 		PrintWriter out = response.getWriter();		
 		int from_no = 0;
 		int to_no = 0;
 		
 		if(sendmsg != null) {
+			System.out.println("sendmsg : "+sendmsg);
 			from_no = sendmsg.getMessage_from_no();
 			to_no = sendmsg.getMessage_to_no();
 			Emp from = empService.selectEmpNo(from_no);
@@ -247,7 +240,6 @@ public class MessageController {
 				notify.setNotify_to(to_no);
 				if(notify!=null) {
 					int result = MessageService.insertNotify(notify);
-					System.out.println("insert Notify : "+result);
 				}				
 			}			
 			sendmsg=null;

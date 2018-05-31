@@ -39,9 +39,7 @@ $(document).ready(function() {
     $('#table_cl').dataTable( {
         ordering:false,
         lengthChange:false,
-        paging: false,
-        info: false,
-        searching: false
+        pageLength:15
     } );
 } );
 
@@ -58,13 +56,6 @@ function clientList(){
 }
 </script>
 
-<!-- ----------------------스크립트관련 작업영역 시작------------------------ -->
-
-
-
-
-
-<!-- ----------------------스크립트관련 작업영역 끝------------------------ -->
 
 </head>
 
@@ -114,7 +105,7 @@ function clientList(){
 					<div class="page-title">
 						<div class="title_left">
 							<h3>
-								계약
+								급여정보
 							</h3>
 						</div>
 					</div>
@@ -126,7 +117,7 @@ function clientList(){
 							<div class="x_panel">
 								<div class="x_title">
 									<h2>
-										계약리스트
+										사원목록
 									</h2>
 									<div class="clearfix"></div>
 								</div>
@@ -146,7 +137,7 @@ function clientList(){
 										</thead>
 										<tbody>
 										
-										<c:forEach var="list" items="${ contractList }">
+										<%-- <c:forEach var="list" items="${ contractList }">
 											<tr>
 												<td><a href="contractDetail.do?client_no=${ list.client.client_no }">${ list.client.client_name }</a></td>
 												<td>${ list.client.client_company }</td>
@@ -157,19 +148,11 @@ function clientList(){
 												<td>${ list.contract_date_end }</td>
 											</tr>
 											
-										</c:forEach>
+										</c:forEach> --%>
 
 										<tbody>
 									</table>
 								</div>
-								
-								<!-- 페이징 처리 -->
-								<div style="text-align:center;">
-									<c:forEach var="i" begin="${ start }" end="${ end }">
-										<a id="listNumber" href="poList.do?startPage=${ i }">${ i }</a>
-									</c:forEach>
-								</div>
-								
 							</div>
 						</div>
 					</div>

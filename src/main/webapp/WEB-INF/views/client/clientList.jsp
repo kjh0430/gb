@@ -19,19 +19,10 @@
 <!-- Font Awesome -->
 <link href="resources/vendors/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet">
-<!-- NProgress -->
-<link href="resources/vendors/nprogress/nprogress.css" rel="stylesheet">
-<!-- iCheck -->
-<link href="resources/vendors/iCheck/skins/flat/green.css"
-	rel="stylesheet">
-
 <!-- bootstrap-progressbar -->
 <link
 	href="resources/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css"
 	rel="stylesheet">
-<!-- JQVMap -->
-<link href="resources/vendors/jqvmap/dist/jqvmap.min.css"
-	rel="stylesheet" />
 <!-- bootstrap-daterangepicker -->
 <link
 	href="resources/vendors/bootstrap-daterangepicker/daterangepicker.css"
@@ -100,7 +91,8 @@ function clientList(){
 									$('table tbody').html(clientList);
 						}	//success
 				});	//ajax
-			});	//keyup				
+			});	//keyup	
+			
 		});	//onload
 	</script>
 
@@ -124,7 +116,22 @@ function clientList(){
 					<div class="clearfix"></div>
 
 					<!-- sidebar menu -->
-					<%@ include file="../etc/sidebar.jsp"%>
+						<c:choose>
+			            	<c:when test="${ loginEmp.job_no == 3}">
+					            <!-- sidebar menu -->
+					            <%@ include file="../etc/adminsidebar.jsp" %>
+					            <!-- /sidebar menu -->
+			            	</c:when>
+			            	<c:when test="${ loginEmp.job_no == 2}">
+			            	<%@ include file="../etc/adminsidebar.jsp" %>
+			            	
+			            	</c:when>
+			            	<c:otherwise>
+								<!-- sidebar menu -->
+					            <%@ include file="../etc/sidebar.jsp" %>
+					            <!-- /sidebar menu --> 
+			            	</c:otherwise>
+			            </c:choose>
 					<!-- /sidebar menu -->
 
 				</div>
@@ -178,7 +185,7 @@ function clientList(){
 										</thead>
 										<tbody>
 										
-										<c:forEach var="list" items="${ clientList }">
+										<c:forEach var="list" items="${ pageList }">
 											<tr>
 												<td><a href="detailClient.do?client_no=${ list.client_no }">${ list.client_name }</a></td>
 												<td>${ list.client_company }</td>
@@ -193,7 +200,16 @@ function clientList(){
 										</tbody>
 									</table>
 								</div>
+								
+								<!-- 페이징 처리 -->
+								<div style="text-align:center;">
+									<c:forEach var="i" begin="${ start }" end="${ end }">
+										<a id="listNumber" href="clientList.do?startPage=${ i }">${ i }</a>
+									</c:forEach>
+								</div>
+								
 							</div>
+															
 						</div>
 					</div>
 				</div>
@@ -216,12 +232,7 @@ function clientList(){
 	<script src="resources/vendors/jquery/dist/jquery.min.js"></script>
 	<!-- Bootstrap -->
 	<script src="resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-	<!-- FastClick -->
-	<script src="resources/vendors/fastclick/lib/fastclick.js"></script>
-	<!-- NProgress -->
-	<script src="resources/vendors/nprogress/nprogress.js"></script>
-	<!-- iCheck -->
-	<script src="resources/vendors/iCheck/icheck.min.js"></script>
+	
 	<!-- Datatables -->
 	<script
 		src="resources/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
@@ -247,9 +258,6 @@ function clientList(){
 		src="resources/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
 	<script
 		src="resources/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-	<script src="resources/vendors/jszip/dist/jszip.min.js"></script>
-	<script src="resources/vendors/pdfmake/build/pdfmake.min.js"></script>
-	<script src="resources/vendors/pdfmake/build/vfs_fonts.js"></script>
 
 	<!-- Custom Theme Scripts -->
 	<script src="resources/build/js/custom.min.js"></script>

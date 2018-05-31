@@ -17,8 +17,6 @@
     <link href="resources/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="resources/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- iCheck -->
-    <link href="resources/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
 	
     <!-- Custom Theme Style -->
     <link href="resources/build/css/custom.min.css" rel="stylesheet">
@@ -379,9 +377,6 @@
     <!-- Bootstrap -->
     <script src="resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
    
-    <!-- iCheck -->
-    <script src="resources/vendors/iCheck/icheck.min.js"></script>
-  
     <!-- Custom Theme Scripts -->
     <script src="resources/build/js/custom.min.js"></script>
 	

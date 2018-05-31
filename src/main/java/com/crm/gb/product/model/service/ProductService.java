@@ -13,5 +13,5 @@ public interface ProductService {
 	int insertProductFile(ProductFile pf);
 	List<Product> selectAllList();
 	ArrayList<Product> selectSearchProduct(String product_name); //상품검색 
-
+	Product selectProductDetail(String product_no);
 }

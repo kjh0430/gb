@@ -114,6 +114,7 @@
 	    Notification.requestPermission(function (status) {
 	      if (Notification.permission !== status) {
 	        Notification.permission = status;
+	        console.log(status);
 	      }
 	    });
 	}
@@ -132,7 +133,7 @@
 	eventSource.addEventListener('to_no', function(event) {	
 		console.log("to_no : "+ event.data);
 		
-		if( ${loginEmp.emp_no} == event.data){			
+		if(${loginEmp.emp_no} == event.data){			
 			 var img = 'resources/images/msg2.png';
 			 var text = from_name+"님이 보낸 쪽지가 도착하였습니다.";
 			
