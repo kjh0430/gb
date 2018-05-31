@@ -210,8 +210,8 @@
 											<tr>
 												<th>제품번호</th>
 												<th>제품명</th>
-												<th>단가</th>
 												<th>수량</th>
+												<th>단가</th>
 											</tr>
 										</thead>
 										<tbody class="order_body">
