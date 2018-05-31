@@ -79,7 +79,7 @@
 			url:"selectNofity.do",
 			type:"post",
 			dataType:"json",
-			data:{emp_no:'${loginEmp.emp_no}'},
+			data:{emp_no:emp_no},
 			success:function(obj){
 				var objStr =JSON.stringify(obj);
 				var notify = JSON.parse(objStr);
