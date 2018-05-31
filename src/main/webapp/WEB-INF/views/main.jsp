@@ -41,8 +41,10 @@
     		    {
     		      title  : '09:00 영업팀 회의',
     		      start  : '2018-05-23',
-    		      end : '2018-05-30'
+    		      end : '2018-05-30',
+    		      
     		    },
+    		
     		    
     		    { title:'09:00 영업 회의',
     		      start:'2018-05-01',
@@ -52,7 +54,17 @@
     		    	start:'2018-05-01'
     		    }
     		   
-    		  ]
+    		  ]  , eventClick:function(event) {
+                  
+    			  
+    			  
+    			  if(event.title) {
+    			alert(event.title);
+                  $('#modal1').modal("show");
+                  }
+    		  },
+    		  
+
     	});
     	
     	
@@ -308,6 +320,86 @@
                 </div>
                 <div class="x_content" id="calendar2">
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+				   <!-- message modal -->
+                              <div class="modal fade sendMsg" tabindex="-1" role="dialog"
+                                 id="modal1" aria-hidden="true">
+                                 <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                       <form class="form-horizontal form-label-left input_mask">
+                                          <div class="modal-header">
+                                             <button type="button" class="close" data-dismiss="modal">
+                                                <span aria-hidden="true">×</span>
+                                             </button>
+                                             <h4 class="modal-title" id="myModalLabel">쪽지보내기</h4>
+                                          </div>
+
+                                          <div class="modal-body">
+                                             <div class="form-group" style="margin: 0px;">
+                                                <div class="row">
+                                                   <label
+                                                      class="control-label col-md-3 col-sm-3 col-xs-12">받는사람</label>
+
+                                                   <div class="col-md-9 col-sm-9 col-xs-12">
+                                                      <div class="input-group">
+
+                                                         <input type="text" class="form-control"
+                                                            placeholder="받는이의 이름을 입력해주세요." id="searchName" required>
+
+                                                        <span
+                                                            class="input-group-btn">
+                                                            <button type="button" class="btn btn-primary"
+                                                               onclick="searchEmp();">
+                                                               <i class="fa fa-search"></i>
+                                                            </button>
+
+                                                         </span>
+                                                      </div>
+                                                   </div>
+                                                   <label class="control-label col-md-3 col-sm-3 col-xs-12">제목</label>
+                                                   <div class="col-md-9 col-sm-9 col-xs-12">
+                                                      <div class="input-group" style="width:100%">
+                                                         <input type="text" class="form-control"
+                                                            name="message_title" id="message_title"
+                                                            placeholder="제목을 입력해주세요." required>
+                                                      </div>
+                                                   </div>
+                                                   <div class="form-group">
+
+                                                      <label
+                                                         class="control-label col-md-3 col-sm-3 col-xs-12">내용</label>
+                                                      <div class="col-md-9 col-sm-9 col-xs-12">
+                                                         <textarea class="form-control" rows="8"
+                                                            name="message_content" id="message_content" required></textarea>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <!-- end of row -->
+                                             </div>
+                                          </div>
+                                          <div class="modal-footer">
+                                          	 <button onclick="modal1Close()" type="button"
+                                                class="btn btn-primary">취소</button>
+                                             <button onclick="modalSubmit();" type="button"
+                                                class="btn btn-primary">전송</button>
+                                          </div>
+                                       </form>
+
+                                    </div>
+                                 </div>
+                              </div>
                 </div>
               </div>
             </div>
