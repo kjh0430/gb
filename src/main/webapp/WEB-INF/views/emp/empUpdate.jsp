@@ -182,7 +182,7 @@ table tr th, table tr td
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">비밀번호</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input class="form-control" id="emp_pwd" name="emp_pwd" type="password" value="${ emp.emp_pwd }">
+                          <input class="form-control" id="emp_pwd" name="emp_pwd" type="password" value="">
                         </div>
                       </div>
                       <div class="form-group">

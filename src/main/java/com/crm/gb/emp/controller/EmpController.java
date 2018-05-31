@@ -173,6 +173,9 @@ public class EmpController {
 		
 		System.out.println("전송온값 : " + emp);
 		
+		String encPassword = pwdEncoder.encode(emp.getEmp_pwd());
+		emp.setEmp_pwd(encPassword);
+		
 		int result = empService.updateEmp(emp);
 		ArrayList<Emp> empList = empService.selectEmpList();
 		model.addAttribute("empList", empList);
