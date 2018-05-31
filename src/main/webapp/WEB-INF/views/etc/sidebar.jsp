@@ -80,7 +80,12 @@
 	eventSource.onmessage = function(event) {
 
 		var count = event.data;
-		$(".count_badge").html(count);		
+		if(count>0){
+			$(".count_badge").html(count);		
+		}else{
+			$(".count_badge").css("display","none");
+		}
+		
 
 	};
 	

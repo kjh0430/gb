@@ -33,8 +33,6 @@
 					</a>
 						<ul class="dropdown-menu dropdown-usermenu pull-right">
 							<li><a href="javascript:;"> 내정보수정</a></li>
-							
-							<li><a href="javascript:;">쪽지함</a></li>
 							<li><a href="logout.do"><i
 									class="fa fa-sign-out pull-right"></i> 로그아웃</a></li>
 						</ul></li>
@@ -55,8 +53,25 @@
 	
 	<!-- <script src="resources/js/eventsource.js"></script> -->
 	<script type="text/javascript">
+
+	var mNotify;
 	$(function(){
 		selectNotify();
+		var mobile = [	        
+	        'iphone', 'ipad', 'windows ce', 'android', 'blackberry', 'nokia',
+	        'webos', 'opera mini', 'sonyerricsson', 'opera mobi', 'iemobile'
+	    ];
+
+	    for(var i in mobile) {
+	        
+	        if(navigator.userAgent.toLowerCase().match(new RegExp(mobile[i]))) {
+	            
+	        	mNotify = "mobile";
+	        }
+	    }
+
+	
+		
 	})//onload
 	
 	function selectNotify(){
@@ -121,25 +136,27 @@
 	
   	var eventSource = new EventSource("notify.do?emp_no=${loginEmp.emp_no}");
 	eventSource.onopen = function(){
-		//console.log("연결중");		
+		console.log("연결중");		
 	}
 	var from_no;
 	eventSource.addEventListener('from_name', function(event) {		
-		//console.log("from_name : "+ event.data);
+		console.log("from_name : "+ event.data);
 		from_name = event.data;
 		
 	}, false);
 
 	eventSource.addEventListener('to_no', function(event) {	
-		//console.log("to_no : "+ event.data);
+		console.log("to_no : "+ event.data);
 		
-		if(${loginEmp.emp_no} == event.data){			
+		if( ${loginEmp.emp_no} == event.data){			
 			 var img = 'resources/images/msg2.png';
 			 var text = from_name+"님이 보낸 쪽지가 도착하였습니다.";
 			
 			 if (window.Notification && Notification.permission === "granted") {
 				var notification = new Notification('Message', { body: text, icon: img });
-    		}			
+    		}else if(mNotify =="mobile"){
+    			alert(text);
+    		}		
 		}
 		 
 	}, false);
