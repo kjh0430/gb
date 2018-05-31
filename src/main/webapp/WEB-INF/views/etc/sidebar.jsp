@@ -7,6 +7,11 @@
 <head>
 <meta charset="UTF-8">
 <title>sidebar</title>
+<style>
+	.count_badge{
+		margin-left:4px;
+	}
+</style>
 </head>
 <body>
 
@@ -54,7 +59,7 @@
 	        </ul>
 	      </li>
 	      
-	       <li><a href="messageList.do"><i class="fa fa-file-text-o"></i> 쪽지함</a>
+	       <li><a href="messageList.do"><i class="fa fa-file-text-o"></i> 쪽지함 <span class="count_badge badge bg-green"></span></a>
 	      </li>
 	      <!-- </li>
 	      <li><a><i class="fa fa-cog"></i> 설정</a>
@@ -67,6 +72,19 @@
 	<div class="sidebar-footer hidden-small">
 	  
 	</div>
+	<script type="text/javascript">
+	var eventSource = new EventSource("count.do?emp_no=${loginEmp.emp_no}");
+	eventSource.onopen = function(){
+		//console.log("연결중2");		
+	}
+	eventSource.onmessage = function(event) {
+
+		var count = event.data;
+		$(".count_badge").html(count);		
+
+	};
+	
+	</script>
 
 
 </body>

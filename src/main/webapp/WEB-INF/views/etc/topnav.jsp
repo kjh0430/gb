@@ -42,7 +42,7 @@
 					<li role="presentation" class="dropdown" id="pst"><a
 						href="javascript:;" class="dropdown-toggle info-number"
 						data-toggle="dropdown" aria-expanded="false"> <i
-							class="fa fa-bell-o"></i> <span class="badge bg-green"></span>
+							class="fa fa-bell-o"></i><span class="notify_badge badge bg-green"></span>
 					</a>
 						<ul id="menu1" class="dropdown-menu list-unstyled msg_list"
 							role="menu">
@@ -78,10 +78,10 @@
 						+notify.list[i].from_name+"님이 보낸 쪽지가 도착했습니다.</li>"
 					}	
 					$("#menu1").html(value);
-					$(".badge").html(size);
+					$(".notify_badge").html(size);
 				}else{
 					$("#menu1").html("<li>새로운 알림이 없습니다.</li>");
-					$(".badge").css('display','none');
+					$(".notify_badge").css('display','none');
 				}
 				
 			}			
@@ -121,17 +121,17 @@
 	
   	var eventSource = new EventSource("notify.do?emp_no=${loginEmp.emp_no}");
 	eventSource.onopen = function(){
-		console.log("연결중");		
+		//console.log("연결중");		
 	}
 	var from_no;
 	eventSource.addEventListener('from_name', function(event) {		
-		console.log("from_name : "+ event.data);
+		//console.log("from_name : "+ event.data);
 		from_name = event.data;
 		
 	}, false);
 
 	eventSource.addEventListener('to_no', function(event) {	
-		console.log("to_no : "+ event.data);
+		//console.log("to_no : "+ event.data);
 		
 		if(${loginEmp.emp_no} == event.data){			
 			 var img = 'resources/images/msg2.png';
@@ -139,8 +139,7 @@
 			
 			 if (window.Notification && Notification.permission === "granted") {
 				var notification = new Notification('Message', { body: text, icon: img });
-    		}
-			
+    		}			
 		}
 		 
 	}, false);

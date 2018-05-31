@@ -24,12 +24,12 @@
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 
-var idx = 1;
-var amount = new Array();
-var orderInfo = new Array();
-var client_no;
-var discount =  new Array();
-var c_discount;
+	var idx = 1;
+	var amount = new Array();
+	var orderInfo = new Array();
+	var client_no;
+	var discount =  new Array();
+	var c_discount;
 	function searchCom(){	
 		
 		$.ajax({

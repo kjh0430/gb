@@ -66,6 +66,12 @@
 		update notify set notify_read='Y' where notify_no=#{notify_no}
 		]]> 
 	</update>
+	
+	<select id="countMsg" parameterType="_int" resultType="_int">
+		<![CDATA[		
+		select count(*) from message where message_to_no = #{emp_no} and message_confirm = 'N'
+		]]>	
+	</select>
 
 
 </mapper>
