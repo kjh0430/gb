@@ -15,6 +15,7 @@
  	text-align:right;
  }
 </style>
+<script src="resources/js/EventSource.js"></script>
 </head>
 
 <body>
@@ -51,7 +52,7 @@
 	</div>
 	
 	
-	<!-- <script src="resources/js/eventsource.js"></script> -->
+	
 	<script type="text/javascript">
 
 	var mNotify;
@@ -69,6 +70,8 @@
 	        	mNotify = "mobile";
 	        }
 	    }
+	    
+	  
 
 	
 		
@@ -134,19 +137,19 @@
 	    });
 	}
 	
-  	var eventSource = new EventSource("notify.do?emp_no=${loginEmp.emp_no}");
-	eventSource.onopen = function(){
-		console.log("연결중");		
+  	var EventSource = new EventSource("notify.do?emp_no=${loginEmp.emp_no}");
+	EventSource.onopen = function(){
+		//console.log("연결중");		
 	}
 	var from_no;
-	eventSource.addEventListener('from_name', function(event) {		
-		console.log("from_name : "+ event.data);
+	EventSource.addEventListener('from_name', function(event) {		
+		//console.log("from_name : "+ event.data);
 		from_name = event.data;
 		
 	}, false);
 
-	eventSource.addEventListener('to_no', function(event) {	
-		console.log("to_no : "+ event.data);
+	EventSource.addEventListener('to_no', function(event) {	
+		//console.log("to_no : "+ event.data);
 		
 		if( ${loginEmp.emp_no} == event.data){			
 			 var img = 'resources/images/msg2.png';

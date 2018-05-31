@@ -12,6 +12,7 @@
 		margin-left:4px;
 	}
 </style>
+<script src="resources/js/EventSource.js"></script>
 </head>
 <body>
 
@@ -73,11 +74,11 @@
 	  
 	</div>
 	<script type="text/javascript">
-	var eventSource = new EventSource("count.do?emp_no=${loginEmp.emp_no}");
-	eventSource.onopen = function(){
+	var EventSource2 = new EventSource("count.do?emp_no=${loginEmp.emp_no}");
+	EventSource2.onopen = function(){
 		//console.log("연결중2");		
 	}
-	eventSource.onmessage = function(event) {
+	EventSource2.onmessage = function(event) {
 
 		var count = event.data;
 		if(count>0){
