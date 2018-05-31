@@ -24,6 +24,7 @@
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 
+
 var idx = 1;
 var amount = new Array(); //상품수량 변수 
 var price = new Array(); //상품가격 변수 
@@ -32,6 +33,7 @@ var client_no;
 var calcValue=new Array(); // 예상 결재 비용 배열 변수
 var discount =  new Array(); //할인율 배열 
 var c_discount; //해당 고객의 할인율 
+
 
 	function searchCom(){	
 		

@@ -36,6 +36,7 @@
 			and client_sign is not null
 			and emp_sign is not null
 			and client_delete = 'N'
+			order by contract_date_start desc
 		]]>
 	</select>
 	

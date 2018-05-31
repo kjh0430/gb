@@ -128,12 +128,45 @@ public class ClientController {
 		return "client/clientList";
 	}
 	
+	
 	/** 등록된 고객리스트 메소드 */
 	@RequestMapping("clientList.do")
-	public String showClient(Client client, Model model) {
+	public String showClient(Client client, Model model,
+			@RequestParam(value="startPage", defaultValue="1") int startPage,
+			HttpServletResponse response) throws IOException{
 		logger.info("고객리스트 메소드 실행됨");
+		
 		ArrayList<Client> clientList=clientService.selectAllClient();
-		model.addAttribute("clientList", clientList);
+		
+		client.setShowPage(10); //보여줄 페이지 수
+		client.setTotalRow(clientList.size());	// 총 회원 수
+		client.setStart(startPage);	// 시작페이지
+		
+		int showPage = client.getShowPage();
+		int totalRow = client.getTotalRow();
+		int start = (client.getStart() - 1)*showPage+1;
+		int end = start+9;
+		int currentPage = 1;
+
+		client.setStartRow(start);	// 시작 열
+		client.setEndRow(end);	// 끝 열
+		
+		if(totalRow%showPage != 0) {	// 끝페이지
+			client.setEnd((totalRow/showPage)+1);
+		}else {
+			client.setEnd(totalRow/showPage);
+		}
+		
+		System.out.println("고객수: "+totalRow);
+		System.out.println("총 페이지 수: "+client.getEnd());
+		System.out.println("시작 로우: "+client.getStartRow());
+		System.out.println("끝 로우: "+client.getEndRow());
+		
+		ArrayList<Client> pList = clientService.selectAllClient(client);
+		
+		model.addAttribute("pageList", pList);
+		model.addAttribute("start", currentPage);
+		model.addAttribute("end", client.getEnd());
 		
 		return "client/clientList";
 	}
@@ -152,10 +185,37 @@ public class ClientController {
 	
 	/** 잠재고객 리스트 메소드 */
 	@RequestMapping("poList.do")
-	public String poList(Client client, Model model) {
+	public String poList(Client client, Model model,
+			@RequestParam(value="startPage", defaultValue="1") int startPage,
+			HttpServletResponse response) throws IOException{
+		
 		logger.info("잠재고객 리스트 메소드 실행됨");
 		ArrayList<Client> poList = clientService.selectPoList();
-		model.addAttribute("poList", poList);
+		
+		client.setShowPage(10); //보여줄 페이지 수
+		client.setTotalRow(poList.size());	// 총 회원 수
+		client.setStart(startPage);	// 시작페이지
+		
+		int showPage = client.getShowPage();
+		int totalRow = client.getTotalRow();
+		int start = (client.getStart() - 1)*showPage+1;
+		int end = start+9;
+		int currentPage = 1;
+
+		client.setStartRow(start);	// 시작 열
+		client.setEndRow(end);	// 끝 열
+		
+		if(totalRow%showPage != 0) {	// 끝페이지
+			client.setEnd((totalRow/showPage)+1);
+		}else {
+			client.setEnd(totalRow/showPage);
+		}
+		
+		ArrayList<Client> pList = clientService.selectPoClient(client);
+		
+		model.addAttribute("pageList", pList);
+		model.addAttribute("start", currentPage);
+		model.addAttribute("end", client.getEnd());
 		
 		return "client/poList";
 	}
@@ -258,8 +318,8 @@ public class ClientController {
 					job.put("client_addr", URLEncoder.encode(c.getClient_addr(), "utf-8"));
 					
 					jarr.add(job);
-					System.out.println(c.getClient_name());
 			}
+			
 				JSONObject resultJob = new JSONObject();
 					resultJob.put("searchList", jarr);
 					
@@ -294,7 +354,7 @@ public class ClientController {
 				job.put("client_addr", URLEncoder.encode(c.getClient_addr(), "utf-8"));
 				
 				jarr.add(job);
-				System.out.println(c.getClient_name());
+				
 		}
 			JSONObject resultJob = new JSONObject();
 				resultJob.put("searchList", jarr);

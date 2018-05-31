@@ -25,13 +25,11 @@ public class EmpDao {
 		
 		Emp resultEmp=sqlSession.selectOne("emp.loginEmp", emp);
 		
-//		if(pwdEncoder.matches(emp.getEmp_pwd(), resultEmp.getEmp_pwd())) {
-//			return resultEmp;
-//		}else {
-//			throw new EmpLoginFailException("아이디와 비밀번호를 확인하세요!!");
-//		}
-		
-		return resultEmp;
+		if(pwdEncoder.matches(emp.getEmp_pwd(), resultEmp.getEmp_pwd())) {
+			return resultEmp;
+		}else {
+			throw new EmpLoginFailException("아이디와 비밀번호를 확인하세요!!");
+		}
 	}
 
 	/*사원 등록*/

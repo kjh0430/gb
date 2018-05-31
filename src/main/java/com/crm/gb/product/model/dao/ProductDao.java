@@ -34,5 +34,10 @@ public class ProductDao {
 	public List<Product> productList(){
 		return sqlSession.selectList("productList");
 	}
-	
+
+	public Product productDetail(String product_no) {
+		return sqlSession.selectOne("productDetail", product_no);
+	}
+
+
 }

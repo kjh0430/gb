@@ -111,5 +111,15 @@ public class ClientDao {
 		return (ArrayList)sqlSession.selectList("searchPoList", client_name);
 	}
 
+	/** 등록고객 페이지 처리 리스트 메소드 Dao */
+	public ArrayList<Client> selectPageAllClient(Client client) {
+		return (ArrayList)sqlSession.selectList("pageList", client);
+	}
+
+	/** 잠재고객 페이지 처리 리스트 메소드 Dao */
+	public ArrayList<Client> selectPagePoClient(Client client) {
+		return (ArrayList)sqlSession.selectList("pagePoList", client);
+	}
+
 	
 }

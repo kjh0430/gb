@@ -19,4 +19,5 @@ public interface MessageService {
 	public abstract int insertNotify(Notify notify);
 	public abstract ArrayList<Notify> selectNotify(Emp emp);
 	public abstract int updateNotify(Notify notify);
+	public abstract int countMsg(int emp_no);
 }

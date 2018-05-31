@@ -16,7 +16,6 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9b9e69b801fea9fcd5736922a07d3042"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f99f3844ac8886eed3b0155cb0041a70"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f99f3844ac8886eed3b0155cb0041a70&libraries=services,clusterer,drawing"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fcb9e8376572459c3de1e762d06d382a&libraries=services,clusterer,drawing"></script>
 
 <title>고객등록</title>
 
@@ -166,7 +165,7 @@
 							});//지도에 마우스 클릭
 
 				   		         
-				$('#searchKeywordBtn').on('click', function(){
+				$('#searchKeywordText').keyup(function(){
 					//alert($('#searchKeywordText').val());
 					
 			   		// 장소 검색 객체를 생성합니다
@@ -242,7 +241,22 @@
 					<div class="clearfix"></div>
 
 					<!-- sidebar menu -->
-					<%@ include file="../etc/sidebar.jsp"%>
+						<c:choose>
+			            	<c:when test="${ loginEmp.job_no == 3}">
+					            <!-- sidebar menu -->
+					            <%@ include file="../etc/adminsidebar.jsp" %>
+					            <!-- /sidebar menu -->
+			            	</c:when>
+			            	<c:when test="${ loginEmp.job_no == 2}">
+			            	<%@ include file="../etc/adminsidebar.jsp" %>
+			            	
+			            	</c:when>
+			            	<c:otherwise>
+								<!-- sidebar menu -->
+					            <%@ include file="../etc/sidebar.jsp" %>
+					            <!-- /sidebar menu --> 
+			            	</c:otherwise>
+			            </c:choose>
 					<!-- /sidebar menu -->
 
 				</div>

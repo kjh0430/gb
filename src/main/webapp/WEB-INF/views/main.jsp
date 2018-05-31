@@ -9,7 +9,7 @@
 <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="icon" href="images/favicon.ico" type="image/ico" />
+   <link rel="icon" href="images/favicon.ico" type="image/ico" />
 
     <title>GROUP BEAN | </title>
 
@@ -19,14 +19,52 @@
     <link href="resources/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- iCheck -->
     <link href="resources/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
-	
+   
+   
+   <link href="resources/fullcalendar-3.9.0/fullcalendar.css" rel="stylesheet">
+   <link href="resources/fullcalendar-3.9.0/fullcalendar.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="resources/build/css/custom.min.css" rel="stylesheet">
     <link href="resources/css/main.css" rel="stylesheet">
     
+       
+    
     <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
+    <script src="resources/fullcalendar-3.9.0/lib/jquery.min.js"></script>
     <script type="text/javascript">
-	
+    $(function() {
+     
+    	
+    	
+    	$('#calendar2').fullCalendar({
+    		events: [
+    		    {
+    		      title  : '09:00 영업팀 회의',
+    		      start  : '2018-05-23',
+    		      end : '2018-05-30'
+    		    },
+    		    
+    		    { title:'09:00 영업 회의',
+    		      start:'2018-05-01',
+    		    },
+    		    {
+    		    	title:'event3',
+    		    	start:'2018-05-01'
+    		    }
+    		   
+    		  ]
+    	});
+    	
+    	
+    	
+    	
+    	
+    	
+    });
+
+
+
+    	
     /*
     $(function(){
     	
@@ -86,11 +124,64 @@
 			
 		}); //end of ajax
 		
-	}); 
-    */
-	
-	</script>	
+	}); */
     
+	
+	</script>
+	<script type="text/javascript">
+    
+    var count = 1;    
+    function addKeywordForm(){
+       var addedFormDiv = document.getElementById("addedTodo");
+       var str = '<input type="text" id="todo_keyword'+count+'" name="todo_keyword'+count+'" class="form-control" placeholder="할일을 입력해주세요">'
+       + '<a onclick="delKeywordForm('+count+')"/><i class="fa fa-times"></i></a>';
+       
+       if(count<5){
+       var addedDiv = document.createElement("div");
+       addedDiv.setAttribute("id", "keyword_Frm"+count);
+       addedDiv.innerHTML = str;
+       addedFormDiv.appendChild(addedDiv);       
+       console.log("todo_keyword : " + str);
+       count++;
+       }else{
+       alert("5개까지 입력하실 수 있습니다");
+       }
+
+       }
+
+       function delKeywordForm(thisCount){          
+       var addedFormDiv = document.getElementById("addedTodo");
+       
+       if(count>1){
+       var thisDiv = document.getElementById("keyword_Frm"+thisCount);
+       addedFormDiv.removeChild(thisDiv);
+       console.log("addedFormDiv : " + addedFormDiv);
+       }else{
+       document.addedFormDiv.reset();
+       }
+       count--;
+       }
+       
+    </script>
+    <style>
+   
+   
+    #calendar { max-width: 900px; margin: 0 auto; }
+
+
+    
+    </style>
+        <style type="text/css">
+   .form-control{
+      display:inline-block;
+      width:90%;
+      margin-top:10px;
+   }
+   
+   .fa.fa-times{
+      margin-left:10px;
+   }
+   </style>  
     
   </head>
 
@@ -155,25 +246,15 @@
             </div>
           </div>
           <!-- /top tiles -->
-          <div class="row">          	
+           <div class="row">       	
                 <!-- Start to do list -->
-                <div class="col-md-6 col-sm-6 col-xs-12">
+                 <div class="col-md-6 col-sm-6 col-xs-12" style="padding:0px;">
+                <div class="col-xs-12">
                   <div class="x_panel">
                     <div class="x_title">
                       <h2>To Do List <small>Sample tasks</small></h2>
                       <ul class="nav navbar-right panel_toolbox">
-                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                        <li class="dropdown">
-                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                          <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Settings 1</a>
-                            </li>
-                            <li><a href="#">Settings 2</a>
-                            </li>
-                          </ul>
-                        </li>
-                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        <li><button type="button" class="btn btn-link" data-toggle="modal" data-target=".bs-example-modal-lg" style="float:right;">등록</button>
                         </li>
                       </ul>
                       <div class="clearfix"></div>
@@ -207,10 +288,50 @@
                     </div>
                   </div>
                 </div>
-                <!-- End to do list -->
                 
-				<!-- start of weather widget -->
-	          <div class="col-md-6 col-sm-6 col-xs-12">
+                 <!-- modal -->    			
+    			<div class="modal fade bs-example-modal-lg" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
+      			<div class="modal-dialog modal-lg">
+          		<div class="modal-content">
+
+            	<div class="modal-header">
+             	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+             	</button>
+             	<h4 class="modal-title" id="myModalLabel">To Do List</h4>
+             	</div>
+             	<div class="modal-body" style="height:270px;">
+             	<div class="col-md-12 col-sm-6 col-xs-12" id="addedTodo">
+             	<input type="hidden" id="emp_no" name="emp_no" value="${ loginEmp.emp_no }">
+             	<input type="text" id="todo_keyword0" name="todo_keyword0" class="form-control" placeholder="할일을 입력해주세요"/>
+				<a onclick="addKeywordForm()"><input type="button" class="btn btn-info" value="추가"/></a>
+				<div class="col-md-12 col-sm-6 col-xs-12" id="addedTodo"></div>             	
+             	</div>
+             	</div>
+             	<div class="modal-footer">
+             	<button type="button" class="btn btn-primary" onclick="todoInsert()">등록</button>
+             	<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>             	
+             	</div>
+           		</div>
+       			</div>
+    			</div>
+				<!-- /page content -->
+				
+                <!-- End to do list -->
+                <div class="col-xs-12">
+              <div class="x_panel tile">
+                <div class="x_title">
+                  <h2>App Versions</h2>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content" id="calendar2">
+
+                </div>
+              </div>
+            </div>
+            </div>
+             <div class="col-md-6 col-sm-6 col-xs-12" style="padding:0px;">
+			<!-- start of weather widget -->
+	          <div class="col-xs-12">
 	            <div class="x_panel">
 	              <div class="x_title">
 	                <h2>오늘의 날씨</h2>
@@ -225,7 +346,7 @@
 	                    </div>
 	                  </div>
 	                </div>
-	                <div class="row">
+	               <!--  <div class="row"> -->
 	                  <div class="col-sm-4">
 	                    <div class="weather-icon" style="padding-left:10px;">
 	                      
@@ -248,11 +369,11 @@
 	                <div class="clearfix"></div>
 	              </div>
 	            </div>	
-	          </div>
+	          <!-- </div> -->
 	          <!-- end of weather widget -->
 	          <!-- start of notice widget -->
 	          
-	          <div class="col-md-6 col-sm-6 col-xs-12">
+	          <div class="col-xs-12">
 	            <div class="x_panel">
 	              <div class="x_title">
 	                <h2>Notice </h2> 
@@ -277,23 +398,13 @@
 	            </div>	
 	          </div>
 	           <!-- end of notice widget -->
-          </div>
+          <!-- </div> -->
 
-          <div class="row">
+          <!-- <div class="row"> -->
 
-            <div class="col-md-6 col-sm-6 col-xs-12">
-              <div class="x_panel tile fixed_height_320">
-                <div class="x_title">
-                  <h2>App Versions</h2>
-                  <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
+            
 
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="col-xs-12">
               <div class="x_panel tile fixed_height_320 overflow_hidden">
                 <div class="x_title">
                   <h2>Device Usage</h2>
@@ -362,8 +473,9 @@
          </div>
         <!-- /page content -->
       </div>
+    
       <!-- footer content -->
-		 <%@ include file="etc/footer.jsp" %>
+       <%@ include file="etc/footer.jsp" %>
       <!-- /footer content -->
       
     </div>
@@ -377,8 +489,15 @@
     <script src="resources/vendors/iCheck/icheck.min.js"></script>
   
     <!-- Custom Theme Scripts -->
+     <script src="resources/fullcalendar-3.9.0/lib/tooltipster.bundle.min.js"></script>
     <script src="resources/build/js/custom.min.js"></script>
-	
+    	
+    	<script src="resources/fullcalendar-3.9.0/lib/moment.min.js"></script>
+   	
+   	  
+    	
+   	<script src="resources/fullcalendar-3.9.0/fullcalendar.js"></script>
+   	
   </body>
   
 </html>

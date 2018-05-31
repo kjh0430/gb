@@ -49,6 +49,12 @@ public class EmpController {
 		return "main";
 	}
 	
+	/** 사원급여화면 */
+	@RequestMapping("empSalary.do")
+	public String empSalaryView() {
+		return "emp/empSalary";
+	}
+	
 	/** 로그인 정보확인 컨트롤러 */
 	@RequestMapping(value="login.do", method=RequestMethod.POST)
 	public void loginEmp(Emp emp, Model model, HttpServletResponse response) throws IOException{
@@ -147,6 +153,9 @@ public class EmpController {
 	public String insertEmp(Emp emp, Model model){
 		logger.info("emp insert 실행");
 		System.out.println("전송온 값 : " + emp);
+		
+		String encPassword = pwdEncoder.encode(emp.getEmp_pwd());
+		emp.setEmp_pwd(encPassword);
 		
 		int result = empService.insertEmp(emp);
 		
