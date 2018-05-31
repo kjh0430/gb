@@ -34,7 +34,7 @@ public class MessageController {
 	private EmpService empService;
 	
 	@RequestMapping("messageList.do")
-	public String loginView() {
+	public String messageList() {
 		return "message/messageList";
 		
 	}
