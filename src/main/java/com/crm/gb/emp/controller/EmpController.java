@@ -154,6 +154,9 @@ public class EmpController {
 		logger.info("emp insert 실행");
 		System.out.println("전송온 값 : " + emp);
 		
+		String encPassword = pwdEncoder.encode(emp.getEmp_pwd());
+		emp.setEmp_pwd(encPassword);
+		
 		int result = empService.insertEmp(emp);
 		
 		ArrayList<Emp> empList = empService.selectEmpList();

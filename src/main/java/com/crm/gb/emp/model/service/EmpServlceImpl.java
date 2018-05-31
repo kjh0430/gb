@@ -3,6 +3,7 @@ package com.crm.gb.emp.model.service;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.crm.gb.emp.exception.EmpLoginFailException;
@@ -34,28 +35,7 @@ public class EmpServlceImpl implements EmpService{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-//	/** 사원정보 등록 메소드 */
-//	@Override
-//	public int insertEmp(Emp emp) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
-//
-//	/** 사원정보 업데이트 메소드 */
-//	@Override
-//	public int updateEmp(Emp emp) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
-//
-//	/** 사원정보 삭제 메소드 */
-//	@Override
-//	public int deleteEmp(String emp_no) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
-
+	
 	/*사원 등록*/
 	@Override
 	public int insertEmp(Emp emp) {
