@@ -254,18 +254,7 @@
                     <div class="x_title">
                       <h2>To Do List <small>Sample tasks</small></h2>
                       <ul class="nav navbar-right panel_toolbox">
-                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                        <li class="dropdown">
-                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                          <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Settings 1</a>
-                            </li>
-                            <li><a href="#">Settings 2</a>
-                            </li>
-                          </ul>
-                        </li>
-                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        <li><button type="button" class="btn btn-link" data-toggle="modal" data-target=".bs-example-modal-lg" style="float:right;">등록</button>
                         </li>
                       </ul>
                       <div class="clearfix"></div>
@@ -299,6 +288,34 @@
                     </div>
                   </div>
                 </div>
+                
+                 <!-- modal -->    			
+    			<div class="modal fade bs-example-modal-lg" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
+      			<div class="modal-dialog modal-lg">
+          		<div class="modal-content">
+
+            	<div class="modal-header">
+             	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+             	</button>
+             	<h4 class="modal-title" id="myModalLabel">To Do List</h4>
+             	</div>
+             	<div class="modal-body" style="height:270px;">
+             	<div class="col-md-12 col-sm-6 col-xs-12" id="addedTodo">
+             	<input type="hidden" id="emp_no" name="emp_no" value="${ loginEmp.emp_no }">
+             	<input type="text" id="todo_keyword0" name="todo_keyword0" class="form-control" placeholder="할일을 입력해주세요"/>
+				<a onclick="addKeywordForm()"><input type="button" class="btn btn-info" value="추가"/></a>
+				<div class="col-md-12 col-sm-6 col-xs-12" id="addedTodo"></div>             	
+             	</div>
+             	</div>
+             	<div class="modal-footer">
+             	<button type="button" class="btn btn-primary" onclick="todoInsert()">등록</button>
+             	<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>             	
+             	</div>
+           		</div>
+       			</div>
+    			</div>
+				<!-- /page content -->
+				
                 <!-- End to do list -->
                 <div class="col-xs-12">
               <div class="x_panel tile">
