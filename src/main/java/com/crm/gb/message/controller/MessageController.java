@@ -37,11 +37,9 @@ public class MessageController {
 	
 	@RequestMapping("messageList.do")
 	public String messageList() {
-		return "message/messageList";
-		
+		return "message/messageList";		
 	}
-	
-	
+		
 	
 	//사원 검색
 	@RequestMapping(value="searchEmp.do" ,method=RequestMethod.POST)
@@ -219,7 +217,7 @@ public class MessageController {
 		int to_no = 0;
 		
 		if(sendmsg != null) {
-			//System.out.println("sendmsg : "+sendmsg);
+			System.out.println("sendmsg : "+sendmsg);
 			from_no = sendmsg.getMessage_from_no();
 			to_no = sendmsg.getMessage_to_no();
 			Emp from = empService.selectEmpNo(from_no);
@@ -228,7 +226,9 @@ public class MessageController {
 				out.write("event:from_name\n");
 				out.write("data: " + sender + "\n\n");
 				out.write("event:to_no\n");
-				out.write("data: " + to_no + "\n\n");				
+				out.write("data: " + to_no + "\n\n");	
+				out.flush();
+				out.close();
 					
 			}else {
 				notify.setNotify_from(from_no);
@@ -238,9 +238,6 @@ public class MessageController {
 				}				
 			}			
 			sendmsg=null;
-			
-			out.flush();
-			out.close();
 		}			
 	}
 	
