@@ -1,7 +1,8 @@
 package com.crm.gb.calendar.model.vo;
 
 import java.io.Serializable;
-import java.sql.Date;
+/*import java.sql.Date;*/
+import java.util.Date;
 
 import org.springframework.stereotype.Component;
 
@@ -14,23 +15,22 @@ public class Calendar implements Serializable {
 	private int emp_no;
 	private String calendar_title;
 	private String calendar_content;
-	private Date calendar_start_date;
-	private Date calendar_end_date;
+	private String calendar_start_date;
+	private String calendar_end_date;
 	
-	private String calendar_start_date1;
-	private String calendar_end_date1;
+	
 	
 	//
 	private String dept_name;
 	private String emp_name;
 	private String job_no;
 	private String dept_no;
-	
+
 	public Calendar() {}
 
 	public Calendar(int calendar_no, int emp_no, String calendar_title, String calendar_content,
-			Date calendar_start_date, Date calendar_end_date, String calendar_start_date1, String calendar_end_date1,
-			String dept_name, String emp_name, String job_no, String dept_no) {
+			String calendar_start_date, String calendar_end_date, String dept_name, String emp_name, String job_no,
+			String dept_no) {
 		super();
 		this.calendar_no = calendar_no;
 		this.emp_no = emp_no;
@@ -38,14 +38,14 @@ public class Calendar implements Serializable {
 		this.calendar_content = calendar_content;
 		this.calendar_start_date = calendar_start_date;
 		this.calendar_end_date = calendar_end_date;
-		this.calendar_start_date1 = calendar_start_date1;
-		this.calendar_end_date1 = calendar_end_date1;
 		this.dept_name = dept_name;
 		this.emp_name = emp_name;
 		this.job_no = job_no;
 		this.dept_no = dept_no;
 	}
 
+	
+	
 	public int getCalendar_no() {
 		return calendar_no;
 	}
@@ -78,36 +78,20 @@ public class Calendar implements Serializable {
 		this.calendar_content = calendar_content;
 	}
 
-	public Date getCalendar_start_date() {
+	public String getCalendar_start_date() {
 		return calendar_start_date;
 	}
 
-	public void setCalendar_start_date(Date calendar_start_date) {
+	public void setCalendar_start_date(String calendar_start_date) {
 		this.calendar_start_date = calendar_start_date;
 	}
 
-	public Date getCalendar_end_date() {
+	public String getCalendar_end_date() {
 		return calendar_end_date;
 	}
 
-	public void setCalendar_end_date(Date calendar_end_date) {
+	public void setCalendar_end_date(String calendar_end_date) {
 		this.calendar_end_date = calendar_end_date;
-	}
-
-	public String getCalendar_start_date1() {
-		return calendar_start_date1;
-	}
-
-	public void setCalendar_start_date1(String calendar_start_date1) {
-		this.calendar_start_date1 = calendar_start_date1;
-	}
-
-	public String getCalendar_end_date1() {
-		return calendar_end_date1;
-	}
-
-	public void setCalendar_end_date1(String calendar_end_date1) {
-		this.calendar_end_date1 = calendar_end_date1;
 	}
 
 	public String getDept_name() {
@@ -142,14 +126,21 @@ public class Calendar implements Serializable {
 		this.dept_no = dept_no;
 	}
 
+	
+
 	@Override
 	public String toString() {
 		return "Calendar [calendar_no=" + calendar_no + ", emp_no=" + emp_no + ", calendar_title=" + calendar_title
 				+ ", calendar_content=" + calendar_content + ", calendar_start_date=" + calendar_start_date
-				+ ", calendar_end_date=" + calendar_end_date + ", calendar_start_date1=" + calendar_start_date1
-				+ ", calendar_end_date1=" + calendar_end_date1 + ", dept_name=" + dept_name + ", emp_name=" + emp_name
+				+ ", calendar_end_date=" + calendar_end_date + ", dept_name=" + dept_name + ", emp_name=" + emp_name
 				+ ", job_no=" + job_no + ", dept_no=" + dept_no + "]";
 	}
+
+	
+
+	
+
+	
 
 	
 	

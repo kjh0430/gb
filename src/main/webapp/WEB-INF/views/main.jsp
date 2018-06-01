@@ -57,7 +57,7 @@
     						 url:"javascript:detailCalendar("+json.list[i].calendar_no+")"
    						
     				 };
-    				  				 
+    				  	
     			 }
     			$('#myCalendar').fullCalendar({
     	    		  				
@@ -68,7 +68,11 @@
     				  defaultDate: '2018-06-01',
     				  buttonIcons: false,
     				  weekNumbers: true,
-					events:[event]
+    				  
+
+
+					 events:[event]
+					
 						
     	    	}); 
     					
@@ -88,8 +92,30 @@
     	}
     	
  		function modify(calendar_no){
+ 			$('#modal2').modal("show");
+ 			/* 2018-06-01 21:34:42 */
+ 			alert($('#startDate').val());
+ 			var date=$('#startDate').val();
+ 			var year=date.substring(0,4);
+ 			var month=date.substring(5,7);
+ 			var day=date.substring(8,10);
+ 			var hour=date.substring(11,13);
+ 			var minute=date.substring(14,16);
+ 			var second=date.substring(17,19);
+ 		
  			
- 			alert("Modify calendar_no"+calendar_no);
+ 			var startdate= new Date(year,month,day,hour,minute,second);
+ 			
+ 			
+ 			
+ 			
+ 			
+ 			
+
+ 			$('#modal2').modal("show");
+
+			
+ 			
  			
  			
  		} 	
@@ -426,7 +452,7 @@
 											</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
 												<input type="text"  id="startDate"
-													class="form-control" readonly style="width:20%;">
+													class="form-control" readonly style="width:30%;">
 												
 											</div>
 											</div>
@@ -436,7 +462,108 @@
 											</label>
 											<div class="col-md-9 col-sm-9 col-xs-12" style="">
 												<input type="text"  id="endDate"
+													class="form-control" readonly style="width:30%;">
+												
+											</div>
+											</div>
+										
+										
+										<div class="form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12"
+												for="first-name">작성자 
+											</label>
+											<div class="col-md-9 col-sm-9 col-xs-12">
+											<input type="text"  id="writer"
 													class="form-control" readonly style="width:20%;">
+											</div>
+										</div>
+												<div class="form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12"
+												for="first-name">부서명
+											</label>
+											<div class="col-md-9 col-sm-9 col-xs-12">
+											<input type="text"  id="dept_name"
+													class="form-control" readonly style="width:20%;">
+											</div>
+										</div>
+													<div class="form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12"
+												for="first-name">제목
+											</label>
+											<div class="col-md-9 col-sm-9 col-xs-12">
+											<input type="text"  id="calendar_title"
+													class="form-control" readonly style="width:50%;">
+											</div>
+										</div>
+										    <div class="form-group">
+
+                                                      <label
+                                                         class="control-label col-md-3 col-sm-3 col-xs-12">내용</label>
+                                                      <div class="col-md-9 col-sm-9 col-xs-12">
+                                                         <textarea class="form-control" rows="8"
+                                                            id="calendar_content" readonly></textarea>
+                                                      </div>
+                                                   </div>
+									
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+									
+									
+                                          </div>
+                                        <div class="modal-footer">
+                                             
+                                             <button onclick="modal1Close();" type="button"
+                                                class="btn btn-primary" id="modalButton" style="float:right;">확인</button>
+                                          </div>
+                                       </form>
+
+                                    </div>
+                                 </div>
+                              </div>
+                              <!-- 스케줄 수정하기 -->
+                              	  <div class="modal fade sendMsg" tabindex="-1" role="dialog"
+                                 id="modal2" aria-hidden="true" >
+                                 <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                       <form class="form-horizontal form-label-left input_mask">
+                                          <div class="modal-header">
+                                             <button type="button" class="close" data-dismiss="modal" onclick="modal1Close();">
+                                                <span aria-hidden="true">×</span>
+                                             </button>
+                                             <h4 class="modal-title" id="myModalLabel">schedule</h4>
+                                          </div>
+
+                                          <div class="modal-body">
+                                
+										<div class="row">
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							<div class="x_panel">
+								<div class="x_title">
+									<h2>schedule</h2>
+									<div class="clearfix"></div>
+								</div>
+								<div class="x_content">
+									<form class="form-horizontal form-label-left">
+
+										<div class="form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12">시작일자
+											</label>
+											<div class="col-md-9 col-sm-9 col-xs-12">
+												<input type="datetime-local"  id="startDateM"
+													class="form-control" style="width:30%;">
+												
+											</div>
+											</div>
+											<div class="form-group">
+												<label class="control-label col-md-3 col-sm-3 col-xs-12"
+												>종료일자 
+											</label>
+											<div class="col-md-9 col-sm-9 col-xs-12" style="">
+												<input type="text"  id="endDate"
+													class="form-control" readonly style="width:30%;">
 												
 											</div>
 											</div>

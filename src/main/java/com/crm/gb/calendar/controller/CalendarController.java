@@ -44,8 +44,8 @@ public class CalendarController {
 			jsonobject.put("emp_name",cal.getEmp_name());
 			jsonobject.put("calendar_title",cal.getCalendar_title());
 			jsonobject.put("calendar_content",cal.getCalendar_content());
-			jsonobject.put("calendar_start_date",cal.getCalendar_start_date1());
-			jsonobject.put("calendar_end_date",cal.getCalendar_end_date1());
+			jsonobject.put("calendar_start_date",cal.getCalendar_start_date());
+			jsonobject.put("calendar_end_date",cal.getCalendar_end_date());
 			
 			jarr.add(jsonobject);
 			
@@ -78,8 +78,8 @@ public class CalendarController {
 		send.put("emp_name",calendarDe.getEmp_name());
 		send.put("calendar_title",calendarDe.getCalendar_title());
 		send.put("calendar_content",calendarDe.getCalendar_content());
-		send.put("calendar_start_date",calendarDe.getCalendar_start_date1());
-		send.put("calendar_end_date",calendarDe.getCalendar_end_date1());
+		send.put("calendar_start_date",calendarDe.getCalendar_start_date());
+		send.put("calendar_end_date",calendarDe.getCalendar_end_date());
 		send.put("calendar_dept_name",calendarDe.getDept_name());
 		
 		
