@@ -93,18 +93,10 @@
     	
  		function modify(calendar_no){
  			$('#modal2').modal("show");
- 			/* 2018-06-01 21:34:42 */
- 			alert($('#startDate').val());
- 			var date=$('#startDate').val();
- 			var year=date.substring(0,4);
- 			var month=date.substring(5,7);
- 			var day=date.substring(8,10);
- 			var hour=date.substring(11,13);
- 			var minute=date.substring(14,16);
- 			var second=date.substring(17,19);
+ 			
  		
  			
- 			var startdate= new Date(year,month,day,hour,minute,second);
+ 			
  			
  			
  			
@@ -552,7 +544,7 @@
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">시작일자
 											</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
-												<input type="datetime-local"  id="startDateM"
+												<input type="date"  id="startDateM"
 													class="form-control" style="width:30%;">
 												
 											</div>
@@ -562,7 +554,7 @@
 												>종료일자 
 											</label>
 											<div class="col-md-9 col-sm-9 col-xs-12" style="">
-												<input type="text"  id="endDate"
+												<input type="date"  id="endDate"
 													class="form-control" readonly style="width:30%;">
 												
 											</div>
