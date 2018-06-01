@@ -61,11 +61,13 @@
     			 }
     			$('#myCalendar').fullCalendar({
     	    		  				
-    				header: {
-    				  
-    				    center: 'title',
+    			 	header: {
     				    right: 'today prev,next'
-    				  },
+    				  }, 
+    				  
+    				  defaultDate: '2018-06-01',
+    				  buttonIcons: false,
+    				  weekNumbers: true,
 					events:[event]
 						
     	    	}); 
