@@ -74,7 +74,11 @@
 	  
 	</div>
 	<script type="text/javascript">
-	var EventSource2 = new EventSource("count.do?emp_no=${loginEmp.emp_no}");
+	$(function(){
+		
+	})
+	var emp_no = ${loginEmp.emp_no};
+	var EventSource2 = new EventSource("count.do?emp_no="+emp_no);
 	EventSource2.onopen = function(){
 		//console.log("연결중2");		
 	}
