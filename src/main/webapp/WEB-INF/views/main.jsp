@@ -32,8 +32,10 @@
     <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
     <script src="resources/fullcalendar-3.9.0/lib/jquery.min.js"></script>
     <script type="text/javascript">//calendar
+   
+
     $(function() {
-     	
+    	
     	//calendar load
     	$.ajax({
     	
@@ -82,7 +84,15 @@
     		
     		$('#modal1').modal("hide");
     	}
-    
+    	
+ 		function modify(calendar_no){
+ 			
+ 			alert("Modify calendar_no"+calendar_no);
+ 			
+ 			
+ 		} 	
+  	
+  	
     	//detail
     	function detailCalendar(calendar_no){
 		
@@ -104,9 +114,10 @@
     			
     			var writer_no=data.emp_no;
     			var emp_no="${loginEmp.emp_no}";
-    		
+    			calendar_no=data.calendar_no;
+    			
     			 if(emp_no==writer_no) {
-    				var value="<button onclick='' type='button' class='btn btn-info' style='float:right; margin-right:0%;'>수정</button>";
+    				var value="<button onclick='modify("+calendar_no+");' type='button' class='btn btn-info' style='float:right; margin-right:0%;'>수정</button>";
     				$('#modalButton').after(value);
     				
     			}
