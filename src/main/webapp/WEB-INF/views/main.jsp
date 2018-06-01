@@ -34,7 +34,7 @@
     <script type="text/javascript">//calendar
     $(function() {
      	
-    	
+    	//calendar load
     	$.ajax({
     	
     		url:"calendarLoad.do",
@@ -77,8 +77,13 @@
     		
     	
 
-  	});
-    	
+  	}); //modal 닫기
+    	function modal1Close(){
+    		
+    		$('#modal1').modal("hide");
+    	}
+    
+    	//detail
     	function detailCalendar(calendar_no){
 		
     		
@@ -380,7 +385,7 @@
 
 				  <!-- calendar detail modal -->
 				  	  <div class="modal fade sendMsg" tabindex="-1" role="dialog"
-                                 id="modal1" aria-hidden="true">
+                                 id="modal1" aria-hidden="true" >
                                  <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                        <form class="form-horizontal form-label-left input_mask">
@@ -408,7 +413,7 @@
 											</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
 												<input type="text"  id="startDate"
-													class="form-control" readonly style="width:50%;">
+													class="form-control" readonly style="width:20%;">
 												
 											</div>
 											</div>
@@ -418,7 +423,7 @@
 											</label>
 											<div class="col-md-9 col-sm-9 col-xs-12" style="">
 												<input type="text"  id="endDate"
-													class="form-control" readonly style="width:50%;">
+													class="form-control" readonly style="width:20%;">
 												
 											</div>
 											</div>
@@ -430,7 +435,7 @@
 											</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
 											<input type="text"  id="writer"
-													class="form-control" readonly style="width:50%;">
+													class="form-control" readonly style="width:20%;">
 											</div>
 										</div>
 												<div class="form-group">
@@ -439,7 +444,7 @@
 											</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
 											<input type="text"  id="dept_name"
-													class="form-control" readonly style="width:50%;">
+													class="form-control" readonly style="width:20%;">
 											</div>
 										</div>
 													<div class="form-group">
@@ -448,7 +453,7 @@
 											</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
 											<input type="text"  id="calendar_title"
-													class="form-control" readonly>
+													class="form-control" readonly style="width:50%;">
 											</div>
 										</div>
 										    <div class="form-group">
@@ -470,9 +475,8 @@
 									
                                           </div>
                                         <div class="modal-footer">
-                                             <button onclick="" type="button"
-                                                class="btn btn-danger" style="float:right;">취소</button>
-                                             <button onclick="" type="button"
+                                             
+                                             <button onclick="modal1Close();" type="button"
                                                 class="btn btn-primary" id="modalButton" style="float:right;">확인</button>
                                           </div>
                                        </form>
