@@ -54,6 +54,8 @@
 	
 	
 	<script type="text/javascript">
+	
+	var emp_no = ${loginEmp.emp_no};
 
 	var mNotify;
 	$(function(){
@@ -63,17 +65,12 @@
 	        'webos', 'opera mini', 'sonyerricsson', 'opera mobi', 'iemobile'
 	    ];
 
-	    for(var i in mobile) {
-	        
-	        if(navigator.userAgent.toLowerCase().match(new RegExp(mobile[i]))) {
-	            
+	    for(var i in mobile) {	        
+	        if(navigator.userAgent.toLowerCase().match(new RegExp(mobile[i]))) {	            
 	        	mNotify = "mobile";
 	        }
 	    }
 	    
-	  
-
-	
 		
 	})//onload
 	
@@ -82,7 +79,7 @@
 			url:"selectNofity.do",
 			type:"post",
 			dataType:"json",
-			data:{emp_no:'${loginEmp.emp_no}'},
+			data:{emp_no:emp_no},
 			success:function(obj){
 				var objStr =JSON.stringify(obj);
 				var notify = JSON.parse(objStr);
@@ -137,19 +134,19 @@
 	    });
 	}
 	
-  	var EventSource = new EventSource("notify.do?emp_no=${loginEmp.emp_no}");
-	EventSource.onopen = function(){
-		//console.log("연결중");		
+  	var EventSource3 = new EventSource('notify.do?emp_no='+emp_no);
+	EventSource3.onopen = function(){
+		console.log("연결중");		
 	}
 	var from_no;
-	EventSource.addEventListener('from_name', function(event) {		
-		//console.log("from_name : "+ event.data);
+	EventSource3.addEventListener('from_name', function(event) {		
+		console.log("from_name : "+ event.data);
 		from_name = event.data;
 		
 	}, false);
 
-	EventSource.addEventListener('to_no', function(event) {	
-		//console.log("to_no : "+ event.data);
+	EventSource3.addEventListener('to_no', function(event) {	
+		console.log("to_no : "+ event.data);
 		
 		if( ${loginEmp.emp_no} == event.data){			
 			 var img = 'resources/images/msg2.png';
