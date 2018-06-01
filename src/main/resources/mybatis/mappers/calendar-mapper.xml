@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Calendar">
+
+<select id="selectCalendar" parameterType="Calendar" resultType="calendar">
+<![CDATA[
+select c.calendar_no,e.emp_name,c.emp_no,c.calendar_title,c.calendar_content,to_char(c.calendar_start_date,'yyyy-mm-dd') as calendar_start_date1,to_char(c.calendar_end_date,'yyyy-mm-dd') as calendar_end_date1,j.job_name from calendar c,job j,
+emp e
+]]>
+
+<choose>
+
+<when test="job_no==1">
+where j.job_no=#{job_no} and j.job_no=e.job_no and c.emp_no=e.emp_no
+
+
+</when>
+<when test="job_no==2">
+where j.job_no=#{job_no} and j.job_no=e.job_no and c.emp_no=e.emp_no
+</when>
+
+<when test="job_no==3">
+where j.job_no=e.job_no and c.emp_no=e.emp_no
+
+
+</when>
+
+</choose> 
+
+
+</select>
+
+
+
+</mapper>

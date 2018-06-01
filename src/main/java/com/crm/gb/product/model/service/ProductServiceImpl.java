@@ -1,9 +1,12 @@
 package com.crm.gb.product.model.service;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.crm.gb.order.model.vo.Order;
 import com.crm.gb.product.model.dao.ProductDao;
 import com.crm.gb.product.model.vo.Product;
 import com.crm.gb.product.model.vo.ProductFile;
@@ -41,6 +44,11 @@ public class ProductServiceImpl implements ProductService {
 	public ArrayList<Product> selectSearchProduct(String product_name){
 		//제품 검색 
 		return productDao.selectSearchProduct(product_name);
+	}
+	
+	@Override
+	public int updateProductAmount(Order orderlist) {
+		return productDao.updateProductAmount(orderlist);
 	}
 	
 

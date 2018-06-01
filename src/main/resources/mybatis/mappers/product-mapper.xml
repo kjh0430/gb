@@ -70,18 +70,24 @@
 			select * from product where product_no = #{product_no}
 		]]>
 	</select>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	<update id="updateProductAmount" parameterType="order">
+		<![CDATA[
+			update product set product_amount = (product_amount - #{order_amount}) where product_no = #{product_no}
+		]]>
+		
+	</update>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </mapper>
