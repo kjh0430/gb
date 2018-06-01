@@ -9,5 +9,6 @@ import com.crm.gb.message.model.vo.Message;
 
 public interface CalendarService {
 	public abstract ArrayList<Calendar> selectCalendar(Calendar calendar);
+	public abstract Calendar selectDetail(Calendar calendar);
 
 }

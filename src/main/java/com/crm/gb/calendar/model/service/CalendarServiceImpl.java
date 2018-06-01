@@ -19,5 +19,11 @@ public ArrayList<Calendar> selectCalendar(Calendar calendar) {
 	
 	return CalendarDao.selectCalendar(calendar);
 }
+
+@Override
+public Calendar selectDetail(Calendar calendar) {
+
+	return CalendarDao.selectDetail(calendar);
+}
 	
 }

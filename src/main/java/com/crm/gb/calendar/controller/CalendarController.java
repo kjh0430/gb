@@ -63,5 +63,33 @@ public class CalendarController {
 	
 	}
 	
+	@RequestMapping(value="detail2.do" ,method=RequestMethod.POST)
+	@ResponseBody
+	public void calendardetail(Calendar calendar,HttpServletResponse  response) throws IOException {		
+	
+		Calendar calendarDe=CalendarService.selectDetail(calendar);		
+	
+		System.out.println(calendar.getDept_no());
+		
+		JSONObject send=new JSONObject();
+	
+		send.put("calendar_no",calendar.getCalendar_no());
+		send.put("emp_no",calendarDe.getEmp_no());
+		send.put("emp_name",calendarDe.getEmp_name());
+		send.put("calendar_title",calendarDe.getCalendar_title());
+		send.put("calendar_content",calendarDe.getCalendar_content());
+		send.put("calendar_start_date",calendarDe.getCalendar_start_date1());
+		send.put("calendar_end_date",calendarDe.getCalendar_end_date1());
+		send.put("calendar_dept_name",calendarDe.getDept_name());
+		
+		
+		response.setContentType("application/json; charset=utf-8");	
+	
+		PrintWriter out=response.getWriter();
+		out.println(send.toJSONString());
+		out.flush();
+		out.close();
+	
+	}
 	
 }

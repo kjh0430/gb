@@ -31,13 +31,9 @@
     
     <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
     <script src="resources/fullcalendar-3.9.0/lib/jquery.min.js"></script>
-    <script type="text/javascript">
+    <script type="text/javascript">//calendar
     $(function() {
-     
-    	
-    	
-    	
-    	
+     	
     	
     	$.ajax({
     	
@@ -56,73 +52,74 @@
     						 title:json.list[i].calendar_title,
     						 start:json.list[i].calendar_start_date,
     						 end:json.list[i].calendar_end_date,
-    						 url:"javascript:detailCalendar("+json.list[i].calendar_no")";
-    						
+    						 url:"javascript:detailCalendar("+json.list[i].calendar_no+")"
+   						
     				 };
-    				
-    				 
+    				  				 
     			 }
-    			$('#calendar2').fullCalendar({
-    	    		
-    				
+    			$('#myCalendar').fullCalendar({
+    	    		  				
     				header: {
     				  
     				    center: 'title',
     				    right: 'today prev,next'
     				  },
 					events:[event]
-				
-    				  
-    			
-    				  
-    	    		  
-
+						
     	    	}); 
+    					
     			
-    			
-    			
-    			
-    			 }
+    			var value="<button class='btn btn-danger' onclick=''; style='padding:0.1%;'>일정추가</button>";
+    			$('#myCalendar').after(value);
+    		 }
     		
     	});
-    			
-    		
-				 
-				 
-    		
-    			
-    			
-    			
-    			
-    		
     		
     	
-    	});
+
+  	});
     	
     	function detailCalendar(calendar_no){
 		
     		
 		 $.ajax({
 			url:"detail2.do",
-			data:{ calendar_no:calendar_no},
+			data:{ calendar_no:calendar_no, dept_no :"${loginEmp.dept_no}"},
     		type:"post",
     		dataType:"json",
     		success: function(data) {
     			
+    			$('#modal1').modal("show");
+    			$('#startDate').val(data.calendar_start_date);
+    			$('#endDate').val(data.calendar_end_date);
+    			$('#writer').val(data.emp_name);
+    			$('#dept_name').val(data.calendar_dept_name);
+    			$('#calendar_title').val(data.calendar_title);
+    			$('#calendar_content').val(data.calendar_content);
+    			
+    			var writer_no=data.emp_no;
+    			var emp_no="${loginEmp.emp_no}";
+    		
+    			 if(emp_no==writer_no) {
+    				var value="<button onclick='' type='button' class='btn btn-info' style='float:right; margin-right:0%;'>수정</button>";
+    				$('#modalButton').after(value);
+    				
+    			}
     			
     			
     		}
-		
+			
 		}); 
 		
     		
 		
-	}
+		
+    	}
+</script>
 
-
-    	
-    /*
-    $(function(){
+ <script type="text/javascript">//날씨
+    
+    /* $(function(){
     	
     	var city = '${loginEmp.getCity()}';
 		var county = '${loginEmp.getCounty()}';
@@ -180,11 +177,11 @@
 			
 		}); //end of ajax
 		
-	}); */
+	});  */
     
 	
 	</script>
-	<script type="text/javascript">
+	<script type="text/javascript">//todolist
     
     var count = 1;    
     function addKeywordForm(){
@@ -221,11 +218,7 @@
     </script>
     <style>
    
-   
-   /*  #calendar { max-width: 900px; margin: 0 auto; } */
 
-
-    
     </style>
         <style type="text/css">
    .form-control{
@@ -376,25 +369,117 @@
                 <div class="col-xs-12">
               <div class="x_panel tile">
                 <div class="x_title">
-                  <h2>App Versions</h2>
+                  <h2>Calendar</h2>
                   <div class="clearfix"></div>
                 </div>
-                <div class="x_content" id="calendar2">
+                <div class="x_content" id="myCalendar">
 
+				<!-- <button class="btn btn-danger" onclick="" style="margin-top:2%;">일정추가</button> -->
+	
+											
 
+				  <!-- calendar detail modal -->
+				  	  <div class="modal fade sendMsg" tabindex="-1" role="dialog"
+                                 id="modal1" aria-hidden="true">
+                                 <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                       <form class="form-horizontal form-label-left input_mask">
+                                          <div class="modal-header">
+                                             <button type="button" class="close" data-dismiss="modal" onclick="modal1Close();">
+                                                <span aria-hidden="true">×</span>
+                                             </button>
+                                             <h4 class="modal-title" id="myModalLabel">schedule</h4>
+                                          </div>
 
+                                          <div class="modal-body">
+                                
+										<div class="row">
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							<div class="x_panel">
+								<div class="x_title">
+									<h2>schedule</h2>
+									<div class="clearfix"></div>
+								</div>
+								<div class="x_content">
+									<form class="form-horizontal form-label-left">
 
+										<div class="form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12">시작일자
+											</label>
+											<div class="col-md-9 col-sm-9 col-xs-12">
+												<input type="text"  id="startDate"
+													class="form-control" readonly style="width:50%;">
+												
+											</div>
+											</div>
+											<div class="form-group">
+												<label class="control-label col-md-3 col-sm-3 col-xs-12"
+												>종료일자 
+											</label>
+											<div class="col-md-9 col-sm-9 col-xs-12" style="">
+												<input type="text"  id="endDate"
+													class="form-control" readonly style="width:50%;">
+												
+											</div>
+											</div>
+										
+										
+										<div class="form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12"
+												for="first-name">작성자 
+											</label>
+											<div class="col-md-9 col-sm-9 col-xs-12">
+											<input type="text"  id="writer"
+													class="form-control" readonly style="width:50%;">
+											</div>
+										</div>
+												<div class="form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12"
+												for="first-name">부서명
+											</label>
+											<div class="col-md-9 col-sm-9 col-xs-12">
+											<input type="text"  id="dept_name"
+													class="form-control" readonly style="width:50%;">
+											</div>
+										</div>
+													<div class="form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12"
+												for="first-name">제목
+											</label>
+											<div class="col-md-9 col-sm-9 col-xs-12">
+											<input type="text"  id="calendar_title"
+													class="form-control" readonly>
+											</div>
+										</div>
+										    <div class="form-group">
 
+                                                      <label
+                                                         class="control-label col-md-3 col-sm-3 col-xs-12">내용</label>
+                                                      <div class="col-md-9 col-sm-9 col-xs-12">
+                                                         <textarea class="form-control" rows="8"
+                                                            id="calendar_content" readonly></textarea>
+                                                      </div>
+                                                   </div>
+									
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+									
+									
+                                          </div>
+                                        <div class="modal-footer">
+                                             <button onclick="" type="button"
+                                                class="btn btn-danger" style="float:right;">취소</button>
+                                             <button onclick="" type="button"
+                                                class="btn btn-primary" id="modalButton" style="float:right;">확인</button>
+                                          </div>
+                                       </form>
 
-
-
-
-
-
-
-
-
-				   <!-- message modal -->
+                                    </div>
+                                 </div>
+                              </div>
                            
                 </div>
               </div>

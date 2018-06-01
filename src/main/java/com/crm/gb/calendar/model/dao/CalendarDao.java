@@ -19,6 +19,12 @@ public class CalendarDao {
 		
 		return (ArrayList)sqlSession.selectList("selectCalendar",calendar);
 	}
+
+	public Calendar selectDetail(Calendar calendar) {
+		
+		
+		return sqlSession.selectOne("selectDetail",calendar);
+	}
 	
 	
 	
