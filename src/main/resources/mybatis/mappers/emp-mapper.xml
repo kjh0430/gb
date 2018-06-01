@@ -9,7 +9,7 @@
 	<select id="loginEmp" parameterType="emp" resultType="emp">
 		<![CDATA[
 			select * from emp 
-			where emp_no = #{emp_no} and emp_pwd = #{emp_pwd}
+			where emp_no = #{emp_no}
 		]]>
 	</select>
 	

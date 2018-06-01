@@ -154,6 +154,9 @@ public class EmpController {
 		logger.info("emp insert 실행");
 		System.out.println("전송온 값 : " + emp);
 		
+		String encPassword = pwdEncoder.encode(emp.getEmp_pwd());
+		emp.setEmp_pwd(encPassword);
+		
 		int result = empService.insertEmp(emp);
 		
 		ArrayList<Emp> empList = empService.selectEmpList();
@@ -310,27 +313,6 @@ public class EmpController {
 		out.flush();
 		out.close();
 		
-	}
-		
-	@RequestMapping(value="todoInsert.do", method=RequestMethod.POST)
-	@ResponseBody
-	public void todoInsert(@RequestParam(value="firstTodo") String firstTodo, @RequestParam(value="todoList") String todoList, HttpServletResponse response) throws IOException{
-		
-		logger.info("todoInsert 실행");
-		
-		JSONObject job = new JSONObject();
-		job.put("firstTodo", firstTodo);
-		job.put("todoList", todoList);
-		
-		System.out.println("firstTodo : " + firstTodo);
-		System.out.println("todoList : " + todoList);
-
-		response.setContentType("application/json; charset=utf-8");
-		PrintWriter out = response.getWriter();
-		out.println(job.toJSONString());
-		out.flush();
-		out.close();
-			
 	}
 		
 }

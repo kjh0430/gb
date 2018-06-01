@@ -15,7 +15,6 @@
    	<property name="username" value="final"></property>
    	<property name="password" value="final"></property>
    	
-
    	<property name="defaultAutoCommit" value="false"></property>
    </bean>
 

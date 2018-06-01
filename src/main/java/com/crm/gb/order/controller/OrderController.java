@@ -140,8 +140,8 @@ public class OrderController {
 		int client_no = Integer.parseInt(request.getParameter("client_no"));
 		//System.out.println("client_no : " + client_no);
 		int contract_discount = contractService.selectDiscount(client_no);
-		//System.out.println("contract_discount : " + contract_discount);
-		
+		System.out.println("contract_discount : " + contract_discount);
+		System.out.println("222 : "+(1.0-contract_discount/100.0));
 		String productNo[] = request.getParameterValues("product_no");
 		String orderPrice[] = request.getParameterValues("order_price");
 		String amountlist[] = request.getParameterValues("order_amount");
@@ -151,7 +151,9 @@ public class OrderController {
 		
 			orderlist.setOrder_no(order_no);
 			orderlist.setOrder_amount(Integer.parseInt(amountlist[i]));
-			orderlist.setOrder_price((int)(Integer.parseInt(orderPrice[i])*(1-contract_discount/100.0)));
+			orderlist.setOrder_price((int)((Integer.parseInt(orderPrice[i]))));
+			//System.out.println("444444444444 : " + (Integer.parseInt(orderPrice[i])));
+			//System.out.println("33333333333 : "+(int)((Integer.parseInt(orderPrice[i])*(1.0-contract_discount/100.0))));
 			orderlist.setProduct_no(Integer.parseInt(productNo[i]));		
 
 			//System.out.println("orderlist 111: " + orderlist.toString());
