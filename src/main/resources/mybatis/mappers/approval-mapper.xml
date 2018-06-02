@@ -70,8 +70,7 @@ where h.emp_no=a.emp_no and h.emp_mgr=#{emp_no}
 <when test="job_no==3">
 ,(select emp_name,dept_no,emp_no from emp) h,
 (select emp_name,emp_no from emp where emp_mgr =0 and job_no != 3) t,(select emp_name,emp_no from emp where job_no=3) s
-where a.approval_team_date is not null and h.emp_no=a.emp_no;
-
+where a.approval_team_date is not null and h.emp_no=a.emp_no and t.emp_no=approval_team_no
 </when>
 
 </choose> 
