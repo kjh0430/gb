@@ -88,6 +88,12 @@ public class EmpServlceImpl implements EmpService{
 	@Override
 	public ArrayList<Emp> selectDeptEmp(Emp emp) {
 		return empDao.selectDeptEmp(emp);
+	}
+
+	/*사원번호 중복검사*/
+	@Override
+	public Emp selectCheckEmpNo(int emp_no) {
+		return empDao.selectCheckEmpNo(emp_no);
 	}	
 	
 }
