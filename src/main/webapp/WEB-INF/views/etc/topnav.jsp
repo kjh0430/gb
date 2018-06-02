@@ -16,6 +16,7 @@
  }
 </style>
 <script src="resources/js/EventSource.js"></script>
+<script src="resources/js/PushNotify.js"></script>
 </head>
 
 <body>
@@ -125,6 +126,8 @@
 		
 	}
 	
+	
+	
 	if (window.Notification && Notification.permission !== "granted") {
 	    Notification.requestPermission(function (status) {
 	      if (Notification.permission !== status) {
@@ -134,7 +137,7 @@
 	    });
 	}
 	
-  	var EventSource3 = new EventSource('notify.do?emp_no='+emp_no);
+   	var EventSource3 = new EventSource('notify.do?emp_no='+emp_no);
 	EventSource3.onopen = function(){
 		console.log("연결중");		
 	}
@@ -160,6 +163,9 @@
 		}
 		 
 	}, false);
+		 
+		 
+		 
 		
 </script>
 

@@ -456,7 +456,8 @@
 
          },
          success : function(data) {
-           
+       		
+        	 
         	 //닫으면 내용 지워주기
         	   $('#searchName').val("");
         	   $('#message_to_no').val("");
