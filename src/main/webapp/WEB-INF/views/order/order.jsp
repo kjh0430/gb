@@ -187,29 +187,11 @@ var c_discount; //해당 고객의 할인율
 	
 	function calcPrice(idx){
 		console.log("calcPrice함수 실행!");
-		/* amount[idx] = $('#orderAmount'+idx).val();
-		price[idx] = $('#orderPrice'+idx).val();
-		calcValue[idx] = amount[idx] * price[idx]; */
+		
 		
 		var sum=0;
 		
-		/* if(calcValue[idx] == '0'){
-			
-			calcValue[idx] = amount[idx] * price[idx];
-			
-			for(var i=1; i <= idx ; i++){
-				if((calcValue[i] !='') && (calcValue[i] !=null) && (calcValue[i] != 'nudefined') && (calcValue[i] != 'NaN')){
-					sum = sum +  calcValue[i];
-					console.log("sum : "+sum);
-				}else{
-					console.log("실행 안됨!!");
-				}
-				
-			}
-			$('#calcValue').html(sum);	
-		}
-		 */
-
+	
 		amount[idx] = $('#orderAmount'+idx).val();
 		console.log("amount["+idx+"]: " + amount[idx]);
 		price[idx] = $('#orderPrice'+idx).val();
@@ -241,11 +223,7 @@ var c_discount; //해당 고객의 할인율
 			}
 			
 		}
-		//sum += calcValue[idx];		
-		//console.log("sum : " + sum);
 		
-		//console.log("sum : " + sum);
-		//alert("prcie * amount = " + value ); 
 		$('#calcValue').val(sum);	
 		
 
@@ -321,8 +299,7 @@ var c_discount; //해당 고객의 할인율
 						<ul class="nav navbar-nav navbar-right">
 							<li class=""><a href="javascript:;"
 								class="user-profile dropdown-toggle" data-toggle="dropdown"
-								aria-expanded="false"> <img src="images/img.jpg" alt="">John
-									Doe <span class=" fa fa-angle-down"></span>
+								aria-expanded="false"> <img src="images/img.jpg" alt="">${loginEmp.emp_name } <span class=" fa fa-angle-down"></span>
 							</a>
 								<ul class="dropdown-menu dropdown-usermenu pull-right">
 									<li><a href="javascript:;"> Profile</a></li>

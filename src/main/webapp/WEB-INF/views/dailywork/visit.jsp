@@ -71,8 +71,7 @@
 						<ul class="nav navbar-nav navbar-right">
 							<li class=""><a href="javascript:;"
 								class="user-profile dropdown-toggle" data-toggle="dropdown"
-								aria-expanded="false"> <img src="images/img.jpg" alt="">John
-									Doe <span class=" fa fa-angle-down"></span>
+								aria-expanded="false"> <img src="images/img.jpg" alt="">${loginEmp.emp_name } <span class=" fa fa-angle-down"></span>
 							</a>
 								<ul class="dropdown-menu dropdown-usermenu pull-right">
 									<li><a href="javascript:;"> Profile</a></li>
@@ -181,10 +180,9 @@
 										</div>
 										<div class="ln_solid"></div>
 										<div class="form-group">
-											<div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-												<button type="button" class="btn btn-primary">Cancel</button>
-												<button class="btn btn-primary" type="reset">Reset</button>
-												<button type="submit" class="btn btn-success">Submit</button>
+											<div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3" style="vertical-align: middle;">
+												
+												<button type="submit" class="btn btn-success" style="vertical-align: middle;" onclick="dailyworkNotice();">등록</button>
 											</div>
 										</div>
 									</form>
@@ -362,6 +360,9 @@
 		});
 			
 
+function dailyworkNotice(){
+	alert("방문일지 등록이 완료되었습니다!");	
+}
 
 
 			// 마커 이미지의 이미지 주소입니다
