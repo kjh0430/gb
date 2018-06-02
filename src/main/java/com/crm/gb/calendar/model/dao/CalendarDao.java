@@ -25,6 +25,11 @@ public class CalendarDao {
 		
 		return sqlSession.selectOne("selectDetail",calendar);
 	}
+
+	public int updateSchedule(Calendar calendar) {
+		
+		return sqlSession.update("updateSchedule",calendar);
+	}
 	
 	
 	

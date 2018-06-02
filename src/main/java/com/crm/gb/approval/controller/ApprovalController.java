@@ -9,14 +9,14 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
-import javax.servlet.http.HttpServletRequest;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,8 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.crm.gb.approval.model.service.ApprovalService;
 import com.crm.gb.approval.model.vo.Approval;
-import com.crm.gb.emp.model.vo.Emp;
-import com.crm.gb.message.model.vo.Message;
+
 
 @Controller
 public class ApprovalController {
@@ -110,7 +109,7 @@ public class ApprovalController {
 	
 	//admin 결재 리스트
 	@RequestMapping(value="approvalListAdmin.do")
-	public String approvalListE(Approval apr,Model model,@RequestParam(name="emp_no") int emp_no ,@RequestParam(name="job_no") String job_no ) {
+	public String approvalListA(Approval apr,Model model,@RequestParam(name="emp_no") int emp_no ,@RequestParam(name="job_no") String job_no ) {
 		apr.setEmp_no(emp_no);
 		apr.setJob_no(job_no);
 		
