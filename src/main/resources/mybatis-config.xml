@@ -17,7 +17,9 @@
 		<typeAlias type="com.crm.gb.order.model.vo.Order" alias="Order"/>
 		<typeAlias type="com.crm.gb.approval.model.vo.Approval" alias="Approval"/>
 		<typeAlias type="com.crm.gb.message.model.vo.Notify" alias="Notify"/>
-		<typeAlias type="com.crm.gb.todolist.model.vo.TodoList" alias="TodoList"/>		
+		<typeAlias type="com.crm.gb.todolist.model.vo.TodoList" alias="TodoList"/>
+		<typeAlias type="com.crm.gb.calendar.model.vo.Calendar" alias="Calendar"/>
+				
 	</typeAliases>
 
 
@@ -32,6 +34,7 @@
 		<mapper resource="mybatis/mappers/contract-mapper.xml"/>
 		<mapper resource="mybatis/mappers/approval-mapper.xml"/>
 		<mapper resource="mybatis/mappers/todolist-mapper.xml"/>
+		<mapper resource="mybatis/mappers/calendar-mapper.xml"/>
 	</mappers>
 
 

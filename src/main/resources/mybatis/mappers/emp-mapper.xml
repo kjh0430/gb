@@ -69,8 +69,8 @@
 	<![CDATA[
 		insert into emp
 		values (#{emp_no}, #{emp_pwd}, #{emp_name}, #{emp_addr}, 
-		#{emp_phone}, #{job_no}, #{emp_email}, #{emp_mgr}, #{emp_hiredate}, 
-		#{emp_firedate}, #{city}, #{county}, #{village}, #{dept_no}, default)
+		#{emp_phone}, #{job_no}, #{emp_email}, #{emp_mgr}, default, 
+		null, #{city}, #{county}, #{village}, #{dept_no}, default)
 	]]>
 	</insert>
 	
@@ -78,8 +78,8 @@
 	<update id="empUpdate" parameterType="Emp">
 	<![CDATA[
 		update emp set emp_no=#{emp_no}, emp_pwd=#{emp_pwd}, emp_name=#{emp_name}, emp_addr=#{emp_addr},
-		emp_phone=#{emp_phone}, job_no=#{job_no}, emp_email=#{emp_email}, emp_mgr=#{emp_mgr},
-		emp_hiredate=#{emp_hiredate}, emp_firedate=#{emp_firedate}, city=#{city}, county=#{county}, village=#{village},
+		emp_phone=#{emp_phone}, job_no=#{job_no}, emp_email=#{emp_email}, emp_mgr=#{emp_mgr}
+		,emp_hiredate=#{emp_hiredate}, emp_firedate=null, city=#{city}, county=#{county}, village=#{village},
 		dept_no=#{dept_no} where emp_no=#{emp_no}
 	]]>
 	</update>
@@ -120,7 +120,12 @@
 		select * from emp where emp_no=#{emp_no} and emp_delete='N'
 	]]>
 	</select>
-
- 
+	
+	<!-- 연락처 중복검사 -->
+	<select id="selectCheckEmpNo" parameterType="emp" resultMap="resultEmpList">	
+	<![CDATA[
+		select * from emp where emp_no = #{emp_no}
+	]]>	
+	</select> 
 
 </mapper>
