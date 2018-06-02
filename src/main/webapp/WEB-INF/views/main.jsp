@@ -90,7 +90,7 @@
     		
     		$('#modal1').modal("hide");
     	}
-    	
+    	//스케줄 수정하기
  		function modify(calendar_no){
  			$('#modal2').modal("show");
  			
