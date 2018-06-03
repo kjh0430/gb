@@ -177,7 +177,7 @@
 				$('#endTimeM').val(ehour+":"+eminute);
 			
 		
-				$('#writerM').val($('#writer').val());
+			$('#writerM').val($('#writer').val());
 			$('#dept_nameM').val($('#dept_name').val());
 			$('#calendar_titleM').val($('#calendar_title').val());
 			$('#calendar_contentM').val($('#calendar_content').val());
@@ -220,7 +220,7 @@
     			}
 			}); 
 		}
-    	//수정 값 테이블로
+    	//수정 값 db로
     	function realModify(calendar_no){
     	 
     		var ModistartDate=$('#startDateM').val();
