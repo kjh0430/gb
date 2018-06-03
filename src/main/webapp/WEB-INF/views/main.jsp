@@ -73,7 +73,7 @@
 				 events:[event]		
 	    	}); 
 					
-			var value="<button class='btn btn-danger' onclick=''; "+
+			var value="<button class='btn btn-danger' onclick='addSchedule();'"+
 			"style='padding:0.1%; margin-top:1%;'>일정추가</button>";
 			$('#addschedule').html(value);
 		 }
@@ -88,7 +88,30 @@
     	
   	}); //modal 상세보기 닫기
   	
-  	 	
+  		//일정 비교
+  		function addSchedule(){
+  		
+  		alert("일정추가 버튼 확인");
+  		
+  		}
+  		
+  		
+ 		function checkDate(){
+ 			var ckModistartDate=$('#startDateM').val();
+ 			var sArr=ckModistartDate.split('-');
+ 		
+ 			
+ 			var ckModiendDate=$('#endDateM').val();
+ 			var eArr=ckModiendDate.split('-');
+ 			
+ 			var start1 =new Date(sArr[0],parseInt(sArr[1])-1,sArr[2]);
+ 			var end1 =new Date(eArr[0],parseInt(eArr[1])-1,eArr[2]);
+ 			
+ 			if(start1.getTime()>end1.getTime()){
+ 				alert("시작 날짜 또는 종료 날짜가 유효하지 않습니다.");
+ 			}
+  	} 	
+  	 	//detail 닫기
     	function modal1Close(){
     		
     		$('#modal1').modal("hide");
@@ -137,7 +160,8 @@
 	 			
 				$('#endTimeM').val(ehour+":"+eminute);
 			
-			$('#writerM').val($('#writer').val());
+		
+				$('#writerM').val($('#writer').val());
 			$('#dept_nameM').val($('#dept_name').val());
 			$('#calendar_titleM').val($('#calendar_title').val());
 			$('#calendar_contentM').val($('#calendar_content').val());
@@ -147,6 +171,7 @@
                 "class='btn btn-info' id='modalButtonM' style='float:right;'>수정</button>";
 		$('#modifySchedule').html(value);
 			$('#modal2').modal("show");
+			$('#modal1').modal("hide");
  		} 	
   	 	
     	//detail
@@ -181,7 +206,7 @@
 		}
     	//수정 값 테이블로
     	function realModify(calendar_no){
-    	
+    	 
     		var ModistartDate=$('#startDateM').val();
     		var ModistartTime=$('#startTimeM').val();
     		
@@ -207,66 +232,8 @@
     				alert(data);
     				modal2Close();
     				modal1Close();
-    				/* calendarLoad(); */
-    			
-    				$.ajax({
-    					
-    					url:"calendarLoad.do",
-    					data:{emp_no : "${loginEmp.emp_no}", job_no : "${loginEmp.job_no}"},
-    					type:"post",
-    					dataType:"json",
-    					success: function(data) {
-    						
-    						var jsonSt = JSON.stringify(data);
-    			            var json = JSON.parse(jsonSt);
-    						 for ( var i in json.list) {
-    						
-    							 var event={
-    									 
-    									 title:json.list[i].calendar_title,
-    									 start:json.list[i].calendar_start_date,
-    									 end:json.list[i].calendar_end_date,
-    									 url:"javascript:detailCalendar("+json.list[i].calendar_no+")"
-    														 
-    							 };
-    							 
-    						 }
-    						$('#myCalendar').fullCalendar({
-    				    		  				
-    						 	header: {
-    							    right: 'today prev,next'
-    							  }, 
-    					  
-    							  defaultDate: '2018-06-01',
-    							  buttonIcons: false,
-    							  weekNumbers: true,
-    							  
-    							 events:[event]		
-    				    	}); 
-    								
-    						var value="<button class='btn btn-danger' onclick=''; "+
-    						"style='padding:0.1%; margin-top:1%;'>일정추가</button>";
-    						$('#addschedule').html(value);
-    					 }
-    					
-    				});
-
-		
-    				
-		
-
-					
-    				
-    			
-				
-    				
-    				
-    		
-    		  		
-    				
-    			    
-    		
-    		 
+    				location.href="mainView.do";
+    				calendarLoad();
     			}
     		});
     		
@@ -670,7 +637,7 @@
 											</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
 												<input type="date"  id="startDateM"
-													class="form-control" style="width:30%;">
+													class="form-control" style="width:30%;" onblur="checkDate();">
 												<input type="time"  id="startTimeM"
 													class="form-control" style="width:30%;">
 											</div>
@@ -681,7 +648,7 @@
 											</label>
 											<div class="col-md-9 col-sm-9 col-xs-12" style="">
 												<input type="date"  id="endDateM"
-													class="form-control" style="width:30%;">
+													class="form-control" style="width:30%;" onblur="checkDate();">
 												<input type="time"  id="endTimeM"
 													class="form-control" style="width:30%;">
 												

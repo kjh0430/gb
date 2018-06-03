@@ -26,38 +26,62 @@
 
 
 <script type="text/javascript">
+var team_no="";
+var admin_no="";
 	$(document).ready(function() {
 	
-			
 		//팀장 이름, 및 관리자 이름 가져오기
-		$.ajax({
+ 		$.ajax({
 			url:"getName.do",
 			data:{emp_no :"${loginEmp.emp_no}"
 			},
 			type:"post",
 			dataType:"json",
 			success:function(data){
+				
+				
 			
 				$('#team_mgr').val(decodeURIComponent(data.team_mgr_name.replace(/\+/g," ")));
 				$('#mgr_name').val(decodeURIComponent(data.mgr_name.replace(/\+/g," ")));
 				$('#team_mgr_no').val(data.team_mgr_no);
 				$('#mgr_no').val(data.mgr_no); //관리자의 사원번호
-				alert("data.mgr_no"+data.mgr_no);
-				alert("team_mgr_no"+data.team_mgr_no);
-			
+				
+				
+				team_no=$('#team_mgr_no').val();
+				admin_no=$('#mgr_no').val();
 			}
 		
 		
-		});
+		}); 
 		
 		
 	
-			
+ 	
 			
 		
 		
 	
 	});
+function submitApproval(){
+	alert(admin_no);
+	 $.ajax({
+			url:"submitApproval.do",
+			data:{emp_no : "${loginEmp.emp_no}",approval_start_date:$('#startDate').val(),approval_end_date:$('#endDate').val(),approval_team_no:team_no,approval_mgr_no:admin_no,
+				approval_choose_no:$('#selectReason').val(),approval_comment:$('#approval_comment').val()
+				},
+			type:"post",
+			success:function(data){
+				alert(data);
+				location.href="approvalListE.do?emp_no=${loginEmp.emp_no}";
+			}
+           
+			
+			
+		}); 
+	
+	
+}	
+
 	
 function resetContent(){
 	
@@ -118,7 +142,7 @@ function resetContent(){
 								</div>
 								<div class="x_content">
 									<form id="demo-form2" data-parsley-validate
-										class="form-horizontal form-label-left" action="submitApproval.do" method="post">
+										class="form-horizontal form-label-left">
 
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12"
@@ -154,7 +178,8 @@ function resetContent(){
 												class="control-label col-md-3 col-sm-3 col-xs-12">결재자(팀장)<span class="required">*</span></label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<div class="input-group" style="margin-bottom:0px;">
-													<input type="text" class="form-control" id="team_mgr" readonly> <span
+													<input type="text" class="form-control" id="team_mgr" readonly
+													> <span
 														class="input-group-btn">
 														<input type="hidden" name="approval_team_no" id="team_mgr_no"/>	
 														
@@ -185,11 +210,10 @@ function resetContent(){
 										<div class="form-group">
 											<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
 												<button class="btn btn-danger" type="reset" onclick="resetContent();">Reset</button>
-												<button type="submit" class="btn btn-primary">Submit</button>
+												<button  type="button" class="btn btn-primary" onclick="submitApproval();">Submit</button>
 											</div>
 										</div>
-									</form>
-									
+										</form>
 								</div>
 							</div>
 						</div>
