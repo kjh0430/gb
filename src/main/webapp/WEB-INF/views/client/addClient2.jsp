@@ -138,8 +138,8 @@
 							    searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
 							    	
 							    	// 클릭한 위도, 경도 정보를 가져옵니다 
-									loc_y = mouseEvent.latLng.getLat();
-									loc_x = mouseEvent.latLng.getLng();
+									loc_x = mouseEvent.latLng.getLat();
+									loc_y = mouseEvent.latLng.getLng();
 									
 									//alert(loc_y + "\n" + loc_x);
 							    	
@@ -196,15 +196,15 @@
 				//검색완료 확인버튼 클릭시 실행될 메소드
 				$('#searchConfirm').on('click', function(){
 					$('#search_client_addr').val(getAddr);
-					$('input[name=client_loc_y]').val(loc_y);
 					$('input[name=client_loc_x]').val(loc_x);
+					$('input[name=client_loc_y]').val(loc_y);
 					
 				});
 				//검색창 취소시 실행메소드
 				$('#searchCancel').on('click', function(){
 					$('#search_client_addr').val("");
-					$('input[name=client_loc_y]').val("");
 					$('input[name=client_loc_x]').val("");
+					$('input[name=client_loc_y]').val("");
 				});
 				
 				function searchAddrFromCoords(coords, callback) {
@@ -356,7 +356,7 @@
 													class="form-control col-md-7 col-xs-12">
 											</div>
 										</div>
-										<div class="form-group">
+										<!-- <div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">
 												계약여부
 											</label>
@@ -366,7 +366,7 @@
 													<input class="form-check-input" type="radio" name="client_contract" id="N" value="N" checked>
 													<label class="form-check-label" for="sale_n">미계약 </label>
 											</div>
-										</div>
+										</div> -->
 																				
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12"
