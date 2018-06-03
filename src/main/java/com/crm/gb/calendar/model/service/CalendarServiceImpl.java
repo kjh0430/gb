@@ -25,5 +25,11 @@ public Calendar selectDetail(Calendar calendar) {
 
 	return CalendarDao.selectDetail(calendar);
 }
+
+@Override
+public int updateSchedule(Calendar calendar) {
+	
+	return CalendarDao.updateSchedule(calendar);
+}
 	
 }

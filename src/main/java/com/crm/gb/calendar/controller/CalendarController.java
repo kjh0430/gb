@@ -92,4 +92,32 @@ public class CalendarController {
 	
 	}
 	
+		@RequestMapping(value="modifySchedule.do" ,method=RequestMethod.POST)
+		@ResponseBody
+		public void calendarModify(Calendar calendar,HttpServletResponse response) throws IOException {		
+		
+			System.out.println(calendar.getCalendar_content());
+			System.out.println(calendar.getCalendar_end_date());
+			System.out.println(calendar.getCalendar_no());
+			System.out.println(calendar.getCalendar_start_date());
+			System.out.println(calendar.getCalendar_title());
+			
+			int result=CalendarService.updateSchedule(calendar);
+			
+			
+			
+			
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter out=response.getWriter();
+			
+			out.append("일정이 수정되었습니다.");
+			out.flush();
+			out.close();
+			
+		
+		}
+		
+
+	
+	
 }
