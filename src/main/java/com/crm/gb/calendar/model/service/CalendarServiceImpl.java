@@ -31,5 +31,11 @@ public int updateSchedule(Calendar calendar) {
 	
 	return CalendarDao.updateSchedule(calendar);
 }
+
+@Override
+public Calendar selectgetInfo(Calendar calendar) {
+	// TODO Auto-generated method stub
+	return CalendarDao.selectgetInfo(calendar);
+}
 	
 }

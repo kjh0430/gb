@@ -34,7 +34,7 @@
     <script type="text/javascript">//calendar
    
     var writer_no="";
-
+    
   	//calendar load
   	function calendarLoad(){
   		
@@ -88,14 +88,26 @@
     	
   	}); //modal 상세보기 닫기
   	
-  		//일정 비교
+  		//일정 추가 modal 창 및 부서,이름 기재
   		function addSchedule(){
   		
-  		alert("일정추가 버튼 확인");
-  		
+  		$.ajax({
+  			
+  		url:"getInfo.do",               
+  		data:{emp_no :"${loginEmp.emp_no}",dept_no :"${loginEmp.dept_no}"},
+  		type:"post",
+  		dataType:"json",
+  		success:function(data){
+  			
+  			$('#addwriter').val(data.emp_name);
+  			$('#adddept_name').val(data.calendar_dept_name);
+  			$('#modal3').modal("show");
   		}
   		
+  		});
   		
+  			}
+  		//일정 비교
  		function checkDate(){
  			var ckModistartDate=$('#startDateM').val();
  			var sArr=ckModistartDate.split('-');
@@ -127,6 +139,10 @@
 			$('#calendar_contentM').val("");
 		
     	}
+  	    //일정추가 닫기
+  	    function modal3Close(){
+  	    	$('#modal3').modal("hide");
+  	    }
   	  	
     	//스케줄 수정하기
  		function modify(calendar_no){
@@ -704,6 +720,110 @@
                                              <button onclick="modal2Close();" type="button"
                                                 class="btn btn-primary" id="modalButtonMd" style="float:right;">취소</button>
                                               <div id="modifySchedule"></div>
+                                          </div>
+                                       </form>
+
+                                    </div>
+                                 </div>
+                              </div>
+                              <!-- 일정 추가 -->
+                               	  <div class="modal fade sendMsg" tabindex="-1" role="dialog"
+                                 id="modal3" aria-hidden="true" >
+                                 <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                       <form class="form-horizontal form-label-left input_mask">
+                                          <div class="modal-header">
+                                             <button type="button" class="close" data-dismiss="modal" onclick="modal3Close();">
+                                                <span aria-hidden="true">×</span>
+                                             </button>
+                                             <h4 class="modal-title" id="myModalLabel">schedule</h4>
+                                          </div>
+
+                                          <div class="modal-body">
+                                
+										<div class="row">
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							<div class="x_panel">
+								<div class="x_title">
+									<h2>schedule</h2>
+									<div class="clearfix"></div>
+								</div>
+								<div class="x_content">
+									<form class="form-horizontal form-label-left">
+
+										<div class="form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12">시작일자
+											</label>
+											<div class="col-md-9 col-sm-9 col-xs-12">
+												<input type="date"  id="addstartDate"
+													class="form-control" style="width:30%;" onblur="checkDate();">
+												<input type="time"  id="addstartTime"
+													class="form-control" style="width:30%;">
+											</div>
+											</div>
+											<div class="form-group">
+												<label class="control-label col-md-3 col-sm-3 col-xs-12"
+												>종료일자 
+											</label>
+											<div class="col-md-9 col-sm-9 col-xs-12" style="">
+												<input type="date"  id="addendDate"
+													class="form-control" style="width:30%;" onblur="checkDate();">
+												<input type="time"  id="addendTime"
+													class="form-control" style="width:30%;">
+												
+											</div>
+											</div>
+										
+										
+										<div class="form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12"
+												for="first-name">작성자 
+											</label>
+											<div class="col-md-9 col-sm-9 col-xs-12">
+											<input type="text"  id="addwriter"
+													class="form-control" readonly style="width:20%;">
+											</div>
+										</div>
+												<div class="form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12"
+												for="first-name">부서명
+											</label>
+											<div class="col-md-9 col-sm-9 col-xs-12">
+											<input type="text"  id="adddept_name"
+													class="form-control" readonly style="width:20%;">
+											</div>
+										</div>
+													<div class="form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12"
+												for="first-name">제목
+											</label>
+											<div class="col-md-9 col-sm-9 col-xs-12">
+											<input type="text"  id="addcalendar_title"
+													class="form-control" style="width:50%;">
+											</div>
+										</div>
+										    <div class="form-group">
+
+                                                      <label
+                                                         class="control-label col-md-3 col-sm-3 col-xs-12">내용</label>
+                                                      <div class="col-md-9 col-sm-9 col-xs-12">
+                                                         <textarea class="form-control" rows="8"
+                                                            id="addcalendar_content"></textarea>
+                                                      </div>
+                                                   </div>
+									
+													</form>
+													</div>
+												</div>
+											 </div>
+										</div>
+									</div>
+                                        <div class="modal-footer">
+                                             
+                                             <button onclick="modal3Close();" type="button"
+                                                class="btn btn-primary" id="modalButtonMd" style="float:right;">취소</button>
+                                             <button onclick="" type="button"
+                                                class="btn btn-primary" id="modalButtonMd" style="float:right;">추가</button>
                                           </div>
                                        </form>
 

@@ -49,4 +49,11 @@ where calendar_no=#{calendar_no}
 ]]>
 </update>
 
+<select id="selectInfo" parameterType="Calendar" resultType="calendar">
+<![CDATA[
+select e.emp_name,d.dept_name,e.emp_no from emp e,dept d where e.emp_no=#{emp_no} and d.dept_no=#{dept_no} and e.dept_no=d.dept_no
+
+]]>
+</select>
+
 </mapper>
