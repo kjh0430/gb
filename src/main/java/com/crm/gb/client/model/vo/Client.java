@@ -33,6 +33,7 @@ public class Client implements Serializable{
 	private int startRow;
 	private int endRow;
 	private Emp emp;
+	private String emp_name;
 	private String contract_discount;
 	
 	public Client() {}
@@ -41,7 +42,7 @@ public class Client implements Serializable{
 			String client_phone, String client_addr, String client_com_tel, String client_loc_x, String client_loc_y,
 			String client_contract, String client_comment, int emp_no, Date client_enroll, String client_delete,
 			int showPage, int totalRow, int start, int end, int startRow, int endRow, Emp emp,
-			String contract_discount) {
+			String contract_discount, String emp_name) {
 		super();
 		this.client_no = client_no;
 		this.client_name = client_name;
@@ -66,6 +67,7 @@ public class Client implements Serializable{
 		this.endRow = endRow;
 		this.emp = emp;
 		this.contract_discount = contract_discount;
+		this.emp_name = emp_name;
 	}
 
 	public int getClient_no() {
@@ -251,6 +253,20 @@ public class Client implements Serializable{
 	public void setContract_discount(String contract_discount) {
 		this.contract_discount = contract_discount;
 	}
+	
+	
+
+	public String getEmp_name() {
+		return emp_name;
+	}
+
+	public void setEmp_name(String emp_name) {
+		this.emp_name = emp_name;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	@Override
 	public String toString() {
@@ -261,8 +277,10 @@ public class Client implements Serializable{
 				+ ", client_comment=" + client_comment + ", emp_no=" + emp_no + ", client_enroll=" + client_enroll
 				+ ", client_delete=" + client_delete + ", showPage=" + showPage + ", totalRow=" + totalRow + ", start="
 				+ start + ", end=" + end + ", startRow=" + startRow + ", endRow=" + endRow + ", emp=" + emp
-				+ ", contract_discount=" + contract_discount + "]";
+				+ ", emp_name=" + emp_name + ", contract_discount=" + contract_discount + "]";
 	}
+
+	
 
 	
 	

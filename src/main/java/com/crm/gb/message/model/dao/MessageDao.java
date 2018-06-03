@@ -51,4 +51,8 @@ public class MessageDao {
 		return sqlSession.update("updateNotify",notify);
 	}
 
+	public int countMsg(int emp_no) {
+		return sqlSession.selectOne("countMsg", emp_no);
+	}
+
 }

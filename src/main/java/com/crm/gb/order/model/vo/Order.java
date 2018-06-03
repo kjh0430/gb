@@ -15,6 +15,7 @@ private static final long serialVersionUID = 1111L;
 	private String emp_name;
 	private int client_no;
 	private int product_no;
+	private String product_name;
 	private int order_amount;
 	private int order_price;
 	private String client_company;
@@ -37,7 +38,7 @@ private static final long serialVersionUID = 1111L;
 		this.order_date = order_date;
 	}
 	
-	public Order(int orderlist_no, int order_no, int emp_no, int client_no, int product_no, int order_amount, int order_price,
+	public Order(int orderlist_no, int order_no, int emp_no, int client_no, int product_no, String product_name, int order_amount, int order_price,
 			String order_date, String client_company,String emp_name) {
 		super();
 		this.orderlist_no = orderlist_no;
@@ -45,6 +46,7 @@ private static final long serialVersionUID = 1111L;
 		this.emp_no = emp_no;
 		this.client_no = client_no;
 		this.product_no = product_no;
+		this.product_name = product_name;
 		this.order_amount = order_amount;
 		this.order_price = order_price;
 		this.order_date = order_date;
@@ -165,10 +167,19 @@ private static final long serialVersionUID = 1111L;
 		this.emp_name = emp_name;
 	}
 
+	
+	public String getProduct_name() {
+		return product_name;
+	}
+
+	public void setProduct_name(String product_name) {
+		this.product_name = product_name;
+	}
+
 	@Override
 	public String toString() {
 		return "Order [orderlist_no=" + orderlist_no + ", order_no=" + order_no + ", emp_no=" + emp_no + ", emp_name="
-				+ emp_name + ", client_no=" + client_no + ", product_no=" + product_no + ", order_amount="
+				+ emp_name + ", client_no=" + client_no + ", product_no=" + product_no +", product_name : " +product_name + ", order_amount="
 				+ order_amount + ", order_price=" + order_price + ", client_company=" + client_company + ", order_date="
 				+ order_date + ", total=" + total + "]";
 	}

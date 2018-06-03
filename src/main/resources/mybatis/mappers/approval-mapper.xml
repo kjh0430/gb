@@ -63,15 +63,14 @@ as approval_team_date,a.approval_mgr_date from approval a
 
 <choose>
 <when test="job_no==2">
-,(select emp_name,dept_no,emp_no from emp) h,
+,(select emp_name,dept_no,emp_no,emp_mgr from emp) h,
 (select emp_name,emp_no from emp where emp_no=#{emp_no}) t,(select emp_name,emp_no from emp where job_no=3) s 
-where t.emp_no=a.approval_team_no and h.emp_no=a.emp_no
+where h.emp_no=a.emp_no and h.emp_mgr=#{emp_no}
 </when>
 <when test="job_no==3">
 ,(select emp_name,dept_no,emp_no from emp) h,
-(select emp_name,emp_no from emp where emp_mgr is null) t,(select emp_name,emp_no from emp where job_no=3) s
-where a.approval_team_no=t.emp_no and a.approval_team_date is not null and h.emp_no=a.emp_no
-
+(select emp_name,emp_no from emp where emp_mgr =0 and job_no != 3) t,(select emp_name,emp_no from emp where job_no=3) s
+where a.approval_team_date is not null and h.emp_no=a.emp_no
 </when>
 
 </choose> 

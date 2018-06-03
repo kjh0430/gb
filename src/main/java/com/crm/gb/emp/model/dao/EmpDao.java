@@ -25,13 +25,11 @@ public class EmpDao {
 		
 		Emp resultEmp=sqlSession.selectOne("emp.loginEmp", emp);
 		
-//		if(pwdEncoder.matches(emp.getEmp_pwd(), resultEmp.getEmp_pwd())) {
-//			return resultEmp;
-//		}else {
-//			throw new EmpLoginFailException("아이디와 비밀번호를 확인하세요!!");
-//		}
-		
-		return resultEmp;
+		if(pwdEncoder.matches(emp.getEmp_pwd(), resultEmp.getEmp_pwd())) {
+			return resultEmp;
+		}else {
+			throw new EmpLoginFailException("아이디와 비밀번호를 확인하세요!!");
+		}
 	}
 
 	/*사원 등록*/
@@ -68,8 +66,6 @@ public class EmpDao {
 	
 	/*이메일 중복검사*/
 	public Emp selectCheckEmail(String emp_email) {
-		System.out.println("emp_email dao 실행");
-		System.out.println("emp_email : " + emp_email);
 		return sqlSession.selectOne("selectCheckEmail", emp_email);
 	}
 
@@ -80,6 +76,11 @@ public class EmpDao {
 	/*상사이름 조회*/
 	public Emp selectMgrNo(int emp_no) {
 		return sqlSession.selectOne("selectMgrNo", emp_no);
+	}
+
+	/*사원번호 중복검사*/
+	public Emp selectCheckEmpNo(int emp_no) {
+		return sqlSession.selectOne("selectCheckEmpNo", emp_no);
 	}
 	
 }

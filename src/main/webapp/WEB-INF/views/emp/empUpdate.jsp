@@ -49,6 +49,7 @@ $(document).ready(function() {
     } );
 } );
 
+}
 </script>
 <style type="text/css">
 table tr th, table tr td
@@ -57,6 +58,61 @@ table tr th, table tr td
 	margin: 10px 0 30px 0; */
 }
 </style>
+
+<script type="text/javascript">
+
+function mgrList(){
+	$.ajax({
+		url: "selectMgrList.do",
+		type : "post",
+		dataType : "json",
+		success : function(obj){
+			console.log("selectMgrList.do 실행");
+			var objStr = JSON.stringify(obj);
+			var jsonObj = JSON.parse(objStr);
+			var outValues = "<table id='mgrTable'><tr><th style='text-align:center;'>사원번호</th><th style='text-align:center;'>사원이름</th></tr>";
+			
+			for(var i in jsonObj.mgrList){
+				outValues += "<tr onclick='selectMgrNo(this);'><td>" + jsonObj.mgrList[i].emp_no + "</td><td>" 
+				+ decodeURIComponent(jsonObj.mgrList[i].emp_name) + "</td></tr>";
+			}
+			
+			outValues += "</table>";
+			
+			console.log("outValues : " + outValues);
+			
+			$("#mgrTable").html(outValues);
+		},
+		error: function(request, status, errorData){
+			console.log("error code : " + request.status + "\n"
+					+ "message : " + request.responseText + "\n"
+					+ "error : " + errorData);
+			}
+		
+	});    
+};
+
+function selectMgrNo(obj){
+	var tr = $(obj);
+	var td = tr.children();
+	
+	var emp_no = td.eq(0).text();
+	var emp_name = td.eq(1).text();
+	
+	$('#mgrModal').modal('hide');
+	$('#emp_mgr').val(emp_no);
+	
+}
+
+
+</script>
+
+<style type="text/css">
+#mgrTable{
+text-align:center;
+}
+</style>
+
 </head>
 
 
@@ -182,7 +238,7 @@ table tr th, table tr td
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">비밀번호</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input class="form-control" id="emp_pwd" name="emp_pwd" type="password" value="${ emp.emp_pwd }">
+                          <input class="form-control" id="emp_pwd" name="emp_pwd" type="password" value="">
                         </div>
                       </div>
                       <div class="form-group">
@@ -240,7 +296,8 @@ table tr th, table tr td
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">상사번호</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input class="form-control" id="emp_mgr" name="emp_mgr" type="text" value="${ emp.emp_mgr }">
+                          <input class="form-control col-md-7 col-xs-12" id="emp_mgr" name="emp_mgr" type="text" value="${ emp.emp_mgr }" style="width:85%;">
+                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm" style="float:right;" onclick="mgrList()">조회</button>
                         </div>
                       </div>
                       <div class="form-group">
@@ -249,12 +306,12 @@ table tr th, table tr td
                           <input class="form-control" id="emp_hiredate" name="emp_hiredate" type="date" value="${ emp.emp_hiredate }">
                         </div>
                       </div>
-                      <div class="form-group">
+                      <%-- <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">퇴사일</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input class="form-control" id="emp_firedate" name="emp_firedate" type="date" value="${ emp.emp_firedate }">
+            			  <input class="form-control" id="emp_firedate" name="emp_firedate" type="text" value="${ emp.emp_firedate }">              
                         </div>
-                      </div>
+                      </div> --%>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">담당지역</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -367,6 +424,30 @@ table tr th, table tr td
 		</div>
 	</div>
 	</div>
+	<!-- /page content -->
+	
+	<!-- modal -->
+	<div class="modal fade bs-example-modal-sm" id="mgrModal" tabindex="-1" role="dialog" aria-hidden="true">
+       <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+
+             <div class="modal-header">
+             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+             </button>
+             <h4 class="modal-title" id="myModalLabel">사원조회</h4>
+             </div>
+             <div class="modal-body" style="overflow-y:auto; overflow-x:hidden; height:400px;">
+             <table class="table table-hover" id="mgrTable">
+             </table>
+             </div>
+             <div class="modal-footer">
+             <!-- <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+             <button type="button" class="btn btn-primary">등록</button> -->
+             </div>
+
+           </div>
+       </div>
+    </div>
 	<!-- /page content -->
 
 	

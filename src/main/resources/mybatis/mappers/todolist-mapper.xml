@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="TodoList">
+
+	<resultMap type="TodoList" id="resultTodoList">
+		<id column="emp_no" property="emp_no" />
+		<result column="do1" property="do1" />
+		<result column="check1" property="check1" />
+		<result column="do2" property="do2" />
+		<result column="check2" property="check2" />
+		<result column="do3" property="do3" />
+		<result column="check3" property="check3" />
+		<result column="do4" property="do4" />
+		<result column="check4" property="check4" />
+		<result column="do5" property="do5" />
+		<result column="check5" property="check5" />
+		<result column="to_date" property="to_date" />
+	</resultMap>
+	
+	<!-- todolist 등록 -->
+	<insert id="todolistInsert" parameterType="TodoList">
+	<![CDATA[
+		insert into todolist
+		values (#{emp_no}, #{todo1}, default, #{todo2}, default,
+		#{todo3}, default, #{todo4}, default, #{todo5}, default, sysdate)
+	]]>
+	</insert>
+
+</mapper>
