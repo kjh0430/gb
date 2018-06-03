@@ -146,7 +146,7 @@ function clientList(){
 										</thead>
 										<tbody>
 										
-										<c:forEach var="list" items="${ contractList }">
+										<c:forEach var="list" items="${ contractPageList }">
 											<tr>
 												<td><a href="contractDetail.do?client_no=${ list.client.client_no }">${ list.client.client_name }</a></td>
 												<td>${ list.client.client_company }</td>
@@ -166,7 +166,7 @@ function clientList(){
 								<!-- 페이징 처리 -->
 								<div style="text-align:center;">
 									<c:forEach var="i" begin="${ start }" end="${ end }">
-										<a id="listNumber" href="poList.do?startPage=${ i }">${ i }</a>
+										<a id="listNumber" href="contractList.do?startPage=${ i }&emp_no=${ loginEmp.emp_no }">${ i }</a>
 									</c:forEach>
 								</div>
 								

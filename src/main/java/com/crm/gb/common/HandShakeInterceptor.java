@@ -22,7 +22,7 @@ public class HandShakeInterceptor extends HttpSessionHandshakeInterceptor{
 	          
 	          
 	        ServletServerHttpRequest ssreq = (ServletServerHttpRequest) request;
-	        System.out.println("URI:"+request.getURI());
+	        //System.out.println("URI:"+request.getURI());
 	  
 	        HttpServletRequest req =  ssreq.getServletRequest();
 	 
