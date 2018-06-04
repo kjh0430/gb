@@ -23,9 +23,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+
 import com.crm.gb.emp.exception.EmpLoginFailException;
 import com.crm.gb.emp.model.service.EmpService;
 import com.crm.gb.emp.model.vo.Emp;
+
 
 @Controller
 @SessionAttributes("loginEmp")
@@ -38,6 +40,13 @@ public class EmpController {
 	/* 일반 사원 테이블 추가부분 */
 	@Autowired
 	private BCryptPasswordEncoder pwdEncoder;
+	
+	//개인 정보 수정
+	@RequestMapping("info.do")
+	public String  modifyInfo() {
+		return "emp/myInfo";
+	}
+	
 	
 	/** 시작화면 */
 	@RequestMapping("view.do")
@@ -358,5 +367,72 @@ public class EmpController {
 		out.close();
 		
 	}
+	//마이 페이지 정보 가져오기
+	@RequestMapping(value="getMyInfo.do" ,method=RequestMethod.POST)
+	@ResponseBody
+	public void getMyInfo(Emp emp,HttpServletResponse  response) throws IOException {		
+	
+		Emp getMyInfo=empService.selectMyInfo(emp);		
 		
+		JSONObject send=new JSONObject();
+		
+		send.put("emp_name",getMyInfo.getEmp_name());
+		send.put("emp_addr",getMyInfo.getEmp_addr());
+		send.put("emp_phone",getMyInfo.getEmp_phone());
+		send.put("job_name",getMyInfo.getJob_name());
+		send.put("emp_email",getMyInfo.getEmp_email());
+		send.put("mgr_name",getMyInfo.getMgr_name());
+		send.put("city",getMyInfo.getCity());
+		send.put("county",getMyInfo.getCounty());
+		send.put("village",getMyInfo.getVillage());
+		send.put("dept_name",getMyInfo.getDept_name());
+	
+		
+		response.setContentType("application/json; charset=utf-8");	
+	
+		PrintWriter out=response.getWriter();
+		out.println(send.toJSONString());
+		out.flush();
+		out.close();
+	
+	} 
+	//email check
+	
+	@RequestMapping(value="emailCheck.do" ,method=RequestMethod.POST)
+	@ResponseBody
+
+	public void checkEmail(Emp emp,HttpServletResponse  response) throws IOException {		
+	
+		Emp checkEmail=empService.selectEmail(emp);		
+	
+		JSONObject send=new JSONObject();
+		send.put("checkEmail",checkEmail);
+		
+		response.setContentType("application/json; charset=utf-8");	
+	
+		PrintWriter out=response.getWriter();
+		out.println(send.toJSONString());
+		out.flush();
+		out.close();
+	
+	}
+	
+		//phone number check
+	@RequestMapping(value="checkPhone.do" ,method=RequestMethod.POST)
+	@ResponseBody
+	public void checkPhone(Emp emp,HttpServletResponse  response) throws IOException {		
+	
+		Emp checkPhone=empService.selectPhone(emp);		
+	
+		JSONObject send=new JSONObject();
+		send.put("checkPhone",checkPhone);
+		
+		response.setContentType("application/json; charset=utf-8");	
+	
+		PrintWriter out=response.getWriter();
+		out.println(send.toJSONString());
+		out.flush();
+		out.close();
+	
+	}
 }

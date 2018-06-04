@@ -44,8 +44,8 @@ var admin_no="";
 				$('#team_mgr_no').val(data.team_mgr_no);
 				$('#mgr_no').val(data.mgr_no); //관리자의 사원번호
 
-				team_no=$('#team_mgr_no').val();
-				admin_no=$('#mgr_no').val();				
+				team_no=data.team_mgr_no;
+				admin_no=data.mgr_no;				
 			}
 		
 		
@@ -64,6 +64,9 @@ function submitApproval(){
 				alert(data);
 				ws.send(team_no);
 				location.href="approvalListE.do?emp_no=${loginEmp.emp_no}";
+				
+				
+				
 				
 			}
            

@@ -94,6 +94,24 @@ public class EmpServlceImpl implements EmpService{
 	@Override
 	public Emp selectCheckEmpNo(int emp_no) {
 		return empDao.selectCheckEmpNo(emp_no);
+	}
+	//나의 정보 가져오기
+	@Override
+	public Emp selectMyInfo(Emp emp) {
+		
+		return empDao.selectMyInfo(emp);
+	}
+	//이메일 체크
+	@Override
+	public Emp selectEmail(Emp emp) {
+		
+		return empDao.selectEmail(emp);
+	}
+	//폰 체크
+	@Override
+	public Emp selectPhone(Emp emp) {
+		
+		return empDao.selectPhone(emp);
 	}	
 	
 }

@@ -82,5 +82,20 @@ public class EmpDao {
 	public Emp selectCheckEmpNo(int emp_no) {
 		return sqlSession.selectOne("selectCheckEmpNo", emp_no);
 	}
+
+	public Emp selectMyInfo(Emp emp) {
+		
+		return sqlSession.selectOne("selectMyInfo",emp);
+	}
+
+	public Emp selectEmail(Emp emp) {
+		
+		return sqlSession.selectOne("selectEmail",emp);
+	}
+
+	public Emp selectPhone(Emp emp) {
+		
+		return sqlSession.selectOne("selectPhone",emp);
+	}
 	
 }

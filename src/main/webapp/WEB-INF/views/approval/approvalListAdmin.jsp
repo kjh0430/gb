@@ -96,12 +96,12 @@ function modalUp(obj){
 			type:"post",
 		 	success : function(data){
 				//alert("팀장 승인 완료"+data);
-				ws.send(data);
-				
+				 ws.send(data);
+				alert("결재가 완료 되었습니다.");
 				$('#modal1').modal("hide");
-			
-				 location.href="approvalListAdmin.do?emp_no=${loginEmp.emp_no}&job_no=${loginEmp.job_no}";
-			}
+				location.href="approvalListAdmin.do?emp_no=${loginEmp.emp_no}&job_no=${loginEmp.job_no}";
+				 
+		 	}
 		 });
 		 
 			
