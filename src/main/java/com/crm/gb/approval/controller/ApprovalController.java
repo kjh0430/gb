@@ -67,7 +67,7 @@ public class ApprovalController {
 	@RequestMapping(value="submitApproval.do",method=RequestMethod.POST)
 	@ResponseBody
 	public void submitApproval(Approval apr, HttpServletResponse response) throws IOException {
-		System.out.println("신청하는 사원"+apr.getEmp_no());
+/*		System.out.println("신청하는 사원"+apr.getEmp_no());
 		System.out.println("시작날짜"+apr.getApproval_start_date());
 		System.out.println("팀장번호:"+apr.getApproval_team_no());
 		System.out.println("관리자번호"+apr.getApproval_mgr_no());
@@ -76,13 +76,13 @@ public class ApprovalController {
 		System.out.println("결재사유번호"+apr.getApproval_choose_no());
 		System.out.println("팀장번호"+apr.getApproval_team_no());
 		System.out.println("관리자번호"+apr.getApproval_mgr_no());
-		System.out.println("비고"+apr.getApproval_comment());
+		System.out.println("비고"+apr.getApproval_comment());*/
 		
 		SimpleDateFormat format=new SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.KOREA);
 		Date date=new Date();
 		Date time=new Date(date.getTime());
 		String getdate=format.format(time);
-		System.out.println(getdate);
+		//System.out.println(getdate);
 		
 		
 		apr.setApproval_submit_date(getdate);
@@ -106,7 +106,7 @@ public class ApprovalController {
 		ArrayList<Approval> approvalListE= ApprovalService.selectapprovalListE(apr);
 
 		model.addAttribute("approvalListE",approvalListE);
-		System.out.println("approvalListE"+approvalListE);
+		//System.out.println("approvalListE"+approvalListE);
 		
 		return "approval/approvalList";
 	}
@@ -117,12 +117,12 @@ public class ApprovalController {
 		apr.setEmp_no(emp_no);
 		apr.setJob_no(job_no);
 		
-		System.out.println(apr.getEmp_no());
-		System.out.println(apr.getJob_no());
+		//System.out.println(apr.getEmp_no());
+		//System.out.println(apr.getJob_no());
 		ArrayList<Approval> approvalListA=ApprovalService.selectapprovalListA(apr);
 		
 		model.addAttribute("approvalListA",approvalListA);
-		System.out.println(approvalListA);
+		//System.out.println(approvalListA);
 		
 		return "approval/approvalListAdmin";
 	}
@@ -156,10 +156,9 @@ public class ApprovalController {
 		Date date=new Date();
 		Date time=new Date(date.getTime());
 		String getdate=format.format(time);
-		System.out.println(getdate);
+		//System.out.println(getdate);
 		
-		apr.setApproval_mgr_date(getdate);
-		
+		apr.setApproval_mgr_date(getdate);		
 		
 		int result=ApprovalService.updateMgrApproval(apr);
 		

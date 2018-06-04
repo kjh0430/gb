@@ -221,7 +221,7 @@ public class MessageController {
 		int to_no = 0;
 		
 		if(sendmsg != null) {
-			//System.out.println("sendmsg : "+sendmsg);
+			System.out.println("sendmsg : "+sendmsg);
 			from_no = sendmsg.getMessage_from_no();
 			to_no = sendmsg.getMessage_to_no();
 			Emp from = empService.selectEmpNo(from_no);
@@ -235,13 +235,13 @@ public class MessageController {
 				out.close();
 					
 			}else {
-				
 				notify.setNotify_from(from_no);
 				notify.setNotify_to(to_no);
-				notify.setNotify_category("M");
-				//if(notify!=null) {
+			
+				if(notify!=null) {
+					notify.setNotify_category("M");
 					int result = notifyService.insertNotify(notify);
-				//}				
+				}				
 			}			
 			sendmsg=null;
 		}			

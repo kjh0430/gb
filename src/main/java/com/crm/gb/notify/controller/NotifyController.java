@@ -34,7 +34,7 @@ public class NotifyController {
 			job.put("notify_no", notify.getNotify_no());
 			job.put("from_name", notify.getEmp_name());
 			job.put("notify_to", notify.getNotify_to());
-			job.put("notify_categofy", notify.getNotify_category());
+			job.put("notify_category", notify.getNotify_category());
 			job.put("notify_date", notify.getNotify_date());
 			job.put("notify_read", notify.getNotify_read());
 			
