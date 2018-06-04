@@ -36,7 +36,6 @@ public class ApprovalController {
 	
 	@RequestMapping("approval.do")
 	public String approval() {
-		
 		return "approval/approval";
 	}
 	
@@ -66,8 +65,11 @@ public class ApprovalController {
 	
 	//결재 제출
 	@RequestMapping(value="submitApproval.do",method=RequestMethod.POST)
+	@ResponseBody
 	public ModelAndView submitApproval(Approval apr,ModelAndView mv) {
 		System.out.println("시작날짜"+apr.getApproval_start_date());
+		System.out.println("팀장번호:"+apr.getApproval_team_no());
+		System.out.println("관리자번호"+apr.getApproval_mgr_no());
 		System.out.println("종료날짜"+apr.getApproval_end_date());
 		System.out.println("사원번호"+apr.getEmp_no());
 		System.out.println("결재사유번호"+apr.getApproval_choose_no());
@@ -85,13 +87,13 @@ public class ApprovalController {
 		apr.setApproval_submit_date(getdate);
 		
 		int result=ApprovalService.insertApproval(apr);
-		if(result>0) {
-		System.out.println("전송 완료");
-		mv.addObject("result",result);
-		}
-		mv.setViewName("approval/approval");
 		
-		return mv;
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out=response.getWriter();
+		out.println("결재 신청이 완료 되었습니다.");
+		out.flush();
+		out.close();
+		
 	}
 	//결재한 리스트
 	@RequestMapping(value="approvalListE.do", method=RequestMethod.GET)

@@ -67,6 +67,7 @@ public class EmpController {
 		try {
 			
 			Emp returnEmp=empService.selectEmp(emp);
+			
 				System.out.println("사원정보 조회:" + returnEmp);
 			model.addAttribute("loginEmp", returnEmp);				
 			

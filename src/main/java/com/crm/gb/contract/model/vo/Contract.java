@@ -24,12 +24,18 @@ public class Contract implements Serializable{
 	private String emp_sign;
 	private Emp emp;
 	private Client client;
+	private int showPage;
+	private int totalRow;
+	private int start;
+	private int end;
+	private int startRow;
+	private int endRow;
 	
 	public Contract() {}
 
 	public Contract(int contract_no, int emp_no, int client_no, int contract_discount, int contract_money,
 			Date contract_date_start, Date contract_date_end, String business_no, String client_sign, String emp_sign,
-			Emp emp, Client client) {
+			Emp emp, Client client, int showPage, int totalRow, int start, int end, int startRow, int endRow) {
 		super();
 		this.contract_no = contract_no;
 		this.emp_no = emp_no;
@@ -43,6 +49,12 @@ public class Contract implements Serializable{
 		this.emp_sign = emp_sign;
 		this.emp = emp;
 		this.client = client;
+		this.showPage = showPage;
+		this.totalRow = totalRow;
+		this.start = start;
+		this.end = end;
+		this.startRow = startRow;
+		this.endRow = endRow;
 	}
 
 	public int getContract_no() {
@@ -141,14 +153,65 @@ public class Contract implements Serializable{
 		this.client = client;
 	}
 
+	public int getShowPage() {
+		return showPage;
+	}
+
+	public void setShowPage(int showPage) {
+		this.showPage = showPage;
+	}
+
+	public int getTotalRow() {
+		return totalRow;
+	}
+
+	public void setTotalRow(int totalRow) {
+		this.totalRow = totalRow;
+	}
+
+	public int getStart() {
+		return start;
+	}
+
+	public void setStart(int start) {
+		this.start = start;
+	}
+
+	public int getEnd() {
+		return end;
+	}
+
+	public void setEnd(int end) {
+		this.end = end;
+	}
+
+	public int getStartRow() {
+		return startRow;
+	}
+
+	public void setStartRow(int startRow) {
+		this.startRow = startRow;
+	}
+
+	public int getEndRow() {
+		return endRow;
+	}
+
+	public void setEndRow(int endRow) {
+		this.endRow = endRow;
+	}
+
 	@Override
 	public String toString() {
 		return "Contract [contract_no=" + contract_no + ", emp_no=" + emp_no + ", client_no=" + client_no
 				+ ", contract_discount=" + contract_discount + ", contract_money=" + contract_money
 				+ ", contract_date_start=" + contract_date_start + ", contract_date_end=" + contract_date_end
 				+ ", business_no=" + business_no + ", client_sign=" + client_sign + ", emp_sign=" + emp_sign + ", emp="
-				+ emp + ", client=" + client + "]";
+				+ emp + ", client=" + client + ", showPage=" + showPage + ", totalRow=" + totalRow + ", start=" + start
+				+ ", end=" + end + ", startRow=" + startRow + ", endRow=" + endRow + "]";
 	}
+
+	
 	
 	
 	

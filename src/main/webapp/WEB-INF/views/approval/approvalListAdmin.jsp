@@ -127,7 +127,7 @@ function modalUp(obj){
 				
 				$('#modal1').modal("hide");
 			
-				location.href="approvalListAdmin.do?emp_no=${loginEmp.emp_no}&job_no=${loginEmp.job_no}";
+				 location.href="approvalListAdmin.do?emp_no=${loginEmp.emp_no}&job_no=${loginEmp.job_no}";
 			}
 		 });
 		 
