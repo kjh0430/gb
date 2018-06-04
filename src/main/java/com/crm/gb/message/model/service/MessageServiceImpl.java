@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.crm.gb.emp.model.vo.Emp;
 import com.crm.gb.message.model.dao.MessageDao;
 import com.crm.gb.message.model.vo.Message;
-import com.crm.gb.message.model.vo.Notify;
 
 
 
@@ -45,20 +44,6 @@ public class MessageServiceImpl implements MessageService {
 		return messageDao.updateReadMessage(message);
 	}
 
-	@Override
-	public int insertNotify(Notify notify) {		
-		return messageDao.insertNofity(notify);
-	}
-
-	@Override
-	public ArrayList<Notify> selectNotify(Emp emp) {		
-		return messageDao.selectNotify(emp);
-	}
-
-	@Override
-	public int updateNotify(Notify notify) {		
-		return messageDao.updateNotify(notify);
-	}
 
 	@Override
 	public int countMsg(int emp_no) {		

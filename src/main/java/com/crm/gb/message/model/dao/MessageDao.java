@@ -7,9 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.crm.gb.emp.model.vo.Emp;
 import com.crm.gb.message.model.vo.Message;
-import com.crm.gb.message.model.vo.Notify;
 
 @Repository("messageDao")
 public class MessageDao {
@@ -37,20 +35,6 @@ public class MessageDao {
 		return sqlSession.update("updateReadMessage",message);
 	}
 	
-	//메시지 받는 사람 미접속중일때, db에 insert
-	public int insertNofity(Notify notify) {		
-		return sqlSession.insert("insertNotify",notify);
-	}
-	
-	//로그인 했을때 알람보여주기
-	public ArrayList<Notify> selectNotify(Emp emp) {		
-		return (ArrayList)sqlSession.selectList("selectNotify", emp);
-	}
-
-	public int updateNotify(Notify notify) {
-		return sqlSession.update("updateNotify",notify);
-	}
-
 	public int countMsg(int emp_no) {
 		return sqlSession.selectOne("countMsg", emp_no);
 	}

@@ -30,12 +30,12 @@ public class TodoListController {
 	
 	@RequestMapping(value="todoInsert.do", method=RequestMethod.POST)
 	@ResponseBody
-	public void todoInsert(TodoList todolist, @RequestParam(value="emp_no") String emp_num, @RequestParam(value="todo1") String todo1, @RequestParam(value="todo2") String todo2, @RequestParam(value="todo3") String todo3, @RequestParam(value="todo4") String todo4, @RequestParam(value="todo5") String todo5, HttpServletResponse response) throws IOException{
+	public void todoInsert(TodoList todolist, HttpServletResponse response) throws IOException{
 		
 		logger.info("todoInsert 실행");		
-		int emp_no = (Integer.parseInt(emp_num));
+		/*int emp_no = (Integer.parseInt(emp_num));
 		System.out.println("controller에서 출력 emp_no : " + emp_no);
-		/*System.out.println("controller에서 출력 todo1 : " + todo1);
+		System.out.println("controller에서 출력 todo1 : " + todo1);
 		System.out.println("controller에서 출력 todo2 : " + todo2);
 		System.out.println("controller에서 출력 todo3 : " + todo3);
 		System.out.println("controller에서 출력 todo4 : " + todo4);
@@ -43,13 +43,15 @@ public class TodoListController {
 		System.out.println("controller에서 출력 todolist : " + todolist);
 		int result = todolistService.insertTodoList(todolist);
 		
+		System.out.println("todoInsert 여기까지 실행됨");
+		
 		JSONObject job = new JSONObject();
 		job.put("emp_no", todolist.getEmp_no());
-		job.put("todo1", URLEncoder.encode(todolist.getTodo1(), "utf-8"));
-		job.put("todo2", URLEncoder.encode(todolist.getTodo2(), "utf-8"));
-		job.put("todo3", URLEncoder.encode(todolist.getTodo3(), "utf-8"));
-		job.put("todo4", URLEncoder.encode(todolist.getTodo4(), "utf-8"));
-		job.put("todo5", URLEncoder.encode(todolist.getTodo5(), "utf-8"));
+		job.put("todo1", todolist.getTodo1());
+		job.put("todo2", todolist.getTodo2());
+		job.put("todo3", todolist.getTodo3());
+		job.put("todo4", todolist.getTodo4());
+		job.put("todo5", todolist.getTodo5());
 
 		response.setContentType("application/json; charset=utf-8");
 		PrintWriter out = response.getWriter();
