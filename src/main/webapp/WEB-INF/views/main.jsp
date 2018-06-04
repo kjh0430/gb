@@ -73,7 +73,7 @@
 				 events:[event]		
 	    	}); 
 					
-			var value="<button class='btn btn-danger' onclick='addSchedule();'"+
+			var value="<button class='btn btn-danger' onclick='Schedule();'"+
 			"style='padding:0.1%; margin-top:1%;'>일정추가</button>";
 			$('#addschedule').html(value);
 		 }
@@ -86,10 +86,8 @@
     	
     	calendarLoad();
     	
-  	}); //modal 상세보기 닫기
-  	
-  		//일정 추가 modal 창 및 부서,이름 기재
-  		function addSchedule(){
+  	}); 
+  		function Schedule(){
   		
   		$.ajax({
   			
@@ -123,7 +121,10 @@
  				alert("시작 날짜 또는 종료 날짜가 유효하지 않습니다.");
  			}
   	} 	
-  	 	//detail 닫기
+  	 	
+  	 	
+  	 	//modal 상세보기 닫기 detail 닫기
+
     	function modal1Close(){
     		
     		$('#modal1').modal("hide");
