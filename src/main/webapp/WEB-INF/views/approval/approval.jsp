@@ -39,16 +39,13 @@ var admin_no="";
 			dataType:"json",
 			success:function(data){
 				
-				
-			
 				$('#team_mgr').val(decodeURIComponent(data.team_mgr_name.replace(/\+/g," ")));
 				$('#mgr_name').val(decodeURIComponent(data.mgr_name.replace(/\+/g," ")));
 				$('#team_mgr_no').val(data.team_mgr_no);
 				$('#mgr_no').val(data.mgr_no); //관리자의 사원번호
-				
-				
+
 				team_no=$('#team_mgr_no').val();
-				admin_no=$('#mgr_no').val();
+				admin_no=$('#mgr_no').val();				
 			}
 		
 		
@@ -72,7 +69,9 @@ function submitApproval(){
 			type:"post",
 			success:function(data){
 				alert(data);
+				ws.send(team_no);
 				location.href="approvalListE.do?emp_no=${loginEmp.emp_no}";
+				
 			}
            
 			

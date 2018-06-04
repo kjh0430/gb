@@ -16,7 +16,7 @@
  }
 </style>
 <script src="resources/js/EventSource.js"></script>
-<script src="resources/js/PushNotify.js"></script>
+<script src="resources/js/PushNotify.js?ver=1"></script>
 </head>
 
 <body>
@@ -90,8 +90,12 @@
 				if(size>0){
 					for(var i in notify.list){								
 						value+="<li><p>"+notify.list[i].notify_date+"<a href='javascript:confirmNotify(\""+notify.list[i].notify_no+"\")'>"
-						+"<i class='fa fa-times'></i></a></p>"
-						+notify.list[i].from_name+"님이 보낸 쪽지가 도착했습니다.</li>"
+						+"<i class='fa fa-times'></i></a></p>";
+						if(notify.list[i].notify_category == 'M'){
+							value+=notify.list[i].from_name+"님이 보낸 쪽지가 도착했습니다.</li>";
+						}else{
+							value+=notify.list[i].from_name+"님이 요청한 결재가 있습니다.</li>";
+						}
 					}	
 					$("#menu1").html(value);
 					$(".notify_badge").html(size);
@@ -120,8 +124,7 @@
 				}else{
 					alert("실패")
 				}		
-			}			
-			
+			}						
 		});//ajax
 		
 	}

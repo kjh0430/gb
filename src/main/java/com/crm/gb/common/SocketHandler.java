@@ -5,11 +5,23 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.crm.gb.emp.model.service.EmpService;
+import com.crm.gb.emp.model.vo.Emp;
+import com.crm.gb.notify.model.service.NotifyService;
+import com.crm.gb.notify.model.vo.Notify;
+
 public class SocketHandler extends TextWebSocketHandler{
+	@Autowired
+	EmpService empService;
+	
+	@Autowired
+	NotifyService notifyService;
 	
 	Map<String, WebSocketSession> users;
 	
@@ -39,26 +51,27 @@ public class SocketHandler extends TextWebSocketHandler{
     @Override
     public void handleTextMessage(WebSocketSession session,TextMessage message)throws Exception{
     	
-        String to_no = (String)(message.getPayload());
-        System.out.println("받는 사람 : "+to_no);
-       // session.sendMessage(new TextMessage("ECHO : " + to_no));
+        String to_no = (String)(message.getPayload());        
+       System.out.println("결재 할 사람 : "+to_no);       
          
-       Map<String, Object> map = session.getAttributes();
+        Map<String, Object> map = session.getAttributes();
         String from_no = (String)map.get("emp_no");
-        System.out.println("보낸 사람 : "+from_no);
+        Emp emp = empService.selectEmpNo(Integer.parseInt(from_no));
+        String to_name = emp.getEmp_name();
+       System.out.println("결재 신청한 사람 : "+from_no);
         
-        if(users.containsKey(to_no)) {
-        	users.get(to_no).sendMessage(new TextMessage("ECHO : " + from_no));
-        }
-
-    	
+       if(users.containsKey(to_no)) {
+        	users.get(to_no).sendMessage(new TextMessage(to_name));
+        }else {
+        	Notify notify = new Notify(Integer.parseInt(from_no),Integer.parseInt(to_no),"A");
+        	int result = notifyService.insertNotify(notify);
+        }    	
     }
-
-
     
-    
+    @Override
+    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+        super.afterConnectionClosed(session, status);
+        System.out.println("클라이언트 접속해제");
+    }
  
-	 
-
-
 }

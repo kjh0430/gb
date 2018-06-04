@@ -134,16 +134,16 @@ public class ApprovalController {
 		Date date=new Date();
 		Date time=new Date(date.getTime());
 		String getdate=format.format(time);
-		System.out.println(getdate);
+		//System.out.println(getdate);
 		
-		apr.setApproval_team_date(getdate);
-		
+		apr.setApproval_team_date(getdate); 
 		
 		int result=ApprovalService.updateTeamApproval(apr);
+		int admin_no = ApprovalService.selectAdminNo(apr);
 		
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out=response.getWriter();
-		out.append("팀장 승인 완료");
+		out.append(admin_no+"");
 		out.flush();
 		out.close();
 		

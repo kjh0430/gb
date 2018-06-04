@@ -1,4 +1,4 @@
-package com.crm.gb.message.model.vo;
+package com.crm.gb.notify.model.vo;
 
 import java.io.Serializable;
 
@@ -12,22 +12,43 @@ public class Notify implements Serializable{
 	private int notify_no;
 	private int notify_from;
 	private int notify_to;
+	private String notify_category;
 	private String notify_date;
 	private String notify_read;
 	private String emp_name;
 	
 	public Notify() {}
+
 	
-	
-	public Notify(int notify_no, int notify_from, int notify_to, String notify_date, String notify_read) {
+	public Notify(int notify_from, int notify_to, String notify_category) {
+		super();
+		this.notify_from = notify_from;
+		this.notify_to = notify_to;
+		this.notify_category = notify_category;
+	}
+
+
+	public Notify(int notify_no, int notify_from, int notify_to, String notify_category, String notify_date,
+			String notify_read, String emp_name) {
 		super();
 		this.notify_no = notify_no;
 		this.notify_from = notify_from;
 		this.notify_to = notify_to;
+		this.notify_category = notify_category;
 		this.notify_date = notify_date;
 		this.notify_read = notify_read;
+		this.emp_name = emp_name;
 	}
-	
+
+
+	public String getNotify_category() {
+		return notify_category;
+	}
+
+	public void setNotify_category(String notify_category) {
+		this.notify_category = notify_category;
+	}
+
 
 	public int getNotify_no() {
 		return notify_no;
@@ -81,14 +102,16 @@ public class Notify implements Serializable{
 	public void setEmp_name(String emp_name) {
 		this.emp_name = emp_name;
 	}
-
-
+	
 	@Override
 	public String toString() {
 		return "Notify [notify_no=" + notify_no + ", notify_from=" + notify_from + ", notify_to=" + notify_to
-				+ ", notify_date=" + notify_date + ", notify_read=" + notify_read + ", emp_name=" + emp_name + "]";
+				+ ", notify_category=" + notify_category + ", notify_date=" + notify_date + ", notify_read="
+				+ notify_read + ", emp_name=" + emp_name + "]";
 	}
 
+
+	
 	
 	
 }

@@ -49,4 +49,8 @@ public class ApprovalDao {
 		return sqlSession.update("updateMgrApproval",apr);
 	}
 
+	public int selectAdminNo(Approval apr) {
+		return sqlSession.selectOne("selectAdminNo",apr);
+	}
+
 }

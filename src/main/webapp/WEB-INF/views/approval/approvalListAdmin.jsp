@@ -17,23 +17,7 @@
 <!-- Font Awesome -->
 <link href="resources/vendors/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet">
-<!-- NProgress -->
-<link href="resources/vendors/nprogress/nprogress.css" rel="stylesheet">
-<!-- iCheck -->
-<link href="resources/vendors/iCheck/skins/flat/green.css"
-	rel="stylesheet">
 
-<!-- bootstrap-progressbar -->
-<link
-	href="resources/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css"
-	rel="stylesheet">
-<!-- JQVMap -->
-<link href="resources/vendors/jqvmap/dist/jqvmap.min.css"
-	rel="stylesheet" />
-<!-- bootstrap-daterangepicker -->
-<link
-	href="resources/vendors/bootstrap-daterangepicker/daterangepicker.css"
-	rel="stylesheet">
 
 <!-- Custom Theme Style -->
 <link href="resources/build/css/custom.min.css" rel="stylesheet">
@@ -60,16 +44,9 @@ function modalUp(obj){
 	var team_mgr_name=td.eq(11).text();
 	var mgr_name=td.eq(12).text();
 	 approval_no=td.eq(13).text();
-	
-	 	
-	
 	 	
 	 	
-	 	
-	 	
-	 	
-	 	
-	 	$('#startDate').val(approval_start_date);
+	$('#startDate').val(approval_start_date);
 	$('#endDate').val(approval_end_date);
 	$('#reason').val(approval_choose_no);
 	
@@ -81,15 +58,10 @@ function modalUp(obj){
 	
 	var value="";
 	if(approval_team_date=="" && ${loginEmp.job_no==2}){
-		
-		
-        value="<button onclick='teamapproval();' type='button' class='btn btn-primary' style='float:right;'>승인</button>";
+        value="<button onclick='teamapproval();' type='button' class='btn btn-primary' style='float:right;'>승인</button>";	
+             $('#manager').html(value);             
 	
-	
-             $('#manager').html(value);
-             
-	
-}
+	}
 	if(approval_team_date!=""  && ${loginEmp.job_no==3}) {
 		
 		 value="<button onclick='adminapproval();' type='button' class='btn btn-primary' style='float:right;'>승인</button>";
@@ -117,13 +89,14 @@ function modalUp(obj){
 	 }
 	 
 	 function teamapproval(){
-			
+		
 		 $.ajax({
 			url:"teamManager.do",
 			data:{ approval_no:approval_no},
 			type:"post",
 		 	success : function(data){
-				alert(data);
+				//alert("팀장 승인 완료"+data);
+				ws.send(data);
 				
 				$('#modal1').modal("hide");
 			
@@ -437,40 +410,7 @@ background-color:#2A3F54;
 	<script src="resources/vendors/jquery/dist/jquery.min.js"></script>
 	<!-- Bootstrap -->
 	<script src="resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-	<!-- FastClick -->
-	<script src="resources/vendors/fastclick/lib/fastclick.js"></script>
-	<!-- NProgress -->
-	<script src="resources/vendors/nprogress/nprogress.js"></script>
-	<!-- iCheck -->
-	<script src="resources/vendors/iCheck/icheck.min.js"></script>
-	<!-- Datatables -->
-	<script
-		src="resources/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-	<script
-		src="resources/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-	<script src="resources/vendors/jszip/dist/jszip.min.js"></script>
-	<script src="resources/vendors/pdfmake/build/pdfmake.min.js"></script>
-	<script src="resources/vendors/pdfmake/build/vfs_fonts.js"></script>
+
 
 	<!-- Custom Theme Scripts -->
 	<script src="resources/build/js/custom.min.js"></script>

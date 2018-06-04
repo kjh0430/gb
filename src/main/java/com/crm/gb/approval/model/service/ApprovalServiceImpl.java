@@ -65,5 +65,12 @@ private ApprovalDao ApprovalDao;
 		return ApprovalDao.updateMgrApproval(apr);
 	}
 
+
+
+	@Override
+	public int selectAdminNo(Approval apr) {
+		return ApprovalDao.selectAdminNo(apr);
+	}
+
 	
 }
