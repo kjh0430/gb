@@ -93,7 +93,7 @@
 						+"<i class='fa fa-times'></i></a></p>";
 						if(notify.list[i].notify_category == 'M'){
 							value+=notify.list[i].from_name+"님이 보낸 쪽지가 도착했습니다.</li>";
-						}else{
+						}else if(notify.list[i].notify_category == 'A'){
 							value+=notify.list[i].from_name+"님이 요청한 결재가 있습니다.</li>";
 						}
 					}	

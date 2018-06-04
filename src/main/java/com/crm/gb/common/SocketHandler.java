@@ -52,13 +52,13 @@ public class SocketHandler extends TextWebSocketHandler{
     public void handleTextMessage(WebSocketSession session,TextMessage message)throws Exception{
     	
         String to_no = (String)(message.getPayload());        
-       System.out.println("결재 할 사람 : "+to_no);       
+        //System.out.println("결재 할 사람 : "+to_no);       
          
         Map<String, Object> map = session.getAttributes();
         String from_no = (String)map.get("emp_no");
         Emp emp = empService.selectEmpNo(Integer.parseInt(from_no));
         String to_name = emp.getEmp_name();
-       System.out.println("결재 신청한 사람 : "+from_no);
+        //System.out.println("결재 신청한 사람 : "+from_no);
         
        if(users.containsKey(to_no)) {
         	users.get(to_no).sendMessage(new TextMessage(to_name));
@@ -71,6 +71,9 @@ public class SocketHandler extends TextWebSocketHandler{
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         super.afterConnectionClosed(session, status);
+        Map<String, Object> map = session.getAttributes();
+        String emp_no = (String)map.get("emp_no");
+    	users.remove(emp_no, session);
         System.out.println("클라이언트 접속해제");
     }
  
