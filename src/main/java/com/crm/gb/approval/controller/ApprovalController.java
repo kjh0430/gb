@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.crm.gb.approval.model.service.ApprovalService;
 import com.crm.gb.approval.model.vo.Approval;
@@ -36,6 +35,7 @@ public class ApprovalController {
 	
 	@RequestMapping("approval.do")
 	public String approval() {
+	
 		return "approval/approval";
 	}
 	
@@ -66,7 +66,8 @@ public class ApprovalController {
 	//결재 제출
 	@RequestMapping(value="submitApproval.do",method=RequestMethod.POST)
 	@ResponseBody
-	public ModelAndView submitApproval(Approval apr,ModelAndView mv) {
+	public void submitApproval(Approval apr, HttpServletResponse response) throws IOException {
+		System.out.println("신청하는 사원"+apr.getEmp_no());
 		System.out.println("시작날짜"+apr.getApproval_start_date());
 		System.out.println("팀장번호:"+apr.getApproval_team_no());
 		System.out.println("관리자번호"+apr.getApproval_mgr_no());
