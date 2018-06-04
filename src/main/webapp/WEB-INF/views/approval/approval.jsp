@@ -50,13 +50,6 @@ var admin_no="";
 		
 		
 		}); 
-		
-		
-	
- 	
-			
-		
-		
 	
 	});
 function submitApproval(){
@@ -177,11 +170,8 @@ function resetContent(){
 												class="control-label col-md-3 col-sm-3 col-xs-12">결재자(팀장)<span class="required">*</span></label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<div class="input-group" style="margin-bottom:0px;">
-													<input type="text" class="form-control" id="team_mgr" readonly
-													> <span
+													<input type="text" class="form-control" id="team_mgr" readonly> <span
 														class="input-group-btn">
-														<input type="hidden" name="approval_team_no" id="team_mgr_no"/>	
-														
 													</span>
 												</div>
 											</div>
@@ -193,7 +183,7 @@ function resetContent(){
 												<div class="input-group" style="margin-bottom:0px;">
 													<input type="text" class="form-control" id="mgr_name" readonly> <span
 														class="input-group-btn">
-													<input type="hidden" name="approval_mgr_no" id="mgr_no"/>
+													
 													</span>
 												</div>
 											</div>

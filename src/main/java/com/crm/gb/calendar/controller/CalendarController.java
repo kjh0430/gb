@@ -33,8 +33,9 @@ public class CalendarController {
 		ArrayList<Calendar> seCalendar=CalendarService.selectCalendar(calendar);		
 		JSONArray jarr=new JSONArray();
 		
-		System.out.println(calendar.getJob_no());
-		System.out.println(calendar.getEmp_no());
+
+		
+		System.out.println("calendarController"+seCalendar);
 		for(Calendar cal : seCalendar) {
 			
 			JSONObject jsonobject=new JSONObject();
@@ -46,6 +47,7 @@ public class CalendarController {
 			jsonobject.put("calendar_content",cal.getCalendar_content());
 			jsonobject.put("calendar_start_date",cal.getCalendar_start_date());
 			jsonobject.put("calendar_end_date",cal.getCalendar_end_date());
+			
 			
 			jarr.add(jsonobject);
 			
@@ -143,7 +145,49 @@ public class CalendarController {
 			out.close();
 		
 		}
-
+		
+		@RequestMapping(value="addSchedule.do" ,method=RequestMethod.POST)
+		@ResponseBody
+		public void insertCalendar(Calendar calendar,HttpServletResponse response) throws IOException {		
+		
+			System.out.println(calendar.getCalendar_content());
+			System.out.println(calendar.getCalendar_end_date());
+			System.out.println(calendar.getCalendar_no());
+			System.out.println(calendar.getCalendar_start_date());
+			System.out.println(calendar.getCalendar_title());
+			
+			int result=CalendarService.insertSchedule(calendar);
+			
+			
+			
+			
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter out=response.getWriter();
+			
+			out.append("일정이 추가되었습니다.");
+			out.flush();
+			out.close();
+			
+		
+		}
 	
+			
+		@RequestMapping(value="deleteSchedule.do" ,method=RequestMethod.POST)
+		@ResponseBody
+		public void deleteCalendar(Calendar calendar,HttpServletResponse response) throws IOException {		
+		
+			System.out.println(calendar.getCalendar_no());
+			
+			int result=CalendarService.deleteSchedule(calendar);
+		
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter out=response.getWriter();
+			
+			out.append("일정이 삭제되었습니다.");
+			out.flush();
+			out.close();
+			
+		
+		}
 	
 }

@@ -7,21 +7,21 @@
 
 <select id="selectCalendar" parameterType="Calendar" resultType="calendar">
 <![CDATA[
-select c.calendar_no,e.emp_name,c.emp_no,c.calendar_title,c.calendar_content,to_char(c.calendar_start_date,'RRRR-MM-DD hh24:mi') as calendar_start_date,to_char(c.calendar_end_date,'RRRR-MM-DD hh24:mi') as calendar_end_date,j.job_name from calendar c,job j,
-emp e
+select c.calendar_no,e.emp_name,c.emp_no,c.calendar_title,c.calendar_content,to_char(c.calendar_start_date,'RRRR-MM-DD hh24:mi') as calendar_start_date,to_char(c.calendar_end_date,'RRRR-MM-DD hh24:mi') as calendar_end_date,d.dept_name from calendar c,dept d,
+emp e where
 ]]>
 <choose>
 
-<when test="job_no==1">
-where j.job_no=#{job_no} and j.job_no=e.job_no and c.emp_no=e.emp_no
+<when test="dept_no==1">
+ d.dept_no=#{dept_no} and d.dept_no=e.dept_no and c.emp_no=e.emp_no
 
 </when>
-<when test="job_no==2">
-where j.job_no=#{job_no} and j.job_no=e.job_no and c.emp_no=e.emp_no
+ <when test="dept_no==2">
+ d.dept_no=#{dept_no} and d.dept_no=e.dept_no and c.emp_no=e.emp_no
 </when>
 
-<when test="job_no==3">
-where j.job_no=e.job_no and c.emp_no=e.emp_no
+<when test="dept_no==3">
+ d.dept_no=e.dept_no and c.emp_no=e.emp_no
 
 </when>
 </choose> 
@@ -56,4 +56,16 @@ select e.emp_name,d.dept_name,e.emp_no from emp e,dept d where e.emp_no=#{emp_no
 ]]>
 </select>
 
+<insert id="insertSchedule" parameterType="calendar">
+<![CDATA[
+insert into calendar values((select max(calendar_no)+1 from calendar),#{emp_no},#{calendar_title},#{calendar_content},to_date(#{calendar_start_date},'RRRR-MM-DD hh24:mi'),to_date(#{calendar_end_date},'RRRR-MM-DD hh24:mi'))
+]]>
+
+</insert>
+
+<delete id="deleteSchedule" parameterType="calendar">
+ <![CDATA[
+delete from calendar where calendar_no=#{calendar_no}
+ ]]>
+</delete>
 </mapper>

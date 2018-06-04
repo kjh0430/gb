@@ -12,5 +12,7 @@ public interface CalendarService {
 	public abstract Calendar selectDetail(Calendar calendar);
 	public abstract int updateSchedule(Calendar calendar);
 	public abstract Calendar selectgetInfo(Calendar calendar);
+	public abstract int insertSchedule(Calendar calendar);
+	public abstract int deleteSchedule(Calendar calendar);
 
 }
