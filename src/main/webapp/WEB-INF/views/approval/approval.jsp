@@ -26,48 +26,40 @@
 
 
 <script type="text/javascript">
+
 	$(document).ready(function() {
 	
-			
 		//팀장 이름, 및 관리자 이름 가져오기
 		$.ajax({
 			url:"getName.do",
-			data:{emp_no :"${loginEmp.emp_no}"
-			},
+			data:{emp_no :"${loginEmp.emp_no}"},
 			type:"post",
 			dataType:"json",
-			success:function(data){
-			
+			success:function(data){			
 				$('#team_mgr').val(decodeURIComponent(data.team_mgr_name.replace(/\+/g," ")));
 				$('#mgr_name').val(decodeURIComponent(data.mgr_name.replace(/\+/g," ")));
 				$('#team_mgr_no').val(data.team_mgr_no);
 				$('#mgr_no').val(data.mgr_no); //관리자의 사원번호
 				alert("data.mgr_no"+data.mgr_no);
-				alert("team_mgr_no"+data.team_mgr_no);
-			
+				alert("team_mgr_no"+data.team_mgr_no);			
 			}
 		
-		
 		});
-		
-		
-	
-			
-			
-		
-		
+		result = ${result};
+		if(result==1){
+			console.log(${result});
+			}
 	
 	});
 	
-function resetContent(){
-	
-	$('#approval_comment').val().remove();
-	$('#startDate').val().remove();
-	$('#endDate').val().remove();
-	
-	$('#approval_choose_no').val()="선택";
-}
-	
+	function resetContent(){
+		
+		$('#approval_comment').val().remove();
+		$('#startDate').val().remove();
+		$('#endDate').val().remove();		
+		$('#approval_choose_no').val()="선택";
+	}
+
 
 </script>
 </head>
@@ -154,10 +146,9 @@ function resetContent(){
 												class="control-label col-md-3 col-sm-3 col-xs-12">결재자(팀장)<span class="required">*</span></label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<div class="input-group" style="margin-bottom:0px;">
-													<input type="text" class="form-control" id="team_mgr" readonly> <span
-														class="input-group-btn">
+													<input type="text" class="form-control" id="team_mgr" readonly>
+													<span class="input-group-btn">
 														<input type="hidden" name="approval_team_no" id="team_mgr_no"/>	
-														
 													</span>
 												</div>
 											</div>

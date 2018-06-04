@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.crm.gb.approval.model.service.ApprovalService;
 import com.crm.gb.approval.model.vo.Approval;
@@ -35,8 +36,6 @@ public class ApprovalController {
 	
 	@RequestMapping("approval.do")
 	public String approval() {
-		
-	
 		
 		return "approval/approval";
 	}
@@ -67,7 +66,7 @@ public class ApprovalController {
 	
 	//결재 제출
 	@RequestMapping(value="submitApproval.do",method=RequestMethod.POST)
-	public String submitApproval(Approval apr) {
+	public ModelAndView submitApproval(Approval apr,ModelAndView mv) {
 		System.out.println("시작날짜"+apr.getApproval_start_date());
 		System.out.println("종료날짜"+apr.getApproval_end_date());
 		System.out.println("사원번호"+apr.getEmp_no());
@@ -88,9 +87,11 @@ public class ApprovalController {
 		int result=ApprovalService.insertApproval(apr);
 		if(result>0) {
 		System.out.println("전송 완료");
+		mv.addObject("result",result);
 		}
+		mv.setViewName("approval/approval");
 		
-		return "approval/approval";
+		return mv;
 	}
 	//결재한 리스트
 	@RequestMapping(value="approvalListE.do", method=RequestMethod.GET)
