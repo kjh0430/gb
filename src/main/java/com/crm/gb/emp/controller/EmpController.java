@@ -418,21 +418,21 @@ public class EmpController {
 	}
 	
 		//phone number check
-	@RequestMapping(value="checkPhone.do" ,method=RequestMethod.POST)
-	@ResponseBody
-	public void checkPhone(Emp emp,HttpServletResponse  response) throws IOException {		
-	
-		Emp checkPhone=empService.selectPhone(emp);		
-	
-		JSONObject send=new JSONObject();
-		send.put("checkPhone",checkPhone);
-		
-		response.setContentType("application/json; charset=utf-8");	
-	
-		PrintWriter out=response.getWriter();
-		out.println(send.toJSONString());
-		out.flush();
-		out.close();
-	
-	}
+//	@RequestMapping(value="checkPhone.do" ,method=RequestMethod.POST)
+//	@ResponseBody
+//	public void checkPhone(Emp emp,HttpServletResponse  response) throws IOException {		
+//	
+//		Emp checkPhone=empService.selectPhone(emp);		
+//	
+//		JSONObject send=new JSONObject();
+//		send.put("checkPhone",checkPhone);
+//		
+//		response.setContentType("application/json; charset=utf-8");	
+//	
+//		PrintWriter out=response.getWriter();
+//		out.println(send.toJSONString());
+//		out.flush();
+//		out.close();
+//	
+//	}
 }
