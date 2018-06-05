@@ -36,6 +36,71 @@
 
 <!-- Custom Theme Style -->
 <link href="resources/build/css/custom.min.css" rel="stylesheet">
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">
+		google.charts.load('current', {'packages':['corechart']});
+		google.charts.setOnLoadCallback(drawVisualization);
+	
+		function drawVisualization() { 
+			var data = google.visualization.arrayToDataTable([
+					['Month', 'Bolivia', 'Ecuador', 'Madagascar', 'Papua New Guinea', 'Rwanda', 'Average'],
+					['2004/05',  165,      938,         522,             998,           450,      614.6],
+					['2005/06',  135,      1120,        599,             1268,          288,      682],
+					['2006/07',  157,      1167,        587,             807,           397,      623],
+					['2007/08',  139,      1110,        615,             968,           215,      609.4],
+					['2008/09',  136,      691,         629,             1026,          366,      569.6]
+				]);
+			var options = {
+					title : 'Monthly Coffee Production by Country',
+					vAxis: {title: 'Cups'},
+					hAxis: {title: 'Month'}, 
+					seriesType: 'bars',
+					series: {5: {type: 'line'}}
+				};
+			
+			var chart = new google.visualization.ComboChart(document.getElementById('chart_div_1'));
+			chart.draw(data, options);
+		}
+	</script>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+
+			google.charts.load('current', {packages: ['corechart', 'bar']});
+			google.charts.setOnLoadCallback(drawStacked);
+			
+			function drawStacked() {
+			      var data = google.visualization.arrayToDataTable([
+			        ['City', '2010 Population', '2000 Population'],
+			        ['New York City, NY', 8175000, 8008000],
+			        ['Los Angeles, CA', 3792000, 3694000],
+			        ['Chicago, IL', 2695000, 2896000],
+			        ['Houston, TX', 2099000, 1953000],
+			        ['Philadelphia, PA', 1526000, 1517000]
+			      ]);
+			
+			      var options = {
+			        title: 'Population of Largest U.S. Cities',
+			        chartArea: {width: '50%'},
+			        isStacked: true,
+			        hAxis: {
+			          title: 'Total Population',
+			          minValue: 0,
+			        },
+			        vAxis: {
+			          title: 'City'
+			        }
+			      };
+			      var chart = new google.visualization.BarChart(document.getElementById('chart_div_2'));
+			      chart.draw(data, options);
+			    }
+
+
+
+
+</script>
 </head>
 
 <body class="nav-md">
@@ -198,9 +263,16 @@
 									</div>
 
 									<div class="col-md-9 col-sm-9 col-xs-12">
-										<div id="chart_plot_01" class="demo-placeholder"></div>
+										<div id="chart_div_1" style="width:900px; height: 500px;"></div>
+										<hr>
+										<div id="chart_div_2"></div>
 									</div>
-									<div class="col-md-3 col-sm-3 col-xs-12 bg-white">
+									
+									  
+									
+									<!-- <div class="col-md-3 col-sm-3 col-xs-12 bg-white">
+									
+									
 										<div class="x_title">
 											<h2>Top Campaign Performance</h2>
 											<div class="clearfix"></div>
@@ -247,7 +319,7 @@
 											</div>
 										</div>
 
-									</div>
+									</div> -->
 								</div>
 							</div>
 						</div>
