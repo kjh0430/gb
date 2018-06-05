@@ -5,7 +5,14 @@
 <head>
 <meta charset="UTF-8">
 <title>adminsidebar</title>
+<style>
+	.count_badge{
+		margin-left:4px;
+	}
+</style>
+<script src="resources/js/EventSource.js"></script>
 </head>
+
 <body>
 
    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
@@ -19,6 +26,7 @@
              <li><a href="goalStateAdmin.do">목표현황</a>
              <li><a href="empRegister.do">사원등록</a></li>
              <li><a href="empList.do">사원목록</a></li>
+             <li><a href="empSalary.do">사원급여</a></li>
            </ul>
          </li>
 
@@ -54,7 +62,9 @@
 	     
 
 
-	      <li><a href="messageList.do"><i class="fa fa-file-text-o"></i> 쪽지함</a>
+	      <li><a href="messageList.do"><i class="fa fa-file-text-o"></i> 쪽지함 <span class="count_badge badge bg-green"></span></a>
+	      </li>
+	       <li><a href="info.do"><i class="fa fa-file-text-o"></i> My Info</a>
 	      </li>
 
 
@@ -77,6 +87,27 @@
        <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
      </a>
    </div>
+   	<script type="text/javascript">
+
+	var emp_no = ${loginEmp.emp_no};
+	var EventSource4 = new EventSource("count.do?emp_no="+emp_no);
+	EventSource4.onopen = function(){
+		//console.log("연결중2");		
+	}
+	EventSource4.onmessage = function(event) {
+		
+		var count = event.data;
+		if(count>0){
+		
+			$(".count_badge").html(count);		
+		}else{
+			$(".count_badge").css("display","none");
+		}
+		
+
+	};
+	
+	</script>
 
 
 </body>

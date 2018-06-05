@@ -1,10 +1,13 @@
 package com.crm.gb.product.model.dao;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.crm.gb.order.model.vo.Order;
 import com.crm.gb.product.model.vo.Product;
 import com.crm.gb.product.model.vo.ProductFile;
 
@@ -34,5 +37,13 @@ public class ProductDao {
 	public List<Product> productList(){
 		return sqlSession.selectList("productList");
 	}
-	
+
+	public Product productDetail(String product_no) {
+		return sqlSession.selectOne("productDetail", product_no);
+	}
+
+	public int updateProductAmount(Order orderlist) {
+		return sqlSession.update("updateProductAmount",orderlist);
+	}
+
 }

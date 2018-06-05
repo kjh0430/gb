@@ -70,7 +70,22 @@ $(document).ready(function() {
 					<div class="clearfix"></div>
 
 					<!-- sidebar menu -->
-					<%@ include file="../etc/sidebar.jsp"%>
+						<c:choose>
+			            	<c:when test="${ loginEmp.job_no == 3}">
+					            <!-- sidebar menu -->
+					            <%@ include file="../etc/adminsidebar.jsp" %>
+					            <!-- /sidebar menu -->
+			            	</c:when>
+			            	<c:when test="${ loginEmp.job_no == 2}">
+			            	<%@ include file="../etc/adminsidebar.jsp" %>
+			            	
+			            	</c:when>
+			            	<c:otherwise>
+								<!-- sidebar menu -->
+					            <%@ include file="../etc/sidebar.jsp" %>
+					            <!-- /sidebar menu --> 
+			            	</c:otherwise>
+			            </c:choose>
 					<!-- /sidebar menu -->
 
 				</div>
@@ -228,7 +243,7 @@ $(document).ready(function() {
 											
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<c:forEach var="list" items="${ clientFileList }">
-												<a href="clientFileDown.do?clientFileName=${ list.client_rename_file }">
+												<a href="clientFileDown.do?clientFileName=${ list.client_rename_file }&oriName=${ list.client_original_file }">
 													<input style="cursor:pointer;" name="client_original_file" id="client_original_file"
 														class="date-picker form-control col-md-7 col-xs-12"
 														required="required" type="text" 

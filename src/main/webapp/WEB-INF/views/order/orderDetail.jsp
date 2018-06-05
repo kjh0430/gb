@@ -61,8 +61,7 @@
 						<ul class="nav navbar-nav navbar-right">
 							<li class=""><a href="javascript:;"
 								class="user-profile dropdown-toggle" data-toggle="dropdown"
-								aria-expanded="false"> <img src="images/img.jpg" alt="">John
-									Doe <span class=" fa fa-angle-down"></span>
+								aria-expanded="false"> <img src="images/img.jpg" alt="">${loginEmp.emp_name } <span class=" fa fa-angle-down"></span>
 							</a>
 								<ul class="dropdown-menu dropdown-usermenu pull-right">
 									<li><a href="javascript:;"> Profile</a></li>
@@ -210,8 +209,8 @@
 											<tr>
 												<th>제품번호</th>
 												<th>제품명</th>
-												<th>단가</th>
 												<th>수량</th>
+												<th>단가</th>
 											</tr>
 										</thead>
 										<tbody class="order_body">
@@ -219,10 +218,10 @@
 										
 											<c:forEach var="list" items="${orderList }">
 												<tr>												
-													<td>${list.order_no }</td>										
-													<td><a href="#">${list.product_no}</td>
-													<td>${list.order_price }</td>
+													<td>${list.product_no }</td>										
+													<td><a href="#">${list.product_name}</td>													
 													<td>${list.order_amount }</td>
+													<td>${list.order_price }</td>
 												</tr>
 											</c:forEach>
 											<tr>

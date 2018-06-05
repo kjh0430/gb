@@ -20,4 +20,9 @@ public interface OrderService {
 	public abstract ArrayList<Order> selectOrderList2(Order order); //매출현황 
 
 	public abstract ArrayList<Order> selectOrderlist(Order order); // 영업일지 
+	
+	public abstract ArrayList<Order> selectAllOrderList(Order order); //매출현황 전체 리스트
+	
+	public abstract int orderListCount(); // 주문 리스트 카운드
+	
 }

@@ -51,6 +51,7 @@
 </script>  -->
 
 <script type="text/javascript">
+
 function Regiemp(){
 	
 	var emp_no = $('#emp_no').val();
@@ -61,8 +62,6 @@ function Regiemp(){
 	var job_no = $('#job_no').val();
 	var emp_email = $('#emp_email').val();
 	var emp_mgr = $('#emp_mgr').val();
-	var emp_hiredate = $('#emp_hiredate').val();
-	var emp_firedate = $('#emp_firedate').val();
 	var city = $('#city').val();
 	var county = $('#county').val();
 	var village = $('#village').val();
@@ -79,50 +78,103 @@ function Regiemp(){
 		alert("사원번호를 입력해주세요.");
 	}else if(!num.test(emp_no)){
 		alert("사원번호는 숫자만 입력해주세요.");
-	}else if(emp_pwd.length < 4){
-		alert("비밀번호는 4자리 이상 입력해주세요.");
-	}else if(emp_phone.match(phone_check) == null){
-		alert("연락처를 제대로 입력해주세요.");
-	}else{
+	}else{		
 		$.ajax({
-			url : "checkPhone.do",
+			url : "checkEmpNo.do",
 			type: "post",
 			dataType: "json",
 			data: {
-				emp_phone : $('#emp_phone').val()
+				emp_no : emp_no
 			},
 			success:function(jsonData){
 				console.log("jsonData : " + jsonData);
-				alert("이미 등록된 번호 입니다. \n다시 입력하십시오");
-				$('#emp_phone').select();
+				alert("이미 등록된 사원번호 입니다. \n다시 입력하십시오");
+				$('#emp_no').select();
 				},
 				error: function(){
-					alert("사용할 수 있는 번호 입니다.");
+					if(emp_pwd.length < 4){
+						alert("비밀번호는 4자리 이상 입력해주세요.");
+					}else if(emp_name.length < 1){
+						alert("이름을 입력해주세요.");
+					}else if(emp_addr.length < 1){
+						alert("주소를 입력해주세요.");
+					}else if(emp_phone.match(phone_check) == null){
+						alert("올바른 연락처 형식이 아닙니다. \n다시 입력하십시오.");
+					}else{
+						$.ajax({
+							url : "checkPhone.do",
+							type: "post",
+							dataType: "json",
+							data: {
+								emp_phone : $('#emp_phone').val()
+							},
+							success:function(jsonData){
+								console.log("jsonData : " + jsonData);
+								alert("이미 등록된 연락처 입니다. \n다시 입력하십시오.");
+								$('#emp_phone').select();
+								},
+								error: function(){
+									/* alert("사용할 수 있는 번호 입니다."); */
+									if(emp_email.match(email_check) == null){
+										alert("올바른 이메일 형식이 아닙니다. \n다시 입력하십시오.");
+									}else{
+									
+									$.ajax({
+										url : "checkEmail.do",
+										type: "post",
+										dataType: "json",
+										data: {
+											emp_email : emp_email
+										},
+										success:function(jsonData){
+											console.log("jsonData : " + jsonData);
+											alert("이미 등록된 이메일 입니다. \n다시 입력하십시오");
+											$('#emp_email').select();
+											},
+											error: function(){
+												/* alert("사용할 수 있는 이메일 입니다"); */
+												if(emp_mgr.length < 1){
+													alert("상사번호를 입력해주세요.");
+												}else if(!num.test(emp_mgr)){
+													alert("상사번호는 숫자만 입력해주세요.");
+												}else{
+													
+													$.ajax({
+											    		url : "empinsert.do",
+											    		type: "post",
+											    		dataType: "json",
+											    		data: {
+											    			emp_no : emp_no,
+											    			emp_pwd : emp_pwd,
+											    			emp_name : emp_name,
+											    			emp_addr : emp_addr,
+											    			emp_phone : emp_phone,
+											    			job_no : job_no,
+											    			emp_email : emp_email,
+											    			emp_mgr : emp_mgr,
+											    			city : city,
+											    			county : county,
+											    			village : village,
+											    			dept_no : dept_no											    			
+											    		},
+											    		success:function(obj){
+											    			alert("사원이 등록되었습니다.");
+											    			},
+											    			error: function(){
+											    			}
+											    		});
+											 		
+												}
+											}
+										});
+									}
+								}
+							});
+					}
 				}
 			});
-	}
+		}
 	
-	if(emp_email.match(email_check) == null){
-		alert("이메일 주소를 제대로 입력하십시오.");
-	}else{
-	
-	$.ajax({
-		url : "checkEmail.do",
-		type: "post",
-		dataType: "json",
-		data: {
-			emp_email : emp_email
-		},
-		success:function(jsonData){
-			console.log("jsonData : " + jsonData);
-			alert("이미 등록된 이메일 입니다. \n다시 입력하십시오");
-			$('#emp_phone').select();
-			},
-			error: function(){
-				alert("사용할 수 있는 이메일 입니다");
-			}
-		});
-	}
 }
 </script>
 
@@ -293,7 +345,7 @@ text-align:center;
 									
 									
 					<!-- 사원 등록 -->
-					<form class="form-horizontal form-label-left" action="empinsert.do" method="post">
+					<form class="form-horizontal form-label-left">
 					<!-- <form class="form-horizontal form-label-left" action="empinsert.do" method="post"> -->
 
                       <div class="form-group">
@@ -324,7 +376,6 @@ text-align:center;
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">연락처 *</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                          <input class="form-control" id="emp_phone" name="emp_phone" type="tel" placeholder="연락처">
-                         <!-- <button class="btn btn-success" type="button" onclick="checkPhone()">Submit</button> -->
                         </div>
                       </div>
                       <div class="form-group">
@@ -341,7 +392,6 @@ text-align:center;
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">이메일 *</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input class="form-control" id="emp_email" name="emp_email" type="email" placeholder="이메일">
-                          <!-- <button class="btn btn-success" type="button" onclick="checkEmail()">Submit</button> -->
                         </div>
                       </div>
                       <div class="form-group">
@@ -351,7 +401,7 @@ text-align:center;
                           <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm" style="float:right;" onclick="mgrList()">조회</button>
                         </div>
                       </div>
-                      <div class="form-group">
+                      <!-- <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">입사일</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input class="form-control" id="emp_hiredate" name="emp_hiredate" type="date">
@@ -362,7 +412,7 @@ text-align:center;
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input class="form-control" id="emp_firedate" name="emp_firedate" type="date">
                         </div>
-                      </div>
+                      </div> -->
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">담당지역</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -395,9 +445,7 @@ text-align:center;
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                          <button class="btn btn-success" type="submit">등록</button>                           
-                          <button class="btn btn-primary" type="button">취소</button>
-                          <button type="button" class="btn btn-info" onclick="Regiemp()">임시</button>
+                          <button class="btn btn-success" type="button" onclick="Regiemp()">등록</button>
 								</div>
 							</div>
 						</div>

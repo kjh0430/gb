@@ -24,10 +24,19 @@
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 
+
 var idx = 1;
-var amount = new Array();
-var orderInfo = new Array();
-	function searchCom(){
+var amount = new Array(); //상품수량 변수 
+var price = new Array(); //상품가격 변수 
+var orderInfo = new Array(); 
+var client_no;
+var calcValue=new Array(); // 예상 결재 비용 배열 변수
+var discount =  new Array(); //할인율 배열 
+var c_discount; //해당 고객의 할인율 
+
+
+	function searchCom(){	
+		
 		$.ajax({
 			url: "searchCom.do",
 			type : "post",
@@ -48,7 +57,8 @@ var orderInfo = new Array();
 					+"<td>"+jsonl.list[i].client_company+"</td>"
 					+"<td>"+jsonl.list[i].client_phone+"</td>"
 					+"<td>"+jsonl.list[i].client_addr+"</td>"
-					+"</tr>";		
+					+"</tr>";	
+					discount[i] = jsonl.list[i].contract_discount;
 				}
 				
 				value += "</table>";
@@ -60,10 +70,13 @@ var orderInfo = new Array();
 	}
 	
 	function selectCom(obj){
+		$('.order_body').html("");
 		var tr=$(obj);
+		//alert("obj : " + $(obj).index());
+		c_discount = discount[$(obj).index()-1];
+		//alert("discount: "  + c_discount);
 		var td=tr.children();
-		
-		var client_no=td.eq(0).text();
+		 client_no=td.eq(0).text();
 		var client_company=td.eq(1).text();
 		var client_phone=td.eq(2).text();
 		var client_addr=td.eq(3).text();
@@ -88,9 +101,11 @@ var orderInfo = new Array();
 			type : "post",
 			dataType : "json",
 			data : {
-				searchProductName : $('#searchProductName').val()
+				searchProductName : $('#searchProductName').val(),
+				client_no : client_no
 			},
 			success : function(obj){
+				
 				var objStr = JSON.stringify(obj);
 				var json = JSON.parse(objStr);
 				var value = "<table id='table_items' class='table table-striped table-bordered'>"
@@ -117,10 +132,10 @@ var orderInfo = new Array();
 		//alert("obj : " + $(obj));
 		var tr=$(obj);
 		var td=tr.children();
-		
+		//alert("ㅎㅇㅎㅇㅎ: " + discount);
 		var product_no=td.eq(0).text();
 		var product_name=td.eq(1).text();
-		var product_price=td.eq(2).text();
+		var product_price=td.eq(2).text()*(1-c_discount/100);
 		//var product_=td.eq(3).text();
 		
 		$('#searchModal2').modal("hide");
@@ -128,53 +143,117 @@ var orderInfo = new Array();
 		var value = $('.order_body').html();
 		
 
-		console.log(amount[1]);
+		
+		//console.log(amount[1]);
 		/* submit하기 위하여 갑 넣기 */
 		value += "<tr id='tr"+idx+"'>"
 		+"<td><input type='text' id='productNo"+idx+"' name='product_no' class='form-control' value='"+product_no+"' readonly/></td>"
 		+"<td>"+product_name+"</td>"
+		+"<td><input type='number' onblur='saveAmount("+idx+");' id='orderAmount"+idx+"' name='order_amount' class='form-control' min='1' value='1'/></td>"
 		+"<td><input type='text' id='orderPrice"+idx+"' name='order_price' class='form-control' value='"+product_price+"'/></td>"
-		+"<td><input type='number' onblur='saveAmount("+idx+");' id='orderAmount"+idx+"' name='order_amount' class='form-control' min='1'/></td>"
-		+"<td><button type='button' class='btn btn-danger btn-order' onclick='deleteRow(\"tr"+idx+"\");'>&nbsp;&nbsp;<i class='fa fa-trash-o'></i>&nbsp;&nbsp;</button></td>"
+		+"<td><button type='button' class='btn btn-danger btn-order' onclick='deleteRow("+idx+");'>&nbsp;&nbsp;<i class='fa fa-trash-o'></i>&nbsp;&nbsp;</button></td>"
 		+"</tr>";
 		
+		
+		
 		idx++;
-		//alert($('#productName').val());
+		
 		$('.order_body').html(value);
-
+		
 		for(i=1; i<amount.length; i++){
 			 $('#orderAmount'+i).val(amount[i]);
 			
 		}
 		
-		
+		calcPrice(idx-1);
+	
+		//alert($('#productName').val());	
 		
 	}
 	
 	//상품 수량 유지 함수 
+	//선택한 상품 * 수량 합계
+	
 	function saveAmount(idx){
 		
-		amount[idx] = $('#orderAmount'+idx).val();		
+		amount[idx] = 
+		console.log("amount: " +amount[idx]);
+
+			
+		calcPrice(idx);
+	}
+	
+	
+	
+	function calcPrice(idx){
+		console.log("calcPrice함수 실행!");
 		
+		
+		var sum=0;
+		
+	
+		amount[idx] = $('#orderAmount'+idx).val();
+		console.log("amount["+idx+"]: " + amount[idx]);
+		price[idx] = $('#orderPrice'+idx).val();
+		
+		console.log("price ["+idx+"]: " + price[idx]);
+		
+		calcValue[idx] = amount[idx] * price[idx];
+		
+		console.log("calc : " + calcValue[idx]);
+		//alert("idx : " +idx);
+		
+		
+		//if문을 사용해서 calcValue[idx] 의 값이 undefine일 경우 i++..
+		//if('' || null || undefined || 0 || NaN){ // ... }else{ console.log("여기가 실행"); }
+		
+		for(var i=1; i <= idx ; i++){
+			if(calcValue[i]=='NaN'){
+				calcValue[i]=0;
+			}
+			if((calcValue[i] !='') || (calcValue[i] !=null) || (calcValue[i] != 'nudefined') || !(isNaN(calcValue[i]))){
+				
+				if(!(isNaN(sum+calcValue[i]))){ 
+					sum = sum +  calcValue[i];
+				}
+				console.log("sum : "+sum);
+				
+			}else{
+				console.log("실행 안됨!!");
+			}
+			
+		}
+		
+		$('#calcValue').val(sum);	
+		
+
 	}
 	
 	//삭제버튼 클릭시 추가된 상품의 ROW삭제 
 	function deleteRow(idx){
-		
+		console.log("deldteRow 함수 구동!!");
 	//	alert("idc : " + idx);
 		
-		$('#'+idx).remove();
+		$('#tr'+idx).remove();
+		console.log("idx ["+idx+"]=" + idx);
+		console.log("calcValue["+idx+"]=" + calcValue[idx]);
+		
+		calcValue[idx] = 0;
+		amount[idx] =0 ;
+		price[idx] = 0;
+
+		console.log("amount["+idx+"] : " + amount[idx] );
+		console.log("price["+idx+"] : " + price[idx] );
+		//console.log("reAmount :" + amount[idx]);
+		console.log("calcValue.length = " + calcValue.length-1);
+		calcPrice(calcValue.length-1);
 		
 		
 	}
 	
-	/* 
-	function submitInfo(){
-		var value = $('#formTag').html();
-		value += "<input type='hidden' name='emp_no' value='${loginEmp.emp_no }'/>"
-				+"<input type='hidden' name='client_no' value='"+$('#clientNo').val()+"'/>";
-		$('#formTag').html(value);		
-	} */
+	function noticeAlert(){
+		alert("발주가 완료되었습니다!");
+	}
 	
 	
 </script>
@@ -220,8 +299,7 @@ var orderInfo = new Array();
 						<ul class="nav navbar-nav navbar-right">
 							<li class=""><a href="javascript:;"
 								class="user-profile dropdown-toggle" data-toggle="dropdown"
-								aria-expanded="false"> <img src="images/img.jpg" alt="">John
-									Doe <span class=" fa fa-angle-down"></span>
+								aria-expanded="false"> <img src="images/img.jpg" alt="">${loginEmp.emp_name } <span class=" fa fa-angle-down"></span>
 							</a>
 								<ul class="dropdown-menu dropdown-usermenu pull-right">
 									<li><a href="javascript:;"> Profile</a></li>
@@ -468,8 +546,7 @@ var orderInfo = new Array();
 												<div class="modal-footer">
 													<button type="button" class="btn btn-default"
 														data-dismiss="modal">Close</button>
-													<button type="button" class="btn btn-primary">Save
-														changes</button>
+													
 												</div>
 
 											</div>
@@ -481,11 +558,11 @@ var orderInfo = new Array();
 									<table class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<th>제품번호</th>
-												<th>제품명</th>
-												<th>단가</th>
-												<th>수량</th>
-												<th>삭제</th>
+												<th style="width: 16%;">제품번호</th>
+												<th style="width: 29%;">제품명</th>
+												<th style="width: 15%;">수량</th>
+												<th style="width: 29%;">단가</th>
+												<th style="width: 6%;">삭제</th>
 											</tr>
 										</thead>
 										<tbody class="order_body">
@@ -509,11 +586,17 @@ var orderInfo = new Array();
 											</tr>
 										<tbody> -->
 									</table>
+									<table class="table table-striped table-bordered">
+									<tr>
+									<td style="width: 63.2%;">합계</td>
+							
+									<td><input type="number" id="calcValue" readonly></td>
+									</tr>
+									</table>
 								
 									<div class="ln_solid"></div>
-									<div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-3" style="margin:0px; text-align:right">
-											
-											<button type="submit" class="btn btn-success">주문</button>
+									<div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-3" style="margin:0px; text-align:center;">											
+											<button type="submit" class="btn btn-success" onclick="noticeAlert();">주문</button>
 									</div>
 								</div>
 							</div>

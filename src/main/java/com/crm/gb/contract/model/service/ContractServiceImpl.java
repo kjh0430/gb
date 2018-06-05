@@ -20,6 +20,12 @@ public class ContractServiceImpl implements ContractService {
 		return contractDao.selectAllList(emp_no);
 	}
 	
+	/** 페이지 처리 계약리스트 조회 */
+	@Override
+	public ArrayList<Contract> selectPageList(Contract contract) {
+		return contractDao.selectPageList(contract);
+	}
+	
 	/** 계약서 등록 */
 	@Override
 	public int insertContract(Contract contract) {

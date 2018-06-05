@@ -14,7 +14,6 @@
 		<result column="product_comment" property="product_comment"/>
 		<result column="product_register" property="product_register"/>
 		<result column="product_delete" property="product_delete"/>
-		<result column="contract_discount" property="contract_discount"/>
 	</resultMap>
 	
 	
@@ -65,4 +64,30 @@
 			where contract.client_no = #{client_no} and product.product_no = #{product_no}
 		]]>
 	</select> -->
+	
+	<select id="productDetail" resultType="Product" resultMap="resultSelectAllProduct">
+		<![CDATA[
+			select * from product where product_no = #{product_no}
+		]]>
+	</select>
+	<update id="updateProductAmount" parameterType="order">
+		<![CDATA[
+			update product set product_amount = (product_amount - #{order_amount}) where product_no = #{product_no}
+		]]>
+		
+	</update>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </mapper>

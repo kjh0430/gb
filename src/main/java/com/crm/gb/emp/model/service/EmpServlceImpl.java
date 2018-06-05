@@ -3,6 +3,7 @@ package com.crm.gb.emp.model.service;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.crm.gb.emp.exception.EmpLoginFailException;
@@ -34,28 +35,7 @@ public class EmpServlceImpl implements EmpService{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-//	/** 사원정보 등록 메소드 */
-//	@Override
-//	public int insertEmp(Emp emp) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
-//
-//	/** 사원정보 업데이트 메소드 */
-//	@Override
-//	public int updateEmp(Emp emp) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
-//
-//	/** 사원정보 삭제 메소드 */
-//	@Override
-//	public int deleteEmp(String emp_no) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
-
+	
 	/*사원 등록*/
 	@Override
 	public int insertEmp(Emp emp) {
@@ -108,6 +88,30 @@ public class EmpServlceImpl implements EmpService{
 	@Override
 	public ArrayList<Emp> selectDeptEmp(Emp emp) {
 		return empDao.selectDeptEmp(emp);
+	}
+
+	/*사원번호 중복검사*/
+	@Override
+	public Emp selectCheckEmpNo(int emp_no) {
+		return empDao.selectCheckEmpNo(emp_no);
+	}
+	//나의 정보 가져오기
+	@Override
+	public Emp selectMyInfo(Emp emp) {
+		
+		return empDao.selectMyInfo(emp);
+	}
+	//이메일 체크
+	@Override
+	public Emp selectEmail(Emp emp) {
+		
+		return empDao.selectEmail(emp);
+	}
+	//폰 체크
+	@Override
+	public Emp selectPhone(Emp emp) {
+		
+		return empDao.selectPhone(emp);
 	}	
 	
 }

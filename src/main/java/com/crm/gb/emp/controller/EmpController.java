@@ -2,6 +2,7 @@ package com.crm.gb.emp.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletResponse;
@@ -11,6 +12,7 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,9 +23,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+
 import com.crm.gb.emp.exception.EmpLoginFailException;
 import com.crm.gb.emp.model.service.EmpService;
 import com.crm.gb.emp.model.vo.Emp;
+
 
 @Controller
 @SessionAttributes("loginEmp")
@@ -37,6 +41,13 @@ public class EmpController {
 	@Autowired
 	private BCryptPasswordEncoder pwdEncoder;
 	
+	//개인 정보 수정
+	@RequestMapping("info.do")
+	public String  modifyInfo() {
+		return "emp/myInfo";
+	}
+	
+	
 	/** 시작화면 */
 	@RequestMapping("view.do")
 	public String loginView() {
@@ -49,6 +60,12 @@ public class EmpController {
 		return "main";
 	}
 	
+	/** 사원급여화면 */
+	@RequestMapping("empSalary.do")
+	public String empSalaryView() {
+		return "emp/empSalary";
+	}
+	
 	/** 로그인 정보확인 컨트롤러 */
 	@RequestMapping(value="login.do", method=RequestMethod.POST)
 	public void loginEmp(Emp emp, Model model, HttpServletResponse response) throws IOException{
@@ -59,6 +76,7 @@ public class EmpController {
 		try {
 			
 			Emp returnEmp=empService.selectEmp(emp);
+			
 				System.out.println("사원정보 조회:" + returnEmp);
 			model.addAttribute("loginEmp", returnEmp);				
 			
@@ -113,7 +131,7 @@ public class EmpController {
 		
 		Emp detailEmp = empService.selectEmpNo(emp_no);
 		model.addAttribute("emp", detailEmp);
-		System.out.println("detailEmp : " + detailEmp);
+		System.out.println("moveEmpUpdate 메소드 detailEmp : " + detailEmp);
 		return "emp/empUpdate";
 	}
 	
@@ -144,25 +162,38 @@ public class EmpController {
 	
 	/*사원 등록*/
 	@RequestMapping(value="empinsert.do", method = RequestMethod.POST)
-	public String insertEmp(Emp emp, Model model){
+	@ResponseBody
+	public String insertEmp(Emp emp, Model model, HttpServletResponse response){
 		logger.info("emp insert 실행");
 		System.out.println("전송온 값 : " + emp);
 		
+		String encPassword = pwdEncoder.encode(emp.getEmp_pwd());
+		emp.setEmp_pwd(encPassword);
+		
 		int result = empService.insertEmp(emp);
 		
-		ArrayList<Emp> empList = empService.selectEmpList();
+		/*ArrayList<Emp> empList = empService.selectEmpList();
 		model.addAttribute("empList", empList);
 		
-		return "emp/empList";
+		return "emp/empList";*/
+		
+		JSONObject job = new JSONObject();
+		job.put("emp_no", emp.getEmp_no());		
+
+		return job.toJSONString();
 	}
 	
 	/*사원 정보 수정*/
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@RequestMapping(value="empupdate.do")
 	public String updateEmp(Emp emp, Model model) {
 		
 		logger.info("emp update 실행");
 		
 		System.out.println("전송온값 : " + emp);
+				
+		String encPassword = pwdEncoder.encode(emp.getEmp_pwd());
+		emp.setEmp_pwd(encPassword);
 		
 		int result = empService.updateEmp(emp);
 		ArrayList<Emp> empList = empService.selectEmpList();
@@ -245,6 +276,37 @@ public class EmpController {
 			
 	}
 	
+	/*사원번호 중복검사*/
+	@RequestMapping(value="checkEmpNo.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String selectCheckEmpNo(@RequestParam(value="emp_no") String emp_num, HttpServletResponse response) throws IOException{
+		
+		logger.info("selectCheckEmpNo 실행");
+		int emp_no = (Integer.parseInt(emp_num));
+		
+		System.out.println("연락처 번호 : "+emp_no);
+		
+		
+		Emp checkEmpNo = empService.selectCheckEmpNo(emp_no);
+		
+		if(checkEmpNo != null) {		
+			
+		JSONObject job = new JSONObject();
+		job.put("emp_no", emp_no);
+		
+		System.out.println("checkEmpNo 값 있음");
+		System.out.println("emp : " + checkEmpNo);
+		System.out.println("emp_no : " + emp_no);
+
+		return job.toJSONString();
+		
+		}else {
+			System.out.println("checkEmpNo null");
+			return null;
+		}
+			
+	}
+	
 	/*상사번호로 이름 가져오기*/
 	@RequestMapping(value="mgrName.do", method=RequestMethod.POST)
 	@ResponseBody
@@ -305,5 +367,92 @@ public class EmpController {
 		out.close();
 		
 	}
+	//마이 페이지 정보 가져오기
+	@RequestMapping(value="getMyInfo.do" ,method=RequestMethod.POST)
+	@ResponseBody
+	public void getMyInfo(Emp emp,HttpServletResponse  response) throws IOException {		
+	
+		Emp getMyInfo=empService.selectMyInfo(emp);		
 		
+		JSONObject send=new JSONObject();
+		
+		send.put("emp_name",getMyInfo.getEmp_name());
+		send.put("emp_addr",getMyInfo.getEmp_addr());
+		send.put("emp_phone",getMyInfo.getEmp_phone());
+		send.put("job_name",getMyInfo.getJob_name());
+		send.put("emp_email",getMyInfo.getEmp_email());
+		send.put("mgr_name",getMyInfo.getMgr_name());
+		send.put("city",getMyInfo.getCity());
+		send.put("county",getMyInfo.getCounty());
+		send.put("village",getMyInfo.getVillage());
+		send.put("dept_name",getMyInfo.getDept_name());
+	
+		
+		response.setContentType("application/json; charset=utf-8");	
+	
+		PrintWriter out=response.getWriter();
+		out.println(send.toJSONString());
+		out.flush();
+		out.close();
+	
+	} 
+	//email check
+	
+	@RequestMapping(value="emailCheck.do" ,method=RequestMethod.POST)
+	@ResponseBody
+
+	public void checkEmail(Emp emp,HttpServletResponse  response) throws IOException {		
+	
+		Emp checkEmail=empService.selectEmail(emp);		
+	
+		JSONObject send=new JSONObject();
+		send.put("checkEmail",checkEmail);
+		
+		response.setContentType("application/json; charset=utf-8");	
+	
+		PrintWriter out=response.getWriter();
+		out.println(send.toJSONString());
+		out.flush();
+		out.close();
+	
+	}
+/*	
+		//phone number check
+<<<<<<< HEAD
+//	@RequestMapping(value="checkPhone.do" ,method=RequestMethod.POST)
+//	@ResponseBody
+//	public void checkPhone(Emp emp,HttpServletResponse  response) throws IOException {		
+//	
+//		Emp checkPhone=empService.selectPhone(emp);		
+//	
+//		JSONObject send=new JSONObject();
+//		send.put("checkPhone",checkPhone);
+//		
+//		response.setContentType("application/json; charset=utf-8");	
+//	
+//		PrintWriter out=response.getWriter();
+//		out.println(send.toJSONString());
+//		out.flush();
+//		out.close();
+//	
+//	}
+=======
+	@RequestMapping(value="checkPhone.do" ,method=RequestMethod.POST)
+	@ResponseBody
+	public void checkPhone(Emp emp,HttpServletResponse  response) throws IOException {		
+	
+		Emp checkPhone=empService.selectPhone(emp);		
+	
+		JSONObject send=new JSONObject();
+		send.put("checkPhone",checkPhone);
+		
+		response.setContentType("application/json; charset=utf-8");	
+	
+		PrintWriter out=response.getWriter();
+		out.println(send.toJSONString());
+		out.flush();
+		out.close();
+	
+	}*/
+
 }

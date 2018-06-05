@@ -28,11 +28,13 @@
 			<result column="client_addr" property="client_addr"/>
 			<result column="client_comment" property="client_comment"/>
 			<result column="product_no" property="product_no"/>
+			<result column="product_name" property="product_name"/>
 			<result column="order_amount" property="order_amount"/>
 			<result column="order_price" property="order_price"/>
 			<result column="order_date" property="order_date"/>
 			<result column="client_company" property="client_company"/>
 			<result column="total" property="total"/>
+			<result column="order_list_count" property="order_list_count"/>
 			
 		</resultMap>
 		
@@ -62,11 +64,49 @@
 
    <select id="selectOrderList2" resultMap="resultOrderlist2" parameterType="_int">
    		<![CDATA[
- 			select * from orderlist
-			where order_no = #{order_no}  			
+ 			select * from orderlist ol, product p 
+			where ol.order_no = #{order_no} and ol.product_no = p.product_no   			
    		]]>	  	
    </select>
    
+    <select id="selectOrderListPage"  resultMap="resultOrderlist">
+	   <![CDATA[
+	      select ol.order_no,ol.emp_no,ol.order_date,ol.client_no,c.client_company,sum((ol.order_price*ol.order_amount)) as total 
+	      from orderlist ol,client c where ol.CLIENT_NO=c.client_no 
+	      and ol.emp_no = #{emp_no} and to_char(ol.order_date,'yyyy-mm-dd') like #{order_date} 
+	      group by c.client_company,ol.order_no,ol.client_no,ol.emp_no,ol.order_date order by order_date
+	   ]]>
+   </select>
+   
+   <!-- 
+		select ol.order_no, c.client_company,sum((ol.order_price*ol.order_amount)) as total, substr(to_char(order_date),1,8) as order_date 
+		from orderlist ol, client c 
+		where ol.client_no = c.client_no group by ol.order_no, c.client_company, order_date order by order_no desc
+ -->
+ 
+ <!-- select ol.order_no, c.client_company,sum((ol.order_price*ol.order_amount)) as total, substr(to_char(order_date),1,8) as order_date 
+		from (select rownum as rn, A.* from (select * from orderlist ol, client c 
+		where ol.client_no = c.client_no group by ol.order_no, c.client_company, order_date order by order_no desc) A) 
+		where rn between #{startPage} and #{endPage} 
+		 -->
+   
+   <select id="selectAllOrderList" resultMap="resultOrderlist2" parameterType="order">
+   	<![CDATA[
+		 	select * from (select rownum as rn, A.* 
+			from (select ol.order_no, c.client_company,sum((ol.order_price*ol.order_amount)) as total, substr(to_char(order_date),1,8) as order_date 
+			from orderlist ol, client c 
+			where ol.client_no = c.client_no group by ol.order_no, c.client_company, order_date order by order_no desc) A ) 
+			where rn between #{startPage} and #{endPage}
+   		
+   	]]>
+   </select>
+   
+   <select id="orderListCount" resultType="_int">
+   <![CDATA[
+   		select count(*) as orderlistcount from (select ol.order_no, c.client_company,sum((ol.order_price*ol.order_amount)) as total, substr(to_char(order_date),1,8) as order_date from orderlist ol, client c 
+		where ol.client_no = c.client_no group by ol.order_no, c.client_company, order_date order by order_no desc)
+   ]]>
+   </select>
 
 
 

@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.servlet.view.AbstractView;
 
+import com.crm.gb.client.model.vo.ClientFile;
+
 @Component("clientFileDown")
 public class ClientFileDownController extends AbstractView {
 
@@ -22,10 +24,14 @@ public class ClientFileDownController extends AbstractView {
 		System.out.println("filedown run...");
 
 		File file = (File) model.get("clientFile");
+		File oriFile = (File)model.get("oriName");
+		
 		System.out.println("file.getPath() : " + file.getPath());
 		System.out.println("file.getName() : " + file.getName());
-
-		String fileName = file.getName();
+		System.out.println("file.getName() : " + oriFile.getName());
+		
+//		String fileName = file.getName();
+		String fileName = oriFile.getName();
 		
 		response.setContentType("text/plain; charset=UTF-8");
 		// 한글 파일명 인코딩 처리함

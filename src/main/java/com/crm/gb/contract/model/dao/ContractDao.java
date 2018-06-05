@@ -33,4 +33,9 @@ public class ContractDao {
 	public int selectDiscount(int client_no) {
 		return sqlSession.selectOne("selectDiscount", client_no);
 	}
+
+	/** 페이지 처리 계약리스트 조회 메소드 */
+	public ArrayList<Contract> selectPageList(Contract contract) {
+		return (ArrayList)sqlSession.selectList("contract.contractPageList", contract);
+	}
 }

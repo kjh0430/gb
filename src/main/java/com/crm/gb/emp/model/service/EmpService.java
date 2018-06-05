@@ -23,6 +23,10 @@ public interface EmpService {
 	public abstract Emp selectCheckEmail(String emp_email); //이메일 중복검사
 	public abstract ArrayList<Emp> selectDeptEmp(Emp emp); //부서별 사원리스트
 	public abstract Emp selectMgrNo(int emp_no); //상사이름 조회
+	public abstract Emp selectCheckEmpNo(int emp_no); //사원번호 중복검사
+	public abstract Emp selectMyInfo(Emp emp); //나의 정보 가져오기
+	public abstract Emp selectEmail(Emp emp); //이메일 check
+	public abstract Emp selectPhone(Emp emp); //phone check 
 	
 	
 }
