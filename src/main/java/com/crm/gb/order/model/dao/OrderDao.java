@@ -40,7 +40,12 @@ public class OrderDao {
 		return (ArrayList)sqlSession.selectList("selectOrderlist",order);
 	}
 	
-	public ArrayList<Order> selectAllOrderList(){
-		return (ArrayList)sqlSession.selectList("selectAllOrderList");
+	public ArrayList<Order> selectAllOrderList(Order order){
+		return (ArrayList)sqlSession.selectList("selectAllOrderList",order);
+	}
+	
+	//orderList count
+	public int orderListCount() {
+		return sqlSession.selectOne("orderListCount");
 	}
 }

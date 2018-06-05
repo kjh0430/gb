@@ -23,6 +23,18 @@ private static final long serialVersionUID = 1111L;
 	private int total;
 	
 
+	//페이징 처리 용 변수
+	private int order_list_count;
+	private int startPage;//페이지 시작 
+	private int endPage;//페이지 끝	
+	private int totBlock;//전체 페이지 블록갯수
+	private int curBlock;//현재 블록
+	private int prevBlock;//이전 블록
+	private int nextBlock;//다음 블록
+	private int blockBegin;//블록페이지 시작페이지
+	private int blockEnd;//블록 페이지 끝 번호
+		
+		
 	public Order() {}
 	
 	public Order(int orderlist_no, int order_no, int emp_no, int client_no, int product_no, int order_amount, int order_price,
@@ -70,6 +82,36 @@ private static final long serialVersionUID = 1111L;
 		this.order_price = order_price;
 		this.order_date = order_date;
 		this.total = total;
+	}
+	
+	
+
+	public Order(int orderlist_no, int order_no, int emp_no, String emp_name, int client_no, int product_no,
+			String product_name, int order_amount, int order_price, String client_company, String order_date, int total,
+			int startPage, int endPage, int totBlock, int curBlock, int prevBlock, int nextBlock, int blockBegin,
+			int blockEnd, int order_list_count) {
+		super();
+		this.orderlist_no = orderlist_no;
+		this.order_no = order_no;
+		this.emp_no = emp_no;
+		this.emp_name = emp_name;
+		this.client_no = client_no;
+		this.product_no = product_no;
+		this.product_name = product_name;
+		this.order_amount = order_amount;
+		this.order_price = order_price;
+		this.client_company = client_company;
+		this.order_date = order_date;
+		this.total = total;
+		this.startPage = startPage;
+		this.endPage = endPage;
+		this.totBlock = totBlock;
+		this.curBlock = curBlock;
+		this.prevBlock = prevBlock;
+		this.nextBlock = nextBlock;
+		this.blockBegin = blockBegin;
+		this.blockEnd = blockEnd;
+		this.order_list_count= order_list_count;
 	}
 
 	public int getOrderlist_no() {
@@ -175,15 +217,95 @@ private static final long serialVersionUID = 1111L;
 	public void setProduct_name(String product_name) {
 		this.product_name = product_name;
 	}
+	
+	
+
+	public int getStartPage() {
+		return startPage;
+	}
+
+	public void setStartPage(int startPage) {
+		this.startPage = startPage;
+	}
+
+	public int getEndPage() {
+		return endPage;
+	}
+
+	public void setEndPage(int endPage) {
+		this.endPage = endPage;
+	}
+
+	public int getTotBlock() {
+		return totBlock;
+	}
+
+	public void setTotBlock(int totBlock) {
+		this.totBlock = totBlock;
+	}
+
+	public int getCurBlock() {
+		return curBlock;
+	}
+
+	public void setCurBlock(int curBlock) {
+		this.curBlock = curBlock;
+	}
+
+	public int getPrevBlock() {
+		return prevBlock;
+	}
+
+	public void setPrevBlock(int prevBlock) {
+		this.prevBlock = prevBlock;
+	}
+
+	public int getNextBlock() {
+		return nextBlock;
+	}
+
+	public void setNextBlock(int nextBlock) {
+		this.nextBlock = nextBlock;
+	}
+
+	public int getBlockBegin() {
+		return blockBegin;
+	}
+
+	public void setBlockBegin(int blockBegin) {
+		this.blockBegin = blockBegin;
+	}
+
+	public int getBlockEnd() {
+		return blockEnd;
+	}
+
+	public void setBlockEnd(int blockEnd) {
+		this.blockEnd = blockEnd;
+	}
+	
+	
+
+	public int getOrder_list_count() {
+		return order_list_count;
+	}
+
+	public void setOrder_list_count(int order_list_count) {
+		this.order_list_count = order_list_count;
+	}
 
 	@Override
 	public String toString() {
 		return "Order [orderlist_no=" + orderlist_no + ", order_no=" + order_no + ", emp_no=" + emp_no + ", emp_name="
-				+ emp_name + ", client_no=" + client_no + ", product_no=" + product_no +", product_name : " +product_name + ", order_amount="
-				+ order_amount + ", order_price=" + order_price + ", client_company=" + client_company + ", order_date="
-				+ order_date + ", total=" + total + "]";
+				+ emp_name + ", client_no=" + client_no + ", product_no=" + product_no + ", product_name="
+				+ product_name + ", order_amount=" + order_amount + ", order_price=" + order_price + ", client_company="
+				+ client_company + ", order_date=" + order_date + ", total=" + total + ", startPage=" + startPage
+				+ ", endPage=" + endPage + ", totBlock=" + totBlock + ", curBlock=" + curBlock + ", prevBlock="
+				+ prevBlock + ", nextBlock=" + nextBlock + ", blockBegin=" + blockBegin + ", blockEnd=" + blockEnd
+				+ "order_list_count : " + order_list_count+"]";
 	}
 
+	
 	
 	
 	

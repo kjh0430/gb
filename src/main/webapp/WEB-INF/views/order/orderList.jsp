@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -82,12 +83,21 @@ display:none;
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-    $('#table_cl').dataTable( {
+    $('#table_order').dataTable( {
         ordering:false,
         lengthChange:false,
-        pageLength:15
+        paging: false,
+        searching: false,
+        info: false
     } );
 } );
+
+
+function list(page){
+	
+	location.href="noticeList.do?page="+page;
+}
+
 
 
 
@@ -207,7 +217,7 @@ $(document).ready(function() {
 								</div>
 								<div class="x_content">
 									
-									<table id="table_cl" class="table table-striped table-bordered" style="min-width:650px;">
+									<table id="table_order" class="table table-striped table-bordered" style="min-width:650px;">
 										<thead>
 											<tr>
 												<th>주문번호</th>
@@ -234,6 +244,64 @@ $(document).ready(function() {
 										<tbody>
 									</table>
 								</div>
+								<nav aria-label="Page navigation example">
+								
+									<ul class="pagination">
+									<!-- if문 -->
+									 <c:if test="${curBlock>1}">
+										<li class="page-item"><a class="page-link" href="orderList.do?page=1">처음으로</a></li>
+									
+									</c:if> 
+									
+									<!--첫페이지로 이동  -->
+									<!--if else문 형식임  -->
+								
+									 <c:if test="${curBlock>1}">
+										<li class="page-item"><a class="page-link" href="orderList.do?page=${blockBegin-1}">이전</a></li>
+									
+									</c:if> 
+									
+									
+									
+									<!-- 페이지 리스트var="page"   -->
+									 <c:forEach var ="page" begin="${blockBegin}" end="${blockEnd}">
+									 	
+										  <c:choose>
+											<c:when test="${page==currentPage}">
+												
+												 <li class="page-item" class="page-link" ><a class="page-link" style="color:red;">${page}</a></li>
+											</c:when> 
+										
+											<c:otherwise> 
+												<%-- <li class="page-item"><a class="page-link" href="noticeList.do?page=${page}">${page}</a></li> --%>	
+									
+													<li class="page-item"><a class="page-link" href="#" onclick="list(${'page'})">${page}</a></li>	
+													
+											
+											 </c:otherwise> 
+										
+										 </c:choose> 
+									
+									</c:forEach>  
+									
+								
+									
+									 <c:if test="${curBlock!=totBlock}">
+										<li class="page-item"><a class="page-link" href="orderList.do?page=${blockEnd+1}">다음</a></li>
+									
+									</c:if> 
+									
+									
+									<!-- 다음페이지 next -->
+									
+									<c:if test="${curBlock!=totBlock}">
+										<li class="page-item"><a class="page-link" href="orderList.do?page=${maxPage}">맨끝</a></li>	
+									
+									</c:if> 										
+										
+									</ul>
+								</nav>
+								
 							</div>
 						</div>
 					</div>
