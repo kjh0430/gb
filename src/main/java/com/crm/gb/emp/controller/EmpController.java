@@ -464,6 +464,17 @@ public class EmpController {
 		out.close();
 	
 	}
+		//수정한 값 집어넣기
+	@RequestMapping(value="modifyInfo.do",method=RequestMethod.POST)
+	public String updateEmpDelete(Emp emp) {
+		
+		String pwd =pwdEncoder.encode(emp.getEmp_pwd());
+		emp.setEmp_pwd(pwd);
+		
+		int result=empService.updateMyInfo(emp);	
+		
+		return "emp/myInfo";
+	}
 
 
 }

@@ -160,4 +160,10 @@
 	select emp_phone from emp where emp_phone=#{emp_phone} and emp_no !=#{emp_no}
 	]]>
 	</select>
+	
+	<update id="updateMyInfo" parameterType="emp">
+	<![CDATA[
+	update emp set emp_phone=#{emp_phone},emp_email=#{emp_email},emp_pwd=#{emp_pwd} where emp_no=#{emp_no}
+	]]>
+	</update>
 </mapper>

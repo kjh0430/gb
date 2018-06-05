@@ -96,5 +96,10 @@ public class EmpDao {
 	public Emp selectPhoneckdupl(Emp emp) {
 		return sqlSession.selectOne("selectPhonedupl",emp);
 	}
+
+	public int updateMyInfo(Emp emp) {
+		
+		return sqlSession.update("updateMyInfo",emp);
+	}
 	
 }

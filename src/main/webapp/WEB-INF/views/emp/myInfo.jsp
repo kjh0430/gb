@@ -143,11 +143,11 @@ function checkCondition(){
 		allCheck=false;
 		return allCheck; 
 	}if(!phone_pattern.test(phone)){
-		alert("올바른 e-mail 형식이 아닙니다.");
+		alert("올바른 전화번호 형식이 아닙니다.ex)010-1234-5678");
 		allCheck=false;
 		return allCheck;
 	}if(!email_pattern.test(email)){
-		alert("올바른 전화번호 형식이 아닙니다.ex)010-1234-5678");
+		alert("올바른 e-mail 형식이 아닙니다.");
 		allCheck=false;
 		return allCheck;
 	}if(pwd_pattern.test(password1) && pwd_pattern.test(password2) && phone_pattern.test(phone) && email_pattern.test(email)){
@@ -197,7 +197,7 @@ text-align:center;
 				<div class="">
 					<div class="page-title">
 						<div class="title_left">
-							<h3>정보 수정</h3>
+							<h3>Information</h3>
 						</div>
 					</div>
 
@@ -207,7 +207,7 @@ text-align:center;
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
 								<div class="x_title">
-									<h2>정보 수정</h2>
+									<h2>Information</h2>
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
@@ -215,8 +215,8 @@ text-align:center;
 									
 									
 					
-					<form class="form-horizontal form-label-left" action="empinsert.do" method="post" onsubmit="return checkCondition();">
-
+					<form class="form-horizontal form-label-left" action="modifyInfo.do" method="post" onsubmit="return checkCondition();">
+					
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">사원번호 *</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -233,7 +233,7 @@ text-align:center;
                           <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">password2</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input class="form-control" id="emp_pwd2" type="password" placeholder="비밀번호 재입력">
+                          <input class="form-control" id="emp_pwd2" type="password" name="emp_pwd" placeholder="비밀번호 재입력">
                         </div>
                        
                       </div>
@@ -305,7 +305,7 @@ text-align:center;
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                          <button class="btn btn-primary" type="submit" onclick="modifyInfo()">수정</button>
+                          <button class="btn btn-primary" type="submit">수정</button>
 								</div>
 							</div>
 							</form>

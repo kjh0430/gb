@@ -110,8 +110,14 @@ public class EmpServlceImpl implements EmpService{
 	//폰 체크
 	@Override
 	public Emp selectPhoneckdupl(Emp emp) {
-		// TODO Auto-generated method stub
+		
 		return empDao.selectPhoneckdupl(emp);
+	}
+	//정보 수정
+	@Override
+	public int updateMyInfo(Emp emp) {
+		
+		return empDao.updateMyInfo(emp);
 	}	
 	
 }
