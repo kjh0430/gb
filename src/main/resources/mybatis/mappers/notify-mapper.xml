@@ -16,7 +16,7 @@
 	<select id="selectNotify" parameterType="notify" resultType="notify">
 		<![CDATA[
 		select * from(select rownum,notify_no,emp_name,notify_from,notify_category,notify_to,to_char(notify_date,'yyyy-mm-dd hh24:mi') as notify_date,notify_read from notify n, emp e where n.notify_from = e.emp_no 
-		and notify_to = #{emp_no} and notify_read like 'N' order by notify_date) where rownum >=1 and rownum <=5
+		and notify_to = #{emp_no} and notify_read like 'N' order by notify_date desc) where rownum >=1 and rownum <=5
 		]]>	
 	</select>
 	

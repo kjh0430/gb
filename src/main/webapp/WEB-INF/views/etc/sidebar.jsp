@@ -62,7 +62,7 @@
 	      
 	       <li><a href="messageList.do"><i class="fa fa-file-text-o"></i> 쪽지함 <span class="count_badge badge bg-green"></span></a>
 	      </li>
-	      <li><a href="info.do"><i class="fa fa-file-text-o"></i> My Info <span class="count_badge badge bg-green"></span></a>
+	      <li><a href="info.do"><i class="fa fa-file-text-o"></i> My Info</a>
 	      </li>
 	      <!-- </li>
 	      <li><a><i class="fa fa-cog"></i> 설정</a>

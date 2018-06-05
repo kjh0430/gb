@@ -63,14 +63,8 @@ function submitApproval(){
 			success:function(data){
 				alert(data);
 				ws.send(team_no);
-				location.href="approvalListE.do?emp_no=${loginEmp.emp_no}";
-				
-				
-				
-				
+				location.href="approvalListE.do?emp_no=${loginEmp.emp_no}";				
 			}
-           
-			
 			
 		}); 
 	
