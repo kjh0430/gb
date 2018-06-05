@@ -58,7 +58,12 @@ public class OrderServiceImpl implements OrderService{
 	
 	/** 매출현황 전체 리스트 출력 메소드 **/
 	@Override
-	public ArrayList<Order> selectAllOrderList(){
-		return orderDao.selectAllOrderList();
+	public ArrayList<Order> selectAllOrderList(Order order){
+		return orderDao.selectAllOrderList(order);
+	}
+	
+	@Override
+	public int orderListCount() {
+		return orderDao.orderListCount();
 	}
 }

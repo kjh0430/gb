@@ -172,15 +172,67 @@ public class OrderController {
 	
 	//매출현황 페이지 메소드 
 		@RequestMapping(value="orderList.do")
-		public String orderListPage(Model model){
+		public String orderListPage(Model model, Order order){
 			
 			logger.info("매출현황 메소드 run...");
 			//int emp_no = Integer.parseInt(empNo);
 			
-			ArrayList<Order> orderList = orderService.selectAllOrderList();
-			System.out.println("orderList: " + orderList.get(0).toString());
+			//페이지 기본값 지정
+			int currentPage=1;				
+			//한 페이지당 출력할 목록갯수 지정
+			int pageSize=10;
+			int pageGroupSize=5;		
+			
+			int listCount_1 = orderService.orderListCount();
+			//int listCount_2 = listCount_1.getOrder_list_count();
+			
+			//페이지수 계산 
+			int maxPage=(int)((double)listCount_1/pageSize+0.9);				
+			//페이지 번호 갯수 출력 					
+			
+			int curBlock=(currentPage-1)/pageGroupSize+1;//원하는 페이지가 몇번째 블록인지계산
+			int totBlock=(int)Math.ceil(maxPage*1.0)/pageGroupSize+1;//총 블록 갯수
+			
+			
+			//블록의 시작 페이지와 끝 페이지 번호 계산
+			int blockBegin=(curBlock-1)*pageGroupSize+1;
+			int blockEnd=blockBegin+pageGroupSize-1;
+			//[이전][다음] 을 눌렀을떄 이동할 페이지 번호
+			int prevBlock=(curBlock==1)?1:(curBlock-1)*pageGroupSize;
+			int nextBlock=curBlock>totBlock?(curBlock*pageGroupSize):(curBlock*pageGroupSize)+1;
+			
+			if(nextBlock>=totBlock) {
+				nextBlock=totBlock;
+			}				
+			
+			//마지막 페이지 번호가 범위를 초과하지 않도록 처리 
+			if(maxPage<blockEnd)
+				blockEnd=maxPage;
+			
+			//int startPage=(((int)((double)currentPage/pageSize+0.9))-1)*pageSize+1;
+			int startPage=(currentPage-1)*pageSize+1;
+			int endPage=startPage+pageSize-1;
+			
+			
+			order.setStartPage(startPage);
+			order.setEndPage(endPage);
+			
+			ArrayList<Order> orderList = orderService.selectAllOrderList(order);
+			//System.out.println("orderList: " + orderList.get(0).toString());
 			model.addAttribute("orderList", orderList);
-//			
+			model.addAttribute("listCount",listCount_1);
+			model.addAttribute("currentPage",currentPage);
+			model.addAttribute("pageGroupSize",pageGroupSize);		
+			model.addAttribute("startPage",startPage);
+			model.addAttribute("endPage",endPage);
+			model.addAttribute("maxPage",maxPage);
+			model.addAttribute("blockBegin",blockBegin);
+			model.addAttribute("blockEnd",blockEnd);
+			model.addAttribute("curBlock",curBlock);
+			model.addAttribute("totBlock",totBlock);
+			model.addAttribute("prevBlock",prevBlock);
+			model.addAttribute("nextBlock",nextBlock);
+		
 			return "order/orderList";
 		}
 		

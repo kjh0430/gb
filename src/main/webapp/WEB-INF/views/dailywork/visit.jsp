@@ -180,9 +180,9 @@
 										</div>
 										<div class="ln_solid"></div>
 										<div class="form-group">
-											<div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3" style="vertical-align: middle;">
+											<div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3" style="text-align:center;">
 												
-												<button type="submit" class="btn btn-success" style="vertical-align: middle;" onclick="dailyworkNotice();">등록</button>
+												<button type="submit" class="btn btn-success" onclick="dailyworkNotice();">등록</button>
 											</div>
 										</div>
 									</form>
