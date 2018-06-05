@@ -109,9 +109,9 @@ public class EmpServlceImpl implements EmpService{
 	}
 	//폰 체크
 	@Override
-	public Emp selectPhone(Emp emp) {
-		
-		return empDao.selectPhone(emp);
+	public Emp selectPhoneckdupl(Emp emp) {
+		// TODO Auto-generated method stub
+		return empDao.selectPhoneckdupl(emp);
 	}	
 	
 }

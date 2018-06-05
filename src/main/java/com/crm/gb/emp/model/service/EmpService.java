@@ -26,7 +26,7 @@ public interface EmpService {
 	public abstract Emp selectCheckEmpNo(int emp_no); //사원번호 중복검사
 	public abstract Emp selectMyInfo(Emp emp); //나의 정보 가져오기
 	public abstract Emp selectEmail(Emp emp); //이메일 check
-	public abstract Emp selectPhone(Emp emp); //phone check 
+	public abstract Emp selectPhoneckdupl(Emp emp); //phone check
 	
 	
 }

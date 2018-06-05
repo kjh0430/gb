@@ -93,9 +93,8 @@ public class EmpDao {
 		return sqlSession.selectOne("selectEmail",emp);
 	}
 
-	public Emp selectPhone(Emp emp) {
-		
-		return sqlSession.selectOne("selectPhone",emp);
+	public Emp selectPhoneckdupl(Emp emp) {
+		return sqlSession.selectOne("selectPhonedupl",emp);
 	}
 	
 }

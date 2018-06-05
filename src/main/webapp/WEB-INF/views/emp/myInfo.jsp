@@ -45,15 +45,12 @@
 <script type="text/javascript">
 $(function(){
 
-var pwdcheck="false";
-var emailcheck="false";
-var phonecheck="false";
-	
+var allCheck=false;
 
-	
+	//내 정보 가져오기
 	$.ajax({
 		url:"getMyInfo.do",
-		data:{emp_no : "${loginEmp.emp_no}"},
+		data:{emp_no : "${loginEmp.emp_no}",job_no:"${loginEmp.job_no}"},
 		type:"post",
 		success:function(data){
 			$('#emp_no').val("${loginEmp.emp_no}");
@@ -66,10 +63,8 @@ var phonecheck="false";
 			$('#city').val(data.city);
 			$('#county').val(data.county);
 			$('#village').val(data.village);
-			$('#dept_name').val(data.dept_name);
-			
-		}
-		
+			$('#dept_name').val(data.dept_name);		
+		}		
 	});
 	
 	$('#emp_pwd2').blur(function(){
@@ -95,11 +90,11 @@ var phonecheck="false";
 			type:"post",
 			success:function(data){
 			
-				if(data!=null){
+				if(data.check=="N" && $('#emp_email').val()!="" && $('#emp_email').val()!=null){
 					alert("사용가능한 e-mail입니다.");
 					
-				}else{
-					alert("다른 사람이 사용하고 있는 e-mail입니다.")
+				}else if(data.check=="Y"){
+					alert("다른 사람이 사용하고 있는 e-mail입니다.");
 				}
 			}
 		});
@@ -108,36 +103,58 @@ var phonecheck="false";
 	});
 	
 	$('#emp_phone').blur(function(){
-		
+
 		$.ajax({
 			
-			url:'checkPhone.do',
+			url:'checkPhoneck.do',
 			data:{emp_no :"${loginEmp.emp_no}", emp_phone:$('#emp_phone').val()},
 			type:"post",
 			success:function(data){
-			
-				if(data!=null){
+				 
+				if(data.check=="N" && $('#emp_phone').val()!="" && $('#emp_phone').val()!=null){
 					alert("사용가능한 전화번호 입니다.");
 					
-				}else{
-					alert("다른 사람이 사용하고 있는 번호입니다.")
+				}else if(data.check=="Y"){
+					alert("다른 사람이 사용하고 있는 번호입니다.");
 				}
 			}
 			
 		});
 	});
 	
-	
-	
-	
 });
 
-
 function checkCondition(){
-	var pattern=/^[A-Za-z0-9]{5,10}$/; //숫자와 문자 포함 형태의  5에서 10자리 비밀번호
-	var phone_check = /^\d{3}-\d{3,4}-\d{4}$/;
-	var email_check = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+	var pwd_pattern=/^[A-Za-z0-9]{5,10}$/; //숫자와 문자 포함 형태의  5에서 10자리 비밀번호
+	var phone_pattern = /^\d{3}-\d{3,4}-\d{4}$/;
+	var email_pattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 	
+	var password1=$('#emp_pwd1').val();
+	var password2=$('#emp_pwd2').val();
+	var email=$('#emp_email').val();
+	var phone=$('#emp_phone').val();
+	
+	
+	var pwdcheck="false";
+	var emailcheck="false";
+	var phonecheck="false";
+	if(!pwd_pattern.test(password1) && !pwd_pattern.test(password2)){
+		alert("비밀번호는 숫자,문자 포함 5~10자리 입니다.");
+		allCheck=false;
+		return allCheck; 
+	}if(!phone_pattern.test(phone)){
+		alert("올바른 e-mail 형식이 아닙니다.");
+		allCheck=false;
+		return allCheck;
+	}if(!email_pattern.test(email)){
+		alert("올바른 전화번호 형식이 아닙니다.ex)010-1234-5678");
+		allCheck=false;
+		return allCheck;
+	}if(pwd_pattern.test(password1) && pwd_pattern.test(password2) && phone_pattern.test(phone) && email_pattern.test(email)){
+		allCheck=true;
+		return allCheck;
+		
+	}
 }
 
 
@@ -305,32 +322,12 @@ text-align:center;
 	
 	
 	<!-- modal -->
-	<div class="modal fade bs-example-modal-sm" id="mgrModal" tabindex="-1" role="dialog" aria-hidden="true">
-       <div class="modal-dialog modal-sm">
-          <div class="modal-content">
-
-             <div class="modal-header">
-             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-             </button>
-             <h4 class="modal-title" id="myModalLabel">사원조회</h4>
-             </div>
-             <div class="modal-body" style="overflow-y:auto; overflow-x:hidden; height:400px;">
-             <table class="table table-hover" id="mgrTable">
-             </table>
-             </div>
-             <div class="modal-footer">
-             <!-- <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-             <button type="button" class="btn btn-primary">등록</button> -->
-             </div>
-
-           </div>
-       </div>
-    </div>
+	
 	<!-- /page content -->
 
 
 	</div>
-	</div>
+	
 
 	<!-- jQuery -->
 	<script src="resources/vendors/jquery/dist/jquery.min.js"></script>

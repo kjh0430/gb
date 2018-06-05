@@ -371,10 +371,23 @@ public class EmpController {
 	@RequestMapping(value="getMyInfo.do" ,method=RequestMethod.POST)
 	@ResponseBody
 	public void getMyInfo(Emp emp,HttpServletResponse  response) throws IOException {		
-	
+		System.out.println("emp_job_no"+emp.getJob_no());
 		Emp getMyInfo=empService.selectMyInfo(emp);		
-		
+		  
 		JSONObject send=new JSONObject();
+		
+		if(emp.getJob_no()==2) {
+			getMyInfo.setMgr_name("");
+			getMyInfo.setCounty("");
+			getMyInfo.setCity("");
+			getMyInfo.setVillage("");
+		}
+		if(emp.getJob_no()==3) {
+			getMyInfo.setMgr_name("");
+			getMyInfo.setCounty("");
+			getMyInfo.setCity("");
+			getMyInfo.setVillage("");
+		}
 		
 		send.put("emp_name",getMyInfo.getEmp_name());
 		send.put("emp_addr",getMyInfo.getEmp_addr());
@@ -406,53 +419,51 @@ public class EmpController {
 		Emp checkEmail=empService.selectEmail(emp);		
 	
 		JSONObject send=new JSONObject();
-		send.put("checkEmail",checkEmail);
+		
+		String check="Y";
+		if(checkEmail==null) {
+			check="N";
+		}
+		
+		send.put("check",check);
 		
 		response.setContentType("application/json; charset=utf-8");	
 	
 		PrintWriter out=response.getWriter();
-		out.println(send.toJSONString());
+		out.append(send.toJSONString());
 		out.flush();
 		out.close();
 	
 	}
-/*	
+	
 		//phone number check
-<<<<<<< HEAD
-//	@RequestMapping(value="checkPhone.do" ,method=RequestMethod.POST)
-//	@ResponseBody
-//	public void checkPhone(Emp emp,HttpServletResponse  response) throws IOException {		
-//	
-//		Emp checkPhone=empService.selectPhone(emp);		
-//	
-//		JSONObject send=new JSONObject();
-//		send.put("checkPhone",checkPhone);
-//		
-//		response.setContentType("application/json; charset=utf-8");	
-//	
-//		PrintWriter out=response.getWriter();
-//		out.println(send.toJSONString());
-//		out.flush();
-//		out.close();
-//	
-//	}
-=======
-	@RequestMapping(value="checkPhone.do" ,method=RequestMethod.POST)
+
+	@RequestMapping(value="checkPhoneck.do" ,method=RequestMethod.POST)
 	@ResponseBody
-	public void checkPhone(Emp emp,HttpServletResponse  response) throws IOException {		
+	public void checkPhonedupl(Emp emp,HttpServletResponse  response) throws IOException {		
 	
-		Emp checkPhone=empService.selectPhone(emp);		
-	
+		Emp checkPhone=empService.selectPhoneckdupl(emp);
 		JSONObject send=new JSONObject();
-		send.put("checkPhone",checkPhone);
 		
-		response.setContentType("application/json; charset=utf-8");	
+		System.out.println("checkPhone"+" "+checkPhone);
+		
+			String check="Y";
+			if(checkPhone==null) {
+				check="N";
+			}
+		
+			send.put("check", check);
+		
+		
 	
+		response.setContentType("application/json; charset=utf-8");	
+		System.out.println("check"+check);
 		PrintWriter out=response.getWriter();
-		out.println(send.toJSONString());
+		out.append(send.toJSONString());
 		out.flush();
 		out.close();
 	
-	}*/
+	}
+
 
 }
