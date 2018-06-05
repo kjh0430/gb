@@ -33,7 +33,7 @@
 	        <ul class="nav child_menu">
 	          <li><a href="accountList.do?emp_no=${loginEmp.emp_no}">거래처</a></li>
 	          <li><a href="selectOrderClient.do?emp_no=${loginEmp.emp_no}">발주하기</a>
-	          <li><a href="orderList.do?emp_no=${loginEmp.emp_no}">매출현황</a></li>
+	          <li><a href="orderList.do?emp_no=${loginEmp.emp_no}&page=1">매출현황</a></li>
 	          <li><a href="visit.do">방문일지</a></li>
 	        </ul>
 	      </li>
