@@ -416,7 +416,7 @@ public class EmpController {
 		out.close();
 	
 	}
-	
+/*	
 		//phone number check
 	@RequestMapping(value="checkPhone.do" ,method=RequestMethod.POST)
 	@ResponseBody
@@ -434,5 +434,5 @@ public class EmpController {
 		out.flush();
 		out.close();
 	
-	}
+	}*/
 }
