@@ -2,6 +2,7 @@ package com.crm.gb.contract.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -31,10 +32,37 @@ public class ContractController {
 	/** 계약리스트  */
 	@RequestMapping("contractList.do")
 	public String contractList(Contract contract, Model model,
-			@RequestParam(value="emp_no") int emp_no) {
+			@RequestParam(value="emp_no") int emp_no,
+			@RequestParam(value="startPage", defaultValue="1") int startPage,
+			HttpServletResponse response) {
 		logger.info("계약리스트 메소드 실행");
 		ArrayList<Contract> returnList=contractService.selectAllList(emp_no);
-		model.addAttribute("contractList", returnList );
+		
+		contract.setShowPage(10); //보여줄 페이지 수
+		contract.setTotalRow(returnList.size());	// 총 회원 수
+		contract.setStart(startPage);	// 시작페이지
+		
+		int showPage = contract.getShowPage();
+		int totalRow = contract.getTotalRow();
+		int start = (contract.getStart() - 1)*showPage+1;
+		int end = start+9;
+		int currentPage = 1;
+
+		contract.setStartRow(start);	// 시작 열
+		contract.setEndRow(end);	// 끝 열
+		
+		if(totalRow%showPage != 0) {	// 끝페이지
+			contract.setEnd((totalRow/showPage)+1);
+		}else {
+			contract.setEnd(totalRow/showPage);
+		}
+		
+		ArrayList<Contract> list = contractService.selectPageList(contract);
+		
+		model.addAttribute("contractPageList", list );
+		model.addAttribute("start", currentPage);
+		model.addAttribute("end", contract.getEnd());
+		
 		return "contract/contractList";
 	}
 	

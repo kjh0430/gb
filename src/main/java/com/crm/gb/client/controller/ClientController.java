@@ -54,7 +54,9 @@ public class ClientController {
 	/** 신규고객 등록 메소드 */
 	@RequestMapping(value="insertClient.do", method=RequestMethod.POST)
 	public String insertClient(Client client, ClientFile clientFile, Model model, HttpServletRequest request,
-			MultipartHttpServletRequest mtfRequest) {
+			MultipartHttpServletRequest mtfRequest,
+			@RequestParam(value="startPage", defaultValue="1") int startPage,
+			HttpServletResponse response) throws IOException{
 		
 		logger.info("고객등록 메소드 실행됨");
 			System.out.println("client객체 확인: "+client);
@@ -122,7 +124,31 @@ public class ClientController {
 				
 			}//if close
 				ArrayList<Client> clientList=clientService.selectAllClient();
-				model.addAttribute("clientList", clientList);
+				
+				client.setShowPage(10); //보여줄 페이지 수
+				client.setTotalRow(clientList.size());	// 총 회원 수
+				client.setStart(startPage);	// 시작페이지
+				
+				int showPage = client.getShowPage();
+				int totalRow = client.getTotalRow();
+				int start = (client.getStart() - 1)*showPage+1;
+				int end = start+9;
+				int currentPage = 1;
+
+				client.setStartRow(start);	// 시작 열
+				client.setEndRow(end);	// 끝 열
+				
+				if(totalRow%showPage != 0) {	// 끝페이지
+					client.setEnd((totalRow/showPage)+1);
+				}else {
+					client.setEnd(totalRow/showPage);
+				}
+				
+				ArrayList<Client> pList = clientService.selectAllClient(client);
+				
+				model.addAttribute("pageList", pList);
+				model.addAttribute("start", currentPage);
+				model.addAttribute("end", client.getEnd());
 		
 				
 		return "client/clientList";
@@ -283,17 +309,27 @@ public class ClientController {
 	/** 고객 첨부파일 다운로드 메소드 */
 	@RequestMapping("clientFileDown.do")
 	public ModelAndView fileDownMethod(HttpServletRequest request,
-				@RequestParam("clientFileName") String fileName) {
+				@RequestParam("clientFileName") String fileName,
+				@RequestParam("oriName") String oriName) {
 		
 		//경로를 저장하고
 		String path=request.getSession().getServletContext().getRealPath("resources/upload/client");
 		//경로와 파일이름을 연결
 		String filePath=path+"/"+fileName;
+		String path2 = path+"/"+oriName;
 		//File 객체생성 
 		File downFile=new File(filePath);
+		File oriFile = new File(path2);
+		
+		ModelAndView mov = new ModelAndView();
+			mov.setViewName("clientFileDown");
+			mov.addObject("clientFile", downFile);
+			mov.addObject("oriName", oriFile);
+		
 								//viewname(bean id명)과 modelname, model객체(저장한 파일객체)를 입력한다
 								//string: downfile, object : downFile로 filedownview클래스로 전송됨
-		return new ModelAndView("clientFileDown", "clientFile", downFile );
+		//return new ModelAndView("clientFileDown", "clientFile", downFile );
+			return mov;
 		
 	}
 	

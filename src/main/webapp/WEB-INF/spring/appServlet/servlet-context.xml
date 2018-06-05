@@ -4,9 +4,11 @@
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
@@ -28,6 +30,16 @@
 		<beans:property name="order" value="1" />
 	</beans:bean>
 
+	<beans:bean id="defaultWebSocketHandler" class="com.crm.gb.common.SocketHandler" />
+ 
+    <!-- url mapping -->
+    <websocket:handlers>
+        <websocket:mapping path="hello.do" handler="defaultWebSocketHandler" />        
+        <websocket:handshake-interceptors>
+            <beans:bean class="com.crm.gb.common.HandShakeInterceptor" />
+        </websocket:handshake-interceptors>
+    </websocket:handlers>
+		
 	<beans:bean class="net.sf.json.spring.web.servlet.view.JsonView"
 		id="jsonView">
 	</beans:bean>
@@ -45,4 +57,6 @@
 		id="multipartResolver">
 	<beans:property name="maxUploadSize" value="10000000" />
 	</beans:bean>
+	
+	
 </beans:beans>

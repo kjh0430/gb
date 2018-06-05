@@ -69,8 +69,8 @@
 	<![CDATA[
 		insert into emp
 		values (#{emp_no}, #{emp_pwd}, #{emp_name}, #{emp_addr}, 
-		#{emp_phone}, #{job_no}, #{emp_email}, #{emp_mgr}, #{emp_hiredate}, 
-		#{emp_firedate}, #{city}, #{county}, #{village}, #{dept_no}, default)
+		#{emp_phone}, #{job_no}, #{emp_email}, #{emp_mgr}, default, 
+		null, #{city}, #{county}, #{village}, #{dept_no}, default)
 	]]>
 	</insert>
 	
@@ -78,8 +78,8 @@
 	<update id="empUpdate" parameterType="Emp">
 	<![CDATA[
 		update emp set emp_no=#{emp_no}, emp_pwd=#{emp_pwd}, emp_name=#{emp_name}, emp_addr=#{emp_addr},
-		emp_phone=#{emp_phone}, job_no=#{job_no}, emp_email=#{emp_email}, emp_mgr=#{emp_mgr},
-		emp_hiredate=#{emp_hiredate}, emp_firedate=#{emp_firedate}, city=#{city}, county=#{county}, village=#{village},
+		emp_phone=#{emp_phone}, job_no=#{job_no}, emp_email=#{emp_email}, emp_mgr=#{emp_mgr}
+		,emp_hiredate=#{emp_hiredate}, emp_firedate=null, city=#{city}, county=#{county}, village=#{village},
 		dept_no=#{dept_no} where emp_no=#{emp_no}
 	]]>
 	</update>
@@ -120,7 +120,32 @@
 		select * from emp where emp_no=#{emp_no} and emp_delete='N'
 	]]>
 	</select>
+	
+	<!-- 연락처 중복검사 -->
+	<select id="selectCheckEmpNo" parameterType="emp" resultMap="resultEmpList">	
+	<![CDATA[
+		select * from emp where emp_no = #{emp_no}
+	]]>	
+	</select> 
 
- 
-
+	<select id="selectMyInfo" parameterType="emp" resultType="emp">
+	<![CDATA[
+	select e.emp_name,e.emp_addr,e.emp_phone,j.job_name,e.emp_email,
+	t.emp_name as mgr_name,e.city,e.county,e.village,d.dept_name from emp e,job j,dept d ,(select emp_name from emp where emp_no=(select emp_mgr from emp where emp_no=#{emp_no})) t
+	where e.emp_no=#{emp_no} and e.job_no=j.job_no and d.dept_no=e.dept_no
+	]]>
+	</select>
+	
+	<select id="selectEmail" parameterType="emp" resultType="emp">
+	<![CDATA[
+	select emp_email from emp where emp_email=#{emp_email} and emp_no !=#{emp_no}
+	]]>
+	
+	</select>
+	
+	<select id="selectPhone" parameterType="emp" resultType="emp">
+	<![CDATA[
+	select emp_phone from emp where emp_phone=#{emp_phone} and emp_no !=#{emp_no}
+	]]>
+	</select>
 </mapper>

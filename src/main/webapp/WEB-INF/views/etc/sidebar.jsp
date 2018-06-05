@@ -62,6 +62,8 @@
 	      
 	       <li><a href="messageList.do"><i class="fa fa-file-text-o"></i> 쪽지함 <span class="count_badge badge bg-green"></span></a>
 	      </li>
+	      <li><a href="info.do"><i class="fa fa-file-text-o"></i> My Info <span class="count_badge badge bg-green"></span></a>
+	      </li>
 	      <!-- </li>
 	      <li><a><i class="fa fa-cog"></i> 설정</a>
 	      </li> -->
@@ -74,7 +76,11 @@
 	  
 	</div>
 	<script type="text/javascript">
-	var EventSource2 = new EventSource("count.do?emp_no=${loginEmp.emp_no}");
+	$(function(){
+		
+	})
+	var emp_no = ${loginEmp.emp_no};
+	var EventSource2 = new EventSource("count.do?emp_no="+emp_no);
 	EventSource2.onopen = function(){
 		//console.log("연결중2");		
 	}

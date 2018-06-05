@@ -16,6 +16,7 @@
  }
 </style>
 <script src="resources/js/EventSource.js"></script>
+<script src="resources/js/PushNotify.js?ver=1"></script>
 </head>
 
 <body>
@@ -89,8 +90,12 @@
 				if(size>0){
 					for(var i in notify.list){								
 						value+="<li><p>"+notify.list[i].notify_date+"<a href='javascript:confirmNotify(\""+notify.list[i].notify_no+"\")'>"
-						+"<i class='fa fa-times'></i></a></p>"
-						+notify.list[i].from_name+"님이 보낸 쪽지가 도착했습니다.</li>"
+						+"<i class='fa fa-times'></i></a></p>";
+						if(notify.list[i].notify_category == 'M'){
+							value+=notify.list[i].from_name+"님이 보낸 쪽지가 도착했습니다.</li>";
+						}else if(notify.list[i].notify_category == 'A'){
+							value+=notify.list[i].from_name+"님이 요청한 결재가 있습니다.</li>";
+						}
 					}	
 					$("#menu1").html(value);
 					$(".notify_badge").html(size);
@@ -119,11 +124,12 @@
 				}else{
 					alert("실패")
 				}		
-			}			
-			
+			}						
 		});//ajax
 		
 	}
+	
+	
 	
 	if (window.Notification && Notification.permission !== "granted") {
 	    Notification.requestPermission(function (status) {
@@ -134,7 +140,7 @@
 	    });
 	}
 	
-  	var EventSource3 = new EventSource('notify.do?emp_no='+emp_no);
+   	var EventSource3 = new EventSource('notify.do?emp_no='+emp_no);
 	EventSource3.onopen = function(){
 		console.log("연결중");		
 	}
@@ -148,7 +154,7 @@
 	EventSource3.addEventListener('to_no', function(event) {	
 		console.log("to_no : "+ event.data);
 		
-		if( ${loginEmp.emp_no} == event.data){			
+		if( emp_no == event.data){			
 			 var img = 'resources/images/msg2.png';
 			 var text = from_name+"님이 보낸 쪽지가 도착하였습니다.";
 			
@@ -160,6 +166,9 @@
 		}
 		 
 	}, false);
+		 
+		 
+		 
 		
 </script>
 

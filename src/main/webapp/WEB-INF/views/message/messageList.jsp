@@ -456,7 +456,8 @@
 
          },
          success : function(data) {
-           
+       		
+        	 
         	 //닫으면 내용 지워주기
         	   $('#searchName').val("");
         	   $('#message_to_no').val("");
@@ -613,8 +614,8 @@ font-weight:900;
          </div>
 
          <!-- top navigation -->
-         <%@ include file="../etc/topnav.jsp"%>
-         <!-- /top navigation -->
+			<%@ include file="../etc/topnav.jsp"%>
+			<!-- /top navigation -->
 
          <!-- page content -->
          <div class="right_col" role="main">
@@ -980,7 +981,9 @@ font-weight:900;
             </div>
          </div>
          
-         <c:import url="../etc/footer.jsp"></c:import>
+         <!-- footer content -->
+			<%@ include file="../etc/footer.jsp"%>
+			<!-- /footer content -->
 
          <!-- /page content -->
       </div>

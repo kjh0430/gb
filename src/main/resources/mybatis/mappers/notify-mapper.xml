@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Notify"> 
+
+	
+	<insert id="insertNotify" parameterType="notify">
+		<![CDATA[
+		insert into notify values((select max(notify_no)+1 from notify),
+		#{notify_from},#{notify_to},#{notify_category},default,default)		
+		]]>	
+	</insert>
+	
+	<select id="selectNotify" parameterType="notify" resultType="notify">
+		<![CDATA[
+		select * from(select rownum,notify_no,emp_name,notify_from,notify_category,notify_to,to_char(notify_date,'yyyy-mm-dd hh24:mi') as notify_date,notify_read from notify n, emp e where n.notify_from = e.emp_no 
+		and notify_to = #{emp_no} and notify_read like 'N' order by notify_date) where rownum >=1 and rownum <=5
+		]]>	
+	</select>
+	
+	<update id="updateNotify" parameterType="notify">
+		<![CDATA[
+		update notify set notify_read='Y' where notify_no=#{notify_no}
+		]]> 
+	</update>
+	
+	
+
+
+</mapper>

@@ -243,7 +243,7 @@ $(document).ready(function() {
 											
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<c:forEach var="list" items="${ clientFileList }">
-												<a href="clientFileDown.do?clientFileName=${ list.client_rename_file }">
+												<a href="clientFileDown.do?clientFileName=${ list.client_rename_file }&oriName=${ list.client_original_file }">
 													<input style="cursor:pointer;" name="client_original_file" id="client_original_file"
 														class="date-picker form-control col-md-7 col-xs-12"
 														required="required" type="text" 

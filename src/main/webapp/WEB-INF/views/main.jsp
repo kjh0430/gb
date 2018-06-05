@@ -9,6 +9,7 @@
 <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="refresh" content="600"> <!-- 10분마다 페이지 새로고침 -->
    <link rel="icon" href="images/favicon.ico" type="image/ico" />
 
     <title>GROUP BEAN | </title>
@@ -31,42 +32,328 @@
     
     <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
     <script src="resources/fullcalendar-3.9.0/lib/jquery.min.js"></script>
-    <script type="text/javascript">
+    <script type="text/javascript">//calendar
+   
+    var writer_no="";
+    var event=new Array();
+  	//calendar load
+  	function calendarLoad(){
+  		
+  		$.ajax({
+	
+		url:"calendarLoad.do",
+		data:{emp_no : "${loginEmp.emp_no}", dept_no : "${loginEmp.dept_no}"},
+		type:"post",
+		dataType:"json",
+		success: function(data) {
+			
+			var jsonSt = JSON.stringify(data);
+            var json = JSON.parse(jsonSt);
+			 event=new Array();
+		
+	
+	for ( var i in json.list) {
+		
+			event.push({
+				title: json.list[i].calendar_title,
+				start:json.list[i].calendar_start_date,
+				end:json.list[i].calendar_end_date,
+				url:"javascript:detailCalendar("+json.list[i].calendar_no+")"
+			});
+									 
+		 };
+		
+
+			
+			$('#myCalendar').fullCalendar({
+	    		  				
+			 	header: {
+				    right: 'today prev,next'
+				  }, 
+		  
+				  defaultDate: '2018-06-01',
+				  buttonIcons: false,
+				  weekNumbers: true,
+				  
+				 events:event
+					
+					 
+					 
+	    	}); 
+					
+			var value="<button class='btn btn-danger' onclick='Schedule();'"+
+			"style='padding:0.1%; margin-top:1%;' id='addScheduleRed'>일정추가</button>";
+			$('#addschedule').html(value);
+		 }
+		
+	});
+  		
+  	}
+    
     $(function() {
-     
     	
+    	calendarLoad();
     	
-    	$('#calendar2').fullCalendar({
-    		events: [
-    		    {
-    		      title  : '09:00 영업팀 회의',
-    		      start  : '2018-05-23',
-    		      end : '2018-05-30'
-    		    },
-    		    
-    		    { title:'09:00 영업 회의',
-    		      start:'2018-05-01',
-    		    },
-    		    {
-    		    	title:'event3',
-    		    	start:'2018-05-01'
-    		    }
-    		   
-    		  ]
-    	});
-    	
-    	
-    	
-    	
-    	
-    	
-    });
+  	}); 
+  		function Schedule(){
+  		
+  		$.ajax({
+  			
+  		url:"getInfo.do",               
+  		data:{emp_no :"${loginEmp.emp_no}",dept_no :"${loginEmp.dept_no}"},
+  		type:"post",
+  		dataType:"json",
+  		success:function(data){
+  			
+  			$('#addwriter').val(data.emp_name);
+  			$('#adddept_name').val(data.calendar_dept_name);
+  			$('#modal3').modal("show");
+  			
+  			
+  		}
+  		
+  		});
+  		
+  			}
+  		
+  		//일정 비교 (수정)
+ 		function checkDate(){
+ 			var ckModistartDate=$('#startDateM').val();
+ 			var sArr=ckModistartDate.split('-');
+ 		
+ 			
+ 			var ckModiendDate=$('#endDateM').val();
+ 			var eArr=ckModiendDate.split('-');
+ 			
+ 			var start1 =new Date(sArr[0],parseInt(sArr[1])-1,sArr[2]);
+ 			var end1 =new Date(eArr[0],parseInt(eArr[1])-1,eArr[2]);
+ 			
+ 			if(start1.getTime()>end1.getTime()){
+ 				alert("시작 날짜 또는 종료 날짜가 유효하지 않습니다.");
+ 			}
+  	} 	
+  		//일정 비교(추가)
+		function checkDates(){
+ 			var ckModistartDate=$('#addstartDate').val();
+ 			var sArr=ckModistartDate.split('-');
+ 		
+ 			
+ 			var ckModiendDate=$('#addendDate').val();
+ 			var eArr=ckModiendDate.split('-');
+ 			
+ 			var start1 =new Date(sArr[0],parseInt(sArr[1])-1,sArr[2]);
+ 			var end1 =new Date(eArr[0],parseInt(eArr[1])-1,eArr[2]);
+ 			
+ 			if(start1.getTime()>end1.getTime()){
+ 				alert("시작 날짜 또는 종료 날짜가 유효하지 않습니다.");
+ 			}
+  	} 	
+ 		
+  	 	
+  	 	
+  	 	//modal 상세보기 닫기 detail 닫기
 
+    	function modal1Close(){
+    		
+    		$('#modal1').modal("hide");
+    	}
+  		
+  	    //modal2 수정페이지 닫기
+		function modal2Close(){
+    		
+    		$('#modal2').modal("hide");
+    		$('#writerM').val("");
+			$('#dept_nameM').val("");
+			$('#calendar_titleM').val("");
+			$('#calendar_contentM').val("");
+		
+    	}
+  	    //일정추가 닫기
+  	    function modal3Close(){
+  	    	$('#modal3').modal("hide");
+  	    }
+  	  	
+    	//스케줄 수정하기
+ 		function modify(calendar_no){
+ 			
+    		 //시작 날짜 수정
+ 			var mostartDate=$('#startDate').val();
+    		
+ 			
+ 		   var syyyy=mostartDate.substring(0,4);
+ 		   var smm=mostartDate.substring(5,7);
+ 		   var sdd=mostartDate.substring(8,10);
+ 			
+ 		  $('#startDateM').val(syyyy+"-"+smm+"-"+sdd);
+ 			
+ 		 	var shour=mostartDate.substring(11,13);
+			var sminute=mostartDate.substring(14,16);
+ 			
+			$('#startTimeM').val(shour+":"+sminute);
+ 			
+			//종료날짜 수정
+			var moendDate=$('#endDate').val();
+			
+			 var eyyyy=moendDate.substring(0,4);
+	 		   var emm=moendDate.substring(5,7);
+	 		   var edd=moendDate.substring(8,10);
+	 			
+	 		  $('#endDateM').val(eyyyy+"-"+emm+"-"+edd);
+	 			
+	 			var ehour=moendDate.substring(11,13);
+				var eminute=moendDate.substring(14,16);
+	 			
+				$('#endTimeM').val(ehour+":"+eminute);
+			
+		
+			$('#writerM').val($('#writer').val());
+			$('#dept_nameM').val($('#dept_name').val());
+			$('#calendar_titleM').val($('#calendar_title').val());
+			$('#calendar_contentM').val($('#calendar_content').val());
+			
+			value="";
+			value="<button onclick='realModify("+calendar_no+");' type='button'"+
+                "class='btn btn-info' id='modalButtonM' style='float:right;'>수정</button>";
+		$('#modifySchedule').html(value);
+			$('#modal2').modal("show");
+			$('#modal1').modal("hide");
+ 		} 	
+  	 	
+    	//detail
+    	function detailCalendar(calendar_no){
+		
+		 $.ajax({
+			url:"detail2.do",
+			data:{ calendar_no:calendar_no, dept_no :"${loginEmp.dept_no}"},
+    		type:"post",
+    		dataType:"json",
+    		success: function(data) {
+    			
+    			$('#modal1').modal("show");
+    			$('#startDate').val(data.calendar_start_date);
+    			$('#endDate').val(data.calendar_end_date);
+    			$('#writer').val(data.emp_name);
+    			$('#dept_name').val(data.calendar_dept_name);
+    			$('#calendar_title').val(data.calendar_title);
+    			$('#calendar_content').val(data.calendar_content);
+    			
+    			writer_no=data.emp_no;
+    			var emp_no="${loginEmp.emp_no}";
+    			calendar_no=data.calendar_no;
+    			
+    			 if(emp_no==writer_no) {
+    				var value="<button onclick='modify("+calendar_no+");' type='button'"+ 
+    				"class='btn btn-info' style='float:right; margin-right:0%;'>수정</button>"+
+    				"<button onclick='deleteSchedule("+calendar_no+");' type='button'"+ 
+    				"class='btn btn-danger' style='float:right; margin-right:0.5%;'>삭제</button>";
+    				$('#modifyModal1').html(value);
+    				}
+    			}
+			}); 
+		}
+    	//수정 값 db로
+    	function realModify(calendar_no){
+    	 
+    		var ModistartDate=$('#startDateM').val();
+    		var ModistartTime=$('#startTimeM').val();
+    		
+    		var modifyStartSchedule=ModistartDate+" "+ModistartTime;
+    		
+    		
+    		var ModiendDate=$('#endDateM').val();
+    		var ModiendTime=$('#endTimeM').val();
+    		
+    		var modifyEndSchedule=ModiendDate+" "+ModiendTime;
+    		
+    		
+    		if($('#startDateM').val() ==null || $('#startTimeM').val() ==null 
+  					|| $('#endDateM').val()  ==null || $('#endTimeM').val() ==null  || $('#calendar_titleM').val() ==null  || $('#calendar_contentM').val() ==null ){
+  				alert("입력하지 않은 정보가 있습니다. 빠짐없이 입력해주세요.");
+  				
+  				 }else{
+    		$.ajax({
+    			
+    			url:"modifySchedule.do",
+    			data:{calendar_no :calendar_no, calendar_start_date : modifyStartSchedule,
+    					calendar_end_date : modifyEndSchedule,calendar_title : $('#calendar_titleM').val(),
+    					calendar_content :$('#calendar_contentM').val()
+    					},
+    			type:"post",
+    			success:function(data){
+    				
+    				modal2Close();
+    				modal1Close();
+    				location.href="mainView.do";
+    				
+    				calendarLoad();
+    			}
+    		});
+  				 }
+    		
+    	}
+    	//일정 추가
+    	function addSchedule(){
+    		
+    		var addstartDate=$('#addstartDate').val();
+    		var addstartTime=$('#addstartTime').val();
+    		
+    		var addstart=addstartDate+" "+addstartTime;
+    		
+    		var addendDate=$('#addendDate').val();
+    		var addendTime=$('#addendTime').val();
+    		
+    		var addend=addendDate+" "+addendTime;
+    		
+    		var addcalendar_title=$('#addcalendar_title').val();
+    		var addcalendar_content=$('#addcalendar_content').val();
+    		
+    		
+    		if($('#addstartDate').val() ==null || $('#addstartTime').val() ==null 
+  					|| $('#addendDate').val()  ==null || $('#addendTime').val() ==null  || $('#addcalendar_title').val() ==null  || $('#addcalendar_content').val() ==null ){
+  				alert("입력하지 않은 정보가 있습니다. 빠짐없이 입력해주세요.");
+  				
+  				 }else{
+  					 
+  					 $.ajax({
+  						 
+  						 url:"addSchedule.do",
+  						 data:{emp_no:"${loginEmp.emp_no}",calendar_title:addcalendar_title,calendar_content:addcalendar_content,calendar_start_date:addstart,calendar_end_date:addend},
+  					 	 type:"post",
+  					 	 success:function(data){
+  					 		
+  					 		modal3Close();
+  					 		location.href="mainView.do";
+  							calendarLoad(); 
+  					 	 }
+  					 });
+  					 
+  					 
+  					 
+  					 
+  				 }
+    	}
+    	//일정 삭제
+    	function deleteSchedule(calendar_no){
+    		alert("deleteSchedule");
+    		$.ajax({
+    			url:"deleteSchedule.do",
+    			data:{calendar_no:calendar_no},
+    			type:"post",
+    			success:function(data){
+    				alert(data);
+    				modal1Close();
+    				location.href="mainView.do";
+    				calendarLoad();
+    			}
+    		})
+    		
+    		
+    	}
+</script>
 
-
-    	
-    /*
-    $(function(){
+ <script type="text/javascript">//날씨
+    
+    /* $(function(){
     	
     	var city = '${loginEmp.getCity()}';
 		var county = '${loginEmp.getCounty()}';
@@ -124,11 +411,11 @@
 			
 		}); //end of ajax
 		
-	}); */
+	});  */
     
 	
 	</script>
-	<script type="text/javascript">
+	<script type="text/javascript">//todolist
     
     var count = 1;    
     function addKeywordForm(){
@@ -165,11 +452,7 @@
     </script>
     <style>
    
-   
-    #calendar { max-width: 900px; margin: 0 auto; }
 
-
-    
     </style>
         <style type="text/css">
    .form-control{
@@ -320,11 +603,326 @@
                 <div class="col-xs-12">
               <div class="x_panel tile">
                 <div class="x_title">
-                  <h2>App Versions</h2>
+                  <h2>Calendar</h2>
                   <div class="clearfix"></div>
                 </div>
-                <div class="x_content" id="calendar2">
+                <div class="x_content" id="myCalendar">
+               
+				<div id="addschedule"></div>
+			
+	
+											
 
+				  <!-- calendar detail modal -->
+				  	  <div class="modal fade sendMsg" tabindex="-1" role="dialog"
+                                 id="modal1" aria-hidden="true" >
+                                 <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                       <form class="form-horizontal form-label-left input_mask">
+                                          <div class="modal-header">
+                                             <button type="button" class="close" data-dismiss="modal" onclick="modal1Close();">
+                                                <span aria-hidden="true">×</span>
+                                             </button>
+                                             <h4 class="modal-title" id="myModalLabel">schedule</h4>
+                                          </div>
+
+                                          <div class="modal-body">
+                                
+										<div class="row">
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							<div class="x_panel">
+								<div class="x_title">
+									<h2>schedule</h2>
+									<div class="clearfix"></div>
+								</div>
+								<div class="x_content">
+									<form class="form-horizontal form-label-left">
+
+										<div class="form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12">시작일자
+											</label>
+											<div class="col-md-9 col-sm-9 col-xs-12">
+												<input type="text"  id="startDate"
+													class="form-control" readonly style="width:30%;">
+												
+											</div>
+											</div>
+											<div class="form-group">
+												<label class="control-label col-md-3 col-sm-3 col-xs-12"
+												>종료일자 
+											</label>
+											<div class="col-md-9 col-sm-9 col-xs-12" style="">
+												<input type="text"  id="endDate"
+													class="form-control" readonly style="width:30%;">
+												
+											</div>
+											</div>
+										
+										
+										<div class="form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12"
+												for="first-name">작성자 
+											</label>
+											<div class="col-md-9 col-sm-9 col-xs-12">
+											<input type="text"  id="writer"
+													class="form-control" readonly style="width:20%;">
+											</div>
+										</div>
+												<div class="form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12"
+												for="first-name">부서명
+											</label>
+											<div class="col-md-9 col-sm-9 col-xs-12">
+											<input type="text"  id="dept_name"
+													class="form-control" readonly style="width:20%;">
+											</div>
+										</div>
+													<div class="form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12"
+												for="first-name">제목
+											</label>
+											<div class="col-md-9 col-sm-9 col-xs-12">
+											<input type="text"  id="calendar_title"
+													class="form-control" readonly style="width:50%;">
+											</div>
+										</div>
+										    <div class="form-group">
+
+                                                      <label
+                                                         class="control-label col-md-3 col-sm-3 col-xs-12">내용</label>
+                                                      <div class="col-md-9 col-sm-9 col-xs-12">
+                                                         <textarea class="form-control" rows="8"
+                                                            id="calendar_content" readonly></textarea>
+                                                      </div>
+                                                   </div>
+									
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+									
+									
+                                          </div>
+                                        <div class="modal-footer">
+                                             
+                                             <button onclick="modal1Close();" type="button"
+                                                class="btn btn-primary" id="modalButton" style="float:right; margin-left:0.5%;">확인</button>
+                                              <div id="modifyModal1"></div>
+                                          </div>
+                                       </form>
+
+                                    </div>
+                                 </div>
+                              </div>
+                              <!-- 스케줄 수정하기 -->
+                              	  <div class="modal fade sendMsg" tabindex="-1" role="dialog"
+                                 id="modal2" aria-hidden="true" >
+                                 <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                       <form class="form-horizontal form-label-left input_mask">
+                                          <div class="modal-header">
+                                             <button type="button" class="close" data-dismiss="modal" onclick="modal1Close();">
+                                                <span aria-hidden="true">×</span>
+                                             </button>
+                                             <h4 class="modal-title" id="myModalLabel">schedule</h4>
+                                          </div>
+
+                                          <div class="modal-body">
+                                
+										<div class="row">
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							<div class="x_panel">
+								<div class="x_title">
+									<h2>schedule</h2>
+									<div class="clearfix"></div>
+								</div>
+								<div class="x_content">
+									<form class="form-horizontal form-label-left">
+
+										<div class="form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12">시작일자
+											</label>
+											<div class="col-md-9 col-sm-9 col-xs-12">
+												<input type="date"  id="startDateM"
+													class="form-control" style="width:30%;" onblur="checkDate();">
+												<input type="time"  id="startTimeM"
+													class="form-control" style="width:30%;">
+											</div>
+											</div>
+											<div class="form-group">
+												<label class="control-label col-md-3 col-sm-3 col-xs-12"
+												>종료일자 
+											</label>
+											<div class="col-md-9 col-sm-9 col-xs-12" style="">
+												<input type="date"  id="endDateM"
+													class="form-control" style="width:30%;" onblur="checkDate();">
+												<input type="time"  id="endTimeM"
+													class="form-control" style="width:30%;">
+												
+											</div>
+											</div>
+										
+										
+										<div class="form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12"
+												for="first-name">작성자 
+											</label>
+											<div class="col-md-9 col-sm-9 col-xs-12">
+											<input type="text"  id="writerM"
+													class="form-control" readonly style="width:20%;">
+											</div>
+										</div>
+												<div class="form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12"
+												for="first-name">부서명
+											</label>
+											<div class="col-md-9 col-sm-9 col-xs-12">
+											<input type="text"  id="dept_nameM"
+													class="form-control" readonly style="width:20%;">
+											</div>
+										</div>
+													<div class="form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12"
+												for="first-name">제목
+											</label>
+											<div class="col-md-9 col-sm-9 col-xs-12">
+											<input type="text"  id="calendar_titleM"
+													class="form-control" style="width:50%;">
+											</div>
+										</div>
+										    <div class="form-group">
+
+                                                      <label
+                                                         class="control-label col-md-3 col-sm-3 col-xs-12">내용</label>
+                                                      <div class="col-md-9 col-sm-9 col-xs-12">
+                                                         <textarea class="form-control" rows="8"
+                                                            id="calendar_contentM"></textarea>
+                                                      </div>
+                                                   </div>
+									
+													</form>
+													</div>
+												</div>
+											 </div>
+										</div>
+									</div>
+                                        <div class="modal-footer">
+                                             
+                                             <button onclick="modal2Close();" type="button"
+                                                class="btn btn-primary" id="modalButtonMd" style="float:right;">취소</button>
+                                              <div id="modifySchedule"></div>
+                                          </div>
+                                       </form>
+
+                                    </div>
+                                 </div>
+                              </div>
+                              <!-- 일정 추가 -->
+                               	  <div class="modal fade sendMsg" tabindex="-1" role="dialog"
+                                 id="modal3" aria-hidden="true" >
+                                 <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                       <form class="form-horizontal form-label-left input_mask">
+                                          <div class="modal-header">
+                                             <button type="button" class="close" data-dismiss="modal" onclick="modal3Close();">
+                                                <span aria-hidden="true">×</span>
+                                             </button>
+                                             <h4 class="modal-title" id="myModalLabel">schedule</h4>
+                                          </div>
+
+                                          <div class="modal-body">
+                                
+										<div class="row">
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							<div class="x_panel">
+								<div class="x_title">
+									<h2>schedule</h2>
+									<div class="clearfix"></div>
+								</div>
+								<div class="x_content">
+									<form class="form-horizontal form-label-left">
+
+										<div class="form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12">시작일자
+											</label>
+											<div class="col-md-9 col-sm-9 col-xs-12">
+												<input type="date"  id="addstartDate"
+													class="form-control" style="width:30%;" onblur="checkDates();">
+												<input type="time"  id="addstartTime"
+													class="form-control" style="width:30%;">
+											</div>
+											</div>
+											<div class="form-group">
+												<label class="control-label col-md-3 col-sm-3 col-xs-12"
+												>종료일자 
+											</label>
+											<div class="col-md-9 col-sm-9 col-xs-12" style="">
+												<input type="date"  id="addendDate"
+													class="form-control" style="width:30%;" onblur="checkDates();">
+												<input type="time"  id="addendTime"
+													class="form-control" style="width:30%;">
+												
+											</div>
+											</div>
+										
+										
+										<div class="form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12"
+												for="first-name">작성자 
+											</label>
+											<div class="col-md-9 col-sm-9 col-xs-12">
+											<input type="text"  id="addwriter"
+													class="form-control" readonly style="width:20%;" >
+											</div>
+										</div>
+												<div class="form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12"
+												for="first-name">부서명
+											</label>
+											<div class="col-md-9 col-sm-9 col-xs-12">
+											<input type="text"  id="adddept_name"
+													class="form-control" readonly style="width:20%;" >
+											</div>
+										</div>
+													<div class="form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12"
+												for="first-name">제목
+											</label>
+											<div class="col-md-9 col-sm-9 col-xs-12">
+											<input type="text"  id="addcalendar_title"
+													class="form-control" style="width:50%;">
+											</div>
+										</div>
+										    <div class="form-group">
+
+                                                      <label
+                                                         class="control-label col-md-3 col-sm-3 col-xs-12">내용</label>
+                                                      <div class="col-md-9 col-sm-9 col-xs-12">
+                                                         <textarea class="form-control" rows="8"
+                                                            id="addcalendar_content"></textarea>
+                                                      </div>
+                                                   </div>
+									
+													</form>
+													</div>
+												</div>
+											 </div>
+										</div>
+									</div>
+                                        <div class="modal-footer">
+                                             
+                                             <button onclick="modal3Close();" type="button"
+                                                class="btn btn-primary" style="float:right;">취소</button>
+                                             <button onclick="addSchedule();" type="button"
+                                                class="btn btn-primary" id="addScheduleBlue" style="float:right;">추가</button>
+                                          </div>
+                                       </form>
+
+                                    </div>
+                                 </div>
+                              </div>
+                           
                 </div>
               </div>
             </div>

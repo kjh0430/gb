@@ -135,17 +135,18 @@
 		
 	<script type="text/javascript" src="resources/js/map.js?ver=9"></script>		
 	<script type="text/javascript">
-	
+	var emp_no = ${loginEmp.emp_no};
 	$(function(){
+		alert("!!");
 		document.getElementById("daily_date").valueAsDate = new Date();		
-		selectVisit('${loginEmp.emp_no}');	
-		selectOrder('${loginEmp.emp_no}');	
+		selectVisit(emp_no);	
+		selectOrder(emp_no);	
 		
 	});//onload
 
 	function selectDailyreport(){		
-		selectVisit('${loginEmp.emp_no}');	
-		selectOrder('${loginEmp.emp_no}');	
+		selectVisit(emp_no);	
+		selectOrder(emp_no);	
 	}
 	
 	

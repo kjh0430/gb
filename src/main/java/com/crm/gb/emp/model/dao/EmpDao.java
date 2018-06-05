@@ -66,8 +66,6 @@ public class EmpDao {
 	
 	/*이메일 중복검사*/
 	public Emp selectCheckEmail(String emp_email) {
-		System.out.println("emp_email dao 실행");
-		System.out.println("emp_email : " + emp_email);
 		return sqlSession.selectOne("selectCheckEmail", emp_email);
 	}
 
@@ -78,6 +76,26 @@ public class EmpDao {
 	/*상사이름 조회*/
 	public Emp selectMgrNo(int emp_no) {
 		return sqlSession.selectOne("selectMgrNo", emp_no);
+	}
+
+	/*사원번호 중복검사*/
+	public Emp selectCheckEmpNo(int emp_no) {
+		return sqlSession.selectOne("selectCheckEmpNo", emp_no);
+	}
+
+	public Emp selectMyInfo(Emp emp) {
+		
+		return sqlSession.selectOne("selectMyInfo",emp);
+	}
+
+	public Emp selectEmail(Emp emp) {
+		
+		return sqlSession.selectOne("selectEmail",emp);
+	}
+
+	public Emp selectPhone(Emp emp) {
+		
+		return sqlSession.selectOne("selectPhone",emp);
 	}
 	
 }

@@ -17,24 +17,7 @@
 <!-- Font Awesome -->
 <link href="resources/vendors/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet">
-<!-- NProgress -->
-<link href="resources/vendors/nprogress/nprogress.css" rel="stylesheet">
-<!-- iCheck -->
-<link href="resources/vendors/iCheck/skins/flat/green.css"
-	rel="stylesheet">
-
-<!-- bootstrap-progressbar -->
-<link
-	href="resources/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css"
-	rel="stylesheet">
-<!-- JQVMap -->
-<link href="resources/vendors/jqvmap/dist/jqvmap.min.css"
-	rel="stylesheet" />
-<!-- bootstrap-daterangepicker -->
-<link
-	href="resources/vendors/bootstrap-daterangepicker/daterangepicker.css"
-	rel="stylesheet">
-
+	
 <!-- Custom Theme Style -->
 <link href="resources/build/css/custom.min.css" rel="stylesheet">
 <link href="resources/css/main.css" rel="stylesheet">
@@ -43,38 +26,57 @@
 
 
 <script type="text/javascript">
+var team_no="";
+var admin_no="";
 	$(document).ready(function() {
 	
-			
 		//팀장 이름, 및 관리자 이름 가져오기
-		$.ajax({
+ 		$.ajax({
 			url:"getName.do",
 			data:{emp_no :"${loginEmp.emp_no}"
 			},
 			type:"post",
 			dataType:"json",
 			success:function(data){
-			
+				
 				$('#team_mgr').val(decodeURIComponent(data.team_mgr_name.replace(/\+/g," ")));
 				$('#mgr_name').val(decodeURIComponent(data.mgr_name.replace(/\+/g," ")));
 				$('#team_mgr_no').val(data.team_mgr_no);
 				$('#mgr_no').val(data.mgr_no); //관리자의 사원번호
-				alert("data.mgr_no"+data.mgr_no);
-				alert("team_mgr_no"+data.team_mgr_no);
-			
+
+				team_no=data.team_mgr_no;
+				admin_no=data.mgr_no;				
 			}
 		
 		
-		});
-		
-		
-	
-			
-			
-		
-		
+		}); 
 	
 	});
+function submitApproval(){
+	alert(admin_no);
+	 $.ajax({
+			url:"submitApproval.do",
+			data:{emp_no : "${loginEmp.emp_no}",approval_start_date:$('#startDate').val(),approval_end_date:$('#endDate').val(),approval_team_no:team_no,approval_mgr_no:admin_no,
+				approval_choose_no:$('#selectReason').val(),approval_comment:$('#approval_comment').val()
+				},
+			type:"post",
+			success:function(data){
+				alert(data);
+				ws.send(team_no);
+				location.href="approvalListE.do?emp_no=${loginEmp.emp_no}";
+				
+				
+				
+				
+			}
+           
+			
+			
+		}); 
+	
+	
+}	
+
 	
 function resetContent(){
 	
@@ -109,74 +111,11 @@ function resetContent(){
 				</div>
 			</div>
 
+			
 			<!-- top navigation -->
-			<div class="top_nav">
-				<div class="nav_menu">
-					<nav>
-						<div class="nav toggle">
-							<a id="menu_toggle"><i class="fa fa-bars"></i></a>
-						</div>
-
-						<ul class="nav navbar-nav navbar-right">
-							<li class=""><a href="javascript:;"
-								class="user-profile dropdown-toggle" data-toggle="dropdown"
-								aria-expanded="false"> <img src="images/img.jpg" alt="">${loginEmp.emp_name}
-								<span class=" fa fa-angle-down"></span>
-							</a>
-								<ul class="dropdown-menu dropdown-usermenu pull-right">
-									<li><a href="javascript:;"> Profile</a></li>
-									<li><a href="javascript:;"> <span
-											class="badge bg-red pull-right">50%</span> <span>Settings</span>
-									</a></li>
-									<li><a href="javascript:;">Help</a></li>
-									<li><a href="logout.do"><i
-											class="fa fa-sign-out pull-right"></i> Log Out</a></li>
-								</ul></li>
-
-							<li role="presentation" class="dropdown"><a
-								href="javascript:;" class="dropdown-toggle info-number"
-								data-toggle="dropdown" aria-expanded="false"> <i
-									class="fa fa-envelope-o"></i> <span class="badge bg-green">6</span>
-							</a>
-								<ul id="menu1" class="dropdown-menu list-unstyled msg_list"
-									role="menu">
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li>
-										<div class="text-center">
-											<a> <strong>See All Alerts</strong> <i
-												class="fa fa-angle-right"></i>
-											</a>
-										</div>
-									</li>
-								</ul></li>
-						</ul>
-					</nav>
-				</div>
-			</div>
+			<%@ include file="../etc/topnav.jsp"%>
 			<!-- /top navigation -->
+			
 
 			<!-- page content -->
 			<div class="right_col" role="main">
@@ -198,7 +137,7 @@ function resetContent(){
 								</div>
 								<div class="x_content">
 									<form id="demo-form2" data-parsley-validate
-										class="form-horizontal form-label-left" action="submitApproval.do" method="post">
+										class="form-horizontal form-label-left">
 
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12"
@@ -236,8 +175,6 @@ function resetContent(){
 												<div class="input-group" style="margin-bottom:0px;">
 													<input type="text" class="form-control" id="team_mgr" readonly> <span
 														class="input-group-btn">
-														<input type="hidden" name="approval_team_no" id="team_mgr_no"/>	
-														
 													</span>
 												</div>
 											</div>
@@ -249,7 +186,7 @@ function resetContent(){
 												<div class="input-group" style="margin-bottom:0px;">
 													<input type="text" class="form-control" id="mgr_name" readonly> <span
 														class="input-group-btn">
-													<input type="hidden" name="approval_mgr_no" id="mgr_no"/>
+													
 													</span>
 												</div>
 											</div>
@@ -265,85 +202,24 @@ function resetContent(){
 										<div class="form-group">
 											<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
 												<button class="btn btn-danger" type="reset" onclick="resetContent();">Reset</button>
-												<button type="submit" class="btn btn-primary">Submit</button>
+												<button  type="button" class="btn btn-primary" onclick="submitApproval();">Submit</button>
 											</div>
 										</div>
-									</form>
-									
+										</form>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+			<!-- footer content -->
+			<%@ include file="../etc/footer.jsp"%>
+			<!-- /footer content -->
 		</div>
 	</div>
 	
 	
-	<!-- 결재자 modal start -->
-
-	<!-- <div class="modal fade ap1-modal-lg" tabindex="-1"
-		role="dialog" aria-hidden="true">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">
-						<span aria-hidden="true">×</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">결재자 선택1</h4>
-				</div>
-				<div class="modal-body">
-					
-					<form class="form-horizontal form-label-left input_mask">
-						<div class="form-group">
-							<div class="row">
-							<label class="col-sm-2 control-label">사원명</label>
-								<div class="col-sm-10">	
-									<div class="input-group">
-										<input type="text" class="form-control"> <span class="input-group-btn">
-											<button type="button" class="btn btn-primary">
-												<i class="fa fa-search"></i>
-											</button>
-										</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<table id="ap_emp1" class="table table-striped table-bordered ap_emp">
-								<tr>
-									<th>사원번호</th>
-									<th>사원명</th>
-									<th>소속팀</th>
-									<th>직급</th>
-									<th>선택</th>
-								</tr>
-								<tr>
-									<td>04</td>
-									<td>채치수</td>
-									<td>영업 1팀</td>
-									<td>팀장</td>
-									<td><input type="button" class="btn btn-dark btn-input" value="선택"/></td>
-								</tr>
-								<tr>
-									<td>15</td>
-									<td>채치수</td>
-									<td>영업 1팀</td>
-									<td>팀장</td>
-									<td><input type="button" class="btn btn-dark btn-input" value="선택"/></td>
-								</tr>
-							
-							</table>
-						</div>
-					</form>
-					
-				</div>
-			</div>
-		</div>
-	</div> -->
-	<!-- client modal end -->
-
-	<!-- /page content -->
+	
 
 
 

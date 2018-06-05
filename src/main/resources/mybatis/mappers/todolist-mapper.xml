@@ -24,8 +24,8 @@
 	<insert id="todolistInsert" parameterType="TodoList">
 	<![CDATA[
 		insert into todolist
-		values (#{emp_no}, #{do1}, default, #{do2}, default,
-		#{do3}, default, #{do4}, default, #{do5}, default, sysdate)
+		values (#{emp_no}, #{todo1, jdbcType = VARCHAR}, default, #{todo2, jdbcType = VARCHAR}, default,
+		#{todo3, jdbcType = VARCHAR}, default, #{todo4, jdbcType = VARCHAR}, default, #{todo5, jdbcType = VARCHAR}, default, sysdate)
 	]]>
 	</insert>
 

@@ -47,26 +47,6 @@
 		]]> 
 	</update>
 	
-	<insert id="insertNotify" parameterType="notify">
-		<![CDATA[
-		insert into notify values((select max(notify_no)+1 from notify),
-		#{notify_from},#{notify_to},default,default)		
-		]]>	
-	</insert>
-	
-	<select id="selectNotify" parameterType="notify" resultType="notify">
-		<![CDATA[
-		select * from(select rownum,notify_no,emp_name,notify_from,notify_to,to_char(notify_date,'yyyy-mm-dd hh24:mi') as notify_date,notify_read from notify n, emp e where n.notify_from = e.emp_no 
-		and notify_to = ${emp_no} and notify_read like 'N' order by notify_date) where rownum >=1 and rownum <=5
-		]]>	
-	</select>
-	
-	<update id="updateNotify" parameterType="notify">
-		<![CDATA[
-		update notify set notify_read='Y' where notify_no=#{notify_no}
-		]]> 
-	</update>
-	
 	<select id="countMsg" parameterType="_int" resultType="_int">
 		<![CDATA[		
 		select count(*) from message where message_to_no = #{emp_no} and message_confirm = 'N'

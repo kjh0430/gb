@@ -2377,7 +2377,7 @@ if (typeof NProgress != 'undefined') {
 		
 		};
 	   
-	   	/* CALENDAR */
+		/* CALENDAR */
 		  
 		    function  init_calendar() {
 					
