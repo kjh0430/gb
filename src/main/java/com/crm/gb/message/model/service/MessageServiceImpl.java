@@ -50,5 +50,11 @@ public class MessageServiceImpl implements MessageService {
 		return messageDao.countMsg(emp_no);
 	}
 
+	@Override
+	public int selectgetListCount(Message message) {
+		
+		return messageDao.selectgetListCount(message);
+	}
+
 	
 }

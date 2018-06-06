@@ -29,6 +29,7 @@ public class Message implements Serializable {
 	
 	
 	//paging 처리를 위한 변수
+	private int listCount;
 	private int currentPage;
 	private int startRow;
 	private int endRow;
@@ -36,7 +37,7 @@ public class Message implements Serializable {
 	}
 	public Message(int message_no, int message_from_no, int message_to_no, String message_title, String message_content,
 			String message_date, String message_confirm, String emp_email, String dept_name, String emp_name,
-			String job_name, int emp_no, int currentPage, int startRow, int endRow) {
+			String job_name, int emp_no, int listCount, int currentPage, int startRow, int endRow) {
 		super();
 		this.message_no = message_no;
 		this.message_from_no = message_from_no;
@@ -50,6 +51,7 @@ public class Message implements Serializable {
 		this.emp_name = emp_name;
 		this.job_name = job_name;
 		this.emp_no = emp_no;
+		this.listCount = listCount;
 		this.currentPage = currentPage;
 		this.startRow = startRow;
 		this.endRow = endRow;
@@ -126,6 +128,12 @@ public class Message implements Serializable {
 	public void setEmp_no(int emp_no) {
 		this.emp_no = emp_no;
 	}
+	public int getListCount() {
+		return listCount;
+	}
+	public void setListCount(int listCount) {
+		this.listCount = listCount;
+	}
 	public int getCurrentPage() {
 		return currentPage;
 	}
@@ -150,8 +158,13 @@ public class Message implements Serializable {
 				+ message_to_no + ", message_title=" + message_title + ", message_content=" + message_content
 				+ ", message_date=" + message_date + ", message_confirm=" + message_confirm + ", emp_email=" + emp_email
 				+ ", dept_name=" + dept_name + ", emp_name=" + emp_name + ", job_name=" + job_name + ", emp_no="
-				+ emp_no + ", currentPage=" + currentPage + ", startRow=" + startRow + ", endRow=" + endRow + "]";
+				+ emp_no + ", listCount=" + listCount + ", currentPage=" + currentPage + ", startRow=" + startRow
+				+ ", endRow=" + endRow + "]";
 	}
+	
+	
+	
+	
 	
 
 	

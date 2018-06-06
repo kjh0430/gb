@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONArray;
@@ -95,9 +96,9 @@ public class MessageController {
 		message.setMessage_date(getdate);
 		
 		int result=MessageService.insertMessage(message);
-		if(result>0) {
+	/*	if(result>0) {
 			sendmsg = new Message(message.getMessage_from_no(),message.getMessage_to_no(),message.getMessage_date());
-		}
+		}*/
 		
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out=response.getWriter();
@@ -108,20 +109,35 @@ public class MessageController {
 	
 	//받은 메시지함
 	@RequestMapping(value="getMessage.do",method=RequestMethod.GET)
-	public void getMessage(Message message ,HttpServletResponse  response) throws IOException {		
+	public void getMessage(Message message ,HttpServletResponse  response,HttpServletRequest request) throws IOException {		
 		
 		int currentPage=1;
+		if(request.getParameter("page")!=null) {
+			currentPage=Integer.parseInt(request.getParameter("page"));
+		}
+		int limit=10;
+		int listCount=MessageService.selectgetListCount(message);
+		System.out.println("listCount"+listCount);
+		
+		message.setStartRow((currentPage-1)*limit+1);
+		message.setEndRow(message.getStartRow()+limit-1);
+		
 		ArrayList<Message> receiveMessage=MessageService.selectReceiveMessage(message);		
 		
+		int maxPage=(int)((double)listCount/limit+0.9);
+		int startPage=((int)(double)(currentPage-1)/10)*10+1;
+		int endPage=startPage+5-1;
 		
-		
-		/*int maxPage=(int)((double)listCount_2/pageSize+0.9);*/
+		System.out.println("maxPage"+maxPage);
+		System.out.println("startPage"+startPage);
+		if(maxPage<endPage) {
+			endPage=maxPage;
+		}
 		JSONArray jarr=new JSONArray();
 
 		for(Message msg : receiveMessage) {
 			
 			JSONObject jsonobject=new JSONObject();			
-			//System.out.println("받은 메시지함:"+msg.getEmp_name()+","+msg.getMessage_from_no());
 			jsonobject.put("from_empName",msg.getEmp_name());
 			jsonobject.put("from_empNo",msg.getMessage_from_no());
 			jsonobject.put("message_title",msg.getMessage_title());
@@ -129,6 +145,11 @@ public class MessageController {
 			jsonobject.put("message_content", msg.getMessage_content());
 			jsonobject.put("message_no",msg.getMessage_no());
 			jsonobject.put("message_confirm",msg.getMessage_confirm());
+			jsonobject.put("currentPage",currentPage);
+			jsonobject.put("maxPage",maxPage);
+			jsonobject.put("startPage",startPage);
+			jsonobject.put("endPage",endPage);
+			
 			jarr.add(jsonobject);
 			
 			}
