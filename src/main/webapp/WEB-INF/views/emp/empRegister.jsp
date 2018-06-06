@@ -158,7 +158,16 @@ function Regiemp(){
 											    			dept_no : dept_no											    			
 											    		},
 											    		success:function(obj){
-											    			alert("사원이 등록되었습니다.");
+											    			$.ajax({
+													    		url : "empList.do",
+													    		type: "post",
+													    		success:function(obj){
+													    			},
+													    			error: function(){
+													    			alert("사원이 등록되었습니다.");
+													    			}
+													    		});
+											    			
 											    			},
 											    			error: function(){
 											    			}
