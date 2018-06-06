@@ -77,6 +77,7 @@ var allCheck=false;
 			alert("비밀번호가 일치하지 않습니다.");
 			$('#emp_pwd1').val("");
 			$('#emp_pwd2').val("");
+			allCheck=false;
 		}
 	});
 	
@@ -125,7 +126,8 @@ var allCheck=false;
 });
 
 function checkCondition(){
-	var pwd_pattern=/^[A-Za-z0-9]{5,10}$/; //숫자와 문자 포함 형태의  5에서 10자리 비밀번호
+	var pwd_pattern= /^[A-Za-z0-9]{5,10}$/; //숫자와 문자 포함 형태의  5에서 10자리 비밀번호
+	var pwd_pattern1= /^[a-zA-Z0-9]{5,10}$/; //숫자와 영문자 조합으로 5에서 10자리
 	var phone_pattern = /^\d{3}-\d{3,4}-\d{4}$/;
 	var email_pattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 	
@@ -134,11 +136,8 @@ function checkCondition(){
 	var email=$('#emp_email').val();
 	var phone=$('#emp_phone').val();
 	
-	
-	var pwdcheck="false";
-	var emailcheck="false";
-	var phonecheck="false";
-	if(!pwd_pattern.test(password1) && !pwd_pattern.test(password2)){
+
+	if(!pwd_pattern.test(password2)){
 		alert("비밀번호는 숫자,문자 포함 5~10자리 입니다.");
 		allCheck=false;
 		return allCheck; 
@@ -152,6 +151,7 @@ function checkCondition(){
 		return allCheck;
 	}if(pwd_pattern.test(password1) && pwd_pattern.test(password2) && phone_pattern.test(phone) && email_pattern.test(email)){
 		allCheck=true;
+		alert("수정이 완료 되었습니다.");
 		return allCheck;
 		
 	}

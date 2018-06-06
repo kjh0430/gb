@@ -110,7 +110,12 @@ public class MessageController {
 	@RequestMapping(value="getMessage.do",method=RequestMethod.GET)
 	public void getMessage(Message message ,HttpServletResponse  response) throws IOException {		
 		
+		int currentPage=1;
 		ArrayList<Message> receiveMessage=MessageService.selectReceiveMessage(message);		
+		
+		
+		
+		/*int maxPage=(int)((double)listCount_2/pageSize+0.9);*/
 		JSONArray jarr=new JSONArray();
 
 		for(Message msg : receiveMessage) {
