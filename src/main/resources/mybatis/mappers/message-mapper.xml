@@ -35,7 +35,7 @@
 		to_char(message_date,'yyyy-mm-dd hh24:mi:ss') 
 		as message_date,message_no,message_confirm 
 		from message m,emp e where m.message_to_no=#{message_to_no}
-		and e.emp_no=m.message_from_no order by m.message_date desc,m.message_confirm desc)where rnum>=#{startRow} and rnum<=#{endRow}
+		and e.emp_no=m.message_from_no order by m.message_confirm asc,m.message_date desc)where rnum>=#{startRow} and rnum<=#{endRow}
 		]]> 		
 	</select>
 

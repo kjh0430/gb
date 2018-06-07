@@ -41,10 +41,16 @@ public class EmpController {
 	@Autowired
 	private BCryptPasswordEncoder pwdEncoder;
 	
-	//개인 정보 수정
+	//개인 정보
 	@RequestMapping("info.do")
-	public String  modifyInfo() {
+	public String  Info() {
 		return "emp/myInfo";
+	}
+	
+	//비밀번호 수정하기
+	@RequestMapping("modifyPassword.do")
+	public String modifyPassword() {
+		return "emp/modifyPassword";
 	}
 	
 	
@@ -468,13 +474,21 @@ public class EmpController {
 	@RequestMapping(value="modifyInfo.do",method=RequestMethod.POST)
 	public String updateEmpDelete(Emp emp) {
 		
-		String pwd =pwdEncoder.encode(emp.getEmp_pwd());
-		emp.setEmp_pwd(pwd);
-		
 		int result=empService.updateMyInfo(emp);	
 		
 		return "emp/myInfo";
 	}
 
+	
+		@RequestMapping(value="updatePassword.do",method=RequestMethod.POST)
+		public String updatePassword(Emp emp) {
+		
+		String pwd =pwdEncoder.encode(emp.getEmp_pwd());
+		emp.setEmp_pwd(pwd);
+		
+		int result=empService.updatePassword(emp);	
+		
+		return "emp/myInfo";
+	}
 
 }

@@ -45,7 +45,7 @@
 <script type="text/javascript">
 $(function(){
 
-/* var allCheck=false; */
+var allCheck=false;
 
 	//내 정보 가져오기
 	$.ajax({
@@ -67,21 +67,8 @@ $(function(){
 		}		
 	});
 	
- 	/* $('#emp_pwd2').blur(function(){
-		var p1=$('#emp_pwd1').val();
-		var p2=$('#emp_pwd2').val();
-		
-		if(p1==p2){
-			alert("비밀번호가 일치합니다.");
-		}else{
-			alert("비밀번호가 일치하지 않습니다.");
-			$('#emp_pwd1').val("");
-			$('#emp_pwd2').val("");
-			allCheck=false;
-		}
-	});  */
 	
-	/* $('#emp_email').blur(function(){
+	 $('#emp_email').blur(function(){
 		
 		
 		$.ajax({
@@ -101,9 +88,9 @@ $(function(){
 		});
 		
 	
-	}); */
+	});
 	
-/* 	$('#emp_phone').blur(function(){
+ 	$('#emp_phone').blur(function(){
 
 		$.ajax({
 			
@@ -121,42 +108,21 @@ $(function(){
 			}
 			
 		});
-	}); */
+	});
 	
 });
-function modifyPassword(){
 
-	location.href="modifyPassword.do";
-	
-}
 
-/*  function checkCondition(){
+  function checkCondition(){
 	
-	var pwd_pattern= /^[A-Za-z0-9]{5,10}$/; //숫자와 문자 포함 형태의  5에서 10자리 비밀번호
-	var pwd_pattern1= /^[a-zA-Z0-9]{5,10}$/; //숫자와 영문자 조합으로 5에서 10자리
+	
 	var phone_pattern = /^\d{3}-\d{3,4}-\d{4}$/;
 	var email_pattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 	
-	var password1=$('#emp_pwd1').val();
-	var password2=$('#emp_pwd2').val();
+	
 	var email=$('#emp_email').val();
 	var phone=$('#emp_phone').val();
 	
-	var checkN = password2.search(/[0-9]/g); 
-	 var checkE = password2.search(/[a-z]/ig);
-	
-	if(!pwd_pattern.test(password2)){
-		alert("비밀번호는 숫자,문자 포함 5~10자리 입니다.");
-		return false; 
-	}    
-
-    if(checkN<0 || checkE< 0)
-
-    { 
-        alert("숫자와 영문자가 조합 되어야 합니다.!"); 
-        return false;
-    }
-
 	if(!phone_pattern.test(phone)){
 		alert("올바른 전화번호 형식이 아닙니다.ex)010-1234-5678");
 		allCheck=false;
@@ -165,13 +131,17 @@ function modifyPassword(){
 		alert("올바른 e-mail 형식이 아닙니다.");
 		allCheck=false;
 		return allCheck;
-	}if(pwd_pattern.test(password1) && pwd_pattern.test(password2) && phone_pattern.test(phone) && email_pattern.test(email)){
+	}if(phone_pattern.test(phone) && email_pattern.test(email)){
 		allCheck=true;
 		alert("수정이 완료 되었습니다.");
 		return allCheck;
 		
 	}
-} */
+}
+  
+  function backMyInfo(){
+	  location.href="info.do";
+  }
 
 
 
@@ -224,8 +194,8 @@ function modifyPassword(){
 									
 									
 									
-					<!-- <form class="form-horizontal form-label-left" action="modifyInfo.do" method="post" onsubmit="return checkCondition();"> -->
-					<form class="form-horizontal form-label-left">
+					<form class="form-horizontal form-label-left" action="modifyInfo.do" method="post" onsubmit="return checkCondition();">
+				
 					
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">사원번호 *</label>
@@ -233,20 +203,7 @@ function modifyPassword(){
                           <input class="form-control" id="emp_no" name="emp_no" type="text" readonly >
                         </div>
                       </div>
-        <!--               <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">password1</label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input class="form-control" id="emp_pwd1" type="password" placeholder="비밀번호 입력">
-                        </div>
-                       
-                      </div>
-                          <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">password2</label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input class="form-control" id="emp_pwd2" type="password" name="emp_pwd" placeholder="비밀번호 재입력">
-                        </div>
-                       
-                      </div> -->
+                
                       
                       
                       <div class="form-group">
@@ -264,7 +221,7 @@ function modifyPassword(){
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">연락처</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                         <input class="form-control" id="emp_phone" name="emp_phone" type="tel" readonly>
+                         <input class="form-control" id="emp_phone" name="emp_phone" type="tel">
                         </div>
                       </div>
                       <div class="form-group">
@@ -276,7 +233,7 @@ function modifyPassword(){
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">이메일</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input class="form-control" id="emp_email" name="emp_email" type="email" readonly>
+                          <input class="form-control" id="emp_email" name="emp_email" type="email">
                         </div>
                       </div>
                       <div class="form-group">
@@ -321,8 +278,8 @@ function modifyPassword(){
 							
 							</form>
 							<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-							<button class="btn btn-primary" onclick="modifyPassword();">비밀번호 변경</button>
-							<button class="btn btn-danger">개인정보 변경</button>
+							<button class="btn btn-primary">수정</button>
+							<button class="btn btn-danger" onclick="backMyInfo();">취소</button>
 							</div>
 						</div>
 					</div>

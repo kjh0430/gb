@@ -63,8 +63,8 @@ $.ajax({
             +"</td><td>"+json.list[i].message_no
             +"</td></tr>";
       	   }		
-        }
-           		currentPage=json.list[0].currentPage;
+        }	     
+           		 currentPage=json.list[0].currentPage;
 				 var maxPage=json.list[0].maxPage;
 				 var startPage=json.list[0].startPage;
 				 var endPage=json.list[0].endPage;
@@ -376,6 +376,7 @@ $('#receive_msg').html(values);
     	  data:{message_no:a_message_no},
     	  success:function(data){
     		  alert("readMessage success");
+    		 receive();
     		  receive(currentPage);
     		  
     		  
