@@ -69,30 +69,6 @@ public class ProductController {
 		
 		model.addAttribute("list",list);
 					
-		/*JSONObject sendJson = new JSONObject();
-		JSONArray jarr = new JSONArray();
-		
-		for(Product product : list) {
-			JSONObject jp = new JSONObject();
-			jp.put("productno",product.getProduct_no());
-			jp.put("productname",product.getProduct_name());
-			jp.put("productprice", product.getProduct_price());
-			jp.put("productavailability", product.getProduct_availability());
-			jp.put("productamount", product.getProduct_amount());
-			jp.put("productcomment", product.getProduct_comment());
-			jp.put("productregister", product.getProduct_register());
-			jp.put("productdelete", product.getProduct_delete());
-			jarr.add(jp);
-		}
-		JSONObject sendjson = new JSONObject();
-		sendjson.put("list",jarr);
-		
-		response.setContentType("application/json; charset=utf-8");
-		PrintWriter out = response.getWriter();
-		out.print(sendJson.toJSONString());
-		out.flush();
-		out.close();
-*/		
 		return "product/productList";
 	}
 
