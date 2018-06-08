@@ -59,18 +59,11 @@
 	         
 	        </ul>
 	      </li>
-	     
-
-
 	      <li><a href="messageList.do"><i class="fa fa-file-text-o"></i> 쪽지함 <span class="count_badge badge bg-green"></span></a>
 	      </li>
-	       
-
-
 	     <!--  <li><a><i class="fa fa-cog"></i> 설정</a> </li> -->
 	    </ul>
      </div>
-   
    </div>
    <div class="sidebar-footer hidden-small">
      <a data-toggle="tooltip" data-placement="top" title="Settings">
@@ -87,23 +80,18 @@
      </a>
    </div>
    	<script type="text/javascript">
-
 	var emp_no = ${loginEmp.emp_no};
 	var EventSource4 = new EventSource("count.do?emp_no="+emp_no);
 	EventSource4.onopen = function(){
 		//console.log("연결중2");		
 	}
 	EventSource4.onmessage = function(event) {
-		
 		var count = event.data;
 		if(count>0){
-		
 			$(".count_badge").html(count);		
 		}else{
 			$(".count_badge").css("display","none");
 		}
-		
-
 	};
 	
 	</script>
