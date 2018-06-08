@@ -183,9 +183,9 @@ public class OrderController {
 			int pageSize=10;
 			int pageGroupSize=5;		
 			
-			System.out.println("page="+page);
-			System.out.println("pageSize="+pageSize);
-			System.out.println("currentPage="+currentPage);
+//			System.out.println("page="+page);
+//			System.out.println("pageSize="+pageSize);
+//			System.out.println("currentPage="+currentPage);
 			
 			int listCount_1 = orderService.orderListCount();
 			//int listCount_2 = listCount_1.getOrder_list_count();
@@ -217,19 +217,19 @@ public class OrderController {
 			int startPage=(currentPage-1)*pageSize+1;
 			int endPage=startPage+pageSize-1;
 			
-			System.out.println("startPage 시작페이지 = "+startPage);
-			
-			System.out.println("endPage 마지막 페이지 = "+endPage);
-			
-			System.out.println("maxPage 페이지수 계산 = "+maxPage);
-			
-			System.out.println("게시판 갯수 숫자 = "+listCount_1);
+//			System.out.println("startPage 시작페이지 = "+startPage);
+//			
+//			System.out.println("endPage 마지막 페이지 = "+endPage);
+//			
+//			System.out.println("maxPage 페이지수 계산 = "+maxPage);
+//			
+//			System.out.println("게시판 갯수 숫자 = "+listCount_1);
 			
 			order.setStartPage(startPage);
 			order.setEndPage(endPage);
 			
 			
-			System.out.println("order : " + order);
+			//System.out.println("order : " + order);
 			ArrayList<Order> orderList = orderService.selectAllOrderList(order);
 			//System.out.println("orderList: " + orderList.get(0).toString());
 			model.addAttribute("orderList", orderList);
