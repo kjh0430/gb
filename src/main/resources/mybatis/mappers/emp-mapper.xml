@@ -131,10 +131,22 @@
 	<select id="selectMyInfo" parameterType="emp" resultType="emp">
 	<![CDATA[
 	select e.emp_name,e.emp_addr,e.emp_phone,j.job_name,e.emp_email,
-	t.emp_name as mgr_name,e.city,e.county,e.village,d.dept_name from emp e,job j,dept d ,(select emp_name from emp where emp_no=(select emp_mgr from emp where emp_no=#{emp_no})) t
-	where e.emp_no=#{emp_no} and e.job_no=j.job_no and d.dept_no=e.dept_no
+	t.emp_name as mgr_name,e.city,e.county,e.village,d.dept_name from emp e,job j,dept d,
 	]]>
-	</select>
+
+ 	<if test="job_no==1">
+	(select emp_name from emp where emp_no=(select emp_mgr from emp where emp_no=#{emp_no})) t
+	where e.emp_no=#{emp_no} and e.job_no=j.job_no and d.dept_no=e.dept_no
+ 	</if>
+ 	<if test="job_no==2">
+ 	(select emp_name from emp where job_no=3) t
+	where e.emp_no=#{emp_no} and e.job_no=j.job_no and d.dept_no=e.dept_no
+	</if> 
+	<if test="job_no==3">
+	(select emp_name from emp where job_no=3) t
+	where e.emp_no=#{emp_no} and e.job_no=j.job_no and d.dept_no=e.dept_no
+ 	</if>
+ 	</select>
 	
 	<select id="selectEmail" parameterType="emp" resultType="emp">
 	<![CDATA[
@@ -143,9 +155,20 @@
 	
 	</select>
 	
-	<select id="selectPhone" parameterType="emp" resultType="emp">
+	<select id="selectPhonedupl" parameterType="emp" resultType="emp">
 	<![CDATA[
 	select emp_phone from emp where emp_phone=#{emp_phone} and emp_no !=#{emp_no}
 	]]>
 	</select>
+	
+	<update id="updateMyInfo" parameterType="emp">
+	<![CDATA[
+	update emp set emp_phone=#{emp_phone},emp_email=#{emp_email} where emp_no=#{emp_no}
+	]]>
+	</update>
+	<update id="updatePassword" parameterType="emp">
+	 <![CDATA[
+	 update emp set emp_pwd=#{emp_pwd} where emp_no=#{emp_no}
+	 ]]>
+	</update>
 </mapper>

@@ -39,4 +39,9 @@ public class MessageDao {
 		return sqlSession.selectOne("countMsg", emp_no);
 	}
 
+	public int selectgetListCount(Message message) {
+		
+		return sqlSession.selectOne("getListCount",message);
+	}
+
 }

@@ -24,69 +24,179 @@
 
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
-   $(function() {
+//받은 쪽지함
 
-      //받은 쪽지함
-         $.ajax({
-               url : "getMessage.do",
-               data : {
-                  message_to_no : "${loginEmp.emp_no}"
-               },
-               type : "get",
-               dataType:"json",
-               success : function(data) {
-                  
-                  var jsonSt = JSON.stringify(data);
-                  var json = JSON.parse(jsonSt);
-                  var size = Object.keys(json.list).length;
-				if(size>0) {
-                  var values = "<table class='table table-hover' id='table_rec'><thead><tr><th>보낸사람</th><th style='width:40%;'>제목</th><th>받은날짜</th><th>사번</th><th>내용</th><th>mnumber</th></thead>"
-                        + "<tbody>"
+var currentPage="";
+function receive(){
+$.ajax({
+     url : "getMessage.do",
+     data : {
+        message_to_no : "${loginEmp.emp_no}"
+     },
+     type : "get",
+     dataType:"json",
+     success : function(data) {
+        
+        var jsonSt = JSON.stringify(data);
+        var json = JSON.parse(jsonSt);
+        var size = Object.keys(json.list).length;
+		if(size>0) {
+        var values = "<table class='table table-hover' id='table_rec'><thead><tr><th>보낸사람</th><th style='width:40%;'>제목</th><th>받은날짜</th><th>사번</th><th>내용</th><th>mnumber</th></thead>"
+              + "<tbody>"
 
-                  for ( var i in json.list) {
-						if(json.list[i].message_confirm=="Y") {
-                     values += "<tr onclick='confirm(this);' style='cusor:hand' class='read'><td>" + json.list[i].from_empName
-                           + "</td><td>" + json.list[i].message_title
-                           + "</td><td>" + json.list[i].message_date
-                           + "</td><td>"+json.list[i].from_empNo
-                           +"</td><td>"+json.list[i].message_content
-                           +"</td><td>"+json.list[i].message_no
-                           +"</td></tr>";
+        for ( var i in json.list) {
+				if(json.list[i].message_confirm=="Y") {
+           values += "<tr onclick='confirm(this);' style='cusor:hand' class='read'><td>" + json.list[i].from_empName
+                 + "</td><td>" + json.list[i].message_title
+                 + "</td><td>" + json.list[i].message_date
+                 + "</td><td>"+json.list[i].from_empNo
+                 +"</td><td>"+json.list[i].message_content
+                 +"</td><td>"+json.list[i].message_no
+                 +"</td></tr>";
 
-                  }else{
-                	  values += "<tr onclick='confirm(this);' style='cusor:hand' class='readx'><td>" + json.list[i].from_empName
-                      + "</td><td>" + json.list[i].message_title
-                      + "</td><td>" + json.list[i].message_date
-                      + "</td><td>"+json.list[i].from_empNo
-                      +"</td><td>"+json.list[i].message_content
-                      +"</td><td>"+json.list[i].message_no
-                      +"</td></tr>";
-                	  
-                	  
-                	  
-                	  
-                  }
-						
-                  }
+        }else{
+      	  values += "<tr onclick='confirm(this);' style='cusor:hand' class='readx'><td>" + json.list[i].from_empName
+            + "</td><td>" + json.list[i].message_title
+            + "</td><td>" + json.list[i].message_date
+            + "</td><td>"+json.list[i].from_empNo
+            +"</td><td>"+json.list[i].message_content
+            +"</td><td>"+json.list[i].message_no
+            +"</td></tr>";
+      	   }		
+        }	     
+           		 currentPage=json.list[0].currentPage;
+				 var maxPage=json.list[0].maxPage;
+				 var startPage=json.list[0].startPage;
+				 var endPage=json.list[0].endPage;
 
-                  values += "</tbody></table>"
+        values += "</tbody></table><ul class='pagination'>";
+        
+        if(startPage>5){
+      	  values+="<li class='page-item'><a class='page-link' href='javascript:receive("+(startPage-1)+")'>PREV</a></li>";
+      	  
+        }else{
+      	  values+="<li class='page-item'><a class='page-link'>prev</a></li>";
+     	 }
+        
+        for(var paging = startPage;paging<=endPage;paging++){
+      	  if(paging==currentPage){
+      		  values+="<li class='page-item'><a class='page-link'>"+paging+"</a></li>";
+      	  }else{
+      		  values+="<li class='page-item'><a class='page-link' href='javascript:receive("+paging+")'>"+paging+"</a></li>";
+      	  }
+      	  
+        }
+        
+        if(endPage<maxPage){
+      	  values+="<li class='page-item'><a class='page-link' href='javascript:receive("+(endPage+1)+")'>next</a></li>";
+        }else{
+      	  values+="<li class='page-item'><a class='page-link'>next</a></li>";
+        }
+        values+="</ul>"
+       
 
-                  $('#receive_msg').html(values);
+        $('#receive_msg').html(values);
 
-                  
+        
 }else{
+values="<br><br><br><br><br><br><h2 style='text-align:center;'>받은 쪽지가 없습니다."+
+"</h2><br><br><br><br><br><br>"
+$('#receive_msg').html(values);	
+
+}
+     }
+  });
+}
+ 
+ function receive(page){ 
+	 
+	    $.ajax({
+	        url : "getMessage.do",
+	        data : {message_to_no : "${loginEmp.emp_no}",page:page},
+	        type : "get",
+	        dataType:"json",
+	        success : function(data) {
+	           
+	           var jsonSt = JSON.stringify(data);
+	           var json = JSON.parse(jsonSt);
+	           var size = Object.keys(json.list).length;
+				if(size>0) {
+	           var values = "<table class='table table-hover' id='table_rec'><thead><tr><th>보낸사람</th><th style='width:40%;'>제목</th><th>받은날짜</th><th>사번</th><th>내용</th><th>mnumber</th></thead>"
+	                 + "<tbody>"
+
+	           for ( var i in json.list) {
+						if(json.list[i].message_confirm=="Y") {
+	              values += "<tr onclick='confirm(this);' style='cusor:hand' class='read'><td>" + json.list[i].from_empName
+	                    + "</td><td>" + json.list[i].message_title
+	                    + "</td><td>" + json.list[i].message_date
+	                    + "</td><td>"+json.list[i].from_empNo
+	                    +"</td><td>"+json.list[i].message_content
+	                    +"</td><td>"+json.list[i].message_no
+	                    +"</td></tr>";
+
+	           }else{
+	         	  values += "<tr onclick='confirm(this);' style='cusor:hand' class='readx'><td>" + json.list[i].from_empName
+	               + "</td><td>" + json.list[i].message_title
+	               + "</td><td>" + json.list[i].message_date
+	               + "</td><td>"+json.list[i].from_empNo
+	               +"</td><td>"+json.list[i].message_content
+	               +"</td><td>"+json.list[i].message_no
+	               +"</td></tr>";
+	         	   }		
+	           }
+	              		currentPage=json.list[0].currentPage;
+					 var maxPage=json.list[0].maxPage;
+					 var startPage=json.list[0].startPage;
+					 var endPage=json.list[0].endPage;
+
+	           values += "</tbody></table><ul class='pagination'>";
+	           
+	           if(startPage>5){
+	         	  values+="<li class='page-item'><a class='page-link' href='javascript:receive("+(startPage-1)+")'>PREV</a></li>";
+	         	  
+	           }else{
+	         	  values+="<li class='page-item'><a class='page-link'>prev</a></li>";
+	        	 }
+	           
+	           for(var paging = startPage;paging<=endPage;paging++){
+	         	  if(paging==currentPage){
+	         		  values+="<li class='page-item'><a class='page-link'>"+paging+"</a></li>";
+	         	  }else{
+	         		  values+="<li class='page-item'><a class='page-link' href='javascript:receive("+paging+")'>"+paging+"</a></li>";
+	         	  }
+	         	  
+	           }
+	           
+	           if(endPage<maxPage){
+	         	  values+="<li class='page-item'><a class='page-link' href='javascript:receive("+(endPage+1)+")'>next</a></li>";
+	           }else{
+	         	  values+="<li class='page-item'><a class='page-link'>next</a></li>";
+	           }
+	           values+="</ul>"
+	          
+
+	           $('#receive_msg').html(values);
+
+	           
+	}else{
 	values="<br><br><br><br><br><br><h2 style='text-align:center;'>받은 쪽지가 없습니다."+
 	"</h2><br><br><br><br><br><br>"
 		$('#receive_msg').html(values);	
+
+	}
+	        }
+	  
+	     });
+	}
+  
+   $(function() {
+	   receive();
 	
-}
-               },
-               error : function(request, status, errorData) {
-                  alert("error code : " + request.status + "\n"
-                        + "message :" + request.responseText + "\n"
-                        + "error :" + errorData);
-               }
-            });
+	
+	   
+	   
+
+
 
       //보낸쪽지함
          $.ajax({
@@ -259,74 +369,19 @@
       var a_message_no=td.eq(5).text();
       alert(a_message_no);
       
-      
+     
       $.ajax({
     	  url:"readMessage.do",
     	  type:"post",
     	  data:{message_no:a_message_no},
     	  success:function(data){
     		  alert("readMessage success");
+    		 receive();
+    		  receive(currentPage);
     		  
-    		//받은 쪽지함
-    	         $.ajax({
-    	               url : "getMessage.do",
-    	               data : {
-    	                  message_to_no : "${loginEmp.emp_no}"
-    	               },
-    	               type : "get",
-    	               success : function(data) {
-    	                  
-    	                  var jsonSt = JSON.stringify(data);
-    	                  var json = JSON.parse(jsonSt);
-    	                  var size = Object.keys(json.list).length;
-
-    	                  var values = "<table class='table table-hover' id='table_rec'><thead><tr><th>보낸사람</th><th style='width:40%;'>제목</th><th>받은날짜</th><th>사번</th><th>내용</th><th>mnumber</th></thead>"
-    	                        + "<tbody>"
-
-    	                  for ( var i in json.list) {
-    							if(json.list[i].message_confirm=="Y") {
-    	                     values += "<tr onclick='confirm(this);' style='cusor:hand' class='read'><td>" + json.list[i].from_empName
-    	                           + "</td><td>" + json.list[i].message_title
-    	                           + "</td><td>" + json.list[i].message_date
-    	                           + "</td><td>"+json.list[i].from_empNo
-    	                           +"</td><td>"+json.list[i].message_content
-    	                           +"</td><td>"+json.list[i].message_no
-    	                           +"</td></tr>";
-
-    	                  }else{
-    	                	  values += "<tr onclick='confirm(this);' style='cusor:hand' class='readx'><td>" + json.list[i].from_empName
-    	                      + "</td><td>" + json.list[i].message_title
-    	                      + "</td><td>" + json.list[i].message_date
-    	                      + "</td><td>"+json.list[i].from_empNo
-    	                      +"</td><td>"+json.list[i].message_content
-    	                      +"</td><td>"+json.list[i].message_no
-    	                      +"</td></tr>";
-    	                	  
-    	                	  
-    	                	  
-    	                	  
-    	                  }
-    							
-    	                  }
-
-    	                  values += "</tbody></table>"
-
-    	                  $('#receive_msg').html(values);
-
-    	               },
-    	               error : function(request, status, errorData) {
-    	                  alert("error code : " + request.status + "\n"
-    	                        + "message :" + request.responseText + "\n"
-    	                        + "error :" + errorData);
-    	               }
-    	            });
     		  
-    	  },
-          error : function(request, status, errorData) {
-              alert("error code : " + request.status + "\n"
-                    + "message :" + request.responseText + "\n"
-                    + "error :" + errorData);
-           }
+    	  }
+        
     	  
     	  
       });

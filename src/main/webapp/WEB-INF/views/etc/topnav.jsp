@@ -34,7 +34,7 @@
 							${ loginEmp.emp_name }님 <span class=" fa fa-angle-down"></span>
 					</a>
 						<ul class="dropdown-menu dropdown-usermenu pull-right">
-							<li><a href="javascript:;"> 내정보수정</a></li>
+							<li><a href="info.do"> 내정보수정</a></li>
 							<li><a href="logout.do"><i
 									class="fa fa-sign-out pull-right"></i> 로그아웃</a></li>
 						</ul></li>

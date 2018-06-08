@@ -281,12 +281,12 @@
     			type:"post",
     			success:function(data){
     				
-    				modal2Close();
+    				 modal2Close();
     				modal1Close();
     				location.href="mainView.do";
-    				
-    				calendarLoad();
-    			}
+    				/* calendarLoad(); */
+    			},
+    			
     		});
   				 }
     		
@@ -320,10 +320,10 @@
   						 data:{emp_no:"${loginEmp.emp_no}",calendar_title:addcalendar_title,calendar_content:addcalendar_content,calendar_start_date:addstart,calendar_end_date:addend},
   					 	 type:"post",
   					 	 success:function(data){
-  					 		
-  					 		modal3Close();
+  					 	
+  					 		 modal3Close();
   					 		location.href="mainView.do";
-  							calendarLoad(); 
+  							calendarLoad();  
   					 	 }
   					 });
   					 

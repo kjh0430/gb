@@ -21,14 +21,21 @@
 		to_date(#{message_date},'yyyy-mm-dd hh24:mi:ss'),default)		
 		]]>	
 	</insert>
+	
+	<select id="getListCount" parameterType="message" resultType="int">
+	<![CDATA[
+	select count(*) as listCount from message where message_to_no=#{message_to_no}
+	]]>
+	
+	</select>
 
 	<select id="selectReceiveMessage" parameterType="message" resultType="Message">	
 		 <![CDATA[
-		select emp_name,message_from_no,message_title,message_content,
+		select * from(select rownum rnum,emp_name,message_from_no,message_title,message_content,
 		to_char(message_date,'yyyy-mm-dd hh24:mi:ss') 
 		as message_date,message_no,message_confirm 
-		from message m,emp e where m.message_to_no=#{message_to_no}  
-		and e.emp_no=m.message_from_no
+		from message m,emp e where m.message_to_no=#{message_to_no}
+		and e.emp_no=m.message_from_no order by m.message_confirm asc,m.message_date desc)where rnum>=#{startRow} and rnum<=#{endRow}
 		]]> 		
 	</select>
 

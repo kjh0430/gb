@@ -15,4 +15,5 @@ public interface MessageService {
 	public abstract ArrayList<Message> selectSendMessage(Message message);
 	public abstract int updateReadMessage(Message message);	
 	public abstract int countMsg(int emp_no);
+	public abstract int selectgetListCount(Message message);
 }
