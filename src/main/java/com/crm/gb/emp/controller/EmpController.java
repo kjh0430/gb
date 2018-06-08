@@ -53,6 +53,12 @@ public class EmpController {
 		return "emp/modifyPassword";
 	}
 	
+	//개인정보 수정하기
+	@RequestMapping("modifyMyInfo.do")
+	public String modifyMyInfo() {
+		return "emp/modifyMyInfo";
+	}
+	
 	
 	/** 시작화면 */
 	@RequestMapping("view.do")

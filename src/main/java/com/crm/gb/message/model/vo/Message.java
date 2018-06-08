@@ -33,6 +33,10 @@ public class Message implements Serializable {
 	private int currentPage;
 	private int startRow;
 	private int endRow;
+	
+	//검색용 조건
+	
+	
 	public Message() {
 	}
 	public Message(int message_no, int message_from_no, int message_to_no, String message_title, String message_content,

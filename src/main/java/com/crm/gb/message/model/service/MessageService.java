@@ -16,4 +16,9 @@ public interface MessageService {
 	public abstract int updateReadMessage(Message message);	
 	public abstract int countMsg(int emp_no);
 	public abstract int selectgetListCount(Message message);
+	public abstract int selectConditionListCount(Message message);
+	public abstract ArrayList<Message> selectReceiveConditionMessage(Message message);
+	public abstract int selectsendListCount(Message message);
+	public abstract int selectConditionsendListCount(Message message);
+	public abstract ArrayList<Message> selectSendConditionMessage(Message message);
 }
