@@ -880,17 +880,37 @@ function searchFunction2(){
    
    //답장하기
    function answerSubmit(){
-      $('#modal4').modal("hide");
-      
-     
       
       
+      if($('#answer_title').val()!=null && $('#answer_title').val()!=""){
+    	  $('#modal4').modal("hide");
+      $.ajax({
+          url:"sub.do",
+          type:"post",
+          data:{
+             message_from_no : "${loginEmp.emp_no}",
+             message_to_no : a_message_from_empNo,
+             message_title : $('#answer_title').val(),
+             message_content :$('#answer_content').val(),
+             
+          },success: function(data){
+             alert(data);
+             receive();
+             $('#answer_title').val("");
+             $('#answer_content').val("");
+          }
+          
+   });
+      }else{
+    	  alert("내용을 빠짐없이 입력해주세요.");
+    	  receive();
+      }
    }
    
    //쪽지 보내기
    function modalSubmit() {
 
-	   if($('#searchName').val() !="" && $('#message_title').val() !="" && $('#message_content').val()!=""){
+	   if($('#searchName').val() !="" && $('#searchName').val() !=null && $('#message_title').val() !="" && $('#message_title').val() !=null && $('#message_content').val()!="" $('#message_content').val()!=null){
 	   
 	   
 	   
@@ -904,11 +924,11 @@ function searchFunction2(){
             message_to_no : emp_no,
             message_title : $('#message_title').val(),
             message_content : $('#message_content').val(),
-            no : 1
+            
 
          },
          success : function(data) {
-       		
+        	 receive();
         	 
         	 //닫으면 내용 지워주기
         	   $('#searchName').val("");
@@ -918,54 +938,8 @@ function searchFunction2(){
         	 
         	 
         	 alert(data);
-            //보낸쪽지함
-            $.ajax({
-               url : "sendMessage.do",
-               data : {
-                  message_from_no : "${loginEmp.emp_no}"
-               },
-               type : "get",
-               success : function(data) {
-               
-                  var jsonSt = JSON.stringify(data);
-                  var json = JSON.parse(jsonSt);
-                  var size = Object.keys(json.list).length;
-
-                  var values = "<table class='table table-hover' id='table_sm'><thead><tr><th>받은사람</th><th style='width:40%;'>제목</th><th>받은날짜</th><th>내용</th><thead>"
-                        + "<tbody>"
-
-                  for ( var i in json.list) {
-
-                     values += "<tr onclick='confirmSend(this);' style='cusor:hand'><td>" + json.list[i].to_empName
-                           + "</td><td>" + json.list[i].message_title
-                           + "</td><td>" + json.list[i].message_date
-                           + "</td><td>"+json.list[i].message_content
-                           +"</td></tr>";
-
-                  }
-
-                  values += "</tbody></table>"
-
-                  $('#send_msg').html(values);
-   							
-                  
-                  
-               },
-               error : function(request, status, errorData) {
-                  alert("error code : " + request.status + "\n"
-                        + "message :" + request.responseText + "\n"
-                        + "error :" + errorData);
-               }
-            });
-            
-            
-            
-            
-            
-            
-            
-            
-            
+           
+                
          },error : function(request, status, errorData) {
                  /*  alert("error code : " + request.status + "\n"
                   + "message :" + request.responseText + "\n"
@@ -976,6 +950,7 @@ function searchFunction2(){
       });
 	   }else{
 		   alert("내용을 빠짐없이 입력해주세요.");
+		   receive();
 	   }
    }
    
