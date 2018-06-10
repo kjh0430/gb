@@ -172,16 +172,20 @@ public class OrderController {
 	
 	//매출현황 페이지 메소드 
 		@RequestMapping(value="orderList.do")
-		public String orderListPage(Model model, Order order){
+		public String orderListPage(Model model, Order order, @RequestParam(value="page") int page){
 			
 			logger.info("매출현황 메소드 run...");
 			//int emp_no = Integer.parseInt(empNo);
 			
 			//페이지 기본값 지정
-			int currentPage=1;				
+			int currentPage=page;				
 			//한 페이지당 출력할 목록갯수 지정
 			int pageSize=10;
 			int pageGroupSize=5;		
+			
+//			System.out.println("page="+page);
+//			System.out.println("pageSize="+pageSize);
+//			System.out.println("currentPage="+currentPage);
 			
 			int listCount_1 = orderService.orderListCount();
 			//int listCount_2 = listCount_1.getOrder_list_count();
@@ -213,10 +217,19 @@ public class OrderController {
 			int startPage=(currentPage-1)*pageSize+1;
 			int endPage=startPage+pageSize-1;
 			
+//			System.out.println("startPage 시작페이지 = "+startPage);
+//			
+//			System.out.println("endPage 마지막 페이지 = "+endPage);
+//			
+//			System.out.println("maxPage 페이지수 계산 = "+maxPage);
+//			
+//			System.out.println("게시판 갯수 숫자 = "+listCount_1);
 			
 			order.setStartPage(startPage);
 			order.setEndPage(endPage);
 			
+			
+			//System.out.println("order : " + order);
 			ArrayList<Order> orderList = orderService.selectAllOrderList(order);
 			//System.out.println("orderList: " + orderList.get(0).toString());
 			model.addAttribute("orderList", orderList);

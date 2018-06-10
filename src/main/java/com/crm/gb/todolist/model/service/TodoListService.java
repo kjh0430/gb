@@ -8,4 +8,6 @@ public interface TodoListService {
 	
 	int insertTodoList(TodoList todolist);
 
+	TodoList selectTodoList(int emp_no);
+
 }

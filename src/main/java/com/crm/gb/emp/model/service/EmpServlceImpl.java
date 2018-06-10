@@ -109,9 +109,22 @@ public class EmpServlceImpl implements EmpService{
 	}
 	//폰 체크
 	@Override
-	public Emp selectPhone(Emp emp) {
+	public Emp selectPhoneckdupl(Emp emp) {
 		
-		return empDao.selectPhone(emp);
+		return empDao.selectPhoneckdupl(emp);
+	}
+	//정보 수정
+	@Override
+	public int updateMyInfo(Emp emp) {
+		
+		return empDao.updateMyInfo(emp);
+	}
+	
+	//비밀번호 업데이트
+	@Override
+	public int updatePassword(Emp emp) {
+		
+		return empDao.updatePassword(emp);
 	}	
 	
 }

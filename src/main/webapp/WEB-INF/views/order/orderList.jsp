@@ -17,23 +17,6 @@
 <!-- Font Awesome -->
 <link href="resources/vendors/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet">
-<!-- NProgress -->
-<link href="resources/vendors/nprogress/nprogress.css" rel="stylesheet">
-<!-- iCheck -->
-<link href="resources/vendors/iCheck/skins/flat/green.css"
-	rel="stylesheet">
-
-<!-- bootstrap-progressbar -->
-<link
-	href="resources/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css"
-	rel="stylesheet">
-<!-- JQVMap -->
-<link href="resources/vendors/jqvmap/dist/jqvmap.min.css"
-	rel="stylesheet" />
-<!-- bootstrap-daterangepicker -->
-<link
-	href="resources/vendors/bootstrap-daterangepicker/daterangepicker.css"
-	rel="stylesheet">
 
 <!-- Custom Theme Style -->
 <link href="resources/build/css/custom.min.css" rel="stylesheet">
@@ -95,7 +78,7 @@ $(document).ready(function() {
 
 function list(page){
 	
-	location.href="noticeList.do?page="+page;
+	location.href="orderList.do?page="+page;
 }
 
 
@@ -249,7 +232,7 @@ function list(page){
 									<ul class="pagination">
 									<!-- if문 -->
 									 <c:if test="${curBlock>1}">
-										<li class="page-item"><a class="page-link" href="orderList.do?page=1">처음으로</a></li>
+										<li class="page-item"><a class="page-link" href="orderList.do?page=1"> << </a></li>
 									
 									</c:if> 
 									
@@ -257,7 +240,7 @@ function list(page){
 									<!--if else문 형식임  -->
 								
 									 <c:if test="${curBlock>1}">
-										<li class="page-item"><a class="page-link" href="orderList.do?page=${blockBegin-1}">이전</a></li>
+										<li class="page-item"><a class="page-link" href="orderList.do?page=${blockBegin-1}"><</a></li>
 									
 									</c:if> 
 									
@@ -275,7 +258,7 @@ function list(page){
 											<c:otherwise> 
 												<%-- <li class="page-item"><a class="page-link" href="noticeList.do?page=${page}">${page}</a></li> --%>	
 									
-													<li class="page-item"><a class="page-link" href="#" onclick="list(${'page'})">${page}</a></li>	
+													<li class="page-item"><a class="page-link" href="#" onclick="list('${page}')">${page}</a></li>	
 													
 											
 											 </c:otherwise> 
@@ -287,7 +270,7 @@ function list(page){
 								
 									
 									 <c:if test="${curBlock!=totBlock}">
-										<li class="page-item"><a class="page-link" href="orderList.do?page=${blockEnd+1}">다음</a></li>
+										<li class="page-item"><a class="page-link" href="orderList.do?page=${blockEnd+1}">></a></li>
 									
 									</c:if> 
 									
@@ -295,7 +278,7 @@ function list(page){
 									<!-- 다음페이지 next -->
 									
 									<c:if test="${curBlock!=totBlock}">
-										<li class="page-item"><a class="page-link" href="orderList.do?page=${maxPage}">맨끝</a></li>	
+										<li class="page-item"><a class="page-link" href="orderList.do?page=${maxPage}">>></a></li>	
 									
 									</c:if> 										
 										
@@ -318,11 +301,7 @@ function list(page){
 	<!-- Bootstrap -->
 	<script src="resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
 	<!-- FastClick -->
-	<script src="resources/vendors/fastclick/lib/fastclick.js"></script>
-	<!-- NProgress -->
-	<script src="resources/vendors/nprogress/nprogress.js"></script>
-	<!-- iCheck -->
-	<script src="resources/vendors/iCheck/icheck.min.js"></script>
+	
 	<!-- Datatables -->
 	<script
 		src="resources/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
@@ -348,9 +327,7 @@ function list(page){
 		src="resources/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
 	<script
 		src="resources/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-	<script src="resources/vendors/jszip/dist/jszip.min.js"></script>
-	<script src="resources/vendors/pdfmake/build/pdfmake.min.js"></script>
-	<script src="resources/vendors/pdfmake/build/vfs_fonts.js"></script>
+	
 
 	<!-- Custom Theme Scripts -->
 	<script src="resources/build/js/custom.min.js"></script>
