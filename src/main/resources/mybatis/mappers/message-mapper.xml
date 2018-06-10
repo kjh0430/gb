@@ -67,6 +67,7 @@
 	<select id="receiveConditionCount" parameterType="message" resultType="int">
 	<![CDATA[
 	select count(*) as listCount from emp e,message m where m.message_to_no=#{message_to_no} and e.emp_name=#{emp_name} and e.emp_no=m.message_from_no
+	
 	]]>
 	
 	</select>
@@ -90,7 +91,8 @@
 	
 	<select id="sendConditionCount" parameterType="message" resultType="int">
 	<![CDATA[
-	select count(*) as listCount from emp e,message m where m.message_from_no=#{message_from_no} and e.emp_name=#{emp_name}
+	select count(*) as listCount from emp e,message m where m.message_from_no=#{message_from_no} and e.emp_name=#{emp_name} and e.emp_no=m.message_to_no
+	
 	]]>
 	</select>
 	

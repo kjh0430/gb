@@ -436,7 +436,7 @@ function send(){
 values += "</tbody></table><ul class='pagination'>";
 
 if(startPage>5){
-  values+="<li class='page-item'><a class='page-link' href='javascript:receiveP("+(startPage-1)+")'>PREV</a></li>";
+  values+="<li class='page-item'><a class='page-link' href='javascript:sendP("+(startPage-1)+")'>PREV</a></li>";
   
 }else{
   values+="<li class='page-item'><a class='page-link'>prev</a></li>";
@@ -446,13 +446,13 @@ for(var paging = startPage;paging<=endPage;paging++){
   if(paging==currentPage){
 	  values+="<li class='page-item'><a style='color:black;' class='page-link'>"+paging+"</a></li>";
   }else{
-	  values+="<li class='page-item'><a class='page-link' href='javascript:receiveP("+paging+")'>"+paging+"</a></li>";
+	  values+="<li class='page-item'><a class='page-link' href='javascript:sendP("+paging+")'>"+paging+"</a></li>";
   }
   
 }
 
 if(endPage<maxPage){
-  values+="<li class='page-item'><a class='page-link' href='javascript:receiveP("+(endPage+1)+")'>next</a></li>";
+  values+="<li class='page-item'><a class='page-link' href='javascript:sendP("+(endPage+1)+")'>next</a></li>";
 }else{
   values+="<li class='page-item'><a class='page-link'>next</a></li>";
 }
@@ -474,7 +474,7 @@ $('#send_msg1').html(values);
  });
 }
  
-function send(page){
+function sendP(page){
 	 $.ajax({
 	    url : "sendMessage.do",
 	    data : {
@@ -512,7 +512,7 @@ function send(page){
 	values += "</tbody></table><ul class='pagination'>";
 
 	if(startPage>5){
-	  values+="<li class='page-item'><a class='page-link' href='javascript:receiveP("+(startPage-1)+")'>PREV</a></li>";
+	  values+="<li class='page-item'><a class='page-link' href='javascript:sendP("+(startPage-1)+")'>PREV</a></li>";
 	  
 	}else{
 	  values+="<li class='page-item'><a class='page-link'>prev</a></li>";
@@ -522,13 +522,13 @@ function send(page){
 	  if(paging==currentPage){
 		  values+="<li class='page-item'><a style='color:black;' class='page-link'>"+paging+"</a></li>";
 	  }else{
-		  values+="<li class='page-item'><a class='page-link' href='javascript:receiveP("+paging+")'>"+paging+"</a></li>";
+		  values+="<li class='page-item'><a class='page-link' href='javascript:sendP("+paging+")'>"+paging+"</a></li>";
 	  }
 	  
 	}
 
 	if(endPage<maxPage){
-	  values+="<li class='page-item'><a class='page-link' href='javascript:receiveP("+(endPage+1)+")'>next</a></li>";
+	  values+="<li class='page-item'><a class='page-link' href='javascript:sendP("+(endPage+1)+")'>next</a></li>";
 	}else{
 	  values+="<li class='page-item'><a class='page-link'>next</a></li>";
 	}

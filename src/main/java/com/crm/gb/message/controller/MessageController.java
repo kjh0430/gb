@@ -190,8 +190,9 @@ public class MessageController {
 		int startPage=((int)(double)(currentPage-1)/10)*10+1;
 		int endPage=startPage+5-1;
 		
-		System.out.println("maxPage"+maxPage);
-		System.out.println("startPage"+startPage);
+		
+		
+		
 		if(maxPage<endPage) {
 			endPage=maxPage;
 		}
