@@ -77,9 +77,8 @@ public class EmpController {
 			
 			Emp returnEmp=empService.selectEmp(emp);
 			
-				System.out.println("사원정보 조회:" + returnEmp);
-			model.addAttribute("loginEmp", returnEmp);				
-			
+			System.out.println("사원정보 조회:" + returnEmp);
+			model.addAttribute("loginEmp", returnEmp);
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			
@@ -107,7 +106,6 @@ public class EmpController {
 	
 	@RequestMapping(value="main.do")
 	public String main() {
-		
 		return "main";
 	}		
 	
