@@ -20,4 +20,8 @@ public interface ApprovalService {
 	int updateMgrApproval(Approval apr);
 	int selectAdminNo(Approval apr);
 	int selectgetListE(Approval apr);
+	ArrayList<Approval> selectapprovalListConditionA(Approval apr);
+	int selectgetConditionListA(Approval apr);
+	int selectgetListCountA(Approval apr);
+	
 }
