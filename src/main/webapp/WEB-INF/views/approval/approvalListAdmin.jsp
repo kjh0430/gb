@@ -298,7 +298,7 @@ background-color:#2A3F54;
 	         <c:set var="startPage" value="${startPage}"/>
 	        <c:choose>
 	        <c:when test="${startPage>5}">
-	          <li class='page-item'><a class='page-link' href='approvalListAdmin.do?page=${startPage-1}&emp_no=${loginEmp.emp_no}&job_no=${loginEmp.job_no}'>PREV</a></li>
+	          <li class='page-item'><a class='page-link' href='approvalListAdmin.do?page=${startPage-1}&emp_no=${loginEmp.emp_no}&job_no=${loginEmp.job_no}&emp_name=${emp_name}'>PREV</a></li>
 	        </c:when>
 	        <c:otherwise>
 	        <li class='page-item'><a class='page-link'>prev</a></li>
@@ -311,7 +311,7 @@ background-color:#2A3F54;
 	        <li class='page-item'><a style='color:black;' class='page-link'>${paging}</a></li>
 	        </c:when>
 	        <c:otherwise>
-	        <li class='page-item'><a class='page-link' href='approvalListAdmin.do?page=${paging}&emp_no=${loginEmp.emp_no}&job_no=${loginEmp.job_no}'>${paging}</a></li>
+	        <li class='page-item'><a class='page-link' href='approvalListAdmin.do?page=${paging}&emp_no=${loginEmp.emp_no}&job_no=${loginEmp.job_no}&emp_name=${emp_name}'>${paging}</a></li>
 	        </c:otherwise>
 	        </c:choose>
 	        </c:forEach>
@@ -319,7 +319,7 @@ background-color:#2A3F54;
 	        <c:set var="maxPage" value="${maxPage}"/>
 	        <c:choose>
 	        <c:when test="${endPage<maxPage}">
-	        <li class='page-item'><a class='page-link' href='approvalListAdmin.do?page=${endPage+1}&emp_no=${loginEmp.emp_no}&job_no=${loginEmp.job_no}'>next</a></li>
+	        <li class='page-item'><a class='page-link' href='approvalListAdmin.do?page=${endPage+1}&emp_no=${loginEmp.emp_no}&job_no=${loginEmp.job_no}&emp_name=${emp_name}'>next</a></li>
 	        </c:when>
 	        <c:otherwise>
 	        <li class='page-item'><a class='page-link'>next</a></li>
