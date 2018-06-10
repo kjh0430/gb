@@ -29,11 +29,6 @@
 var currentPage="";
 var receiveCondition="";
 
-$(function() {
-	   receive();
-	   send();
-
-});
 
 //받은 메시지함
 function searchFunctionP(page){
@@ -884,6 +879,7 @@ function searchFunction2(){
       
       if($('#answer_title').val()!=null && $('#answer_title').val()!=""){
     	  $('#modal4').modal("hide");
+    	  closeModal3();
       $.ajax({
           url:"sub.do",
           type:"post",
@@ -895,7 +891,8 @@ function searchFunction2(){
              
           },success: function(data){
              alert(data);
-             receive();
+             
+             send();
              $('#answer_title').val("");
              $('#answer_content').val("");
           }
@@ -903,14 +900,14 @@ function searchFunction2(){
    });
       }else{
     	  alert("내용을 빠짐없이 입력해주세요.");
-    	  receive();
+    	  
       }
    }
    
    //쪽지 보내기
    function modalSubmit() {
 
-	   if($('#searchName').val() !="" && $('#searchName').val() !=null && $('#message_title').val() !="" && $('#message_title').val() !=null && $('#message_content').val()!="" $('#message_content').val()!=null){
+	   if($('#searchName').val() !="" && $('#searchName').val() !=null && $('#message_title').val() !="" && $('#message_title').val() !=null && $('#message_content').val()!="" && $('#message_content').val()!=null){
 	   
 	   
 	   
@@ -928,7 +925,7 @@ function searchFunction2(){
 
          },
          success : function(data) {
-        	 receive();
+        	 send();
         	 
         	 //닫으면 내용 지워주기
         	   $('#searchName').val("");
@@ -954,6 +951,11 @@ function searchFunction2(){
 	   }
    }
    
+   $(function() {
+	   receive();
+	   send();
+
+});
 </script>
 <style type="text/css">
 .btn-modify {

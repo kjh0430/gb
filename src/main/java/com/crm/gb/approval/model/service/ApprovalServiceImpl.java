@@ -72,5 +72,13 @@ private ApprovalDao ApprovalDao;
 		return ApprovalDao.selectAdminNo(apr);
 	}
 
+
+
+	@Override
+	public int selectgetListE(Approval apr) {
+	
+		return ApprovalDao.selectgetListE(apr);
+	}
+
 	
 }

@@ -96,9 +96,9 @@ public class MessageController {
 		message.setMessage_date(getdate);
 		
 		int result=MessageService.insertMessage(message);
-	/*	if(result>0) {
+		if(result>0) {
 			sendmsg = new Message(message.getMessage_from_no(),message.getMessage_to_no(),message.getMessage_date());
-		}*/
+		}
 		
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out=response.getWriter();

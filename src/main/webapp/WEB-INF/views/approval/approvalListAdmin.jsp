@@ -24,6 +24,16 @@
 <link href="resources/css/main.css" rel="stylesheet">
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
+function searchCondition(){
+	
+	emp_name=$('#emp_name').val();
+	emp_no=${loginEmp.emp_no};
+	job_no=${loginEmp.job_no};
+	
+	location.href="approvalListAdmin.do?emp_no="+emp_no+"&job_no="+job_no+"&emp_name="+emp_name
+
+	
+}
 
 
 function modalUp(obj){
@@ -198,6 +208,9 @@ background-color:#2A3F54;
 							<div class="x_panel">
 								
 								<div class="x_content">
+								
+									<input style="float:right;" type="text" placeholder="사원명" id="emp_name"><button  style="float:right; margin-right:0px;" type="button" onclick="searchCondition();">검색</button>
+									
 									
 									<table id="table_ap" class="table table-striped table-bordered">
 										<thead>
@@ -220,6 +233,7 @@ background-color:#2A3F54;
 											</tr>
 										</thead>
 										<tbody>
+										
 										<c:forEach items="${approvalListA}" var="approval">
 											<c:if test="${approval.approval_choose_no eq '1'}">
 											<c:set var="approval_choose_no" value="휴가"/>
@@ -269,6 +283,10 @@ background-color:#2A3F54;
 												
 											</tr>
 												</c:forEach>
+												
+											<c:if test="${approvalListA eq null}">
+											<h2>표시할 항목이 없습니다.</h2>
+											</c:if>
 										<tbody>
 									</table>
 									<div class="modal fade sendMsg" tabindex="-1" role="dialog"

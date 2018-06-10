@@ -53,4 +53,9 @@ public class ApprovalDao {
 		return sqlSession.selectOne("selectAdminNo",apr);
 	}
 
+	public int selectgetListE(Approval apr) {
+	
+		return sqlSession.selectOne("selectgetListCountE",apr);
+	}
+
 }

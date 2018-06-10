@@ -5,7 +5,7 @@
 
 <mapper namespace="Approval">
 	
-	<resultMap id="approvalListE" type="approval">
+	 <resultMap id="approvalListE" type="approval">
 		<id column="approval_no" property="approval_no"/>
 		<result column="emp_no" property="emp_no"/>
 		<result column="approval_choose_no" property="approval_choose_no"/>
@@ -35,12 +35,15 @@
 	
 	<select id="approvalListE" parameterType="approval" resultType="approval" resultMap="approvalListE">
 		<![CDATA[
-		select t.emp_name as team_mgr_name,s.emp_name as mgr_name, a.approval_no,a.emp_no,a.approval_choose_no,to_char(a.approval_submit_date,'yyyy-mm-dd hh24:mi:ss') 
+		select * from(select rownum rnum,team_mgr_name,mgr_name,approval_no,emp_no,approval_choose_no,approval_submit_date,approval_start_date,approval_end_date,approval_comment,
+		approval_team_date,approval_mgr_date from
+		(select rownum rnum,t.emp_name as team_mgr_name,s.emp_name as mgr_name, a.approval_no,a.emp_no,a.approval_choose_no,to_char(a.approval_submit_date,'yyyy-mm-dd hh24:mi:ss') 
 		as approval_submit_date,a.approval_start_date,a.approval_end_date,a.approval_comment,
 		to_char(a.approval_team_date,'yyyy-mm-dd hh24:mi:ss') as 
 		approval_team_date,a.approval_mgr_date from approval a,
 		(select emp_name from emp where emp_no = (select emp_mgr from emp where emp_no=#{emp_no})) t,
-		(select emp_name from emp where job_no=3) s where a.emp_no=#{emp_no}
+		(select emp_name from emp where job_no=3) s where a.emp_no=#{emp_no} order by approval_mgr_date desc NULLS first,approval_team_date desc nulls first)) where rnum>=#{startRow} and rnum<=#{endRow}
+    
 		
 		]]>
 	</select>
@@ -83,10 +86,18 @@
 	</update>
 	
 	<select id="selectAdminNo" parameterType="approval" resultType="_int">
+		<![CDATA[
 		select approval_mgr_no from approval where approval_no = #{approval_no}
+		]]>
 	</select>
 
-
+<select id="selectgetListCountE" parameterType="approval" resultType="int">
+<![CDATA[
+select count(*) as listCount from approval a,
+		(select emp_name from emp where emp_no = (select emp_mgr from emp where emp_no=#{emp_no})) t,
+		(select emp_name from emp where job_no=3) s where a.emp_no=#{emp_no}
+]]>
+</select>
 
 
 </mapper>
