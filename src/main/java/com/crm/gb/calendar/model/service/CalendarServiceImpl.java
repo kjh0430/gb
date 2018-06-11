@@ -31,5 +31,23 @@ public int updateSchedule(Calendar calendar) {
 	
 	return CalendarDao.updateSchedule(calendar);
 }
+
+@Override
+public Calendar selectgetInfo(Calendar calendar) {
+	
+	return CalendarDao.selectgetInfo(calendar);
+}
+
+@Override
+public int insertSchedule(Calendar calendar) {
+	// TODO Auto-generated method stub
+	return CalendarDao.insertSchedule(calendar);
+}
+
+@Override
+public int deleteSchedule(Calendar calendar) {
+
+	return CalendarDao.deleteSchedule(calendar);
+}
 	
 }

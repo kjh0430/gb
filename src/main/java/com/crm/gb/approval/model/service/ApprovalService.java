@@ -3,11 +3,13 @@ package com.crm.gb.approval.model.service;
 
 import java.util.ArrayList;
 
+import org.springframework.stereotype.Service;
+
 import com.crm.gb.approval.model.vo.Approval;
 
 
 
-
+@Service
 public interface ApprovalService {
 
 	Approval selectName(int emp_no);
@@ -16,4 +18,10 @@ public interface ApprovalService {
 	ArrayList<Approval> selectapprovalListA(Approval apr);
 	int updateTeamApproval(Approval apr);
 	int updateMgrApproval(Approval apr);
+	int selectAdminNo(Approval apr);
+	int selectgetListE(Approval apr);
+	ArrayList<Approval> selectapprovalListConditionA(Approval apr);
+	int selectgetConditionListA(Approval apr);
+	int selectgetListCountA(Approval apr);
+	
 }

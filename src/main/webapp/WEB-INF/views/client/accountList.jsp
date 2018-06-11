@@ -28,6 +28,10 @@
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 
+function list(page){
+	
+	location.href="accountList.do?page="+page;
+}
 
 </script>
 
@@ -118,6 +122,66 @@
 										<tbody>
 									</table>
 								</div>
+								
+								<nav aria-label="Page navigation example">
+								
+									<ul class="pagination">
+									<!-- if문 -->
+									 <c:if test="${curBlock>1}">
+										<li class="page-item"><a class="page-link" href="noticeList.do?page=1"><<</a></li>
+									
+									</c:if> 
+									
+									<!--첫페이지로 이동  -->
+									<!--if else문 형식임  -->
+								
+								
+									
+									 <c:if test="${curBlock>1}">
+										<li class="page-item"><a class="page-link" href="noticeList.do?page=${blockBegin-1}"><</a></li>
+									
+									</c:if> 
+									
+									
+									
+									<!-- 페이지 리스트var="page"   -->
+									 <c:forEach var ="page" begin="${blockBegin}" end="${blockEnd}">
+									 	
+										  <c:choose>
+											<c:when test="${page==currentPage}">
+												
+												 <li class="page-item" class="page-link" ><a class="page-link" style="color:red;">${page}</a></li>
+											</c:when> 
+										
+											<c:otherwise> 
+												<%-- <li class="page-item"><a class="page-link" href="noticeList.do?page=${page}">${page}</a></li> --%>	
+									
+													<li class="page-item"><a class="page-link" href="#" onclick="list('${page}')">${page}</a></li>	
+													
+											
+											 </c:otherwise> 
+										
+										 </c:choose> 
+									
+									</c:forEach>  
+									
+									
+									 <c:if test="${curBlock!=totBlock}">
+										<li class="page-item"><a class="page-link" href="noticeList.do?page=${blockEnd+1}">></a></li>
+									
+									</c:if> 
+									
+									
+									<!-- 다음페이지 next -->
+									
+									
+									<c:if test="${curBlock!=totBlock}">
+										<li class="page-item"><a class="page-link" href="noticeList.do?page=${maxPage}">>></a></li>	
+									
+									</c:if> 										
+										
+									</ul>
+								</nav>
 							</div>
 						</div>
 					</div>

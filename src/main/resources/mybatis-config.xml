@@ -16,10 +16,13 @@
 		<typeAlias type="com.crm.gb.message.model.vo.Message" alias="Message" />
 		<typeAlias type="com.crm.gb.order.model.vo.Order" alias="Order"/>
 		<typeAlias type="com.crm.gb.approval.model.vo.Approval" alias="Approval"/>
-		<typeAlias type="com.crm.gb.message.model.vo.Notify" alias="Notify"/>
 		<typeAlias type="com.crm.gb.todolist.model.vo.TodoList" alias="TodoList"/>
 		<typeAlias type="com.crm.gb.calendar.model.vo.Calendar" alias="Calendar"/>
+<<<<<<< HEAD
 		<typeAlias type="com.crm.gb.salary.model.vo.Salary" alias="Salary"/>
+=======
+		<typeAlias type="com.crm.gb.notify.model.vo.Notify" alias="Notify"/>
+>>>>>>> branch 'master' of https://github.com/kjh0430/gb.git
 				
 	</typeAliases>
 
@@ -35,8 +38,13 @@
 		<mapper resource="mybatis/mappers/contract-mapper.xml"/>
 		<mapper resource="mybatis/mappers/approval-mapper.xml"/>
 		<mapper resource="mybatis/mappers/todolist-mapper.xml"/>
+<<<<<<< HEAD
 		<mapper resource="mybatis/mappers/calendar-mapper.xml"/>
 		<mapper resource="mybatis/mappers/salary-mapper.xml"/>
+=======
+		<mapper resource="mybatis/mappers/calendar-mapper.xml"/>
+		<mapper resource="mybatis/mappers/notify-mapper.xml"/>
+>>>>>>> branch 'master' of https://github.com/kjh0430/gb.git
 	</mappers>
 
 

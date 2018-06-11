@@ -17,23 +17,8 @@
 <!-- Font Awesome -->
 <link href="resources/vendors/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet">
-<!-- NProgress -->
-<link href="resources/vendors/nprogress/nprogress.css" rel="stylesheet">
-<!-- iCheck -->
-<link href="resources/vendors/iCheck/skins/flat/green.css"
-	rel="stylesheet">
 
-<!-- bootstrap-progressbar -->
-<link
-	href="resources/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css"
-	rel="stylesheet">
-<!-- JQVMap -->
-<link href="resources/vendors/jqvmap/dist/jqvmap.min.css"
-	rel="stylesheet" />
-<!-- bootstrap-daterangepicker -->
-<link
-	href="resources/vendors/bootstrap-daterangepicker/daterangepicker.css"
-	rel="stylesheet">
+
 
 <!-- Custom Theme Style -->
 <link href="resources/build/css/custom.min.css" rel="stylesheet">
@@ -41,7 +26,7 @@
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 
-function modalUp(obj){
+ function modalUp(obj){
 	var content=$(obj);
 	var td=content.children();
 
@@ -148,19 +133,14 @@ background-color:#2A3F54;
 							</h3>
 						</div>
 					</div>
-
 					<div class="clearfix"></div>
-
 					<div class="row">
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
-								
 								<div class="x_content">
-									
 									<table id="table_ap" class="table table-striped table-bordered">
 										<thead>
 											<tr>
-											
 												<th>결재유형</th>
 												<th>일자</th>
 												<th>진행상황</th>
@@ -169,170 +149,200 @@ background-color:#2A3F54;
 												<th>end</th>
 												<th>comment</th>
 												<th>team</th>
-												<th>mgr</th> 
+												<th>mgr</th>
 												<th>team_name</th>
 												<th>mgr_name</th>
 											</tr>
 										</thead>
 										<tbody>
-										<c:forEach items="${approvalListE}" var="approval">
-											<c:if test="${approval.approval_choose_no eq '1'}">
-											<c:set var="approval_choose_no" value="휴가"/>
-											</c:if>
-											<c:if test="${approval.approval_choose_no eq '2'}">
-											<c:set var="approval_choose_no" value="경조사"/>
-											</c:if>
-											<c:if test="${approval.approval_choose_no eq '3'}">
-											<c:set var="approval_choose_no" value="병가"/>
-											</c:if>
-											<c:if test="${approval.approval_choose_no eq '4'}">
-											<c:set var="approval_choose_no" value="비고"/>
-											</c:if>
-											<c:if test="${approval.approval_mgr_date eq null && approval.approval_team_date eq null}">
-											 <c:set var="approval_process" value="미진행 "/>
-											</c:if>
-											<c:if test="${approval.approval_mgr_date eq null && approval.approval_team_date ne null}">
-											<c:set var="approval_process" value="팀장 승인 "/>
-											</c:if>
-											<c:if test="${approval.approval_mgr_date ne null}">
-											<c:set var="approval_process" value="결재 완료"/>
-											</c:if>
-										
-											
-											<tr onclick="modalUp(this);">
-												
-												<td style="width:50%;">${approval_choose_no}</td>
-												<td style="width:30%;">${approval.approval_submit_date}</td>
-												<td>${approval_process}</td>
-												<td>${approval.emp_no }</td>
-												<td>${approval.approval_start_date}</td>
-												<td>${approval.approval_end_date}</td>
-												<td>${approval.approval_comment}</td>
-												<td>${approval.approval_team_date}</td>
-												<td>${approval.approval_mgr_date }</td> 
-												<td>${approval.team_mgr_name}</td>
-												<td>${approval.mgr_name}</td>
-											</tr>
-												</c:forEach>
+											 <c:forEach items="${approvalListE}" var="approval">
+												<c:if test="${approval.approval_choose_no eq '1'}">
+													<c:set var="approval_choose_no" value="휴가" />
+												</c:if>
+												<c:if test="${approval.approval_choose_no eq '2'}">
+													<c:set var="approval_choose_no" value="경조사" />
+												</c:if>
+												<c:if test="${approval.approval_choose_no eq '3'}">
+													<c:set var="approval_choose_no" value="병가" />
+												</c:if>
+												<c:if test="${approval.approval_choose_no eq '4'}">
+													<c:set var="approval_choose_no" value="비고" />
+												</c:if>
+												<c:if
+													test="${approval.approval_mgr_date eq null && approval.approval_team_date eq null}">
+													<c:set var="approval_process" value="미진행 " />
+												</c:if>
+												<c:if
+													test="${approval.approval_mgr_date eq null && approval.approval_team_date ne null}">
+													<c:set var="approval_process" value="팀장 승인 " />
+												</c:if>
+												<c:if test="${approval.approval_mgr_date ne null}">
+													<c:set var="approval_process" value="결재 완료" />
+												</c:if>
+
+												<tr onclick="modalUp(this);">
+													<td style="width: 50%;">${approval_choose_no}</td>
+													<td style="width: 30%;">${approval.approval_submit_date}</td>
+													<td>${approval_process}</td>
+													<td>${approval.emp_no }</td>
+													<td>${approval.approval_start_date}</td>
+													<td>${approval.approval_end_date}</td>
+													<td>${approval.approval_comment}</td>
+													<td>${approval.approval_team_date}</td>
+													<td>${approval.approval_mgr_date }</td>
+													<td>${approval.team_mgr_name}</td>
+													<td>${approval.mgr_name}</td>
+												</tr>
+											</c:forEach>
 										<tbody>
 									</table>
 									
-									  <div class="modal fade sendMsg" tabindex="-1" role="dialog"
-                                 id="modal1" aria-hidden="true">
-                                 <div class="modal-dialog modal-lg">
-                                    <div class="modal-content">
-                                       <form class="form-horizontal form-label-left input_mask">
-                                          <div class="modal-header">
-                                             <button type="button" class="close" data-dismiss="modal" onclick="modal1Close();">
-                                                <span aria-hidden="true">×</span>
-                                             </button>
-                                             <h4 class="modal-title" id="myModalLabel">결재 내용</h4>
-                                          </div>
-
-                                          <div class="modal-body">
-                                          	<div id="wizard" class="form_wizard wizard_horizontal">
-										<ul class="wizard_steps anchor" style="margin:0px;padding:0px;">
-											<li>
-												 <div style = "width:100%" align = "center">
-												 <div class="circle" id="circle1">사원</div>
-												 </div>
-											</li>
-											
-											<li>
-											<div style = "width:100%" align = "center">
-											<div class="circle" id="circle2">팀장</div>
-											</div>
-											</li>
-											<li>
-											<div style = "width:100%" align = "center">
-												<div class="circle" id="circle3">관리자</div>
-												</div>
-											</li>
-
-										</ul>
-										<br>
-									</div>
-										<div class="row">
-						<div class="col-md-12 col-sm-12 col-xs-12">
-							<div class="x_panel">
-								<div class="x_title">
-									<h2>결재 내용</h2>
-									<div class="clearfix"></div>
-								</div>
-								<div class="x_content">
-									<form class="form-horizontal form-label-left">
-
-										<div class="form-group">
-											<label class="control-label col-md-3 col-sm-3 col-xs-12"
-												for="first-name">일자 
-											</label>
-											<div class="col-md-6 col-sm-6 col-xs-12">
-												<input type="date" required="required" id="startDate"
-													class="form-date col-md-5 col-xs-12" readonly>
-												<input type="date" required="required" id="endDate"
-													class="form-date col-md-5 col-xs-12" readonly>
-											</div>
-										</div>
-										<div class="form-group">
-											<label class="control-label col-md-3 col-sm-3 col-xs-12"
-												for="last-name">사유 
-											</label> 
-											<div class="col-md-2 col-sm-4 col-xs-12">
-												<input type="text" class="form-control"  id="reason" readonly>
-											</div>
-										</div>
-										<div class="form-group">
-											<label for="middle-name"
-												class="control-label col-md-3 col-sm-3 col-xs-12" id="teamname">팀장</label>
-											<div class="col-md-6 col-sm-6 col-xs-12">
-												<div class="input-group" style="margin-bottom:0px;">
-													
-													
-													
-													<input type="text" required="required" id="team"
-													class="form-date col-md-5 col-xs-12" readonly style="width:163px;">
-														
-														
-													
-												</div>
-											</div>
-										</div>
-										<div class="form-group">
-											<label for="middle-name"
-												class="control-label col-md-3 col-sm-3 col-xs-12" id="mgrname">관리자 </label>
-											<div class="col-md-6 col-sm-6 col-xs-12">
-												<div class="input-group" style="margin-bottom:0px;">
-													<input type="text" required="required" id="admin"
-													class="form-date col-md-5 col-xs-12" readonly style="width:163px;">
-												</div>
-											</div>
-										</div>
-										<div class="form-group">
-											<label class="control-label col-md-3 col-sm-3 col-xs-12">비고
-											</label>
-											<div class="col-md-6 col-sm-6 col-xs-12">
-												<textarea rows="3" class="form-control col-md-7 col-xs-12" id="textarea" readonly></textarea>
-											</div>
-										</div>
-									</form>
+									  <ul class='pagination'>
+	        
+	      
+	        
+	         <c:set var="startPage" value="${startPage}"/>
+	        <c:choose>
+	        <c:when test="${startPage>5}">
+	          <li class='page-item'><a class='page-link' href='approvalListE.do?page=${startPage-1}&emp_no=${loginEmp.emp_no}'>PREV</a></li>
+	        </c:when>
+	        <c:otherwise>
+	        <li class='page-item'><a class='page-link'>prev</a></li>
+	        </c:otherwise>
+	        </c:choose> 
+	       
+	        <c:forEach var="paging" begin="${startPage}" end="${endPage}">
+	        <c:choose>
+	        <c:when test="${paging==currentPage}">
+	        <li class='page-item'><a style='color:black;' class='page-link'>${paging}</a></li>
+	        </c:when>
+	        <c:otherwise>
+	        <li class='page-item'><a class='page-link' href='approvalListE.do?page=${paging}&emp_no=${loginEmp.emp_no}'>${paging}</a></li>
+	        </c:otherwise>
+	        </c:choose>
+	        </c:forEach>
+	        <c:set var="endPage" value="${endPage}"/>
+	        <c:set var="maxPage" value="${maxPage}"/>
+	        <c:choose>
+	        <c:when test="${endPage<maxPage}">
+	        <li class='page-item'><a class='page-link' href='approvalListE.do?page=${endPage+1}&emp_no=${loginEmp.emp_no}'>next</a></li>
+	        </c:when>
+	        <c:otherwise>
+	        <li class='page-item'><a class='page-link'>next</a></li>
+	        </c:otherwise>
+	        </c:choose>
+	        </ul>			
 								</div>
 							</div>
 						</div>
-					</div>
-									
-									
-                                          </div>
-                                          <div class="modal-footer">
-                                          	 <button onclick="modal1Close()" type="button"
-                                                class="btn btn-primary">확인</button>
-                                             
-                                          </div>
-                                       </form>
+					</div><!-- row close -->
+					<!--  modal start -->
+					<div class="modal fade sendMsg" tabindex="-1" role="dialog"	id="modal1" aria-hidden="true">
+						<div class="modal-dialog modal-lg">
+							<div class="modal-content">
+								<form class="form-horizontal form-label-left input_mask">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"
+											onclick="modal1Close();">
+											<span aria-hidden="true">×</span>
+										</button>
+										<h4 class="modal-title" id="myModalLabel">결재 내용</h4>
+									</div>
 
-                                    </div>
-                                 </div>
-                              </div>
-								</div>
+									<div class="modal-body" style="overflow:hidden;">
+										<div id="wizard" class="form_wizard wizard_horizontal">
+											<ul class="wizard_steps anchor"
+												style="margin: 0px; padding: 0px;">
+												<li>
+													<div style="width: 100%" align="center">
+														<div class="circle" id="circle1">사원</div>
+													</div>
+												</li>
+
+												<li>
+													<div style="width: 100%" align="center">
+														<div class="circle" id="circle2">팀장</div>
+													</div>
+												</li>
+												<li>
+													<div style="width: 100%" align="center">
+														<div class="circle" id="circle3">관리자</div>
+													</div>
+												</li>
+
+											</ul>
+											<br>
+										</div>
+										
+										<div class="col-md-12 col-sm-12 col-xs-12">
+											<div class="x_panel">
+												<div class="x_title">
+													<h2>결재 내용</h2>
+													<div class="clearfix"></div>
+												</div>
+												<div class="x_content">
+														<div class="form-group">
+															<label class="control-label col-md-3 col-sm-3 col-xs-12"
+																for="first-name">일자 </label>
+															<div class="col-md-6 col-sm-6 col-xs-12">
+																<input type="date" required="required" id="startDate"
+																	class="form-date col-md-5 col-xs-12" readonly>
+																<input type="date" required="required" id="endDate"
+																	class="form-date col-md-5 col-xs-12" readonly>
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="control-label col-md-3 col-sm-3 col-xs-12"
+																for="last-name">사유 </label>
+															<div class="col-md-2 col-sm-4 col-xs-12">
+																<input type="text" class="form-control" id="reason"
+																	readonly>
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="middle-name"
+																class="control-label col-md-3 col-sm-3 col-xs-12"
+																id="teamname">팀장</label>
+															<div class="col-md-6 col-sm-6 col-xs-12">
+																<div class="input-group" style="margin-bottom: 0px;">
+																	<input type="text" required="required" id="team"
+																		class="form-date col-md-5 col-xs-12" readonly
+																		style="width: 163px;">
+																</div>
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="middle-name"
+																class="control-label col-md-3 col-sm-3 col-xs-12"
+																id="mgrname">관리자 </label>
+															<div class="col-md-6 col-sm-6 col-xs-12">
+																<div class="input-group" style="margin-bottom: 0px;">
+																	<input type="text" required="required" id="admin"
+																		class="form-date col-md-5 col-xs-12" readonly
+																		style="width: 163px;">
+																</div>
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="control-label col-md-3 col-sm-3 col-xs-12">비고
+															</label>
+															<div class="col-md-6 col-sm-6 col-xs-12">
+																<textarea rows="3"
+																	class="form-control col-md-7 col-xs-12" id="textarea"
+																	readonly></textarea>
+															</div>
+														</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button onclick="modal1Close()" type="button"
+											class="btn btn-primary">확인</button>
+
+									</div>
+								</form>
+
 							</div>
 						</div>
 					</div>
@@ -342,51 +352,16 @@ background-color:#2A3F54;
 			<%@ include file="../etc/footer.jsp"%>
 		</div>
 	</div>
-	</div>
+	
 	<!-- /page content -->
 
-	
-	</div>
-	</div>
+
 
 	<!-- jQuery -->
 	<script src="resources/vendors/jquery/dist/jquery.min.js"></script>
 	<!-- Bootstrap -->
 	<script src="resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-	<!-- FastClick -->
-	<script src="resources/vendors/fastclick/lib/fastclick.js"></script>
-	<!-- NProgress -->
-	<script src="resources/vendors/nprogress/nprogress.js"></script>
-	<!-- iCheck -->
-	<script src="resources/vendors/iCheck/icheck.min.js"></script>
-	<!-- Datatables -->
-	<script
-		src="resources/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-	<script
-		src="resources/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-	<script src="resources/vendors/jszip/dist/jszip.min.js"></script>
-	<script src="resources/vendors/pdfmake/build/pdfmake.min.js"></script>
-	<script src="resources/vendors/pdfmake/build/vfs_fonts.js"></script>
+
 
 	<!-- Custom Theme Scripts -->
 	<script src="resources/build/js/custom.min.js"></script>

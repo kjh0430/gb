@@ -49,4 +49,30 @@ public class ApprovalDao {
 		return sqlSession.update("updateMgrApproval",apr);
 	}
 
+	public int selectAdminNo(Approval apr) {
+		return sqlSession.selectOne("selectAdminNo",apr);
+	}
+
+	public int selectgetListE(Approval apr) {
+	
+		return sqlSession.selectOne("selectgetListCountE",apr);
+	}
+
+	public ArrayList<Approval> selectapprovalListConditionA(Approval apr) {
+	
+		return (ArrayList)sqlSession.selectList("selectapprovalListConditionA",apr);
+	}
+
+	
+
+	public int selectgetConditionListA(Approval apr) {
+		
+		return sqlSession.selectOne("selectgetConditionCountA",apr);
+	}
+
+	public int selectgetListCountA(Approval apr) {
+	
+		return sqlSession.selectOne("selectgetListCountA",apr);
+	}
+
 }

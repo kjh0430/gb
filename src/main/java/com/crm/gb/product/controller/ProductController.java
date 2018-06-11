@@ -95,16 +95,23 @@ public class ProductController {
 */		
 		return "product/productList";
 	}
-
-		
-	//상품 상세보기 화면으로 이동
+	
+	
+	//상품 상세보기 화면으로 이동(해당 제품 내용을 뿌리기)
 	@RequestMapping(value="moveproductDetail.do", method=RequestMethod.GET)
 	public ModelAndView moveproductDetail(ModelAndView mv,HttpServletRequest request, HttpServletResponse response) {
 		/*System.out.println("데이터="+request.getParameter("data"));*/
 		Product pd = productService.selectProductDetail(request.getParameter("data"));
 		System.out.println(pd.toString());
+		mv.addObject("productDetail", pd);
+		mv.addObject("avail",pd.getProduct_availability());
+		mv.setViewName("product/productDetail");
+		// 첨부파일 다운로드만 추가 구현 좀 부탁이용!!
 		return mv;
 	}
+	
+	
+	//상품 내역 수정 관련 메소드
 	
 	//상품 등록 화면으로 이동
 	@RequestMapping("moveProductInsert.do")

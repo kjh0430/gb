@@ -23,9 +23,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+
 import com.crm.gb.emp.exception.EmpLoginFailException;
 import com.crm.gb.emp.model.service.EmpService;
 import com.crm.gb.emp.model.vo.Emp;
+
 
 @Controller
 @SessionAttributes("loginEmp")
@@ -38,6 +40,25 @@ public class EmpController {
 	/* 일반 사원 테이블 추가부분 */
 	@Autowired
 	private BCryptPasswordEncoder pwdEncoder;
+	
+	//개인 정보
+	@RequestMapping("info.do")
+	public String  Info() {
+		return "emp/myInfo";
+	}
+	
+	//비밀번호 수정하기
+	@RequestMapping("modifyPassword.do")
+	public String modifyPassword() {
+		return "emp/modifyPassword";
+	}
+	
+	//개인정보 수정하기
+	@RequestMapping("modifyMyInfo.do")
+	public String modifyMyInfo() {
+		return "emp/modifyMyInfo";
+	}
+	
 	
 	/** 시작화면 */
 	@RequestMapping("view.do")
@@ -61,9 +82,9 @@ public class EmpController {
 		try {
 			
 			Emp returnEmp=empService.selectEmp(emp);
-				System.out.println("사원정보 조회:" + returnEmp);
-			model.addAttribute("loginEmp", returnEmp);				
 			
+			System.out.println("사원정보 조회:" + returnEmp);
+			model.addAttribute("loginEmp", returnEmp);
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			
@@ -91,7 +112,6 @@ public class EmpController {
 	
 	@RequestMapping(value="main.do")
 	public String main() {
-		
 		return "main";
 	}		
 	
@@ -351,6 +371,126 @@ public class EmpController {
 		out.close();
 		
 	}
+	//마이 페이지 정보 가져오기
+	@RequestMapping(value="getMyInfo.do" ,method=RequestMethod.POST)
+	@ResponseBody
+	public void getMyInfo(Emp emp,HttpServletResponse  response) throws IOException {		
+		System.out.println("emp_job_no"+emp.getJob_no());
+		Emp getMyInfo=empService.selectMyInfo(emp);		
+		  
+		JSONObject send=new JSONObject();
+		
+<<<<<<< HEAD
+	
+=======
+		if(emp.getJob_no()==2) {
+			getMyInfo.setMgr_name("");
+			getMyInfo.setCounty("");
+			getMyInfo.setCity("");
+			getMyInfo.setVillage("");
+		}
+		if(emp.getJob_no()==3) {
+			getMyInfo.setMgr_name("");
+			getMyInfo.setCounty("");
+			getMyInfo.setCity("");
+			getMyInfo.setVillage("");
+		}
+		
+		send.put("emp_name",getMyInfo.getEmp_name());
+		send.put("emp_addr",getMyInfo.getEmp_addr());
+		send.put("emp_phone",getMyInfo.getEmp_phone());
+		send.put("job_name",getMyInfo.getJob_name());
+		send.put("emp_email",getMyInfo.getEmp_email());
+		send.put("mgr_name",getMyInfo.getMgr_name());
+		send.put("city",getMyInfo.getCity());
+		send.put("county",getMyInfo.getCounty());
+		send.put("village",getMyInfo.getVillage());
+		send.put("dept_name",getMyInfo.getDept_name());
+	
+		
+		response.setContentType("application/json; charset=utf-8");	
+	
+		PrintWriter out=response.getWriter();
+		out.println(send.toJSONString());
+		out.flush();
+		out.close();
+	
+	} 
+	//email check
+	
+	@RequestMapping(value="emailCheck.do" ,method=RequestMethod.POST)
+	@ResponseBody
+
+	public void checkEmail(Emp emp,HttpServletResponse  response) throws IOException {		
+	
+		Emp checkEmail=empService.selectEmail(emp);		
+	
+		JSONObject send=new JSONObject();
+		
+		String check="Y";
+		if(checkEmail==null) {
+			check="N";
+		}
+		
+		send.put("check",check);
+		
+		response.setContentType("application/json; charset=utf-8");	
+	
+		PrintWriter out=response.getWriter();
+		out.append(send.toJSONString());
+		out.flush();
+		out.close();
+	
+	}
+	
+		//phone number check
+
+	@RequestMapping(value="checkPhoneck.do" ,method=RequestMethod.POST)
+	@ResponseBody
+	public void checkPhonedupl(Emp emp,HttpServletResponse  response) throws IOException {		
+	
+		Emp checkPhone=empService.selectPhoneckdupl(emp);
+		JSONObject send=new JSONObject();
+		
+		System.out.println("checkPhone"+" "+checkPhone);
+		
+			String check="Y";
+			if(checkPhone==null) {
+				check="N";
+			}
+		
+			send.put("check", check);
+		
 		
 	
+		response.setContentType("application/json; charset=utf-8");	
+		System.out.println("check"+check);
+		PrintWriter out=response.getWriter();
+		out.append(send.toJSONString());
+		out.flush();
+		out.close();
+	
+	}
+		//수정한 값 집어넣기
+	@RequestMapping(value="modifyInfo.do",method=RequestMethod.POST)
+	public String updateEmpDelete(Emp emp) {
+		
+		int result=empService.updateMyInfo(emp);	
+		
+		return "emp/myInfo";
+	}
+
+	
+		@RequestMapping(value="updatePassword.do",method=RequestMethod.POST)
+		public String updatePassword(Emp emp) {
+		
+		String pwd =pwdEncoder.encode(emp.getEmp_pwd());
+		emp.setEmp_pwd(pwd);
+		
+		int result=empService.updatePassword(emp);	
+		
+		return "emp/myInfo";
+	}
+
+>>>>>>> branch 'master' of https://github.com/kjh0430/gb.git
 }

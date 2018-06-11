@@ -65,5 +65,49 @@ private ApprovalDao ApprovalDao;
 		return ApprovalDao.updateMgrApproval(apr);
 	}
 
+
+
+	@Override
+	public int selectAdminNo(Approval apr) {
+		return ApprovalDao.selectAdminNo(apr);
+	}
+
+
+
+	@Override
+	public int selectgetListE(Approval apr) {
+	
+		return ApprovalDao.selectgetListE(apr);
+	}
+
+
+
+	@Override
+	public ArrayList<Approval> selectapprovalListConditionA(Approval apr) {
+		
+		return ApprovalDao.selectapprovalListConditionA(apr);
+	}
+
+	@Override
+	public int selectgetConditionListA(Approval apr) {
+		
+		return ApprovalDao.selectgetConditionListA(apr);
+	}
+
+	@Override
+	public int selectgetListCountA(Approval apr) {
+		
+		return ApprovalDao.selectgetListCountA(apr);
+	}
+
+
+
+	
+	
+	
+
+
+	
+
 	
 }

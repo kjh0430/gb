@@ -20,12 +20,12 @@ public class TodoList implements Serializable{
 	private String check4;
 	private String todo5;
 	private String check5;
-	private Date to_date;
+	private Date todo_date;
 	
 	public TodoList() {}
 
 	public TodoList(int emp_no, String todo1, String check1, String todo2, String check2, String todo3, String check3,
-			String todo4, String check4, String todo5, String check5, Date to_date) {
+			String todo4, String check4, String todo5, String check5, Date todo_date) {
 		super();
 		this.emp_no = emp_no;
 		this.todo1 = todo1;
@@ -38,7 +38,7 @@ public class TodoList implements Serializable{
 		this.check4 = check4;
 		this.todo5 = todo5;
 		this.check5 = check5;
-		this.to_date = to_date;
+		this.todo_date = todo_date;
 	}
 
 	public int getEmp_no() {
@@ -129,19 +129,19 @@ public class TodoList implements Serializable{
 		this.check5 = check5;
 	}
 
-	public Date getTo_date() {
-		return to_date;
+	public Date getTodo_date() {
+		return todo_date;
 	}
 
-	public void setTo_date(Date to_date) {
-		this.to_date = to_date;
+	public void setTodo_date(Date todo_date) {
+		this.todo_date = todo_date;
 	}
 
 	@Override
 	public String toString() {
 		return "TodoList [emp_no=" + emp_no + ", todo1=" + todo1 + ", check1=" + check1 + ", todo2=" + todo2
 				+ ", check2=" + check2 + ", todo3=" + todo3 + ", check3=" + check3 + ", todo4=" + todo4 + ", check4="
-				+ check4 + ", todo5=" + todo5 + ", check5=" + check5 + ", to_date=" + to_date + "]";
+				+ check4 + ", todo5=" + todo5 + ", check5=" + check5 + ", todo_date=" + todo_date + "]";
 	}
 	
 }

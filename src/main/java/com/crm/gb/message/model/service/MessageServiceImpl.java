@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.crm.gb.emp.model.vo.Emp;
 import com.crm.gb.message.model.dao.MessageDao;
 import com.crm.gb.message.model.vo.Message;
-import com.crm.gb.message.model.vo.Notify;
 
 
 
@@ -45,24 +44,46 @@ public class MessageServiceImpl implements MessageService {
 		return messageDao.updateReadMessage(message);
 	}
 
-	@Override
-	public int insertNotify(Notify notify) {		
-		return messageDao.insertNofity(notify);
-	}
-
-	@Override
-	public ArrayList<Notify> selectNotify(Emp emp) {		
-		return messageDao.selectNotify(emp);
-	}
-
-	@Override
-	public int updateNotify(Notify notify) {		
-		return messageDao.updateNotify(notify);
-	}
 
 	@Override
 	public int countMsg(int emp_no) {		
 		return messageDao.countMsg(emp_no);
+	}
+
+	@Override
+	public int selectgetListCount(Message message) {
+		
+		return messageDao.selectgetListCount(message);
+	}
+
+	@Override
+	public int selectConditionListCount(Message message) {
+
+		return messageDao.selectConditionListCount(message);
+	}
+
+	@Override
+	public ArrayList<Message> selectReceiveConditionMessage(Message message) {
+	
+		return messageDao.selectReceiveConditionMessage(message);
+	}
+
+	@Override
+	public int selectsendListCount(Message message) {
+		
+		return messageDao.selectsendListCount(message);
+	}
+
+	@Override
+	public int selectConditionsendListCount(Message message) {
+		// TODO Auto-generated method stub
+		return messageDao.selectConditionsendListCount(message);
+	}
+
+	@Override
+	public ArrayList<Message> selectSendConditionMessage(Message message) {
+		// TODO Auto-generated method stub
+		return messageDao.selectSendConditionMessage(message);
 	}
 
 	

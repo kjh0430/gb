@@ -6,7 +6,7 @@
 <mapper namespace="TodoList">
 
 	<resultMap type="TodoList" id="resultTodoList">
-		<id column="emp_no" property="emp_no" />
+		<result column="emp_no" property="emp_no" />
 		<result column="do1" property="do1" />
 		<result column="check1" property="check1" />
 		<result column="do2" property="do2" />
@@ -17,16 +17,23 @@
 		<result column="check4" property="check4" />
 		<result column="do5" property="do5" />
 		<result column="check5" property="check5" />
-		<result column="to_date" property="to_date" />
+		<result column="todo_date" property="todo_date" />
 	</resultMap>
 	
 	<!-- todolist 등록 -->
 	<insert id="todolistInsert" parameterType="TodoList">
 	<![CDATA[
 		insert into todolist
-		values (#{emp_no}, #{todo1}, default, #{todo2}, default,
-		#{todo3}, default, #{todo4}, default, #{todo5}, default, sysdate)
+		values (#{emp_no}, #{todo1, jdbcType = VARCHAR}, default, #{todo2, jdbcType = VARCHAR}, default,
+		#{todo3, jdbcType = VARCHAR}, default, #{todo4, jdbcType = VARCHAR}, default, #{todo5, jdbcType = VARCHAR}, default, sysdate)
 	]]>
 	</insert>
+	
+	<!-- todolist 목록 -->
+	<select id="todolistSelect" parameterType="int" resultMap="resultTodoList">
+	<![CDATA[
+		select * from todolist where emp_no=#{emp_no} and to_char(todo_date,'yyyy-mm-dd') = to_char(sysdate,'yyyy-mm-dd')
+	]]>
+	</select>
 
 </mapper>

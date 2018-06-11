@@ -17,29 +17,23 @@
 <!-- Font Awesome -->
 <link href="resources/vendors/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet">
-<!-- NProgress -->
-<link href="resources/vendors/nprogress/nprogress.css" rel="stylesheet">
-<!-- iCheck -->
-<link href="resources/vendors/iCheck/skins/flat/green.css"
-	rel="stylesheet">
 
-<!-- bootstrap-progressbar -->
-<link
-	href="resources/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css"
-	rel="stylesheet">
-<!-- JQVMap -->
-<link href="resources/vendors/jqvmap/dist/jqvmap.min.css"
-	rel="stylesheet" />
-<!-- bootstrap-daterangepicker -->
-<link
-	href="resources/vendors/bootstrap-daterangepicker/daterangepicker.css"
-	rel="stylesheet">
 
 <!-- Custom Theme Style -->
 <link href="resources/build/css/custom.min.css" rel="stylesheet">
 <link href="resources/css/main.css" rel="stylesheet">
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
+function searchCondition(){
+	
+	emp_name=$('#emp_name').val();
+	emp_no=${loginEmp.emp_no};
+	job_no=${loginEmp.job_no};
+	
+	location.href="approvalListAdmin.do?emp_no="+emp_no+"&job_no="+job_no+"&emp_name="+emp_name
+
+	
+}
 
 
 function modalUp(obj){
@@ -60,16 +54,9 @@ function modalUp(obj){
 	var team_mgr_name=td.eq(11).text();
 	var mgr_name=td.eq(12).text();
 	 approval_no=td.eq(13).text();
-	
-	 	
-	
 	 	
 	 	
-	 	
-	 	
-	 	
-	 	
-	 	$('#startDate').val(approval_start_date);
+	$('#startDate').val(approval_start_date);
 	$('#endDate').val(approval_end_date);
 	$('#reason').val(approval_choose_no);
 	
@@ -81,15 +68,10 @@ function modalUp(obj){
 	
 	var value="";
 	if(approval_team_date=="" && ${loginEmp.job_no==2}){
-		
-		
-        value="<button onclick='teamapproval();' type='button' class='btn btn-primary' style='float:right;'>승인</button>";
+        value="<button onclick='teamapproval();' type='button' class='btn btn-primary' style='float:right;'>승인</button>";	
+             $('#manager').html(value);             
 	
-	
-             $('#manager').html(value);
-             
-	
-}
+	}
 	if(approval_team_date!=""  && ${loginEmp.job_no==3}) {
 		
 		 value="<button onclick='adminapproval();' type='button' class='btn btn-primary' style='float:right;'>승인</button>";
@@ -117,18 +99,19 @@ function modalUp(obj){
 	 }
 	 
 	 function teamapproval(){
-			
+		
 		 $.ajax({
 			url:"teamManager.do",
 			data:{ approval_no:approval_no},
 			type:"post",
 		 	success : function(data){
-				alert(data);
-				
+				//alert("팀장 승인 완료"+data);
+				 ws.send(data);
+				alert("결재가 완료 되었습니다.");
 				$('#modal1').modal("hide");
-			
 				location.href="approvalListAdmin.do?emp_no=${loginEmp.emp_no}&job_no=${loginEmp.job_no}";
-			}
+				 
+		 	}
 		 });
 		 
 			
@@ -225,6 +208,9 @@ background-color:#2A3F54;
 							<div class="x_panel">
 								
 								<div class="x_content">
+								
+									<input style="float:right;" type="text" placeholder="사원명" id="emp_name"><button  style="float:right; margin-right:0px;" type="button" onclick="searchCondition();">검색</button>
+									
 									
 									<table id="table_ap" class="table table-striped table-bordered">
 										<thead>
@@ -247,6 +233,7 @@ background-color:#2A3F54;
 											</tr>
 										</thead>
 										<tbody>
+										
 										<c:forEach items="${approvalListA}" var="approval">
 											<c:if test="${approval.approval_choose_no eq '1'}">
 											<c:set var="approval_choose_no" value="휴가"/>
@@ -293,11 +280,52 @@ background-color:#2A3F54;
 												<td>${approval.team_mgr_name}</td>
 												<td>${approval.mgr_name}</td>
 												<td>${approval.approval_no}</td>
-												
+											
+											<c:if test="${approval.emp_no eq null}">
+											<h2>검색 결과가 없습니다.</h2>
+											</c:if>
 											</tr>
+											
 												</c:forEach>
-										<tbody>
+											
+											
+										</tbody>
 									</table>
+			<ul class='pagination'>
+	        
+	      
+	        <c:set var="emp_name" value="${emp_name}"/>
+	         <c:set var="startPage" value="${startPage}"/>
+	        <c:choose>
+	        <c:when test="${startPage>5}">
+	          <li class='page-item'><a class='page-link' href='approvalListAdmin.do?page=${startPage-1}&emp_no=${loginEmp.emp_no}&job_no=${loginEmp.job_no}&emp_name=${emp_name}'>PREV</a></li>
+	        </c:when>
+	        <c:otherwise>
+	        <li class='page-item'><a class='page-link'>prev</a></li>
+	        </c:otherwise>
+	        </c:choose> 
+	       
+	        <c:forEach var="paging" begin="${startPage}" end="${endPage}">
+	        <c:choose>
+	        <c:when test="${paging==currentPage}">
+	        <li class='page-item'><a style='color:black;' class='page-link'>${paging}</a></li>
+	        </c:when>
+	        <c:otherwise>
+	        <li class='page-item'><a class='page-link' href='approvalListAdmin.do?page=${paging}&emp_no=${loginEmp.emp_no}&job_no=${loginEmp.job_no}&emp_name=${emp_name}'>${paging}</a></li>
+	        </c:otherwise>
+	        </c:choose>
+	        </c:forEach>
+	        <c:set var="endPage" value="${endPage}"/>
+	        <c:set var="maxPage" value="${maxPage}"/>
+	        <c:choose>
+	        <c:when test="${endPage<maxPage}">
+	        <li class='page-item'><a class='page-link' href='approvalListAdmin.do?page=${endPage+1}&emp_no=${loginEmp.emp_no}&job_no=${loginEmp.job_no}&emp_name=${emp_name}'>next</a></li>
+	        </c:when>
+	        <c:otherwise>
+	        <li class='page-item'><a class='page-link'>next</a></li>
+	        </c:otherwise>
+	        </c:choose>
+	        </ul>
 									<div class="modal fade sendMsg" tabindex="-1" role="dialog"
                                  id="modal1" aria-hidden="true">
                                  <div class="modal-dialog modal-lg">
@@ -437,40 +465,7 @@ background-color:#2A3F54;
 	<script src="resources/vendors/jquery/dist/jquery.min.js"></script>
 	<!-- Bootstrap -->
 	<script src="resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-	<!-- FastClick -->
-	<script src="resources/vendors/fastclick/lib/fastclick.js"></script>
-	<!-- NProgress -->
-	<script src="resources/vendors/nprogress/nprogress.js"></script>
-	<!-- iCheck -->
-	<script src="resources/vendors/iCheck/icheck.min.js"></script>
-	<!-- Datatables -->
-	<script
-		src="resources/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-	<script
-		src="resources/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-	<script src="resources/vendors/jszip/dist/jszip.min.js"></script>
-	<script src="resources/vendors/pdfmake/build/pdfmake.min.js"></script>
-	<script src="resources/vendors/pdfmake/build/vfs_fonts.js"></script>
+
 
 	<!-- Custom Theme Scripts -->
 	<script src="resources/build/js/custom.min.js"></script>

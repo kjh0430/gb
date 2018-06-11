@@ -16,4 +16,8 @@ public class TodoListDao {
 		return sqlSession.insert("todolistInsert", todolist);
 	}
 
+	public TodoList selectTodoList(int emp_no) {
+		return sqlSession.selectOne("todolistSelect", emp_no);
+	}
+
 }

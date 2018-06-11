@@ -83,5 +83,31 @@ public class EmpDao {
 		return sqlSession.selectOne("selectCheckEmpNo", emp_no);
 	}
 
+<<<<<<< HEAD
+=======
+	public Emp selectMyInfo(Emp emp) {
+		
+		return sqlSession.selectOne("selectMyInfo",emp);
+	}
+
+	public Emp selectEmail(Emp emp) {
+		
+		return sqlSession.selectOne("selectEmail",emp);
+	}
+
+	public Emp selectPhoneckdupl(Emp emp) {
+		return sqlSession.selectOne("selectPhonedupl",emp);
+	}
+
+	public int updateMyInfo(Emp emp) {
+		
+		return sqlSession.update("updateMyInfo",emp);
+	}
+
+	public int updatePassword(Emp emp) {
+		
+		return sqlSession.update("updatePassword",emp);
+	}
+>>>>>>> branch 'master' of https://github.com/kjh0430/gb.git
 	
 }

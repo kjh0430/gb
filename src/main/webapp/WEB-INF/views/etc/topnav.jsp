@@ -6,7 +6,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>sidebar</title>
 <style type="text/css">
  #menu1 li{
  	padding:10px;
@@ -16,7 +15,7 @@
  }
 </style>
 <script src="resources/js/EventSource.js"></script>
-<script src="resources/js/PushNotify.js"></script>
+<script src="resources/js/PushNotify.js?ver=1"></script>
 </head>
 
 <body>
@@ -34,7 +33,7 @@
 							${ loginEmp.emp_name }님 <span class=" fa fa-angle-down"></span>
 					</a>
 						<ul class="dropdown-menu dropdown-usermenu pull-right">
-							<li><a href="javascript:;"> 내정보수정</a></li>
+							<li><a href="info.do"> 내정보수정</a></li>
 							<li><a href="logout.do"><i
 									class="fa fa-sign-out pull-right"></i> 로그아웃</a></li>
 						</ul></li>
@@ -90,8 +89,12 @@
 				if(size>0){
 					for(var i in notify.list){								
 						value+="<li><p>"+notify.list[i].notify_date+"<a href='javascript:confirmNotify(\""+notify.list[i].notify_no+"\")'>"
-						+"<i class='fa fa-times'></i></a></p>"
-						+notify.list[i].from_name+"님이 보낸 쪽지가 도착했습니다.</li>"
+						+"<i class='fa fa-times'></i></a></p>";
+						if(notify.list[i].notify_category == 'M'){
+							value+=notify.list[i].from_name+"님이 보낸 쪽지가 도착했습니다.</li>";
+						}else if(notify.list[i].notify_category == 'A'){
+							value+=notify.list[i].from_name+"님이 요청한 결재가 있습니다.</li>";
+						}
 					}	
 					$("#menu1").html(value);
 					$(".notify_badge").html(size);
@@ -120,8 +123,7 @@
 				}else{
 					alert("실패")
 				}		
-			}			
-			
+			}						
 		});//ajax
 		
 	}

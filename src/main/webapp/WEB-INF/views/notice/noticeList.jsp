@@ -17,23 +17,7 @@
 <!-- Font Awesome -->
 <link href="resources/vendors/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet">
-<!-- NProgress -->
-<link href="resources/vendors/nprogress/nprogress.css" rel="stylesheet">
-<!-- iCheck -->
-<link href="resources/vendors/iCheck/skins/flat/green.css"
-	rel="stylesheet">
 
-<!-- bootstrap-progressbar -->
-<link
-	href="resources/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css"
-	rel="stylesheet">
-<!-- JQVMap -->
-<link href="resources/vendors/jqvmap/dist/jqvmap.min.css"
-	rel="stylesheet" />
-<!-- bootstrap-daterangepicker -->
-<link
-	href="resources/vendors/bootstrap-daterangepicker/daterangepicker.css"
-	rel="stylesheet">
 
 <!-- Custom Theme Style -->
 <link href="resources/build/css/custom.min.css" rel="stylesheet">
@@ -177,22 +161,24 @@ function list(page){
 								<div class="x_content table-responsive">	
 									<button type="button" class="btn btn-default btn-sm" style="float:right;"><a href="noticeWrite.do">글쓰기</a></button>
 										
-									<table id="table_notice" class="table table-striped table-responsive table-bordered" style="min-width:600px;">
+									<!-- <table id="table_notice" class="table table-striped table-responsive table-bordered" style="min-width:600px;"> -->
+									<table id="table_notice" class="table table-striped jambo_table bulk_action" style="min-width:600px;">
+									
 										<thead>
-											<tr>
-												<th>번호</th>
-												<th>제목</th>
-												<th>날짜</th>
-												<th>조회수</th>
+											<tr class="headings">
+												<th class="column-title" style="display: table-cell;">번호</th>
+												<th class="column-title" style="display: table-cell;">제목</th>
+												<th class="column-title" style="display: table-cell;">날짜</th>
+												<th class="column-title" style="display: table-cell;">조회수</th>
 											</tr>
 										</thead>
 										<tbody>
 											 <c:forEach var="notice" items="${ noticeList }">
 												<tr>
-													<th>${ notice.notice_no }</th>													
-													<th><a href="noticeDetail.do?notice_no=${notice.notice_no}" >${ notice.notice_title }</a></th>
-													<th>${ notice.notice_date }</th>
-													<th>${ notice.notice_count }</th>
+													<td>${ notice.notice_no }</td>													
+													<td><a href="noticeDetail.do?notice_no=${notice.notice_no}" >${ notice.notice_title }</a></td>
+													<td>${ notice.notice_date }</td>
+													<td>${ notice.notice_count }</td>
 												</tr>
 											</c:forEach>
 											
@@ -222,7 +208,7 @@ function list(page){
 									         </c:forEach> --%>
 
 
-										<tbody>
+										</tbody>
 									</table>
 								</div>
 							<nav aria-label="Page navigation example">
@@ -344,12 +330,7 @@ function list(page){
 	<script src="resources/vendors/jquery/dist/jquery.min.js"></script>
 	<!-- Bootstrap -->
 	<script src="resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-	<!-- FastClick -->
-	<script src="resources/vendors/fastclick/lib/fastclick.js"></script>
-	<!-- NProgress -->
-	<script src="resources/vendors/nprogress/nprogress.js"></script>
-	<!-- iCheck -->
-	<script src="resources/vendors/iCheck/icheck.min.js"></script>
+	
 	<!-- Datatables -->
 	<script
 		src="resources/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
@@ -375,9 +356,7 @@ function list(page){
 		src="resources/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
 	<script
 		src="resources/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-	<script src="resources/vendors/jszip/dist/jszip.min.js"></script>
-	<script src="resources/vendors/pdfmake/build/pdfmake.min.js"></script>
-	<script src="resources/vendors/pdfmake/build/vfs_fonts.js"></script>
+	
 
 	<!-- Custom Theme Scripts -->
 	<script src="resources/build/js/custom.min.js"></script>

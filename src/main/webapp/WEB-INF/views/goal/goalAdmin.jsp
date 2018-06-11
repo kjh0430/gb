@@ -45,6 +45,36 @@ $(document).ready(function() {
 } );
 
 </script>
+
+<script type="text/javascript">
+
+$(function(){
+	
+	$('goal_select')
+	
+	
+	$('#goal_search').click(
+		function(){
+			#('').html(
+					
+			
+			
+			);
+			
+			
+		}		
+	
+	)
+	
+});
+
+
+
+
+
+
+</script>
+
 <style type="text/css">
 	.btn-modify{
 		padding:3px 6px;
@@ -156,6 +186,43 @@ $(document).ready(function() {
 							</h3>
 						</div>
 					</div>
+					
+					
+					<div class="row">
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							<div class="x_panel">
+								<div class="x_title">
+									<h2>상세검색</h2>
+									<div class="clearfix"></div>
+								</div>
+								<div class="x_content">
+									<div class="col-md-6 col-sm-12 col-xs-12">
+									<form class="form-horizontal form-label-left">
+										<div class="form-group">
+											<div class="col-sm-3">
+											<select class="form-control" id="goal_select">
+												<option value="">전체</option>
+												<option value="">팀별</option>
+												<option value="">사원별</option>
+											</select>
+											</div>
+											<div class="col-sm-9">
+												<div class="input-group">
+													<input type="text" class="form-control"> <span
+														class="input-group-btn">
+														<button type="submit" class="btn btn-primary" id ="goal_search">검색</button>
+													</span>
+												</div>
+											</div>
+										</div>
+									</form>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div><!-- end row -->
+					
 
 					<div class="clearfix"></div>
 

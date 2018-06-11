@@ -33,8 +33,9 @@ public class CalendarController {
 		ArrayList<Calendar> seCalendar=CalendarService.selectCalendar(calendar);		
 		JSONArray jarr=new JSONArray();
 		
-		System.out.println(calendar.getJob_no());
-		System.out.println(calendar.getEmp_no());
+
+		
+		System.out.println("calendarController"+seCalendar);
 		for(Calendar cal : seCalendar) {
 			
 			JSONObject jsonobject=new JSONObject();
@@ -46,6 +47,7 @@ public class CalendarController {
 			jsonobject.put("calendar_content",cal.getCalendar_content());
 			jsonobject.put("calendar_start_date",cal.getCalendar_start_date());
 			jsonobject.put("calendar_end_date",cal.getCalendar_end_date());
+			
 			
 			jarr.add(jsonobject);
 			
@@ -67,20 +69,20 @@ public class CalendarController {
 	@ResponseBody
 	public void calendardetail(Calendar calendar,HttpServletResponse  response) throws IOException {		
 	
-		Calendar calendarDe=CalendarService.selectDetail(calendar);		
+		Calendar calendarDar=CalendarService.selectDetail(calendar);		
 	
 		System.out.println(calendar.getDept_no());
 		
 		JSONObject send=new JSONObject();
 	
 		send.put("calendar_no",calendar.getCalendar_no());
-		send.put("emp_no",calendarDe.getEmp_no());
-		send.put("emp_name",calendarDe.getEmp_name());
-		send.put("calendar_title",calendarDe.getCalendar_title());
-		send.put("calendar_content",calendarDe.getCalendar_content());
-		send.put("calendar_start_date",calendarDe.getCalendar_start_date());
-		send.put("calendar_end_date",calendarDe.getCalendar_end_date());
-		send.put("calendar_dept_name",calendarDe.getDept_name());
+		send.put("emp_no",calendarDar.getEmp_no());
+		send.put("emp_name",calendarDar.getEmp_name());
+		send.put("calendar_title",calendarDar.getCalendar_title());
+		send.put("calendar_content",calendarDar.getCalendar_content());
+		send.put("calendar_start_date",calendarDar.getCalendar_start_date());
+		send.put("calendar_end_date",calendarDar.getCalendar_end_date());
+		send.put("calendar_dept_name",calendarDar.getDept_name());
 		
 		
 		response.setContentType("application/json; charset=utf-8");	
@@ -117,7 +119,75 @@ public class CalendarController {
 		
 		}
 		
-
+		@RequestMapping(value="getInfo.do" ,method=RequestMethod.POST)
+		@ResponseBody
+		public void CalendargetInfo(Calendar calendar,HttpServletResponse  response) throws IOException {		
+		System.out.println("emp_no"+calendar.getEmp_no());
+		System.out.println("job_no"+calendar.getDept_no());
+			
+			Calendar getcalendarDar=CalendarService.selectgetInfo(calendar);		
+		
+			System.out.println("부서이름"+getcalendarDar.getDept_name());
+			
+			JSONObject send=new JSONObject();
+		
+		
+			send.put("emp_no",getcalendarDar.getEmp_no());
+			send.put("emp_name",getcalendarDar.getEmp_name());
+			send.put("calendar_dept_name",getcalendarDar.getDept_name());
+			
+			
+			response.setContentType("application/json; charset=utf-8");	
+		
+			PrintWriter out=response.getWriter();
+			out.println(send.toJSONString());
+			out.flush();
+			out.close();
+		
+		}
+		
+		@RequestMapping(value="addSchedule.do" ,method=RequestMethod.POST)
+		@ResponseBody
+		public void insertCalendar(Calendar calendar,HttpServletResponse response) throws IOException {		
+		
+			System.out.println(calendar.getCalendar_content());
+			System.out.println(calendar.getCalendar_end_date());
+			System.out.println(calendar.getCalendar_no());
+			System.out.println(calendar.getCalendar_start_date());
+			System.out.println(calendar.getCalendar_title());
+			
+			int result=CalendarService.insertSchedule(calendar);
+			
+			
+			
+			
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter out=response.getWriter();
+			
+			out.append("일정이 추가되었습니다.");
+			out.flush();
+			out.close();
+			
+		
+		}
 	
+			
+		@RequestMapping(value="deleteSchedule.do" ,method=RequestMethod.POST)
+		@ResponseBody
+		public void deleteCalendar(Calendar calendar,HttpServletResponse response) throws IOException {		
+		
+			System.out.println(calendar.getCalendar_no());
+			
+			int result=CalendarService.deleteSchedule(calendar);
+		
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter out=response.getWriter();
+			
+			out.append("일정이 삭제되었습니다.");
+			out.flush();
+			out.close();
+			
+		
+		}
 	
 }
