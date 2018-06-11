@@ -58,4 +58,21 @@ public class ApprovalDao {
 		return sqlSession.selectOne("selectgetListCountE",apr);
 	}
 
+	public ArrayList<Approval> selectapprovalListConditionA(Approval apr) {
+	
+		return (ArrayList)sqlSession.selectList("selectapprovalListConditionA",apr);
+	}
+
+	
+
+	public int selectgetConditionListA(Approval apr) {
+		
+		return sqlSession.selectOne("selectgetConditionCountA",apr);
+	}
+
+	public int selectgetListCountA(Approval apr) {
+	
+		return sqlSession.selectOne("selectgetListCountA",apr);
+	}
+
 }

@@ -280,15 +280,52 @@ background-color:#2A3F54;
 												<td>${approval.team_mgr_name}</td>
 												<td>${approval.mgr_name}</td>
 												<td>${approval.approval_no}</td>
-												
-											</tr>
-												</c:forEach>
-												
-											<c:if test="${approvalListA eq null}">
-											<h2>표시할 항목이 없습니다.</h2>
+											
+											<c:if test="${approval.emp_no eq null}">
+											<h2>검색 결과가 없습니다.</h2>
 											</c:if>
-										<tbody>
+											</tr>
+											
+												</c:forEach>
+											
+											
+										</tbody>
 									</table>
+			<ul class='pagination'>
+	        
+	      
+	        <c:set var="emp_name" value="${emp_name}"/>
+	         <c:set var="startPage" value="${startPage}"/>
+	        <c:choose>
+	        <c:when test="${startPage>5}">
+	          <li class='page-item'><a class='page-link' href='approvalListAdmin.do?page=${startPage-1}&emp_no=${loginEmp.emp_no}&job_no=${loginEmp.job_no}&emp_name=${emp_name}'>PREV</a></li>
+	        </c:when>
+	        <c:otherwise>
+	        <li class='page-item'><a class='page-link'>prev</a></li>
+	        </c:otherwise>
+	        </c:choose> 
+	       
+	        <c:forEach var="paging" begin="${startPage}" end="${endPage}">
+	        <c:choose>
+	        <c:when test="${paging==currentPage}">
+	        <li class='page-item'><a style='color:black;' class='page-link'>${paging}</a></li>
+	        </c:when>
+	        <c:otherwise>
+	        <li class='page-item'><a class='page-link' href='approvalListAdmin.do?page=${paging}&emp_no=${loginEmp.emp_no}&job_no=${loginEmp.job_no}&emp_name=${emp_name}'>${paging}</a></li>
+	        </c:otherwise>
+	        </c:choose>
+	        </c:forEach>
+	        <c:set var="endPage" value="${endPage}"/>
+	        <c:set var="maxPage" value="${maxPage}"/>
+	        <c:choose>
+	        <c:when test="${endPage<maxPage}">
+	        <li class='page-item'><a class='page-link' href='approvalListAdmin.do?page=${endPage+1}&emp_no=${loginEmp.emp_no}&job_no=${loginEmp.job_no}&emp_name=${emp_name}'>next</a></li>
+	        </c:when>
+	        <c:otherwise>
+	        <li class='page-item'><a class='page-link'>next</a></li>
+	        </c:otherwise>
+	        </c:choose>
+	        </ul>
 									<div class="modal fade sendMsg" tabindex="-1" role="dialog"
                                  id="modal1" aria-hidden="true">
                                  <div class="modal-dialog modal-lg">

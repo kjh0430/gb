@@ -11,7 +11,6 @@
    	destroy-method="close">
 
    	<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
-
    	<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"></property>
    	<property name="username" value="final"></property>
    	<property name="password" value="final"></property>
