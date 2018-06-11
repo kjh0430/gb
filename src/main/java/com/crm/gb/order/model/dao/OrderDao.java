@@ -48,4 +48,8 @@ public class OrderDao {
 	public int orderListCount() {
 		return sqlSession.selectOne("orderListCount");
 	}
+
+	public ArrayList<Order> productShare() {
+		return (ArrayList)sqlSession.selectList("productShare");
+	}
 }
