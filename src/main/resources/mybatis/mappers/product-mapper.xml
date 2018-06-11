@@ -45,7 +45,7 @@
 	
 	<select id="productList" resultType="arraylist" resultMap="selectAllProductList">
 	<![CDATA[
-	select product_no, product_name, product_price, product_availability from product
+	select product_no, product_name, product_price, product_availability from product where product_delete = 'N'
 	]]>
 	</select>
 
@@ -70,6 +70,7 @@
 			select * from product where product_no = #{product_no}
 		]]>
 	</select>
+	
 	<update id="updateProductAmount" parameterType="order">
 		<![CDATA[
 			update product set product_amount = (product_amount - #{order_amount}) where product_no = #{product_no}
@@ -77,17 +78,18 @@
 		
 	</update>
 
+	<update id="updateProduct" parameterType="product">
+		<![CDATA[
+			update product set product_name = #{product_name},product_price=#{product_price},product_availability=#{product_availability},
+			product_amount=#{product_amount},product_comment=#{product_comment} where product_no = #{product_no}
+		]]>		
+	</update>
 
-
-
-
-
-
-
-
-
-
-
+	<update id="deleteProduct" parameterType="product">
+		<![CDATA[
+			update product set product_delete = 'Y' where product_no = #{product_no}
+		]]>		
+	</update>
 
 
 </mapper>
