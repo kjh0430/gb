@@ -387,7 +387,7 @@ public class EmpController {
       JSONObject send=new JSONObject();
       
       if(emp.getJob_no()==2) {
-         getMyInfo.setMgr_name("");
+       /*  getMyInfo.setMgr_name("");*/
          getMyInfo.setCounty("");
          getMyInfo.setCity("");
          getMyInfo.setVillage("");

@@ -31,5 +31,5 @@ public interface ClientService {
 
 	public abstract Client selectOrderClient(Order order); //발주정보 상세보기
 	
-	public abstract int clientListCount(int emp_no);
+	public abstract int clientListCount(Client client);
 }

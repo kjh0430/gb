@@ -54,6 +54,7 @@
 		<result column="client_enroll" property="client_enroll"/>
 		<result column="emp_name" property="emp_name"/>
 		<result column="contract_discount" property="contract_discount"/>
+		<result column="job_no" property="job_no"/>
 		
 	</resultMap>
 
@@ -124,19 +125,38 @@
 	
 	<!-- 거래중인 거래처 리스트 mapping -->
 	<select id="selectAccountClient" resultMap="resultAccountClient" parameterType="client">
+	<if test="job_no ==3|| job_no==2">
+		<![CDATA[
+			select * from (
+			(select rownum as rn, A.* from (select * from client where client_contract = 'Y') A))
+			where rn between #{startPage} and #{endPage}
+		]]>	
+	</if>
+	<if test="job_no ==1">
 		<![CDATA[
 			select * from (
 			(select rownum as rn, A.* from (select * from client where emp_no = #{emp_no} and client_contract = 'Y') A))
 			where rn between #{startPage} and #{endPage}
 		]]>
+	
+	</if>
+		
 	</select>
 	
 	<!-- 거래중인 고객사 리스트카운트 -->
-	<select id="clCount" parameterType="_int" resultType="int">
+	<select id="clCount" parameterType="client" resultType="int">
+	
+		<if test="job_no==3|| job_no==2">
 		<![CDATA[
-			select count(*) from client where emp_no = #{emp_no} and client_contract = 'Y'
+			select count(*) from client where client_contract = 'Y'
 		]]>
+		</if>
+		<if test="job_no ==1">
+			<![CDATA[
+				select count(*) from client where emp_no = #{emp_no} and client_contract = 'Y'
+			]]>
 		
+		</if>
 	</select>
 	
 	<!-- 거래처 이름 검색 mapping -->
