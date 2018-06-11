@@ -56,6 +56,31 @@ function clientList(){
 }
 </script>
 
+<!-- 급여명세서 -->
+<script type="text/javascript">
+
+		function clickNames(empNo) {
+			
+			$.ajax({
+				url: "empSalaryDetail.do",
+				type: "post",
+				data: {
+					emp_no : empNo
+				},
+				dataType: "json",
+				success: function(data) {
+					$('#emp_name').val(decodeURIComponent(data.name));
+					$('#dept_name').val(decodeURIComponent(data.dept));
+					$('#job_name').val(decodeURIComponent(data.job));
+					$('#sal').val(data.sal);
+					$('#sal_bonus').val(data.bonus);
+					$('#toSal').val(data.toSal);
+				}
+				
+			});	//ajax
+		}
+
+</script>
 
 </head>
 
@@ -126,31 +151,36 @@ function clientList(){
 									<table id="table_cl" class="table table-striped table-bordered" style="min-width:650px;">
 										<thead>
 											<tr>
-												<th>고객명</th>
-												<th>회사명</th>
+												<th>사원명</th>
+												<th>부서명</th>
 												<th>연락처</th>
-												<th>할인률 (%)</th>
-												<th>계약금</th>
-												<th>계약시작일</th>
-												<th>계약종료일</th>
+												<th>기본급</th>
+												<th>날짜(월)</th>
+												<th>입사일</th>
 											</tr>
 										</thead>
 										<tbody>
 										
-										<%-- <c:forEach var="list" items="${ contractList }">
+										<c:forEach items="${ salaryList }" var="list">
 											<tr>
-												<td><a href="contractDetail.do?client_no=${ list.client.client_no }">${ list.client.client_name }</a></td>
-												<td>${ list.client.client_company }</td>
-												<td>${ list.client.client_phone }</td>
-												<td>${ list.contract_discount }</td>
-												<td>${ list.contract_money }</td>
-												<td>${ list.contract_date_start }</td>
-												<td>${ list.contract_date_end }</td>
-											</tr>
-											
-										</c:forEach> --%>
-
-										<tbody>
+												<td>
+												<a onclick="clickNames('${ list.emp.emp_no }')"
+													class="showSalary"
+													id="showSalary" 
+													style="cursor:pointer;" 
+													data-toggle="modal" 
+													data-target="#myModal">
+													${ list.emp.emp_name }</a></td>
+													
+												<td>${ list.dept.dept_name }</td>
+												<td>${ list.emp.emp_phone }</td>
+												<td>${ list.sal }</td>
+												<td>${ list.sal_date }</td>
+												<td>${ list.emp.emp_hiredate }</td>
+											</tr>	
+										</c:forEach>
+										
+										</tbody>
 									</table>
 								</div>
 							</div>
@@ -158,6 +188,65 @@ function clientList(){
 					</div>
 				</div>
 			</div>
+			
+			<!-- 모달의 시작 -->
+				<!-- Modal -->
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+				      <div class="modal-header" style="text-align:center;">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+				        <h4 class="modal-title" id="myModalLabel">급여정보</h4>
+				        
+				      </div><!-- modal heder end div -->	
+				      
+				      <div class="modal-body" style="text-align:center;">
+							<div class="form-group">
+								<span>성명</span>
+								<span>
+									<input type="text" id="emp_name" readonly>
+								</span>
+							</div>				 	     
+							<div class="form-group">
+								<span>부서</span>
+								<span>
+									<input type="text" id="dept_name" readonly>
+								</span>
+							</div>				 	     
+							<div class="form-group">
+								<span>직책</span>
+								<span>
+									<input type="text" id="job_name" readonly>
+								</span>
+							</div>				 	     
+							<div class="form-group">
+								<span>기본급</span>
+								<span>
+									<input type="text" id="sal" readonly>
+								</span>
+							</div>				 	     
+							<div class="form-group">
+								<span>인센티브</span>
+								<span>
+									<input type="text" id="sal_bonus" readonly>
+								</span>
+							</div>				 	     
+							<div class="form-group">
+								<span>총지급액</span>
+								<span>
+									<input type="text" id="toSal" readonly>
+								</span>
+							</div>				 	     
+									 	     
+				      </div>
+				      
+				      <div class="modal-footer">
+				        <button id="" type="submit" class="btn btn-primary" data-dismiss="modal">확인</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+				<!-- 모달의 끝 -->
 			
 			<!-- start footer -->
 				<c:import url="../etc/footer.jsp"></c:import>

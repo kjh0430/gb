@@ -82,5 +82,6 @@ public class EmpDao {
 	public Emp selectCheckEmpNo(int emp_no) {
 		return sqlSession.selectOne("selectCheckEmpNo", emp_no);
 	}
+
 	
 }

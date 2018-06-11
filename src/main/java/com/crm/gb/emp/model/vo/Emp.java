@@ -5,6 +5,8 @@ import java.sql.Date;
 
 import org.springframework.stereotype.Component;
 
+import com.crm.gb.job.model.vo.Job;
+
 @Component("emp")
 public class Emp implements Serializable{
 	private static final long serialVersionUID=1805091737L;
@@ -25,12 +27,13 @@ public class Emp implements Serializable{
 	private int dept_no;
 	private String emp_delete;
 	private String dept_name; //부서별 사원조회 
+	private Job job;
 	
 	public Emp() {}
 
 	public Emp(int emp_no, String emp_pwd, String emp_name, String emp_addr, String emp_phone, int job_no,
 			String emp_email, int emp_mgr, Date emp_hiredate, Date emp_firedate, String city, String county,
-			String village, int dept_no, String emp_delete, String dept_name) {
+			String village, int dept_no, String emp_delete, String dept_name, Job job) {
 		super();
 		this.emp_no = emp_no;
 		this.emp_pwd = emp_pwd;
@@ -48,6 +51,7 @@ public class Emp implements Serializable{
 		this.dept_no = dept_no;
 		this.emp_delete = emp_delete;
 		this.dept_name = dept_name;
+		this.job = job;
 	}
 
 	public int getEmp_no() {
@@ -178,13 +182,23 @@ public class Emp implements Serializable{
 		this.dept_name = dept_name;
 	}
 
+	public Job getJob() {
+		return job;
+	}
+
+	public void setJob(Job job) {
+		this.job = job;
+	}
+
 	@Override
 	public String toString() {
 		return "Emp [emp_no=" + emp_no + ", emp_pwd=" + emp_pwd + ", emp_name=" + emp_name + ", emp_addr=" + emp_addr
 				+ ", emp_phone=" + emp_phone + ", job_no=" + job_no + ", emp_email=" + emp_email + ", emp_mgr="
 				+ emp_mgr + ", emp_hiredate=" + emp_hiredate + ", emp_firedate=" + emp_firedate + ", city=" + city
 				+ ", county=" + county + ", village=" + village + ", dept_no=" + dept_no + ", emp_delete=" + emp_delete
-				+ ", dept_name=" + dept_name + "]";
+				+ ", dept_name=" + dept_name + ", job=" + job + "]";
 	}
+
+	
 	
 }
