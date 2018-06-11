@@ -134,8 +134,8 @@ public class ClientServiceImpl implements ClientService{
 	}
 	
 	@Override
-	public int clientListCount(int emp_no) {
-		return clientDao.clientListCount(emp_no);
+	public int clientListCount(Client client) {
+		return clientDao.clientListCount(client);
 	}
 	
 }

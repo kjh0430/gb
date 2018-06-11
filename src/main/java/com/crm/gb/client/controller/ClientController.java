@@ -199,9 +199,15 @@ public class ClientController {
 	
 	/** 거래중인 거래처 리스트 메소드 **/
 	@RequestMapping("accountList.do")
-	public String showAccountClient(@RequestParam("emp_no") String emp_num, Model model, @RequestParam(value="page") int page, Client client) {
+	public String showAccountClient(@RequestParam("emp_no") String emp_num, Model model, 
+	@RequestParam(value="page") int page, Client client, @RequestParam(value="job_no") String jobNo) {
 		logger.info("거래처 리스트 메소드 실행됨!!");
+		
 		int emp_no = Integer.parseInt(emp_num);
+		int job_no = Integer.parseInt(jobNo);
+		
+		System.out.println("jobNo : " + job_no);
+		System.out.println("page: " + page);
 		
 		//페이지 기본값 지정
 		int currentPage=page;				
@@ -209,8 +215,11 @@ public class ClientController {
 		int pageSize=10;
 		int pageGroupSize=5;
 		
-		int listCount_1 = clientService.clientListCount(emp_no);
+		client.setEmp_no(emp_no);
+		client.setJob_no(job_no);
 		
+		int listCount_1 = clientService.clientListCount(client);
+		System.out.println("count : " + listCount_1);
 		//페이지수 계산 
 		int maxPage=(int)((double)listCount_1/pageSize+0.9);				
 		//페이지 번호 갯수 출력 					
@@ -242,6 +251,7 @@ public class ClientController {
 		client.setEndPage(endPage);
 		client.setEmp_no(emp_no);
 		
+		System.out.println("client : " + client);
 		ArrayList<Client> accountClientList = clientService.selectAccountClientList(client);
 		model.addAttribute("accountClientList", accountClientList);
 		model.addAttribute("listCount",listCount_1);
