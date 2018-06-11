@@ -232,7 +232,7 @@ function list(page){
 									<ul class="pagination">
 									<!-- if문 -->
 									 <c:if test="${curBlock>1}">
-										<li class="page-item"><a class="page-link" href="orderList.do?page=1"> << </a></li>
+										<li class="page-item"><a class="page-link" href="orderList.do?page=1">prev </a></li>
 									
 									</c:if> 
 									
@@ -240,7 +240,7 @@ function list(page){
 									<!--if else문 형식임  -->
 								
 									 <c:if test="${curBlock>1}">
-										<li class="page-item"><a class="page-link" href="orderList.do?page=${blockBegin-1}"><</a></li>
+										<li class="page-item"><a class="page-link" href="orderList.do?page=${blockBegin-1}">prev</a></li>
 									
 									</c:if> 
 									
@@ -270,7 +270,7 @@ function list(page){
 								
 									
 									 <c:if test="${curBlock!=totBlock}">
-										<li class="page-item"><a class="page-link" href="orderList.do?page=${blockEnd+1}">></a></li>
+										<li class="page-item"><a class="page-link" href="orderList.do?page=${blockEnd+1}">next</a></li>
 									
 									</c:if> 
 									
@@ -278,7 +278,7 @@ function list(page){
 									<!-- 다음페이지 next -->
 									
 									<c:if test="${curBlock!=totBlock}">
-										<li class="page-item"><a class="page-link" href="orderList.do?page=${maxPage}">>></a></li>	
+										<li class="page-item"><a class="page-link" href="orderList.do?page=${maxPage}">next</a></li>	
 									
 									</c:if> 										
 										

@@ -122,9 +122,9 @@ public class ClientDao {
 	}
 
 	/**  거래중인 고객사 리스트카운트 Dao**/
-	public int clientListCount(int emp_no) {
-		System.out.println("dao : " + emp_no);
-		return sqlSession.selectOne("clCount",emp_no);
+	public int clientListCount(Client client) {
+		System.out.println("dao : " + client);
+		return sqlSession.selectOne("clCount",client);
 	}
 	
 }

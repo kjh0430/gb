@@ -63,11 +63,12 @@ public class OrderController {
 		
 		
 		int emp_no = Integer.parseInt(empNo);
+		System.out.println("client_company : " + client_company);
 		
 		clientInfo.setClient_company(client_company);
 		clientInfo.setEmp_no(emp_no);
 		
-		//System.out.println("clientInfo : " + clientInfo);
+		System.out.println("clientInfo : " + clientInfo);
 
 		ArrayList<Client> SearchCom = clientService.selectSearchAccount(clientInfo);
 		JSONArray jarr = new JSONArray();
@@ -189,6 +190,7 @@ public class OrderController {
 			
 			int listCount_1 = orderService.orderListCount();
 			//int listCount_2 = listCount_1.getOrder_list_count();
+			System.out.println("listCount : " + listCount_1);
 			
 			//페이지수 계산 
 			int maxPage=(int)((double)listCount_1/pageSize+0.9);				
