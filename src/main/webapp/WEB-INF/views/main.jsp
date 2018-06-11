@@ -417,6 +417,53 @@
 	</script>
 	<script type="text/javascript">//todolist
     
+$(function(){
+		
+		$.ajax({
+	       		url : "todoSelect.do",
+	       		data:{
+	       			emp_no : "${loginEmp.emp_no}"
+	       		},
+	    		type:"post",
+	    		dataType:"json",
+	       		success:function(data){
+	       			
+	       			var jsonSt = JSON.stringify(data);
+	                var json = JSON.parse(jsonSt);
+	                var size = Object.keys(json).length;
+	       			
+	       			console.log("todoSelect.do 제대로 실행됨");
+	       			console.log("size : " + size);
+	       			
+	       			var obj = [json.todo1, json.todo2, json.todo3, json.todo4, json.todo5];
+	       			
+	       			console.log("obj : " + obj);
+	       			
+	       			var count = 1;	       			
+	       			var values = ""
+	       			
+	       			for(var i in obj){
+	       				if(obj[i] != null){
+	       			values += '<li><p><input type="checkbox" class="flat" id="todo_list'+count+'" name="todo_list'+count+'" >'+obj[i]+'</p></li>';
+	    	       	count++;
+	    	       	console.log("obj["+i+"] : " + obj[i]);
+	       				}
+	       			}	       		
+	       			
+	       			values+='<button type="button" class="btn btn-primary" onclick="checkList()">확인</button>';
+	       			
+	       			$(".to_do").html(values);
+	       			
+	       			},
+	       			error: function(){       				
+	       			console.log("todolist 출력 error");
+	       			values = "입력된 값이 없습니다";
+	       			$(".to_do").html(values);
+	       			}
+	       		});
+	});
+	
+    
     var count = 1;    
     function addKeywordForm(){
        var addedFormDiv = document.getElementById("addedTodo");
@@ -447,6 +494,91 @@
        document.addedFormDiv.reset();
        }
        count--;
+       }
+       
+       function todoInsert(){
+			
+       	var emp_no = $('#emp_no').val();       	
+       	var todo1 = $('#todo_keyword0').val();
+       	var todo2 = $('#todo_keyword1').val();
+       	var todo3 = $('#todo_keyword2').val();
+       	var todo4 = $('#todo_keyword3').val();
+       	var todo5 = $('#todo_keyword4').val();
+       	
+       	console.log("main에서 출력 emp_no : " + emp_no);
+       	console.log("main에서 출력 todo1 : " + todo1);
+       	console.log("main에서 출력 todo2 : " + todo2);
+       	console.log("main에서 출력 todo3 : " + todo3);
+       	console.log("main에서 출력 todo4 : " + todo4);
+       	console.log("main에서 출력 todo5 : " + todo5);
+       	
+       	$.ajax({
+       		url : "todoInsert.do",
+       		type: "post",
+       		dataType: "json",
+       		data: {
+       			emp_no : emp_no,
+       			todo1 : todo1,
+       			todo2 : todo2,
+       			todo3 : todo3,
+       			todo4 : todo4,
+       			todo5 : todo5
+       		},
+       		success:function(obj){
+       			
+       			alert("등록되었습니다.");
+       			$('#addModal').modal('hide');
+       					
+       			$.ajax({
+       	       		url : "todoSelect.do",
+       	       		type: "post",
+       	       		dataType: "json",
+       	       		data: {
+       	       			emp_no : emp_no
+       	       		},
+       	       		success:function(data){       	       			
+       	       			console.log("todoSelect.do 제대로 실행됨");       	       			
+       	       			
+       	       		var jsonSt = JSON.stringify(data);
+	                var json = JSON.parse(jsonSt);
+	                var size = Object.keys(json).length;
+	       			
+	       			console.log("todoSelect.do 제대로 실행됨");
+	       			console.log("size : " + size);
+	       			
+	       			var obj = [json.todo1, json.todo2, json.todo3, json.todo4, json.todo5];
+	       			
+	       			console.log("obj : " + obj);
+	       			
+	       			var count = 1;	       			
+	       			var values = ""
+	       			
+	       			for(var i in obj){
+	       				if(obj[i] != null){
+	       			values += '<li><p><input type="checkbox" class="flat" id="todo_list'+count+'" name="todo_list'+count+'" >'+obj[i]+'</p></li>';
+	    	       	count++;
+	    	       	console.log("obj["+i+"] : " + obj[i]);
+	       				}
+	       			}	       			
+	       			
+	       			values+='<button type="button" class="btn btn-primary" onclick="checkList()">확인</button>';
+	       			
+	       			$(".to_do").html(values);
+       	       			
+       	       			},
+       	       			error: function(){       				
+       	       			console.log("error");
+       	       			}
+       	       		});
+       			},
+       			error: function(){       				
+       			console.log("error");
+       			}
+       		});
+       }
+       
+       function checkList(){
+    	   alert("checkList 실행");
        }
        
     </script>
@@ -535,37 +667,29 @@
                 <div class="col-xs-12">
                   <div class="x_panel">
                     <div class="x_title">
-                      <h2>To Do List <small>Sample tasks</small></h2>
+                      <h2>To Do List</h2>
                       <ul class="nav navbar-right panel_toolbox">
-                        <li><button type="button" class="btn btn-link" data-toggle="modal" data-target=".bs-example-modal-lg" style="float:right;">등록</button>
+                      <%-- <c:choose>
+            			<c:when test="${ todolist == null }">
+		           		<li><button type="button" class="btn btn-link" data-toggle="modal" data-target=".bs-example-modal-lg" style="float:right;">등록</button>
                         </li>
+            			</c:when>
+            			<c:otherwise>
+						<li><button type="button" class="btn btn-link" data-toggle="modal" data-target=".bs-example-modal-lg" style="float:right;">수정</button>
+                        </li>
+            			</c:otherwise>
+            		  </c:choose> --%>
+            		  	<li><button type="button" class="btn btn-link" data-toggle="modal" data-target=".bs-example-modal-lg" style="float:right;">등록</button>
+                        </li>
+                        <!-- <li><button type="button" class="btn btn-link" data-toggle="modal" data-target=".bs-example-modal-lg" style="float:right;">수정</button>
+                        </li> -->
                       </ul>
                       <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
-
                       <div class="">
                         <ul class="to_do">
-                          <li>
-                            <p>
-                              <input type="checkbox" class="flat"> Schedule meeting with new client </p>
-                          </li>
-                          <li>
-                            <p>
-                              <input type="checkbox" class="flat"> Create email address for new intern</p>
-                          </li>
-                          <li>
-                            <p>
-                              <input type="checkbox" class="flat"> Have IT fix the network printer</p>
-                          </li>
-                          <li>
-                            <p>
-                              <input type="checkbox" class="flat"> Copy backups to offsite location</p>
-                          </li>
-                          <li>
-                            <p>
-                              <input type="checkbox" class="flat"> Food truck fixie locavors mcsweeney</p>
-                          </li>
+                          
                         </ul>
                       </div>
                     </div>
