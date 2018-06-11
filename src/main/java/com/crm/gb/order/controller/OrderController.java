@@ -71,7 +71,7 @@ public class OrderController {
 
 		ArrayList<Client> SearchCom = clientService.selectSearchAccount(clientInfo);
 		JSONArray jarr = new JSONArray();
-		
+		System.out.println("SearchCom : "+SearchCom);
 		for(Client client : SearchCom) {
 			JSONObject jsonobject = new JSONObject();
 			jsonobject.put("client_no", client.getClient_no());

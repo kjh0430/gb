@@ -37,6 +37,7 @@ var c_discount; //해당 고객의 할인율
 
 	function searchCom(){	
 		
+	if($('#searchComName').val()!=null && $('#searchComName').val()!="") {
 		$.ajax({
 			url: "searchCom.do",
 			type : "post",
@@ -67,6 +68,9 @@ var c_discount; //해당 고객의 할인율
 			}
 			
 		});//ajax complete
+	}else{
+		alert("검색값을  입력해줏ㅇ5")
+	}
 	}
 	
 	function selectCom(obj){
