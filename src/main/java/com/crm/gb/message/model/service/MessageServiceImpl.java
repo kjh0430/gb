@@ -50,5 +50,41 @@ public class MessageServiceImpl implements MessageService {
 		return messageDao.countMsg(emp_no);
 	}
 
+	@Override
+	public int selectgetListCount(Message message) {
+		
+		return messageDao.selectgetListCount(message);
+	}
+
+	@Override
+	public int selectConditionListCount(Message message) {
+
+		return messageDao.selectConditionListCount(message);
+	}
+
+	@Override
+	public ArrayList<Message> selectReceiveConditionMessage(Message message) {
+	
+		return messageDao.selectReceiveConditionMessage(message);
+	}
+
+	@Override
+	public int selectsendListCount(Message message) {
+		
+		return messageDao.selectsendListCount(message);
+	}
+
+	@Override
+	public int selectConditionsendListCount(Message message) {
+		// TODO Auto-generated method stub
+		return messageDao.selectConditionsendListCount(message);
+	}
+
+	@Override
+	public ArrayList<Message> selectSendConditionMessage(Message message) {
+		// TODO Auto-generated method stub
+		return messageDao.selectSendConditionMessage(message);
+	}
+
 	
 }

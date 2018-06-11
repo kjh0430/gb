@@ -24,6 +24,16 @@
 <link href="resources/css/main.css" rel="stylesheet">
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
+function searchCondition(){
+	
+	emp_name=$('#emp_name').val();
+	emp_no=${loginEmp.emp_no};
+	job_no=${loginEmp.job_no};
+	
+	location.href="approvalListAdmin.do?emp_no="+emp_no+"&job_no="+job_no+"&emp_name="+emp_name
+
+	
+}
 
 
 function modalUp(obj){
@@ -198,6 +208,9 @@ background-color:#2A3F54;
 							<div class="x_panel">
 								
 								<div class="x_content">
+								
+									<input style="float:right;" type="text" placeholder="사원명" id="emp_name"><button  style="float:right; margin-right:0px;" type="button" onclick="searchCondition();">검색</button>
+									
 									
 									<table id="table_ap" class="table table-striped table-bordered">
 										<thead>
@@ -220,6 +233,7 @@ background-color:#2A3F54;
 											</tr>
 										</thead>
 										<tbody>
+										
 										<c:forEach items="${approvalListA}" var="approval">
 											<c:if test="${approval.approval_choose_no eq '1'}">
 											<c:set var="approval_choose_no" value="휴가"/>
@@ -266,11 +280,52 @@ background-color:#2A3F54;
 												<td>${approval.team_mgr_name}</td>
 												<td>${approval.mgr_name}</td>
 												<td>${approval.approval_no}</td>
-												
+											
+											<c:if test="${approval.emp_no eq null}">
+											<h2>검색 결과가 없습니다.</h2>
+											</c:if>
 											</tr>
+											
 												</c:forEach>
-										<tbody>
+											
+											
+										</tbody>
 									</table>
+			<ul class='pagination'>
+	        
+	      
+	        <c:set var="emp_name" value="${emp_name}"/>
+	         <c:set var="startPage" value="${startPage}"/>
+	        <c:choose>
+	        <c:when test="${startPage>5}">
+	          <li class='page-item'><a class='page-link' href='approvalListAdmin.do?page=${startPage-1}&emp_no=${loginEmp.emp_no}&job_no=${loginEmp.job_no}&emp_name=${emp_name}'>PREV</a></li>
+	        </c:when>
+	        <c:otherwise>
+	        <li class='page-item'><a class='page-link'>prev</a></li>
+	        </c:otherwise>
+	        </c:choose> 
+	       
+	        <c:forEach var="paging" begin="${startPage}" end="${endPage}">
+	        <c:choose>
+	        <c:when test="${paging==currentPage}">
+	        <li class='page-item'><a style='color:black;' class='page-link'>${paging}</a></li>
+	        </c:when>
+	        <c:otherwise>
+	        <li class='page-item'><a class='page-link' href='approvalListAdmin.do?page=${paging}&emp_no=${loginEmp.emp_no}&job_no=${loginEmp.job_no}&emp_name=${emp_name}'>${paging}</a></li>
+	        </c:otherwise>
+	        </c:choose>
+	        </c:forEach>
+	        <c:set var="endPage" value="${endPage}"/>
+	        <c:set var="maxPage" value="${maxPage}"/>
+	        <c:choose>
+	        <c:when test="${endPage<maxPage}">
+	        <li class='page-item'><a class='page-link' href='approvalListAdmin.do?page=${endPage+1}&emp_no=${loginEmp.emp_no}&job_no=${loginEmp.job_no}&emp_name=${emp_name}'>next</a></li>
+	        </c:when>
+	        <c:otherwise>
+	        <li class='page-item'><a class='page-link'>next</a></li>
+	        </c:otherwise>
+	        </c:choose>
+	        </ul>
 									<div class="modal fade sendMsg" tabindex="-1" role="dialog"
                                  id="modal1" aria-hidden="true">
                                  <div class="modal-dialog modal-lg">

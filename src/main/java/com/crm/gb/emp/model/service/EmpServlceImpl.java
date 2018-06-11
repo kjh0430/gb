@@ -118,6 +118,13 @@ public class EmpServlceImpl implements EmpService{
 	public int updateMyInfo(Emp emp) {
 		
 		return empDao.updateMyInfo(emp);
+	}
+	
+	//비밀번호 업데이트
+	@Override
+	public int updatePassword(Emp emp) {
+		
+		return empDao.updatePassword(emp);
 	}	
 	
 }

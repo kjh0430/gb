@@ -101,5 +101,10 @@ public class EmpDao {
 		
 		return sqlSession.update("updateMyInfo",emp);
 	}
+
+	public int updatePassword(Emp emp) {
+		
+		return sqlSession.update("updatePassword",emp);
+	}
 	
 }

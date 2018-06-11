@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,8 +28,15 @@
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-  
-} );
+var st = "${avail}";
+	var yes = "Y";
+	var no = "N";
+if(st == yes){
+	  $("#sale_y").attr("checked",true);
+  }else if(st == no){
+	  $("#sale_n").attr("checked",true);
+  }
+});
 
 </script>
 </head>
@@ -76,7 +85,7 @@ $(document).ready(function() {
 								<div class="x_content">
                    					 <br />
 									<form id="demo-form2" data-parsley-validate
-										class="form-horizontal form-label-left">
+										class="form-horizontal form-label-left" >
 
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12"
@@ -84,7 +93,7 @@ $(document).ready(function() {
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<input type="text" id="first-name" required="required"
-													class="form-control col-md-7 col-xs-12" value="24" readonly>
+													class="form-control col-md-7 col-xs-12" value="${productDetail.product_no}" readonly>
 											</div>
 										</div>
 										<div class="form-group">
@@ -93,7 +102,7 @@ $(document).ready(function() {
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<input type="text" id="first-name" required="required"
-													class="form-control col-md-7 col-xs-12" value="잉어킹" >
+													class="form-control col-md-7 col-xs-12" value="${productDetail.product_name}" >
 											</div>
 										</div>
 										<div class="form-group">
@@ -102,7 +111,7 @@ $(document).ready(function() {
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<input type="text" id="last-name" name="last-name"
-													required="required" class="form-control col-md-7 col-xs-12" value="정대만" >
+													required="required" class="form-control col-md-7 col-xs-12" value="${productDetail.product_price}" >
 											</div>
 										</div>
 										<div class="form-group">
@@ -111,9 +120,8 @@ $(document).ready(function() {
 												재고
 												</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<input id="middle-name"
-													class="form-control col-md-7 col-xs-12" type="text"
-													name="middle-name" value="3,485" >
+												<input id="middle-name"	class="form-control col-md-7 col-xs-12" type="text" name="middle-name" 
+												value="${productDetail.product_amount}" >
 											</div>
 										</div>
 										<div class="form-group">
@@ -130,13 +138,10 @@ $(document).ready(function() {
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12" style="height:34px;padding:6px 12px">
 												
-													<input class="form-check-input" type="radio" name="sale_yn" id="sale_y" value="sale_y"
-														checked> <label class="form-check-label"
-														for="sale_yn">판매가능 </label>
-														<input class="form-check-input" type="radio"
-														name="sale_yn" id="sale_n" value="sale_n">
-													<label class="form-check-label" for="sale_n">
-														판매불가 </label>
+										<input class="form-check-input" type="radio" name="sale_yn" id="sale_y" value="sale_y" che> 
+										<label class="form-check-label"	for="sale_yn">판매가능 </label>
+										<input class="form-check-input" type="radio" name="sale_yn" id="sale_n" value="sale_n">
+										<label class="form-check-label" for="sale_n">판매불가 </label>
 											</div>
 										</div>
 										<div class="form-group">
@@ -161,9 +166,6 @@ $(document).ready(function() {
 												<button class="btn btn-danger" type="button">제품삭제</button>
 											</div>
 										</div>
-										
-										
-
 									</form>
 								</div>
 							</div>

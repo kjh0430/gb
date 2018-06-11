@@ -28,6 +28,7 @@ public interface EmpService {
 	public abstract Emp selectEmail(Emp emp); //이메일 check
 	public abstract Emp selectPhoneckdupl(Emp emp); //phone check
 	public abstract int updateMyInfo(Emp emp); //내 정보 업데이트
+	public abstract int updatePassword(Emp emp); //비밀번호  수정하기
 	
 	
 }

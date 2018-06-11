@@ -172,7 +172,6 @@ return index;
 										</thead>
 										<tbody>
 											<c:forEach items="${list}" var="li"> 
-			
 											<tr>
 												<td>${li.product_no}</td>
 												<td><a href=moveproductDetail.do?data=${li.product_no}>${li.product_name}</a></td>

@@ -45,6 +45,7 @@
 <script type="text/javascript">
 $(function(){
 
+var allCheck=false;
 
 	//내 정보 가져오기
 	$.ajax({
@@ -67,17 +68,80 @@ $(function(){
 	});
 	
 	
+	 $('#emp_email').blur(function(){
+		
+		
+		$.ajax({
+			
+			url:"emailCheck.do",
+			data:{emp_no :"${loginEmp.emp_no}", emp_email:$('#emp_email').val()},
+			type:"post",
+			success:function(data){
+			
+				if(data.check=="N" && $('#emp_email').val()!="" && $('#emp_email').val()!=null){
+					alert("사용가능한 e-mail입니다.");
+					
+				}else if(data.check=="Y"){
+					alert("다른 사람이 사용하고 있는 e-mail입니다.");
+				}
+			}
+		});
+		
+	
+	});
+	
+ 	$('#emp_phone').blur(function(){
+
+		$.ajax({
+			
+			url:'checkPhoneck.do',
+			data:{emp_no :"${loginEmp.emp_no}", emp_phone:$('#emp_phone').val()},
+			type:"post",
+			success:function(data){
+				 
+				if(data.check=="N" && $('#emp_phone').val()!="" && $('#emp_phone').val()!=null){
+					alert("사용가능한 전화번호 입니다.");
+					
+				}else if(data.check=="Y"){
+					alert("다른 사람이 사용하고 있는 번호입니다.");
+				}
+			}
+			
+		});
+	});
 	
 });
-function modifyPassword(){
 
-	location.href="modifyPassword.do";
+
+  function checkCondition(){
 	
+	
+	var phone_pattern = /^\d{3}-\d{3,4}-\d{4}$/;
+	var email_pattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+	
+	
+	var email=$('#emp_email').val();
+	var phone=$('#emp_phone').val();
+	
+	if(!phone_pattern.test(phone)){
+		alert("올바른 전화번호 형식이 아닙니다.ex)010-1234-5678");
+		allCheck=false;
+		return allCheck;
+	}if(!email_pattern.test(email)){
+		alert("올바른 e-mail 형식이 아닙니다.");
+		allCheck=false;
+		return allCheck;
+	}if(phone_pattern.test(phone) && email_pattern.test(email)){
+		allCheck=true;
+		alert("수정이 완료 되었습니다.");
+		return allCheck;
+		
+	}
 }
-
-function modifyMyInfo(){
-	location.href="modifyMyInfo.do";
-}
+  
+  function backMyInfo(){
+	  location.href="info.do";
+  }
 
 
 
@@ -130,8 +194,8 @@ function modifyMyInfo(){
 									
 									
 									
-				
-					<form class="form-horizontal form-label-left">
+					<form class="form-horizontal form-label-left" action="modifyInfo.do" method="post" onsubmit="return checkCondition();">
+																														
 					
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">사원번호 *</label>
@@ -139,7 +203,7 @@ function modifyMyInfo(){
                           <input class="form-control" id="emp_no" name="emp_no" type="text" readonly >
                         </div>
                       </div>
-     
+                
                       
                       
                       <div class="form-group">
@@ -157,7 +221,7 @@ function modifyMyInfo(){
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">연락처</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                         <input class="form-control" id="emp_phone" name="emp_phone" type="tel" readonly>
+                         <input class="form-control" id="emp_phone" name="emp_phone" type="tel">
                         </div>
                       </div>
                       <div class="form-group">
@@ -169,7 +233,7 @@ function modifyMyInfo(){
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">이메일</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input class="form-control" id="emp_email" name="emp_email" type="email" readonly>
+                          <input class="form-control" id="emp_email" name="emp_email" type="email">
                         </div>
                       </div>
                       <div class="form-group">
@@ -211,12 +275,12 @@ function modifyMyInfo(){
                        
                           
 								</div>
-							
-							</form>
-							<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-							<button class="btn btn-primary" onclick="modifyPassword();">비밀번호 변경</button>
-							<button class="btn btn-danger" onclick="modifyMyInfo();">개인정보 변경</button>
+								<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+							<button class="btn btn-primary" type=submit>수정</button>
+							<button class="btn btn-danger" type="button" onclick="backMyInfo();">취소</button>
 							</div>
+							</form>
+							
 						</div>
 					</div>
 				</div>

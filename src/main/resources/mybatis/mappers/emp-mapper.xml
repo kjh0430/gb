@@ -163,7 +163,12 @@
 	
 	<update id="updateMyInfo" parameterType="emp">
 	<![CDATA[
-	update emp set emp_phone=#{emp_phone},emp_email=#{emp_email},emp_pwd=#{emp_pwd} where emp_no=#{emp_no}
+	update emp set emp_phone=#{emp_phone},emp_email=#{emp_email} where emp_no=#{emp_no}
 	]]>
+	</update>
+	<update id="updatePassword" parameterType="emp">
+	 <![CDATA[
+	 update emp set emp_pwd=#{emp_pwd} where emp_no=#{emp_no}
+	 ]]>
 	</update>
 </mapper>
