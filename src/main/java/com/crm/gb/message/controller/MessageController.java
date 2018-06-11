@@ -96,9 +96,9 @@ public class MessageController {
 		message.setMessage_date(getdate);
 		
 		int result=MessageService.insertMessage(message);
-	/*	if(result>0) {
+		if(result>0) {
 			sendmsg = new Message(message.getMessage_from_no(),message.getMessage_to_no(),message.getMessage_date());
-		}*/
+		}
 		
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out=response.getWriter();
@@ -134,7 +134,7 @@ public class MessageController {
 			endPage=maxPage;
 		}
 		JSONArray jarr=new JSONArray();
-
+	
 		for(Message msg : receiveMessage) {
 			
 			JSONObject jsonobject=new JSONObject();			
@@ -145,10 +145,13 @@ public class MessageController {
 			jsonobject.put("message_content", msg.getMessage_content());
 			jsonobject.put("message_no",msg.getMessage_no());
 			jsonobject.put("message_confirm",msg.getMessage_confirm());
-			jsonobject.put("currentPage",currentPage);
+			jsonobject.put("dept_name",msg.getDept_name());
+			jsonobject.put("job_name",msg.getJob_name());
+			jsonobject.put("currentPage",currentPage); 
 			jsonobject.put("maxPage",maxPage);
 			jsonobject.put("startPage",startPage);
 			jsonobject.put("endPage",endPage);
+			
 			
 			jarr.add(jsonobject);
 			
@@ -169,20 +172,48 @@ public class MessageController {
 	
 	//보낸 메시지함
 	@RequestMapping(value="sendMessage.do",method=RequestMethod.GET)
-	public void sendMessage(Message message ,HttpServletResponse  response) throws IOException {		
+	public void sendMessage(Message message ,HttpServletResponse  response,HttpServletRequest request) throws IOException {		
 		
-		ArrayList<Message> sendMessage=MessageService.selectSendMessage(message);		
+		int currentPage=1;
+		if(request.getParameter("page")!=null) {
+			currentPage=Integer.parseInt(request.getParameter("page"));
+		}
+		int limit=10;
+		int listCount=MessageService.selectsendListCount(message);
+		message.setStartRow((currentPage-1)*limit+1);
+		message.setEndRow(message.getStartRow()+limit-1);
+		
+		
+		ArrayList<Message> sendMessage=MessageService.selectSendMessage(message);
+		
+		int maxPage=(int)((double)listCount/limit+0.9);
+		int startPage=((int)(double)(currentPage-1)/10)*10+1;
+		int endPage=startPage+5-1;
+		
+		
+		
+		
+		if(maxPage<endPage) {
+			endPage=maxPage;
+		}
+		
 		JSONArray jarr=new JSONArray();
 
 		for(Message msg : sendMessage) {
 			
 			JSONObject jsonobject=new JSONObject();
-			//System.out.println("보낸 메시지함"+msg.getEmp_name()+","+msg.getMessage_to_no());
+		
 			jsonobject.put("to_empName",msg.getEmp_name());
+			jsonobject.put("dept_name",msg.getDept_name());
+			jsonobject.put("job_name",msg.getJob_name());
 			jsonobject.put("to_emp_no", msg.getMessage_to_no());
 			jsonobject.put("message_title",msg.getMessage_title());
 			jsonobject.put("message_date",msg.getMessage_date());
 			jsonobject.put("message_content", msg.getMessage_content());
+			jsonobject.put("currentPage",currentPage); 
+			jsonobject.put("maxPage",maxPage);
+			jsonobject.put("startPage",startPage);
+			jsonobject.put("endPage",endPage);
 			
 			jarr.add(jsonobject);			
 		}
@@ -290,6 +321,130 @@ public class MessageController {
 		out.close();
 				
 	}
+	
+	
+	
+		//받은 메시지함 조건 검색
+@RequestMapping(value="receiveCondition.do",method=RequestMethod.GET)
+public void getReceiveCondtion(Message message ,HttpServletResponse  response,HttpServletRequest request) throws IOException {		
+			
+			int currentPage=1;
+			if(request.getParameter("page")!=null) {
+				currentPage=Integer.parseInt(request.getParameter("page"));
+			}
+			int limit=10;
+			int listCount=MessageService.selectConditionListCount(message);
+			System.out.println("listCount"+listCount);
+			
+			message.setStartRow((currentPage-1)*limit+1);
+			message.setEndRow(message.getStartRow()+limit-1);
+			
+			ArrayList<Message> receiveConditionMessage=MessageService.selectReceiveConditionMessage(message);		
+			
+			int maxPage=(int)((double)listCount/limit+0.9);
+			int startPage=((int)(double)(currentPage-1)/10)*10+1;
+			int endPage=startPage+5-1;
+			
+			System.out.println("maxPage"+maxPage);
+			System.out.println("startPage"+startPage);
+			if(maxPage<endPage) {
+				endPage=maxPage;
+			}
+			JSONArray jarr=new JSONArray();
+
+			for(Message msg : receiveConditionMessage) {
+				
+				JSONObject jsonobject=new JSONObject();			
+				jsonobject.put("from_empName",msg.getEmp_name());
+				jsonobject.put("from_empNo",msg.getMessage_from_no());
+				jsonobject.put("message_title",msg.getMessage_title());
+				jsonobject.put("message_date",msg.getMessage_date());
+				jsonobject.put("message_content", msg.getMessage_content());
+				jsonobject.put("message_no",msg.getMessage_no());
+				jsonobject.put("message_confirm",msg.getMessage_confirm());
+				jsonobject.put("dept_name",msg.getDept_name());
+				jsonobject.put("job_name",msg.getJob_name());
+				jsonobject.put("currentPage",currentPage); 
+				jsonobject.put("maxPage",maxPage);
+				jsonobject.put("startPage",startPage);
+				jsonobject.put("endPage",endPage);
+				
+				jarr.add(jsonobject);
+				
+				}
+			
+			JSONObject send=new JSONObject();
+			send.put("list",jarr);
+				
+			response.setContentType("application/json; charset=utf-8");	
+			
+			PrintWriter out=response.getWriter();
+			out.println(send.toJSONString());
+			out.flush();
+			out.close();
+			
+		}
+		
+			//보낸 메시지함 조건 검색
+			@RequestMapping(value="sendcondition.do",method=RequestMethod.GET)
+			public void getsendCondtion(Message message ,HttpServletResponse  response,HttpServletRequest request) throws IOException {		
+						
+						int currentPage=1;
+						if(request.getParameter("page")!=null) {
+							currentPage=Integer.parseInt(request.getParameter("page"));
+						}
+						int limit=10;
+						int listCount=MessageService.selectConditionsendListCount(message);
+						System.out.println("listCount"+listCount);
+						
+						message.setStartRow((currentPage-1)*limit+1);
+						message.setEndRow(message.getStartRow()+limit-1);
+						
+						ArrayList<Message> sendConditionMessage=MessageService.selectSendConditionMessage(message);		
+						
+						int maxPage=(int)((double)listCount/limit+0.9);
+						int startPage=((int)(double)(currentPage-1)/10)*10+1;
+						int endPage=startPage+5-1;
+						
+						System.out.println("maxPage"+maxPage);
+						System.out.println("startPage"+startPage);
+						if(maxPage<endPage) {
+							endPage=maxPage;
+						}
+						JSONArray jarr=new JSONArray();
+
+						for(Message msg : sendConditionMessage) {
+							
+							JSONObject jsonobject=new JSONObject();			
+							jsonobject.put("from_empName",msg.getEmp_name());
+							jsonobject.put("from_empNo",msg.getMessage_from_no());
+							jsonobject.put("message_title",msg.getMessage_title());
+							jsonobject.put("message_date",msg.getMessage_date());
+							jsonobject.put("message_content", msg.getMessage_content());
+							jsonobject.put("message_no",msg.getMessage_no());
+							jsonobject.put("message_confirm",msg.getMessage_confirm());
+							jsonobject.put("dept_name",msg.getDept_name());
+							jsonobject.put("job_name",msg.getJob_name());
+							jsonobject.put("currentPage",currentPage); 
+							jsonobject.put("maxPage",maxPage);
+							jsonobject.put("startPage",startPage);
+							jsonobject.put("endPage",endPage);
+							
+							jarr.add(jsonobject);
+							
+							}
+						
+						JSONObject send=new JSONObject();
+						send.put("list",jarr);
+							
+						response.setContentType("application/json; charset=utf-8");	
+						
+						PrintWriter out=response.getWriter();
+						out.println(send.toJSONString());
+						out.flush();
+						out.close();
+						
+					}
 	
 /*	@RequestMapping(value="notify.do")
 	public ResponseBodyEmitter getNotify(Message message) {

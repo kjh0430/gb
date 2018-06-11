@@ -351,71 +351,55 @@
     	}
 </script>
 
- <script type="text/javascript">//날씨
+ 
+	<script type="text/javascript">//todolist
     
-    /* $(function(){
-    	
-    	var city = '${loginEmp.getCity()}';
-		var county = '${loginEmp.getCounty()}';
-		var village = '${loginEmp.getVillage()}';
-
-		var headers = {};
-		headers["Accept"]="application/json";
-		headers["Content-Type"]="application/json; charset=UTF-8";
-		headers["appKey"]="c73d9878-1921-4214-b7a2-1a0653b6c0a1";
+$(function(){
 		
 		$.ajax({
-			type:'get',
-			headers:headers,
-			data:{city:city,county:county,village:village},
-			url:'https://api2.sktelecom.com/weather/current/hourly?version=1&callback=result',
-			async:false,
-			success : function(data){
-				console.log(data);
-				var todayDate = data["weather"]["hourly"][0]['timeRelease'];
-				var todayTemp = Math.round(data["weather"]["hourly"][0]['temperature']['tc']);
-				var todayMinTemp = Math.round(data["weather"]["hourly"][0]['temperature']['tmin']);
-				var todayMaxTemp = Math.round(data["weather"]["hourly"][0]['temperature']['tmax']);
-				var todayDesc = data["weather"]["hourly"][0]['sky']['name'];
-				var todayIcon = data["weather"]["hourly"][0]['sky']['code'];
-				var todayTimeRelease = data["weather"]["hourly"][0]['timeRelease'];
-										
-					$(".todayMinTemp").append(todayMinTemp);		
-					$(".todayMaxTemp").append(todayMaxTemp);		
-					$(".todayTemp").append(todayTemp);
-					$(".todayDesc").html(todayDesc);
-				var icon;
-				switch(todayIcon){
-					case "SKY_O01" : icon = "<img src='resources/images/weather/SKY_O01.png'/>";break;
-					case "SKY_O02" : icon = "<img src='resources/images/weather/SKY_O02.png'/>";break;
-					case "SKY_O03" : icon = "<img src='resources/images/weather/SKY_O03.png'/>";break;
-					case "SKY_O04" : icon = "<img src='resources/images/weather/SKY_O04.png'/>";break;
-					case "SKY_O05" : icon = "<img src='resources/images/weather/SKY_O05.png'/>";break;
-					case "SKY_O06" : icon = "<img src='resources/images/weather/SKY_O06.png'/>";break;
-					case "SKY_O07" : icon = "<img src='resources/images/weather/SKY_O07.png'/>";break;
-					case "SKY_O08" : icon = "<img src='resources/images/weather/SKY_O08.png'/>";break;
-					case "SKY_O09" : icon = "<img src='resources/images/weather/SKY_O09.png'/>";break;
-					case "SKY_O10" : icon = "<img src='resources/images/weather/SKY_O10.png'/>";break;
-					case "SKY_O11" : icon = "<img src='resources/images/weather/SKY_O11.png'/>";break;
-					case "SKY_O12" : icon = "<img src='resources/images/weather/SKY_O12.png'/>";break;
-					case "SKY_O13" : icon = "<img src='resources/images/weather/SKY_O13.png'/>";break;
-					case "SKY_O14" : icon = "<img src='resources/images/weather/SKY_O14.png'/>";break;				
-				}
-				$(".weather-icon").append(icon);
-				},
-				complete: function(){
-				},
-				error	: function(xhr, status, error){
-					console.log(error);
-				}
-			
-		}); //end of ajax
-		
-	});  */
-    
+	       		url : "todoSelect.do",
+	       		data:{
+	       			emp_no : "${loginEmp.emp_no}"
+	       		},
+	    		type:"post",
+	    		dataType:"json",
+	       		success:function(data){
+	       			
+	       			var jsonSt = JSON.stringify(data);
+	                var json = JSON.parse(jsonSt);
+	                var size = Object.keys(json).length;
+	       			
+	       			console.log("todoSelect.do 제대로 실행됨");
+	       			console.log("size : " + size);
+	       			
+	       			var obj = [json.todo1, json.todo2, json.todo3, json.todo4, json.todo5];
+	       			
+	       			console.log("obj : " + obj);
+	       			
+	       			var count = 1;	       			
+	       			var values = ""
+	       			
+	       			for(var i in obj){
+	       				if(obj[i] != null){
+	       			values += '<li><p><input type="checkbox" class="flat" id="todo_list'+count+'" name="todo_list'+count+'" >'+obj[i]+'</p></li>';
+	    	       	count++;
+	    	       	console.log("obj["+i+"] : " + obj[i]);
+	       				}
+	       			}	       		
+	       			
+	       			values+='<button type="button" class="btn btn-primary" onclick="checkList()">확인</button>';
+	       			
+	       			$(".to_do").html(values);
+	       			
+	       			},
+	       			error: function(){       				
+	       			console.log("todolist 출력 error");
+	       			values = "입력된 값이 없습니다";
+	       			$(".to_do").html(values);
+	       			}
+	       		});
+	});
 	
-	</script>
-	<script type="text/javascript">//todolist
     
     var count = 1;    
     function addKeywordForm(){
@@ -447,6 +431,91 @@
        document.addedFormDiv.reset();
        }
        count--;
+       }
+       
+       function todoInsert(){
+			
+       	var emp_no = $('#emp_no').val();       	
+       	var todo1 = $('#todo_keyword0').val();
+       	var todo2 = $('#todo_keyword1').val();
+       	var todo3 = $('#todo_keyword2').val();
+       	var todo4 = $('#todo_keyword3').val();
+       	var todo5 = $('#todo_keyword4').val();
+       	
+       	console.log("main에서 출력 emp_no : " + emp_no);
+       	console.log("main에서 출력 todo1 : " + todo1);
+       	console.log("main에서 출력 todo2 : " + todo2);
+       	console.log("main에서 출력 todo3 : " + todo3);
+       	console.log("main에서 출력 todo4 : " + todo4);
+       	console.log("main에서 출력 todo5 : " + todo5);
+       	
+       	$.ajax({
+       		url : "todoInsert.do",
+       		type: "post",
+       		dataType: "json",
+       		data: {
+       			emp_no : emp_no,
+       			todo1 : todo1,
+       			todo2 : todo2,
+       			todo3 : todo3,
+       			todo4 : todo4,
+       			todo5 : todo5
+       		},
+       		success:function(obj){
+       			
+       			alert("등록되었습니다.");
+       			$('#addModal').modal('hide');
+       					
+       			$.ajax({
+       	       		url : "todoSelect.do",
+       	       		type: "post",
+       	       		dataType: "json",
+       	       		data: {
+       	       			emp_no : emp_no
+       	       		},
+       	       		success:function(data){       	       			
+       	       			console.log("todoSelect.do 제대로 실행됨");       	       			
+       	       			
+       	       		var jsonSt = JSON.stringify(data);
+	                var json = JSON.parse(jsonSt);
+	                var size = Object.keys(json).length;
+	       			
+	       			console.log("todoSelect.do 제대로 실행됨");
+	       			console.log("size : " + size);
+	       			
+	       			var obj = [json.todo1, json.todo2, json.todo3, json.todo4, json.todo5];
+	       			
+	       			console.log("obj : " + obj);
+	       			
+	       			var count = 1;	       			
+	       			var values = ""
+	       			
+	       			for(var i in obj){
+	       				if(obj[i] != null){
+	       			values += '<li><p><input type="checkbox" class="flat" id="todo_list'+count+'" name="todo_list'+count+'" >'+obj[i]+'</p></li>';
+	    	       	count++;
+	    	       	console.log("obj["+i+"] : " + obj[i]);
+	       				}
+	       			}	       			
+	       			
+	       			values+='<button type="button" class="btn btn-primary" onclick="checkList()">확인</button>';
+	       			
+	       			$(".to_do").html(values);
+       	       			
+       	       			},
+       	       			error: function(){       				
+       	       			console.log("error");
+       	       			}
+       	       		});
+       			},
+       			error: function(){       				
+       			console.log("error");
+       			}
+       		});
+       }
+       
+       function checkList(){
+    	   alert("checkList 실행");
        }
        
     </script>
@@ -535,37 +604,29 @@
                 <div class="col-xs-12">
                   <div class="x_panel">
                     <div class="x_title">
-                      <h2>To Do List <small>Sample tasks</small></h2>
+                      <h2>To Do List</h2>
                       <ul class="nav navbar-right panel_toolbox">
-                        <li><button type="button" class="btn btn-link" data-toggle="modal" data-target=".bs-example-modal-lg" style="float:right;">등록</button>
+                      <%-- <c:choose>
+            			<c:when test="${ todolist == null }">
+		           		<li><button type="button" class="btn btn-link" data-toggle="modal" data-target=".bs-example-modal-lg" style="float:right;">등록</button>
                         </li>
+            			</c:when>
+            			<c:otherwise>
+						<li><button type="button" class="btn btn-link" data-toggle="modal" data-target=".bs-example-modal-lg" style="float:right;">수정</button>
+                        </li>
+            			</c:otherwise>
+            		  </c:choose> --%>
+            		  	<li><button type="button" class="btn btn-link" data-toggle="modal" data-target=".bs-example-modal-lg" style="float:right;">등록</button>
+                        </li>
+                        <!-- <li><button type="button" class="btn btn-link" data-toggle="modal" data-target=".bs-example-modal-lg" style="float:right;">수정</button>
+                        </li> -->
                       </ul>
                       <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
-
                       <div class="">
                         <ul class="to_do">
-                          <li>
-                            <p>
-                              <input type="checkbox" class="flat"> Schedule meeting with new client </p>
-                          </li>
-                          <li>
-                            <p>
-                              <input type="checkbox" class="flat"> Create email address for new intern</p>
-                          </li>
-                          <li>
-                            <p>
-                              <input type="checkbox" class="flat"> Have IT fix the network printer</p>
-                          </li>
-                          <li>
-                            <p>
-                              <input type="checkbox" class="flat"> Copy backups to offsite location</p>
-                          </li>
-                          <li>
-                            <p>
-                              <input type="checkbox" class="flat"> Food truck fixie locavors mcsweeney</p>
-                          </li>
+                          
                         </ul>
                       </div>
                     </div>
@@ -938,9 +999,8 @@
 	              <div class="x_content">
 	                <div class="row">
 	                  <div class="col-sm-12">
-	                    <div class="temperature" style="margin-bottom:5px;"><b>현재날짜들어갈 부분</b>, 지역들어갈 부분
-	                      <span>F</span>
-	                      <span><b>C</b></span>
+	                    <div class="todayDate" style="margin-bottom:5px;">
+	                      
 	                    </div>
 	                  </div>
 	                </div>
@@ -1003,66 +1063,15 @@
             
 
             <div class="col-xs-12">
-              <div class="x_panel tile fixed_height_320 overflow_hidden">
+              <div class="x_panel tile">
                 <div class="x_title">
-                  <h2>Device Usage</h2>
+                  <h2>이번달 판매량</h2>
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                  <table class="" style="width:100%">
-                    <tr>
-                      <th style="width:37%;">
-                        <p>Top 5</p>
-                      </th>
-                      <th>
-                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
-                          <p class="">Device</p>
-                        </div>
-                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                          <p class="">Progress</p>
-                        </div>
-                      </th>
-                    </tr>
-                    <tr>
-                      <td>
-                        <canvas class="canvasDoughnut" height="140" width="140" style="margin: 15px 10px 10px 0"></canvas>
-                      </td>
-                      <td>
-                        <table class="tile_info">
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square blue"></i>IOS </p>
-                            </td>
-                            <td>30%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square green"></i>Android </p>
-                            </td>
-                            <td>10%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square purple"></i>Blackberry </p>
-                            </td>
-                            <td>20%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square aero"></i>Symbian </p>
-                            </td>
-                            <td>15%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square red"></i>Others </p>
-                            </td>
-                            <td>30%</td>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr>
-                  </table>
+                  <div class="pie">
+                  <canvas id="myChart"></canvas>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1075,7 +1084,7 @@
       <!-- footer content -->
        <%@ include file="etc/footer.jsp" %>
       <!-- /footer content -->
-      
+      </div>
     </div>
 
     <!-- jQuery -->
@@ -1088,13 +1097,124 @@
   
     <!-- Custom Theme Scripts -->
      <script src="resources/fullcalendar-3.9.0/lib/tooltipster.bundle.min.js"></script>
-    <script src="resources/build/js/custom.min.js"></script>
-    	
-    	<script src="resources/fullcalendar-3.9.0/lib/moment.min.js"></script>
-   	
-   	  
-    	
+    <script src="resources/build/js/custom.min.js"></script>    	
+    <script src="resources/fullcalendar-3.9.0/lib/moment.min.js"></script> 
    	<script src="resources/fullcalendar-3.9.0/fullcalendar.js"></script>
+   	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+   	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+   	<script>
+  	var amount=[];
+	var pname=[];
+  		
+	$.ajax({
+		url:"productShare.do",
+		type:"post",
+		dataType:"json",
+		success: function(data) {
+			var objStr =JSON.stringify(data);
+			var result = JSON.parse(objStr);				
+			
+			for(var i in result.list){
+				amount.push(result.list[i].total);
+				pname.push(result.list[i].product_name);
+			}			
+		} 
+	});//ajax  
+	 
+   		
+	 var ctx = document.getElementById("myChart");
+	 var myChart = new Chart(ctx, {
+	     type: 'pie',
+	     data: {
+	         labels: pname,
+	         datasets: [{
+	             data: amount,
+	             backgroundColor: [
+	                 'rgba(59, 81, 89)',
+	                 'rgba(163, 201, 217)',
+	                 'rgba(217, 179, 132)',
+	                 'rgba(140, 110, 84)',
+	                 'rgba(191, 146, 107)'
+	             ]
+	         }]
+	     },
+	     options: {
+	    	 responsive: true,
+	   	    	maintainAspectRatio: false,
+		   	     legend: {
+		             display: true,
+		             position:'right'
+		         }
+	     }
+	 });
+
+	    
+   $(function(){
+    	
+    	var city = '${loginEmp.getCity()}';
+		var county = '${loginEmp.getCounty()}';
+		var village = '${loginEmp.getVillage()}';
+
+		var headers = {};
+		headers["Accept"]="application/json";
+		headers["Content-Type"]="application/json; charset=UTF-8";
+		headers["appKey"]="c73d9878-1921-4214-b7a2-1a0653b6c0a1";
+		
+		$.ajax({
+			type:'get',
+			headers:headers,
+			data:{city:city,county:county,village:village},
+			url:'https://api2.sktelecom.com/weather/current/hourly?version=1&callback=result',
+			async:false,
+			success : function(data){
+				//console.log(data);
+				var todayDate = data["weather"]["hourly"][0]['timeRelease'];
+				var todayTemp = Math.round(data["weather"]["hourly"][0]['temperature']['tc']);
+				var todayMinTemp = Math.round(data["weather"]["hourly"][0]['temperature']['tmin']);
+				var todayMaxTemp = Math.round(data["weather"]["hourly"][0]['temperature']['tmax']);
+				var todayDesc = data["weather"]["hourly"][0]['sky']['name'];
+				var todayIcon = data["weather"]["hourly"][0]['sky']['code'];
+				var todayTimeRelease = data["weather"]["hourly"][0]['timeRelease'];
+				var year = todayDate.substring(0,4);
+				var month = todayDate.substring(6,7);
+				var day = todayDate.substring(9,10);
+					$(".todayDate").append(year+"년 "+month+"월 "+day+"일" );						
+					$(".todayMinTemp").append(todayMinTemp);		
+					$(".todayMaxTemp").append(todayMaxTemp);		
+					$(".todayTemp").append(todayTemp);
+					$(".todayDesc").html(todayDesc);
+				var icon;
+				switch(todayIcon){
+					case "SKY_O01" : icon = "<img src='resources/images/weather/SKY_O01.png'/>";break;
+					case "SKY_O02" : icon = "<img src='resources/images/weather/SKY_O02.png'/>";break;
+					case "SKY_O03" : icon = "<img src='resources/images/weather/SKY_O03.png'/>";break;
+					case "SKY_O04" : icon = "<img src='resources/images/weather/SKY_O04.png'/>";break;
+					case "SKY_O05" : icon = "<img src='resources/images/weather/SKY_O05.png'/>";break;
+					case "SKY_O06" : icon = "<img src='resources/images/weather/SKY_O06.png'/>";break;
+					case "SKY_O07" : icon = "<img src='resources/images/weather/SKY_O07.png'/>";break;
+					case "SKY_O08" : icon = "<img src='resources/images/weather/SKY_O08.png'/>";break;
+					case "SKY_O09" : icon = "<img src='resources/images/weather/SKY_O09.png'/>";break;
+					case "SKY_O10" : icon = "<img src='resources/images/weather/SKY_O10.png'/>";break;
+					case "SKY_O11" : icon = "<img src='resources/images/weather/SKY_O11.png'/>";break;
+					case "SKY_O12" : icon = "<img src='resources/images/weather/SKY_O12.png'/>";break;
+					case "SKY_O13" : icon = "<img src='resources/images/weather/SKY_O13.png'/>";break;
+					case "SKY_O14" : icon = "<img src='resources/images/weather/SKY_O14.png'/>";break;				
+				}
+				$(".weather-icon").append(icon);
+				},
+				complete: function(){
+				},
+				error	: function(xhr, status, error){
+					console.log(error);
+				}
+			
+		}); //end of ajax
+		
+	});  
+	    
+		
+
+	</script>
    	
   </body>
   

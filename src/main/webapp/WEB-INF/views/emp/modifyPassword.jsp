@@ -93,7 +93,7 @@ $(function(){
     if(checkN<0 || checkE< 0)
 
     { 
-        alert("숫자와 영문자가 조합 되어야 합니다.!");
+        alert("비밀번호는 숫자,문자 포함 5~10자리 입니다.");
         allCheck=false;
         return allCheck;
     }
@@ -199,7 +199,7 @@ $(function(){
                       <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                           <button class="btn btn-primary" style="margin-left:25%;" type="submit">수정</button>
-                          <button class="btn btn-danger"onclick="backMyInfo();">취소</button>
+                          <button class="btn btn-danger"onclick="backMyInfo();" type="button">취소</button>
 								</div>
 							</div>
 							</form>

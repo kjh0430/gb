@@ -70,9 +70,9 @@ function Regiemp(){
 	var en1 = new RegExp("[A-Z]");
 	var en2 = new RegExp("[a-z]");
 	var num = new RegExp("[0-9]");
-	var binkan = /\s/g;
 	var phone_check = /^\d{3}-\d{3,4}-\d{4}$/;
 	var email_check = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+	var pwd_pattern= /^[A-Za-z0-9]{5,10}$/; //숫자와 문자 포함 형태의  5에서 10자리 비밀번호
 	
 	if(emp_no.length < 1){
 		alert("사원번호를 입력해주세요.");
@@ -92,8 +92,8 @@ function Regiemp(){
 				$('#emp_no').select();
 				},
 				error: function(){
-					if(emp_pwd.length < 4){
-						alert("비밀번호는 4자리 이상 입력해주세요.");
+					if(!pwd_pattern.test(emp_pwd)){
+						alert("비밀번호는 숫자, 문자 포함 5~10 자리 입니다.");
 					}else if(emp_name.length < 1){
 						alert("이름을 입력해주세요.");
 					}else if(emp_addr.length < 1){

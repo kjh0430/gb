@@ -82,7 +82,9 @@ public class ContractController {
 			@RequestParam(value="emp_no") int emp_no,
 			@RequestParam(value="client_no") int client_no,
 			@RequestParam(value="client_Sign") String client_Sign,
-			@RequestParam(value="emp_Sign") String emp_Sign) {
+			@RequestParam(value="emp_Sign") String emp_Sign,
+			@RequestParam(value="startPage", defaultValue="1") int startPage,
+			HttpServletResponse response) {
 		
 		logger.info("계약서 등록버든 실행됨");
 		
@@ -95,7 +97,31 @@ public class ContractController {
 		clientService.updateClientContract(client_no);	// 계약상태 Y로 변경
 		
 		ArrayList<Contract> returnList=contractService.selectAllList(emp_no);
-		model.addAttribute("contractList", returnList );
+		
+			contract.setShowPage(10); //보여줄 페이지 수
+			contract.setTotalRow(returnList.size());	// 총 회원 수
+			contract.setStart(startPage);	// 시작페이지
+			
+			int showPage = contract.getShowPage();
+			int totalRow = contract.getTotalRow();
+			int start = (contract.getStart() - 1)*showPage+1;
+			int end = start+9;
+			int currentPage = 1;
+	
+			contract.setStartRow(start);	// 시작 열
+			contract.setEndRow(end);	// 끝 열
+			
+			if(totalRow%showPage != 0) {	// 끝페이지
+				contract.setEnd((totalRow/showPage)+1);
+			}else {
+				contract.setEnd(totalRow/showPage);
+			}
+			
+			ArrayList<Contract> list = contractService.selectPageList(contract);
+			
+			model.addAttribute("contractPageList", list );
+			model.addAttribute("start", currentPage);
+			model.addAttribute("end", contract.getEnd());
 		
 		return "contract/contractList";
 	}

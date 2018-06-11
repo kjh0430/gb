@@ -26,7 +26,7 @@
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 
-function modalUp(obj){
+ function modalUp(obj){
 	var content=$(obj);
 	var td=content.children();
 
@@ -155,7 +155,7 @@ background-color:#2A3F54;
 											</tr>
 										</thead>
 										<tbody>
-											<c:forEach items="${approvalListE}" var="approval">
+											 <c:forEach items="${approvalListE}" var="approval">
 												<c:if test="${approval.approval_choose_no eq '1'}">
 													<c:set var="approval_choose_no" value="휴가" />
 												</c:if>
@@ -196,6 +196,42 @@ background-color:#2A3F54;
 											</c:forEach>
 										<tbody>
 									</table>
+									
+									  <ul class='pagination'>
+	        
+	      
+	        
+	         <c:set var="startPage" value="${startPage}"/>
+	        <c:choose>
+	        <c:when test="${startPage>5}">
+	          <li class='page-item'><a class='page-link' href='approvalListE.do?page=${startPage-1}&emp_no=${loginEmp.emp_no}'>PREV</a></li>
+	        </c:when>
+	        <c:otherwise>
+	        <li class='page-item'><a class='page-link'>prev</a></li>
+	        </c:otherwise>
+	        </c:choose> 
+	       
+	        <c:forEach var="paging" begin="${startPage}" end="${endPage}">
+	        <c:choose>
+	        <c:when test="${paging==currentPage}">
+	        <li class='page-item'><a style='color:black;' class='page-link'>${paging}</a></li>
+	        </c:when>
+	        <c:otherwise>
+	        <li class='page-item'><a class='page-link' href='approvalListE.do?page=${paging}&emp_no=${loginEmp.emp_no}'>${paging}</a></li>
+	        </c:otherwise>
+	        </c:choose>
+	        </c:forEach>
+	        <c:set var="endPage" value="${endPage}"/>
+	        <c:set var="maxPage" value="${maxPage}"/>
+	        <c:choose>
+	        <c:when test="${endPage<maxPage}">
+	        <li class='page-item'><a class='page-link' href='approvalListE.do?page=${endPage+1}&emp_no=${loginEmp.emp_no}'>next</a></li>
+	        </c:when>
+	        <c:otherwise>
+	        <li class='page-item'><a class='page-link'>next</a></li>
+	        </c:otherwise>
+	        </c:choose>
+	        </ul>			
 								</div>
 							</div>
 						</div>

@@ -137,7 +137,6 @@
 	<script type="text/javascript">
 	var emp_no = ${loginEmp.emp_no};
 	$(function(){
-		alert("!!");
 		document.getElementById("daily_date").valueAsDate = new Date();		
 		selectVisit(emp_no);	
 		selectOrder(emp_no);	

@@ -1,4 +1,4 @@
-3<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 
@@ -6,7 +6,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>sidebar</title>
 <style type="text/css">
  #menu1 li{
  	padding:10px;
@@ -142,17 +141,17 @@
 	
    	var EventSource3 = new EventSource('notify.do?emp_no='+emp_no);
 	EventSource3.onopen = function(){
-		console.log("연결중");		
+		//console.log("연결중");		
 	}
 	var from_no;
 	EventSource3.addEventListener('from_name', function(event) {		
-		console.log("from_name : "+ event.data);
+		//console.log("from_name : "+ event.data);
 		from_name = event.data;
 		
 	}, false);
 
 	EventSource3.addEventListener('to_no', function(event) {	
-		console.log("to_no : "+ event.data);
+		//console.log("to_no : "+ event.data);
 		
 		if( emp_no == event.data){			
 			 var img = 'resources/images/msg2.png';

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="salary">
+
+	<resultMap type="salary" id="resultSalaryList">
+		
+		<id column="salary_no" property="salary_no"/>
+		<result column="emp_no" property="emp.emp_no"/>
+		<result column="emp_name" property="emp.emp_name"/>
+		<result column="emp_phone" property="emp.emp_phone"/>
+		<result column="emp_hiredate" property="emp.emp_hiredate"/>
+		<result column="sal" property="sal"/>
+		<result column="sal_bonus" property="sal_bonus"/>
+		<result column="sal_date" property="sal_date"/>
+		<result column="dept_name" property="dept.dept_name"/>
+		<result column="job_name" property="job.job_name"/>
+		
+	</resultMap>
+	
+
+	<!-- 급여관련 사원리스트 -->
+	<select id="salaryList" parameterType="salary" resultMap="resultSalaryList">
+			<![CDATA[
+				select sal.salary_no, em.emp_no, em.emp_name, em.dept_name, em.emp_phone, em.emp_hiredate, sal.sal_date, sal.sal, sal.sal_bonus
+				from (select *
+				        from emp e, dept d
+				        where e.dept_no = d.dept_no) em, salary sal
+				where em.emp_no = sal.emp_no
+			]]>
+	</select>
+	
+	<!-- 급여정보 상세보기 -->
+	<select id="salaryDetail" parameterType="_int" resultMap="resultSalaryList">
+		<![CDATA[
+			select sal.salary_no, em.emp_no, em.emp_name, em.dept_name, em.emp_phone, em.emp_hiredate, sal.sal_date, sal.sal, sal.sal_bonus,
+				j.job_name
+				from (select *
+				        from emp e, dept d
+				        where e.dept_no = d.dept_no) em, salary sal, job j
+				where em.emp_no = sal.emp_no
+				and em.job_no = j.job_no
+                and sal.emp_no = #{emp_no} 
+		]]>
+	</select>
+	
+	
+</mapper>

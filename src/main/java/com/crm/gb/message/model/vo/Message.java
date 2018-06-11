@@ -33,8 +33,21 @@ public class Message implements Serializable {
 	private int currentPage;
 	private int startRow;
 	private int endRow;
+	
+	
+	
+	
+	
 	public Message() {
 	}
+	
+	public Message(int message_from_no, int message_to_no, String message_date) {
+		super();
+		this.message_from_no = message_from_no;
+		this.message_to_no = message_to_no;
+		this.message_date = message_date;
+	}
+
 	public Message(int message_no, int message_from_no, int message_to_no, String message_title, String message_content,
 			String message_date, String message_confirm, String emp_email, String dept_name, String emp_name,
 			String job_name, int emp_no, int listCount, int currentPage, int startRow, int endRow) {

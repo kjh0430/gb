@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
-
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONObject;
@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.crm.gb.approval.model.service.ApprovalService;
 import com.crm.gb.approval.model.vo.Approval;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 
 
 @Controller
@@ -97,32 +98,106 @@ public class ApprovalController {
 		
 	}
 	//결재한 리스트
-	@RequestMapping(value="approvalListE.do", method=RequestMethod.GET)
+	@RequestMapping(value="approvalListE.do")
 	
-	public String approvalListE(Approval apr,Model model,@RequestParam(name="emp_no") int emp_no,HttpServletResponse response) {
+	public String approvalListE(Approval apr,Model model,@RequestParam(name="emp_no") int emp_no,HttpServletResponse response,HttpServletRequest request) {
 		
 		apr.setEmp_no(emp_no);
-
+		
+		int currentPage=1;
+		if(request.getParameter("page")!=null) {
+			currentPage=Integer.parseInt(request.getParameter("page"));
+		}
+		int limit=10;
+		int listCount=ApprovalService.selectgetListE(apr);
+		System.out.println("approval ListCount"+listCount);
+		
+		apr.setStartRow((currentPage-1)*limit+1);
+		apr.setEndRow(apr.getStartRow()+limit-1);
+		
 		ArrayList<Approval> approvalListE= ApprovalService.selectapprovalListE(apr);
-
+		
+		int maxPage=(int)((double)listCount/limit+0.9);
+		int startPage=((int)(double)(currentPage-1)/10)*10+1;
+		int endPage=startPage+5-1;
+		
+		
+		if(maxPage<endPage) {
+			endPage=maxPage;
+		}
+		
+		
+		
 		model.addAttribute("approvalListE",approvalListE);
-		//System.out.println("approvalListE"+approvalListE);
+		model.addAttribute("currentPage",currentPage);
+		model.addAttribute("maxPage",maxPage);
+		model.addAttribute("startPage",startPage);
+		model.addAttribute("endPage",endPage);
+		
 		
 		return "approval/approvalList";
 	}
 	
 	//admin 결재 리스트
 	@RequestMapping(value="approvalListAdmin.do")
-	public String approvalListA(Approval apr,Model model,@RequestParam(name="emp_no") int emp_no ,@RequestParam(name="job_no") String job_no ) {
+	public String approvalListA(Approval apr,Model model,@RequestParam(name="emp_no") int emp_no ,@RequestParam(name="job_no") String job_no,HttpServletRequest request) {
+		
+		
+		int currentPage=1;
+		int listCount=0;
+		
+		if(request.getParameter("page")!=null) {
+			currentPage=Integer.parseInt(request.getParameter("page"));
+		}
+		int limit=10;
+		
 		apr.setEmp_no(emp_no);
 		apr.setJob_no(job_no);
 		
-		//System.out.println(apr.getEmp_no());
-		//System.out.println(apr.getJob_no());
-		ArrayList<Approval> approvalListA=ApprovalService.selectapprovalListA(apr);
 		
-		model.addAttribute("approvalListA",approvalListA);
-		//System.out.println(approvalListA);
+		
+		if(apr.getEmp_name()!=null && apr.getEmp_name()!="") {
+			System.out.println("hbdbdfbdfbdbb");
+			listCount=ApprovalService.selectgetConditionListA(apr);
+			apr.setStartRow((currentPage-1)*limit+1);
+			apr.setEndRow(apr.getStartRow()+limit-1);
+			ArrayList<Approval> approvalListConditionA=ApprovalService.selectapprovalListConditionA(apr);	
+			model.addAttribute("approvalListA",approvalListConditionA);
+			model.addAttribute("emp_name",apr.getEmp_name());
+			System.out.println("emp_name"+apr.getEmp_name());
+			System.out.println(apr.getStartRow());
+			System.out.println(apr.getEndRow());
+			System.out.println("approvalListA 사이즈"+approvalListConditionA.size());
+			
+		}else{
+			System.out.println("zzzzzz");
+			listCount=ApprovalService.selectgetListCountA(apr);
+			apr.setStartRow((currentPage-1)*limit+1);
+			apr.setEndRow(apr.getStartRow()+limit-1);
+			ArrayList<Approval> approvalListA=ApprovalService.selectapprovalListA(apr);
+			model.addAttribute("approvalListA",approvalListA);
+			model.addAttribute("emp_name",apr.getEmp_name());
+			
+		}
+		
+		int maxPage=(int)((double)listCount/limit+0.9);
+		int startPage=((int)(double)(currentPage-1)/10)*10+1;
+		int endPage=startPage+5-1;
+		System.out.println("listCount"+listCount);
+		System.out.println("maxPage"+maxPage);
+		System.out.println("startPage"+startPage);
+		System.out.println("endPage"+endPage);
+		
+		if(maxPage<endPage) {
+			endPage=maxPage;
+		}
+		
+		
+		
+		model.addAttribute("currentPage",currentPage);
+		model.addAttribute("maxPage",maxPage);
+		model.addAttribute("startPage",startPage);
+		model.addAttribute("endPage",endPage);
 		
 		return "approval/approvalListAdmin";
 	}

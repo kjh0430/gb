@@ -195,7 +195,7 @@ var allCheck=false;
 									
 									
 					<form class="form-horizontal form-label-left" action="modifyInfo.do" method="post" onsubmit="return checkCondition();">
-				
+																														
 					
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">사원번호 *</label>
@@ -272,15 +272,15 @@ var allCheck=false;
                       <div class="ln_solid"></div>
                       <div class="form-group">
                        
-                          <!-- <button class="btn btn-primary" style="margin-left:25%;" onclick="modifyPassword();">비밀번호 변경</button> -->
+                       
                           
 								</div>
-							
-							</form>
-							<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-							<button class="btn btn-primary">수정</button>
-							<button class="btn btn-danger" onclick="backMyInfo();">취소</button>
+								<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+							<button class="btn btn-primary" type=submit>수정</button>
+							<button class="btn btn-danger" type="button" onclick="backMyInfo();">취소</button>
 							</div>
+							</form>
+							
 						</div>
 					</div>
 				</div>

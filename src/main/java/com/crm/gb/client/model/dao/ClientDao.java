@@ -126,5 +126,10 @@ public class ClientDao {
 		System.out.println("dao : " + client);
 		return sqlSession.selectOne("clCount",client);
 	}
+
+	public ArrayList<Client> selectAccountClient(int emp_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

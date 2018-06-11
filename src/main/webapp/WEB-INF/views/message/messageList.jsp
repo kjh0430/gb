@@ -27,6 +27,197 @@
 //받은 쪽지함
 
 var currentPage="";
+var receiveCondition="";
+
+
+//받은 메시지함
+function searchFunctionP(page){
+	
+	 
+	
+	 $.ajax({
+	     url : "receiveCondition.do",
+	     data : {
+	        message_to_no : "${loginEmp.emp_no}",emp_name:$('#receiveCondition').val(),page:page
+	     },
+	     type : "get",
+	     dataType:"json",
+	     success : function(data) {
+	        
+	        var jsonSt = JSON.stringify(data);
+	        var json = JSON.parse(jsonSt);
+	        var size = Object.keys(json.list).length;
+	      
+	        
+	        
+	    
+			if(size>0) {
+				values = "<table class='table table-hover' id='table_rec'><thead><tr><th>부서</th><th>직급</th><th>보낸사람</th><th style='width:40%;'>제목</th><th>받은날짜</th><th>사번</th><th>내용</th><th>mnumber</th></thead>"
+		              + "<tbody>"
+
+	        for ( var i in json.list) {
+					if(json.list[i].message_confirm=="Y") {
+						values += "<tr onclick='confirm(this);' style='cusor:hand' class='read'>"
+			           		 +"<td>"+json.list[i].dept_name
+			           		 +"</td><td>"+json.list[i].job_name
+			           		 +"</td><td>" + json.list[i].from_empName
+			                 + "</td><td>" + json.list[i].message_title
+			                 + "</td><td>" + json.list[i].message_date
+			                 + "</td><td>"+json.list[i].from_empNo
+			                 +"</td><td>"+json.list[i].message_content
+			                 +"</td><td>"+json.list[i].message_no
+			                 +"</td></tr>";
+
+	        }else{
+	        	values += "<tr onclick='confirm(this);' style='cusor:hand' class='readx'>"
+	           		 +"<td>"+json.list[i].dept_name
+	           		 +"</td><td>"+json.list[i].job_name
+	           		 +"</td><td>" + json.list[i].from_empName
+	                 + "</td><td>" + json.list[i].message_title
+	                 + "</td><td>" + json.list[i].message_date
+	                 + "</td><td>"+json.list[i].from_empNo
+	                 +"</td><td>"+json.list[i].message_content
+	                 +"</td><td>"+json.list[i].message_no
+	                 +"</td></tr>";
+	      	   }		
+	        }	     
+	           		 currentPage=json.list[0].currentPage;
+					 var maxPage=json.list[0].maxPage;
+					 var startPage=json.list[0].startPage;
+					 var endPage=json.list[0].endPage;
+
+	        values += "</tbody></table><ul class='pagination'>";
+	        
+	        if(startPage>5){
+	      	  values+="<li class='page-item'><a class='page-link' href='javascript:searchFunctionP("+(startPage-1)+")'>PREV</a></li>";
+	      	  
+	        }else{
+	      	  values+="<li class='page-item'><a class='page-link'>prev</a></li>";
+	     	 }
+	        
+	        for(var paging = startPage;paging<=endPage;paging++){
+	      	  if(paging==currentPage){
+	      		  values+="<li class='page-item'><a style='color:black;' class='page-link'>"+paging+"</a></li>";
+	      	  }else{
+	      		  values+="<li class='page-item'><a class='page-link' href='javascript:searchFunctionP("+paging+")'>"+paging+"</a></li>";
+	      	  }
+	      	  
+	        }
+	        
+	        if(endPage<maxPage){
+	      	  values+="<li class='page-item'><a class='page-link' href='javascript:searchFunctionP("+(endPage+1)+")'>next</a></li>";
+	        }else{
+	      	  values+="<li class='page-item'><a class='page-link'>next</a></li>";
+	        }
+	        values+="</ul>"
+	       
+
+	        $('#receive_msg1').html(values);
+
+	        
+	}else{
+	values="<br><br><br><br><br><br><h2 style='text-align:center;'>검색 결과가 없습니다."+
+	"</h2><br><br><br><br><br><br>"
+	$('#receive_msg1').html(values);	
+
+	}
+	     }
+	  });
+	 
+} 
+
+function searchFunction(){
+	
+	 $.ajax({
+	     url : "receiveCondition.do",
+	     data : {
+	        message_to_no : "${loginEmp.emp_no}",emp_name:$('#receiveCondition').val()
+	     },
+	     type : "get",
+	     dataType:"json",
+	     success : function(data) {
+	    	
+	        var jsonSt = JSON.stringify(data);
+	        var json = JSON.parse(jsonSt);
+	        var size = Object.keys(json.list).length;
+	      
+			if(size>0) {
+				values = "<table class='table table-hover' id='table_rec'><thead><tr><th>부서</th><th>직급</th><th>보낸사람</th><th style='width:40%;'>제목</th><th>받은날짜</th><th>사번</th><th>내용</th><th>mnumber</th></thead>"
+		              + "<tbody>"
+
+	        for ( var i in json.list) {
+					if(json.list[i].message_confirm=="Y") {
+						values += "<tr onclick='confirm(this);' style='cusor:hand' class='read'>"
+			           		 +"<td>"+json.list[i].dept_name
+			           		 +"</td><td>"+json.list[i].job_name
+			           		 +"</td><td>" + json.list[i].from_empName
+			                 + "</td><td>" + json.list[i].message_title
+			                 + "</td><td>" + json.list[i].message_date
+			                 + "</td><td>"+json.list[i].from_empNo
+			                 +"</td><td>"+json.list[i].message_content
+			                 +"</td><td>"+json.list[i].message_no
+			                 +"</td></tr>";
+
+	        }else{
+	        	values += "<tr onclick='confirm(this);' style='cusor:hand' class='readx'>"
+	           		 +"<td>"+json.list[i].dept_name
+	           		 +"</td><td>"+json.list[i].job_name
+	           		 +"</td><td>" + json.list[i].from_empName
+	                 + "</td><td>" + json.list[i].message_title
+	                 + "</td><td>" + json.list[i].message_date
+	                 + "</td><td>"+json.list[i].from_empNo
+	                 +"</td><td>"+json.list[i].message_content
+	                 +"</td><td>"+json.list[i].message_no
+	                 +"</td></tr>";
+	      	   }		
+	        }	     
+	           		 currentPage=json.list[0].currentPage;
+					 var maxPage=json.list[0].maxPage;
+					 var startPage=json.list[0].startPage;
+					 var endPage=json.list[0].endPage;
+
+	        values += "</tbody></table><ul class='pagination'>";
+	        
+	        if(startPage>5){
+	      	  values+="<li class='page-item'><a class='page-link' href='javascript:searchFunctionP("+(startPage-1)+")'>PREV</a></li>";
+	      	  
+	        }else{
+	      	  values+="<li class='page-item'><a class='page-link'>prev</a></li>";
+	     	 }
+	        
+	        for(var paging = startPage;paging<=endPage;paging++){
+	      	  if(paging==currentPage){
+	      		  values+="<li class='page-item'><a  style='color:black;' class='page-link'>"+paging+"</a></li>";
+	      	  }else{
+	      		  values+="<li class='page-item'><a class='page-link' href='javascript:searchFunctionP("+paging+")'>"+paging+"</a></li>";
+	      	  }
+	      	  
+	        }
+	        
+	        if(endPage<maxPage){
+	      	  values+="<li class='page-item'><a class='page-link' href='javascript:searchFunctionP("+(endPage+1)+")'>next</a></li>";
+	        }else{
+	      	  values+="<li class='page-item'><a class='page-link'>next</a></li>";
+	        }
+	        values+="</ul>"
+	       
+
+	        $('#receive_msg1').html(values);
+
+	        
+	}else{
+	values="<br><br><br><br><br><br><h2 style='text-align:center;'>검색 결과가 없습니다."+
+	"</h2><br><br><br><br><br><br>"
+	$('#receive_msg1').html(values);	
+
+	}
+			
+	     
+	     }
+	  });
+	 
+} 
+
 function receive(){
 $.ajax({
      url : "getMessage.do",
@@ -40,28 +231,38 @@ $.ajax({
         var jsonSt = JSON.stringify(data);
         var json = JSON.parse(jsonSt);
         var size = Object.keys(json.list).length;
+      
+      
+    
 		if(size>0) {
-        var values = "<table class='table table-hover' id='table_rec'><thead><tr><th>보낸사람</th><th style='width:40%;'>제목</th><th>받은날짜</th><th>사번</th><th>내용</th><th>mnumber</th></thead>"
-              + "<tbody>"
+			values = "<table class='table table-hover' id='table_rec'><thead><tr><th>부서</th><th>직급</th><th>보낸사람</th><th style='width:40%;'>제목</th><th>받은날짜</th><th>사번</th><th>내용</th><th>mnumber</th></thead>"
+	              + "<tbody>"
 
         for ( var i in json.list) {
 				if(json.list[i].message_confirm=="Y") {
-           values += "<tr onclick='confirm(this);' style='cusor:hand' class='read'><td>" + json.list[i].from_empName
-                 + "</td><td>" + json.list[i].message_title
-                 + "</td><td>" + json.list[i].message_date
-                 + "</td><td>"+json.list[i].from_empNo
-                 +"</td><td>"+json.list[i].message_content
-                 +"</td><td>"+json.list[i].message_no
-                 +"</td></tr>";
+					 values += "<tr onclick='confirm(this);' style='cusor:hand' class='read'>"
+		           		 +"<td>"+json.list[i].dept_name
+		           		 +"</td><td>"+json.list[i].job_name
+		           		 +"</td><td>" + json.list[i].from_empName
+		                 + "</td><td>" + json.list[i].message_title
+		                 + "</td><td>" + json.list[i].message_date
+		                 + "</td><td>"+json.list[i].from_empNo
+		                 +"</td><td>"+json.list[i].message_content
+		                 +"</td><td>"+json.list[i].message_no
+		                 +"</td></tr>";
+		                 
 
         }else{
-      	  values += "<tr onclick='confirm(this);' style='cusor:hand' class='readx'><td>" + json.list[i].from_empName
-            + "</td><td>" + json.list[i].message_title
-            + "</td><td>" + json.list[i].message_date
-            + "</td><td>"+json.list[i].from_empNo
-            +"</td><td>"+json.list[i].message_content
-            +"</td><td>"+json.list[i].message_no
-            +"</td></tr>";
+        	values += "<tr onclick='confirm(this);' style='cusor:hand' class='readx'>"
+          		 +"<td>"+json.list[i].dept_name
+          		 +"</td><td>"+json.list[i].job_name
+          		 +"</td><td>" + json.list[i].from_empName
+                + "</td><td>" + json.list[i].message_title
+                + "</td><td>" + json.list[i].message_date
+                + "</td><td>"+json.list[i].from_empNo
+                +"</td><td>"+json.list[i].message_content
+                +"</td><td>"+json.list[i].message_no
+                +"</td></tr>";
       	   }		
         }	     
            		 currentPage=json.list[0].currentPage;
@@ -72,7 +273,7 @@ $.ajax({
         values += "</tbody></table><ul class='pagination'>";
         
         if(startPage>5){
-      	  values+="<li class='page-item'><a class='page-link' href='javascript:receive("+(startPage-1)+")'>PREV</a></li>";
+      	  values+="<li class='page-item'><a class='page-link' href='javascript:receiveP("+(startPage-1)+")'>PREV</a></li>";
       	  
         }else{
       	  values+="<li class='page-item'><a class='page-link'>prev</a></li>";
@@ -80,35 +281,35 @@ $.ajax({
         
         for(var paging = startPage;paging<=endPage;paging++){
       	  if(paging==currentPage){
-      		  values+="<li class='page-item'><a class='page-link'>"+paging+"</a></li>";
+      		  values+="<li class='page-item'><a style='color:black;' class='page-link'>"+paging+"</a></li>";
       	  }else{
-      		  values+="<li class='page-item'><a class='page-link' href='javascript:receive("+paging+")'>"+paging+"</a></li>";
+      		  values+="<li class='page-item'><a class='page-link' href='javascript:receiveP("+paging+")'>"+paging+"</a></li>";
       	  }
       	  
         }
         
         if(endPage<maxPage){
-      	  values+="<li class='page-item'><a class='page-link' href='javascript:receive("+(endPage+1)+")'>next</a></li>";
+      	  values+="<li class='page-item'><a class='page-link' href='javascript:receiveP("+(endPage+1)+")'>next</a></li>";
         }else{
       	  values+="<li class='page-item'><a class='page-link'>next</a></li>";
         }
         values+="</ul>"
        
 
-        $('#receive_msg').html(values);
+        $('#receive_msg1').html(values);
 
         
 }else{
 values="<br><br><br><br><br><br><h2 style='text-align:center;'>받은 쪽지가 없습니다."+
 "</h2><br><br><br><br><br><br>"
-$('#receive_msg').html(values);	
+$('#receive_msg1').html(values);	
 
 }
      }
   });
 }
  
- function receive(page){ 
+ function receiveP(page){ 
 	 
 	    $.ajax({
 	        url : "getMessage.do",
@@ -120,28 +321,35 @@ $('#receive_msg').html(values);
 	           var jsonSt = JSON.stringify(data);
 	           var json = JSON.parse(jsonSt);
 	           var size = Object.keys(json.list).length;
+	           	
 				if(size>0) {
-	           var values = "<table class='table table-hover' id='table_rec'><thead><tr><th>보낸사람</th><th style='width:40%;'>제목</th><th>받은날짜</th><th>사번</th><th>내용</th><th>mnumber</th></thead>"
-	                 + "<tbody>"
+					values = "<table class='table table-hover' id='table_rec'><thead><tr><th>부서</th><th>직급</th><th>보낸사람</th><th style='width:40%;'>제목</th><th>받은날짜</th><th>사번</th><th>내용</th><th>mnumber</th></thead>"
+			              + "<tbody>"
 
 	           for ( var i in json.list) {
 						if(json.list[i].message_confirm=="Y") {
-	              values += "<tr onclick='confirm(this);' style='cusor:hand' class='read'><td>" + json.list[i].from_empName
-	                    + "</td><td>" + json.list[i].message_title
-	                    + "</td><td>" + json.list[i].message_date
-	                    + "</td><td>"+json.list[i].from_empNo
-	                    +"</td><td>"+json.list[i].message_content
-	                    +"</td><td>"+json.list[i].message_no
-	                    +"</td></tr>";
+							values += "<tr onclick='confirm(this);' style='cusor:hand' class='read'>"
+				           		 +"<td>"+json.list[i].dept_name
+				           		 +"</td><td>"+json.list[i].job_name
+				           		 +"</td><td>"+json.list[i].from_empName
+				                 +"</td><td>"+json.list[i].message_title
+				                 +"</td><td>"+json.list[i].message_date
+				                 +"</td><td>"+json.list[i].from_empNo
+				                 +"</td><td>"+json.list[i].message_content
+				                 +"</td><td>"+json.list[i].message_no
+				                 +"</td></tr>";
 
 	           }else{
-	         	  values += "<tr onclick='confirm(this);' style='cusor:hand' class='readx'><td>" + json.list[i].from_empName
-	               + "</td><td>" + json.list[i].message_title
-	               + "</td><td>" + json.list[i].message_date
-	               + "</td><td>"+json.list[i].from_empNo
-	               +"</td><td>"+json.list[i].message_content
-	               +"</td><td>"+json.list[i].message_no
-	               +"</td></tr>";
+	        	   values += "<tr onclick='confirm(this);' style='cusor:hand' class='readx'>"
+		           		 +"<td>"+json.list[i].dept_name
+		           		 +"</td><td>"+json.list[i].job_name
+		           		 +"</td><td>" + json.list[i].from_empName
+		                 + "</td><td>" + json.list[i].message_title
+		                 + "</td><td>" + json.list[i].message_date
+		                 + "</td><td>"+json.list[i].from_empNo
+		                 +"</td><td>"+json.list[i].message_content
+		                 +"</td><td>"+json.list[i].message_no
+		                 +"</td></tr>";
 	         	   }		
 	           }
 	              		currentPage=json.list[0].currentPage;
@@ -152,7 +360,7 @@ $('#receive_msg').html(values);
 	           values += "</tbody></table><ul class='pagination'>";
 	           
 	           if(startPage>5){
-	         	  values+="<li class='page-item'><a class='page-link' href='javascript:receive("+(startPage-1)+")'>PREV</a></li>";
+	         	  values+="<li class='page-item'><a class='page-link' href='javascript:receiveP("+(startPage-1)+")'>PREV</a></li>";
 	         	  
 	           }else{
 	         	  values+="<li class='page-item'><a class='page-link'>prev</a></li>";
@@ -160,93 +368,344 @@ $('#receive_msg').html(values);
 	           
 	           for(var paging = startPage;paging<=endPage;paging++){
 	         	  if(paging==currentPage){
-	         		  values+="<li class='page-item'><a class='page-link'>"+paging+"</a></li>";
+	         		  values+="<li class='page-item'><a style='color:black;' class='page-link'>"+paging+"</a></li>";
 	         	  }else{
-	         		  values+="<li class='page-item'><a class='page-link' href='javascript:receive("+paging+")'>"+paging+"</a></li>";
+	         		  values+="<li class='page-item'><a class='page-link' href='javascript:receiveP("+paging+")'>"+paging+"</a></li>";
 	         	  }
 	         	  
 	           }
 	           
 	           if(endPage<maxPage){
-	         	  values+="<li class='page-item'><a class='page-link' href='javascript:receive("+(endPage+1)+")'>next</a></li>";
+	         	  values+="<li class='page-item'><a class='page-link' href='javascript:receiveP("+(endPage+1)+")'>next</a></li>";
 	           }else{
 	         	  values+="<li class='page-item'><a class='page-link'>next</a></li>";
 	           }
 	           values+="</ul>"
 	          
 
-	           $('#receive_msg').html(values);
+	           $('#receive_msg1').html(values);
 
 	           
 	}else{
 	values="<br><br><br><br><br><br><h2 style='text-align:center;'>받은 쪽지가 없습니다."+
 	"</h2><br><br><br><br><br><br>"
-		$('#receive_msg').html(values);	
+		$('#receive_msg1').html(values);	
 
 	}
 	        }
 	  
 	     });
 	}
+ 
+ //보낸쪽지함
+function send(){
+ $.ajax({
+    url : "sendMessage.do",
+    data : {
+       message_from_no : "${loginEmp.emp_no}"
+    },
+    type : "get",
+    dataType:"json",
+    success : function(data) {
+    
+       var jsonSt = JSON.stringify(data);
+       var json = JSON.parse(jsonSt);
+       var size = Object.keys(json.list).length;
+	if(size>0){
+       var values = "<table class='table table-hover' id='table_sm'><thead><tr><th>부서</th><th>직급</th><th>받은사람</th><th style='width:40%;'>제목</th><th>받은날짜</th><th id='sendContent'>내용</th><thead>"
+             + "<tbody>"
+
+       for ( var i in json.list) {
+    	   
+          values += "<tr onclick='confirmSend(this);' style='cusor:hand'>"
+          		+"<td>"+json.list[i].dept_name
+					+"</td><td>"+json.list[i].job_name
+          		+"</td><td>" +json.list[i].to_empName
+                +"</td><td>" + json.list[i].message_title
+                + "</td><td>" + json.list[i].message_date
+                + "</td><td>"+json.list[i].message_content
+                +"</td></tr>";
+
+       }
+        
+       	 currentPage=json.list[0].currentPage;
+		 var maxPage=json.list[0].maxPage;
+		 var startPage=json.list[0].startPage;
+		 var endPage=json.list[0].endPage;
+
+values += "</tbody></table><ul class='pagination'>";
+
+if(startPage>5){
+  values+="<li class='page-item'><a class='page-link' href='javascript:sendP("+(startPage-1)+")'>PREV</a></li>";
   
-   $(function() {
-	   receive();
-	
-	
-	   
-	   
+}else{
+  values+="<li class='page-item'><a class='page-link'>prev</a></li>";
+}
+
+for(var paging = startPage;paging<=endPage;paging++){
+  if(paging==currentPage){
+	  values+="<li class='page-item'><a style='color:black;' class='page-link'>"+paging+"</a></li>";
+  }else{
+	  values+="<li class='page-item'><a class='page-link' href='javascript:sendP("+paging+")'>"+paging+"</a></li>";
+  }
+  
+}
+
+if(endPage<maxPage){
+  values+="<li class='page-item'><a class='page-link' href='javascript:sendP("+(endPage+1)+")'>next</a></li>";
+}else{
+  values+="<li class='page-item'><a class='page-link'>next</a></li>";
+}
+values+="</ul>"
+
+       values += "</tbody></table>"
+
+       $('#send_msg1').html(values);
+}else{
+values="<br><br><br><br><br><br><h2 style='text-align:center;'>보낸 쪽지가 없습니다."+
+"</h2><br><br><br><br><br><br>"
+$('#send_msg1').html(values);	
 
 
+}					
+       
+       
+    }
+ });
+}
+ 
+function sendP(page){
+	 $.ajax({
+	    url : "sendMessage.do",
+	    data : {
+	       message_from_no : "${loginEmp.emp_no}",page:page
+	    },
+	    type : "get",
+	    dataType:"json",
+	    success : function(data) {
+	    
+	       var jsonSt = JSON.stringify(data);
+	       var json = JSON.parse(jsonSt);
+	       var size = Object.keys(json.list).length;
+		if(size>0){
+	       var values = "<table class='table table-hover' id='table_sm'><thead><tr><th>부서</th><th>직급</th><th>받은사람</th><th style='width:40%;'>제목</th><th>받은날짜</th><th id='sendContent'>내용</th><thead>"
+	             + "<tbody>"
 
-      //보낸쪽지함
-         $.ajax({
-            url : "sendMessage.do",
-            data : {
-               message_from_no : "${loginEmp.emp_no}"
-            },
-            type : "get",
-            dataType:"json",
-            success : function(data) {
-            
-               var jsonSt = JSON.stringify(data);
-               var json = JSON.parse(jsonSt);
-               var size = Object.keys(json.list).length;
-			if(size>0){
-               var values = "<table class='table table-hover' id='table_sm'><thead><tr><th>받은사람</th><th style='width:40%;'>제목</th><th>받은날짜</th><th>내용</th><thead>"
-                     + "<tbody>"
+	       for ( var i in json.list) {
+	    	   
+	          values += "<tr onclick='confirmSend(this);' style='cusor:hand'>"
+	          		+"<td>"+json.list[i].dept_name
+						+"</td><td>"+json.list[i].job_name
+	          		+"</td><td>" +json.list[i].to_empName
+	                +"</td><td>" + json.list[i].message_title
+	                + "</td><td>" + json.list[i].message_date
+	                + "</td><td>"+json.list[i].message_content
+	                +"</td></tr>";
 
-               for ( var i in json.list) {
+	       }
+	        
+	       	 currentPage=json.list[0].currentPage;
+			 var maxPage=json.list[0].maxPage;
+			 var startPage=json.list[0].startPage;
+			 var endPage=json.list[0].endPage;
 
-                  values += "<tr onclick='confirmSend(this);' style='cusor:hand'><td>" + json.list[i].to_empName
-                        + "</td><td>" + json.list[i].message_title
-                        + "</td><td>" + json.list[i].message_date
-                        + "</td><td>"+json.list[i].message_content
-                        +"</td></tr>";
+	values += "</tbody></table><ul class='pagination'>";
 
-               }
+	if(startPage>5){
+	  values+="<li class='page-item'><a class='page-link' href='javascript:sendP("+(startPage-1)+")'>PREV</a></li>";
+	  
+	}else{
+	  values+="<li class='page-item'><a class='page-link'>prev</a></li>";
+	}
 
-               values += "</tbody></table>"
+	for(var paging = startPage;paging<=endPage;paging++){
+	  if(paging==currentPage){
+		  values+="<li class='page-item'><a style='color:black;' class='page-link'>"+paging+"</a></li>";
+	  }else{
+		  values+="<li class='page-item'><a class='page-link' href='javascript:sendP("+paging+")'>"+paging+"</a></li>";
+	  }
+	  
+	}
 
-               $('#send_msg').html(values);
+	if(endPage<maxPage){
+	  values+="<li class='page-item'><a class='page-link' href='javascript:sendP("+(endPage+1)+")'>next</a></li>";
+	}else{
+	  values+="<li class='page-item'><a class='page-link'>next</a></li>";
+	}
+	values+="</ul>"
+
+	       values += "</tbody></table>"
+
+	       $('#send_msg1').html(values);
 	}else{
 	values="<br><br><br><br><br><br><h2 style='text-align:center;'>보낸 쪽지가 없습니다."+
 	"</h2><br><br><br><br><br><br>"
-		$('#send_msg').html(values);	
+	$('#send_msg1').html(values);	
+
+
+	}					
+	       
+	       
+	    }
+	 });
+	}
+function searchFunction2p(page){
 	
+	 $.ajax({
+	     url : "sendcondition.do",
+	     data : {
+	        message_from_no : "${loginEmp.emp_no}",emp_name:$('#sendCondition').val(),page:page
+	     },
+	     type : "get",
+	     dataType:"json",
+	     success : function(data) {
+	    	
+	        var jsonSt = JSON.stringify(data);
+	        var json = JSON.parse(jsonSt);
+	        var size = Object.keys(json.list).length;
+	      
+			if(size>0) {
+			    var values = "<table class='table table-hover' id='table_sm'><thead><tr><th>부서</th><th>직급</th><th>받은사람</th><th style='width:40%;'>제목</th><th>받은날짜</th><th id='sendContent'>내용</th><thead>"
+		             + "<tbody>"
+
+		       for ( var i in json.list) {
+		    	   
+		          values += "<tr onclick='confirmSend(this);' style='cusor:hand'>"
+		          		+"<td>"+json.list[i].dept_name
+							+"</td><td>"+json.list[i].job_name
+		          		+"</td><td>" +json.list[i].from_empName
+		                +"</td><td>" + json.list[i].message_title
+		                + "</td><td>" + json.list[i].message_date
+		                + "</td><td>"+json.list[i].message_content
+		                +"</td></tr>";
+
+		       }	
+	        	     
+	           		 currentPage=json.list[0].currentPage;
+					 var maxPage=json.list[0].maxPage;
+					 var startPage=json.list[0].startPage;
+					 var endPage=json.list[0].endPage;
+
+	        values += "</tbody></table><ul class='pagination'>";
+	        
+	        if(startPage>5){
+	      	  values+="<li class='page-item'><a class='page-link' href='javascript: searchFunction2p("+(startPage-1)+")'>PREV</a></li>";
+	      	  
+	        }else{
+	      	  values+="<li class='page-item'><a class='page-link'>prev</a></li>";
+	     	 }
+	        
+	        for(var paging = startPage;paging<=endPage;paging++){
+	      	  if(paging==currentPage){
+	      		  values+="<li class='page-item'><a  style='color:black;' class='page-link'>"+paging+"</a></li>";
+	      	  }else{
+	      		  values+="<li class='page-item'><a class='page-link' href='javascript: searchFunction2p("+paging+")'>"+paging+"</a></li>";
+	      	  }
+	      	  
+	        }
+	        
+	        if(endPage<maxPage){
+	      	  values+="<li class='page-item'><a class='page-link' href='javascript: searchFunction2p("+(endPage+1)+")'>next</a></li>";
+	        }else{
+	      	  values+="<li class='page-item'><a class='page-link'>next</a></li>";
+	        }
+	        values+="</ul>"
+	       
+
+	        $('#send_msg1').html(values);
+
+	        
+	}else{
+	values="<br><br><br><br><br><br><h2 style='text-align:center;'>검색 결과가 없습니다."+
+	"</h2><br><br><br><br><br><br>"
+	$('#send_msg1').html(values);	
+
+	}
+			
+	     
+	     }
+	  });
+	 
+}
+
+function searchFunction2(){
 	
-}					
-               
-               
-            },
-            error : function(request, status, errorData) {
-               alert("error code : " + request.status + "\n"
-                     + "message :" + request.responseText + "\n"
-                     + "error :" + errorData);
-            }
-         });
-      
-   });
-   
+	 $.ajax({
+	     url : "sendcondition.do",
+	     data : {
+	        message_from_no : "${loginEmp.emp_no}",emp_name:$('#sendCondition').val()
+	     },
+	     type : "get",
+	     dataType:"json",
+	     success : function(data) {
+	    	
+	        var jsonSt = JSON.stringify(data);
+	        var json = JSON.parse(jsonSt);
+	        var size = Object.keys(json.list).length;
+	      
+			if(size>0) {
+			    var values = "<table class='table table-hover' id='table_sm'><thead><tr><th>부서</th><th>직급</th><th>받은사람</th><th style='width:40%;'>제목</th><th>받은날짜</th><th id='sendContent'>내용</th><thead>"
+		             + "<tbody>"
+
+		       for ( var i in json.list) {
+		    	   
+		          values += "<tr onclick='confirmSend(this);' style='cusor:hand'>"
+		          		+"<td>"+json.list[i].dept_name
+							+"</td><td>"+json.list[i].job_name
+		          		+"</td><td>" +json.list[i].from_empName
+		                +"</td><td>" + json.list[i].message_title
+		                + "</td><td>" + json.list[i].message_date
+		                + "</td><td>"+json.list[i].message_content
+		                +"</td></tr>";
+
+		       }    
+	           		 currentPage=json.list[0].currentPage;
+					 var maxPage=json.list[0].maxPage;
+					 var startPage=json.list[0].startPage;
+					 var endPage=json.list[0].endPage;
+
+	        values += "</tbody></table><ul class='pagination'>";
+	        
+	        if(startPage>5){
+	      	  values+="<li class='page-item'><a class='page-link' href='javascript: searchFunction2p("+(startPage-1)+")'>PREV</a></li>";
+	      	  
+	        }else{
+	      	  values+="<li class='page-item'><a class='page-link'>prev</a></li>";
+	     	 }
+	        
+	        for(var paging = startPage;paging<=endPage;paging++){
+	      	  if(paging==currentPage){
+	      		  values+="<li class='page-item'><a  style='color:black;' class='page-link'>"+paging+"</a></li>";
+	      	  }else{
+	      		  values+="<li class='page-item'><a class='page-link' href='javascript: searchFunction2p("+paging+")'>"+paging+"</a></li>";
+	      	  }
+	      	  
+	        }
+	        
+	        if(endPage<maxPage){
+	      	  values+="<li class='page-item'><a class='page-link' href='javascript: searchFunction2p("+(endPage+1)+")'>next</a></li>";
+	        }else{
+	      	  values+="<li class='page-item'><a class='page-link'>next</a></li>";
+	        }
+	        values+="</ul>"
+	       
+
+	        $('#send_msg1').html(values);
+
+	        
+	}else{
+	values="<br><br><br><br><br><br><h2 style='text-align:center;'>검색 결과가 없습니다."+
+	"</h2><br><br><br><br><br><br>"
+	$('#send_msg1').html(values);	
+
+	}
+			
+	     
+	     }
+	  });
+	 
+}
+
    function modal1Close(){
 	   $('#modal1').modal("hide");
 	   $('#searchName').val("");
@@ -360,13 +819,13 @@ $('#receive_msg').html(values);
 	  var content=$(obj);
       var td=content.children();
       
-      var a_from_empName=td.eq(0).text();
-      var a_message_title=td.eq(1).text();
-      var a_message_date=td.eq(2).text();
-     	 a_message_from_empNo=td.eq(3).text();
-      var a_message_content=td.eq(4).text();
+      var a_from_empName=td.eq(2).text();
+      var a_message_title=td.eq(3).text();
+      var a_message_date=td.eq(4).text();
+     	 a_message_from_empNo=td.eq(5).text();
+      var a_message_content=td.eq(6).text();
    	  //읽음처리를 위해 가져온 message_no
-      var a_message_no=td.eq(5).text();
+      var a_message_no=td.eq(7).text();
       alert(a_message_no);
       
      
@@ -375,9 +834,7 @@ $('#receive_msg').html(values);
     	  type:"post",
     	  data:{message_no:a_message_no},
     	  success:function(data){
-    		  alert("readMessage success");
-    		 receive();
-    		  receive(currentPage);
+    		 
     		  
     		  
     	  }
@@ -405,9 +862,9 @@ $('#receive_msg').html(values);
 	   var content=$(obj);
 	   var td=content.children();
 	   
-	   var s_to_empName=td.eq(0).text();
-	   var s_message_title=td.eq(1).text();
-	   var s_message_content=td.eq(3).text();
+	   var s_to_empName=td.eq(2).text();
+	   var s_message_title=td.eq(3).text();
+	   var s_message_content=td.eq(5).text();
 	   
 	   $('#s_to_empName').val(s_to_empName);
 	   $('#s_message_title').val(s_message_title);
@@ -418,82 +875,39 @@ $('#receive_msg').html(values);
    
    //답장하기
    function answerSubmit(){
-      $('#modal4').modal("hide");
       
+      
+      if($('#answer_title').val()!=null && $('#answer_title').val()!=""){
+    	  $('#modal4').modal("hide");
+    	  closeModal3();
       $.ajax({
-         url:"sub.do",
-         type:"post",
-         data:{
-            message_from_no : "${loginEmp.emp_no}",
-            message_to_no : a_message_from_empNo,
-            message_title : $('#answer_title').val(),
-            message_content :$('#answer_content').val(),
-            
-         },success: function(data){
-            alert(data);
-           
-            $('#answer_title').val("");
-            $('#answer_content').val("");
-           
- 
-     	   
-            //보낸쪽지함
-            $.ajax({
-               url : "sendMessage.do",
-               data : {
-                  message_from_no : "${loginEmp.emp_no}"
-               },
-               type : "get",
-               success : function(data) {
-               
-                  var jsonSt = JSON.stringify(data);
-                  var json = JSON.parse(jsonSt);
-                  var size = Object.keys(json.list).length;
-
-                  var values = "<table class='table table-hover' id='table_sm'><thead><tr><th>받은사람</th><th style='width:40%;'>제목</th><th>받은날짜</th><th>내용</th><thead>"
-                        + "<tbody>"
-
-                  for ( var i in json.list) {
-
-                     values += "<tr onclick='confirmSend(this);' style='cusor:hand'><td>" + json.list[i].to_empName
-                           + "</td><td>" + json.list[i].message_title
-                           + "</td><td>" + json.list[i].message_date
-                           + "</td><td>"+json.list[i].message_content
-                           +"</td></tr>";
-
-                  }
-
-                  values += "</tbody></table>"
-
-                  $('#send_msg').html(values);
-   							
-                  
-                  
-               },
-               error : function(request, status, errorData) {
-                  alert("error code : " + request.status + "\n"
-                        + "message :" + request.responseText + "\n"
-                        + "error :" + errorData);
-               }
-            });
-            
-            
-            
-            
-         },error : function(request, status, errorData) {
-                  alert("error code : " + request.status + "\n"
-                  + "message :" + request.responseText + "\n"
-                  + "error :" + errorData);
-                  }
-      });
-      
-      
+          url:"sub.do",
+          type:"post",
+          data:{
+             message_from_no : "${loginEmp.emp_no}",
+             message_to_no : a_message_from_empNo,
+             message_title : $('#answer_title').val(),
+             message_content :$('#answer_content').val(),
+             
+          },success: function(data){
+             alert(data);
+             
+             send();
+             $('#answer_title').val("");
+             $('#answer_content').val("");
+          }
+          
+   });
+      }else{
+    	  alert("내용을 빠짐없이 입력해주세요.");
+    	  
+      }
    }
    
    //쪽지 보내기
    function modalSubmit() {
 
-	   if($('#searchName').val() !="" && $('#message_title').val() !="" && $('#message_content').val()!=""){
+	   if($('#searchName').val() !="" && $('#searchName').val() !=null && $('#message_title').val() !="" && $('#message_title').val() !=null && $('#message_content').val()!="" && $('#message_content').val()!=null){
 	   
 	   
 	   
@@ -507,11 +921,11 @@ $('#receive_msg').html(values);
             message_to_no : emp_no,
             message_title : $('#message_title').val(),
             message_content : $('#message_content').val(),
-            no : 1
+            
 
          },
          success : function(data) {
-       		
+        	 send();
         	 
         	 //닫으면 내용 지워주기
         	   $('#searchName').val("");
@@ -521,54 +935,8 @@ $('#receive_msg').html(values);
         	 
         	 
         	 alert(data);
-            //보낸쪽지함
-            $.ajax({
-               url : "sendMessage.do",
-               data : {
-                  message_from_no : "${loginEmp.emp_no}"
-               },
-               type : "get",
-               success : function(data) {
-               
-                  var jsonSt = JSON.stringify(data);
-                  var json = JSON.parse(jsonSt);
-                  var size = Object.keys(json.list).length;
-
-                  var values = "<table class='table table-hover' id='table_sm'><thead><tr><th>받은사람</th><th style='width:40%;'>제목</th><th>받은날짜</th><th>내용</th><thead>"
-                        + "<tbody>"
-
-                  for ( var i in json.list) {
-
-                     values += "<tr onclick='confirmSend(this);' style='cusor:hand'><td>" + json.list[i].to_empName
-                           + "</td><td>" + json.list[i].message_title
-                           + "</td><td>" + json.list[i].message_date
-                           + "</td><td>"+json.list[i].message_content
-                           +"</td></tr>";
-
-                  }
-
-                  values += "</tbody></table>"
-
-                  $('#send_msg').html(values);
-   							
-                  
-                  
-               },
-               error : function(request, status, errorData) {
-                  alert("error code : " + request.status + "\n"
-                        + "message :" + request.responseText + "\n"
-                        + "error :" + errorData);
-               }
-            });
-            
-            
-            
-            
-            
-            
-            
-            
-            
+           
+                
          },error : function(request, status, errorData) {
                  /*  alert("error code : " + request.status + "\n"
                   + "message :" + request.responseText + "\n"
@@ -579,8 +947,15 @@ $('#receive_msg').html(values);
       });
 	   }else{
 		   alert("내용을 빠짐없이 입력해주세요.");
+		   receive();
 	   }
    }
+   
+   $(function() {
+	   receive();
+	   send();
+
+});
 </script>
 <style type="text/css">
 .btn-modify {
@@ -593,44 +968,60 @@ $('#receive_msg').html(values);
    vertical-align: middle;
 }
 
-#table_rm tr:last-child {
+/* #table_rm tr:last-child {
    border-bottom: 1px solid #ddd;
-}
+} */
 
-#getvalues th:nth-child(5), td:nth-child(5) {
+#getvalues th:nth-child(5){
    display: none;
 }
 
-#table_rec th:nth-child(4){
+#getvalues td:nth-child(5){
    display: none;
 }
-#table_rec td:nth-child(4){
-display:none;
-}
 
-#table_rec th:nth-child(5){
-display: none;
-}
-
-#table_rec td:nth-child(5){
-display: none;
-}
 #table_rec th:nth-child(6){
-display:none;
+   display: none;
 }
-
 #table_rec td:nth-child(6){
 display:none;
 }
 
-#table_sm th:nth-child(4){
+#table_rec th:nth-child(7){
+display: none;
+}
+
+#table_rec td:nth-child(7){
+display: none;
+}
+#table_rec th:nth-child(8){
 display:none;
 }
 
-#table_sm td:nth-child(4){
+#table_rec td:nth-child(8){
 display:none;
 }
 
+
+
+#table_sm th:nth-child(6){
+display:none;
+} 
+
+ #table_sm td:nth-child(6){
+display:none;
+}
+ #table_sm td:nth-child(7){
+display:none;
+}
+ #table_sm th:nth-child(7){
+display:none;
+}  
+
+#sendContent{
+display:none;
+}
+ 
 .read {
 font-weight:100;
 
@@ -707,14 +1098,20 @@ font-weight:900;
                               </ul>
                               <!-- start of receive msg tab -->
                               <div id="myTabContent" class="tab-content">
-                                 <div role="tabpanel" class="tab-pane fade active in"
-                                    id="receive_msg" aria-labelledby="home-tab"></div>
+                                 <div role="tabpanel" class="tab-pane fade active in" id="receive_msg" aria-labelledby="home-tab">
+                                 <div style="text-align:right">
+                                   <input id='receiveCondition' class="form-control" style="width:130px;display:inline-block;margin-right:3px;" type="text" placeholder="사원명">
+                                   <button class="btn btn-dark" style="margin:0 0 3px 0" onclick="searchFunction();">검색</button>
+                                   </div>
+                                   <div id="receive_msg1"></div>
+                                   </div>
                                  <!-- end of receive msg tab -->
 
                                  <!-- start of send msg tab -->
                                  <div role="tabpanel" class="tab-pane fade" id="send_msg"
                                     aria-labelledby="profile-tab">
-                                 
+                                   <input id='sendCondition' style="float:right;" type="text" placeholder="사원명"><button  style="float:right; margin-right:0px;" onclick="searchFunction2();">검색</button>
+                                   <div id="send_msg1"></div>
                                  </div>
                                  <!-- end of send msg tab -->
                               </div>
@@ -854,6 +1251,7 @@ font-weight:900;
 
                                                          <input type="text" class="form-control"
                                                             id="a_from_empName" readonly>
+                                                            
                                                                
                                                       </div>
                                                    </div>
@@ -983,7 +1381,7 @@ font-weight:900;
 
                                                          <input type="text" class="form-control"
                                                             id="s_to_empName" readonly>
-                                                               
+                                                         
                                                                                                                           
                                                       </div>
                                                    </div>

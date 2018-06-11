@@ -108,6 +108,14 @@
    ]]>
    </select>
 
+	<select id="productShare" resultMap="resultOrderlist2">
+	 <![CDATA[
+		select * from(select rownum rnum,product_no,product_name,total from (select rownum rnum,ol.product_no,p.product_name,sum(ol.order_amount) as total 
+		from orderlist ol,product p where ol.product_no=p.product_no and 
+		to_char(ol.order_date,'yyyy-mm') like to_char(sysdate,'yyyy-mm') 
+		group by p.product_name,ol.product_no,rownum order by total desc)) where rnum >=1 and rnum<=5
+	 ]]>
+	</select>
 
 
 

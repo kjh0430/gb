@@ -31,20 +31,24 @@
 
 	<select id="selectReceiveMessage" parameterType="message" resultType="Message">	
 		 <![CDATA[
-		select * from(select rownum rnum,emp_name,message_from_no,message_title,message_content,
+		select * from (select rownum rnum,emp_name,message_from_no,message_title,message_content,message_date,message_no,message_confirm,dept_name,job_name from(select rownum rnum,emp_name,message_from_no,message_title,message_content,
 		to_char(message_date,'yyyy-mm-dd hh24:mi:ss') 
-		as message_date,message_no,message_confirm 
-		from message m,emp e where m.message_to_no=#{message_to_no}
-		and e.emp_no=m.message_from_no order by m.message_confirm asc,m.message_date desc)where rnum>=#{startRow} and rnum<=#{endRow}
+		as message_date,message_no,message_confirm,dept_name,job_name
+		from message m,emp e,dept d,job j where m.message_to_no=#{message_to_no}
+		and e.emp_no=m.message_from_no and d.dept_no=e.dept_no and j.job_no=e.job_no order by m.message_confirm asc,m.message_date desc))where rnum>=#{startRow} and rnum<=#{endRow}
 		]]> 		
 	</select>
 
 	<select id="selectSendMessage" parameterType="message" resultType="Message">	
 		 <![CDATA[
-		select emp_name,message_to_no,message_title,message_content,
+		select * from (select rownum rnum,emp_name,message_to_no,message_title,message_content,
+		message_date,dept_name,job_name from (select rownum rnum,emp_name,message_to_no,message_title,message_content,
 		to_char(message_date,'yyyy-mm-dd hh24:mi:ss') 
-		as message_date from message m,emp e where m.message_from_no=#{message_from_no}  
-		and e.emp_no=m.message_to_no
+		as message_date,dept_name,job_name from message m,emp e,dept d,job j where m.message_from_no=#{message_from_no} 
+		and e.emp_no=m.message_to_no and e.dept_no=d.dept_no and e.job_no=j.job_no order by m.message_date desc)) where rnum>=#{startRow} and rnum<=#{endRow}
+    
+    
+		
 		]]> 			
 	</select>
 
@@ -59,6 +63,49 @@
 		select count(*) from message where message_to_no = #{emp_no} and message_confirm = 'N'
 		]]>	
 	</select>
+	
+	<select id="receiveConditionCount" parameterType="message" resultType="int">
+	<![CDATA[
+	select count(*) as listCount from emp e,message m where m.message_to_no=#{message_to_no} and e.emp_name=#{emp_name} and e.emp_no=m.message_from_no
+	
+	]]>
+	
+	</select>
+	
+	<select id="receiveConditionList" parameterType="message" resultType="Message">
+	<![CDATA[
+	select * from (select rownum rnum,emp_name,message_from_no,message_title,message_content,message_date,message_no,message_confirm,dept_name,job_name from
+	(select rownum rnum,emp_name,message_from_no,message_title,message_content,
+		to_char(message_date,'yyyy-mm-dd hh24:mi:ss') 
+		as message_date,message_no,message_confirm,dept_name,job_name
+		from message m,emp e,dept d,job j where m.message_to_no=#{message_to_no} and e.emp_name=#{emp_name}
+		and e.emp_no=m.message_from_no and d.dept_no=e.dept_no and j.job_no=e.job_no order by m.message_confirm asc,m.message_date desc)) where rnum>=#{startRow} and rnum<=#{endRow}   
+	]]>
+	</select>
 
+	<select id="sendListCount" parameterType="message" resultType="int">
+	<![CDATA[
+	select count(*) listCount from emp e,message m where message_from_no=#{message_from_no} and e.emp_no=m.message_from_no
+	]]>
+	</select>
+	
+	<select id="sendConditionCount" parameterType="message" resultType="int">
+	<![CDATA[
+	select count(*) as listCount from emp e,message m where m.message_from_no=#{message_from_no} and e.emp_name=#{emp_name} and e.emp_no=m.message_to_no
+	
+	]]>
+	</select>
+	
+	<select id="selectSendConditionMessage" parameterType="message" resultType="message">
+	<![CDATA[
+	select * from (select rownum rnum,emp_name,message_from_no,message_title,message_content,message_date,message_no,message_confirm,dept_name,job_name from
+	(select rownum rnum,emp_name,message_from_no,message_title,message_content,
+		to_char(message_date,'yyyy-mm-dd hh24:mi:ss') 
+		as message_date,message_no,message_confirm,dept_name,job_name
+		from message m,emp e,dept d,job j where m.message_from_no=#{message_from_no} and e.emp_name=#{emp_name}
+		and e.emp_no=m.message_to_no and d.dept_no=e.dept_no and j.job_no=e.job_no order by m.message_confirm asc,m.message_date desc))
+		 where rnum>=#{startRow} and rnum<=#{endRow}   
+	]]>
+	</select>
 
 </mapper>
