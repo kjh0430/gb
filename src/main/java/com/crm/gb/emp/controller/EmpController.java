@@ -72,12 +72,6 @@ public class EmpController {
 		return "main";
 	}
 	
-	/** 사원급여화면 */
-	@RequestMapping("empSalary.do")
-	public String empSalaryView() {
-		return "emp/empSalary";
-	}
-	
 	/** 로그인 정보확인 컨트롤러 */
 	@RequestMapping(value="login.do", method=RequestMethod.POST)
 	public void loginEmp(Emp emp, Model model, HttpServletResponse response) throws IOException{
@@ -386,6 +380,9 @@ public class EmpController {
 		  
 		JSONObject send=new JSONObject();
 		
+<<<<<<< HEAD
+	
+=======
 		if(emp.getJob_no()==2) {
 			getMyInfo.setMgr_name("");
 			getMyInfo.setCounty("");
@@ -495,4 +492,5 @@ public class EmpController {
 		return "emp/myInfo";
 	}
 
+>>>>>>> branch 'master' of https://github.com/kjh0430/gb.git
 }
