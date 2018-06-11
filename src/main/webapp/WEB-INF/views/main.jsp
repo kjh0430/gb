@@ -351,70 +351,7 @@
     	}
 </script>
 
- <script type="text/javascript">//날씨
-    
-    /* $(function(){
-    	
-    	var city = '${loginEmp.getCity()}';
-		var county = '${loginEmp.getCounty()}';
-		var village = '${loginEmp.getVillage()}';
-
-		var headers = {};
-		headers["Accept"]="application/json";
-		headers["Content-Type"]="application/json; charset=UTF-8";
-		headers["appKey"]="c73d9878-1921-4214-b7a2-1a0653b6c0a1";
-		
-		$.ajax({
-			type:'get',
-			headers:headers,
-			data:{city:city,county:county,village:village},
-			url:'https://api2.sktelecom.com/weather/current/hourly?version=1&callback=result',
-			async:false,
-			success : function(data){
-				console.log(data);
-				var todayDate = data["weather"]["hourly"][0]['timeRelease'];
-				var todayTemp = Math.round(data["weather"]["hourly"][0]['temperature']['tc']);
-				var todayMinTemp = Math.round(data["weather"]["hourly"][0]['temperature']['tmin']);
-				var todayMaxTemp = Math.round(data["weather"]["hourly"][0]['temperature']['tmax']);
-				var todayDesc = data["weather"]["hourly"][0]['sky']['name'];
-				var todayIcon = data["weather"]["hourly"][0]['sky']['code'];
-				var todayTimeRelease = data["weather"]["hourly"][0]['timeRelease'];
-										
-					$(".todayMinTemp").append(todayMinTemp);		
-					$(".todayMaxTemp").append(todayMaxTemp);		
-					$(".todayTemp").append(todayTemp);
-					$(".todayDesc").html(todayDesc);
-				var icon;
-				switch(todayIcon){
-					case "SKY_O01" : icon = "<img src='resources/images/weather/SKY_O01.png'/>";break;
-					case "SKY_O02" : icon = "<img src='resources/images/weather/SKY_O02.png'/>";break;
-					case "SKY_O03" : icon = "<img src='resources/images/weather/SKY_O03.png'/>";break;
-					case "SKY_O04" : icon = "<img src='resources/images/weather/SKY_O04.png'/>";break;
-					case "SKY_O05" : icon = "<img src='resources/images/weather/SKY_O05.png'/>";break;
-					case "SKY_O06" : icon = "<img src='resources/images/weather/SKY_O06.png'/>";break;
-					case "SKY_O07" : icon = "<img src='resources/images/weather/SKY_O07.png'/>";break;
-					case "SKY_O08" : icon = "<img src='resources/images/weather/SKY_O08.png'/>";break;
-					case "SKY_O09" : icon = "<img src='resources/images/weather/SKY_O09.png'/>";break;
-					case "SKY_O10" : icon = "<img src='resources/images/weather/SKY_O10.png'/>";break;
-					case "SKY_O11" : icon = "<img src='resources/images/weather/SKY_O11.png'/>";break;
-					case "SKY_O12" : icon = "<img src='resources/images/weather/SKY_O12.png'/>";break;
-					case "SKY_O13" : icon = "<img src='resources/images/weather/SKY_O13.png'/>";break;
-					case "SKY_O14" : icon = "<img src='resources/images/weather/SKY_O14.png'/>";break;				
-				}
-				$(".weather-icon").append(icon);
-				},
-				complete: function(){
-				},
-				error	: function(xhr, status, error){
-					console.log(error);
-				}
-			
-		}); //end of ajax
-		
-	});  */
-    
-	
-	</script>
+ 
 	<script type="text/javascript">//todolist
     
     var count = 1;    
@@ -1003,66 +940,15 @@
             
 
             <div class="col-xs-12">
-              <div class="x_panel tile fixed_height_320 overflow_hidden">
+              <div class="x_panel tile">
                 <div class="x_title">
-                  <h2>Device Usage</h2>
+                  <h2>이번달 판매량</h2>
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                  <table class="" style="width:100%">
-                    <tr>
-                      <th style="width:37%;">
-                        <p>Top 5</p>
-                      </th>
-                      <th>
-                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
-                          <p class="">Device</p>
-                        </div>
-                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                          <p class="">Progress</p>
-                        </div>
-                      </th>
-                    </tr>
-                    <tr>
-                      <td>
-                        <canvas class="canvasDoughnut" height="140" width="140" style="margin: 15px 10px 10px 0"></canvas>
-                      </td>
-                      <td>
-                        <table class="tile_info">
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square blue"></i>IOS </p>
-                            </td>
-                            <td>30%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square green"></i>Android </p>
-                            </td>
-                            <td>10%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square purple"></i>Blackberry </p>
-                            </td>
-                            <td>20%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square aero"></i>Symbian </p>
-                            </td>
-                            <td>15%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square red"></i>Others </p>
-                            </td>
-                            <td>30%</td>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr>
-                  </table>
+                  <div class="pie">
+                  <canvas id="myChart"></canvas>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1075,7 +961,7 @@
       <!-- footer content -->
        <%@ include file="etc/footer.jsp" %>
       <!-- /footer content -->
-      
+      </div>
     </div>
 
     <!-- jQuery -->
@@ -1088,13 +974,121 @@
   
     <!-- Custom Theme Scripts -->
      <script src="resources/fullcalendar-3.9.0/lib/tooltipster.bundle.min.js"></script>
-    <script src="resources/build/js/custom.min.js"></script>
-    	
-    	<script src="resources/fullcalendar-3.9.0/lib/moment.min.js"></script>
-   	
-   	  
-    	
+    <script src="resources/build/js/custom.min.js"></script>    	
+    <script src="resources/fullcalendar-3.9.0/lib/moment.min.js"></script> 
    	<script src="resources/fullcalendar-3.9.0/fullcalendar.js"></script>
+   	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+   	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+   	<script>
+  	var amount=[];
+	var pname=[];
+  		
+	$.ajax({
+		url:"productShare.do",
+		type:"post",
+		dataType:"json",
+		success: function(data) {
+			var objStr =JSON.stringify(data);
+			var result = JSON.parse(objStr);				
+			
+			for(var i in result.list){
+				amount.push(result.list[i].total);
+				pname.push(result.list[i].product_name);
+			}			
+		} 
+	});//ajax  
+	 
+   		
+	 var ctx = document.getElementById("myChart");
+	 var myChart = new Chart(ctx, {
+	     type: 'pie',
+	     data: {
+	         labels: pname,
+	         datasets: [{
+	             data: amount,
+	             backgroundColor: [
+	                 'rgba(59, 81, 89)',
+	                 'rgba(163, 201, 217)',
+	                 'rgba(217, 179, 132)',
+	                 'rgba(140, 110, 84)',
+	                 'rgba(191, 146, 107)'
+	             ]
+	         }]
+	     },
+	     options: {
+	    	 responsive: true,
+	   	    	maintainAspectRatio: false,
+		   	     legend: {
+		             display: true,
+		             position:'right'
+		         }
+	     }
+	 });
+
+	    
+	    /* $(function(){
+	    	
+	    	var city = '${loginEmp.getCity()}';
+			var county = '${loginEmp.getCounty()}';
+			var village = '${loginEmp.getVillage()}';
+
+			var headers = {};
+			headers["Accept"]="application/json";
+			headers["Content-Type"]="application/json; charset=UTF-8";
+			headers["appKey"]="c73d9878-1921-4214-b7a2-1a0653b6c0a1";
+			
+			$.ajax({
+				type:'get',
+				headers:headers,
+				data:{city:city,county:county,village:village},
+				url:'https://api2.sktelecom.com/weather/current/hourly?version=1&callback=result',
+				async:false,
+				success : function(data){
+					console.log(data);
+					var todayDate = data["weather"]["hourly"][0]['timeRelease'];
+					var todayTemp = Math.round(data["weather"]["hourly"][0]['temperature']['tc']);
+					var todayMinTemp = Math.round(data["weather"]["hourly"][0]['temperature']['tmin']);
+					var todayMaxTemp = Math.round(data["weather"]["hourly"][0]['temperature']['tmax']);
+					var todayDesc = data["weather"]["hourly"][0]['sky']['name'];
+					var todayIcon = data["weather"]["hourly"][0]['sky']['code'];
+					var todayTimeRelease = data["weather"]["hourly"][0]['timeRelease'];
+											
+						$(".todayMinTemp").append(todayMinTemp);		
+						$(".todayMaxTemp").append(todayMaxTemp);		
+						$(".todayTemp").append(todayTemp);
+						$(".todayDesc").html(todayDesc);
+					var icon;
+					switch(todayIcon){
+						case "SKY_O01" : icon = "<img src='resources/images/weather/SKY_O01.png'/>";break;
+						case "SKY_O02" : icon = "<img src='resources/images/weather/SKY_O02.png'/>";break;
+						case "SKY_O03" : icon = "<img src='resources/images/weather/SKY_O03.png'/>";break;
+						case "SKY_O04" : icon = "<img src='resources/images/weather/SKY_O04.png'/>";break;
+						case "SKY_O05" : icon = "<img src='resources/images/weather/SKY_O05.png'/>";break;
+						case "SKY_O06" : icon = "<img src='resources/images/weather/SKY_O06.png'/>";break;
+						case "SKY_O07" : icon = "<img src='resources/images/weather/SKY_O07.png'/>";break;
+						case "SKY_O08" : icon = "<img src='resources/images/weather/SKY_O08.png'/>";break;
+						case "SKY_O09" : icon = "<img src='resources/images/weather/SKY_O09.png'/>";break;
+						case "SKY_O10" : icon = "<img src='resources/images/weather/SKY_O10.png'/>";break;
+						case "SKY_O11" : icon = "<img src='resources/images/weather/SKY_O11.png'/>";break;
+						case "SKY_O12" : icon = "<img src='resources/images/weather/SKY_O12.png'/>";break;
+						case "SKY_O13" : icon = "<img src='resources/images/weather/SKY_O13.png'/>";break;
+						case "SKY_O14" : icon = "<img src='resources/images/weather/SKY_O14.png'/>";break;				
+					}
+					$(".weather-icon").append(icon);
+					},
+					complete: function(){
+					},
+					error	: function(xhr, status, error){
+						console.log(error);
+					}
+				
+			}); //end of ajax
+			
+		});  */
+	    
+		
+
+	</script>
    	
   </body>
   
