@@ -1098,11 +1098,13 @@ font-weight:900;
                               </ul>
                               <!-- start of receive msg tab -->
                               <div id="myTabContent" class="tab-content">
-                                 <div role="tabpanel" class="tab-pane fade active in"
-                                    id="receive_msg" aria-labelledby="home-tab">
-                                   <input id='receiveCondition' style="float:right;" type="text" placeholder="사원명"><button  style="float:right; margin-right:0px;" onclick="searchFunction();">검색</button>
+                                 <div role="tabpanel" class="tab-pane fade active in" id="receive_msg" aria-labelledby="home-tab">
+                                 <div style="text-align:right">
+                                   <input id='receiveCondition' class="form-control" style="width:130px;display:inline-block;margin-right:3px;" type="text" placeholder="사원명">
+                                   <button class="btn btn-dark" style="margin:0 0 3px 0" onclick="searchFunction();">검색</button>
+                                   </div>
                                    <div id="receive_msg1"></div>
-                                    </div>
+                                   </div>
                                  <!-- end of receive msg tab -->
 
                                  <!-- start of send msg tab -->
