@@ -133,11 +133,17 @@ function Regiemp(){
 	var emp_phone = $('#emp_phone').val();
 	var job_no = $('#job_no').val();
 	var emp_email = $('#emp_email').val();
-	var emp_mgr = $('#emp_mgr').val(emp_num);
+	var emp_mgr = $('#emp_mgr').val();
 	var city = $('#city').val();
 	var county = $('#county').val();
 	var village = $('#village').val();
 	var dept_no = $('#dept_no').val();
+	
+	if(emp_mgr == null){
+		$('#emp_mgr').val(0);
+	}else{
+		$('#emp_mgr').val(emp_num);
+	}
 	
 	var en1 = new RegExp("[A-Z]");
 	var en2 = new RegExp("[a-z]");
@@ -413,7 +419,8 @@ text-align:center;
                             <option value="3">관리자</option>                       
                           </select>
                         </div>
-                      </div>                             
+                      </div>
+                             
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
