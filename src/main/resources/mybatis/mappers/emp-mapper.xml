@@ -68,7 +68,7 @@
 	<insert id="empInsert" parameterType="Emp">
 	<![CDATA[
 		insert into emp
-		values (#{emp_no}, #{emp_pwd}, #{emp_name}, #{emp_addr}, 
+		values ((select max(emp_no)+1 from emp), #{emp_pwd}, #{emp_name}, #{emp_addr}, 
 		#{emp_phone}, #{job_no}, #{emp_email}, #{emp_mgr}, default, 
 		null, #{city}, #{county}, #{village}, #{dept_no}, default)
 	]]>

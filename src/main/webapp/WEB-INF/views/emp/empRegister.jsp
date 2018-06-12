@@ -52,16 +52,88 @@
 
 <script type="text/javascript">
 
-function Regiemp(){
+$(function(){
 	
-	var emp_no = $('#emp_no').val();
-	var emp_pwd = $('#emp_pwd').val();
+var allCheck=false;
+
+$('#emp_phone').blur(function(){
+	
+	var emp_phone = $('#emp_phone').val();
+	var phone_check = /^\d{3}-\d{3,4}-\d{4}$/;
+	
+	if(emp_phone.match(phone_check) == null){
+		alert("올바른 전화번호 형식이 아닙니다.ex)010-1234-5678");
+		allCheck=false;
+		return allCheck;
+	}else{
+		
+		$.ajax({
+			url : "checkPhone.do",
+			type: "post",
+			dataType: "json",
+			data: {
+				emp_phone : $('#emp_phone').val()
+			},
+			success:function(data){
+				if(data.check=="N" && $('#emp_phone').val()!="" && $('#emp_phone').val()!=null){
+					/* alert("사용가능한 번호 입니다."); */					
+				}else if(data.check=="Y"){
+					alert("이미 사용되고 있는 번호 입니다.");
+				}
+			}
+		
+	});
+		
+	}
+
+});
+
+$('#emp_email').blur(function(){
+	
+	var emp_email = $('#emp_email').val();
+	var email_check = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+	
+	if(emp_email.match(email_check) == null){
+		alert("올바른 e-mail 형식이 아닙니다.");
+		allCheck=false;
+		return allCheck;
+	}else{
+	
+	$.ajax({
+		url : "checkEmail.do",
+		type: "post",
+		dataType: "json",
+		data: {
+			emp_email : $('#emp_email').val()
+		},
+		success:function(data){
+			if(data.check=="N" && $('#emp_email').val()!="" && $('#emp_email').val()!=null){
+				/* alert("사용가능한 e-mail 입니다."); */					
+			}else if(data.check=="Y"){
+				alert("이미 사용되고 있는 e-mail 입니다.");
+			}
+		}
+	
+});
+	
+	}
+
+});
+
+	
+});
+
+function Regiemp(){	
+	
+	var emp_num = 0;
+	
 	var emp_name = $('#emp_name').val();
+	var emp_pwd = $('#emp_pwd').val();	
 	var emp_addr = $('#emp_addr').val();
 	var emp_phone = $('#emp_phone').val();
 	var job_no = $('#job_no').val();
 	var emp_email = $('#emp_email').val();
-	var emp_mgr = $('#emp_mgr').val();
+	var emp_mgr = $('#emp_mgr').val(emp_num);
 	var city = $('#city').val();
 	var county = $('#county').val();
 	var village = $('#village').val();
@@ -74,118 +146,57 @@ function Regiemp(){
 	var email_check = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 	var pwd_pattern= /^[A-Za-z0-9]{5,10}$/; //숫자와 문자 포함 형태의  5에서 10자리 비밀번호
 	
-	if(emp_no.length < 1){
-		alert("사원번호를 입력해주세요.");
-	}else if(!num.test(emp_no)){
-		alert("사원번호는 숫자만 입력해주세요.");
-	}else{		
-		$.ajax({
-			url : "checkEmpNo.do",
-			type: "post",
-			dataType: "json",
-			data: {
-				emp_no : emp_no
-			},
-			success:function(jsonData){
-				console.log("jsonData : " + jsonData);
-				alert("이미 등록된 사원번호 입니다. \n다시 입력하십시오");
-				$('#emp_no').select();
-				},
-				error: function(){
-					if(!pwd_pattern.test(emp_pwd)){
-						alert("비밀번호는 숫자, 문자 포함 5~10 자리 입니다.");
-					}else if(emp_name.length < 1){
-						alert("이름을 입력해주세요.");
-					}else if(emp_addr.length < 1){
-						alert("주소를 입력해주세요.");
-					}else if(emp_phone.match(phone_check) == null){
-						alert("올바른 연락처 형식이 아닙니다. \n다시 입력하십시오.");
-					}else{
-						$.ajax({
-							url : "checkPhone.do",
-							type: "post",
-							dataType: "json",
-							data: {
-								emp_phone : $('#emp_phone').val()
-							},
-							success:function(jsonData){
-								console.log("jsonData : " + jsonData);
-								alert("이미 등록된 연락처 입니다. \n다시 입력하십시오.");
-								$('#emp_phone').select();
-								},
-								error: function(){
-									/* alert("사용할 수 있는 번호 입니다."); */
-									if(emp_email.match(email_check) == null){
-										alert("올바른 이메일 형식이 아닙니다. \n다시 입력하십시오.");
-									}else{
-									
-									$.ajax({
-										url : "checkEmail.do",
-										type: "post",
-										dataType: "json",
-										data: {
-											emp_email : emp_email
-										},
-										success:function(jsonData){
-											console.log("jsonData : " + jsonData);
-											alert("이미 등록된 이메일 입니다. \n다시 입력하십시오");
-											$('#emp_email').select();
-											},
-											error: function(){
-												/* alert("사용할 수 있는 이메일 입니다"); */
-												if(emp_mgr.length < 1){
-													alert("상사번호를 입력해주세요.");
-												}else if(!num.test(emp_mgr)){
-													alert("상사번호는 숫자만 입력해주세요.");
-												}else{
-													
-													$.ajax({
-											    		url : "empinsert.do",
-											    		type: "post",
-											    		dataType: "json",
-											    		data: {
-											    			emp_no : emp_no,
-											    			emp_pwd : emp_pwd,
-											    			emp_name : emp_name,
-											    			emp_addr : emp_addr,
-											    			emp_phone : emp_phone,
-											    			job_no : job_no,
-											    			emp_email : emp_email,
-											    			emp_mgr : emp_mgr,
-											    			city : city,
-											    			county : county,
-											    			village : village,
-											    			dept_no : dept_no											    			
-											    		},
-											    		success:function(obj){
-											    			/* $.ajax({
-													    		url : "empList.do",
-													    		type: "post",
-													    		success:function(obj){
-													    			},
-													    			error: function(){
-													    			alert("사원이 등록되었습니다.");
-													    			}
-													    		}); */
-													    		
-													    		alert("사원이 등록되었습니다.");
-											    			
-											    			},
-											    			error: function(){
-											    				alert("error");
-											    			}
-											    		});
-											 		
-												}
-											}
-										});
-									}
-								}
-							});
-					}
-				}
-			});
-		}
+	if(emp_name.length < 1){
+		alert("사원이름을 입력해주세요.");
+		allCheck=false;
+		return allCheck;
+	}if(!pwd_pattern.test(emp_pwd)){
+		alert("비밀번호는 숫자, 문자 포함 5~10 자리 입니다.");
+		allCheck=false;
+		return allCheck;
+	}if(emp_addr.length < 1){
+		alert("주소를 입력해주세요.");
+		allCheck=false;
+		return allCheck;
+	}if(emp_phone.length < 1){
+		alert("연락처를 입력해주세요.");
+		allCheck=false;
+		return allCheck;
+	}if(emp_email.length < 1){
+		alert("e-mail을 입력해주세요.");
+		allCheck=false;
+		return allCheck;
+	}if(emp_name.length > 1 && pwd_pattern.test(emp_pwd) && emp_addr.length > 1 && emp_phone.length > 1 && emp_email.length > 1){
+				
+		 $.ajax({
+    		url : "empinsert.do",
+    		type: "post",
+    		dataType: "json",
+    		data: {
+    			emp_name : emp_name,
+    			emp_pwd : emp_pwd,    			
+    			emp_addr : emp_addr,
+    			emp_phone : emp_phone,
+    			job_no : job_no,
+    			emp_email : emp_email,
+    			emp_mgr : emp_mgr,
+    			city : city,
+    			county : county,
+    			village : village,
+    			dept_no : dept_no											    			
+    		},
+    		success:function(obj){
+    				alert("사원이 등록 되었습니다.");
+    				location.href="empList.do";    			
+    			},
+    			error: function(request, status, errorData){
+    				console.log("error code : " + request.status + "\n"
+    						+ "message : " + request.responseText + "\n"
+    						+ "error : " + errorData);
+    				
+    			}
+    		});		
+	}
 	
 }
 </script>
@@ -230,7 +241,7 @@ function selectMgrNo(obj){
 	var emp_no = td.eq(0).text();
 	var emp_name = td.eq(1).text();
 	
-	$('#mgrModal').modal('hide');
+	$('#mgrModal').modal('hide');	
 	$('#emp_mgr').val(emp_no);
 	
 }
@@ -259,79 +270,29 @@ text-align:center;
 					<div class="clearfix"></div>
 
 					<!-- sidebar menu -->
-					<%@ include file="../etc/adminsidebar.jsp"%>
+					<c:choose>
+			            	<c:when test="${ loginEmp.job_no == 3}">
+					            <!-- sidebar menu -->
+					            <%@ include file="../etc/adminsidebar.jsp" %>
+					            <!-- /sidebar menu -->
+			            	</c:when>
+			            	<c:when test="${ loginEmp.job_no == 2}">
+			            	<%@ include file="../etc/adminsidebar.jsp" %>
+			            	
+			            	</c:when>
+			            	<c:otherwise>
+								<!-- sidebar menu -->
+					            <%@ include file="../etc/sidebar.jsp" %>
+					            <!-- /sidebar menu --> 
+			            	</c:otherwise>
+			            </c:choose>
 					<!-- /sidebar menu -->
 
 				</div>
 			</div>
 
 			<!-- top navigation -->
-			<div class="top_nav">
-				<div class="nav_menu">
-					<nav>
-						<div class="nav toggle">
-							<a id="menu_toggle"><i class="fa fa-bars"></i></a>
-						</div>
-
-						<ul class="nav navbar-nav navbar-right">
-							<li class=""><a href="javascript:;"
-								class="user-profile dropdown-toggle" data-toggle="dropdown"
-								aria-expanded="false"> <!-- <img src="images/img.jpg" alt=""> -->John
-									Doe <span class=" fa fa-angle-down"></span>
-							</a>
-								<ul class="dropdown-menu dropdown-usermenu pull-right">
-									<li><a href="javascript:;"> Profile</a></li>
-									<li><a href="javascript:;"> <span
-											class="badge bg-red pull-right">50%</span> <span>Settings</span>
-									</a></li>
-									<li><a href="javascript:;">Help</a></li>
-									<li><a href="login.html"><i
-											class="fa fa-sign-out pull-right"></i> Log Out</a></li>
-								</ul></li>
-
-							<li role="presentation" class="dropdown"><a
-								href="javascript:;" class="dropdown-toggle info-number"
-								data-toggle="dropdown" aria-expanded="false"> <i
-									class="fa fa-envelope-o"></i> <span class="badge bg-green">6</span>
-							</a>
-								<ul id="menu1" class="dropdown-menu list-unstyled msg_list"
-									role="menu">
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li>
-										<div class="text-center">
-											<a> <strong>See All Alerts</strong> <i
-												class="fa fa-angle-right"></i>
-											</a>
-										</div>
-									</li>
-								</ul></li>
-						</ul>
-					</nav>
-				</div>
-			</div>
+			<c:import url="../etc/topnav.jsp"></c:import>
 			<!-- /top navigation -->
 
 			<!-- page content -->
@@ -360,10 +321,16 @@ text-align:center;
 					<form class="form-horizontal form-label-left">
 					<!-- <form class="form-horizontal form-label-left" action="empinsert.do" method="post"> -->
 
-                      <div class="form-group">
+                      <!-- <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">사원번호 *</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input class="form-control" id="emp_no" name="emp_no" type="text" placeholder="사원번호">
+                        </div>
+                      </div> -->
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">이름 *</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input class="form-control" id="emp_name" name="emp_name" type="text" placeholder="사원이름">
                         </div>
                       </div>
                       <div class="form-group">
@@ -371,13 +338,7 @@ text-align:center;
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input class="form-control" id="emp_pwd" name="emp_pwd" type="password" placeholder="비밀번호">
                         </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">이름 *</label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input class="form-control" id="emp_name" name="emp_name" type="text" placeholder="사원이름">
-                        </div>
-                      </div>
+                      </div>                      
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">주소 *</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
