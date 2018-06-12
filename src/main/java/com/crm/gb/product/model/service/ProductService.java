@@ -12,10 +12,12 @@ import com.crm.gb.product.model.vo.ProductFile;
 @Service
 public interface ProductService {
 	
-	int insertProduct(Product product);
-	int insertProductFile(ProductFile pf);
-	List<Product> selectAllList();
-	ArrayList<Product> selectSearchProduct(String product_name); //상품검색 
-	Product selectProductDetail(String product_no);
-	int updateProductAmount(Order orderlist); // 주문후 재고 수량 업데이트 
+	public abstract int insertProduct(Product product);
+	public abstract int insertProductFile(ProductFile pf);
+	public abstract List<Product> selectAllList();
+	public abstract ArrayList<Product> selectSearchProduct(String product_name); //상품검색 
+	public abstract Product selectProductDetail(String product_no);
+	public abstract int updateProductAmount(Order orderlist); // 주문후 재고 수량 업데이트 
+	public abstract int updateProduct(Product product);
+	public abstract int deleteProduct(int product_no);
 }

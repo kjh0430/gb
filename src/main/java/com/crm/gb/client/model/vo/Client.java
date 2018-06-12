@@ -36,6 +36,9 @@ public class Client implements Serializable{
 	private String emp_name;
 	private String contract_discount;
 	
+	//emp job_no
+	private int job_no;
+	
 	//페이징 처리 변수 선언!
 	//헷갈려서 그냥 다시 만들었어요!!
 	private int client_list_count;
@@ -93,7 +96,7 @@ public class Client implements Serializable{
 			String client_phone, String client_addr, String client_com_tel, String client_loc_x, String client_loc_y,
 			String client_contract, String client_comment, int emp_no, Date client_enroll, String client_delete,
 			int showPage, int totalRow, int start, int end, int startRow, int endRow, Emp emp,
-			String contract_discount, String emp_name) {
+			String contract_discount, String emp_name, int job_no) {
 		super();
 		this.client_no = client_no;
 		this.client_name = client_name;
@@ -119,6 +122,7 @@ public class Client implements Serializable{
 		this.emp = emp;
 		this.contract_discount = contract_discount;
 		this.emp_name = emp_name;
+		this.job_no = job_no;
 	}
 
 	public int getClient_no() {
@@ -425,6 +429,19 @@ public class Client implements Serializable{
 
 	public void setBlockEnd(int blockEnd) {
 		this.blockEnd = blockEnd;
+	}
+
+	
+
+
+	public int getJob_no() {
+		return job_no;
+	}
+
+
+
+	public void setJob_no(int job_no) {
+		this.job_no = job_no;
 	}
 
 

@@ -63,15 +63,16 @@ public class OrderController {
 		
 		
 		int emp_no = Integer.parseInt(empNo);
+		System.out.println("client_company : " + client_company);
 		
 		clientInfo.setClient_company(client_company);
 		clientInfo.setEmp_no(emp_no);
 		
-		//System.out.println("clientInfo : " + clientInfo);
+		System.out.println("clientInfo : " + clientInfo);
 
 		ArrayList<Client> SearchCom = clientService.selectSearchAccount(clientInfo);
 		JSONArray jarr = new JSONArray();
-		
+		System.out.println("SearchCom : "+SearchCom);
 		for(Client client : SearchCom) {
 			JSONObject jsonobject = new JSONObject();
 			jsonobject.put("client_no", client.getClient_no());
@@ -189,6 +190,7 @@ public class OrderController {
 			
 			int listCount_1 = orderService.orderListCount();
 			//int listCount_2 = listCount_1.getOrder_list_count();
+			System.out.println("listCount : " + listCount_1);
 			
 			//페이지수 계산 
 			int maxPage=(int)((double)listCount_1/pageSize+0.9);				
@@ -217,14 +219,10 @@ public class OrderController {
 			int startPage=(currentPage-1)*pageSize+1;
 			int endPage=startPage+pageSize-1;
 			
-//			System.out.println("startPage 시작페이지 = "+startPage);
-//			
-//			System.out.println("endPage 마지막 페이지 = "+endPage);
-//			
-//			System.out.println("maxPage 페이지수 계산 = "+maxPage);
-//			
-//			System.out.println("게시판 갯수 숫자 = "+listCount_1);
-			
+//			System.out.println("startPage 시작페이지 = "+startPage);//			
+//			System.out.println("endPage 마지막 페이지 = "+endPage);//			
+//			System.out.println("maxPage 페이지수 계산 = "+maxPage);//			
+//			System.out.println("게시판 갯수 숫자 = "+listCount_1);			
 			order.setStartPage(startPage);
 			order.setEndPage(endPage);
 			
@@ -250,39 +248,63 @@ public class OrderController {
 		}
 		
 	//orderlist 상세보기 	
-		@RequestMapping(value="orderdetail.do")
-		public String orderDetailPage(Order order, Model model ,Model model2, Model model3) {
-			logger.info("주문 상세보기 메소드 run...");
-			
+	@RequestMapping(value="orderdetail.do")
+	public String orderDetailPage(Order order, Model model ,Model model2, Model model3) {
+		logger.info("주문 상세보기 메소드 run...");
 		
-			ArrayList<Order> orderList = orderService.selectOrderList2(order);
-			//System.out.println("orderList : " + orderList);
-			model.addAttribute("orderList",orderList);
-		
-			order.setClient_no(orderList.get(0).getClient_no());
-			//order.setEmp_name(orderList.get(0).getEmp_name());
-			
-			//System.out.println("order : " + order);			
 	
-			//고객 정보 전달용 
-			Client clientInfo = clientService.selectOrderClient(order);
-			//System.out.println("clientInfo : " + clientInfo);
-			model2.addAttribute("clientInfo",clientInfo);
-			
-			//주문 상품 금액 합계 전달용 
-			int price=0;
-			for(int i=0; i < orderList.size(); i++) {
-				price += orderList.get(i).getOrder_price() * orderList.get(i).getOrder_amount();
-			}
-			
-			//System.out.println("price : " + price);
-			model3.addAttribute("price",price);
-			
-			return "order/orderDetail";
+		ArrayList<Order> orderList = orderService.selectOrderList2(order);
+		//System.out.println("orderList : " + orderList);
+		model.addAttribute("orderList",orderList);
+	
+		order.setClient_no(orderList.get(0).getClient_no());
+		//order.setEmp_name(orderList.get(0).getEmp_name());
+		
+		//System.out.println("order : " + order);			
+
+		//고객 정보 전달용 
+		Client clientInfo = clientService.selectOrderClient(order);
+		//System.out.println("clientInfo : " + clientInfo);
+		model2.addAttribute("clientInfo",clientInfo);
+		
+		//주문 상품 금액 합계 전달용 
+		int price=0;
+		for(int i=0; i < orderList.size(); i++) {
+			price += orderList.get(i).getOrder_price() * orderList.get(i).getOrder_amount();
 		}
 		
+		//System.out.println("price : " + price);
+		model3.addAttribute("price",price);
 		
+		return "order/orderDetail";
+	}
+		
+		
+	//main _ 제품별 주문량 차트
+	@RequestMapping(value="productShare.do", method=RequestMethod.POST)
+	public void productShare(Order order,HttpServletResponse response) throws IOException {
+		ArrayList<Order> orderProduct  = orderService.productShare();
+		System.out.println(orderProduct);
+		JSONArray jarr = new JSONArray();
+		
+		for(Order o : orderProduct) {
+			JSONObject job = new JSONObject();
+			job.put("product_name", o.getProduct_name());
+			job.put("total", o.getTotal());
+			jarr.add(job);
+		}
+		
+		JSONObject sendJson = new JSONObject();
+		sendJson.put("list", jarr);
+		
+		response.setContentType("application/json; charset=utf-8");	
+		//System.out.println("orderProductController:"+sendJson);
+		PrintWriter out=response.getWriter();
+		out.println(sendJson.toJSONString());
+		out.flush();
+		out.close();
 	
+	}
 	
 	
 

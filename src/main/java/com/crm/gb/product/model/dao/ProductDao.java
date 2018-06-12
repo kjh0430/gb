@@ -46,4 +46,12 @@ public class ProductDao {
 		return sqlSession.update("updateProductAmount",orderlist);
 	}
 
+	public int updateProduct(Product product) {
+		return sqlSession.update("updateProduct",product);
+	}
+
+	public int deleteProduct(int product_no) {
+		return sqlSession.update("deleteProduct",product_no);
+	}
+
 }
