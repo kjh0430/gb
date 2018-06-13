@@ -173,12 +173,14 @@ public class EmpController {
    /*사원 등록*/
    @RequestMapping(value="empinsert.do", method = RequestMethod.POST)
    @ResponseBody
-   public String insertEmp(Emp emp, Model model, HttpServletResponse response){
+   public String insertEmp(Emp emp, Model model, @RequestParam(value = "emp_mgr", required = false, defaultValue = "0" ) int emp_mgr, HttpServletResponse response){
       logger.info("emp insert 실행");
       System.out.println("전송온 값 : " + emp);
       
       String encPassword = pwdEncoder.encode(emp.getEmp_pwd());
       emp.setEmp_pwd(encPassword);
+      
+      emp.setEmp_mgr(emp_mgr);
       
       int result = empService.insertEmp(emp);
       
@@ -187,8 +189,13 @@ public class EmpController {
       
       return "emp/empList";*/
       
+      System.out.println("emp : " + emp);
+      System.out.println("emp_no : " + emp.getEmp_no());
+      System.out.println("emp_name : " + emp.getEmp_name());
+      System.out.println("emp_mgr : " + emp.getEmp_mgr());
+      
       JSONObject job = new JSONObject();
-      job.put("emp_no", emp.getEmp_no());      
+      job.put("emp_name", emp.getEmp_name());      
 
       return job.toJSONString();
    }
@@ -231,59 +238,61 @@ public class EmpController {
    /*연락처 중복검사*/
    @RequestMapping(value="checkPhone.do", method=RequestMethod.POST)
    @ResponseBody
-   public String selectCheckPhone(@RequestParam(value="emp_phone") String emp_phone, HttpServletResponse response) throws IOException{
+   public void selectCheckPhone(@RequestParam(value="emp_phone") String emp_phone, HttpServletResponse response) throws IOException{
       
       logger.info("selectCheckPhone 실행");
       
       System.out.println("연락처 번호 : "+emp_phone);
       
-      Emp checkPhone = empService.selectCheckPhone(emp_phone);
-      
-      if(checkPhone != null) {      
+      Emp checkPhone = empService.selectCheckPhone(emp_phone);        
          
       JSONObject job = new JSONObject();
-      job.put("emp_phone", emp_phone);
       
-      System.out.println("checkPhone 값 있음");
-      System.out.println("emp : " + checkPhone);
-      System.out.println("emp_phone : " + emp_phone);
-
-      return job.toJSONString();
-      
-      }else {
-         System.out.println("checkPhone null");
-         return null;
+      String check="Y";
+      if(checkPhone==null) {
+         check="N";
       }
+      
+      job.put("check",check);
+      
+      response.setContentType("application/json; charset=utf-8");   
+   
+      PrintWriter out=response.getWriter();
+      out.append(job.toJSONString());
+      out.flush();
+      out.close();
+      
+     
          
    }
    
    /*이메일 중복검사*/
    @RequestMapping(value="checkEmail.do", method=RequestMethod.POST)
    @ResponseBody
-   public String selectCheckEmail(@RequestParam(value="emp_email") String emp_email, HttpServletResponse response) throws IOException{
+   public void selectCheckEmail(@RequestParam(value="emp_email") String emp_email, HttpServletResponse response) throws IOException{
       
       logger.info("selectCheckEmail 실행");
       
       System.out.println("이메일 주소 : "+emp_email);
       
       Emp checkEmail = empService.selectCheckEmail(emp_email);
-      
-      if(checkEmail != null) {
-         
+                     
       JSONObject job = new JSONObject();
-      job.put("emp_email", emp_email);
-      
-      System.out.println("checkEmail 값 있음");
-      System.out.println("emp : " + checkEmail);
-      System.out.println("emp_email : " + emp_email);
-
-      return job.toJSONString();
-      
-      }else {
-         System.out.println("checkEmail null");
-         return null;
+            
+      String check="Y";
+      if(checkEmail==null) {
+         check="N";
       }
-         
+      
+      job.put("check",check);
+      
+      response.setContentType("application/json; charset=utf-8");   
+   
+      PrintWriter out=response.getWriter();
+      out.append(job.toJSONString());
+      out.flush();
+      out.close();
+      
    }
    
    /*사원번호 중복검사*/
