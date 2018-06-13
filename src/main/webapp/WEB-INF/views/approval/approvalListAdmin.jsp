@@ -208,9 +208,12 @@ background-color:#2A3F54;
 							<div class="x_panel">
 								
 								<div class="x_content">
-								
-									<input style="float:right;" type="text" placeholder="사원명" id="emp_name"><button  style="float:right; margin-right:0px;" type="button" onclick="searchCondition();">검색</button>
 									
+									
+									<div style="text-align:right">
+									<input class="form-control" style="width:130px;display:inline-block;margin-right:3px;" type="text" placeholder="사원명" id="emp_name">
+									<button class="btn btn-dark" style="margin:0 0 3px 0" onclick="searchCondition();">검색</button>
+									</div>
 									
 									<table id="table_ap" class="table table-striped table-bordered">
 										<thead>
@@ -235,18 +238,7 @@ background-color:#2A3F54;
 										<tbody>
 										
 										<c:forEach items="${approvalListA}" var="approval">
-											<c:if test="${approval.approval_choose_no eq '1'}">
-											<c:set var="approval_choose_no" value="휴가"/>
-											</c:if>
-											<c:if test="${approval.approval_choose_no eq '2'}">
-											<c:set var="approval_choose_no" value="경조사"/>
-											</c:if>
-											<c:if test="${approval.approval_choose_no eq '3'}">
-											<c:set var="approval_choose_no" value="병가"/>
-											</c:if>
-											<c:if test="${approval.approval_choose_no eq '4'}">
-											<c:set var="approval_choose_no" value="비고"/>
-											</c:if>
+											
 											<c:if test="${approval.approval_mgr_date eq null && approval.approval_team_date eq null}">
 											 <c:set var="approval_process" value="미진행 "/>
 											</c:if>
@@ -268,7 +260,7 @@ background-color:#2A3F54;
 												<td>${approval.emp_name}</td>
 												<td>${approval_dept_name}</td>
 												
-												<td style="width:30%;">${approval_choose_no}</td>
+												<td style="width:30%;">${approval.reason_name}</td>
 												<td style="width:30%;">${approval.approval_submit_date}</td>
 												<td>${approval_process}</td>
 												<td>${approval.emp_no }</td>
