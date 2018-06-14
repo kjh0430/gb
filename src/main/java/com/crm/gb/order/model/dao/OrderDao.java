@@ -52,4 +52,11 @@ public class OrderDao {
 	public ArrayList<Order> productShare() {
 		return (ArrayList)sqlSession.selectList("productShare");
 	}
+
+	
+
+	public int selectConditionListCount(Order order) {
+		
+		return sqlSession.selectOne("conditionListCount",order);
+	}
 }

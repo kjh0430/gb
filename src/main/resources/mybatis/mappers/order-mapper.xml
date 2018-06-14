@@ -116,6 +116,14 @@
 		group by p.product_name,ol.product_no order by total desc)) where rnum >=1 and rnum<=5
 	 ]]>
 	</select>
+	
+	<select id="conditionListCount" parameterType="order" resultType="int">
+	 <![CDATA[
+	 	select count(*) as orderlistcount from (select ol.order_no, c.client_company,sum((ol.order_price*ol.order_amount)) as total, substr(to_char(order_date),1,8) as order_date from orderlist ol, client c 
+		where ol.client_no = c.client_no and c.client_company=#{client_company} group by ol.order_no, c.client_company, order_date order by order_no desc)
+	 
+	 ]]>
+	</select>
 
 
 

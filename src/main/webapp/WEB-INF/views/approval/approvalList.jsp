@@ -112,9 +112,7 @@ background-color:#2A3F54;
 
 					<div class="clearfix"></div>
 
-					<!-- sidebar menu -->
-					<%@ include file="../etc/sidebar.jsp"%>
-					<!-- /sidebar menu -->
+				
 
 				</div>
 			</div>

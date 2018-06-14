@@ -137,5 +137,17 @@ public class ClientServiceImpl implements ClientService{
 	public int clientListCount(Client client) {
 		return clientDao.clientListCount(client);
 	}
+
+	@Override  //클라이언트 회사명 조건검색 
+	public int selectClientCondition(Client client) {
+
+		return clientDao.selectClientCondition(client);
+	}
+
+	@Override //검색 조건에 맞는 클라이언트명 가져오기
+	public ArrayList<Client> selectgetClientCondition(Client client) {
+		
+		return clientDao.selectListClientCondition(client);
+	}
 	
 }

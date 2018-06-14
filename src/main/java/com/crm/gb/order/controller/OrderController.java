@@ -188,6 +188,18 @@ public class OrderController {
 //			System.out.println("pageSize="+pageSize);
 //			System.out.println("currentPage="+currentPage);
 			
+			
+			//조건 검색
+			if(order.getClient_company()!=null  && order.getClient_company()!="") {
+			int listCount=orderService.selectConditionListCount(order);
+			System.out.println("listCount"+listCount);
+			
+			}
+			
+			
+			
+			
+			
 			int listCount_1 = orderService.orderListCount();
 			//int listCount_2 = listCount_1.getOrder_list_count();
 			System.out.println("listCount : " + listCount_1);

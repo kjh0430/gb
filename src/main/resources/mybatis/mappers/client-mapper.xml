@@ -305,5 +305,39 @@
 			where client_no = #{client_no} and client.emp_no = emp.emp_no
 		]]>
 	</select>
+	
+	<select id="conditionClient" parameterType="client" resultType="int">
+	
+	
+	<if test="job_no==1">
+	<![CDATA[
+		select count(*) from client where client_contract = 'Y' and emp_no=#{emp_no} and client_company=#{client_company}
+	]]>
+	</if>
+	<if test="job_no==2 || job_no==3">
+	<![CDATA[
+		select count(*) from client where client_contract = 'Y' and client_company=#{client_company}
+	]]>
+	</if>
+	
+	
+	</select>
+	
+ 	<select id="selectConditionList" parameterType="client" resultMap="resultAccountClient">
+	<if test="job_no==1">
+	<![CDATA[
+	select * from (
+			(select rownum as rn, A.* from (select * from client where client_contract = 'Y' and emp_no=#{emp_no} and client_company=#{client_company} order by client_enroll desc) A))
+			where rn between #{startRow} and #{endRow}
+	]]>
+	</if>
+	<if test="job_no==2 || job_no==3">
+	<![CDATA[
+	select * from (
+			(select rownum as rn, A.* from (select * from client where client_contract = 'Y' and client_company=#{client_company} order by client_enroll desc) A))
+			where rn between #{startRow} and #{endRow}
+	]]>
+	</if>
+	</select>
 </mapper>
 
