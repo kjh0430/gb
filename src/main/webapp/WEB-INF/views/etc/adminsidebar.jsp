@@ -39,8 +39,8 @@
          </li>
          <li><a><i class="fa fa-edit"></i>영업현황 <span class="fa fa-chevron-down"></span></a>
            <ul class="nav child_menu">
-             <li><a href="clientList.do">거래처 목록</a></li>
-             <li><a href="orderList.do">매출현황</a></li>
+             <li><a href="accountList.do?emp_no=${loginEmp.emp_no }&job_no=${loginEmp.job_no}&page=1">거래처 목록</a></li>
+             <li><a href="orderList.do?emp_no=${loginEmp.emp_no}&page=1">매출현황</a></li>
            </ul>
          </li>
          <li><a><i class="fa fa-clone"></i> 공지사항 <span class="fa fa-chevron-down"></span></a>
@@ -59,19 +59,11 @@
 	         
 	        </ul>
 	      </li>
-	     
-
-
 	      <li><a href="messageList.do"><i class="fa fa-file-text-o"></i> 쪽지함 <span class="count_badge badge bg-green"></span></a>
 	      </li>
-	       <li><a href="info.do"><i class="fa fa-file-text-o"></i> My Info</a>
-	      </li>
-
-
 	     <!--  <li><a><i class="fa fa-cog"></i> 설정</a> </li> -->
 	    </ul>
      </div>
-   
    </div>
    <div class="sidebar-footer hidden-small">
      <a data-toggle="tooltip" data-placement="top" title="Settings">
@@ -88,23 +80,18 @@
      </a>
    </div>
    	<script type="text/javascript">
-
 	var emp_no = ${loginEmp.emp_no};
 	var EventSource4 = new EventSource("count.do?emp_no="+emp_no);
 	EventSource4.onopen = function(){
 		//console.log("연결중2");		
 	}
 	EventSource4.onmessage = function(event) {
-		
 		var count = event.data;
 		if(count>0){
-		
 			$(".count_badge").html(count);		
 		}else{
 			$(".count_badge").css("display","none");
 		}
-		
-
 	};
 	
 	</script>

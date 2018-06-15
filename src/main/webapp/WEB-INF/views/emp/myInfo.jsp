@@ -45,15 +45,11 @@
 <script type="text/javascript">
 $(function(){
 
-var pwdcheck="false";
-var emailcheck="false";
-var phonecheck="false";
-	
 
-	
+	//내 정보 가져오기
 	$.ajax({
 		url:"getMyInfo.do",
-		data:{emp_no : "${loginEmp.emp_no}"},
+		data:{emp_no : "${loginEmp.emp_no}",job_no:"${loginEmp.job_no}"},
 		type:"post",
 		success:function(data){
 			$('#emp_no').val("${loginEmp.emp_no}");
@@ -66,90 +62,27 @@ var phonecheck="false";
 			$('#city').val(data.city);
 			$('#county').val(data.county);
 			$('#village').val(data.village);
-			$('#dept_name').val(data.dept_name);
-			
-		}
-		
+			$('#dept_name').val(data.dept_name);		
+		}		
 	});
-	
-	$('#emp_pwd2').blur(function(){
-		var p1=$('#emp_pwd1').val();
-		var p2=$('#emp_pwd2').val();
-		
-		if(p1==p2){
-			alert("비밀번호가 일치합니다.");
-		}else{
-			alert("비밀번호가 일치하지 않습니다.");
-			$('#emp_pwd1').val("");
-			$('#emp_pwd2').val("");
-		}
-	});
-	
-	$('#emp_email').blur(function(){
-		
-		
-		$.ajax({
-			
-			url:"emailCheck.do",
-			data:{emp_no :"${loginEmp.emp_no}", emp_email:$('#emp_email').val()},
-			type:"post",
-			success:function(data){
-			
-				if(data!=null){
-					alert("사용가능한 e-mail입니다.");
-					
-				}else{
-					alert("다른 사람이 사용하고 있는 e-mail입니다.")
-				}
-			}
-		});
-		
-	
-	});
-	
-	$('#emp_phone').blur(function(){
-		
-		$.ajax({
-			
-			url:'checkPhone.do',
-			data:{emp_no :"${loginEmp.emp_no}", emp_phone:$('#emp_phone').val()},
-			type:"post",
-			success:function(data){
-			
-				if(data!=null){
-					alert("사용가능한 전화번호 입니다.");
-					
-				}else{
-					alert("다른 사람이 사용하고 있는 번호입니다.")
-				}
-			}
-			
-		});
-	});
-	
 	
 	
 	
 });
+function modifyPassword(){
 
-
-function checkCondition(){
-	var pattern=/^[A-Za-z0-9]{5,10}$/; //숫자와 문자 포함 형태의  5에서 10자리 비밀번호
-	var phone_check = /^\d{3}-\d{3,4}-\d{4}$/;
-	var email_check = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+	location.href="modifyPassword.do";
 	
+}
+
+function modifyMyInfo(){
+	location.href="modifyMyInfo.do";
 }
 
 
 
 
 </script>
-<style type="text/css">
-#mgrTable{
-text-align:center;
-}
-</style>
-
 </head>
 
 <body class="nav-md">
@@ -180,7 +113,7 @@ text-align:center;
 				<div class="">
 					<div class="page-title">
 						<div class="title_left">
-							<h3>정보 수정</h3>
+							<h3>Information</h3>
 						</div>
 					</div>
 
@@ -190,36 +123,23 @@ text-align:center;
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
 								<div class="x_title">
-									<h2>정보 수정</h2>
+									<h2>Information</h2>
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
 									
 									
 									
+				
+					<form class="form-horizontal form-label-left">
 					
-					<form class="form-horizontal form-label-left" action="empinsert.do" method="post" onsubmit="return checkCondition();">
-
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">사원번호 *</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input class="form-control" id="emp_no" name="emp_no" type="text" readonly >
                         </div>
                       </div>
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">password1</label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input class="form-control" id="emp_pwd1" type="password" placeholder="비밀번호 입력">
-                        </div>
-                       
-                      </div>
-                          <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">password2</label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input class="form-control" id="emp_pwd2" type="password" placeholder="비밀번호 재입력">
-                        </div>
-                       
-                      </div>
+     
                       
                       
                       <div class="form-group">
@@ -237,19 +157,19 @@ text-align:center;
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">연락처</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                         <input class="form-control" id="emp_phone" name="emp_phone" type="tel" placeholder="연락처">
+                         <input class="form-control" id="emp_phone" name="emp_phone" type="tel" readonly>
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">직급</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                         <input class="form-control" id="job_name" name="job_name" type="tel" readonly>
+                         <input class="form-control" id="job_name" name="job_name" type="text" readonly>
                       </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">이메일</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input class="form-control" id="emp_email" name="emp_email" type="email" placeholder="이메일">
+                          <input class="form-control" id="emp_email" name="emp_email" type="email" readonly>
                         </div>
                       </div>
                       <div class="form-group">
@@ -287,11 +207,16 @@ text-align:center;
                              
                       <div class="ln_solid"></div>
                       <div class="form-group">
-                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                          <button class="btn btn-primary" type="submit" onclick="modifyInfo()">수정</button>
+                       
+                       
+                          
 								</div>
-							</div>
+							
 							</form>
+							<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+							<button class="btn btn-primary" onclick="modifyPassword();">비밀번호 변경</button>
+							<button class="btn btn-danger" onclick="modifyMyInfo();">개인정보 변경</button>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -305,32 +230,12 @@ text-align:center;
 	
 	
 	<!-- modal -->
-	<div class="modal fade bs-example-modal-sm" id="mgrModal" tabindex="-1" role="dialog" aria-hidden="true">
-       <div class="modal-dialog modal-sm">
-          <div class="modal-content">
-
-             <div class="modal-header">
-             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-             </button>
-             <h4 class="modal-title" id="myModalLabel">사원조회</h4>
-             </div>
-             <div class="modal-body" style="overflow-y:auto; overflow-x:hidden; height:400px;">
-             <table class="table table-hover" id="mgrTable">
-             </table>
-             </div>
-             <div class="modal-footer">
-             <!-- <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-             <button type="button" class="btn btn-primary">등록</button> -->
-             </div>
-
-           </div>
-       </div>
-    </div>
+	
 	<!-- /page content -->
 
 
 	</div>
-	</div>
+	
 
 	<!-- jQuery -->
 	<script src="resources/vendors/jquery/dist/jquery.min.js"></script>

@@ -30,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.crm.gb.client.model.service.ClientService;
 import com.crm.gb.client.model.vo.Client;
 import com.crm.gb.client.model.vo.ClientFile;
+import com.crm.gb.message.model.vo.Message;
 
 /**
  * Handles requests for the application home page.
@@ -199,13 +200,89 @@ public class ClientController {
 	
 	/** 거래중인 거래처 리스트 메소드 **/
 	@RequestMapping("accountList.do")
-	public String showAccountClient(@RequestParam("emp_no") String emp_num, Model model) {
+	public String showAccountClient(@RequestParam("emp_no") String emp_num, Model model, 
+	@RequestParam(value="page") int page, Client client, @RequestParam(value="job_no") String jobNo) {
 		logger.info("거래처 리스트 메소드 실행됨!!");
+		
 		int emp_no = Integer.parseInt(emp_num);
-		//System.out.println("emp_no : " + emp_no);
-		ArrayList<Client> accountClientList = clientService.selectAccountClientList(emp_no);
+		int job_no = Integer.parseInt(jobNo);
+		
+		client.setEmp_no(emp_no);
+		client.setJob_no(job_no);
+		
+		//페이지 기본값 지정
+				int currentPage=page;				
+				//한 페이지당 출력할 목록갯수 지정
+				int pageSize=10;
+				int pageGroupSize=5;
+		
+		
+		//조건 검색
+		if(client.getClient_company()!=null && client.getClient_company()!="") {
+		int listCount=clientService.selectClientCondition(client); //조건으로 검색된 행의 개수 
+		System.out.println("listCount"+listCount);
+		//
+		client.setStartRow((currentPage-1)*pageSize+1);
+		client.setEndRow(client.getStartRow()+pageSize+1);
+		//조건에 맞는 리스트 뽑아오기
+		ArrayList<Client> clientListCondition=clientService.selectgetClientCondition(client);
+		}
+		
+		
+		System.out.println("jobNo : " + job_no);
+		System.out.println("page: " + page);
+		
+		
+	
+		
+		int listCount_1 = clientService.clientListCount(client);
+		System.out.println("count : " + listCount_1);
+		//페이지수 계산 
+		int maxPage=(int)((double)listCount_1/pageSize+0.9);				
+		//페이지 번호 갯수 출력 					
+		
+		int curBlock=(currentPage-1)/pageGroupSize+1;//원하는 페이지가 몇번째 블록인지계산
+		int totBlock=(int)Math.ceil(maxPage*1.0)/pageGroupSize+1;//총 블록 갯수
+		
+		
+		//블록의 시작 페이지와 끝 페이지 번호 계산
+		int blockBegin=(curBlock-1)*pageGroupSize+1;
+		int blockEnd=blockBegin+pageGroupSize-1;
+		//[이전][다음] 을 눌렀을떄 이동할 페이지 번호
+		int prevBlock=(curBlock==1)?1:(curBlock-1)*pageGroupSize;
+		int nextBlock=curBlock>totBlock?(curBlock*pageGroupSize):(curBlock*pageGroupSize)+1;
+		
+		if(nextBlock>=totBlock) {
+			nextBlock=totBlock;
+		}				
+		
+		//마지막 페이지 번호가 범위를 초과하지 않도록 처리 
+		if(maxPage<blockEnd)
+			blockEnd=maxPage;
+		
+		//int startPage=(((int)((double)currentPage/pageSize+0.9))-1)*pageSize+1;
+		int startPage=(currentPage-1)*pageSize+1;
+		int endPage=startPage+pageSize-1;
+		
+		client.setStartPage(startPage);
+		client.setEndPage(endPage);
+		client.setEmp_no(emp_no);
+		
+		System.out.println("client : " + client);
+		ArrayList<Client> accountClientList = clientService.selectAccountClientList(client);
 		model.addAttribute("accountClientList", accountClientList);
-		//System.out.println("accountClientList : " +accountClientList.toString());
+		model.addAttribute("listCount",listCount_1);
+		model.addAttribute("currentPage",currentPage);
+		model.addAttribute("pageGroupSize",pageGroupSize);		
+		model.addAttribute("startPage",startPage);
+		model.addAttribute("endPage",endPage);
+		model.addAttribute("maxPage",maxPage);
+		model.addAttribute("blockBegin",blockBegin);
+		model.addAttribute("blockEnd",blockEnd);
+		model.addAttribute("curBlock",curBlock);
+		model.addAttribute("totBlock",totBlock);
+		model.addAttribute("prevBlock",prevBlock);
+		model.addAttribute("nextBlock",nextBlock);
 		return "client/accountList";
 	}
 	
@@ -403,6 +480,7 @@ public class ClientController {
 				out.close();
 		
 	}
+	
 	
 }
 

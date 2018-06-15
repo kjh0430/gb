@@ -87,8 +87,8 @@ public class ClientServiceImpl implements ClientService{
 	
 	/** 거래처 리스트 메소드 **/
 	@Override
-	public ArrayList<Client> selectAccountClientList(int emp_no) {
-		return clientDao.selectAccountClient(emp_no);
+	public ArrayList<Client> selectAccountClientList(Client client) {
+		return clientDao.selectAccountClient(client);
 	}
 	
 	/** 고객관련 파일 추가 메소드 */
@@ -131,6 +131,23 @@ public class ClientServiceImpl implements ClientService{
 	@Override
 	public ArrayList<Client> selectPoList(String client_name) {
 		return clientDao.selectPoList(client_name);
+	}
+	
+	@Override
+	public int clientListCount(Client client) {
+		return clientDao.clientListCount(client);
+	}
+
+	@Override  //클라이언트 회사명 조건검색 
+	public int selectClientCondition(Client client) {
+
+		return clientDao.selectClientCondition(client);
+	}
+
+	@Override //검색 조건에 맞는 클라이언트명 가져오기
+	public ArrayList<Client> selectgetClientCondition(Client client) {
+		
+		return clientDao.selectListClientCondition(client);
 	}
 	
 }

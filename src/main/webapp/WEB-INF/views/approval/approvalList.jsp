@@ -26,7 +26,7 @@
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 
-function modalUp(obj){
+ function modalUp(obj){
 	var content=$(obj);
 	var td=content.children();
 
@@ -112,9 +112,7 @@ background-color:#2A3F54;
 
 					<div class="clearfix"></div>
 
-					<!-- sidebar menu -->
-					<%@ include file="../etc/sidebar.jsp"%>
-					<!-- /sidebar menu -->
+				
 
 				</div>
 			</div>
@@ -155,19 +153,8 @@ background-color:#2A3F54;
 											</tr>
 										</thead>
 										<tbody>
-											<c:forEach items="${approvalListE}" var="approval">
-												<c:if test="${approval.approval_choose_no eq '1'}">
-													<c:set var="approval_choose_no" value="휴가" />
-												</c:if>
-												<c:if test="${approval.approval_choose_no eq '2'}">
-													<c:set var="approval_choose_no" value="경조사" />
-												</c:if>
-												<c:if test="${approval.approval_choose_no eq '3'}">
-													<c:set var="approval_choose_no" value="병가" />
-												</c:if>
-												<c:if test="${approval.approval_choose_no eq '4'}">
-													<c:set var="approval_choose_no" value="비고" />
-												</c:if>
+											 <c:forEach items="${approvalListE}" var="approval">
+												
 												<c:if
 													test="${approval.approval_mgr_date eq null && approval.approval_team_date eq null}">
 													<c:set var="approval_process" value="미진행 " />
@@ -181,7 +168,7 @@ background-color:#2A3F54;
 												</c:if>
 
 												<tr onclick="modalUp(this);">
-													<td style="width: 50%;">${approval_choose_no}</td>
+													<td style="width: 50%;">${approval.reason_name}</td>
 													<td style="width: 30%;">${approval.approval_submit_date}</td>
 													<td>${approval_process}</td>
 													<td>${approval.emp_no }</td>
@@ -196,6 +183,42 @@ background-color:#2A3F54;
 											</c:forEach>
 										<tbody>
 									</table>
+									
+									  <ul class='pagination'>
+	        
+	      
+	        
+	         <c:set var="startPage" value="${startPage}"/>
+	        <c:choose>
+	        <c:when test="${startPage>5}">
+	          <li class='page-item'><a class='page-link' href='approvalListE.do?page=${startPage-1}&emp_no=${loginEmp.emp_no}'>PREV</a></li>
+	        </c:when>
+	        <c:otherwise>
+	        <li class='page-item'><a class='page-link'>prev</a></li>
+	        </c:otherwise>
+	        </c:choose> 
+	       
+	        <c:forEach var="paging" begin="${startPage}" end="${endPage}">
+	        <c:choose>
+	        <c:when test="${paging==currentPage}">
+	        <li class='page-item'><a style='color:black;' class='page-link'>${paging}</a></li>
+	        </c:when>
+	        <c:otherwise>
+	        <li class='page-item'><a class='page-link' href='approvalListE.do?page=${paging}&emp_no=${loginEmp.emp_no}'>${paging}</a></li>
+	        </c:otherwise>
+	        </c:choose>
+	        </c:forEach>
+	        <c:set var="endPage" value="${endPage}"/>
+	        <c:set var="maxPage" value="${maxPage}"/>
+	        <c:choose>
+	        <c:when test="${endPage<maxPage}">
+	        <li class='page-item'><a class='page-link' href='approvalListE.do?page=${endPage+1}&emp_no=${loginEmp.emp_no}'>next</a></li>
+	        </c:when>
+	        <c:otherwise>
+	        <li class='page-item'><a class='page-link'>next</a></li>
+	        </c:otherwise>
+	        </c:choose>
+	        </ul>			
 								</div>
 							</div>
 						</div>

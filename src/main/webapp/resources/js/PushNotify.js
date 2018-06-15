@@ -6,7 +6,7 @@ var ws=null;
 $(function(){
 	//console.log("되고있니?");
 	
-	ws = new WebSocket("ws://localhost:3333/gb/hello.do?emp_no="+emp_no);
+	ws = new WebSocket("ws://localhost:7300/gb/hello.do?emp_no="+emp_no);
     ws.onopen = function () {
        console.log("onopen");
     };

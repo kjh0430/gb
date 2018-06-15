@@ -17,4 +17,9 @@ public class TodoListServiceImpl implements TodoListService{
 		return todolistDao.insertTodoList(todolist);
 	}
 
+	@Override
+	public TodoList selectTodoList(int emp_no) {
+		return todolistDao.selectTodoList(emp_no);
+	}
+
 }

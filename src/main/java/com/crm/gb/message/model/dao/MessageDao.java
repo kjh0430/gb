@@ -39,4 +39,34 @@ public class MessageDao {
 		return sqlSession.selectOne("countMsg", emp_no);
 	}
 
+	public int selectgetListCount(Message message) {
+		
+		return sqlSession.selectOne("getListCount",message);
+	}
+
+	public int selectConditionListCount(Message message) {
+	
+		return sqlSession.selectOne("receiveConditionCount",message);
+	}
+
+	public ArrayList<Message> selectReceiveConditionMessage(Message message) {
+		
+		return (ArrayList)sqlSession.selectList("receiveConditionList",message);
+	}
+
+	public int selectsendListCount(Message message) {
+		
+		return sqlSession.selectOne("sendListCount",message);
+	}
+
+	public int selectConditionsendListCount(Message message) {
+		
+		return sqlSession.selectOne("sendConditionCount",message);
+	}
+
+	public ArrayList<Message> selectSendConditionMessage(Message message) {
+	
+		return (ArrayList)sqlSession.selectList("selectSendConditionMessage",message);
+	}
+
 }
