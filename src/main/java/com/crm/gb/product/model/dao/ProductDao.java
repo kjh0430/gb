@@ -57,4 +57,8 @@ public class ProductDao {
 		return (ArrayList)sqlSession.selectList("productDetailFile",pd);
 	}
 
+	public int deleteFile(String product_rename_file) {
+		return sqlSession.delete("deleteFile",product_rename_file);
+	}
+
 }

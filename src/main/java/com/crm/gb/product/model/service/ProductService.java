@@ -21,4 +21,5 @@ public interface ProductService {
 	public abstract int updateProduct(Product product);
 	public abstract int deleteProduct(int product_no);
 	public abstract ArrayList<ProductFile> selectProductFile(Product pd);
+	public abstract int deleteFile(String product_rename_file);
 }

@@ -1276,7 +1276,7 @@ $(function(){
 		 });
 	    
    $(function(){
-    	
+    	/*
     	var city = '${loginEmp.getCity()}';
 		var county = '${loginEmp.getCounty()}';
 		var village = '${loginEmp.getVillage()}';
@@ -1335,6 +1335,7 @@ $(function(){
 				}
 			
 		}); //end of ajax
+		*/
 		
 	});  
 	    

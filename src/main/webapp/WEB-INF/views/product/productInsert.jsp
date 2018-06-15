@@ -25,10 +25,13 @@
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 	
-	
-	function addFile(){
-		var index=1;		
-		var value="<li id='pFile-"+index+"' class='added'><input type='file' class='form-control' name='product_file'>"
+	var index=1;	
+	$(function(){
+		$(".add_btn").attr("disabled",true)
+	})
+
+	function addFile(){			
+		var value="<li id='pFile-"+index+"' class='added'><input type='file' onchange='fileChange()' class='form-control' name='product_file'>"
 		+"<a href='javascript:delFile(\"pFile-"+index+"\")' title='삭제'>&nbsp;&nbsp;<i class='fa fa-times'></i></a></li>";
 		$(".p_file").append(value);
 		var firstFile = $("#firstFile").val(); 
@@ -38,6 +41,9 @@
 		}else{
 			index++;
 		}		
+		$(".add_btn").attr("disabled",true);
+		$(".fileSpan").html("");
+		
 	};
 	
 	function delFile(idx){
@@ -47,12 +53,19 @@
 			$("#"+idx).remove();
 		}else{
 			$("#"+idx).remove();
-		}		
+		}	
+		
+		var count = $(".p_file").length;
+		if(count==1){
+			$("#pFile-0 .fileSpan").html("<a href='javascript:resetFile()' title='삭제'>&nbsp;<i class='fa fa-times'></i></a>");
+		}
+		$(".add_btn").attr("disabled",false)
 	}
 	
 	function resetFile(){
 		$("#firstFile").val("");
-		$(".fileSpan").html("");		
+		$(".fileSpan").html("");	
+		$(".add_btn").attr("disabled",true)
 	}
 	
 	function firstChange(){
@@ -60,6 +73,12 @@
 		if(firstFile!=""){
 			$(".fileSpan").html("<a href='javascript:resetFile()' title='삭제'>&nbsp;<i class='fa fa-times'></i></a>");
 		}
+		$(".add_btn").attr("disabled",false)
+		
+	}
+	
+	function fileChange(){
+		$(".add_btn").attr("disabled",false)
 	}
 
 </script>
