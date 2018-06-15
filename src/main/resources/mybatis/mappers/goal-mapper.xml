@@ -45,6 +45,17 @@
 	
 	</select>
 	
+	<select id="selectEmpGoal" parameterType="goal" resultType="goal">
+	<![CDATA[
+	select goalMonth,goalmoney,sales,round(sales/goalmoney*100,2) as acheive
+	from (select substr(to_char(g1.goal_date,'yyyy-mm-dd'),1,7) as goalMonth,
+	g1.goal_money as goalmoney,sum(nvl((ol1.order_amount*ol1.order_price),0)) as sales
+	from goal g1 left join orderlist ol1 on ol1.emp_no=g1.emp_no and g1.emp_no=#{emp_no} and 
+	substr(to_char(ol1.order_date,'yyyy-mm'),1,7)=substr(to_char(g1.goal_date,'yyyy-mm'),1,7) 
+	group by substr(to_char(g1.goal_date,'yyyy-mm-dd'),1,7), g1.goal_money) order by goalMonth asc
+	]]>
+	</select>
+	
 	
 	
 </mapper>
