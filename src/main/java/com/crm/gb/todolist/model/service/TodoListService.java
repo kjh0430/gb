@@ -10,4 +10,6 @@ public interface TodoListService {
 
 	TodoList selectTodoList(int emp_no);
 
+	int updateTodoList(TodoList todolist);
+
 }
