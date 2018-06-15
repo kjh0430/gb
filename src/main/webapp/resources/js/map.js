@@ -35,7 +35,7 @@
 			dataType:"json",
 			data:{emp_no:emp_no,daily_date:$("#daily_date").val()},
 			success:function(obj){
-				console.log("obj : " +obj); 
+				//console.log("obj : " +obj); 
 				var objStr =JSON.stringify(obj);
 				var visit = JSON.parse(objStr);	
 				
@@ -155,14 +155,14 @@
 			var string=$("#emp_no option:selected").val();	
 			var emp_no = string.split(' / ',1)*1;
 		}
-		console.log("emp_no : "+emp_no);
+		//console.log("emp_no : "+emp_no);
 		$.ajax({
 			url:"orderList.do",
 			type:"post",
 			dataType:"json",
 			data:{emp_no:emp_no,daily_date:$("#daily_date").val()},
 			success:function(obj){				
-				console.log("order : "+obj);				
+				//console.log("order : "+obj);				
 				var objStr =JSON.stringify(obj);
 				var order = JSON.parse(objStr);	
 				var size =  Object.keys(order.list).length;				

@@ -1,5 +1,7 @@
 package com.crm.gb.goal.controller;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,11 +9,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.crm.gb.goal.model.service.GoalService;
 import com.crm.gb.goal.model.vo.Goal;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class GoalController {
@@ -66,4 +73,34 @@ public class GoalController {
 		
 		return "goal/goalStateAdmin";
 	}
+	
+	@RequestMapping("search.do")
+	@ResponseBody
+	public void searchEmp(Goal goal,HttpServletResponse  response) throws IOException {
+	ArrayList<Goal> searchEmp=goalService.selectEmpCondition(goal);
+	JSONArray jarr=new JSONArray();
+	
+	for(Goal goal1: searchEmp) {
+		
+		JSONObject jsonobject=new JSONObject();
+		
+		jsonobject.put("emp_name",goal1.getEmp_name());
+		jsonobject.put("dept_name",goal1.getDept_name());
+		jsonobject.put("emp_job",goal1.getJob_name());
+		jsonobject.put("emp_email",goal1.getEmp_email());
+		jsonobject.put("emp_no",goal1.getEmp_no());
+		jarr.add(jsonobject);
+		
+	}
+	JSONObject send=new JSONObject();
+	send.put("list",jarr);
+	
+	response.setContentType("application/json; charset=utf-8");	
+	//System.out.println("messageController:"+send);
+	PrintWriter out=response.getWriter();
+	out.println(send.toJSONString());
+	out.flush();
+	out.close();
+	}
+	
 }

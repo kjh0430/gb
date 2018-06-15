@@ -142,6 +142,7 @@ function list(page){
 										<tbody>
 										
 										<c:forEach var="list" items="${ accountClientList }">
+										
 											<tr>
 												<td><a href="detailClient.do?client_no=${list.client_no }">${ list.client_name }</a></td>
 												<td>${ list.client_company }</td>
@@ -158,11 +159,11 @@ function list(page){
 								</div>
 								
 								<nav aria-label="Page navigation example">
-								
+								<c:set var="client_company" value="${client_company}"/>
 									<ul class="pagination">
 									<!-- if문 -->
 									 <c:if test="${curBlock>1}">
-										<li class="page-item"><a class="page-link" href="noticeList.do?page=1">PREV</a></li>
+										<li class="page-item"><a class="page-link" href="accountList.do?page=1&client_company=${client_company}">PREV</a></li>
 									
 									</c:if> 
 									
@@ -172,7 +173,7 @@ function list(page){
 								
 									
 									 <c:if test="${curBlock>1}">
-										<li class="page-item"><a class="page-link" href="noticeList.do?page=${blockBegin-1}">prev</a></li>
+										<li class="page-item"><a class="page-link" href="accountList.do?page=${blockBegin-1}&client_company=${client_company}">prev</a></li>
 									
 									</c:if> 
 									
@@ -190,7 +191,7 @@ function list(page){
 											<c:otherwise> 
 												<%-- <li class="page-item"><a class="page-link" href="noticeList.do?page=${page}">${page}</a></li> --%>	
 									
-													<li class="page-item"><a class="page-link" href="#" onclick="list('${page}')">${page}</a></li>	
+													<li class="page-item"><a class="page-link" href="accountList.do?page=${page}&client_company=${client_company}">${page}</a></li>	
 													
 											
 											 </c:otherwise> 
@@ -201,7 +202,7 @@ function list(page){
 									
 									
 									 <c:if test="${curBlock!=totBlock}">
-										<li class="page-item"><a class="page-link" href="noticeList.do?page=${blockEnd+1}">next</a></li>
+										<li class="page-item"><a class="page-link" href="accountList.do?page=${blockEnd+1}&client_company=${client_company}">next</a></li>
 									
 									</c:if> 
 									
@@ -210,7 +211,7 @@ function list(page){
 									
 									
 									<c:if test="${curBlock!=totBlock}">
-										<li class="page-item"><a class="page-link" href="noticeList.do?page=${maxPage}">NEXT</a></li>	
+										<li class="page-item"><a class="page-link" href="accountList.do?page=${maxPage}&client_company=${client_company}">NEXT</a></li>	
 									
 									</c:if> 										
 										

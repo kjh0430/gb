@@ -102,6 +102,102 @@
 
 
 </script>
+<script>
+function selectEmp(obj){
+	
+	
+	
+	 var content = $(obj);
+     var td = content.children();
+
+     var emp_name = td.eq(0).text();
+     var dept_name = td.eq(1).text();
+     var emp_job = td.eq(2).text();
+     var emp_email = td.eq(3).text();
+      emp_no = td.eq(4).text();
+     $('#searchModal').modal("hide");
+
+ 
+    /*  $.ajax({
+    url:"getgoalInfo.do",
+    
+    	 
+    	 
+    	 
+     }); */
+     
+	
+}
+
+
+function searchEmp(){
+	if($('#empName').val()!=""){
+	emp_name=$('#empName').val();
+	
+	
+	$.ajax({
+	url:"search.do",
+	type:"post",
+	dataType:"json",
+	data:{
+		emp_name:emp_name,
+		emp_no:"${loginEmp.emp_no}"
+	},
+	success :function(obj){
+		var objStr = JSON.stringify(obj);
+        var jsonl = JSON.parse(objStr);
+        var size = Object.keys(jsonl.list).length;	
+		
+        if(size>0){
+            var value = "<table class='table table-hover' id='getvalues'><thead><tr><th>이름</th><th>직급</th><th>부서</th><th>e-mail</th><th>사원번호</th></tr></thead><tbody>";
+
+               for ( var i in jsonl.list) {
+
+                  value += "<tr onclick='selectEmp(this);' style='cusor:hand'><td>"
+                        + jsonl.list[i].emp_name
+                        + "</td><td>"
+                        + jsonl.list[i].emp_job
+                        + "</td><td>"
+                        + jsonl.list[i].dept_name
+                        + "</td><td>"
+                        + jsonl.list[i].emp_email
+                        + "</td><td>"
+                        + jsonl.list[i].emp_no + "</td></tr>";
+               }
+
+               value += "</tbody></table>";
+
+               $('#searchModal').modal("show");
+               $('#searchTable').html(value);
+
+               
+            }else{
+         	   value="<br><br><h2 style='text-align:center;'>검색 결과가 없습니다."+
+         		"</h2><br><br>";
+         			$('#myModal2').modal("show");
+         			$('#searchTable').html(value);	
+         	   
+         	   
+            }
+	}
+	})
+	
+	}else{
+		alert("검색할 사원을 입력해주세요");
+		
+	}
+}
+
+</script>
+<style>
+#getvalues th:nth-child(5){
+display:none;
+}
+#getvalues td:nth-child(5){
+display:none;
+}
+
+</style>
 </head>
 
 <body class="nav-md">
@@ -200,46 +296,61 @@
 						<div class="title_left">
 							<h3>목표 현황</h3>
 						</div>
+						<div style="float:right">
+							<div class="input-group" style="width:300px">
+								<input type="text" class="form-control" placeholder="사원별 검색" id="empName"> 
+								<span class="input-group-btn">
+								<button type="submit" class="btn btn-primary" onclick="searchEmp();">검색</button>
+								</span>
+							</div>
+							
+							<!-- 사원 검색 modal -->
+							  <div class="modal fade sendMsg2" tabindex="-1" role="dialog"
+                                 id="searchModal" aria-hidden="true">
+                                 <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                       <form class="form-horizontal form-label-left input_mask">
+                                          <div class="modal-header">
+                                             <button type="button" class="close" data-dismiss="modal">
+                                                <span aria-hidden="true">×</span>
+                                             </button>
+                                             <h4 class="modal-title" id="myModalLabel2">사원 검색</h4>
+                                          </div>
+                                          <div class="modal-body">
+                                             <div class="form-group" style="margin: 0px;">
+                                                <div class="row">
+                                                   <label
+                                                      class="control-label col-md-3 col-sm-3 col-xs-12"></label>
+                                                   <div class="col-md-9 col-sm-9 col-xs-12">
+                                                      <div class="input-group">
+
+
+                                                         <span class="input-group-btn"> </span>
+
+                                                      </div>
+                                                   </div>
+
+                                                   <div id="searchTable"></div>
+
+                                                   <div class="form-group">
+
+
+                                                      <div class="col-md-9 col-sm-9 col-xs-12"></div>
+                                                   </div>
+                                                </div>
+
+                                             </div>
+                                          </div>
+                                          <div class="modal-footer"></div>
+                                       </form>
+                                    </div>
+                                 </div>
+                              </div>
+                              <!-- 	사원 검색 modal 끝 -->
+						</div>
 					</div>
 
 					<div class="clearfix"></div>
-
-					<br />
-					
-					
-					<div class="row">
-						<div class="col-md-12 col-sm-12 col-xs-12">
-							<div class="x_panel">
-								<div class="x_title">
-									<h2>상세검색</h2>
-									<div class="clearfix"></div>
-								</div>
-								<div class="x_content">
-									<div class="col-md-6 col-sm-12 col-xs-12">
-									<form class="form-horizontal form-label-left">
-										<div class="form-group">
-											<div class="col-sm-3">
-											<select class="form-control" id="sales_select">
-												<option>전체</option>
-												<option>팀별</option>
-												<option>사원별</option>
-											</select>
-											</div>
-											<div class="col-sm-9">
-												<div class="input-group">
-													<input type="text" class="form-control"> <span
-														class="input-group-btn">
-														<button type="submit" class="btn btn-primary">검색</button>
-													</span>
-												</div>
-											</div>
-										</div>
-									</form>
-									</div>
-								</div>
-							</div>
-						</div>
-
 					</div><!-- end row -->
 					
 					<div class="row">
@@ -333,17 +444,12 @@
 								<table id="table_cl" class="table table-striped table-bordered"
 									style="min-width: 500px;">
 									<tr>
-										<td>&nbsp;</td>
+										<td>(년)</td>
 										<td>목표</td>
 										<td>매출</td>
 										<td>달성</td>
 									</tr>
-									<tr>
-										<td>년 매출</td>
-										<td>240,000</td>
-										<td>180,000</td>
-										<td>80%</td>
-									</tr>
+									
 									<tr>
 										<td>1월</td>
 										<td>12,000</td>

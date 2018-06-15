@@ -18,4 +18,9 @@ public class GoalDao {
 		return (ArrayList)sqlSession.selectList("Goal.selectAllGoalState");
 	}
 
+	public ArrayList<Goal> selectEmpCondition(Goal goal) {
+		
+		return (ArrayList)sqlSession.selectList("Goal.selectEmp",goal);
+	}
+
 }

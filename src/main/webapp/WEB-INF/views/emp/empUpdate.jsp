@@ -105,21 +105,19 @@ function selectMgrNo(obj){
 function empUpdate(){
 	
 	var emp_pwd = $('#emp_pwd').val();
+	var emp_name = $('#emp_name').val();
+	var emp_addr = $('#emp_addr').val();
+	var emp_phone = $('#emp_phone').val();
+	var emp_email = $('#emp_email').val();
+	var emp_mgr = $('#emp_mgr').val();
 	
 	var pwd_pattern= /^[A-Za-z0-9]{5,10}$/; //숫자와 문자 포함 형태의  5에서 10자리 비밀번호
 	
-	if(emp_pwd==null && password1==""){
-		alert("password를 입력해주세요!")
-		allCheck=false;
-		return allCheck;
-	 }
-	 if(!pwd_pattern.test(emp_pwd)){
+	if(!pwd_pattern.test(emp_pwd)){
 		alert("비밀번호는 숫자,문자 포함 5~10자리 입니다.");
 		allCheck=false;
 		return allCheck; 
-	}
-
-	if(pwd_pattern.test(password1)){		
+	}else{		
 		alert("수정이 완료 되었습니다.");
 		allCheck=true;
 		return allCheck;		

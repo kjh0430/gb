@@ -21,4 +21,10 @@ public class GoalServiceImpl implements GoalService{
 		return goalDao.selectAllGoalState();
 	}
 
+	@Override
+	public ArrayList<Goal> selectEmpCondition(Goal goal) {
+	
+		return goalDao.selectEmpCondition(goal);
+	}
+
 }
