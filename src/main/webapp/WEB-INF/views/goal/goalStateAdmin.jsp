@@ -131,10 +131,23 @@ function selectEmp(obj){
     	var objStr = JSON.stringify(obj);
         var jsonl = JSON.parse(objStr);
         var size = Object.keys(jsonl.list).length;
-    	
-    	value="";
-    	"<table id='table_cl' class='table table-striped table-bordered' style='min-width:500px;'>"+
-			"<tr><td>(년)</td><td>목표</td><td>매출</td><td>달성</td></tr>";
+        
+        values = "<table class='table table-striped table-bordered table-responsive' style='min-width:550px;'><thead><tr><th>(월)</th><th>목표(원)</th><th>매출(원)</th><th>달성(%)</th></thead>"
+            + "<tbody>"
+ 
+			
+			for(var i in jsonl.list){
+				
+				
+				
+			values+="<tr><td>"+jsonl.list[i].goalMonth+"</td>"+
+						"<td>"+jsonl.list[i].goalMoney+"</td>"+
+						"<td>"+jsonl.list[i].sales+"</td>"+
+						"<td>"+jsonl.list[i].acheive+"%</td></tr>"				
+				
+			}
+            values +="</tbody></table>";
+            $('#goalEmpTable').html(values);
     }
     	 
     	 
@@ -146,9 +159,10 @@ function selectEmp(obj){
 
 
 function searchEmp(){
-	if($('#empName').val()!=""){
+
 	emp_name=$('#empName').val();
 	
+	if($('#empName').val()!=null){
 	
 	$.ajax({
 	url:"search.do",
@@ -163,7 +177,7 @@ function searchEmp(){
         var jsonl = JSON.parse(objStr);
         var size = Object.keys(jsonl.list).length;	
 		
-        if(size>0){
+     	if(size>0){
             var value = "<table class='table table-hover' id='getvalues'><thead><tr><th>이름</th><th>직급</th><th>부서</th><th>e-mail</th><th>사원번호</th></tr></thead><tbody>";
 
                for ( var i in jsonl.list) {
@@ -186,21 +200,25 @@ function searchEmp(){
                $('#searchTable').html(value);
 
                
-            }else{
-         	   value="<br><br><h2 style='text-align:center;'>검색 결과가 없습니다."+
-         		"</h2><br><br>";
-         			$('#myModal2').modal("show");
-         			$('#searchTable').html(value);	
-         	   
-         	   
-            }
+     	}else{
+     		values="<br><br><br><br><br><br><h2 style='text-align:center;'>검색 결과가 없습니다."+
+     		"</h2><br><br><br><br><br><br>"
+     		 $('#searchModal').modal("show");
+            $('#searchTable').html(values);
+     		
+     	}
 	}
-	})
+            
+         	
+        
 	
+	
+	});
 	}else{
-		alert("검색할 사원을 입력해주세요");
-		
+		alert("검색할 사원을 입력해주세요.");
 	}
+	
+	
 }
 
 </script>
