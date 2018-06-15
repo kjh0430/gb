@@ -63,47 +63,62 @@ public class ProductController {
 		for(int i=0; i<productService.selectAllList().size(); i++) {
 			list.add(i, ((ArrayList<Product>)productService.selectAllList()).get(i));
 		}
-		
 		model.addAttribute("list",list);
-					
-		/*JSONObject sendJson = new JSONObject();
-		JSONArray jarr = new JSONArray();
-		
-		for(Product product : list) {
-			JSONObject jp = new JSONObject();
-			jp.put("productno",product.getProduct_no());
-			jp.put("productname",product.getProduct_name());
-			jp.put("productprice", product.getProduct_price());
-			jp.put("productavailability", product.getProduct_availability());
-			jp.put("productamount", product.getProduct_amount());
-			jp.put("productcomment", product.getProduct_comment());
-			jp.put("productregister", product.getProduct_register());
-			jp.put("productdelete", product.getProduct_delete());
-			jarr.add(jp);
-		}
-		JSONObject sendjson = new JSONObject();
-		sendjson.put("list",jarr);
-		
-		response.setContentType("application/json; charset=utf-8");
-		PrintWriter out = response.getWriter();
-		out.print(sendJson.toJSONString());
-		out.flush();
-		out.close();
-*/		
 		return "product/productList";
 	}
+	
+	//상품 상세보기 화면으로 이동(해당 제품 내용을 뿌리기)
+	@RequestMapping("productFileDown.do")
+	public ModelAndView fileDownMethod(HttpServletRequest request,
+				@RequestParam(value="pfName") String fileName, HttpServletResponse response) {
+		
+		System.out.println("받아온 파일이름: "+fileName);
+		//경로를 저장하고
+		String path=request.getSession().getServletContext().getRealPath("resources/product");
+		//경로와 파일이름을 연결
+		String filePath=path+"/"+fileName;
+		//File 객체생성 
+		File downFile=new File(filePath);
+		ModelAndView mov = new ModelAndView();
+			mov.setViewName("productFileDown");
+			mov.addObject("productFile", downFile);
+		//viewname(bean id명)과 modelname, model객체(저장한 파일객체)를 입력한다
+		//string: downfile, object : downFile로 filedownview클래스로 전송됨
+		//return new ModelAndView("clientFileDown", "clientFile", downFile );
+//			try{response.sendRedirect("productList.do");}
+//			catch(Exception e) {
+//				e.printStackTrace();
+//			}
+			return mov;
+	}
+
 	
 	
 	//상품 상세보기 화면으로 이동(해당 제품 내용을 뿌리기)
 	@RequestMapping(value="moveproductDetail.do", method=RequestMethod.GET)
-	public ModelAndView moveproductDetail(ModelAndView mv,HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView moveproductDetail(
+			ModelAndView mv,HttpServletRequest request, HttpServletResponse response
+			) {
 		/*System.out.println("데이터="+request.getParameter("data"));*/
 		Product pd = productService.selectProductDetail(request.getParameter("data"));
 		System.out.println(pd.toString());
 		mv.addObject("productDetail", pd);
 		mv.addObject("avail",pd.getProduct_availability());
+		//여기까지가 제품 정보에 관한 것 뿌리는거
+		
+		//첨부파일 뿌리는 부분
+		ArrayList<ProductFile> pf = productService.selectProductFile(pd);//이름을 받아왔음
+		if(pf.isEmpty()) {                  
+			System.out.println("널값이다");
+		}else {
+			mv.addObject("productFileNames", pf);
+		}
+		
+		/** 제품 상세페이지 다운로드 메소드 *//*
+			*/
+		
 		mv.setViewName("product/productDetail");
-		// 첨부파일 다운로드만 추가 구현 좀 부탁이용!!
+		
 		return mv;
 	}
 	
@@ -204,4 +219,11 @@ public class ProductController {
 	}
 	
 	
-}
+}	
+
+
+
+	
+	
+	
+	
