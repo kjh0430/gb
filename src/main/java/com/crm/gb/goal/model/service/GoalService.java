@@ -11,4 +11,6 @@ public interface GoalService {
 
 	public abstract ArrayList<Goal> selectGoalStateList();
 
+	public abstract ArrayList<Goal> selectEmpCondition(Goal goal);
+
 }
