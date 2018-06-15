@@ -102,5 +102,35 @@ public class GoalController {
 	out.flush();
 	out.close();
 	}
+/*	@RequestMapping("getgoalInfo.do")
+	@ResponseBody
+	public void goalEmpInfo(Goal goal,HttpServletResponse  response) throws IOException {
+	ArrayList<Goal> selectEmpGoal=goalService.selectEmpGoal(goal);
+	JSONArray jarr=new JSONArray();
+	
+	for(Goal goal1: selectEmpGoal) {
+		
+		JSONObject jsonobject=new JSONObject();
+		
+		jsonobject.put("emp_name",goal1.getEmp_name());
+		jsonobject.put("dept_name",goal1.getDept_name());
+		jsonobject.put("emp_job",goal1.getJob_name());
+		jsonobject.put("emp_email",goal1.getEmp_email());
+		jsonobject.put("emp_no",goal1.getEmp_no());
+		jarr.add(jsonobject);
+		
+	}
+	JSONObject send=new JSONObject();
+	send.put("list",jarr);
+	
+	response.setContentType("application/json; charset=utf-8");	
+	//System.out.println("messageController:"+send);
+	PrintWriter out=response.getWriter();
+	out.println(send.toJSONString());
+	out.flush();
+	out.close();
+	}*/
+
+	
 	
 }

@@ -118,13 +118,28 @@ function selectEmp(obj){
      $('#searchModal').modal("hide");
 
  
-    /*  $.ajax({
+      $.ajax({
     url:"getgoalInfo.do",
-    
+    type:"post",
+    dataType:"json",
+    data:{
+    	emp_no:emp_no
+    	
+    },
+    success:function(obj){
+    	
+    	var objStr = JSON.stringify(obj);
+        var jsonl = JSON.parse(objStr);
+        var size = Object.keys(jsonl.list).length;
+    	
+    	value="";
+    	"<table id='table_cl' class='table table-striped table-bordered' style='min-width:500px;'>"+
+			"<tr><td>(년)</td><td>목표</td><td>매출</td><td>달성</td></tr>";
+    }
     	 
     	 
     	 
-     }); */
+     });
      
 	
 }
@@ -441,87 +456,11 @@ display:none;
 					<div class="row" style="vertical-align: middle;">
 						<div class="col-xs-12">
 							<div class="x_panel">
-								<table id="table_cl" class="table table-striped table-bordered"
-									style="min-width: 500px;">
-									<tr>
-										<td>(년)</td>
-										<td>목표</td>
-										<td>매출</td>
-										<td>달성</td>
-									</tr>
+							<div id="goalEmpTable"></div>
+								
+								
 									
-									<tr>
-										<td>1월</td>
-										<td>12,000</td>
-										<td>80,000</td>
-										<td>80%</td>
-									</tr>
-									<tr>
-										<td>2월</td>
-										<td>12,000</td>
-										<td>80,000</td>
-										<td>80%</td>
-									</tr>
-									<tr>
-										<td>3월</td>
-										<td>12,000</td>
-										<td>80,000</td>
-										<td>80%</td>
-									</tr>
-									<tr>
-										<td>4월</td>
-										<td>12,000</td>
-										<td>80,000</td>
-										<td>80%</td>
-									</tr>
-									<tr>
-										<td>5월</td>
-										<td>12,000</td>
-										<td>80,000</td>
-										<td>80%</td>
-									</tr>
-									<tr>
-										<td>6월</td>
-										<td>12,000</td>
-										<td>80,000</td>
-										<td>80%</td>
-									</tr>
-									<tr>
-										<td>7월</td>
-										<td>12,000</td>
-										<td>90,000</td>
-										<td>80%</td>
-									</tr>
-									<tr>
-										<td>8월</td>
-										<td>12,000</td>
-										<td>90,000</td>
-										<td>85.0%</td>
-									</tr>
-									<tr>
-										<td>9월</td>
-										<td>13,000</td>
-										<td>90,000</td>
-										<td>89.4%</td>
-									</tr>
-									<tr>
-										<td>10월</td>
-										<td>13,000</td>
-										<td>90,000</td>
-										<td>90%</td>
-									</tr>
-									<tr>
-										<td>11월</td>
-										<td>13,000</td>
-										<td>90,000</td>
-										<td>70%</td>
-									</tr>
-									<tr>
-										<td>12월</td>
-										<td>13,000</td>
-										<td>90,000</td>
-										<td>78%</td>
-									</tr>
+									
 								</table>
 							</div>
 						</div>
