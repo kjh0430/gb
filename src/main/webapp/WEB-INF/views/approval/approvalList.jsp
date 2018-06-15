@@ -112,7 +112,22 @@ background-color:#2A3F54;
 
 					<div class="clearfix"></div>
 
-				
+					<c:choose>
+						<c:when test="${ loginEmp.job_no == 3}">
+							<!-- sidebar menu -->
+							<%@ include file="../etc/adminsidebar.jsp"%>
+							<!-- /sidebar menu -->
+						</c:when>
+						<c:when test="${ loginEmp.job_no == 2}">
+							<%@ include file="../etc/adminsidebar.jsp"%>
+
+						</c:when>
+						<c:otherwise>
+							<!-- sidebar menu -->
+							<%@ include file="../etc/sidebar.jsp"%>
+							<!-- /sidebar menu -->
+						</c:otherwise>
+					</c:choose>
 
 				</div>
 			</div>
