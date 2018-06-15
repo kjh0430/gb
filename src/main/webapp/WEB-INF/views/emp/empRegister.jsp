@@ -125,6 +125,7 @@ $('#emp_email').blur(function(){
 
 function Regiemp(){	
 	
+	
 	var emp_num = 0;
 	
 	var emp_name = $('#emp_name').val();
@@ -138,6 +139,8 @@ function Regiemp(){
 	var county = $('#county').val();
 	var village = $('#village').val();
 	var dept_no = $('#dept_no').val();
+	
+	alert(emp_no + emp_pwd + emp_addr + emp_phone + job_no + emp_email + emp_mgr + city + county + village + dept_no);
 	
 	if(emp_mgr == null){
 		$('#emp_mgr').val(0);
