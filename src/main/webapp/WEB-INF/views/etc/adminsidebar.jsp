@@ -29,19 +29,19 @@
              <li><a href="empSalary.do">사원급여</a></li>
            </ul>
          </li>
-
-         <li><a href="#"><i class="fa fa-table"></i>영업관리<span class="fa fa-chevron-down"></span></a>
-            <ul class="nav child_menu">   
-             <li><a href="productList.do">제품관리</a></li>
-             <li><a href="moveAdminDailyReport.do">영업일지</a></li>
-           </ul>
-           
-         </li>
+         
          <li><a><i class="fa fa-edit"></i>영업현황 <span class="fa fa-chevron-down"></span></a>
            <ul class="nav child_menu">
              <li><a href="accountList.do?emp_no=${loginEmp.emp_no}&job_no=${loginEmp.job_no}&page=1">거래처 목록</a></li>
              <li><a href="orderList.do?emp_no=${loginEmp.emp_no}&page=1">매출현황</a></li>
            </ul>
+         </li>
+          <li><a href="#"><i class="fa fa-table"></i>영업관리<span class="fa fa-chevron-down"></span></a>
+            <ul class="nav child_menu">   
+             <li><a href="productList.do">제품관리</a></li>
+             <li><a href="moveAdminDailyReport.do">영업일지</a></li>
+           </ul>
+           
          </li>
 	       <li><a href="noticeList.do?page=1"><i class="fa fa-file-text-o"></i> 공지사항</a></li>
        </ul>
