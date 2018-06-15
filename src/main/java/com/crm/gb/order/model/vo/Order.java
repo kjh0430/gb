@@ -33,7 +33,9 @@ private static final long serialVersionUID = 1111L;
 	private int nextBlock;//다음 블록
 	private int blockBegin;//블록페이지 시작페이지
 	private int blockEnd;//블록 페이지 끝 번호
-		
+	
+	//조건 검색을 위한 client_company 추가
+	
 		
 	public Order() {}
 	
@@ -113,6 +115,9 @@ private static final long serialVersionUID = 1111L;
 		this.blockEnd = blockEnd;
 		this.order_list_count= order_list_count;
 	}
+	
+	
+	
 
 	public int getOrderlist_no() {
 		return orderlist_no;

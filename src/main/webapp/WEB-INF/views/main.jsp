@@ -1158,11 +1158,11 @@ $(function(){
 	     },
 	     options: {
 	    	 responsive: true,
-	   	    	maintainAspectRatio: false,
-		   	     legend: {
-		             display: true,
-		             position:'right'
-		         }
+	   	     maintainAspectRatio: false,
+	   	     legend: {
+	             display: true,
+	             position:'right'
+	         }
 	     }
 	 });
 
@@ -1185,7 +1185,7 @@ $(function(){
 			url:'https://api2.sktelecom.com/weather/current/hourly?version=1&callback=result',
 			async:false,
 			success : function(data){
-				//console.log(data);
+				console.log(data);
 				var todayDate = data["weather"]["hourly"][0]['timeRelease'];
 				var todayTemp = Math.round(data["weather"]["hourly"][0]['temperature']['tc']);
 				var todayMinTemp = Math.round(data["weather"]["hourly"][0]['temperature']['tmin']);

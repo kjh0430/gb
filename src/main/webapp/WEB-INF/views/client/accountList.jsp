@@ -28,6 +28,21 @@
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 
+function searchClient(){
+	
+	
+	client_company=$('#clientCondition').val();
+	emp_no=${loginEmp.emp_no};
+	job_no=${loginEmp.job_no};
+	
+	location.href="accountList.do?emp_no="+emp_no+"&job_no="+job_no+"&client_company="+client_company+"&page="+1
+	
+	
+	
+}
+
+
+
 function list(page){
 	
 	location.href="accountList.do?page="+page;
@@ -59,7 +74,22 @@ function list(page){
 					<div class="clearfix"></div>
 
 					<!-- sidebar menu -->
-					<%@ include file="../etc/sidebar.jsp"%>
+						<c:choose>
+			            	<c:when test="${ loginEmp.job_no == 3}">
+					            <!-- sidebar menu -->
+					            <%@ include file="../etc/adminsidebar.jsp" %>
+					            <!-- /sidebar menu -->
+			            	</c:when>
+			            	<c:when test="${ loginEmp.job_no == 2}">
+			            	<%@ include file="../etc/adminsidebar.jsp" %>
+			            	
+			            	</c:when>
+			            	<c:otherwise>
+								<!-- sidebar menu -->
+					            <%@ include file="../etc/sidebar.jsp" %>
+					            <!-- /sidebar menu --> 
+			            	</c:otherwise>
+			            </c:choose>
 					<!-- /sidebar menu -->
 
 				</div>
@@ -93,6 +123,10 @@ function list(page){
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
+								<div style="text-align:right">
+                                     <input id='clientCondition' class="form-control" style="width:130px;display:inline-block;margin-right:3px;" type="text" placeholder="사원명">
+                                   <button class="btn btn-dark" style="margin:0 0 3px 0" onclick="searchClient();">검색</button>
+                                  </div>
 									
 									<table id="table_cl" class="table table-striped table-bordered" style="min-width:650px;">
 										<thead>
@@ -108,6 +142,7 @@ function list(page){
 										<tbody>
 										
 										<c:forEach var="list" items="${ accountClientList }">
+										
 											<tr>
 												<td><a href="detailClient.do?client_no=${list.client_no }">${ list.client_name }</a></td>
 												<td>${ list.client_company }</td>
@@ -124,11 +159,15 @@ function list(page){
 								</div>
 								
 								<nav aria-label="Page navigation example">
-								
+								<c:set var="client_company" value="${client_company}"/>
 									<ul class="pagination">
 									<!-- if문 -->
 									 <c:if test="${curBlock>1}">
+<<<<<<< HEAD
 										<li class="page-item"><a class="page-link" href="accountList.do?page=1">PREV</a></li>
+=======
+										<li class="page-item"><a class="page-link" href="accountList.do?page=1&client_company=${client_company}">PREV</a></li>
+>>>>>>> branch 'master' of https://github.com/kjh0430/gb
 									
 									</c:if> 
 									
@@ -138,7 +177,11 @@ function list(page){
 								
 									
 									 <c:if test="${curBlock>1}">
+<<<<<<< HEAD
 										<li class="page-item"><a class="page-link" href="accountList.do">prev</a></li>
+=======
+										<li class="page-item"><a class="page-link" href="accountList.do?page=${blockBegin-1}&client_company=${client_company}">prev</a></li>
+>>>>>>> branch 'master' of https://github.com/kjh0430/gb
 									
 									</c:if> 
 									
@@ -156,7 +199,7 @@ function list(page){
 											<c:otherwise> 
 												<%-- <li class="page-item"><a class="page-link" href="noticeList.do?page=${page}">${page}</a></li> --%>	
 									
-													<li class="page-item"><a class="page-link" href="#" onclick="list('${page}')">${page}</a></li>	
+													<li class="page-item"><a class="page-link" href="accountList.do?page=${page}&client_company=${client_company}">${page}</a></li>	
 													
 											
 											 </c:otherwise> 
@@ -167,7 +210,7 @@ function list(page){
 									
 									
 									 <c:if test="${curBlock!=totBlock}">
-										<li class="page-item"><a class="page-link" href="noticeList.do?page=${blockEnd+1}">next</a></li>
+										<li class="page-item"><a class="page-link" href="accountList.do?page=${blockEnd+1}&client_company=${client_company}">next</a></li>
 									
 									</c:if> 
 									
@@ -176,7 +219,7 @@ function list(page){
 									
 									
 									<c:if test="${curBlock!=totBlock}">
-										<li class="page-item"><a class="page-link" href="noticeList.do?page=${maxPage}">NEXT</a></li>	
+										<li class="page-item"><a class="page-link" href="accountList.do?page=${maxPage}&client_company=${client_company}">NEXT</a></li>	
 									
 									</c:if> 										
 										

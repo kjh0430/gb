@@ -188,6 +188,7 @@ public class OrderController {
 //			System.out.println("pageSize="+pageSize);
 //			System.out.println("currentPage="+currentPage);
 			
+			
 			int listCount_1 = orderService.orderListCount();
 			//int listCount_2 = listCount_1.getOrder_list_count();
 			System.out.println("listCount : " + listCount_1);

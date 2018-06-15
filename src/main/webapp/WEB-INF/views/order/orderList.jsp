@@ -81,6 +81,12 @@ function list(page){
 	location.href="orderList.do?page="+page;
 }
 
+function searchCondition(){
+	client_company=$('#clientCondition').val();
+	
+	 location.href="orderList.do?"+client_company
+	
+}
 
 
 
@@ -199,7 +205,10 @@ function list(page){
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
-									
+								<div style="text-align:right">
+                                   <input id='clientCondition' class="form-control" style="width:130px;display:inline-block;margin-right:3px;" type="text" placeholder="사원명">
+                                   <button class="btn btn-dark" style="margin:0 0 3px 0" onclick="searchCondition();">검색</button>
+                                   </div>	
 									<table id="table_order" class="table table-striped table-bordered" style="min-width:650px;">
 										<thead>
 											<tr>

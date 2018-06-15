@@ -834,7 +834,7 @@ function searchFunction2(){
     	  type:"post",
     	  data:{message_no:a_message_no},
     	  success:function(data){
-    		 
+    		  receive();
     		  
     		  
     	  }
@@ -891,7 +891,7 @@ function searchFunction2(){
              
           },success: function(data){
              alert(data);
-             
+             receive();
              send();
              $('#answer_title').val("");
              $('#answer_content').val("");
@@ -1110,7 +1110,11 @@ font-weight:900;
                                  <!-- start of send msg tab -->
                                  <div role="tabpanel" class="tab-pane fade" id="send_msg"
                                     aria-labelledby="profile-tab">
-                                   <input id='sendCondition' style="float:right;" type="text" placeholder="사원명"><button  style="float:right; margin-right:0px;" onclick="searchFunction2();">검색</button>
+                                    <div style="text-align:right">
+                                     <input id='sendCondition' class="form-control" style="width:130px;display:inline-block;margin-right:3px;" type="text" placeholder="사원명">
+                                   <button class="btn btn-dark" style="margin:0 0 3px 0" onclick="searchFunction2();">검색</button>
+                                  </div>
+                                  <!--  <input id='sendCondition' style="float:right;" type="text" placeholder="사원명"><button  style="float:right; margin-right:0px;" onclick="searchFunction2();">검색</button> -->
                                    <div id="send_msg1"></div>
                                  </div>
                                  <!-- end of send msg tab -->
@@ -1474,10 +1478,15 @@ font-weight:900;
       src="resources/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
    <script
       src="resources/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+   
 
 
    <!-- Custom Theme Scripts -->
    <script src="resources/build/js/custom.min.js"></script>
+
+     
+   
+   
 
 </body>
 </html>

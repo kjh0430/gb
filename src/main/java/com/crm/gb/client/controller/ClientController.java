@@ -30,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.crm.gb.client.model.service.ClientService;
 import com.crm.gb.client.model.vo.Client;
 import com.crm.gb.client.model.vo.ClientFile;
+import com.crm.gb.message.model.vo.Message;
 
 /**
  * Handles requests for the application home page.
@@ -206,17 +207,34 @@ public class ClientController {
 		int emp_no = Integer.parseInt(emp_num);
 		int job_no = Integer.parseInt(jobNo);
 		
+		client.setEmp_no(emp_no);
+		client.setJob_no(job_no);
+		
+		//페이지 기본값 지정
+				int currentPage=page;				
+				//한 페이지당 출력할 목록갯수 지정
+				int pageSize=10;
+				int pageGroupSize=5;
+		
+		
+	/*	//조건 검색
+		if(client.getClient_company()!=null && client.getClient_company()!="") {
+		int listCount=clientService.selectClientCondition(client); //조건으로 검색된 행의 개수 
+		System.out.println("listCount"+listCount);
+		//
+		client.setStartRow((currentPage-1)*pageSize+1);
+		client.setEndRow(client.getStartRow()+pageSize+1);
+		//조건에 맞는 리스트 뽑아오기
+		ArrayList<Client> clientListCondition=clientService.selectgetClientCondition(client);
+		
+		}*/
+		
+		
 		System.out.println("jobNo : " + job_no);
 		System.out.println("page: " + page);
 		
-		//페이지 기본값 지정
-		int currentPage=page;				
-		//한 페이지당 출력할 목록갯수 지정
-		int pageSize=10;
-		int pageGroupSize=5;
 		
-		client.setEmp_no(emp_no);
-		client.setJob_no(job_no);
+	
 		
 		int listCount_1 = clientService.clientListCount(client);
 		System.out.println("count : " + listCount_1);
@@ -253,6 +271,7 @@ public class ClientController {
 		
 		System.out.println("client : " + client);
 		ArrayList<Client> accountClientList = clientService.selectAccountClientList(client);
+		System.out.println("accountClientList"+accountClientList.size());
 		model.addAttribute("accountClientList", accountClientList);
 		model.addAttribute("listCount",listCount_1);
 		model.addAttribute("currentPage",currentPage);
@@ -266,6 +285,7 @@ public class ClientController {
 		model.addAttribute("totBlock",totBlock);
 		model.addAttribute("prevBlock",prevBlock);
 		model.addAttribute("nextBlock",nextBlock);
+		model.addAttribute("client_company",client.getClient_company());
 		return "client/accountList";
 	}
 	
@@ -463,6 +483,7 @@ public class ClientController {
 				out.close();
 		
 	}
+	
 	
 }
 

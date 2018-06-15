@@ -62,24 +62,30 @@ $(function(){
 			var jsonl = JSON.parse(objStr);
 			
 			console.log(jsonl.emp_name);
-			$('#style1_mgr').html(jsonl.emp_name);
+			console.log(obj.emp_name);
+			
+			$('#style1_mgr').html('<input type="text" class="form-control" id="emp_mgr" name="emp_mgr" value="${jsonl.emp_name}" readonly>');
 			},
 			error: function(){
 				console.log("상사이름 가져오기 에러");
+				$('#style1_mgr').html('<input type="text" class="form-control" id="emp_mgr" name="emp_mgr" value="" readonly>');
 			}
 		});
 });
 
-</script>
-<style type="text/css">
-#style1{
-margin-top:6pt;
+function empUp(){
+	location.href="moveEmpUpdate.do?emp_no="+""+${ emp.emp_no }+"";
 }
 
-#style1_mgr{
-margin-top:6pt;
+function empDe(){
+	if(confirm("해당 사원을 삭제하시겠습니까?")==true) {
+	location.href="updateEmpDelete.do?emp_no="+""+${ emp.emp_no }+"";
+	alert("사원이 삭제 되었습니다.");
+	}
 }
-</style>
+
+</script>
+
 </head>
 
 
@@ -96,79 +102,29 @@ margin-top:6pt;
 					<div class="clearfix"></div>
 
 					<!-- sidebar menu -->
-					<%@ include file="../etc/adminsidebar.jsp"%>
+					<c:choose>
+			            	<c:when test="${ loginEmp.job_no == 3}">
+					            <!-- sidebar menu -->
+					            <%@ include file="../etc/adminsidebar.jsp" %>
+					            <!-- /sidebar menu -->
+			            	</c:when>
+			            	<c:when test="${ loginEmp.job_no == 2}">
+			            	<%@ include file="../etc/adminsidebar.jsp" %>
+			            	
+			            	</c:when>
+			            	<c:otherwise>
+								<!-- sidebar menu -->
+					            <%@ include file="../etc/sidebar.jsp" %>
+					            <!-- /sidebar menu --> 
+			            	</c:otherwise>
+			            </c:choose>
 					<!-- /sidebar menu -->
 
 				</div>
 			</div>
 
 			<!-- top navigation -->
-			<div class="top_nav">
-				<div class="nav_menu">
-					<nav>
-						<div class="nav toggle">
-							<a id="menu_toggle"><i class="fa fa-bars"></i></a>
-						</div>
-
-						<ul class="nav navbar-nav navbar-right">
-							<li class=""><a href="javascript:;"
-								class="user-profile dropdown-toggle" data-toggle="dropdown"
-								aria-expanded="false"> <img src="images/img.jpg" alt="">John
-									Doe <span class=" fa fa-angle-down"></span>
-							</a>
-								<ul class="dropdown-menu dropdown-usermenu pull-right">
-									<li><a href="javascript:;"> Profile</a></li>
-									<li><a href="javascript:;"> <span
-											class="badge bg-red pull-right">50%</span> <span>Settings</span>
-									</a></li>
-									<li><a href="javascript:;">Help</a></li>
-									<li><a href="login.html"><i
-											class="fa fa-sign-out pull-right"></i> Log Out</a></li>
-								</ul></li>
-
-							<li role="presentation" class="dropdown"><a
-								href="javascript:;" class="dropdown-toggle info-number"
-								data-toggle="dropdown" aria-expanded="false"> <i
-									class="fa fa-envelope-o"></i> <span class="badge bg-green">6</span>
-							</a>
-								<ul id="menu1" class="dropdown-menu list-unstyled msg_list"
-									role="menu">
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li>
-										<div class="text-center">
-											<a> <strong>See All Alerts</strong> <i
-												class="fa fa-angle-right"></i>
-											</a>
-										</div>
-									</li>
-								</ul></li>
-						</ul>
-					</nav>
-				</div>
-			</div>
+			<c:import url="../etc/topnav.jsp"></c:import>
 			<!-- /top navigation -->
 
 			<!-- page content -->
@@ -189,9 +145,6 @@ margin-top:6pt;
 							<div class="x_panel">
 								<div class="x_title">
 									<font style="font-size:18px;">상세정보</font>
-									<font style="float:right; font-size:15px;">
-										<a href="moveEmpUpdate.do?emp_no=${ emp.emp_no }">수정</a>&nbsp; &nbsp;<a href="updateEmpDelete.do?emp_no=${ emp.emp_no }">삭제</a>
-									</font>
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
@@ -200,87 +153,123 @@ margin-top:6pt;
 					<!-- 사원 상세폼 -->
 					<form class="form-horizontal form-label-left">
 					<div class="form-group">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12">사원번호</label>
-                        <div class="col-md-8 col-sm-8 col-xs-12" id="style1">
-                        ${ emp.emp_no }
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">사원번호</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input class="form-control" id="emp_no" name="emp_no" type="text" value="${ emp.emp_no }" readonly>
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12">이름 </label>
-                        <div class="col-md-8 col-sm-8 col-xs-12" id="style1">
-                          ${ emp.emp_name }
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">이름 </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input class="form-control" id="emp_name" name="emp_name" type="text" value="${ emp.emp_name }" readonly>
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12">주소</label>
-                        <div class="col-md-8 col-sm-8 col-xs-12" id="style1">
-                          ${ emp.emp_addr }
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">주소</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12" id="style1">
+                          <input class="form-control" id="emp_addr" name="emp_addr" type="text" value="${ emp.emp_addr }" readonly>
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12">연락처</label>
-                        <div class="col-md-8 col-sm-8 col-xs-12" id="style1">
-                          ${ emp.emp_phone }
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">연락처</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12" id="style1">
+                          <input class="form-control" id="emp_phone" name="emp_phone" type="tel" value="${ emp.emp_phone }" readonly>
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12">직급</label>
-                        <div class="col-md-8 col-sm-8 col-xs-12" id="style1">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">직급</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12" id="style1">
                          <c:choose>
             				<c:when test="${ emp.job_no == 1 }">
-            					사원		        		   
+            					<select class="form-control" id="job_no" name="job_no" disabled>
+                           	 		<option value="1" selected>사원</option>
+                            		<option value="2">팀장</option>
+                            		<option value="3">관리자</option>                         
+                          		</select>		        		   
             				</c:when>
             				<c:when test="${ emp.job_no == 2 }">
-            					팀장		        		   
+            					<select class="form-control" id="job_no" name="job_no" disabled>
+                           	 		<option value="1">사원</option>
+                            		<option value="2" selected>팀장</option>
+                            		<option value="3">관리자</option>                         
+                          		</select>		        		   
             				</c:when>
             				<c:when test="${ emp.job_no == 3 }">
-            					관리자					
+            					<select class="form-control" id="job_no" name="job_no" disabled>
+                           	 		<option value="1">사원</option>
+                            		<option value="2">팀장</option>
+                            		<option value="3" selected>관리자</option>                         
+                          		</select>					
             				</c:when>
             			</c:choose>
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12">이메일</label>
-                        <div class="col-md-8 col-sm-8 col-xs-12" id="style1">
-                          ${ emp.emp_email }
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">이메일</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12" id="style1">
+                          <input class="form-control" id="emp_email" name="emp_email" type="email" value="${ emp.emp_email }" readonly>
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12">상사</label>
-                        <div class="col-md-8 col-sm-8 col-xs-12" id="style1_mgr">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">상사</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12" id="style1_mgr">
                          <input type="hidden" id="emp_mgr" name="emp_mgr" value="${ emp.emp_mgr }">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12">입사일</label>
-                        <div class="col-md-8 col-sm-8 col-xs-12" id="style1">
-                         ${ emp.emp_hiredate }
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">입사일</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12" id="style1">
+                         <input class="form-control" id="emp_hiredate" name="emp_hiredate" type="date" value="${ emp.emp_hiredate }" readonly>
+                        </div>
+                      </div>
+                      <%-- <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">퇴사일</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12" id="style1">
+                         <input class="form-control" id="emp_firedate" name="emp_firedate" type="date" value="${ emp.emp_firedate }" readonly>
+                        </div>
+                      </div> --%>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">담당지역</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input class="form-control" id="city" name="city" type="text" value="${ emp.city }" readonly>
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12">퇴사일</label>
-                        <div class="col-md-8 col-sm-8 col-xs-12" id="style1">
-                         ${ emp.emp_firedate }
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input class="form-control" id="county" name="county" type="text" value="${ emp.county }" readonly>
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12">담당지역</label>
-                        <div class="col-md-8 col-sm-8 col-xs-12" id="style1">
-                         ${ emp.city }&nbsp;${ emp.county }&nbsp;${ emp.village }
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input class="form-control" id="village" name="village" type="text" value="${ emp.village }" readonly>
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12">부서</label>
-                        <div class="col-md-8 col-sm-8 col-xs-12" id="style1">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">부서</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12" id="style1">
                         <c:choose>
             				<c:when test="${ emp.dept_no == 1 }">
-            					영업1팀		        		   
+            					<select class="form-control" id="dept_no" name="dept_no" disabled>
+                           			<option value="1" selected>영업1팀</option>
+                            		<option value="2">영업2팀</option>
+                            		<option value="3">관리자</option>                       
+                          		</select>		        		   
             				</c:when>
             				<c:when test="${ emp.dept_no == 2 }">
-            					영업2팀	        		   
+            					<select class="form-control" id="dept_no" name="dept_no" disabled>
+                           	 		<option value="1">영업1팀</option>
+                            		<option value="2" selected>영업2팀</option>
+                            		<option value="3">관리자</option>                         
+                          		</select>		        		   
             				</c:when>
             				<c:when test="${ emp.dept_no == 3 }">
-            					관리자				
+            					<select class="form-control" id="dept_no" name="dept_no" disabled>
+                           	 		<option value="1">영업1팀</option>
+                            		<option value="2">영업2팀</option>
+                            		<option value="3" selected>관리자</option>                         
+                          		</select>					
             				</c:when>
             			</c:choose>
                         </div>
@@ -289,7 +278,10 @@ margin-top:6pt;
                              
                       <div class="ln_solid"></div>
                       <div class="form-group">
-                        
+                        <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                          <button class="btn btn-success" type="button" onclick="empUp()">정보수정</button>                    
+                          <button class="btn btn-primary" type="button" onclick="empDe()">사원삭제</button>                     
+                        </div>
                       </div>
                   </div>
                 </div>

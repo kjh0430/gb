@@ -72,4 +72,12 @@ public class OrderServiceImpl implements OrderService{
 	public ArrayList<Order> productShare() {
 		return orderDao.productShare();
 	}
+
+	@Override
+	public int selectConditionListCount(Order order) {
+		
+		return orderDao.selectConditionListCount(order);
+	}
+
+	
 }

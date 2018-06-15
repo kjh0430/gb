@@ -38,8 +38,14 @@ public class ClientDao {
 	
 	/** 거래중이 거래처 정보 확인 메소드 Dao **/
 	public ArrayList<Client> selectAccountClient(Client client){
-		
-		return (ArrayList)sqlSession.selectList("selectAccountClient", client);
+	System.out.println(client.toString());
+		if(client.getClient_company()!=null) {
+			System.out.println(1);
+		return (ArrayList)sqlSession.selectList("selectConditionList",client);
+		}else {
+			System.out.println(2);
+		return (ArrayList)sqlSession.selectList("selectAccountClient",client);
+		}
 	}
 	
 
@@ -127,9 +133,14 @@ public class ClientDao {
 		return sqlSession.selectOne("clCount",client);
 	}
 
-	public ArrayList<Client> selectAccountClient(int emp_no) {
-		// TODO Auto-generated method stub
-		return null;
+	public int selectClientCondition(Client client) {
+	
+		return sqlSession.selectOne("conditionClient",client);
+	}
+
+	public ArrayList<Client> selectListClientCondition(Client client) {
+		
+		return (ArrayList)sqlSession.selectList("selectConditionList",client);
 	}
 	
 }

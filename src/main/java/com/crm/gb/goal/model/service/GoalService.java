@@ -1,8 +1,14 @@
 package com.crm.gb.goal.model.service;
 
-import org.springframework.stereotype.Service;
+import java.util.ArrayList;
 
-@Service
+
+
+import com.crm.gb.goal.model.vo.Goal;
+
+
 public interface GoalService {
+
+	public abstract ArrayList<Goal> selectGoalStateList();
 
 }

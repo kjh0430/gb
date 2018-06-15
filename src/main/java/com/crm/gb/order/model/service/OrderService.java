@@ -26,5 +26,7 @@ public interface OrderService {
 	public abstract int orderListCount(); // 주문 리스트 카운드
 
 	public abstract ArrayList<Order> productShare();
+
+	public abstract int selectConditionListCount(Order order); //조건 검색 시 행의 개수ㄴ
 	
 }

@@ -22,9 +22,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.crm.gb.client.controller.ClientController;
 import com.crm.gb.notice.controller.NoticeController;
@@ -44,12 +46,7 @@ public class ProductController {
 	
 	public ProductController() {}
 	
-	@RequestMapping("adminmain.do")
-	public String adminMain() {
-			return "adminmain";
-				
-	}
-			
+	
 	//main으로 가기
 	@RequestMapping("Movemain.do")
 	public String main() {
@@ -179,6 +176,31 @@ public class ProductController {
 		mv.setViewName("product/productList");			
 		return mv;
 		
+	}
+	
+	@RequestMapping(value="updateProduct.do", method=RequestMethod.POST)
+	public ModelAndView updateProduct(Product product,ModelAndView mv) {
+		
+		System.out.println("update : "+product);
+		if(product.getProduct_availability().equals("sale_y")) {
+			product.setProduct_availability("Y");
+		}else {
+			product.setProduct_availability("N");
+		}
+		int result = productService.updateProduct(product);
+		
+		mv.setView(new RedirectView("/productList.do",true));
+		
+		return mv;
+	}
+	
+	@RequestMapping(value="deleteProduct.do", method=RequestMethod.GET)
+	public ModelAndView deleteProduct(ModelAndView mv,Product product,@RequestParam("product_no") String product_no) {
+		
+		int result = productService.deleteProduct(Integer.parseInt(product_no));
+		
+		mv.setView(new RedirectView("/productList.do",true));		
+		return mv;
 	}
 	
 	
