@@ -519,6 +519,24 @@ $(function(){
        }
        
     </script>
+    
+    <script type="text/javascript"> //매출현황, 평균주문액 등
+    $(function() {
+
+  		$.ajax({	
+			url:"mainCount.do",
+			type:"post",
+			dataType:"json",
+			success: function() {
+				alert("mainCount 실행됨!!");
+			}
+  		});
+  		
+  	  });
+    
+    
+    </script>
+    
     <style>
    
 
@@ -578,17 +596,17 @@ $(function(){
           <div class="row tile_count">
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i> 매출현황</span>
-              <div class="count">2500</div>
+              <div class="count" id="orderState">2500</div>
               <span class="count_bottom"><i class="green">4% </i> From last Week</span>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 tile_stats_count">
               <span class="count_top"><i class="fa fa-clock-o"></i> 목표달성현황</span>
-              <div class="count">123.50</div>
+              <div class="count" id="goalState">123.50</div>
               <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span>
             </div>   
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i> 평균 주문액</span>
-              <div class="count">4,567</div>
+              <div class="count" id="orderSum">4,567</div>
               <span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>12% </i> From last Week</span>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 tile_stats_count">

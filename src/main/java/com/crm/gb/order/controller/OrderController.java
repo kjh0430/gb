@@ -306,6 +306,11 @@ public class OrderController {
 	
 	}
 	
+	@RequestMapping(value="mainCount.do", method=RequestMethod.POST)
+	public void mainCount() {
+		
+	}
+	
 	
 
 }

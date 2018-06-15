@@ -128,7 +128,7 @@ function list(page){
 									<ul class="pagination">
 									<!-- if문 -->
 									 <c:if test="${curBlock>1}">
-										<li class="page-item"><a class="page-link" href="noticeList.do?page=1">PREV</a></li>
+										<li class="page-item"><a class="page-link" href="accountList.do?page=1">PREV</a></li>
 									
 									</c:if> 
 									
@@ -138,7 +138,7 @@ function list(page){
 								
 									
 									 <c:if test="${curBlock>1}">
-										<li class="page-item"><a class="page-link" href="noticeList.do?page=${blockBegin-1}">prev</a></li>
+										<li class="page-item"><a class="page-link" href="accountList.do">prev</a></li>
 									
 									</c:if> 
 									
