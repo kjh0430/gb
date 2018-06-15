@@ -28,6 +28,21 @@
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 
+function searchClient(){
+	
+	
+	client_company=$('#clientCondition').val();
+	emp_no=${loginEmp.emp_no};
+	job_no=${loginEmp.job_no};
+	
+	location.href="accountList.do?emp_no="+emp_no+"&job_no="+job_no+"&client_company="+client_company+"&page="+1
+	
+	
+	
+}
+
+
+
 function list(page){
 	
 	location.href="accountList.do?page="+page;
@@ -59,7 +74,22 @@ function list(page){
 					<div class="clearfix"></div>
 
 					<!-- sidebar menu -->
-					<%@ include file="../etc/sidebar.jsp"%>
+						<c:choose>
+			            	<c:when test="${ loginEmp.job_no == 3}">
+					            <!-- sidebar menu -->
+					            <%@ include file="../etc/adminsidebar.jsp" %>
+					            <!-- /sidebar menu -->
+			            	</c:when>
+			            	<c:when test="${ loginEmp.job_no == 2}">
+			            	<%@ include file="../etc/adminsidebar.jsp" %>
+			            	
+			            	</c:when>
+			            	<c:otherwise>
+								<!-- sidebar menu -->
+					            <%@ include file="../etc/sidebar.jsp" %>
+					            <!-- /sidebar menu --> 
+			            	</c:otherwise>
+			            </c:choose>
 					<!-- /sidebar menu -->
 
 				</div>
@@ -93,6 +123,10 @@ function list(page){
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
+								<div style="text-align:right">
+                                     <input id='clientCondition' class="form-control" style="width:130px;display:inline-block;margin-right:3px;" type="text" placeholder="사원명">
+                                   <button class="btn btn-dark" style="margin:0 0 3px 0" onclick="searchClient();">검색</button>
+                                  </div>
 									
 									<table id="table_cl" class="table table-striped table-bordered" style="min-width:650px;">
 										<thead>

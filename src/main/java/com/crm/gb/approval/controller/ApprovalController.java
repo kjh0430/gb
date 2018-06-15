@@ -118,7 +118,7 @@ public class ApprovalController {
 		ArrayList<Approval> approvalListE= ApprovalService.selectapprovalListE(apr);
 		
 		int maxPage=(int)((double)listCount/limit+0.9);
-		int startPage=((int)(double)(currentPage-1)/10)*10+1;
+		int startPage=((int)((double)currentPage/5+0.8)-1)*5+1;
 		int endPage=startPage+5-1;
 		
 		
@@ -181,7 +181,7 @@ public class ApprovalController {
 		}
 		
 		int maxPage=(int)((double)listCount/limit+0.9);
-		int startPage=((int)(double)(currentPage-1)/10)*10+1;
+		int startPage=((int)((double)currentPage/5+0.8)-1)*5+1;
 		int endPage=startPage+5-1;
 		System.out.println("listCount"+listCount);
 		System.out.println("maxPage"+maxPage);

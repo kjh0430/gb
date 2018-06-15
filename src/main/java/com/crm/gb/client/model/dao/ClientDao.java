@@ -127,9 +127,14 @@ public class ClientDao {
 		return sqlSession.selectOne("clCount",client);
 	}
 
-	public ArrayList<Client> selectAccountClient(int emp_no) {
-		// TODO Auto-generated method stub
-		return null;
+	public int selectClientCondition(Client client) {
+	
+		return sqlSession.selectOne("conditionClient",client);
+	}
+
+	public ArrayList<Client> selectListClientCondition(Client client) {
+		
+		return (ArrayList)sqlSession.selectList("selectConditionList",client);
 	}
 	
 }
