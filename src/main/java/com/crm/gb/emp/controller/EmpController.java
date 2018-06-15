@@ -72,12 +72,11 @@ public class EmpController {
 		logger.info("로그인관련 컨트롤러 실행됨");
 		
 		System.out.println("받아온 사원정보: "+emp);
-		
 		try {
 			
 			Emp returnEmp=empService.selectEmp(emp);
 			
-				System.out.println("사원정보 조회:" + returnEmp);
+			System.out.println("사원정보 조회:" + returnEmp);
 			model.addAttribute("loginEmp", returnEmp);				
 			
 			response.setContentType("text/html; charset=utf-8");

@@ -24,7 +24,7 @@ public class EmpDao {
 	public Emp selectEmp(Emp emp) throws EmpLoginFailException{
 		
 		Emp resultEmp=sqlSession.selectOne("emp.loginEmp", emp);
-		
+		System.out.println("dao:"+resultEmp);
 		if(pwdEncoder.matches(emp.getEmp_pwd(), resultEmp.getEmp_pwd())) {
 			return resultEmp;
 		}else {

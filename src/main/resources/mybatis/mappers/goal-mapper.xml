@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Goal">
+
+	<!-- 목표관리 리스트 -->
+<!-- 	 <resultMap type="goal" id="resultSelectAllGoalState">
+		
+		<result column="emp_no" property="emp_no"/>		
+		<result column="emp_name" property="emp_name"/>		
+		<result column="job_no" property="job_no"/>		
+		<result column="dept_no" property="dept_no"/>		
+		<result column="contract_no" property="contract_no"/>	
+		<result column="contract_discount" property="contract_discount"/>	
+		<result column="contract_money" property="contract_money"/>	
+		<result column="contract_date_start" property="contract_date_start"/>	
+		<result column="goal_no" property="goal_no"/>	
+		<result column="goal_money" property="goal_money"/>	
+		<result column="goal_date" property="goal_date"/>		
+				
+	</resultMap> -->
+
+
+	<!-- 목표관리를 위한 리스트 출력 -->
+	<select id="selectAllGoalState" resultType="goal">
+		<![CDATA[
+			
+		select e.emp_name,sum(c.contract_money)as contract_money,e.emp_no ,to_char(c.contract_date_start, 'yyyy-MM') as contract_date_start_goal
+  			from emp e left join contract c on e.emp_no = c.emp_no
+ 			group by e.emp_name,e.emp_no ,to_char(c.contract_date_start, 'yyyy-MM')
+			
+		]]>	
+	</select>
+	
+	
+	
+</mapper>
