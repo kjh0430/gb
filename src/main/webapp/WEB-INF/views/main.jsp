@@ -637,15 +637,16 @@ function addKeywordForm(){
        		error: function(){       				
        			console.log("error");
        			}
-	   
-		});
-	   
-   }
-   }
+       		});
+       }
+       
+       function checkList(){
+    	   alert("checkList 실행");
+       }
+       
+    </script>
 
-</script>
-
-        <style type="text/css">
+  <style type="text/css">
    .form-control{
       display:inline-block;
       width:90%;
@@ -655,20 +656,14 @@ function addKeywordForm(){
    .fa.fa-times{
       margin-left:10px;
    }
-   </style>
    
-   <style type="text/css">
-   input[type=checkbox]{
-   	  margin-right:5px;
-   }
+   .chart-container {
+	  position: relative;
+	  margin: auto;
+	  height: 20vh;
+	  width: 20vw;
+}
    
-   #checkp{
-     text-decoration: line-through;
-   }
-   
-   #goalpp{
-      margin-top:5px;
-   }
    </style>  
     
   </head>
@@ -1149,8 +1144,8 @@ function addKeywordForm(){
 	                <div class="clearfix"></div>
 	              </div>
 	            </div>	
-	          <!-- </div> -->
 	          <!-- end of weather widget -->
+	          
 	          <!-- start of notice widget -->
 	          
 	          <div class="col-xs-12">
@@ -1178,9 +1173,6 @@ function addKeywordForm(){
 	            </div>	
 	          </div>
 	           <!-- end of notice widget -->
-          <!-- </div> -->
-
-          <!-- <div class="row"> -->
 
             
 
@@ -1191,9 +1183,9 @@ function addKeywordForm(){
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                  <div class="pie">
-                  <canvas id="myChart"></canvas>
-                  </div>
+                 	<div class="chart-container" style="position:relative;">
+				   	 <canvas id="myChart"></canvas>
+					</div>
                 </div>
               </div>
             </div>
@@ -1224,52 +1216,53 @@ function addKeywordForm(){
    	<script src="resources/fullcalendar-3.9.0/fullcalendar.js"></script>
    	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
    	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+
    	<script>
   	var amount=[];
 	var pname=[];
-  		
-	$.ajax({
-		url:"productShare.do",
-		type:"post",
-		dataType:"json",
-		success: function(data) {
-			var objStr =JSON.stringify(data);
-			var result = JSON.parse(objStr);				
-			
-			for(var i in result.list){
-				amount.push(result.list[i].total);
-				pname.push(result.list[i].product_name);
-			}			
-		} 
-	});//ajax  
-	 
-   		
-	 var ctx = document.getElementById("myChart");
-	 var myChart = new Chart(ctx, {
-	     type: 'pie',
-	     data: {
-	         labels: pname,
-	         datasets: [{
-	             data: amount,
-	             backgroundColor: [
-	                 'rgba(59, 81, 89)',
-	                 'rgba(163, 201, 217)',
-	                 'rgba(217, 179, 132)',
-	                 'rgba(140, 110, 84)',
-	                 'rgba(191, 146, 107)'
-	             ]
-	         }]
-	     },
-	     options: {
-	    	 responsive: true,
-	   	     maintainAspectRatio: false,
-	   	     legend: {
-	             display: true,
-	             position:'right'
-	         }
-	     }
-	 });
 
+		$.ajax({
+			url:"productShare.do",
+			type:"post",
+			dataType:"json",
+			success: function(data) {
+				
+				var objStr =JSON.stringify(data);
+				var result = JSON.parse(objStr);				
+				
+				for(var i in result.list){
+					amount.push(result.list[i].total);
+					pname.push(result.list[i].product_name);
+				}			
+			} 
+		});//ajax  
+		 
+	   		
+		 var ctx = document.getElementById("myChart");
+		 var myChart = new Chart(ctx, {
+		     type: 'pie',
+		     data: {
+		         labels: pname,
+		         datasets: [{
+		             data: amount,
+		             backgroundColor: [
+		                 'rgba(59, 81, 89)',
+		                 'rgba(163, 201, 217)',
+		                 'rgba(217, 179, 132)',
+		                 'rgba(140, 110, 84)',
+		                 'rgba(191, 146, 107)'
+		             ]
+		         }]
+		     },
+		     options: {
+		    	 responsive: true,
+		   	     maintainAspectRatio: false,
+		   	     legend: {
+		             display: true,
+		             position:'right'
+		         }
+		     }
+		 });
 	    
    $(function(){
     	
@@ -1289,7 +1282,7 @@ function addKeywordForm(){
 			url:'https://api2.sktelecom.com/weather/current/hourly?version=1&callback=result',
 			async:false,
 			success : function(data){
-				console.log(data);
+				//console.log(data);
 				var todayDate = data["weather"]["hourly"][0]['timeRelease'];
 				var todayTemp = Math.round(data["weather"]["hourly"][0]['temperature']['tc']);
 				var todayMinTemp = Math.round(data["weather"]["hourly"][0]['temperature']['tmin']);

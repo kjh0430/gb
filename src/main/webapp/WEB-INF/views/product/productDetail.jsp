@@ -28,7 +28,7 @@
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-var st = "${avail}";
+	var st = "${avail}";
 	var yes = "Y";
 	var no = "N";
 if(st == yes){
@@ -36,6 +36,9 @@ if(st == yes){
   }else if(st == no){
 	  $("#sale_n").attr("checked",true);
   }
+
+
+
 });
 
 </script>
@@ -51,7 +54,6 @@ if(st == yes){
 						<a href="main.html" class="site_title"><i class="fa fa-google"></i>
 							<span>GROUP BEAN</span></a>
 					</div>
-
 					<div class="clearfix"></div>
 
 					<!-- sidebar menu -->
@@ -148,16 +150,14 @@ if(st == yes){
 												첨부파일
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<ul class="product_attach">
-													<li><a href="#">첨부파일 1</a></li>
-													<li><a href="#">첨부파일 2</a></li>
-													<li><a href="#">첨부파일 3</a></li>
+												<ul class="product_attach" id="pfs">
+												<c:forEach var="list" items="${productFileNames}">
+												<li><a href="productFileDown.do?pfName=${list.product_rename_file}&oriName=${list.product_original_file}">${list.product_original_file}</a></li>
+												
+												</c:forEach>
 												</ul>
 											</div>
 										</div>
-										
-									
-                      
 										<div class="ln_solid"></div>
 										<div class="form-group">
 											<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">

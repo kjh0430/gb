@@ -5,7 +5,7 @@
 var ws=null;
 $(function(){
 	
-	ws = new WebSocket("ws://localhost:7300/gb/hello.do?emp_no="+emp_no);
+	ws = new WebSocket("ws://192.168.110.96:7300/gb/hello.do?emp_no="+emp_no);
     ws.onopen = function () {
       // console.log("onopen");
     };

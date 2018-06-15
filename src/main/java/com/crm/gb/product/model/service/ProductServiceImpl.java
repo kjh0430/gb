@@ -60,5 +60,9 @@ public class ProductServiceImpl implements ProductService {
 		return productDao.deleteProduct(product_no);
 	}
 	
+	@Override
+	public ArrayList<ProductFile> selectProductFile(Product pd) {
+		return productDao.selectProductDetailFile(pd);
+	}
 
 }
