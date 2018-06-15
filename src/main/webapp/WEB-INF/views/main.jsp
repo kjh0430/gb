@@ -639,10 +639,11 @@ function addKeywordForm(){
        			}
        		});
        }
+   }
        
        function checkList(){
     	   alert("checkList 실행");
-       }
+       };
        
     </script>
 
@@ -1325,7 +1326,7 @@ function addKeywordForm(){
 			
 		}); //end of ajax
 		
-	});  
+	})
 	    
 		
 
