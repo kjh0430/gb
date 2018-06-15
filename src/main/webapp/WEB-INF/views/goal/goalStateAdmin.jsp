@@ -17,23 +17,8 @@
 <!-- Font Awesome -->
 <link href="resources/vendors/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet">
-<!-- NProgress -->
-<link href="resources/vendors/nprogress/nprogress.css" rel="stylesheet">
-<!-- iCheck -->
-<link href="resources/vendors/iCheck/skins/flat/green.css"
-	rel="stylesheet">
 
-<!-- bootstrap-progressbar -->
-<link
-	href="resources/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css"
-	rel="stylesheet">
-<!-- JQVMap -->
-<link href="resources/vendors/jqvmap/dist/jqvmap.min.css"
-	rel="stylesheet" />
-<!-- bootstrap-daterangepicker -->
-<link
-	href="resources/vendors/bootstrap-daterangepicker/daterangepicker.css"
-	rel="stylesheet">
+
 
 <!-- Custom Theme Style -->
 <link href="resources/build/css/custom.min.css" rel="stylesheet">
@@ -487,47 +472,12 @@ display:none;
 			</div>
 			<!-- /page content -->
 		</div>
-	</div>
 
 	<!-- jQuery -->
 	<script src="resources/vendors/jquery/dist/jquery.min.js"></script>
 	<!-- Bootstrap -->
 	<script src="resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-	<!-- FastClick -->
-	<script src="resources/vendors/fastclick/lib/fastclick.js"></script>
-	<!-- NProgress -->
-	<script src="resources/vendors/nprogress/nprogress.js"></script>
-	<!-- Chart.js -->
 	
-	<!-- gauge.js -->
-	<script src="resources/vendors/gauge.js/dist/gauge.min.js"></script>
-	<!-- bootstrap-progressbar -->
-	<script
-		src="resources/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
-	<!-- iCheck -->
-	<script src="resources/vendors/iCheck/icheck.min.js"></script>
-	<!-- Skycons -->
-	<script src="resources/vendors/skycons/skycons.js"></script>
-	<!-- Flot -->
-	<script src="resources/vendors/Flot/jquery.flot.js"></script>
-	<script src="resources/vendors/Flot/jquery.flot.pie.js"></script>
-	<script src="resources/vendors/Flot/jquery.flot.time.js"></script>
-	<script src="resources/vendors/Flot/jquery.flot.stack.js"></script>
-	<script src="resources/vendors/Flot/jquery.flot.resize.js"></script>
-	<!-- Flot plugins -->
-	<script
-		src="resources/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
-	<script
-		src="resources/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
-	<script src="resources/vendors/flot.curvedlines/curvedLines.js"></script>
-	<!-- DateJS -->
-	<script src="resources/vendors/DateJS/build/date.js"></script>
-	<!-- JQVMap -->
-	<script src="resources/vendors/jqvmap/dist/jquery.vmap.js"></script>
-	<script src="resources/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
-	<script
-		src="resources/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
-	<!-- bootstrap-daterangepicker -->
 	
 
 	<!-- Custom Theme Scripts -->
