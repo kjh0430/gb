@@ -6,6 +6,7 @@
 <mapper namespace="TodoList">
 
 	<resultMap type="TodoList" id="resultTodoList">
+		<result column="todolist_no" property="todolist_no" />
 		<result column="emp_no" property="emp_no" />
 		<result column="do1" property="do1" />
 		<result column="check1" property="check1" />
