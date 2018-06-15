@@ -217,7 +217,7 @@ public class ClientController {
 				int pageGroupSize=5;
 		
 		
-		//조건 검색
+	/*	//조건 검색
 		if(client.getClient_company()!=null && client.getClient_company()!="") {
 		int listCount=clientService.selectClientCondition(client); //조건으로 검색된 행의 개수 
 		System.out.println("listCount"+listCount);
@@ -226,7 +226,8 @@ public class ClientController {
 		client.setEndRow(client.getStartRow()+pageSize+1);
 		//조건에 맞는 리스트 뽑아오기
 		ArrayList<Client> clientListCondition=clientService.selectgetClientCondition(client);
-		}
+		
+		}*/
 		
 		
 		System.out.println("jobNo : " + job_no);
@@ -270,6 +271,7 @@ public class ClientController {
 		
 		System.out.println("client : " + client);
 		ArrayList<Client> accountClientList = clientService.selectAccountClientList(client);
+		System.out.println("accountClientList"+accountClientList.size());
 		model.addAttribute("accountClientList", accountClientList);
 		model.addAttribute("listCount",listCount_1);
 		model.addAttribute("currentPage",currentPage);
@@ -283,6 +285,7 @@ public class ClientController {
 		model.addAttribute("totBlock",totBlock);
 		model.addAttribute("prevBlock",prevBlock);
 		model.addAttribute("nextBlock",nextBlock);
+		model.addAttribute("client_company",client.getClient_company());
 		return "client/accountList";
 	}
 	
