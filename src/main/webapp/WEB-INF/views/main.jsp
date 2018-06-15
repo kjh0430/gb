@@ -28,8 +28,6 @@
     <link href="resources/build/css/custom.min.css" rel="stylesheet">
     <link href="resources/css/main.css" rel="stylesheet">
     
-       
-    
     <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
     <script src="resources/fullcalendar-3.9.0/lib/jquery.min.js"></script>
     <script type="text/javascript">//calendar
@@ -661,8 +659,6 @@ function addKeywordForm(){
    .chart-container {
 	  position: relative;
 	  margin: auto;
-	  height: 20vh;
-	  width: 20vw;
 }
    
    </style>  
