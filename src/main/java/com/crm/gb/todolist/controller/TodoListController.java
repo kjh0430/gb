@@ -72,7 +72,8 @@ public class TodoListController {
 		model.addAttribute("todolist", detailtodolist);
 		
 		System.out.println("todoSelect 여기까지 실행됨");
-		
+				
+		if(detailtodolist != null) {
 		JSONObject job = new JSONObject();
 		job.put("emp_no", detailtodolist.getEmp_no());
 		job.put("todo1", detailtodolist.getTodo1());
@@ -85,12 +86,13 @@ public class TodoListController {
 		job.put("check3", detailtodolist.getCheck3());
 		job.put("check4", detailtodolist.getCheck4());
 		job.put("check5", detailtodolist.getCheck5());
-
+		
 		response.setContentType("application/json; charset=utf-8");
 		PrintWriter out = response.getWriter();
 		out.println(job.toJSONString());
 		out.flush();
 		out.close();
+		}
 			
 	}
 	
