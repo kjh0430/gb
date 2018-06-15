@@ -180,7 +180,7 @@ background-color:#2A3F54;
 													<c:set var="approval_process" value="결재 완료" />
 												</c:if>
 
-												<tr onclick="modalUp(this);">
+												<tr onclick="modalUp(this);" style="cursor:pointer">
 													<td style="width: 50%;">${approval_choose_no}</td>
 													<td style="width: 30%;">${approval.approval_submit_date}</td>
 													<td>${approval_process}</td>

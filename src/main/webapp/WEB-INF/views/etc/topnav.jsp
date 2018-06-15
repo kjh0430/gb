@@ -134,7 +134,7 @@
 	    Notification.requestPermission(function (status) {
 	      if (Notification.permission !== status) {
 	        Notification.permission = status;
-	        console.log(status);
+	        //console.log(status);
 	      }
 	    });
 	}
