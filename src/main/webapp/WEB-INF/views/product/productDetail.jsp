@@ -152,7 +152,8 @@ if(st == yes){
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<ul class="product_attach" id="pfs">
 												<c:forEach var="list" items="${productFileNames}">
-												<li><a href="productFileDown.do?pfName=${list.product_original_file}">${list.product_original_file}</a></li>
+												<li><a href="productFileDown.do?pfName=${list.product_rename_file}&oriName=${list.product_original_file}">${list.product_original_file}</a></li>
+												
 												</c:forEach>
 												</ul>
 											</div>

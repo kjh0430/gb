@@ -70,18 +70,24 @@ public class ProductController {
 	//상품 상세보기 화면으로 이동(해당 제품 내용을 뿌리기)
 	@RequestMapping("productFileDown.do")
 	public ModelAndView fileDownMethod(HttpServletRequest request,
-				@RequestParam(value="pfName") String fileName, HttpServletResponse response) {
+				@RequestParam(value="pfName") String fileName, 
+				@RequestParam(value="oriName") String  orifileName, HttpServletResponse response) {
 		
 		System.out.println("받아온 파일이름: "+fileName);
+		System.out.println("원래 파일이름: "+orifileName);
 		//경로를 저장하고
-		String path=request.getSession().getServletContext().getRealPath("resources/product");
+		String path=request.getSession().getServletContext().getRealPath("resources/upload/product");
 		//경로와 파일이름을 연결
 		String filePath=path+"/"+fileName;
+		String path2=path+"/"+orifileName;
+		
 		//File 객체생성 
 		File downFile=new File(filePath);
+		File oriFile=new File(path2);
 		ModelAndView mov = new ModelAndView();
 			mov.setViewName("productFileDown");
 			mov.addObject("productFile", downFile);
+			mov.addObject("oriFileName", oriFile);
 		//viewname(bean id명)과 modelname, model객체(저장한 파일객체)를 입력한다
 		//string: downfile, object : downFile로 filedownview클래스로 전송됨
 		//return new ModelAndView("clientFileDown", "clientFile", downFile );
@@ -133,8 +139,8 @@ public class ProductController {
 	
 	//상품 등록 처리 컨트롤러
 	@RequestMapping(value="insertProduct.do", method=RequestMethod.POST)
-	public ModelAndView insertProduct(Product product,ModelAndView mv,HttpServletRequest request,
-			MultipartHttpServletRequest mtfRequest) {
+	public void insertProduct(Product product,ModelAndView mv,HttpServletRequest request,
+			MultipartHttpServletRequest mtfRequest, HttpServletResponse response) {
 				
 		if(product.getProduct_availability().equals("sale_n")) {
 			product.setProduct_availability("N");
@@ -188,8 +194,13 @@ public class ProductController {
 			}			
 		}
 		
-		mv.setViewName("product/productList");			
-		return mv;
+		try {
+			response.sendRedirect("productList.do");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}			
+		
 		
 	}
 	

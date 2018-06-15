@@ -29,14 +29,14 @@ public class ProductFileDownController extends AbstractView {
 		System.out.println("filedown run...");
 
 		File file = (File) model.get("productFile");
-		//File oriFile = (File)model.get("oriName");
+		File oriFile = (File)model.get("oriFileName");
 		
 		System.out.println("file.getPath() : " + file.getPath());
-		System.out.println("file.getName() : " + file.getName());
+		System.out.println("file.getName() : " + oriFile.getName());
 		//System.out.println("file.getName() : " + oriFile.getName());
 		
-		String fileName = file.getName();
-		//String fileName = oriFile.getName();
+		//String fileName = file.getName();
+		String fileName = oriFile.getName();
 		
 		response.setContentType("text/plain; charset=UTF-8");
 		// 한글 파일명 인코딩 처리함
