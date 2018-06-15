@@ -110,10 +110,7 @@
 							</div>
 						</div>
 						<!-- row -->
-						<button type="button" onclick="printJS()">
-							Print Form
-						</button>
-
+						
 					</div>
 
 				</div>
