@@ -28,6 +28,8 @@
     <link href="resources/build/css/custom.min.css" rel="stylesheet">
     <link href="resources/css/main.css" rel="stylesheet">
     
+       
+    
     <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
     <script src="resources/fullcalendar-3.9.0/lib/jquery.min.js"></script>
     <script type="text/javascript">//calendar
@@ -350,298 +352,171 @@
 </script>
 
  
-<script type="text/javascript">//todolist
-
+	<script type="text/javascript">//todolist
+    
 $(function(){
-	
-	$.ajax({
-       		url : "todoSelect.do",
-       		data:{
-       			emp_no : "${loginEmp.emp_no}"
-       		},
-    		type:"post",
-    		dataType:"json",
-       		success:function(data){
-       			
-       			var jsonSt = JSON.stringify(data);
-                var json = JSON.parse(jsonSt);
-                var size = Object.keys(json).length;
-       			
-       			console.log("todoSelect.do 제대로 실행됨");
-       			console.log("size : " + size);
-       			
-       			var obj = [json.todo1, json.todo2, json.todo3, json.todo4, json.todo5];
-       			var obj2 = [json.check1, json.check2, json.check3, json.check4, json.check5];
-       			
-       			console.log("obj : " + obj);
-       			console.log("obj2 : " + obj2);	       			
-       			     			
-       			var values = ""
-       			var values2 = ""
-       			var count = 0;
-       			var count2 = 0;
-       			
-       			for(var i in obj){
-       				if(obj[i] != null && obj2[i] == "N"){
-       			values += '<li><p><input type="checkbox" class="flat" id="todo_list'+i+'" name="todo_list'+i+'" >'+obj[i]+'</p></li>';
-    	       	console.log("obj["+i+"] : " + obj[i]);
-    	       	count2++;
-       				}else if(obj[i] != null && obj2[i] == "Y"){
-       					values += '<li><p id="checkp"><input type="checkbox" class="flat" id="todo_list'+i+'" name="todo_list'+i+'" checked disabled>'+obj[i]+'</p></li>';
-    	    	       	console.log("obj["+i+"] : " + obj[i]);
-    	    	       	count++;
-    	    	       	count2++;
-       				}
-       			}
-       			
-       			var goal = new Number((count/count2)*100);
-       			
-       			console.log("count : " + count);
-       			console.log("count2 : " + count2);
-       			console.log("goal : " + goal.toFixed(2));
-       			
-       			if(obj2[0] == "Y" || obj2[1] == "Y" || obj2[2] == "Y" || obj2[3] == "Y" || obj2[4] == "Y"){
-       				values+='<p id="goalpp" style="float:right;">달성률 : '+goal.toFixed(1)+'%</p>'	       			
-       			}else{
-       				values+='<p><button type="button" class="btn btn-default btn-sm" onclick="checkList()" style="float:right; margin-top:5px;">확인</button></p>';
-       			}
-       			
-       			$(".to_do").html(values);
-       			
-       			},
-       			error: function(){
-       			console.log("todolist 출력 error");
-       			values = "입력된 값이 없습니다.";
-       			$(".to_do").html(values);
-       			
-       			values2 = '<li><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target=".bs-example-modal-lg" style="float:right;">등록</button></li>';
-       			$(".todo_1").html(values2);
-       			}
-       		});
-});
-
-
-var count = 1;    
-function addKeywordForm(){
-   var addedFormDiv = document.getElementById("addedTodo");
-   var str = '<input type="text" id="todo_keyword'+count+'" name="todo_keyword'+count+'" class="form-control" placeholder="할일을 입력해주세요">'
-   + '<a onclick="delKeywordForm('+count+')"/><i class="fa fa-times"></i></a>';
-   
-   if(count<5){
-   var addedDiv = document.createElement("div");
-   addedDiv.setAttribute("id", "keyword_Frm"+count);
-   addedDiv.innerHTML = str;
-   addedFormDiv.appendChild(addedDiv);       
-   console.log("todo_keyword : " + str);
-   count++;
-   }else{
-   alert("5개까지 입력하실 수 있습니다");
-   }
-
-   }
-
-   function delKeywordForm(thisCount){          
-   var addedFormDiv = document.getElementById("addedTodo");
-   
-   if(count>1){
-   var thisDiv = document.getElementById("keyword_Frm"+thisCount);
-   addedFormDiv.removeChild(thisDiv);
-   console.log("addedFormDiv : " + addedFormDiv);
-   }else{
-   document.addedFormDiv.reset();
-   }
-   count--;
-   }
-   
-   function todoInsert(){
 		
-   	var emp_no = $('#emp_no').val();       	
-   	var todo1 = $('#todo_keyword0').val();
-   	var todo2 = $('#todo_keyword1').val();
-   	var todo3 = $('#todo_keyword2').val();
-   	var todo4 = $('#todo_keyword3').val();
-   	var todo5 = $('#todo_keyword4').val();
-   	
-   	console.log("todo1 : " + todo1);
-   	
-   	console.log("main에서 출력 emp_no : " + emp_no);
-   	console.log("main에서 출력 todo1 : " + todo1);
-   	console.log("main에서 출력 todo2 : " + todo2);
-   	console.log("main에서 출력 todo3 : " + todo3);
-   	console.log("main에서 출력 todo4 : " + todo4);
-   	console.log("main에서 출력 todo5 : " + todo5);
-   	
-   	if($('#todo_keyword0').val() == null || $('#todo_keyword0').val() == ""){
-   		alert("값을 입력해주세요.");
-   	}else{
-   		
-   	$.ajax({
-   		url : "todoInsert.do",
-   		type: "post",
-   		dataType: "json",
-   		data: {
-   			emp_no : emp_no,
-   			todo1 : todo1,
-   			todo2 : todo2,
-   			todo3 : todo3,
-   			todo4 : todo4,
-   			todo5 : todo5
-   		},
-   		success:function(obj){
-   			
-   			alert("등록되었습니다.");
-   			$('#addModal').modal('hide');
-   					
-   			$.ajax({
-   	       		url : "todoSelect.do",
-   	       		type: "post",
-   	       		dataType: "json",
-   	       		data: {
-   	       			emp_no : emp_no
-   	       		},
-   	       		success:function(data){       	       			
-   	       			console.log("todoSelect.do 제대로 실행됨");       	       			
-   	       			
-   	       		var jsonSt = JSON.stringify(data);
-                var json = JSON.parse(jsonSt);
-                var size = Object.keys(json).length;
-       			
-       			console.log("todoSelect.do 제대로 실행됨");
-       			console.log("size : " + size);
-       			
-       			var obj = [json.todo1, json.todo2, json.todo3, json.todo4, json.todo5];
-       			
-       			console.log("obj : " + obj);
-       			       			
-       			var values = ""
-       			var values2 = ""
-       			
-       			for(var i in obj){
-       				if(obj[i] != null){
-       			values += '<li><p><input type="checkbox" class="flat" id="todo_list'+i+'" name="todo_list'+i+'" >'+obj[i]+'</p></li>';
-    	       	console.log("obj["+i+"] : " + obj[i]);
-       				}
-       			}	       			
-       			
-       			values+='<p><button type="button" class="btn btn-default btn-sm" onclick="checkList()" style="float:right;">확인</button></p>';
-       			
-       			$(".to_do").html(values);
-       			
-       			$(".todo_1").html(values2);
-       			
-   	       			},
-   	       			error: function(){       				
-   	       			console.log("error");
-   	       			}
-   	       		});
-   			},
-   			error: function(){       				
-   			console.log("error");
-   			}
-   		});
-   }
-   }
-   
-   function checkList(){
-       
-   var emp_no = $('#emp_no').val();
-   var check1 = 'N';
-   var check2 = 'N';
-   var check3 = 'N';
-   var check4 = 'N';
-   var check5 = 'N';
-   
-	   if($("input:checkbox[name='todo_list0']").is(":checked")){
-		   check1 = 'Y';
-	   }
-	   if($("input:checkbox[name='todo_list1']").is(":checked")){
-		   check2 = 'Y';
-	   }
-	   if($("input:checkbox[name='todo_list2']").is(":checked")){
-		   check3 = 'Y';
-	   }
-	   if($("input:checkbox[name='todo_list3']").is(":checked")){
-		   check4 = 'Y';
-	   }
-	   if($("input:checkbox[name='todo_list4']").is(":checked")){
-		   check5 = 'Y';
-	   }
-	   
-	   if(!($("input:checkbox[name='todo_list0']").is(":checked")) && !($("input:checkbox[name='todo_list1']").is(":checked")) && !($("input:checkbox[name='todo_list2']").is(":checked")) && !($("input:checkbox[name='todo_list3']").is(":checked")) && !($("input:checkbox[name='todo_list4']").is(":checked"))){
-		   alert("한개 이상 체크 해주세요.");
-	   }else{
-	   
 		$.ajax({
-       		url : "todoChecked.do",
+	       		url : "todoSelect.do",
+	       		data:{
+	       			emp_no : "${loginEmp.emp_no}"
+	       		},
+	    		type:"post",
+	    		dataType:"json",
+	       		success:function(data){
+	       			
+	       			var jsonSt = JSON.stringify(data);
+	                var json = JSON.parse(jsonSt);
+	                var size = Object.keys(json).length;
+	       			
+	       			console.log("todoSelect.do 제대로 실행됨");
+	       			console.log("size : " + size);
+	       			
+	       			var obj = [json.todo1, json.todo2, json.todo3, json.todo4, json.todo5];
+	       			
+	       			console.log("obj : " + obj);
+	       			
+	       			var count = 1;	       			
+	       			var values = ""
+	       			
+	       			for(var i in obj){
+	       				if(obj[i] != null){
+	       			values += '<li><p><input type="checkbox" class="flat" id="todo_list'+count+'" name="todo_list'+count+'" >'+obj[i]+'</p></li>';
+	    	       	count++;
+	    	       	console.log("obj["+i+"] : " + obj[i]);
+	       				}
+	       			}	       		
+	       			
+	       			values+='<button type="button" class="btn btn-primary" onclick="checkList()">확인</button>';
+	       			
+	       			$(".to_do").html(values);
+	       			
+	       			},
+	       			error: function(){       				
+	       			console.log("todolist 출력 error");
+	       			values = "입력된 값이 없습니다";
+	       			$(".to_do").html(values);
+	       			}
+	       		});
+	});
+	
+    
+    var count = 1;    
+    function addKeywordForm(){
+       var addedFormDiv = document.getElementById("addedTodo");
+       var str = '<input type="text" id="todo_keyword'+count+'" name="todo_keyword'+count+'" class="form-control" placeholder="할일을 입력해주세요">'
+       + '<a onclick="delKeywordForm('+count+')"/><i class="fa fa-times"></i></a>';
+       
+       if(count<5){
+       var addedDiv = document.createElement("div");
+       addedDiv.setAttribute("id", "keyword_Frm"+count);
+       addedDiv.innerHTML = str;
+       addedFormDiv.appendChild(addedDiv);       
+       console.log("todo_keyword : " + str);
+       count++;
+       }else{
+       alert("5개까지 입력하실 수 있습니다");
+       }
+
+       }
+
+       function delKeywordForm(thisCount){          
+       var addedFormDiv = document.getElementById("addedTodo");
+       
+       if(count>1){
+       var thisDiv = document.getElementById("keyword_Frm"+thisCount);
+       addedFormDiv.removeChild(thisDiv);
+       console.log("addedFormDiv : " + addedFormDiv);
+       }else{
+       document.addedFormDiv.reset();
+       }
+       count--;
+       }
+       
+       function todoInsert(){
+			
+       	var emp_no = $('#emp_no').val();       	
+       	var todo1 = $('#todo_keyword0').val();
+       	var todo2 = $('#todo_keyword1').val();
+       	var todo3 = $('#todo_keyword2').val();
+       	var todo4 = $('#todo_keyword3').val();
+       	var todo5 = $('#todo_keyword4').val();
+       	
+       	console.log("main에서 출력 emp_no : " + emp_no);
+       	console.log("main에서 출력 todo1 : " + todo1);
+       	console.log("main에서 출력 todo2 : " + todo2);
+       	console.log("main에서 출력 todo3 : " + todo3);
+       	console.log("main에서 출력 todo4 : " + todo4);
+       	console.log("main에서 출력 todo5 : " + todo5);
+       	
+       	$.ajax({
+       		url : "todoInsert.do",
        		type: "post",
        		dataType: "json",
        		data: {
        			emp_no : emp_no,
-       			check1 : check1,
-       			check2 : check2,
-       			check3 : check3,
-       			check4 : check4,
-       			check5 : check5
+       			todo1 : todo1,
+       			todo2 : todo2,
+       			todo3 : todo3,
+       			todo4 : todo4,
+       			todo5 : todo5
        		},
-       		success:function(data){
-       			console.log("todoChecked.do 제대로 실행됨");
+       		success:function(obj){
        			
-       			alert("등록 되었습니다.");
-       			
-       			var jsonSt = JSON.stringify(data);
-                var json = JSON.parse(jsonSt);
-                var size = Object.keys(json).length;
-       			
-       			var obj = [json.todo1, json.todo2, json.todo3, json.todo4, json.todo5];
-       			var obj2 = [json.check1, json.check2, json.check3, json.check4, json.check5];
-       			
-       			console.log("obj : " + obj);
-       			console.log("obj2 : " + obj2);	       			
-       			     			
-       			var values = ""
-       			var values2 = ""
-       			var count = 0;
-       			var count2 = 0;
-       			
-       			for(var i in obj){
-       				if(obj[i] != null && obj2[i] == "N"){
-       			values += '<li><p><input type="checkbox" class="flat" id="todo_list'+i+'" name="todo_list'+i+'" >'+obj[i]+'</p></li>';
-    	       	console.log("obj["+i+"] : " + obj[i]);
-    	       	count2++;
-       				}else if(obj[i] != null && obj2[i] == "Y"){
-       					values += '<li><p id="checkp"><input type="checkbox" class="flat" id="todo_list'+i+'" name="todo_list'+i+'" checked disabled>'+obj[i]+'</p></li>';
-    	    	       	console.log("obj["+i+"] : " + obj[i]);
-    	    	       	count++;
-    	    	       	count2++;
-       				}
-       			}
-       			
-       			var goal = new Number((count/count2)*100);
-       			
-       			console.log("count : " + count);
-       			console.log("count2 : " + count2);
-       			console.log("goal : " + goal.toFixed(2));
-       			
-       			if(obj2[0] == "Y" || obj2[1] == "Y" || obj2[2] == "Y" || obj2[3] == "Y" || obj2[4] == "Y"){
-       				values+='<p id="goalpp" style="float:right;">달성률 : '+goal.toFixed(1)+'%</p>'	       			
-       			}else{
-       				values+='<p><button type="button" class="btn btn-default btn-sm" onclick="checkList()" style="float:right; margin-top:5px;">확인</button></p>';
-       			}
-       			
-       			$(".to_do").html(values);
-       			
-       			
-       		},
-       		error: function(){       				
+       			alert("등록되었습니다.");
+       			$('#addModal').modal('hide');
+       					
+       			$.ajax({
+       	       		url : "todoSelect.do",
+       	       		type: "post",
+       	       		dataType: "json",
+       	       		data: {
+       	       			emp_no : emp_no
+       	       		},
+       	       		success:function(data){       	       			
+       	       			console.log("todoSelect.do 제대로 실행됨");       	       			
+       	       			
+       	       		var jsonSt = JSON.stringify(data);
+	                var json = JSON.parse(jsonSt);
+	                var size = Object.keys(json).length;
+	       			
+	       			console.log("todoSelect.do 제대로 실행됨");
+	       			console.log("size : " + size);
+	       			
+	       			var obj = [json.todo1, json.todo2, json.todo3, json.todo4, json.todo5];
+	       			
+	       			console.log("obj : " + obj);
+	       			
+	       			var count = 1;	       			
+	       			var values = ""
+	       			
+	       			for(var i in obj){
+	       				if(obj[i] != null){
+	       			values += '<li><p><input type="checkbox" class="flat" id="todo_list'+count+'" name="todo_list'+count+'" >'+obj[i]+'</p></li>';
+	    	       	count++;
+	    	       	console.log("obj["+i+"] : " + obj[i]);
+	       				}
+	       			}	       			
+	       			
+	       			values+='<button type="button" class="btn btn-primary" onclick="checkList()">확인</button>';
+	       			
+	       			$(".to_do").html(values);
+       	       			
+       	       			},
+       	       			error: function(){       				
+       	       			console.log("error");
+       	       			}
+       	       		});
+       			},
+       			error: function(){       				
        			console.log("error");
        			}
        		});
        }
-   }
        
        function checkList(){
     	   alert("checkList 실행");
-       };
+       }
        
     </script>
 
@@ -659,7 +534,7 @@ function addKeywordForm(){
    .chart-container {
 	  position: relative;
 	  margin: auto;
-}
+	}
    
    </style>  
     
@@ -728,12 +603,26 @@ function addKeywordForm(){
           <!-- /top tiles -->
            <div class="row">       	
                 <!-- Start to do list -->
-                <div class="col-md-6 col-sm-6 col-xs-12" style="padding:0px;">
+                 <div class="col-md-6 col-sm-6 col-xs-12" style="padding:0px;">
                 <div class="col-xs-12">
                   <div class="x_panel">
                     <div class="x_title">
                       <h2>To Do List</h2>
-                      <ul class="todo_1">
+                      <ul class="nav navbar-right panel_toolbox">
+                      <%-- <c:choose>
+            			<c:when test="${ todolist == null }">
+		           		<li><button type="button" class="btn btn-link" data-toggle="modal" data-target=".bs-example-modal-lg" style="float:right;">등록</button>
+                        </li>
+            			</c:when>
+            			<c:otherwise>
+						<li><button type="button" class="btn btn-link" data-toggle="modal" data-target=".bs-example-modal-lg" style="float:right;">수정</button>
+                        </li>
+            			</c:otherwise>
+            		  </c:choose> --%>
+            		  	<li><button type="button" class="btn btn-link" data-toggle="modal" data-target=".bs-example-modal-lg" style="float:right;">등록</button>
+                        </li>
+                        <!-- <li><button type="button" class="btn btn-link" data-toggle="modal" data-target=".bs-example-modal-lg" style="float:right;">수정</button>
+                        </li> -->
                       </ul>
                       <div class="clearfix"></div>
                     </div>
@@ -1322,7 +1211,7 @@ function addKeywordForm(){
 			
 		}); //end of ajax
 		
-	})
+	});  
 	    
 		
 
