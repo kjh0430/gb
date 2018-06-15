@@ -120,13 +120,18 @@ $('#emp_email').blur(function(){
 
 });
 
+$('#job_no').blur(function(){
+	console.log("job_no : " + $('#job_no').val());
+	if($('#job_no').val()==3){
+		$('#emp_mgr').val(0);
+	}
+});
+
 	
 });
 
 function Regiemp(){	
-	
-	var emp_num = 0;
-	
+		
 	var emp_name = $('#emp_name').val();
 	var emp_pwd = $('#emp_pwd').val();	
 	var emp_addr = $('#emp_addr').val();
@@ -138,12 +143,6 @@ function Regiemp(){
 	var county = $('#county').val();
 	var village = $('#village').val();
 	var dept_no = $('#dept_no').val();
-	
-	if(emp_mgr == null){
-		$('#emp_mgr').val(0);
-	}else{
-		$('#emp_mgr').val(emp_num);
-	}
 	
 	var en1 = new RegExp("[A-Z]");
 	var en2 = new RegExp("[a-z]");
@@ -172,7 +171,16 @@ function Regiemp(){
 		alert("e-mail을 입력해주세요.");
 		allCheck=false;
 		return allCheck;
-	}if(emp_name.length > 1 && pwd_pattern.test(emp_pwd) && emp_addr.length > 1 && emp_phone.length > 1 && emp_email.length > 1){
+	}if(emp_mgr.length == 0){
+		alert("상사번호를 입력해주세요.");
+		allCheck=false;
+		return allCheck;
+	}if(!num.test(emp_mgr)){
+		alert("상사번호는 숫자만 입력할 수 있습니다.");
+		allCheck=false;
+		return allCheck;
+	}
+	if(emp_name.length > 1 && pwd_pattern.test(emp_pwd) && emp_addr.length > 1 && emp_phone.length > 1 && emp_email.length > 1 && emp_mgr.length != 0 && num.test(emp_mgr)){
 				
 		 $.ajax({
     		url : "empinsert.do",
@@ -380,18 +388,6 @@ text-align:center;
                           <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm" style="float:right;" onclick="mgrList()">조회</button>
                         </div>
                       </div>
-                      <!-- <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">입사일</label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input class="form-control" id="emp_hiredate" name="emp_hiredate" type="date">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">퇴사일</label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input class="form-control" id="emp_firedate" name="emp_firedate" type="date">
-                        </div>
-                      </div> -->
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">담당지역</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">

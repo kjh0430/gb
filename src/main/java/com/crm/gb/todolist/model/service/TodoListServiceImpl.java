@@ -22,4 +22,9 @@ public class TodoListServiceImpl implements TodoListService{
 		return todolistDao.selectTodoList(emp_no);
 	}
 
+	@Override
+	public int updateTodoList(TodoList todolist) {
+		return todolistDao.updateTodoList(todolist);
+	}
+
 }

@@ -80,6 +80,46 @@ public class TodoListController {
 		job.put("todo3", detailtodolist.getTodo3());
 		job.put("todo4", detailtodolist.getTodo4());
 		job.put("todo5", detailtodolist.getTodo5());
+		job.put("check1", detailtodolist.getCheck1());
+		job.put("check2", detailtodolist.getCheck2());
+		job.put("check3", detailtodolist.getCheck3());
+		job.put("check4", detailtodolist.getCheck4());
+		job.put("check5", detailtodolist.getCheck5());
+
+		response.setContentType("application/json; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		out.println(job.toJSONString());
+		out.flush();
+		out.close();
+			
+	}
+	
+	@RequestMapping(value="todoChecked.do", method=RequestMethod.POST)
+	@ResponseBody
+	public void todoChecked(TodoList todolist, Model model, @RequestParam(value="emp_no") String emp_num, HttpServletResponse response) throws IOException{
+		
+		logger.info("todoChecked 실행");
+		
+		int result = todolistService.updateTodoList(todolist);
+		int emp_no = (Integer.parseInt(emp_num));
+		
+		System.out.println("todoChecked 여기까지 실행됨");
+		System.out.println("checked todolist : " + todolist);
+		
+		TodoList detailtodolist = todolistService.selectTodoList(emp_no);
+		
+		JSONObject job = new JSONObject();
+		job.put("emp_no", detailtodolist.getEmp_no());
+		job.put("todo1", detailtodolist.getTodo1());
+		job.put("todo2", detailtodolist.getTodo2());
+		job.put("todo3", detailtodolist.getTodo3());
+		job.put("todo4", detailtodolist.getTodo4());
+		job.put("todo5", detailtodolist.getTodo5());
+		job.put("check1", todolist.getCheck1());
+		job.put("check2", todolist.getCheck2());
+		job.put("check3", todolist.getCheck3());
+		job.put("check4", todolist.getCheck4());
+		job.put("check5", todolist.getCheck5());
 
 		response.setContentType("application/json; charset=utf-8");
 		PrintWriter out = response.getWriter();
