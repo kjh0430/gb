@@ -339,9 +339,7 @@ background-color:#2A3F54;
 										</div>
 									</div>
 									<div class="modal-footer">
-										<button onclick="modal1Close()" type="button"
-											class="btn btn-primary">확인</button>
-
+										<button onclick="modal1Close()" type="button" class="btn btn-primary">확인</button>
 									</div>
 								</form>
 
@@ -367,6 +365,14 @@ background-color:#2A3F54;
 
 	<!-- Custom Theme Scripts -->
 	<script src="resources/build/js/custom.min.js"></script>
+	
+
+   	
+   	<script type="text/javascript">
+   	
+   
+   	
+   	</script>
 
 </body>
 </html>
