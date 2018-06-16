@@ -45,8 +45,8 @@ public class OrderDao {
 	}
 	
 	//orderList count
-	public int orderListCount() {
-		return sqlSession.selectOne("orderListCount");
+	public int orderListCount(Order order) {
+		return sqlSession.selectOne("orderListCount",order);
 	}
 
 	public ArrayList<Order> productShare() {

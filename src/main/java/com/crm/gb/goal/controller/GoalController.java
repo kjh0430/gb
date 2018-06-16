@@ -74,6 +74,11 @@ public class GoalController {
 		return "goal/goalStateAdmin";
 	}
 	
+	@RequestMapping("myGoal.do")
+	public String myGoal() {
+		return "goal/MygoalState";
+	}
+	
 	@RequestMapping("search.do")
 	@ResponseBody
 	public void searchEmp(Goal goal,HttpServletResponse  response) throws IOException {
@@ -158,4 +163,6 @@ public class GoalController {
 	out.flush();
 	out.close();
 	}
+	
+	
 }

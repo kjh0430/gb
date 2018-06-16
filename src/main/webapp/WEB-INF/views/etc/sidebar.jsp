@@ -33,7 +33,7 @@
 	        <ul class="nav child_menu">
 	          <li><a href="accountList.do?emp_no=${loginEmp.emp_no}&page=1&job_no=${loginEmp.job_no}">거래처</a></li>
 	          <li><a href="selectOrderClient.do?emp_no=${loginEmp.emp_no}">발주하기</a>
-	          <li><a href="orderList.do?emp_no=${loginEmp.emp_no}&page=1">매출현황</a></li>
+	          <li><a href="orderList.do?emp_no=${loginEmp.emp_no}&page=1&client_company=null">매출현황</a></li>
 	          <li><a href="visit.do">방문일지</a></li>
 	        </ul>
 	      </li>
@@ -41,7 +41,7 @@
 	        <ul class="nav child_menu">
 
 	          <li><a href="productList.do">제품관리</a></li>
-	          <li><a href="MovegoalState.do">목표현황</a></li>
+	          <li><a href="myGoal.do">목표현황</a></li>
 	          <li><a href="moveDailyReport.do">영업일지</a></li>
 	        </ul>
 	      </li>

@@ -173,7 +173,7 @@ public class OrderController {
 	
 	//매출현황 페이지 메소드 
 		@RequestMapping(value="orderList.do")
-		public String orderListPage(Model model, Order order, @RequestParam(value="page") int page){
+		public String orderListPage(@RequestParam(value="client_company") String client_company, Model model, Order order, @RequestParam(value="page") int page){
 			
 			logger.info("매출현황 메소드 run...");
 			//int emp_no = Integer.parseInt(empNo);
@@ -183,15 +183,16 @@ public class OrderController {
 			//한 페이지당 출력할 목록갯수 지정
 			int pageSize=10;
 			int pageGroupSize=5;		
-			
-//			System.out.println("page="+page);
-//			System.out.println("pageSize="+pageSize);
-//			System.out.println("currentPage="+currentPage);
-			
-			
-			int listCount_1 = orderService.orderListCount();
+			String searchCom = client_company;
+			if(searchCom.equals("null") || searchCom==null) {
+				searchCom = null;
+			}
+			//System.out.println("searchCom 1: "+searchCom );
+			order.setSearchCom(searchCom);
+			//System.out.println("order : " + order);
+			int listCount_1 = orderService.orderListCount(order);
 			//int listCount_2 = listCount_1.getOrder_list_count();
-			System.out.println("listCount : " + listCount_1);
+			//System.out.println("listCount : " + listCount_1);
 			
 			//페이지수 계산 
 			int maxPage=(int)((double)listCount_1/pageSize+0.9);				
@@ -216,14 +217,10 @@ public class OrderController {
 			if(maxPage<blockEnd)
 				blockEnd=maxPage;
 			
-			//int startPage=(((int)((double)currentPage/pageSize+0.9))-1)*pageSize+1;
 			int startPage=(currentPage-1)*pageSize+1;
 			int endPage=startPage+pageSize-1;
 			
-//			System.out.println("startPage 시작페이지 = "+startPage);//			
-//			System.out.println("endPage 마지막 페이지 = "+endPage);//			
-//			System.out.println("maxPage 페이지수 계산 = "+maxPage);//			
-//			System.out.println("게시판 갯수 숫자 = "+listCount_1);			
+//				
 			order.setStartPage(startPage);
 			order.setEndPage(endPage);
 			
@@ -244,7 +241,7 @@ public class OrderController {
 			model.addAttribute("totBlock",totBlock);
 			model.addAttribute("prevBlock",prevBlock);
 			model.addAttribute("nextBlock",nextBlock);
-		
+			model.addAttribute("searchCom",searchCom);
 			return "order/orderList";
 		}
 		
