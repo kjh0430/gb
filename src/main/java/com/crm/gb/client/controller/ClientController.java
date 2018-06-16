@@ -211,32 +211,20 @@ public class ClientController {
 		client.setJob_no(job_no);
 		
 		//페이지 기본값 지정
-				int currentPage=page;				
-				//한 페이지당 출력할 목록갯수 지정
-				int pageSize=10;
-				int pageGroupSize=5;
-		
-		
-	/*	//조건 검색
-		if(client.getClient_company()!=null && client.getClient_company()!="") {
-		int listCount=clientService.selectClientCondition(client); //조건으로 검색된 행의 개수 
-		System.out.println("listCount"+listCount);
-		//
-		client.setStartRow((currentPage-1)*pageSize+1);
-		client.setEndRow(client.getStartRow()+pageSize+1);
-		//조건에 맞는 리스트 뽑아오기
-		ArrayList<Client> clientListCondition=clientService.selectgetClientCondition(client);
-		
-		}*/
-		
-		
-		System.out.println("jobNo : " + job_no);
-		System.out.println("page: " + page);
+		int currentPage=page;				
+		//한 페이지당 출력할 목록갯수 지정
+		int pageSize=10;
+		int pageGroupSize=5;
+
+	
+		//System.out.println("jobNo : " + job_no);
+		//System.out.println("page: " + page);
 		
 		
 	
 		
 		int listCount_1 = clientService.clientListCount(client);
+		System.out.println("oooooooooooooooooooooo");
 		System.out.println("count : " + listCount_1);
 		//페이지수 계산 
 		int maxPage=(int)((double)listCount_1/pageSize+0.9);				

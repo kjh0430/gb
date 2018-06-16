@@ -644,9 +644,8 @@ $(function(){
        }
        
     </script>
-<<<<<<< HEAD
     
-    <script type="text/javascript"> //매출현황, 평균주문액 등
+   <!--  <script type="text/javascript"> //매출현황, 평균주문액 등
     $(function() {
 
   		$.ajax({	
@@ -662,7 +661,7 @@ $(function(){
     
     
     </script>
-    
+     -->
     <style>
    
 =======

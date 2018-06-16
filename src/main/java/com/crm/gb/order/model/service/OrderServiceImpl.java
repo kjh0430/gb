@@ -63,8 +63,8 @@ public class OrderServiceImpl implements OrderService{
 	}
 	
 	@Override
-	public int orderListCount() {
-		return orderDao.orderListCount();
+	public int orderListCount(Order order) {
+		return orderDao.orderListCount(order);
 	}
 	
 	//주문리스트 중 제품별 판매량

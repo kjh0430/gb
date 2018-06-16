@@ -73,19 +73,31 @@ $(document).ready(function() {
         searching: false,
         info: false
     } );
+
 } );
 
 
 function list(page){
-	
-	location.href="orderList.do?page="+page;
+	console.log("paging확인");
+	client_company=$('#clientCondition').val();
+	console.log("ccom : " + client_company);
+	if(client_company==""){
+		location.href="orderList.do?client_company=null&page="+page;
+
+	}else{
+		location.href="orderList.do?client_company="+client_company+"&page="+page;
+
+	}
 }
 
 function searchCondition(){
 	client_company=$('#clientCondition').val();
-	
-	 location.href="orderList.do?"+client_company
-	
+	if(client_company==""){
+		 location.href="orderList.do?page=1&client_company=null"
+
+	}else{
+	 	location.href="orderList.do?page=1&client_company="+client_company
+	}
 }
 
 
@@ -115,72 +127,8 @@ function searchCondition(){
 			</div>
 
 			<!-- top navigation -->
-			<div class="top_nav">
-				<div class="nav_menu">
-					<nav>
-						<div class="nav toggle">
-							<a id="menu_toggle"><i class="fa fa-bars"></i></a>
-						</div>
-
-						<ul class="nav navbar-nav navbar-right">
-							<li class=""><a href="javascript:;"
-								class="user-profile dropdown-toggle" data-toggle="dropdown"
-								aria-expanded="false"> <img src="images/img.jpg" alt="">${loginEmp.emp_name } <span class=" fa fa-angle-down"></span>
-							</a>
-								<ul class="dropdown-menu dropdown-usermenu pull-right">
-									<li><a href="javascript:;"> Profile</a></li>
-									<li><a href="javascript:;"> <span
-											class="badge bg-red pull-right">50%</span> <span>Settings</span>
-									</a></li>
-									<li><a href="javascript:;">Help</a></li>
-									<li><a href="login.html"><i
-											class="fa fa-sign-out pull-right"></i> Log Out</a></li>
-								</ul></li>
-
-							<li role="presentation" class="dropdown"><a
-								href="javascript:;" class="dropdown-toggle info-number"
-								data-toggle="dropdown" aria-expanded="false"> <i
-									class="fa fa-envelope-o"></i> <span class="badge bg-green">6</span>
-							</a>
-								<ul id="menu1" class="dropdown-menu list-unstyled msg_list"
-									role="menu">
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li>
-										<div class="text-center">
-											<a> <strong>See All Alerts</strong> <i
-												class="fa fa-angle-right"></i>
-											</a>
-										</div>
-									</li>
-								</ul></li>
-						</ul>
-					</nav>
-				</div>
-			</div>
-			<!-- /top navigation -->
+			<%@ include file="../etc/topnav.jsp"%>
+			<!-- top navigation -->
 
 			<!-- page content -->
 			<div class="right_col" role="main">
@@ -241,15 +189,24 @@ function searchCondition(){
 									<ul class="pagination">
 									<!-- if문 -->
 									 <c:if test="${curBlock>1}">
-										<li class="page-item"><a class="page-link" href="orderList.do?page=1"><<</a></li>
-									
+									 	<c:if test="${searchCom != null }">
+											<li class="page-item"><a class="page-link" href="orderList.do?client_company=${searchCom }&page=1"><<</a></li>
+										</c:if>
+										<c:if test="${searchCom == null }">
+											<li class="page-item"><a class="page-link" href="orderList.do?client_company=null&page=1"><<</a></li>
+										</c:if>
 									</c:if> 
 									
 									<!--첫페이지로 이동  -->
 									<!--if else문 형식임  -->
 								
 									 <c:if test="${curBlock>1}">
-										<li class="page-item"><a class="page-link" href="orderList.do?page=${blockBegin-1}">prev</a></li>
+										 <c:if test="${searchCom != null }">
+											<li class="page-item"><a class="page-link" href="orderList.do?client_company=${searchCom }&page=${blockBegin-1}">prev</a></li>
+										</c:if>
+										<c:if test="${searchCom == null }">
+											<li class="page-item"><a class="page-link" href="orderList.do?client_company=null&page=${blockBegin-1}">prev</a></li>
+										</c:if>
 									
 									</c:if> 
 									
@@ -279,15 +236,24 @@ function searchCondition(){
 								
 									
 									 <c:if test="${curBlock!=totBlock}">
-										<li class="page-item"><a class="page-link" href="orderList.do?page=${blockEnd+1}">next</a></li>
-									
+									 <c:if test="${searchCom != null }">
+										<li class="page-item"><a class="page-link" href="orderList.do?client_company=${searchCom }&page=${blockEnd+1}">next</a></li>
+									</c:if>
+									<c:if test="${searchCom == null }">
+										<li class="page-item"><a class="page-link" href="orderList.do?client_company=null&page=${blockEnd+1}">next</a></li>
+									</c:if>	
 									</c:if> 
 									
 									
 									<!-- 다음페이지 next -->
 									
 									<c:if test="${curBlock < endPage}">
-										<li class="page-item"><a class="page-link" href="orderList.do?page=${maxPage}">>></a></li>				
+										<c:if test="${searchCom != null }">
+											<li class="page-item"><a class="page-link" href="orderList.do?client_company=${searchCom }&page=${maxPage}">>></a></li>
+										</c:if>
+										<c:if test="${searchCom == null }">
+											<li class="page-item"><a class="page-link" href="orderList.do?client_company=null&page=${maxPage}">>></a></li>
+										</c:if>					
 									</c:if> 										
 										
 									</ul>
@@ -298,6 +264,9 @@ function searchCondition(){
 					</div>
 				</div>
 			</div>
+			<!-- footer content -->
+			<%@ include file="../etc/footer.jsp"%>
+			<!-- /footer content -->
 		</div>
 	</div>
 
