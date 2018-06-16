@@ -658,10 +658,6 @@ $(function(){
       margin-left:10px;
    }
    
-   .chart-container {
-	  position: relative;
-	  margin: auto;
-	}
    
     input[type=checkbox]{
  	  margin-right:5px;
@@ -1193,9 +1189,7 @@ $(function(){
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                 	<div class="chart-container" style="position:relative;">
-				   	 <canvas id="myChart"></canvas>
-					</div>
+                 	<div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
                 </div>
               </div>
             </div>
@@ -1225,15 +1219,16 @@ $(function(){
     <script src="resources/fullcalendar-3.9.0/lib/moment.min.js"></script> 
    	<script src="resources/fullcalendar-3.9.0/fullcalendar.js"></script>
    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+   <script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+	<script src="https://code.highcharts.com/modules/export-data.js"></script>
     
 
    	<script>
-	var amount=[];
+   	var amount=[];
 	var pname=[];
-  
-	$.ajax({
+  $(function(){
+	  $.ajax({
 			url:"productShare.do",
 			type:"post",
 			dataType:"json",
@@ -1246,33 +1241,68 @@ $(function(){
 					amount.push(result.list[i].total);
 					pname.push(result.list[i].product_name);
 				}	
+				getChart();
 			} 
 		
 	});//ajax
 	
+  })
 	
-	
-	var data = {
-	  labels: pname,
-	  datasets: [{
-	    backgroundColor: ['#3b5159','#a3c9d9','#d9b384','#8c6e54','#bf926b'],
-	    data: amount,
-	  }]
-	};
+	function getChart(){
+	  Highcharts.chart('container', {
+		  chart: {
+		    plotBackgroundColor: null,
+		    plotBorderWidth: null,
+		    plotShadow: false,
+		    type: 'pie'
+		  },
+		  title: {
+		    text: ''
+		  },
+		  tooltip: {
+		    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+		  },
+   		  exporting:{
+   			 'enabled':false 
+   		  },
+		  plotOptions: {
+		    pie: {
+		      allowPointSelect: true,
+		      cursor: 'pointer',
+		      dataLabels: {
+		        enabled: false
+		      },
+		      showInLegend: true
+		    }
+		  },
+		  series: [{
+		    name: '점유율',
+		    colorByPoint: true,
+		    data: [{
+		      name: 'Chrome',
+		      y: 61.41,
+		      sliced: true,
+		      selected: true
+		    }, {
+		      name: 'Internet Explorer',
+		      y: 11.84
+		    }, {
+		      name: 'Firefox',
+		      y: 10.85
+		    }, {
+		      name: 'Edge',
+		      y: 4.67
+		    }, {
+		      name: 'Safari',
+		      y: 4.18
+		    }, {
+		      name: 'Other',
+		      y: 7.05
+		    }]
+		  }]
+		});
+  }
 
-	var options = {
-	responsive:true,
-	maintainAspectRatio: false,
-	legend: {
-            display: true,
-            position:'right'
-        	}
-	};
-
-	Chart.Doughnut('myChart', {
-	  options: options,
-	  data: data
-	}); 
 		
 
 	/* 

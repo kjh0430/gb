@@ -44,7 +44,8 @@
 			$("#product_comment").attr('readonly',true);
 			$("#product_amount").attr('readonly',true);
 			$("#sale_y").attr('disabled',true);
-			$("#sale_n").attr('disabled',true);			
+			$("#sale_n").attr('disabled',true);	
+			$("#pFile-0").css("display","none");
 		}
 
 	});

@@ -89,9 +89,6 @@ display:none;
 
 }
 #container {
-  height: 300px;
-  min-width: 310px;
-  max-width: 800px;
 }
 </style>
 </head>
@@ -190,10 +187,7 @@ display:none;
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
 								<div class="dashboard_graph">
-
-									
-
-									<div class="col-md-9 col-sm-9 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
 										<div id="container"></div>
 									</div>
 	
@@ -227,10 +221,16 @@ display:none;
 	<script src="resources/build/js/custom.min.js"></script>
 	
 	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+	<script src="https://code.highcharts.com/modules/export-data.js"></script>
 	
     
    	<script type="text/javascript">
-   	
+  	
+   	var goal= [];
+	var perform =[];
+	var month = [];
+	
    	$(document).ready(function() {
    	//모든 사원의 목표,달성 등등 가져오기
    	
@@ -239,7 +239,9 @@ display:none;
 		    type:"post",
 		    dataType:"json",
 		    success:function(obj){
-		    	
+		      	goal = [];
+		    	perform =[];
+		    	month = [];
 		    	var objStr = JSON.stringify(obj);
 		        var jsonl = JSON.parse(objStr);
 		        var size = Object.keys(jsonl.list).length;
@@ -269,10 +271,7 @@ display:none;
    	});
    	
    	
-   	
-   	var goal= [];
-	var perform =[];
-	var month = [];
+ 
 
 	function selectEmp(obj){
 		
@@ -295,6 +294,9 @@ display:none;
 		    	emp_no:emp_no
 		    },
 		    success:function(obj){
+		    	goal = [];
+		    	perform =[];
+		    	month = [];
 		    	
 		    	var objStr = JSON.stringify(obj);
 		        var jsonl = JSON.parse(objStr);
@@ -324,91 +326,82 @@ display:none;
 	
 
 	   	function drawChart(){
-	   		var chart = Highcharts.chart('container', {
 
+	   		Highcharts.chart('container', {
 	   		  chart: {
-	   		    type: 'column'
+	   		    zoomType: 'x'
 	   		  },
-
 	   		  title: {
-	   		    text: 'Highcharts responsive chart'
+	   		    text: '목표 달성 현황'
 	   		  },
-
 	   		  subtitle: {
-	   		    text: 'Resize the frame or click buttons to change appearance'
+	   		    text: ''
 	   		  },
-
-	   		  legend: {
-	   		    align: 'right',
-	   		    verticalAlign: 'middle',
-	   		    layout: 'vertical'
-	   		  },
-
-	   		  xAxis: {
-	   		    categories: ['Apples', 'Oranges', 'Bananas'],
-	   		    labels: {
-	   		      x: -10
-	   		    }
-	   		  },
-
-	   		  yAxis: {
-	   		    allowDecimals: false,
-	   		    title: {
-	   		      text: 'Amount'
-	   		    }
-	   		  },
-
-	   		  series: [{
-	   		    name: 'Christmas Eve',
-	   		    data: [1, 4, 3]
-	   		  }, {
-	   		    name: 'Christmas Day before dinner',
-	   		    data: [6, 4, 2]
-	   		  }, {
-	   		    name: 'Christmas Day after dinner',
-	   		    data: [8, 4, 3]
+	   		  xAxis: [{
+	   		    categories: month,
+	   		    crosshair: true
 	   		  }],
-
-	   		  responsive: {
-	   		    rules: [{
-	   		      condition: {
-	   		        maxWidth: 500
-	   		      },
-	   		      chartOptions: {
-	   		        legend: {
-	   		          align: 'center',
-	   		          verticalAlign: 'bottom',
-	   		          layout: 'horizontal'
-	   		        },
-	   		        yAxis: {
-	   		          labels: {
-	   		            align: 'left',
-	   		            x: 0,
-	   		            y: -5
-	   		          },
-	   		          title: {
-	   		            text: null
-	   		          }
-	   		        },
-	   		        subtitle: {
-	   		          text: null
-	   		        },
-	   		        credits: {
-	   		          enabled: false
-	   		        }
+	   		  yAxis: [{ // Primary yAxis
+	   		    labels: {
+	   		       format: '{value} 원', 
+	   		      style: {
+	   		        color: Highcharts.getOptions().colors[1]
 	   		      }
-	   		    }]
-	   		  }
-	   		});
+	   		    },
+	   		    title: {
+	   		      text: '실적',
+	   		      style: {
+	   		        color: Highcharts.getOptions().colors[1]
+	   		      }
+	   		    }
+	   		  }, { // Secondary yAxis
+	   		    title: {
+	   		      text: '목표',
+	   		      style: {
+	   		        color: Highcharts.getOptions().colors[0]
+	   		      }
+	   		    },
+	   		    labels: {
+	   		      format: '{value} 원',
+	   		      style: {
+	   		        color: Highcharts.getOptions().colors[0]
+	   		      }
+	   		    },
+	   		    opposite: true
+	   		  }],
+	   		  tooltip: {
+	   		    shared: true
+	   		  },
+	   		  legend: {
+	   		    layout: 'vertical',
+	   		    align: 'left',
+	   		    x: 120,
+	   		    verticalAlign: 'top',
+	   		    y: 100,
+	   		    floating: true,
+	   		    backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+	   		  },
+	   		  exporting:{
+	   			 'enabled':false 
+	   		  },
+	   		  series: [{
+	   		    name: '목표',
+	   		    type: 'column',
+	   		    yAxis: 1,
+	   		    data: goal,
+	   		    tooltip: {
+	   		      valueSuffix: ' 원'
+	   		    }
 
-	   		$('#small').click(function () {
-	   		  chart.setSize(400, 300);
+	   		  }, {
+	   		    name: '실적',
+	   		    type: 'spline',
+	   		    data: perform,
+	   		    tooltip: {
+	   		      valueSuffix: '원'
+	   		    }
+	   		  }]
 	   		});
-
-	   		$('#large').click(function () {
-	   		  chart.setSize(600, 300);
-	   		});
-
 
 
 	   	}
