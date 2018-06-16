@@ -69,7 +69,7 @@ var c_discount; //해당 고객의 할인율
 			
 		});//ajax complete
 	}else{
-		alert("검색값을  입력해줏ㅇ5")
+		alert("검색값을  입력해주세요")
 	}
 	}
 	

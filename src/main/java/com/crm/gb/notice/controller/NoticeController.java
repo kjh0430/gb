@@ -1,9 +1,14 @@
 package com.crm.gb.notice.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +18,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 
 import com.crm.gb.notice.model.service.NoticeService;
 import com.crm.gb.notice.model.vo.Notice;
@@ -365,6 +372,42 @@ public class NoticeController {
 		return "notice/noticeList";
 	}
 	
+		
+		
+	@RequestMapping(value="latestNotice.do",method=RequestMethod.POST)
+	@ResponseBody
+	public void latestNotice(HttpServletResponse  response) throws IOException {
+	
+	ArrayList<Notice> selectlatestNotice=noticeService.selectLatestNotice();
+	JSONArray jarr=new JSONArray();
+	
+	for(Notice notice: selectlatestNotice) {
+		
+		JSONObject jsonobject=new JSONObject();
+		
+		jsonobject.put("notice_no",notice.getNotice_no());
+		jsonobject.put("notice_title",notice.getNotice_title());
+		jsonobject.put("notice_date",notice.getNotice_date().toString());
+		
+		System.out.println("notice_no"+notice.getNotice_no());
+		System.out.println("notice_title"+notice.getNotice_title());
+		System.out.println("notice_date"+notice.getNotice_date().toString());
+		
+		jarr.add(jsonobject);
+		
+	}
+	
+	System.out.println("selectlatestNotice"+selectlatestNotice);
+	JSONObject send=new JSONObject();
+	send.put("list",jarr);
+	
+	response.setContentType("application/json; charset=utf-8");	
+	PrintWriter out=response.getWriter();
+	out.println(send.toJSONString());
+	out.flush();
+	out.close();
+	
+	}
 	
 }
 

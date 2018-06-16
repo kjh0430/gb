@@ -168,6 +168,8 @@ background-color:#2A3F54;
 											</tr>
 										</thead>
 										<tbody>
+											
+											
 											 <c:forEach items="${approvalListE}" var="approval">
 												
 												<c:if

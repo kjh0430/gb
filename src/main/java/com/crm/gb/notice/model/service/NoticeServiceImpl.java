@@ -64,6 +64,12 @@ public class NoticeServiceImpl implements NoticeService{
 		return noticeDao.countNoticeList();
 	}
 
+	@Override
+	public ArrayList<Notice> selectLatestNotice() {
+		
+		return noticeDao.selectLatestNotice();
+	}
+
 	
 	
 	

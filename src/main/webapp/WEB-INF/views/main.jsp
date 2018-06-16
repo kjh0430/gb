@@ -643,7 +643,56 @@ $(function(){
     
     
     </script>
+    <script >//notice
     
+     $(function(){
+    
+    	$.ajax({
+    		url:"latestNotice.do",
+    		type:"post",
+    		dataType:"json",
+    		success:function(data){
+    	
+    	  var jsonSt = JSON.stringify(data);
+	        var jsonl = JSON.parse(jsonSt);
+	        var size = Object.keys(jsonl.list).length;
+    	
+	   
+	        
+	        
+    	value="";
+    	if(size>0) {
+    	value="<ul class='notice_list'>";
+    	
+    	 for(var i in jsonl.list){
+     	value+="<li><a href='noticeDetail.do?notice_no="+jsonl.list[i].notice_no+"'><span>"+jsonl.list[i].notice_date+"</span>&nbsp;&nbsp;"+jsonl.list[i].notice_title+"</a></li>";
+    		
+    	}
+    	
+    	value+="</ul>"
+    	
+    		$('#latest_notice').html(value); 
+    		
+    	
+    	
+    		}else{
+    			value="<h1>공지사항이 없습니다.</h1>"
+    				$('#latest_notice').html(value); 
+    		}
+    		}
+    	});
+    	
+    
+    
+    }); 
+     
+    
+    
+    
+    
+    
+    
+    </script>
 
 
 
@@ -1158,21 +1207,16 @@ $(function(){
 	            <div class="x_panel">
 	              <div class="x_title">
 	                <h2>Notice </h2> 
-	                <ul class="nav navbar-right panel_toolbox">	                 
-	                  <li><a class="#"><i class="fa fa-plus"></i> 더보기</a>
-	                  </li>
-	                </ul>
+	                 <ul style="float:right;">	                 
+	                  <a href="noticeList.do?page=1"><i class="fa fa-plus"></i> 더보기</a>
+	                  
+	               </ul>
 	                
 	                <div class="clearfix"></div> 
 	              </div>
 	              <div class="x_content">
-	              	<ul class="notice_list">
-	              		<li><span>2018.04.30</span>&nbsp;&nbsp;<a href="">공지사항 들어갈 자리입니다.</a></li>
-	              		<li><span>2018.04.30</span>&nbsp;&nbsp;<a href="">GROUP BEAN 서비스 점검 일정입니다.</a></li>
-	              		<li><span>2018.04.30</span>&nbsp;&nbsp;<a href="">2018년 5월 1일 개최예정이었던 영업회의는 연기되었습니다.</a></li>
-	              		<li><span>2018.04.30</span>&nbsp;&nbsp;<a href="">공지사항 들어갈 자리입니다.</a></li>
-	              		<li><span>2018.04.30</span>&nbsp;&nbsp;<a href="">GROUP BEAN 서비스 점검 일정입니다.</a></li>
-	              	</ul>
+	              <div id="latest_notice"></div>
+	              	
 	               
 	                <div class="clearfix"></div>
 	              </div>

@@ -101,6 +101,14 @@
 	
 	</select>
 	
+	<select id="selectLatestNotice" resultType="notice">
+	<![CDATA[
+	select notice_no,notice_title,notice_date from (select n.notice_no,n.notice_title,n.notice_date from notice n order by notice_date desc) where rownum<=5
+	
+	]]>
+	
+	</select>
+	
 	
 	
 </mapper>
