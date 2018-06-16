@@ -18,62 +18,13 @@
 <link href="resources/vendors/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet">
 
-
-
 <!-- Custom Theme Style -->
 <link href="resources/build/css/custom.min.css" rel="stylesheet">
 
+<script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script>
 
-	var goal= [];
-	var perform =[];
-	var month = [];
-	function selectEmp(obj){
-		
-		 var content = $(obj);
-	     var td = content.children();
 	
-	     var emp_name = td.eq(0).text();
-	     var dept_name = td.eq(1).text();
-	     var emp_job = td.eq(2).text();
-	     var emp_email = td.eq(3).text();
-	      emp_no = td.eq(4).text();
-	     $('#searchModal').modal("hide");
-	
-	 
-	      $.ajax({
-	    url:"getgoalInfo.do",
-		    type:"post",
-		    dataType:"json",
-		    data:{
-		    	emp_no:emp_no
-		    },
-		    success:function(obj){
-		    	
-		    	var objStr = JSON.stringify(obj);
-		        var jsonl = JSON.parse(objStr);
-		        var size = Object.keys(jsonl.list).length;
-		        
-		        values = "<table class='table table-striped table-bordered table-responsive' style='min-width:550px;'><thead><tr><th>(월)</th><th>목표(원)</th><th>매출(원)</th><th>달성(%)</th></thead>"
-		            + "<tbody>";
-					for(var i in jsonl.list){
-						values+="<tr><td>"+jsonl.list[i].goalMonth+"</td>"+
-									"<td>"+jsonl.list[i].goalMoney+"</td>"+
-									"<td>"+jsonl.list[i].sales+"</td>"+
-									"<td>"+jsonl.list[i].acheive+"%</td></tr>"				
-						goal.push(jsonl.list[i].goalMoney);
-						perform.push(jsonl.list[i].sales);
-						month.push(jsonl.list[i].goalMonth);
-					}
-					
-		            values +="</tbody></table>";
-		            $('#goalEmpTable').html(values);
-		            drawChart();
-		   		}
-	   	  });
-	     
-		
-	}
 
 
 	function searchEmp(){
@@ -138,8 +89,13 @@ display:none;
 }
 #getvalues td:nth-child(5){
 display:none;
-}
 
+}
+#container {
+  height: 300px;
+  min-width: 310px;
+  max-width: 800px;
+}
 </style>
 </head>
 
@@ -163,7 +119,9 @@ display:none;
 			</div>
 
 			<!-- top navigation -->
+
 			<%@ include file="../etc/topnav.jsp"%>
+
 			<!-- /top navigation -->
 
 			<!-- page content -->
@@ -239,10 +197,7 @@ display:none;
 									
 
 									<div class="col-md-9 col-sm-9 col-xs-12">
-										<div id="chart_div_1">
-											<canvas id="chart"></canvas>
-										</div>
-										
+										<div id="container"></div>
 									</div>
 	
 								</div>
@@ -259,63 +214,168 @@ display:none;
 						</div>
 					</div>
 				</div>
+				   <%@ include file="../etc/footer.jsp" %>
 			</div>
 			<!-- /page content -->
 		</div>
 	
+    
 	<!-- jQuery -->
 	<script src="resources/vendors/jquery/dist/jquery.min.js"></script>
+	
 	<!-- Bootstrap -->
 	<script src="resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
 	
 	<!-- Custom Theme Scripts -->
 	<script src="resources/build/js/custom.min.js"></script>
 	
-	<!-- Chart -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	
     
    	<script type="text/javascript">
-   		function drawChart(){
-   			
-   			var data = {
-   				  labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
-   				  datasets: [{
-   				    label: "Dataset #1",
-   				    backgroundColor: "rgba(255,99,132,0.2)",
-   				    borderColor: "rgba(255,99,132,1)",
-   				    borderWidth: 2,
-   				    hoverBackgroundColor: "rgba(255,99,132,0.4)",
-   				    hoverBorderColor: "rgba(255,99,132,1)",
-   				    data: [65, 59, 20, 81, 56, 55, 40],
-   				  }]
-   				};
+   	var goal= [];
+	var perform =[];
+	var month = [];
 
-   				var options = {
-   				  maintainAspectRatio: false,
-   				  scales: {
-   				    yAxes: [{
-   				      stacked: true,
-   				      gridLines: {
-   				        display: true,
-   				        color: "rgba(255,99,132,0.2)"
-   				      }
-   				    }],
-   				    xAxes: [{
-   				      gridLines: {
-   				        display: false
-   				      }
-   				    }]
-   				  }
-   				};
+	function selectEmp(obj){
+		
+		 var content = $(obj);
+	     var td = content.children();
+	
+	     var emp_name = td.eq(0).text();
+	     var dept_name = td.eq(1).text();
+	     var emp_job = td.eq(2).text();
+	     var emp_email = td.eq(3).text();
+	      emp_no = td.eq(4).text();
+	     $('#searchModal').modal("hide");
+	
+	 
+	      $.ajax({
+	  	  url:"getgoalInfo.do",
+		    type:"post",
+		    dataType:"json",
+		    data:{
+		    	emp_no:emp_no
+		    },
+		    success:function(obj){
+		    	
+		    	var objStr = JSON.stringify(obj);
+		        var jsonl = JSON.parse(objStr);
+		        var size = Object.keys(jsonl.list).length;
+		        
+		        values = "<table class='table table-striped table-bordered table-responsive' style='min-width:550px;'><thead><tr><th>(월)</th><th>목표(원)</th><th>매출(원)</th><th>달성(%)</th></thead>"
+		            + "<tbody>";
+					for(var i in jsonl.list){
+						values+="<tr><td>"+jsonl.list[i].goalMonth+"</td>"+
+									"<td>"+jsonl.list[i].goalMoney+"</td>"+
+									"<td>"+jsonl.list[i].sales+"</td>"+
+									"<td>"+jsonl.list[i].acheive+"%</td></tr>"				
+						goal.push(jsonl.list[i].goalMoney);
+						perform.push(jsonl.list[i].sales);
+						month.push(jsonl.list[i].goalMonth);
+					}
+					
+		            values +="</tbody></table>";
+		            $('#goalEmpTable').html(values);
+		            
+		            drawChart();
+		   		}
+	   	  });
+	     
+		
+	}
+	
 
-   				Chart.Bar('chart', {
-   				  options: options,
-   				  data: data
-   				});
+	   	function drawChart(){
+	   		var chart = Highcharts.chart('container', {
 
-   		}
-   	
+	   		  chart: {
+	   		    type: 'column'
+	   		  },
+
+	   		  title: {
+	   		    text: 'Highcharts responsive chart'
+	   		  },
+
+	   		  subtitle: {
+	   		    text: 'Resize the frame or click buttons to change appearance'
+	   		  },
+
+	   		  legend: {
+	   		    align: 'right',
+	   		    verticalAlign: 'middle',
+	   		    layout: 'vertical'
+	   		  },
+
+	   		  xAxis: {
+	   		    categories: ['Apples', 'Oranges', 'Bananas'],
+	   		    labels: {
+	   		      x: -10
+	   		    }
+	   		  },
+
+	   		  yAxis: {
+	   		    allowDecimals: false,
+	   		    title: {
+	   		      text: 'Amount'
+	   		    }
+	   		  },
+
+	   		  series: [{
+	   		    name: 'Christmas Eve',
+	   		    data: [1, 4, 3]
+	   		  }, {
+	   		    name: 'Christmas Day before dinner',
+	   		    data: [6, 4, 2]
+	   		  }, {
+	   		    name: 'Christmas Day after dinner',
+	   		    data: [8, 4, 3]
+	   		  }],
+
+	   		  responsive: {
+	   		    rules: [{
+	   		      condition: {
+	   		        maxWidth: 500
+	   		      },
+	   		      chartOptions: {
+	   		        legend: {
+	   		          align: 'center',
+	   		          verticalAlign: 'bottom',
+	   		          layout: 'horizontal'
+	   		        },
+	   		        yAxis: {
+	   		          labels: {
+	   		            align: 'left',
+	   		            x: 0,
+	   		            y: -5
+	   		          },
+	   		          title: {
+	   		            text: null
+	   		          }
+	   		        },
+	   		        subtitle: {
+	   		          text: null
+	   		        },
+	   		        credits: {
+	   		          enabled: false
+	   		        }
+	   		      }
+	   		    }]
+	   		  }
+	   		});
+
+	   		$('#small').click(function () {
+	   		  chart.setSize(400, 300);
+	   		});
+
+	   		$('#large').click(function () {
+	   		  chart.setSize(600, 300);
+	   		});
+
+
+
+	   	}
+	
    	</script> 
 
 </body>

@@ -625,7 +625,7 @@ $(function(){
        }
        
     </script>
-<<<<<<< HEAD
+
     
     <script type="text/javascript"> //매출현황, 평균주문액 등
     $(function() {
@@ -644,10 +644,8 @@ $(function(){
     
     </script>
     
-    <style>
-   
-=======
->>>>>>> branch 'master' of https://github.com/kjh0430/gb
+
+
 
   <style type="text/css">
    .form-control{
