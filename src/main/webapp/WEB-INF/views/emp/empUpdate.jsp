@@ -104,23 +104,89 @@ function selectMgrNo(obj){
 
 function empUpdate(){
 	
+	var allCheck=false;
+	
+	var emp_no = $('#emp_no').val();
 	var emp_pwd = $('#emp_pwd').val();
 	var emp_name = $('#emp_name').val();
 	var emp_addr = $('#emp_addr').val();
+	var job_no = $('#job_no').val();
 	var emp_phone = $('#emp_phone').val();
 	var emp_email = $('#emp_email').val();
 	var emp_mgr = $('#emp_mgr').val();
+	var emp_hiredate = $('#emp_hiredate').val();
+	var city = $('#city').val();
+	var county = $('#county').val();
+	var village = $('#village').val();
+	var dept_no = $('#dept_no').val();
 	
+	var num = new RegExp("[0-9]");
 	var pwd_pattern= /^[A-Za-z0-9]{5,10}$/; //숫자와 문자 포함 형태의  5에서 10자리 비밀번호
+	var phone_check = /^\d{3}-\d{3,4}-\d{4}$/;
+	var email_check = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 	
 	if(!pwd_pattern.test(emp_pwd)){
 		alert("비밀번호는 숫자,문자 포함 5~10자리 입니다.");
 		allCheck=false;
 		return allCheck; 
-	}else{		
-		alert("수정이 완료 되었습니다.");
-		allCheck=true;
-		return allCheck;		
+	}if(emp_name.length < 1){
+		alert("사원이름을 입력해주세요.");
+		allCheck=false;
+		return allCheck;
+	}if(emp_addr.length < 1){
+		alert("주소를 입력해주세요.");
+		allCheck=false;
+		return allCheck;
+	}if(emp_phone.length < 1){
+		alert("연락처를 입력해주세요.");
+		allCheck=false;
+		return allCheck;
+	}if(emp_email.length < 1){
+		alert("e-mail을 입력해주세요.");
+		allCheck=false;
+		return allCheck;
+	}if(emp_mgr.length == 0){
+		alert("상사번호를 입력해주세요.");
+		allCheck=false;
+		return allCheck;
+	}if(!num.test(emp_mgr)){
+		alert("상사번호는 숫자만 입력할 수 있습니다.");
+		allCheck=false;
+		return allCheck;
+	}if(emp_name.length > 1 && pwd_pattern.test(emp_pwd) && emp_addr.length > 1 && emp_phone.length > 1 && emp_email.length > 1 && emp_mgr.length != 0 && num.test(emp_mgr)){
+		
+		console.log("ajax 실행");
+		
+		$.ajax({
+   		url : "empupdate.do",
+   		type: "post",
+   		dataType: "json",
+   		data: {
+   			emp_no : emp_no,
+   			emp_name : emp_name,
+   			emp_pwd : emp_pwd,    			
+   			emp_addr : emp_addr,
+   			emp_phone : emp_phone,
+   			job_no : job_no,
+   			emp_email : emp_email,
+   			emp_mgr : emp_mgr,
+   			emp_hiredate : emp_hiredate,
+   			city : city,
+   			county : county,
+   			village : village,
+   			dept_no : dept_no											    			
+   		},
+   		success:function(obj){
+   				alert("사원정보가 수정 되었습니다.");
+   				location.href="empList.do";    			
+   			},
+   			error: function(request, status, errorData){
+   				console.log("error code : " + request.status + "\n"
+   						+ "message : " + request.responseText + "\n"
+   						+ "error : " + errorData);
+   				
+   			}
+   		});		
 	}
 }
 
@@ -201,7 +267,7 @@ text-align:center;
 								
 								
 					<!-- 사원 수정폼 -->
-					<form class="form-horizontal form-label-left" action="empupdate.do" method="post" onsubmit="return empUpdate();">	
+					<form class="form-horizontal form-label-left">	
 					 <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">사원번호</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -335,7 +401,7 @@ text-align:center;
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                          <button class="btn btn-success" type="submit">수정</button>                    
+                          <button class="btn btn-success" type="button" onclick="empUpdate()">수정</button>                    
                           <button class="btn btn-primary" type="button" onclick="backMyInfo()">취소</button>                     
                         </div>
                       </div>
