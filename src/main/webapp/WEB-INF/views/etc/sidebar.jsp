@@ -41,7 +41,7 @@
 	        <ul class="nav child_menu">
 
 	          <li><a href="productList.do">제품관리</a></li>
-	          <li><a href="MovegoalState.do">목표현황</a></li>
+	          <li><a href="myGoal.do">목표현황</a></li>
 	          <li><a href="moveDailyReport.do">영업일지</a></li>
 	        </ul>
 	      </li>

@@ -642,8 +642,12 @@ $(function(){
     	   
        }
        }
+<<<<<<< HEAD
        
     </script>
+=======
+       </script>
+>>>>>>> branch 'master' of https://github.com/kjh0430/gb
 
     
     <script type="text/javascript"> //매출현황, 평균주문액 등
