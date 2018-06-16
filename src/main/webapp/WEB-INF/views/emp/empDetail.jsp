@@ -61,15 +61,16 @@ $(function(){
 			var objStr = JSON.stringify(obj);
 			var jsonl = JSON.parse(objStr);
 			
-			var emp_mgar_name = jsonl.emp_name
+			var mgrname = jsonl.emp_name;
 			
 			console.log("jsonl.emp_name : " + jsonl.emp_name);
-			console.log("emp_mgar_name : " + emp_mgar_name);
+			console.log("mgrname : " + mgrname);
 			
-			
-			
-			$('#style1_mgr').html('<input type="text" class="form-control" id="emp_mgr" name="emp_mgr" value="emp_mgar_name" readonly>');
-			},
+			$('#style1_mgr').html('<input type="text" class="form-control" id="emp_mgr2" name="emp_mgr2" value="" readonly>');
+			$('#emp_mgr2').val(mgrname);
+		
+		}
+		,
 			error: function(){
 				console.log("상사이름 가져오기 에러");
 				$('#style1_mgr').html('<input type="text" class="form-control" id="emp_mgr" name="emp_mgr" value="" readonly>');
