@@ -239,7 +239,7 @@ public class OrderController {
 			model.addAttribute("endPage",endPage);
 			model.addAttribute("maxPage",maxPage);
 			model.addAttribute("blockBegin",blockBegin);
-			model.addAttribute("blockEnd",blockEnd);
+			model.addAttribute("blockEnd",blockEnd); 
 			model.addAttribute("curBlock",curBlock);
 			model.addAttribute("totBlock",totBlock);
 			model.addAttribute("prevBlock",prevBlock);
