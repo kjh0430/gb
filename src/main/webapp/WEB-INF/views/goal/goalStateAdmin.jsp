@@ -149,8 +149,7 @@ display:none;
                                           <div class="modal-body">
                                              <div class="form-group" style="margin: 0px;">
                                                 <div class="row">
-                                                   <label
-                                                      class="control-label col-md-3 col-sm-3 col-xs-12"></label>
+                                                   <label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
                                                    <div class="col-md-9 col-sm-9 col-xs-12">
                                                       <div class="input-group">
 
@@ -200,7 +199,7 @@ display:none;
 					<div class="row" style="vertical-align: middle;">
 						<div class="col-xs-12">
 							<div class="x_panel">
-								<div id="goalEmpTable"></div>								
+								<div id="goalEmpTable" style="overflow:auto"></div>								
 							</div>
 						</div>
 					</div>
@@ -246,7 +245,7 @@ display:none;
 		        var jsonl = JSON.parse(objStr);
 		        var size = Object.keys(jsonl.list).length;
 		        
-		        values = "<table class='table table-striped table-bordered table-responsive' style='min-width:550px;'><thead><tr><th>(월)</th><th>목표(원)</th><th>매출(원)</th><th>달성(%)</th></thead>"
+		        values = "<table class='table table-striped table-bordered table-responsive' style='min-width:500px;'><thead><tr><th>(월)</th><th>목표(원)</th><th>매출(원)</th><th>달성(%)</th></thead>"
 		            + "<tbody>";
 					for(var i in jsonl.list){
 						values+="<tr><td>"+jsonl.list[i].goalMonth+"</td>"+
@@ -343,7 +342,7 @@ display:none;
 	   		  }],
 	   		  yAxis: [{ // Primary yAxis
 	   		    labels: {
-	   		       format: '{value} 원', 
+	   		       format: false, 
 	   		      style: {
 	   		        color: Highcharts.getOptions().colors[1]
 	   		      }
@@ -362,7 +361,7 @@ display:none;
 	   		      }
 	   		    },
 	   		    labels: {
-	   		      format: '{value} 원',
+	   		      format:false,
 	   		      style: {
 	   		        color: Highcharts.getOptions().colors[0]
 	   		      }
@@ -380,7 +379,36 @@ display:none;
 	   		    y: 100,
 	   		    floating: true,
 	   		    backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
-	   		  },
+	   		  },responsive: {
+	   	        rules: [{
+	   	            condition: {
+	   	                maxWidth: 500
+	   	            },
+	   	            chartOptions: {
+	   	                legend: {
+	   	                    align: 'center',
+	   	                    verticalAlign: 'bottom',
+	   	                    layout: 'horizontal'
+	   	                },
+	   	                yAxis: {
+	   	                    labels: {
+	   	                        align: 'left',
+	   	                        x: 0,
+	   	                        y: -5
+	   	                    },
+	   	                    title: {
+	   	                        text: null
+	   	                    }
+	   	                },
+	   	                subtitle: {
+	   	                    text: null
+	   	                },
+	   	                credits: {
+	   	                    enabled: false
+	   	                }
+	   	            }
+	   	        }]
+	   	    },
 	   		  exporting:{
 	   			 'enabled':false 
 	   		  },
