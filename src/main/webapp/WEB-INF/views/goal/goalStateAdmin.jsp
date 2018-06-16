@@ -24,9 +24,6 @@
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script>
 
-	
-
-
 	function searchEmp(){
 	
 		emp_name=$('#empName').val();
@@ -233,6 +230,46 @@ display:none;
 	
     
    	<script type="text/javascript">
+   	
+   	$(document).ready(function() {
+   	//모든 사원의 목표,달성 등등 가져오기
+   	
+   	 $.ajax({
+	  	  url:"getAll.do",
+		    type:"post",
+		    dataType:"json",
+		    success:function(obj){
+		    	
+		    	var objStr = JSON.stringify(obj);
+		        var jsonl = JSON.parse(objStr);
+		        var size = Object.keys(jsonl.list).length;
+		        
+		        values = "<table class='table table-striped table-bordered table-responsive' style='min-width:550px;'><thead><tr><th>(월)</th><th>목표(원)</th><th>매출(원)</th><th>달성(%)</th></thead>"
+		            + "<tbody>";
+					for(var i in jsonl.list){
+						values+="<tr><td>"+jsonl.list[i].goalMonth+"</td>"+
+									"<td>"+jsonl.list[i].goalMoney+"</td>"+
+									"<td>"+jsonl.list[i].sales+"</td>"+
+									"<td>"+jsonl.list[i].acheive+"%</td></tr>"				
+						goal.push(jsonl.list[i].goalMoney);
+						perform.push(jsonl.list[i].sales);
+						month.push(jsonl.list[i].goalMonth);
+					}
+					
+		            values +="</tbody></table>";
+		            $('#goalEmpTable').html(values);
+		            
+		            drawChart();
+		   		}
+	   	  });
+   		
+   		
+   		
+   		
+   	});
+   	
+   	
+   	
    	var goal= [];
 	var perform =[];
 	var month = [];
