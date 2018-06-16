@@ -1227,8 +1227,9 @@ $(function(){
    	<script>
    	var amount=[];
 	var pname=[];
-  $(function(){
-	  $.ajax({
+	var c_data=[];
+ 	 $(function(){
+		  $.ajax({
 			url:"productShare.do",
 			type:"post",
 			dataType:"json",
@@ -1237,10 +1238,13 @@ $(function(){
 				var objStr =JSON.stringify(data);
 				var result = JSON.parse(objStr);				
 				
-				for(var i in result.list){
-					amount.push(result.list[i].total);
-					pname.push(result.list[i].product_name);
-				}	
+				for ( var i in result.list) {
+					c_data[i] = {
+							name :result.list[i].product_name,
+							y : result.list[i].total
+						};
+				}
+		
 				getChart();
 			} 
 		
@@ -1278,7 +1282,8 @@ $(function(){
 		  series: [{
 		    name: '점유율',
 		    colorByPoint: true,
-		    data: [{
+		    data:c_data
+		    	/*  [{
 		      name: 'Chrome',
 		      y: 61.41,
 		      sliced: true,
@@ -1298,7 +1303,7 @@ $(function(){
 		    }, {
 		      name: 'Other',
 		      y: 7.05
-		    }]
+		    }] */
 		  }]
 		});
   }
