@@ -241,7 +241,7 @@ function searchCondition(){
 									<ul class="pagination">
 									<!-- if문 -->
 									 <c:if test="${curBlock>1}">
-										<li class="page-item"><a class="page-link" href="orderList.do?page=1">prev </a></li>
+										<li class="page-item"><a class="page-link" href="orderList.do?page=1"><<</a></li>
 									
 									</c:if> 
 									
@@ -286,9 +286,8 @@ function searchCondition(){
 									
 									<!-- 다음페이지 next -->
 									
-									<c:if test="${curBlock!=totBlock}">
-										<li class="page-item"><a class="page-link" href="orderList.do?page=${maxPage}">next</a></li>	
-									
+									<c:if test="${curBlock < endPage}">
+										<li class="page-item"><a class="page-link" href="orderList.do?page=${maxPage}">>></a></li>				
 									</c:if> 										
 										
 									</ul>
