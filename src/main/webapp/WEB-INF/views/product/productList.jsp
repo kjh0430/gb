@@ -105,10 +105,12 @@ return index;
 					<div class="row">
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
+								<c:if test="${ loginEmp.job_no == 3}">
 								<div class="x_title" style="text-align:right">
 									<button class="btn btn-primary" onclick="location.href='moveProductInsert.do'">제품등록</button>
 									<div class="clearfix"></div>
 								</div>
+								</c:if>
 								<div class="x_content">
 									
 									<table id="table_pl" class="table table-striped table-bordered table-responsive" style="min-width:550px;">

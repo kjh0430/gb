@@ -163,7 +163,11 @@ function list(page){
 									<ul class="pagination">
 									<!-- if문 -->
 									 <c:if test="${curBlock>1}">
+<<<<<<< HEAD
+										<li class="page-item"><a class="page-link" href="accountList.do?page=1">PREV</a></li>
+=======
 										<li class="page-item"><a class="page-link" href="accountList.do?page=1&client_company=${client_company}">PREV</a></li>
+>>>>>>> branch 'master' of https://github.com/kjh0430/gb
 									
 									</c:if> 
 									
@@ -173,7 +177,11 @@ function list(page){
 								
 									
 									 <c:if test="${curBlock>1}">
+<<<<<<< HEAD
+										<li class="page-item"><a class="page-link" href="accountList.do">prev</a></li>
+=======
 										<li class="page-item"><a class="page-link" href="accountList.do?page=${blockBegin-1}&client_company=${client_company}">prev</a></li>
+>>>>>>> branch 'master' of https://github.com/kjh0430/gb
 									
 									</c:if> 
 									

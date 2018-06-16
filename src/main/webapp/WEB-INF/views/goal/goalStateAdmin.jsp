@@ -23,188 +23,113 @@
 <!-- Custom Theme Style -->
 <link href="resources/build/css/custom.min.css" rel="stylesheet">
 
-
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-	<script type="text/javascript">
-		google.charts.load('current', {'packages':['corechart']});
-		google.charts.setOnLoadCallback(drawVisualization);
-	
-		function drawVisualization() { 
-			var data = google.visualization.arrayToDataTable([
-					['Month', 'Bolivia', 'Ecuador', 'Madagascar', 'Papua New Guinea', 'Rwanda', 'Average'],
-					['2004/05',  165,      938,         522,             998,           450,      614.6],
-					['2005/06',  135,      1120,        599,             1268,          288,      682],
-					['2006/07',  157,      1167,        587,             807,           397,      623],
-					['2007/08',  139,      1110,        615,             968,           215,      609.4],
-					['2008/09',  136,      691,         629,             1026,          366,      569.6]
-				]);
-			var options = {
-					title : 'Monthly Coffee Production by Country',
-					vAxis: {title: 'Cups'},
-					hAxis: {title: 'Month'}, 
-					seriesType: 'bars',
-					series: {5: {type: 'line'}}
-				};
-			
-			var chart = new google.visualization.ComboChart(document.getElementById('chart_div_1'));
-			chart.draw(data, options);
-		}
-	</script>
-
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-
-			google.charts.load('current', {packages: ['corechart', 'bar']});
-			google.charts.setOnLoadCallback(drawStacked);
-			
-			function drawStacked() {
-			      var data = google.visualization.arrayToDataTable([
-			        ['City', '2010 Population', '2000 Population'],
-			        ['New York City, NY', 8175000, 8008000],
-			        ['Los Angeles, CA', 3792000, 3694000],
-			        ['Chicago, IL', 2695000, 2896000],
-			        ['Houston, TX', 2099000, 1953000],
-			        ['Philadelphia, PA', 1526000, 1517000]
-			      ]);
-			
-			      var options = {
-			        title: 'Population of Largest U.S. Cities',
-			        chartArea: {width: '50%'},
-			        isStacked: true,
-			        hAxis: {
-			          title: 'Total Population',
-			          minValue: 0,
-			        },
-			        vAxis: {
-			          title: 'City'
-			        }
-			      };
-			      var chart = new google.visualization.BarChart(document.getElementById('chart_div_2'));
-			      chart.draw(data, options);
-			    }
-
-
-
-
-</script>
 <script>
-function selectEmp(obj){
-	
-	
-	
-	 var content = $(obj);
-     var td = content.children();
 
-     var emp_name = td.eq(0).text();
-     var dept_name = td.eq(1).text();
-     var emp_job = td.eq(2).text();
-     var emp_email = td.eq(3).text();
-      emp_no = td.eq(4).text();
-     $('#searchModal').modal("hide");
-
- 
-      $.ajax({
-    url:"getgoalInfo.do",
-    type:"post",
-    dataType:"json",
-    data:{
-    	emp_no:emp_no
-    	
-    },
-    success:function(obj){
-    	
-    	var objStr = JSON.stringify(obj);
-        var jsonl = JSON.parse(objStr);
-        var size = Object.keys(jsonl.list).length;
-        
-        values = "<table class='table table-striped table-bordered table-responsive' style='min-width:550px;'><thead><tr><th>(월)</th><th>목표(원)</th><th>매출(원)</th><th>달성(%)</th></thead>"
-            + "<tbody>"
- 
-			
-			for(var i in jsonl.list){
-				
-				
-				
-			values+="<tr><td>"+jsonl.list[i].goalMonth+"</td>"+
-						"<td>"+jsonl.list[i].goalMoney+"</td>"+
-						"<td>"+jsonl.list[i].sales+"</td>"+
-						"<td>"+jsonl.list[i].acheive+"%</td></tr>"				
-				
-			}
-            values +="</tbody></table>";
-            $('#goalEmpTable').html(values);
-    }
-    	 
-    	 
-    	 
-     });
-     
-	
-}
-
-
-function searchEmp(){
-
-	emp_name=$('#empName').val();
-	
-	if($('#empName').val()!=null){
-	
-	$.ajax({
-	url:"search.do",
-	type:"post",
-	dataType:"json",
-	data:{
-		emp_name:emp_name,
-		emp_no:"${loginEmp.emp_no}"
-	},
-	success :function(obj){
-		var objStr = JSON.stringify(obj);
-        var jsonl = JSON.parse(objStr);
-        var size = Object.keys(jsonl.list).length;	
+	var goal= [];
+	var perform =[];
+	var month = [];
+	function selectEmp(obj){
 		
-     	if(size>0){
-            var value = "<table class='table table-hover' id='getvalues'><thead><tr><th>이름</th><th>직급</th><th>부서</th><th>e-mail</th><th>사원번호</th></tr></thead><tbody>";
-
-               for ( var i in jsonl.list) {
-
-                  value += "<tr onclick='selectEmp(this);' style='cusor:hand'><td>"
-                        + jsonl.list[i].emp_name
-                        + "</td><td>"
-                        + jsonl.list[i].emp_job
-                        + "</td><td>"
-                        + jsonl.list[i].dept_name
-                        + "</td><td>"
-                        + jsonl.list[i].emp_email
-                        + "</td><td>"
-                        + jsonl.list[i].emp_no + "</td></tr>";
-               }
-
-               value += "</tbody></table>";
-
-               $('#searchModal').modal("show");
-               $('#searchTable').html(value);
-
-               
-     	}else{
-     		values="<br><br><br><br><br><br><h2 style='text-align:center;'>검색 결과가 없습니다."+
-     		"</h2><br><br><br><br><br><br>"
-     		 $('#searchModal').modal("show");
-            $('#searchTable').html(values);
-     		
-     	}
+		 var content = $(obj);
+	     var td = content.children();
+	
+	     var emp_name = td.eq(0).text();
+	     var dept_name = td.eq(1).text();
+	     var emp_job = td.eq(2).text();
+	     var emp_email = td.eq(3).text();
+	      emp_no = td.eq(4).text();
+	     $('#searchModal').modal("hide");
+	
+	 
+	      $.ajax({
+	    url:"getgoalInfo.do",
+		    type:"post",
+		    dataType:"json",
+		    data:{
+		    	emp_no:emp_no
+		    },
+		    success:function(obj){
+		    	
+		    	var objStr = JSON.stringify(obj);
+		        var jsonl = JSON.parse(objStr);
+		        var size = Object.keys(jsonl.list).length;
+		        
+		        values = "<table class='table table-striped table-bordered table-responsive' style='min-width:550px;'><thead><tr><th>(월)</th><th>목표(원)</th><th>매출(원)</th><th>달성(%)</th></thead>"
+		            + "<tbody>";
+					for(var i in jsonl.list){
+						values+="<tr><td>"+jsonl.list[i].goalMonth+"</td>"+
+									"<td>"+jsonl.list[i].goalMoney+"</td>"+
+									"<td>"+jsonl.list[i].sales+"</td>"+
+									"<td>"+jsonl.list[i].acheive+"%</td></tr>"				
+						goal.push(jsonl.list[i].goalMoney);
+						perform.push(jsonl.list[i].sales);
+						month.push(jsonl.list[i].goalMonth);
+					}
+					
+		            values +="</tbody></table>";
+		            $('#goalEmpTable').html(values);
+		            drawChart();
+		   		}
+	   	  });
+	     
+		
 	}
-            
-         	
-        
+
+
+	function searchEmp(){
 	
+		emp_name=$('#empName').val();
+		
+		if($('#empName').val()!=null){
+		
+		$.ajax({
+		url:"search.do",
+		type:"post",
+		dataType:"json",
+		data:{
+			emp_name:emp_name,
+			emp_no:"${loginEmp.emp_no}"
+		},
+		success :function(obj){
+			var objStr = JSON.stringify(obj);
+	        var jsonl = JSON.parse(objStr);
+	        var size = Object.keys(jsonl.list).length;	
+			
+	     	if(size>0){
+	            var value = "<table class='table table-hover' id='getvalues'><thead><tr><th>이름</th><th>직급</th><th>부서</th><th>e-mail</th><th>사원번호</th></tr></thead><tbody>";
 	
-	});
-	}else{
-		alert("검색할 사원을 입력해주세요.");
+	               for ( var i in jsonl.list) {
+	
+	                  value += "<tr onclick='selectEmp(this);' style='cusor:hand'><td>"
+	                        + jsonl.list[i].emp_name
+	                        + "</td><td>"
+	                        + jsonl.list[i].emp_job
+	                        + "</td><td>"
+	                        + jsonl.list[i].dept_name
+	                        + "</td><td>"
+	                        + jsonl.list[i].emp_email
+	                        + "</td><td>"
+	                        + jsonl.list[i].emp_no + "</td></tr>";
+	               }
+	
+	               value += "</tbody></table>";
+	
+	               $('#searchModal').modal("show");
+	               $('#searchTable').html(value);
+	     	}else{
+	     		values="<br><br><br><br><br><br><h2 style='text-align:center;'>검색 결과가 없습니다."+
+	     		"</h2><br><br><br><br><br><br>"
+	     		 $('#searchModal').modal("show");
+	            $('#searchTable').html(values);	     		
+	    	 	}
+			}
+		});
+		}else{
+			alert("검색할 사원을 입력해주세요.");
+		}
+		
+		
 	}
-	
-	
-}
 
 </script>
 <style>
@@ -311,80 +236,15 @@ display:none;
 							<div class="x_panel">
 								<div class="dashboard_graph">
 
-									<div class="row x_title">
-										<div class="col-md-6">
-											<h3>
-												Network Activities <small>Graph title sub-title</small>
-											</h3>
-										</div>
-										<div class="col-md-6">
-											<div id="reportrange" class="pull-right"
-												style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
-												<i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
-												<span>December 30, 2014 - January 28, 2015</span> <b
-													class="caret"></b>
-											</div>
-										</div>
-									</div>
+									
 
 									<div class="col-md-9 col-sm-9 col-xs-12">
-										<div id="chart_div_1" style="width:900px; height: 500px;"></div>
-										<hr>
-										<div id="chart_div_2"></div>
+										<div id="chart_div_1">
+											<canvas id="chart"></canvas>
+										</div>
+										
 									</div>
-									
-									  
-									
-									<!-- <div class="col-md-3 col-sm-3 col-xs-12 bg-white">
-									
-									
-										<div class="x_title">
-											<h2>Top Campaign Performance</h2>
-											<div class="clearfix"></div>
-										</div>
-
-										<div class="col-md-12 col-sm-12 col-xs-6">
-											<div>
-												<p>Facebook Campaign</p>
-												<div class="">
-													<div class="progress progress_sm" style="width: 76%;">
-														<div class="progress-bar bg-green" role="progressbar"
-															data-transitiongoal="80"></div>
-													</div>
-												</div>
-											</div>
-											<div>
-												<p>Twitter Campaign</p>
-												<div class="">
-													<div class="progress progress_sm" style="width: 76%;">
-														<div class="progress-bar bg-green" role="progressbar"
-															data-transitiongoal="60"></div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="col-md-12 col-sm-12 col-xs-6">
-											<div>
-												<p>Conventional Media</p>
-												<div class="">
-													<div class="progress progress_sm" style="width: 76%;">
-														<div class="progress-bar bg-green" role="progressbar"
-															data-transitiongoal="40"></div>
-													</div>
-												</div>
-											</div>
-											<div>
-												<p>Bill boards</p>
-												<div class="">
-													<div class="progress progress_sm" style="width: 76%;">
-														<div class="progress-bar bg-green" role="progressbar"
-															data-transitiongoal="50"></div>
-													</div>
-												</div>
-											</div>
-										</div>
-
-									</div> -->
+	
 								</div>
 							</div>
 						</div>
@@ -394,12 +254,7 @@ display:none;
 					<div class="row" style="vertical-align: middle;">
 						<div class="col-xs-12">
 							<div class="x_panel">
-							<div id="goalEmpTable"></div>
-								
-								
-									
-									
-								</table>
+								<div id="goalEmpTable"></div>								
 							</div>
 						</div>
 					</div>
@@ -407,16 +262,61 @@ display:none;
 			</div>
 			<!-- /page content -->
 		</div>
-
+	
 	<!-- jQuery -->
 	<script src="resources/vendors/jquery/dist/jquery.min.js"></script>
 	<!-- Bootstrap -->
 	<script src="resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
 	
-	
-
 	<!-- Custom Theme Scripts -->
 	<script src="resources/build/js/custom.min.js"></script>
+	
+	<!-- Chart -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    
+   	<script type="text/javascript">
+   		function drawChart(){
+   			
+   			var data = {
+   				  labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+   				  datasets: [{
+   				    label: "Dataset #1",
+   				    backgroundColor: "rgba(255,99,132,0.2)",
+   				    borderColor: "rgba(255,99,132,1)",
+   				    borderWidth: 2,
+   				    hoverBackgroundColor: "rgba(255,99,132,0.4)",
+   				    hoverBorderColor: "rgba(255,99,132,1)",
+   				    data: [65, 59, 20, 81, 56, 55, 40],
+   				  }]
+   				};
+
+   				var options = {
+   				  maintainAspectRatio: false,
+   				  scales: {
+   				    yAxes: [{
+   				      stacked: true,
+   				      gridLines: {
+   				        display: true,
+   				        color: "rgba(255,99,132,0.2)"
+   				      }
+   				    }],
+   				    xAxes: [{
+   				      gridLines: {
+   				        display: false
+   				      }
+   				    }]
+   				  }
+   				};
+
+   				Chart.Bar('chart', {
+   				  options: options,
+   				  data: data
+   				});
+
+   		}
+   	
+   	</script> 
 
 </body>
 </html>
