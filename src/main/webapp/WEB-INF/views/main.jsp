@@ -52,22 +52,15 @@
 			 event=new Array();
 		
 	
-	for ( var i in json.list) {
-		
+		for ( var i in json.list) {
 			event.push({
 				title: json.list[i].calendar_title,
 				start:json.list[i].calendar_start_date,
 				end:json.list[i].calendar_end_date,
 				url:"javascript:detailCalendar("+json.list[i].calendar_no+")"
 			});
-			
-									 
 		 };
 		
-		
-		
-
-			
 			$('#myCalendar').fullCalendar({
 	    		  				
 			 	header: {
@@ -79,10 +72,6 @@
 				  weekNumbers: true,
 				  
 				 events:event
-					
-					 
-					
-					
 					 
 	    	}); 
 					
@@ -100,53 +89,41 @@
     	calendarLoad();
     	
   	}); 
-  		function Schedule(){
-  		
-  		$.ajax({
-  			
-  		url:"getInfo.do",               
-  		data:{emp_no :"${loginEmp.emp_no}",dept_no :"${loginEmp.dept_no}"},
-  		type:"post",
-  		dataType:"json",
-  		success:function(data){
-  			
+ 	function Schedule(){
+ 		$.ajax({
+ 		url:"getInfo.do",               
+ 		data:{emp_no :"${loginEmp.emp_no}",dept_no :"${loginEmp.dept_no}"},
+ 		type:"post",
+ 		dataType:"json",
+ 		success:function(data){
   			$('#addwriter').val(data.emp_name);
   			$('#adddept_name').val(data.calendar_dept_name);
   			$('#modal3').modal("show");
-  			
-  			
-  		}
-  		
-  		});
-  		
-  			
-  			
-  			
   			}
-  			
+ 		
+ 		});
+ 	}//Schedule
   		
   		//일정 비교 (수정)
- 		function checkDate(){
- 			var ckModistartDate=$('#startDateM').val();
- 			var sArr=ckModistartDate.split('-');
- 		
- 			
- 			var ckModiendDate=$('#endDateM').val();
- 			var eArr=ckModiendDate.split('-');
- 			
- 			var start1 =new Date(sArr[0],parseInt(sArr[1])-1,sArr[2]);
- 			var end1 =new Date(eArr[0],parseInt(eArr[1])-1,eArr[2]);
- 			
- 			if(start1.getTime()>end1.getTime()){
- 				alert("시작 날짜 또는 종료 날짜가 유효하지 않습니다.");
- 			}
-  	} 	
+	function checkDate(){
+		var ckModistartDate=$('#startDateM').val();
+		var sArr=ckModistartDate.split('-');
+		
+		var ckModiendDate=$('#endDateM').val();
+		var eArr=ckModiendDate.split('-');
+		
+		var start1 =new Date(sArr[0],parseInt(sArr[1])-1,sArr[2]);
+		var end1 =new Date(eArr[0],parseInt(eArr[1])-1,eArr[2]);
+		
+		if(start1.getTime()>end1.getTime()){
+			alert("시작 날짜 또는 종료 날짜가 유효하지 않습니다.");
+		}
+	} 	
   		//일정 비교(추가)
 		function checkDates(){
  			var ckModistartDate=$('#addstartDate').val();
  			var sArr=ckModistartDate.split('-');
  		
- 			
  			var ckModiendDate=$('#addendDate').val();
  			var eArr=ckModiendDate.split('-');
  			
@@ -156,14 +133,12 @@
  			if(start1.getTime()>end1.getTime()){
  				alert("시작 날짜 또는 종료 날짜가 유효하지 않습니다.");
  			}
-  	} 	
+  		} 	
  		
-  	 	
   	 	
   	 	//modal 상세보기 닫기 detail 닫기
 
     	function modal1Close(){
-    		
     		$('#modal1').modal("hide");
     	}
   		
@@ -335,9 +310,6 @@
   							calendarLoad();  
   					 	 }
   					 });
-  					 
-  					 
-  					 
   					 
   				 }
     	}
@@ -651,12 +623,8 @@ $(function(){
     	   
        }
        }
-<<<<<<< HEAD
        
     </script>
-=======
-       </script>
->>>>>>> branch 'master' of https://github.com/kjh0430/gb
 
     
     <script type="text/javascript"> //매출현황, 평균주문액 등
@@ -676,7 +644,8 @@ $(function(){
     
     </script>
     
-    <style>
+
+
 
   <style type="text/css">
    .form-control{
@@ -689,16 +658,9 @@ $(function(){
       margin-left:10px;
    }
    
-   .chart-container {
-	  position: relative;
-	  margin: auto;
-	}
    
-   </style>
-   
-   <style type="text/css">
-   input[type=checkbox]{
-   	  margin-right:5px;
+    input[type=checkbox]{
+ 	  margin-right:5px;
    }
    
    #checkp{
@@ -708,7 +670,7 @@ $(function(){
    #goalpp{
       margin-top:5px;
    }
-   </style>  
+   </style>
     
   </head>
 
@@ -1227,9 +1189,7 @@ $(function(){
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                 	<div class="chart-container" style="position:relative;">
-				   	 <canvas id="myChart"></canvas>
-					</div>
+                 	<div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
                 </div>
               </div>
             </div>
@@ -1254,15 +1214,18 @@ $(function(){
     <script src="resources/vendors/iCheck/icheck.min.js"></script>
   
     <!-- Custom Theme Scripts -->
-     <script src="resources/fullcalendar-3.9.0/lib/tooltipster.bundle.min.js"></script>
+    <script src="resources/fullcalendar-3.9.0/lib/tooltipster.bundle.min.js"></script>
     <script src="resources/build/js/custom.min.js"></script>    	
     <script src="resources/fullcalendar-3.9.0/lib/moment.min.js"></script> 
    	<script src="resources/fullcalendar-3.9.0/fullcalendar.js"></script>
-   	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
-   	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+   
+   <script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+	<script src="https://code.highcharts.com/modules/export-data.js"></script>
+    
 
    	<script>
-  	var amount=[];
+   	var amount=[];
 	var pname=[];
 	var c_data=[];
  	 $(function(){
@@ -1281,7 +1244,11 @@ $(function(){
 							y : result.list[i].total
 						};
 				}
-		
+					/*
+			 for(var i in result.list){
+					amount.push(result.list[i].total);
+					pname.push(result.list[i].product_name);
+				}	 */
 				getChart();
 			} 
 		
@@ -1407,9 +1374,16 @@ $(function(){
 				}
 			
 		}); //end of ajax
-		*/
-		
+	}
+	 */
+	    
+   $(function(){
+	  // getWeather();
+	  
+	   
 	});  
+   
+  
 	    
 		
 
