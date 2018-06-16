@@ -623,28 +623,6 @@ $(function(){
     	   
        }
        }
-       
-    </script>
-
-    
-    <script type="text/javascript"> //매출현황, 평균주문액 등
-    $(function() {
-
-  		$.ajax({	
-			url:"mainCount.do",
-			type:"post",
-			dataType:"json",
-			success: function() {
-				alert("mainCount 실행됨!!");
-			}
-  		});
-  		
-  	  });
-    
-    
-    </script>
-    
-
 
 
   <style type="text/css">
