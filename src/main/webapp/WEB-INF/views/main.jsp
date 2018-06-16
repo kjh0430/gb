@@ -373,29 +373,51 @@ $(function(){
 	       			console.log("size : " + size);
 	       			
 	       			var obj = [json.todo1, json.todo2, json.todo3, json.todo4, json.todo5];
+	       			var obj2 = [json.check1, json.check2, json.check3, json.check4, json.check5];
 	       			
 	       			console.log("obj : " + obj);
-	       			
-	       			var count = 1;	       			
+	       			console.log("obj2 : " + obj2);	       			
+	       			     			
 	       			var values = ""
+	       			var values2 = ""
+	       			var count = 0;
+	       			var count2 = 0;
 	       			
 	       			for(var i in obj){
-	       				if(obj[i] != null){
-	       			values += '<li><p><input type="checkbox" class="flat" id="todo_list'+count+'" name="todo_list'+count+'" >'+obj[i]+'</p></li>';
-	    	       	count++;
+	       				if(obj[i] != null && obj2[i] == "N"){
+	       			values += '<li><p><input type="checkbox" class="flat" id="todo_list'+i+'" name="todo_list'+i+'" >'+obj[i]+'</p></li>';
 	    	       	console.log("obj["+i+"] : " + obj[i]);
+	    	       	count2++;
+	       				}else if(obj[i] != null && obj2[i] == "Y"){
+	       					values += '<li><p id="checkp"><input type="checkbox" class="flat" id="todo_list'+i+'" name="todo_list'+i+'" checked disabled>'+obj[i]+'</p></li>';
+	    	    	       	console.log("obj["+i+"] : " + obj[i]);
+	    	    	       	count++;
+	    	    	       	count2++;
 	       				}
-	       			}	       		
+	       			}
 	       			
-	       			values+='<button type="button" class="btn btn-primary" onclick="checkList()">확인</button>';
+	       			var goal = new Number((count/count2)*100);
+	       			
+	       			console.log("count : " + count);
+	       			console.log("count2 : " + count2);
+	       			console.log("goal : " + goal.toFixed(2));
+	       			
+	       			if(obj2[0] == "Y" || obj2[1] == "Y" || obj2[2] == "Y" || obj2[3] == "Y" || obj2[4] == "Y"){
+	       				values+='<p id="goalpp" style="float:right;">달성률 : '+goal.toFixed(1)+'%</p>'	       			
+	       			}else{
+	       				values+='<p><button type="button" class="btn btn-default btn-sm" onclick="checkList()" style="float:right; margin-top:5px;">확인</button></p>';
+	       			}
 	       			
 	       			$(".to_do").html(values);
 	       			
 	       			},
-	       			error: function(){       				
+	       			error: function(){
 	       			console.log("todolist 출력 error");
-	       			values = "입력된 값이 없습니다";
+	       			values = "입력된 값이 없습니다.";
 	       			$(".to_do").html(values);
+	       			
+	       			values2 = '<li><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target=".bs-example-modal-lg" style="float:right;">등록</button></li>';
+	       			$(".todo_1").html(values2);
 	       			}
 	       		});
 	});
@@ -442,6 +464,8 @@ $(function(){
        	var todo4 = $('#todo_keyword3').val();
        	var todo5 = $('#todo_keyword4').val();
        	
+       	console.log("todo1 : " + todo1);
+       	
        	console.log("main에서 출력 emp_no : " + emp_no);
        	console.log("main에서 출력 todo1 : " + todo1);
        	console.log("main에서 출력 todo2 : " + todo2);
@@ -449,6 +473,10 @@ $(function(){
        	console.log("main에서 출력 todo4 : " + todo4);
        	console.log("main에서 출력 todo5 : " + todo5);
        	
+       	if($('#todo_keyword0').val() == null || $('#todo_keyword0').val() == ""){
+       		alert("값을 입력해주세요.");
+       	}else{
+       		
        	$.ajax({
        		url : "todoInsert.do",
        		type: "post",
@@ -486,22 +514,23 @@ $(function(){
 	       			var obj = [json.todo1, json.todo2, json.todo3, json.todo4, json.todo5];
 	       			
 	       			console.log("obj : " + obj);
-	       			
-	       			var count = 1;	       			
+	       			       			
 	       			var values = ""
+	       			var values2 = ""
 	       			
 	       			for(var i in obj){
 	       				if(obj[i] != null){
-	       			values += '<li><p><input type="checkbox" class="flat" id="todo_list'+count+'" name="todo_list'+count+'" >'+obj[i]+'</p></li>';
-	    	       	count++;
+	       			values += '<li><p><input type="checkbox" class="flat" id="todo_list'+i+'" name="todo_list'+i+'" >'+obj[i]+'</p></li>';
 	    	       	console.log("obj["+i+"] : " + obj[i]);
 	       				}
 	       			}	       			
 	       			
-	       			values+='<button type="button" class="btn btn-primary" onclick="checkList()">확인</button>';
+	       			values+='<p><button type="button" class="btn btn-default btn-sm" onclick="checkList()" style="float:right;">확인</button></p>';
 	       			
 	       			$(".to_do").html(values);
-       	       			
+	       			
+	       			$(".todo_1").html(values2);
+	       			
        	       			},
        	       			error: function(){       				
        	       			console.log("error");
@@ -513,12 +542,109 @@ $(function(){
        			}
        		});
        }
+       }
        
        function checkList(){
-    	   alert("checkList 실행");
+           
+       var emp_no = $('#emp_no').val();
+       var check1 = 'N';
+       var check2 = 'N';
+       var check3 = 'N';
+       var check4 = 'N';
+       var check5 = 'N';
+       
+    	   if($("input:checkbox[name='todo_list0']").is(":checked")){
+    		   check1 = 'Y';
+    	   }
+    	   if($("input:checkbox[name='todo_list1']").is(":checked")){
+    		   check2 = 'Y';
+    	   }
+    	   if($("input:checkbox[name='todo_list2']").is(":checked")){
+    		   check3 = 'Y';
+    	   }
+    	   if($("input:checkbox[name='todo_list3']").is(":checked")){
+    		   check4 = 'Y';
+    	   }
+    	   if($("input:checkbox[name='todo_list4']").is(":checked")){
+    		   check5 = 'Y';
+    	   }
+    	   
+    	   if(!($("input:checkbox[name='todo_list0']").is(":checked")) && !($("input:checkbox[name='todo_list1']").is(":checked")) && !($("input:checkbox[name='todo_list2']").is(":checked")) && !($("input:checkbox[name='todo_list3']").is(":checked")) && !($("input:checkbox[name='todo_list4']").is(":checked"))){
+    		   alert("한개 이상 체크 해주세요.");
+    	   }else{
+    	   
+    		$.ajax({
+           		url : "todoChecked.do",
+           		type: "post",
+           		dataType: "json",
+           		data: {
+           			emp_no : emp_no,
+           			check1 : check1,
+           			check2 : check2,
+           			check3 : check3,
+           			check4 : check4,
+           			check5 : check5
+           		},
+           		success:function(data){
+           			console.log("todoChecked.do 제대로 실행됨");
+           			
+           			alert("등록 되었습니다.");
+           			
+           			var jsonSt = JSON.stringify(data);
+	                var json = JSON.parse(jsonSt);
+	                var size = Object.keys(json).length;
+	       			
+	       			var obj = [json.todo1, json.todo2, json.todo3, json.todo4, json.todo5];
+	       			var obj2 = [json.check1, json.check2, json.check3, json.check4, json.check5];
+	       			
+	       			console.log("obj : " + obj);
+	       			console.log("obj2 : " + obj2);	       			
+	       			     			
+	       			var values = ""
+	       			var values2 = ""
+	       			var count = 0;
+	       			var count2 = 0;
+	       			
+	       			for(var i in obj){
+	       				if(obj[i] != null && obj2[i] == "N"){
+	       			values += '<li><p><input type="checkbox" class="flat" id="todo_list'+i+'" name="todo_list'+i+'" >'+obj[i]+'</p></li>';
+	    	       	console.log("obj["+i+"] : " + obj[i]);
+	    	       	count2++;
+	       				}else if(obj[i] != null && obj2[i] == "Y"){
+	       					values += '<li><p id="checkp"><input type="checkbox" class="flat" id="todo_list'+i+'" name="todo_list'+i+'" checked disabled>'+obj[i]+'</p></li>';
+	    	    	       	console.log("obj["+i+"] : " + obj[i]);
+	    	    	       	count++;
+	    	    	       	count2++;
+	       				}
+	       			}
+	       			
+	       			var goal = new Number((count/count2)*100);
+	       			
+	       			console.log("count : " + count);
+	       			console.log("count2 : " + count2);
+	       			console.log("goal : " + goal.toFixed(2));
+	       			
+	       			if(obj2[0] == "Y" || obj2[1] == "Y" || obj2[2] == "Y" || obj2[3] == "Y" || obj2[4] == "Y"){
+	       				values+='<p id="goalpp" style="float:right;">달성률 : '+goal.toFixed(1)+'%</p>'	       			
+	       			}else{
+	       				values+='<p><button type="button" class="btn btn-default btn-sm" onclick="checkList()" style="float:right; margin-top:5px;">확인</button></p>';
+	       			}
+	       			
+	       			$(".to_do").html(values);
+	       			
+           			
+           		},
+           		error: function(){       				
+           			console.log("error");
+           			}
+    	   
+    		});
+    	   
+       }
        }
        
     </script>
+<<<<<<< HEAD
     
     <script type="text/javascript"> //매출현황, 평균주문액 등
     $(function() {
@@ -539,9 +665,10 @@ $(function(){
     
     <style>
    
+=======
+>>>>>>> branch 'master' of https://github.com/kjh0430/gb
 
-    </style>
-        <style type="text/css">
+  <style type="text/css">
    .form-control{
       display:inline-block;
       width:90%;
@@ -550,6 +677,26 @@ $(function(){
    
    .fa.fa-times{
       margin-left:10px;
+   }
+   
+   .chart-container {
+	  position: relative;
+	  margin: auto;
+	}
+   
+   </style>
+   
+   <style type="text/css">
+   input[type=checkbox]{
+   	  margin-right:5px;
+   }
+   
+   #checkp{
+     text-decoration: line-through;
+   }
+   
+   #goalpp{
+      margin-top:5px;
    }
    </style>  
     
@@ -617,27 +764,13 @@ $(function(){
           </div>
           <!-- /top tiles -->
            <div class="row">       	
-                <!-- Start to do list -->
+                 <!-- Start to do list -->
                  <div class="col-md-6 col-sm-6 col-xs-12" style="padding:0px;">
                 <div class="col-xs-12">
                   <div class="x_panel">
                     <div class="x_title">
                       <h2>To Do List</h2>
-                      <ul class="nav navbar-right panel_toolbox">
-                      <%-- <c:choose>
-            			<c:when test="${ todolist == null }">
-		           		<li><button type="button" class="btn btn-link" data-toggle="modal" data-target=".bs-example-modal-lg" style="float:right;">등록</button>
-                        </li>
-            			</c:when>
-            			<c:otherwise>
-						<li><button type="button" class="btn btn-link" data-toggle="modal" data-target=".bs-example-modal-lg" style="float:right;">수정</button>
-                        </li>
-            			</c:otherwise>
-            		  </c:choose> --%>
-            		  	<li><button type="button" class="btn btn-link" data-toggle="modal" data-target=".bs-example-modal-lg" style="float:right;">등록</button>
-                        </li>
-                        <!-- <li><button type="button" class="btn btn-link" data-toggle="modal" data-target=".bs-example-modal-lg" style="float:right;">수정</button>
-                        </li> -->
+                      <ul class="todo_1">
                       </ul>
                       <div class="clearfix"></div>
                     </div>
@@ -1045,8 +1178,8 @@ $(function(){
 	                <div class="clearfix"></div>
 	              </div>
 	            </div>	
-	          <!-- </div> -->
 	          <!-- end of weather widget -->
+	          
 	          <!-- start of notice widget -->
 	          
 	          <div class="col-xs-12">
@@ -1074,9 +1207,6 @@ $(function(){
 	            </div>	
 	          </div>
 	           <!-- end of notice widget -->
-          <!-- </div> -->
-
-          <!-- <div class="row"> -->
 
             
 
@@ -1087,9 +1217,9 @@ $(function(){
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                  <div class="pie">
-                  <canvas id="myChart"></canvas>
-                  </div>
+                 	<div class="chart-container" style="position:relative;">
+				   	 <canvas id="myChart"></canvas>
+					</div>
                 </div>
               </div>
             </div>
@@ -1120,55 +1250,56 @@ $(function(){
    	<script src="resources/fullcalendar-3.9.0/fullcalendar.js"></script>
    	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
    	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+
    	<script>
   	var amount=[];
 	var pname=[];
-  		
-	$.ajax({
-		url:"productShare.do",
-		type:"post",
-		dataType:"json",
-		success: function(data) {
-			var objStr =JSON.stringify(data);
-			var result = JSON.parse(objStr);				
-			
-			for(var i in result.list){
-				amount.push(result.list[i].total);
-				pname.push(result.list[i].product_name);
-			}			
-		} 
-	});//ajax  
-	 
-   		
-	 var ctx = document.getElementById("myChart");
-	 var myChart = new Chart(ctx, {
-	     type: 'pie',
-	     data: {
-	         labels: pname,
-	         datasets: [{
-	             data: amount,
-	             backgroundColor: [
-	                 'rgba(59, 81, 89)',
-	                 'rgba(163, 201, 217)',
-	                 'rgba(217, 179, 132)',
-	                 'rgba(140, 110, 84)',
-	                 'rgba(191, 146, 107)'
-	             ]
-	         }]
-	     },
-	     options: {
-	    	 responsive: true,
-	   	     maintainAspectRatio: false,
-	   	     legend: {
-	             display: true,
-	             position:'right'
-	         }
-	     }
-	 });
 
+		$.ajax({
+			url:"productShare.do",
+			type:"post",
+			dataType:"json",
+			success: function(data) {
+				
+				var objStr =JSON.stringify(data);
+				var result = JSON.parse(objStr);				
+				
+				for(var i in result.list){
+					amount.push(result.list[i].total);
+					pname.push(result.list[i].product_name);
+				}			
+			} 
+		});//ajax  
+		 
+	   		
+		 var ctx = document.getElementById("myChart");
+		 var myChart = new Chart(ctx, {
+		     type: 'pie',
+		     data: {
+		         labels: pname,
+		         datasets: [{
+		             data: amount,
+		             backgroundColor: [
+		                 'rgba(59, 81, 89)',
+		                 'rgba(163, 201, 217)',
+		                 'rgba(217, 179, 132)',
+		                 'rgba(140, 110, 84)',
+		                 'rgba(191, 146, 107)'
+		             ]
+		         }]
+		     },
+		     options: {
+		    	 responsive: true,
+		   	     maintainAspectRatio: false,
+		   	     legend: {
+		             display: true,
+		             position:'right'
+		         }
+		     }
+		 });
 	    
    $(function(){
-    	
+    	/*
     	var city = '${loginEmp.getCity()}';
 		var county = '${loginEmp.getCounty()}';
 		var village = '${loginEmp.getVillage()}';
@@ -1185,7 +1316,7 @@ $(function(){
 			url:'https://api2.sktelecom.com/weather/current/hourly?version=1&callback=result',
 			async:false,
 			success : function(data){
-				console.log(data);
+				//console.log(data);
 				var todayDate = data["weather"]["hourly"][0]['timeRelease'];
 				var todayTemp = Math.round(data["weather"]["hourly"][0]['temperature']['tc']);
 				var todayMinTemp = Math.round(data["weather"]["hourly"][0]['temperature']['tmin']);
@@ -1227,6 +1358,7 @@ $(function(){
 				}
 			
 		}); //end of ajax
+		*/
 		
 	});  
 	    

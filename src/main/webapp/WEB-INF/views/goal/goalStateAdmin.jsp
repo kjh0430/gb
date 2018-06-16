@@ -17,23 +17,8 @@
 <!-- Font Awesome -->
 <link href="resources/vendors/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet">
-<!-- NProgress -->
-<link href="resources/vendors/nprogress/nprogress.css" rel="stylesheet">
-<!-- iCheck -->
-<link href="resources/vendors/iCheck/skins/flat/green.css"
-	rel="stylesheet">
 
-<!-- bootstrap-progressbar -->
-<link
-	href="resources/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css"
-	rel="stylesheet">
-<!-- JQVMap -->
-<link href="resources/vendors/jqvmap/dist/jqvmap.min.css"
-	rel="stylesheet" />
-<!-- bootstrap-daterangepicker -->
-<link
-	href="resources/vendors/bootstrap-daterangepicker/daterangepicker.css"
-	rel="stylesheet">
+
 
 <!-- Custom Theme Style -->
 <link href="resources/build/css/custom.min.css" rel="stylesheet">
@@ -102,6 +87,135 @@
 
 
 </script>
+<script>
+function selectEmp(obj){
+	
+	
+	
+	 var content = $(obj);
+     var td = content.children();
+
+     var emp_name = td.eq(0).text();
+     var dept_name = td.eq(1).text();
+     var emp_job = td.eq(2).text();
+     var emp_email = td.eq(3).text();
+      emp_no = td.eq(4).text();
+     $('#searchModal').modal("hide");
+
+ 
+      $.ajax({
+    url:"getgoalInfo.do",
+    type:"post",
+    dataType:"json",
+    data:{
+    	emp_no:emp_no
+    	
+    },
+    success:function(obj){
+    	
+    	var objStr = JSON.stringify(obj);
+        var jsonl = JSON.parse(objStr);
+        var size = Object.keys(jsonl.list).length;
+        
+        values = "<table class='table table-striped table-bordered table-responsive' style='min-width:550px;'><thead><tr><th>(월)</th><th>목표(원)</th><th>매출(원)</th><th>달성(%)</th></thead>"
+            + "<tbody>"
+ 
+			
+			for(var i in jsonl.list){
+				
+				
+				
+			values+="<tr><td>"+jsonl.list[i].goalMonth+"</td>"+
+						"<td>"+jsonl.list[i].goalMoney+"</td>"+
+						"<td>"+jsonl.list[i].sales+"</td>"+
+						"<td>"+jsonl.list[i].acheive+"%</td></tr>"				
+				
+			}
+            values +="</tbody></table>";
+            $('#goalEmpTable').html(values);
+    }
+    	 
+    	 
+    	 
+     });
+     
+	
+}
+
+
+function searchEmp(){
+
+	emp_name=$('#empName').val();
+	
+	if($('#empName').val()!=null){
+	
+	$.ajax({
+	url:"search.do",
+	type:"post",
+	dataType:"json",
+	data:{
+		emp_name:emp_name,
+		emp_no:"${loginEmp.emp_no}"
+	},
+	success :function(obj){
+		var objStr = JSON.stringify(obj);
+        var jsonl = JSON.parse(objStr);
+        var size = Object.keys(jsonl.list).length;	
+		
+     	if(size>0){
+            var value = "<table class='table table-hover' id='getvalues'><thead><tr><th>이름</th><th>직급</th><th>부서</th><th>e-mail</th><th>사원번호</th></tr></thead><tbody>";
+
+               for ( var i in jsonl.list) {
+
+                  value += "<tr onclick='selectEmp(this);' style='cusor:hand'><td>"
+                        + jsonl.list[i].emp_name
+                        + "</td><td>"
+                        + jsonl.list[i].emp_job
+                        + "</td><td>"
+                        + jsonl.list[i].dept_name
+                        + "</td><td>"
+                        + jsonl.list[i].emp_email
+                        + "</td><td>"
+                        + jsonl.list[i].emp_no + "</td></tr>";
+               }
+
+               value += "</tbody></table>";
+
+               $('#searchModal').modal("show");
+               $('#searchTable').html(value);
+
+               
+     	}else{
+     		values="<br><br><br><br><br><br><h2 style='text-align:center;'>검색 결과가 없습니다."+
+     		"</h2><br><br><br><br><br><br>"
+     		 $('#searchModal').modal("show");
+            $('#searchTable').html(values);
+     		
+     	}
+	}
+            
+         	
+        
+	
+	
+	});
+	}else{
+		alert("검색할 사원을 입력해주세요.");
+	}
+	
+	
+}
+
+</script>
+<style>
+#getvalues th:nth-child(5){
+display:none;
+}
+#getvalues td:nth-child(5){
+display:none;
+}
+
+</style>
 </head>
 
 <body class="nav-md">
@@ -200,46 +314,61 @@
 						<div class="title_left">
 							<h3>목표 현황</h3>
 						</div>
+						<div style="float:right">
+							<div class="input-group" style="width:300px">
+								<input type="text" class="form-control" placeholder="사원별 검색" id="empName"> 
+								<span class="input-group-btn">
+								<button type="submit" class="btn btn-primary" onclick="searchEmp();">검색</button>
+								</span>
+							</div>
+							
+							<!-- 사원 검색 modal -->
+							  <div class="modal fade sendMsg2" tabindex="-1" role="dialog"
+                                 id="searchModal" aria-hidden="true">
+                                 <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                       <form class="form-horizontal form-label-left input_mask">
+                                          <div class="modal-header">
+                                             <button type="button" class="close" data-dismiss="modal">
+                                                <span aria-hidden="true">×</span>
+                                             </button>
+                                             <h4 class="modal-title" id="myModalLabel2">사원 검색</h4>
+                                          </div>
+                                          <div class="modal-body">
+                                             <div class="form-group" style="margin: 0px;">
+                                                <div class="row">
+                                                   <label
+                                                      class="control-label col-md-3 col-sm-3 col-xs-12"></label>
+                                                   <div class="col-md-9 col-sm-9 col-xs-12">
+                                                      <div class="input-group">
+
+
+                                                         <span class="input-group-btn"> </span>
+
+                                                      </div>
+                                                   </div>
+
+                                                   <div id="searchTable"></div>
+
+                                                   <div class="form-group">
+
+
+                                                      <div class="col-md-9 col-sm-9 col-xs-12"></div>
+                                                   </div>
+                                                </div>
+
+                                             </div>
+                                          </div>
+                                          <div class="modal-footer"></div>
+                                       </form>
+                                    </div>
+                                 </div>
+                              </div>
+                              <!-- 	사원 검색 modal 끝 -->
+						</div>
 					</div>
 
 					<div class="clearfix"></div>
-
-					<br />
-					
-					
-					<div class="row">
-						<div class="col-md-12 col-sm-12 col-xs-12">
-							<div class="x_panel">
-								<div class="x_title">
-									<h2>상세검색</h2>
-									<div class="clearfix"></div>
-								</div>
-								<div class="x_content">
-									<div class="col-md-6 col-sm-12 col-xs-12">
-									<form class="form-horizontal form-label-left">
-										<div class="form-group">
-											<div class="col-sm-3">
-											<select class="form-control" id="sales_select">
-												<option>전체</option>
-												<option>팀별</option>
-												<option>사원별</option>
-											</select>
-											</div>
-											<div class="col-sm-9">
-												<div class="input-group">
-													<input type="text" class="form-control"> <span
-														class="input-group-btn">
-														<button type="submit" class="btn btn-primary">검색</button>
-													</span>
-												</div>
-											</div>
-										</div>
-									</form>
-									</div>
-								</div>
-							</div>
-						</div>
-
 					</div><!-- end row -->
 					
 					<div class="row">
@@ -330,92 +459,11 @@
 					<div class="row" style="vertical-align: middle;">
 						<div class="col-xs-12">
 							<div class="x_panel">
-								<table id="table_cl" class="table table-striped table-bordered"
-									style="min-width: 500px;">
-									<tr>
-										<td>&nbsp;</td>
-										<td>목표</td>
-										<td>매출</td>
-										<td>달성</td>
-									</tr>
-									<tr>
-										<td>년 매출</td>
-										<td>240,000</td>
-										<td>180,000</td>
-										<td>80%</td>
-									</tr>
-									<tr>
-										<td>1월</td>
-										<td>12,000</td>
-										<td>80,000</td>
-										<td>80%</td>
-									</tr>
-									<tr>
-										<td>2월</td>
-										<td>12,000</td>
-										<td>80,000</td>
-										<td>80%</td>
-									</tr>
-									<tr>
-										<td>3월</td>
-										<td>12,000</td>
-										<td>80,000</td>
-										<td>80%</td>
-									</tr>
-									<tr>
-										<td>4월</td>
-										<td>12,000</td>
-										<td>80,000</td>
-										<td>80%</td>
-									</tr>
-									<tr>
-										<td>5월</td>
-										<td>12,000</td>
-										<td>80,000</td>
-										<td>80%</td>
-									</tr>
-									<tr>
-										<td>6월</td>
-										<td>12,000</td>
-										<td>80,000</td>
-										<td>80%</td>
-									</tr>
-									<tr>
-										<td>7월</td>
-										<td>12,000</td>
-										<td>90,000</td>
-										<td>80%</td>
-									</tr>
-									<tr>
-										<td>8월</td>
-										<td>12,000</td>
-										<td>90,000</td>
-										<td>85.0%</td>
-									</tr>
-									<tr>
-										<td>9월</td>
-										<td>13,000</td>
-										<td>90,000</td>
-										<td>89.4%</td>
-									</tr>
-									<tr>
-										<td>10월</td>
-										<td>13,000</td>
-										<td>90,000</td>
-										<td>90%</td>
-									</tr>
-									<tr>
-										<td>11월</td>
-										<td>13,000</td>
-										<td>90,000</td>
-										<td>70%</td>
-									</tr>
-									<tr>
-										<td>12월</td>
-										<td>13,000</td>
-										<td>90,000</td>
-										<td>78%</td>
-									</tr>
+							<div id="goalEmpTable"></div>
+								
+								
+									
+									
 								</table>
 							</div>
 						</div>
@@ -424,47 +472,12 @@
 			</div>
 			<!-- /page content -->
 		</div>
-	</div>
 
 	<!-- jQuery -->
 	<script src="resources/vendors/jquery/dist/jquery.min.js"></script>
 	<!-- Bootstrap -->
 	<script src="resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-	<!-- FastClick -->
-	<script src="resources/vendors/fastclick/lib/fastclick.js"></script>
-	<!-- NProgress -->
-	<script src="resources/vendors/nprogress/nprogress.js"></script>
-	<!-- Chart.js -->
 	
-	<!-- gauge.js -->
-	<script src="resources/vendors/gauge.js/dist/gauge.min.js"></script>
-	<!-- bootstrap-progressbar -->
-	<script
-		src="resources/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
-	<!-- iCheck -->
-	<script src="resources/vendors/iCheck/icheck.min.js"></script>
-	<!-- Skycons -->
-	<script src="resources/vendors/skycons/skycons.js"></script>
-	<!-- Flot -->
-	<script src="resources/vendors/Flot/jquery.flot.js"></script>
-	<script src="resources/vendors/Flot/jquery.flot.pie.js"></script>
-	<script src="resources/vendors/Flot/jquery.flot.time.js"></script>
-	<script src="resources/vendors/Flot/jquery.flot.stack.js"></script>
-	<script src="resources/vendors/Flot/jquery.flot.resize.js"></script>
-	<!-- Flot plugins -->
-	<script
-		src="resources/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
-	<script
-		src="resources/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
-	<script src="resources/vendors/flot.curvedlines/curvedLines.js"></script>
-	<!-- DateJS -->
-	<script src="resources/vendors/DateJS/build/date.js"></script>
-	<!-- JQVMap -->
-	<script src="resources/vendors/jqvmap/dist/jquery.vmap.js"></script>
-	<script src="resources/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
-	<script
-		src="resources/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
-	<!-- bootstrap-daterangepicker -->
 	
 
 	<!-- Custom Theme Scripts -->

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 public class TodoList implements Serializable{	
 	private static final long serialVersionUID = 15385L;
 	
+	private int todolist_no;
 	private int emp_no;
 	private String todo1;
 	private String check1;
@@ -24,9 +25,10 @@ public class TodoList implements Serializable{
 	
 	public TodoList() {}
 
-	public TodoList(int emp_no, String todo1, String check1, String todo2, String check2, String todo3, String check3,
-			String todo4, String check4, String todo5, String check5, Date todo_date) {
+	public TodoList(int todolist_no, int emp_no, String todo1, String check1, String todo2, String check2, String todo3,
+			String check3, String todo4, String check4, String todo5, String check5, Date todo_date) {
 		super();
+		this.todolist_no = todolist_no;
 		this.emp_no = emp_no;
 		this.todo1 = todo1;
 		this.check1 = check1;
@@ -39,6 +41,14 @@ public class TodoList implements Serializable{
 		this.todo5 = todo5;
 		this.check5 = check5;
 		this.todo_date = todo_date;
+	}
+
+	public int getTodolist_no() {
+		return todolist_no;
+	}
+
+	public void setTodolist_no(int todolist_no) {
+		this.todolist_no = todolist_no;
 	}
 
 	public int getEmp_no() {
@@ -139,9 +149,10 @@ public class TodoList implements Serializable{
 
 	@Override
 	public String toString() {
-		return "TodoList [emp_no=" + emp_no + ", todo1=" + todo1 + ", check1=" + check1 + ", todo2=" + todo2
-				+ ", check2=" + check2 + ", todo3=" + todo3 + ", check3=" + check3 + ", todo4=" + todo4 + ", check4="
-				+ check4 + ", todo5=" + todo5 + ", check5=" + check5 + ", todo_date=" + todo_date + "]";
+		return "TodoList [todolist_no=" + todolist_no + ", emp_no=" + emp_no + ", todo1=" + todo1 + ", check1=" + check1
+				+ ", todo2=" + todo2 + ", check2=" + check2 + ", todo3=" + todo3 + ", check3=" + check3 + ", todo4="
+				+ todo4 + ", check4=" + check4 + ", todo5=" + todo5 + ", check5=" + check5 + ", todo_date=" + todo_date
+				+ "]";
 	}
 	
 }
