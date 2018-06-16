@@ -28,4 +28,9 @@ public class GoalDao {
 		return (ArrayList)sqlSession.selectList("Goal.selectEmpGoal",goal);
 	}
 
+	public ArrayList<Goal> selectEmpAll() {
+		
+		return (ArrayList)sqlSession.selectList("Goal.selectEmpAll");
+	}
+
 }

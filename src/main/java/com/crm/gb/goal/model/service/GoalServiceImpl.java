@@ -33,4 +33,10 @@ public class GoalServiceImpl implements GoalService{
 		return goalDao.selectEmpGoal(goal);
 	}
 
+	@Override
+	public ArrayList<Goal> selectEmpAll() {
+		
+		return goalDao.selectEmpAll();
+	}
+
 }

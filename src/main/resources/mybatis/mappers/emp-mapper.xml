@@ -77,9 +77,9 @@
 	<!-- 사원 정보 수정 -->
 	<update id="empUpdate" parameterType="Emp">
 	<![CDATA[
-		update emp set emp_no=#{emp_no}, emp_pwd=#{emp_pwd}, emp_name=#{emp_name}, emp_addr=#{emp_addr},
+		update emp set emp_pwd=#{emp_pwd}, emp_name=#{emp_name}, emp_addr=#{emp_addr},
 		emp_phone=#{emp_phone}, job_no=#{job_no}, emp_email=#{emp_email}, emp_mgr=#{emp_mgr}
-		,emp_hiredate=#{emp_hiredate}, emp_firedate=null, city=#{city}, county=#{county}, village=#{village},
+		,emp_hiredate=#{emp_hiredate}, city=#{city}, county=#{county}, village=#{village},
 		dept_no=#{dept_no} where emp_no=#{emp_no}
 	]]>
 	</update>

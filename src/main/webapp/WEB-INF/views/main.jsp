@@ -52,19 +52,15 @@
 			 event=new Array();
 		
 	
-	for ( var i in json.list) {
-		
+		for ( var i in json.list) {
 			event.push({
 				title: json.list[i].calendar_title,
 				start:json.list[i].calendar_start_date,
 				end:json.list[i].calendar_end_date,
 				url:"javascript:detailCalendar("+json.list[i].calendar_no+")"
 			});
-									 
 		 };
 		
-
-			
 			$('#myCalendar').fullCalendar({
 	    		  				
 			 	header: {
@@ -76,8 +72,6 @@
 				  weekNumbers: true,
 				  
 				 events:event
-					
-					 
 					 
 	    	}); 
 					
@@ -95,49 +89,41 @@
     	calendarLoad();
     	
   	}); 
-  		function Schedule(){
-  		
-  		$.ajax({
-  			
-  		url:"getInfo.do",               
-  		data:{emp_no :"${loginEmp.emp_no}",dept_no :"${loginEmp.dept_no}"},
-  		type:"post",
-  		dataType:"json",
-  		success:function(data){
-  			
+ 	function Schedule(){
+ 		$.ajax({
+ 		url:"getInfo.do",               
+ 		data:{emp_no :"${loginEmp.emp_no}",dept_no :"${loginEmp.dept_no}"},
+ 		type:"post",
+ 		dataType:"json",
+ 		success:function(data){
   			$('#addwriter').val(data.emp_name);
   			$('#adddept_name').val(data.calendar_dept_name);
   			$('#modal3').modal("show");
-  			
-  			
-  		}
-  		
-  		});
-  		
   			}
+ 		
+ 		});
+ 	}//Schedule
   		
   		//일정 비교 (수정)
- 		function checkDate(){
- 			var ckModistartDate=$('#startDateM').val();
- 			var sArr=ckModistartDate.split('-');
- 		
- 			
- 			var ckModiendDate=$('#endDateM').val();
- 			var eArr=ckModiendDate.split('-');
- 			
- 			var start1 =new Date(sArr[0],parseInt(sArr[1])-1,sArr[2]);
- 			var end1 =new Date(eArr[0],parseInt(eArr[1])-1,eArr[2]);
- 			
- 			if(start1.getTime()>end1.getTime()){
- 				alert("시작 날짜 또는 종료 날짜가 유효하지 않습니다.");
- 			}
-  	} 	
+	function checkDate(){
+		var ckModistartDate=$('#startDateM').val();
+		var sArr=ckModistartDate.split('-');
+		
+		var ckModiendDate=$('#endDateM').val();
+		var eArr=ckModiendDate.split('-');
+		
+		var start1 =new Date(sArr[0],parseInt(sArr[1])-1,sArr[2]);
+		var end1 =new Date(eArr[0],parseInt(eArr[1])-1,eArr[2]);
+		
+		if(start1.getTime()>end1.getTime()){
+			alert("시작 날짜 또는 종료 날짜가 유효하지 않습니다.");
+		}
+	} 	
   		//일정 비교(추가)
 		function checkDates(){
  			var ckModistartDate=$('#addstartDate').val();
  			var sArr=ckModistartDate.split('-');
  		
- 			
  			var ckModiendDate=$('#addendDate').val();
  			var eArr=ckModiendDate.split('-');
  			
@@ -147,14 +133,12 @@
  			if(start1.getTime()>end1.getTime()){
  				alert("시작 날짜 또는 종료 날짜가 유효하지 않습니다.");
  			}
-  	} 	
+  		} 	
  		
-  	 	
   	 	
   	 	//modal 상세보기 닫기 detail 닫기
 
     	function modal1Close(){
-    		
     		$('#modal1').modal("hide");
     	}
   		
@@ -326,9 +310,6 @@
   							calendarLoad();  
   					 	 }
   					 });
-  					 
-  					 
-  					 
   					 
   				 }
     	}
@@ -642,30 +623,7 @@ $(function(){
     	   
        }
        }
-       
-    </script>
-    
-   <!--  <script type="text/javascript"> //매출현황, 평균주문액 등
-    $(function() {
 
-  		$.ajax({	
-			url:"mainCount.do",
-			type:"post",
-			dataType:"json",
-			success: function() {
-				alert("mainCount 실행됨!!");
-			}
-  		});
-  		
-  	  });
-    
-    
-    </script>
-     -->
-    <style>
-   
-=======
->>>>>>> branch 'master' of https://github.com/kjh0430/gb
 
   <style type="text/css">
    .form-control{
@@ -678,16 +636,9 @@ $(function(){
       margin-left:10px;
    }
    
-   .chart-container {
-	  position: relative;
-	  margin: auto;
-	}
    
-   </style>
-   
-   <style type="text/css">
-   input[type=checkbox]{
-   	  margin-right:5px;
+    input[type=checkbox]{
+ 	  margin-right:5px;
    }
    
    #checkp{
@@ -697,7 +648,7 @@ $(function(){
    #goalpp{
       margin-top:5px;
    }
-   </style>  
+   </style>
     
   </head>
 
@@ -1216,9 +1167,7 @@ $(function(){
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                 	<div class="chart-container" style="position:relative;">
-				   	 <canvas id="myChart"></canvas>
-					</div>
+                 	<div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
                 </div>
               </div>
             </div>
@@ -1243,18 +1192,21 @@ $(function(){
     <script src="resources/vendors/iCheck/icheck.min.js"></script>
   
     <!-- Custom Theme Scripts -->
-     <script src="resources/fullcalendar-3.9.0/lib/tooltipster.bundle.min.js"></script>
+    <script src="resources/fullcalendar-3.9.0/lib/tooltipster.bundle.min.js"></script>
     <script src="resources/build/js/custom.min.js"></script>    	
     <script src="resources/fullcalendar-3.9.0/lib/moment.min.js"></script> 
    	<script src="resources/fullcalendar-3.9.0/fullcalendar.js"></script>
-   	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
-   	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+   
+   <script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+	<script src="https://code.highcharts.com/modules/export-data.js"></script>
+    
 
    	<script>
-  	var amount=[];
+   	var amount=[];
 	var pname=[];
-
-		$.ajax({
+  $(function(){
+	  $.ajax({
 			url:"productShare.do",
 			type:"post",
 			dataType:"json",
@@ -1266,40 +1218,74 @@ $(function(){
 				for(var i in result.list){
 					amount.push(result.list[i].total);
 					pname.push(result.list[i].product_name);
-				}			
+				}	
+				getChart();
 			} 
-		});//ajax  
-		 
-	   		
-		 var ctx = document.getElementById("myChart");
-		 var myChart = new Chart(ctx, {
-		     type: 'pie',
-		     data: {
-		         labels: pname,
-		         datasets: [{
-		             data: amount,
-		             backgroundColor: [
-		                 'rgba(59, 81, 89)',
-		                 'rgba(163, 201, 217)',
-		                 'rgba(217, 179, 132)',
-		                 'rgba(140, 110, 84)',
-		                 'rgba(191, 146, 107)'
-		             ]
-		         }]
-		     },
-		     options: {
-		    	 responsive: true,
-		   	     maintainAspectRatio: false,
-		   	     legend: {
-		             display: true,
-		             position:'right'
-		         }
-		     }
-		 });
-	    
-   $(function(){
-    	/*
-    	var city = '${loginEmp.getCity()}';
+		
+	});//ajax
+	
+  })
+	
+	function getChart(){
+	  Highcharts.chart('container', {
+		  chart: {
+		    plotBackgroundColor: null,
+		    plotBorderWidth: null,
+		    plotShadow: false,
+		    type: 'pie'
+		  },
+		  title: {
+		    text: ''
+		  },
+		  tooltip: {
+		    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+		  },
+   		  exporting:{
+   			 'enabled':false 
+   		  },
+		  plotOptions: {
+		    pie: {
+		      allowPointSelect: true,
+		      cursor: 'pointer',
+		      dataLabels: {
+		        enabled: false
+		      },
+		      showInLegend: true
+		    }
+		  },
+		  series: [{
+		    name: '점유율',
+		    colorByPoint: true,
+		    data: [{
+		      name: 'Chrome',
+		      y: 61.41,
+		      sliced: true,
+		      selected: true
+		    }, {
+		      name: 'Internet Explorer',
+		      y: 11.84
+		    }, {
+		      name: 'Firefox',
+		      y: 10.85
+		    }, {
+		      name: 'Edge',
+		      y: 4.67
+		    }, {
+		      name: 'Safari',
+		      y: 4.18
+		    }, {
+		      name: 'Other',
+		      y: 7.05
+		    }]
+		  }]
+		});
+  }
+
+		
+
+	/* 
+	function getWeather(){
+		var city = '${loginEmp.getCity()}';
 		var county = '${loginEmp.getCounty()}';
 		var village = '${loginEmp.getVillage()}';
 
@@ -1357,9 +1343,16 @@ $(function(){
 				}
 			
 		}); //end of ajax
-		*/
-		
+	}
+	 */
+	    
+   $(function(){
+	  // getWeather();
+	  
+	   
 	});  
+   
+  
 	    
 		
 

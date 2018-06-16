@@ -15,4 +15,6 @@ public interface GoalService {
 
 	public abstract ArrayList<Goal> selectEmpGoal(Goal goal); //사원별 목표 상세 가져오기
 
+	public abstract ArrayList<Goal> selectEmpAll(); //모든 사원들의 목표 등등..
+
 }
