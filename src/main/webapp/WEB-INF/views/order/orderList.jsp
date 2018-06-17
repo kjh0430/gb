@@ -252,7 +252,10 @@ function searchCondition(){
 											<li class="page-item"><a class="page-link" href="orderList.do?client_company=${searchCom }&page=${maxPage}">>></a></li>
 										</c:if>
 										<c:if test="${searchCom == null }">
+											<c:if test="${currentPage != maxPage }">
 											<li class="page-item"><a class="page-link" href="orderList.do?client_company=null&page=${maxPage}">>></a></li>
+											</c:if>
+											
 										</c:if>					
 									</c:if> 										
 										

@@ -310,7 +310,7 @@ public class OrderController {
 		logger.info("main count 메소드 실행...");
 		
 		int emp_no = Integer.parseInt(empNo);
-		System.out.println("emp_no : " + emp_no);
+		//System.out.println("emp_no : " + emp_no);
 		int order_sum = orderService.selectOrderSum(emp_no);
 		int order_avg = orderService.selectselectOrderAvg(emp_no);
 		String goal_state = orderService.selectGoalState(emp_no);
