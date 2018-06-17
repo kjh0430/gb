@@ -6,7 +6,7 @@
 <mapper namespace="Goal">
 
 	<!-- 목표관리 리스트 -->
-<!-- 	 <resultMap type="goal" id="resultSelectAllGoalState">
+ 	 <resultMap type="goal" id="resultSelectAllGoalState">
 		
 		<result column="emp_no" property="emp_no"/>		
 		<result column="emp_name" property="emp_name"/>		
@@ -20,7 +20,7 @@
 		<result column="goal_money" property="goal_money"/>	
 		<result column="goal_date" property="goal_date"/>		
 				
-	</resultMap> -->
+	</resultMap>
 
 
 	<!-- 목표관리를 위한 리스트 출력 -->
