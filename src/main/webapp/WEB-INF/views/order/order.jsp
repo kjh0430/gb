@@ -69,7 +69,7 @@ var c_discount; //해당 고객의 할인율
 			
 		});//ajax complete
 	}else{
-		alert("검색값을  입력해줏ㅇ5")
+		alert("검색값을  입력해주세요")
 	}
 	}
 	
@@ -279,7 +279,7 @@ var c_discount; //해당 고객의 할인율
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="main.html" class="site_title"><i class="fa fa-google"></i>
+						<a href="mainView.do" class="site_title"><i class="fa fa-google"></i>
 							<span>GROUP BEAN</span></a>
 					</div>
 
