@@ -52,7 +52,7 @@ display:none;
 					<div class="clearfix"></div>
 
 					<!-- sidebar menu -->
-					<%@ include file="../etc/adminsidebar.jsp"%>
+					<%@ include file="../etc/sidebar.jsp"%>
 					<!-- /sidebar menu -->
 
 				</div>
