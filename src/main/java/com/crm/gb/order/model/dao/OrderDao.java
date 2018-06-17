@@ -53,10 +53,23 @@ public class OrderDao {
 		return (ArrayList)sqlSession.selectList("productShare");
 	}
 
-	
-
 	public int selectConditionListCount(Order order) {
 		
 		return sqlSession.selectOne("conditionListCount",order);
+	}
+	
+	//이달의 매출현황
+	public int selectOrderSum(int emp_no) {
+		return sqlSession.selectOne("selectOrderSum",emp_no);
+	}
+	
+	//이달의 평균매출
+	public int selectselectOrderAvg(int emp_no) {
+		return sqlSession.selectOne("selectOrderAvg",emp_no);
+	}
+	
+	//목표달성현황 
+	public String selectGoalState(int emp_no) {
+		return sqlSession.selectOne("selectGoalState",emp_no);
 	}
 }

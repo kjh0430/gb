@@ -29,4 +29,10 @@ public interface OrderService {
 
 	public abstract int selectConditionListCount(Order order); //조건 검색 시 행의 개수ㄴ
 	
+	public abstract int selectOrderSum(int emp_no); //이달의 매출현황
+	
+	public abstract int selectselectOrderAvg(int emp_no); //이달의 매출 평균 
+	
+	public abstract String selectGoalState(int emp_no); //목표달성 현황 
+	
 }

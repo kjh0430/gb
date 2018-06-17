@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -305,8 +306,28 @@ public class OrderController {
 	}
 	
 	@RequestMapping(value="mainCount.do", method=RequestMethod.POST)
-	public void mainCount() {
+	public void mainCount(@RequestParam(value="emp_no") String empNo,Order order,HttpServletResponse response) throws IOException{
+		logger.info("main count 메소드 실행...");
 		
+		int emp_no = Integer.parseInt(empNo);
+		System.out.println("emp_no : " + emp_no);
+		int order_sum = orderService.selectOrderSum(emp_no);
+		int order_avg = orderService.selectselectOrderAvg(emp_no);
+		String goal_state = orderService.selectGoalState(emp_no);
+		//JSONArray jarr = new JSONArray();
+		JSONObject job = new JSONObject();
+		job.put("order_sum", order_sum);
+		job.put("order_avg", order_avg);
+		job.put("goal_state", goal_state);
+		//jarr.add(job);
+		//System.out.println("jarr : " + jarr.toString());
+		
+		response.setContentType("application/json; charset=utf-8");
+		PrintWriter out = response.getWriter();
+	
+		out.println(job.toJSONString());
+		out.flush();
+		out.close();
 	}
 	
 	
