@@ -130,13 +130,13 @@ select count(*) as listCount from approval a,reason r
 			<when test="job_no==2">
 			,(select emp_name,dept_no,emp_no,emp_mgr from emp) h,
 			(select emp_name,emp_no,emp_mgr from emp where emp_no=#{emp_no}) t,(select emp_name,emp_no from emp where job_no=3) s 
-			where r.reason_no=a.approval_choose_no and h.emp_no=a.emp_no and h.emp_mgr=#{emp_no} and t.emp_mgr=s.emp_no and h.emp_name=#{emp_name}
+			where r.reason_no=a.approval_choose_no and h.emp_no=a.emp_no and h.emp_mgr=#{emp_no} and t.emp_mgr=s.emp_no and h.emp_name like '%'||#{emp_name}||'%'
 		
 			</when>
 			<when test="job_no==3">
 		,(select emp_name,dept_no,emp_no,emp_mgr from emp) h,
 			(select emp_name,emp_no,emp_mgr from emp where emp_mgr=(select emp_no from emp where emp_no=#{emp_no})) t,(select emp_name,emp_no from emp where job_no=3) s
-			where r.reason_no=a.approval_choose_no and a.approval_team_date is not null and h.emp_no=a.emp_no and s.emp_no=#{emp_no} and t.emp_mgr=s.emp_no and a.emp_no=h.emp_no and h.emp_mgr=t.emp_no and h.emp_name=#{emp_name}
+			where r.reason_no=a.approval_choose_no and a.approval_team_date is not null and h.emp_no=a.emp_no and s.emp_no=#{emp_no} and t.emp_mgr=s.emp_no and a.emp_no=h.emp_no and h.emp_mgr=t.emp_no and h.emp_name like '%'||#{emp_name}||'%'
 			</when>	
 			</choose>
 
@@ -163,7 +163,7 @@ as approval_team_date,a.approval_mgr_date from approval a,reason r
 (select emp_name,emp_no,emp_mgr from emp where emp_no=#{emp_no}) t,
 (select emp_name,emp_no from emp where job_no=3) s 
 where r.reason_no=a.approval_choose_no and h.emp_no=a.emp_no and h.emp_mgr=#{emp_no} and
-a.emp_no=h.emp_no and t.emp_no=h.emp_mgr and t.emp_mgr=s.emp_no and h.emp_name=#{emp_name} 
+a.emp_no=h.emp_no and t.emp_no=h.emp_mgr and t.emp_mgr=s.emp_no and h.emp_name like '%'||#{emp_name}||'%' 
 order by a.approval_submit_date desc)) where rnum>=#{startRow} and rnum<=#{endRow}
 ]]>
 </if>
@@ -180,7 +180,7 @@ as approval_team_date,a.approval_mgr_date from approval a,reason r,
 (select emp_name,emp_no,emp_mgr from emp where emp_mgr=(select emp_no from emp where emp_no=#{emp_no})) t,
 (select emp_name,emp_no from emp where job_no=3) s
 where r.reason_no=a.approval_choose_no and a.approval_team_date is not null and h.emp_no=a.emp_no and s.emp_no=t.emp_mgr and
-s.emp_no=#{emp_no} and a.emp_no=h.emp_no and h.emp_mgr=t.emp_no and h.emp_name=#{emp_name} order by approval_mgr_date desc NULLS first,approval_team_date desc)) where rnum>=#{startRow} and rnum<=#{endRow}
+s.emp_no=#{emp_no} and a.emp_no=h.emp_no and h.emp_mgr=t.emp_no and h.emp_name like '%'||#{emp_name}||'%' order by approval_mgr_date desc NULLS first,approval_team_date desc)) where rnum>=#{startRow} and rnum<=#{endRow}
 
 
 
