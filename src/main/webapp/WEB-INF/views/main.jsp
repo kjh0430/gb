@@ -1229,11 +1229,11 @@ $(function(){
             <div class="col-xs-12">
               <div class="x_panel tile">
                 <div class="x_title">
-                  <h2>이번달 판매량</h2>
+                  <h2>이번달 제품 판매율</h2>
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                 	<div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+                 	<div id="container" style="min-width:200px; height: 300px; max-width: 500px; margin: 0 auto"></div>
                 </div>
               </div>
             </div>
@@ -1327,31 +1327,17 @@ $(function(){
 		      showInLegend: true
 		    }
 		  },
+		  colors:[
+			    "#3b5159",
+			    "#a3c9d9",
+			    "#d9b384",
+			    "#8c6e54",
+			    "#6c8aa2"
+		  ],
 		  series: [{
 		    name: '점유율',
 		    colorByPoint: true,
 		    data:c_data
-		    	/*  [{
-		      name: 'Chrome',
-		      y: 61.41,
-		      sliced: true,
-		      selected: true
-		    }, {
-		      name: 'Internet Explorer',
-		      y: 11.84
-		    }, {
-		      name: 'Firefox',
-		      y: 10.85
-		    }, {
-		      name: 'Edge',
-		      y: 4.67
-		    }, {
-		      name: 'Safari',
-		      y: 4.18
-		    }, {
-		      name: 'Other',
-		      y: 7.05
-		    }] */
 		  }]
 		});
   }
