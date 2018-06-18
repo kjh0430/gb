@@ -52,19 +52,26 @@ var c_discount; //해당 고객의 할인율
 				var value = "<table id='table_items' class='table table-striped table-bordered'>"
 				+"<tr><th>거래처번호</th><th>거래처명</th><th>전화번호</th><th>주소</th></tr>";
 				
-				for(var i in jsonl.list){
-					value += "<tr onclick='selectCom(this);'>"
-					+"<td>"+jsonl.list[i].client_no+"</td>"
-					+"<td>"+jsonl.list[i].client_company+"</td>"
-					+"<td>"+jsonl.list[i].client_phone+"</td>"
-					+"<td>"+jsonl.list[i].client_addr+"</td>"
-					+"</tr>";	
-					discount[i] = jsonl.list[i].contract_discount;
+				var size = Object.keys(jsonl.list).length;
+				
+				if(size > 0 && window.event.keyCode==13){
+					for(var i in jsonl.list){
+						value += "<tr onclick='selectCom(this);'>"
+						+"<td>"+jsonl.list[i].client_no+"</td>"
+						+"<td>"+jsonl.list[i].client_company+"</td>"
+						+"<td>"+jsonl.list[i].client_phone+"</td>"
+						+"<td>"+jsonl.list[i].client_addr+"</td>"
+						+"</tr>";	
+						discount[i] = jsonl.list[i].contract_discount;
+					}
+					
+					value += "</table>";
+				//	alert("value : " + value);
+					$('#searchResult').html(value);
+				}else{
+					alert("검색어를 입력해주세요.");
 				}
 				
-				value += "</table>";
-			//	alert("value : " + value);
-				$('#searchResult').html(value);
 			}
 			
 		});//ajax complete
@@ -100,36 +107,40 @@ var c_discount; //해당 고객의 할인율
 
 	//상품 검색용.
 	function searchProduct(){
-		$.ajax({
-			url: "searchProduct.do",
-			type : "post",
-			dataType : "json",
-			data : {
-				searchProductName : $('#searchProductName').val(),
-				client_no : client_no
-			},
-			success : function(obj){
-				
-				var objStr = JSON.stringify(obj);
-				var json = JSON.parse(objStr);
-				var value = "<table id='table_items' class='table table-striped table-bordered'>"
-				+"<tr><th>제품번호</th><th>제품명</th><th>단가</th></tr>";
-				
-				for(var i in json.plist){
-					this.row = i;
-					value += "<tr onclick='selectProduct(this);'>"
-					+"<td>"+json.plist[i].product_no+"</td>"
-					+"<td>"+json.plist[i].product_name+"</td>"
-					+"<td>"+json.plist[i].product_price+"</td>"
-					+"</tr>";
+		if($('#searchProductName').val()!=null && $('#searchProductName').val()!="") {
+			$.ajax({
+				url: "searchProduct.do",
+				type : "post",
+				dataType : "json",
+				data : {
+					searchProductName : $('#searchProductName').val(),
+					client_no : client_no
+				},
+				success : function(obj){
 					
+					var objStr = JSON.stringify(obj);
+					var json = JSON.parse(objStr);
+					var value = "<table id='table_items' class='table table-striped table-bordered'>"
+					+"<tr><th>제품번호</th><th>제품명</th><th>단가</th></tr>";
+					
+					for(var i in json.plist){
+						this.row = i;
+						value += "<tr onclick='selectProduct(this);'>"
+						+"<td>"+json.plist[i].product_no+"</td>"
+						+"<td>"+json.plist[i].product_name+"</td>"
+						+"<td>"+json.plist[i].product_price+"</td>"
+						+"</tr>";
+						
+					}
+					
+					
+					value += "</table>";
+					$('#searchProductList').html(value);
 				}
-				
-				
-				value += "</table>";
-				$('#searchProductList').html(value);
-			}
-		});//ajax complete
+			});//ajax complete
+		}else{
+			alert("검색할 제품명을 입력해주세요");
+		}
 	}
 	
 	function selectProduct(obj){

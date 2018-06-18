@@ -137,6 +137,7 @@ public class ProductController {
 		return "product/productInsert";
 	}
 	
+	
 	//상품 등록 처리 컨트롤러
 	@RequestMapping(value="insertProduct.do", method=RequestMethod.POST)
 	public ModelAndView insertProduct(Product product,ModelAndView mv,HttpServletRequest request,
@@ -148,6 +149,7 @@ public class ProductController {
 			product.setProduct_availability("Y");
 		}		
 		
+		System.out.println(product);
 		int result = productService.insertProduct(product);
 		int product_no = product.getProduct_no();
 		String path = request.getSession().getServletContext().getRealPath("resources/upload/product");

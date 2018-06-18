@@ -220,9 +220,21 @@
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9847a2e4326a2ca39c99b754b2d4e80c&libraries=services"></script>		
 	<script type="text/javascript" src="resources/js/map.js?ver=9"></script>
 	<script type="text/javascript">
-		function selectDailyreport(){		
-			selectVisit();	
-			selectOrder();
+		function selectDailyreport(){	
+			var date = $("#daily_date").val();
+			var emp_option = $("#emp_no option:selected").val();
+	
+			
+			if($("#emp_no option:selected").val() == "사원선택"){
+				alert("사원을 선택해주세요.");			
+			}else if(date==""){
+				alert("날짜를 선택해주세요.");
+			}else{
+				selectVisit();	
+				selectOrder();
+			}
+			
+			
 		}
 		
 		

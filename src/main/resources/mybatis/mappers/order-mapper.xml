@@ -75,7 +75,7 @@
 	   <![CDATA[
 	      select ol.order_no,ol.emp_no,ol.order_date,ol.client_no,c.client_company,sum((ol.order_price*ol.order_amount)) as total 
 	      from orderlist ol,client c where ol.CLIENT_NO=c.client_no 
-	      and ol.emp_no = #{emp_no} and to_char(ol.order_date,'yyyy-mm-dd') like #{order_date} 
+	      and ol.emp_no = #{emp_no} and substr(to_char(ol.order_date,'yyyy-mm-dd'),1,10) like substr(#{order_date} ,1,10)
 	      group by c.client_company,ol.order_no,ol.client_no,ol.emp_no,ol.order_date order by order_date
 	   ]]>
    </select>
@@ -95,20 +95,22 @@
    <select id="selectAllOrderList" resultMap="resultOrderlist2" parameterType="order">
    	<if test="searchCom==null">
    	<![CDATA[
-		 	select * from (select rownum as rn, A.* 
-			from (select ol.order_no, c.client_company,sum((ol.order_price*ol.order_amount)) as total, substr(to_char(order_date),1,8) as order_date 
-			from orderlist ol, client c 
-			where ol.client_no = c.client_no group by ol.order_no, c.client_company, order_date order by order_no desc) A ) 
-			where rn between #{startPage} and #{endPage}
+	 	select * from (select rownum as rn, A.* 
+		from (select ol.order_no,ol.emp_no,ol.client_no,c.client_company,sum(ol.order_price*ol.order_amount) as total,
+		substr(to_char(ol.order_date,'yyyy-mm-dd'),1,10) as order_date
+		from orderlist ol,client c 
+		where ol.CLIENT_NO=c.client_no  
+		group by ol.order_no,c.client_company,ol.client_no,ol.emp_no, substr(to_char(ol.order_date,'yyyy-mm-dd'),1,10) order by order_no desc) A ) 
+		where rn between #{startPage} and #{endPage}
    		
    	]]>
    	</if>
    	<if test="searchCom!=null">
    	<![CDATA[
    		select * from (select rownum as rn, A.* 
-			from (select ol.order_no, c.client_company,sum((ol.order_price*ol.order_amount)) as total, substr(to_char(order_date),1,8) as order_date 
+			from (select ol.order_no, c.client_company,sum((ol.order_price*ol.order_amount)) as total, substr(to_char(order_date,'yyyy-mm-dd'),1,10) as order_date 
 			from orderlist ol, client c 
-			where ol.client_no = c.client_no and c.client_company like '%'||#{searchCom}||'%' group by ol.order_no, c.client_company, order_date order by order_no desc) A ) 
+			where ol.client_no = c.client_no and c.client_company like '%'||#{searchCom}||'%' group by ol.order_no, c.client_company, substr(to_char(order_date,'yyyy-mm-dd'),1,10) order by order_no desc) A ) 
 			where rn between #{startPage} and #{endPage}
    	
    	]]>
@@ -167,7 +169,8 @@
 	<![CDATA[
 		select distinct(ROUND(((select sum(order_amount*order_price) as order_sum from orderlist 
 		where substr(to_char(order_date),1,6) = substr(sysdate,1,6) and emp_no =#{emp_no})/
-		(select goal_money from goal where substr(to_char(goal_date),1,6) = substr(sysdate,1,6) and emp_no =#{emp_no})*100),2)) as goalstate 
+		(select goal_money from goal where substr(to_char(goal_date),1,6) = substr(sysdate,1,6) and emp_no = #{emp_no})*100),2)) as goalstate 
+
 		from orderlist
 	]]>
 	

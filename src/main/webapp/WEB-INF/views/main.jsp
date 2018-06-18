@@ -1191,10 +1191,15 @@ $(function(){
 	                      
 	                    </div>
 	                  </div>
-	                  <div class="col-sm-8">
+	                  <div class="col-sm-2">
+	                    <div class="weather-text">
+	                      <h2 class="todayDesc"></h2>
+	                    </div>
+	                  </div>
+	                  <div class="col-sm-6">
 	                    <div class="weather-text">
 	                      <h2 class="degrees todayTemp">현재기온 : </h2>
-	                      <h2 class="todayDesc"></h2>
+	                      <h2 class="todayRain">강수량 : </h2>
 	                    </div>
 	                  </div>
 	                </div>
@@ -1353,7 +1358,7 @@ $(function(){
 
 		
 
-	/* 
+	
 	function getWeather(){
 		var city = '${loginEmp.getCity()}';
 		var county = '${loginEmp.getCounty()}';
@@ -1371,21 +1376,22 @@ $(function(){
 			url:'https://api2.sktelecom.com/weather/current/hourly?version=1&callback=result',
 			async:false,
 			success : function(data){
-				//console.log(data);
+				console.log(data);
 				var todayDate = data["weather"]["hourly"][0]['timeRelease'];
 				var todayTemp = Math.round(data["weather"]["hourly"][0]['temperature']['tc']);
 				var todayMinTemp = Math.round(data["weather"]["hourly"][0]['temperature']['tmin']);
 				var todayMaxTemp = Math.round(data["weather"]["hourly"][0]['temperature']['tmax']);
 				var todayDesc = data["weather"]["hourly"][0]['sky']['name'];
 				var todayIcon = data["weather"]["hourly"][0]['sky']['code'];
-				var todayTimeRelease = data["weather"]["hourly"][0]['timeRelease'];
+				var todayRain = data["weather"]["hourly"][0]['precipitation']['sinceOntime'];
 				var year = todayDate.substring(0,4);
 				var month = todayDate.substring(6,7);
 				var day = todayDate.substring(9,10);
 					$(".todayDate").append(year+"년 "+month+"월 "+day+"일" );						
 					$(".todayMinTemp").append(todayMinTemp);		
 					$(".todayMaxTemp").append(todayMaxTemp);		
-					$(".todayTemp").append(todayTemp);
+					$(".todayTemp").append(todayTemp);		
+					$(".todayRain").append(todayRain);
 					$(".todayDesc").html(todayDesc);
 				var icon;
 				switch(todayIcon){
@@ -1414,10 +1420,9 @@ $(function(){
 			
 		}); //end of ajax
 	}
-	 */
 	    
    $(function(){
-	  // getWeather();
+	  getWeather();
 	  
 	   
 	});  

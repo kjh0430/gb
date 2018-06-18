@@ -83,6 +83,7 @@ public class EmpDao {
       return sqlSession.selectOne("selectCheckEmpNo", emp_no);
    }
 
+
    public Emp selectMyInfo(Emp emp) {
       
       return sqlSession.selectOne("selectMyInfo",emp);
@@ -101,6 +102,7 @@ public class EmpDao {
       
       return sqlSession.update("updateMyInfo",emp);
    }
+
 
    public int updatePassword(Emp emp) {
       
