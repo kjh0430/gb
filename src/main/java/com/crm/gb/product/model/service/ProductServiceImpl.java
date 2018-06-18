@@ -66,8 +66,14 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public int deleteFile(String product_rename_file) {
-		return productDao.deleteFile(product_rename_file);
+	public int selectgetProduct(Product pro) {
+		return productDao.productListE(pro);
+	}
+
+	@Override
+	public ArrayList<Product> selectproductList(Product pro) {
+		return productDao.productListB(pro);
+
 	}
 
 }

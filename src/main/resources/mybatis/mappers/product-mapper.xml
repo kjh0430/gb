@@ -106,9 +106,22 @@
 		]]>
 	</select>
 	
-	<delete id="deleteFile" parameterType="string">
-		<![CDATA[
-		delete from product_file where product_rename_file = #{product_rename_file}
+
+	<select id="productListA" parameterType="int" resultType="int">
+	<![CDATA[
+	select count(*) from PRODUCT
 		]]>
-	</delete>
+	</select>
+	
+	<select id="productListC" parameterType="product" resultType="product">
+	<![CDATA[
+	select * from
+		(select rownum rnum, xx.*
+		  from (select ex.* from( select product_no, product_name, product_price, PRODUCT_AVAILABILITY from product p order by product_no desc) ex) xx)
+	where rnum >= #{startRow} and rnum <= #{endRow}
+		 
+	]]>
+	</select>
+	
+
 </mapper>

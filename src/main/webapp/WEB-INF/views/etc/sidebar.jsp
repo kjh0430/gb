@@ -40,9 +40,12 @@
 	      <li><a><i class="fa fa-edit"></i> 영업관리 <span class="fa fa-chevron-down"></span></a>
 	        <ul class="nav child_menu">
 
-	          <li><a href="productList.do">제품관리</a></li>
-	          <li><a href="myGoal.do">목표현황</a></li>
+
+	          <li><a href="productList.do?page=1">제품관리</a></li>
+	          <li><a href="MovegoalState.do">목표현황</a></li>
 	          <li><a href="moveDailyReport.do">영업일지</a></li>
+
+
 	        </ul>
 	      </li>
 	       <li><a href="noticeList.do?page=1"><i class="fa fa-file-text-o"></i> 공지사항</a></li>

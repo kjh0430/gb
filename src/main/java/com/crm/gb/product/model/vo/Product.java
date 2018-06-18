@@ -18,28 +18,18 @@ public class Product implements java.io.Serializable{
 	private Date product_register;
 	private String product_delete;
 	private int contract_discount;
-	
+	private int startRow;
+	private int endRow;
+	private int showPage;
+	private int totalRow;
+	private int start;
+	private int end;
 	
 	public Product() {}
-	
-	public Product(int product_no, String product_name, int product_price, String product_availability,
-			int product_amount, String product_comment, Date product_register, String product_delete) {
-		super();
-		this.product_no = product_no;
-		this.product_name = product_name;
-		this.product_price = product_price;
-		this.product_availability = product_availability;
-		this.product_amount = product_amount;
-		this.product_comment = product_comment;
-		this.product_register = product_register;
-		this.product_delete = product_delete;
-	}
-	
-	
-	
+
 	public Product(int product_no, String product_name, int product_price, String product_availability,
 			int product_amount, String product_comment, Date product_register, String product_delete,
-			int contract_discount) {
+			int contract_discount, int startRow, int endRow, int showPage, int totalRow, int start, int end) {
 		super();
 		this.product_no = product_no;
 		this.product_name = product_name;
@@ -50,6 +40,12 @@ public class Product implements java.io.Serializable{
 		this.product_register = product_register;
 		this.product_delete = product_delete;
 		this.contract_discount = contract_discount;
+		this.startRow = startRow;
+		this.endRow = endRow;
+		this.showPage = showPage;
+		this.totalRow = totalRow;
+		this.start = start;
+		this.end = end;
 	}
 
 	public int getProduct_no() {
@@ -116,12 +112,6 @@ public class Product implements java.io.Serializable{
 		this.product_delete = product_delete;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-	
-
 	public int getContract_discount() {
 		return contract_discount;
 	}
@@ -130,14 +120,69 @@ public class Product implements java.io.Serializable{
 		this.contract_discount = contract_discount;
 	}
 
+	public int getStartRow() {
+		return startRow;
+	}
+
+	public void setStartRow(int startRow) {
+		this.startRow = startRow;
+	}
+
+	public int getEndRow() {
+		return endRow;
+	}
+
+	public void setEndRow(int endRow) {
+		this.endRow = endRow;
+	}
+
+	public int getShowPage() {
+		return showPage;
+	}
+
+	public void setShowPage(int showPage) {
+		this.showPage = showPage;
+	}
+
+	public int getTotalRow() {
+		return totalRow;
+	}
+
+	public void setTotalRow(int totalRow) {
+		this.totalRow = totalRow;
+	}
+
+	public int getStart() {
+		return start;
+	}
+
+	public void setStart(int start) {
+		this.start = start;
+	}
+
+	public int getEnd() {
+		return end;
+	}
+
+	public void setEnd(int end) {
+		this.end = end;
+	}
+
 	@Override
 	public String toString() {
 		return "Product [product_no=" + product_no + ", product_name=" + product_name + ", product_price="
-				+ product_price + ", product_availavility=" + product_availability + ", product_amount="
+				+ product_price + ", product_availability=" + product_availability + ", product_amount="
 				+ product_amount + ", product_comment=" + product_comment + ", product_register=" + product_register
-				+ ", product_delete=" + product_delete  + " , discount : "+ contract_discount+"]";
+				+ ", product_delete=" + product_delete + ", contract_discount=" + contract_discount + ", startRow="
+				+ startRow + ", endRow=" + endRow + ", showPage=" + showPage + ", totalRow=" + totalRow + ", start="
+				+ start + ", end=" + end + "]";
 	}
 	
 	
 	
-}
+		
+	}
+	
+	
+	
+

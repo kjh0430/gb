@@ -123,7 +123,7 @@ return index;
 											</tr>
 										</thead>
 										<tbody>
-											<c:forEach items="${list}" var="li"> 
+											<c:forEach items="${pageList}" var="li"> 
 											<tr>
 												<td>${li.product_no}</td>
 												<td><a href=moveproductDetail.do?data=${li.product_no}>${li.product_name}</a></td>
@@ -134,6 +134,49 @@ return index;
 										<tbody>
 									</table>
 								</div>
+							
+														  <!-- <ul class='pagination'> -->
+	        
+	      
+	        
+	        <%--  <c:set var="startPage" value="${startPage}"/>
+	        <c:choose>
+	        <c:when test="${startPage>5}">
+	          <li class='page-item'><a class='page-link' href='productListE.do?page=${startPage-1}'>PREV</a></li>
+	        </c:when>
+	        <c:otherwise>
+	        <li class='page-item'><a class='page-link'>prev</a></li>
+	        </c:otherwise>
+	        </c:choose> 
+	       
+	        <c:forEach var="paging" begin="${startPage}" end="${endPage}">
+	        <c:choose>
+	        <c:when test="${paging==currentPage}">
+	        <li class='page-item'><a style='color:black;' class='page-link'>${paging}</a></li>
+	        </c:when>
+	        <c:otherwise>
+	        <li class='page-item'><a class='page-link' href='productListE.do?page=${paging}'>${paging}</a></li>
+	        </c:otherwise>
+	        </c:choose>
+	        </c:forEach>
+	        <c:set var="endPage" value="${endPage}"/>
+	        <c:set var="maxPage" value="${maxPage}"/>
+	        <c:choose>
+	        <c:when test="${endPage<maxPage}">
+	        <li class='page-item'><a class='page-link' href='productListE.do?page=${endPage+1}'>next</a></li>
+	        </c:when>
+	        <c:otherwise>
+	        <li class='page-item'><a class='page-link'>next</a></li>
+	        </c:otherwise>
+	        </c:choose>
+	        </ul> --%>
+							
+								<div style="text-align:center;">
+									<c:forEach var="i" begin="${ startPage }" end="${ endPage }">
+										<a id="listNumber" href="productListE2.do?startPage=${ i }">${ i }</a>
+									</c:forEach>
+								</div>
+							
 							</div>
 						</div>
 					</div>
