@@ -48,8 +48,6 @@ $(document).ready(function() {
         pageLength:15
     } );
 } );
-
-}
 </script>
 <style type="text/css">
 table tr th, table tr td
@@ -104,6 +102,97 @@ function selectMgrNo(obj){
 	
 }
 
+function empUpdate(){
+	
+	var allCheck=false;
+	
+	var emp_no = $('#emp_no').val();
+	var emp_pwd = $('#emp_pwd').val();
+	var emp_name = $('#emp_name').val();
+	var emp_addr = $('#emp_addr').val();
+	var job_no = $('#job_no').val();
+	var emp_phone = $('#emp_phone').val();
+	var emp_email = $('#emp_email').val();
+	var emp_mgr = $('#emp_mgr').val();
+	var emp_hiredate = $('#emp_hiredate').val();
+	var city = $('#city').val();
+	var county = $('#county').val();
+	var village = $('#village').val();
+	var dept_no = $('#dept_no').val();
+	
+	var num = new RegExp("[0-9]");
+	var pwd_pattern= /^[A-Za-z0-9]{5,10}$/; //숫자와 문자 포함 형태의  5에서 10자리 비밀번호
+	var phone_check = /^\d{3}-\d{3,4}-\d{4}$/;
+	var email_check = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+	
+	if(!pwd_pattern.test(emp_pwd)){
+		alert("비밀번호는 숫자,문자 포함 5~10자리 입니다.");
+		allCheck=false;
+		return allCheck; 
+	}if(emp_name.length < 1){
+		alert("사원이름을 입력해주세요.");
+		allCheck=false;
+		return allCheck;
+	}if(emp_addr.length < 1){
+		alert("주소를 입력해주세요.");
+		allCheck=false;
+		return allCheck;
+	}if(emp_phone.length < 1){
+		alert("연락처를 입력해주세요.");
+		allCheck=false;
+		return allCheck;
+	}if(emp_email.length < 1){
+		alert("e-mail을 입력해주세요.");
+		allCheck=false;
+		return allCheck;
+	}if(emp_mgr.length == 0){
+		alert("상사번호를 입력해주세요.");
+		allCheck=false;
+		return allCheck;
+	}if(!num.test(emp_mgr)){
+		alert("상사번호는 숫자만 입력할 수 있습니다.");
+		allCheck=false;
+		return allCheck;
+	}if(emp_name.length > 1 && pwd_pattern.test(emp_pwd) && emp_addr.length > 1 && emp_phone.length > 1 && emp_email.length > 1 && emp_mgr.length != 0 && num.test(emp_mgr)){
+		
+		console.log("ajax 실행");
+		
+		$.ajax({
+   		url : "empupdate.do",
+   		type: "post",
+   		dataType: "json",
+   		data: {
+   			emp_no : emp_no,
+   			emp_name : emp_name,
+   			emp_pwd : emp_pwd,    			
+   			emp_addr : emp_addr,
+   			emp_phone : emp_phone,
+   			job_no : job_no,
+   			emp_email : emp_email,
+   			emp_mgr : emp_mgr,
+   			emp_hiredate : emp_hiredate,
+   			city : city,
+   			county : county,
+   			village : village,
+   			dept_no : dept_no											    			
+   		},
+   		success:function(obj){
+   				alert("사원정보가 수정 되었습니다.");
+   				location.href="empList.do";    			
+   			},
+   			error: function(request, status, errorData){
+   				console.log("error code : " + request.status + "\n"
+   						+ "message : " + request.responseText + "\n"
+   						+ "error : " + errorData);
+   				
+   			}
+   		});		
+	}
+}
+
+function backMyInfo(){
+	  location.href="empDetail.do?emp_no="+""+${ emp.emp_no }+"";
+}
 
 </script>
 
@@ -122,86 +211,36 @@ text-align:center;
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="main.html" class="site_title"><i class="fa fa-google"></i>
+						<a href="mainView.do" class="site_title"><i class="fa fa-google"></i>
 							<span>GROUP BEAN</span></a>
 					</div>
 
 					<div class="clearfix"></div>
 
 					<!-- sidebar menu -->
-					<%@ include file="../etc/adminsidebar.jsp"%>
+					<c:choose>
+			            	<c:when test="${ loginEmp.job_no == 3}">
+					            <!-- sidebar menu -->
+					            <%@ include file="../etc/adminsidebar.jsp" %>
+					            <!-- /sidebar menu -->
+			            	</c:when>
+			            	<c:when test="${ loginEmp.job_no == 2}">
+			            	<%@ include file="../etc/adminsidebar.jsp" %>
+			            	
+			            	</c:when>
+			            	<c:otherwise>
+								<!-- sidebar menu -->
+					            <%@ include file="../etc/sidebar.jsp" %>
+					            <!-- /sidebar menu --> 
+			            	</c:otherwise>
+			            </c:choose>
 					<!-- /sidebar menu -->
 
 				</div>
 			</div>
 
 			<!-- top navigation -->
-			<div class="top_nav">
-				<div class="nav_menu">
-					<nav>
-						<div class="nav toggle">
-							<a id="menu_toggle"><i class="fa fa-bars"></i></a>
-						</div>
-
-						<ul class="nav navbar-nav navbar-right">
-							<li class=""><a href="javascript:;"
-								class="user-profile dropdown-toggle" data-toggle="dropdown"
-								aria-expanded="false"> <img src="images/img.jpg" alt="">John
-									Doe <span class=" fa fa-angle-down"></span>
-							</a>
-								<ul class="dropdown-menu dropdown-usermenu pull-right">
-									<li><a href="javascript:;"> Profile</a></li>
-									<li><a href="javascript:;"> <span
-											class="badge bg-red pull-right">50%</span> <span>Settings</span>
-									</a></li>
-									<li><a href="javascript:;">Help</a></li>
-									<li><a href="login.html"><i
-											class="fa fa-sign-out pull-right"></i> Log Out</a></li>
-								</ul></li>
-
-							<li role="presentation" class="dropdown"><a
-								href="javascript:;" class="dropdown-toggle info-number"
-								data-toggle="dropdown" aria-expanded="false"> <i
-									class="fa fa-envelope-o"></i> <span class="badge bg-green">6</span>
-							</a>
-								<ul id="menu1" class="dropdown-menu list-unstyled msg_list"
-									role="menu">
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li>
-										<div class="text-center">
-											<a> <strong>See All Alerts</strong> <i
-												class="fa fa-angle-right"></i>
-											</a>
-										</div>
-									</li>
-								</ul></li>
-						</ul>
-					</nav>
-				</div>
-			</div>
+			<c:import url="../etc/topnav.jsp"></c:import>
 			<!-- /top navigation -->
 
 			<!-- page content -->
@@ -228,7 +267,7 @@ text-align:center;
 								
 								
 					<!-- 사원 수정폼 -->
-					<form class="form-horizontal form-label-left" action="empupdate.do" method="post">	
+					<form class="form-horizontal form-label-left">	
 					 <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">사원번호</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -362,8 +401,8 @@ text-align:center;
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                          <button class="btn btn-success" type="submit" onclick="Regiemp()">수정</button>                    
-                          <button class="btn btn-primary" type="button">취소</button>                     
+                          <button class="btn btn-success" type="button" onclick="empUpdate()">수정</button>                    
+                          <button class="btn btn-primary" type="button" onclick="backMyInfo()">취소</button>                     
                         </div>
                       </div>
 					</form>

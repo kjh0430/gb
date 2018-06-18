@@ -20,4 +20,8 @@ public class TodoListDao {
 		return sqlSession.selectOne("todolistSelect", emp_no);
 	}
 
+	public int updateTodoList(TodoList todolist) {
+		return sqlSession.update("todolistUpdate", todolist);
+	}
+
 }

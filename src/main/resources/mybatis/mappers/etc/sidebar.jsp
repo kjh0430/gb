@@ -7,12 +7,6 @@
 <head>
 <meta charset="UTF-8">
 <title>sidebar</title>
-<style>
-	.count_badge{
-		margin-left:4px;
-	}
-</style>
-<script src="resources/js/EventSource.js"></script>
 </head>
 <body>
 
@@ -31,9 +25,9 @@
 	      </li>
 	      <li><a><i class="fa fa-table"></i> 영업현황 <span class="fa fa-chevron-down"></span></a>
 	        <ul class="nav child_menu">
-	          <li><a href="accountList.do?emp_no=${loginEmp.emp_no}&page=1&job_no=${loginEmp.job_no}">거래처</a></li>
+	          <li><a href="accountList.do?emp_no=${loginEmp.emp_no}">거래처</a></li>
 	          <li><a href="selectOrderClient.do?emp_no=${loginEmp.emp_no}">발주하기</a>
-	          <li><a href="orderList.do?emp_no=${loginEmp.emp_no}&page=1&client_company=null">매출현황</a></li>
+	          <li><a href="orderList.do">매출현황</a></li>
 	          <li><a href="visit.do">방문일지</a></li>
 	        </ul>
 	      </li>
@@ -41,11 +35,11 @@
 	        <ul class="nav child_menu">
 
 	          <li><a href="productList.do">제품관리</a></li>
-	          <li><a href="myGoal.do">목표현황</a></li>
+	          <li><a href="MovegoalState.do">목표현황</a></li>
 	          <li><a href="moveDailyReport.do">영업일지</a></li>
+
 	        </ul>
 	      </li>
-	       <li><a href="noticeList.do?page=1"><i class="fa fa-file-text-o"></i> 공지사항</a></li>
 	    </ul>
 	  </div>
 	  <div class="menu_section">
@@ -53,14 +47,18 @@
 	    <ul class="nav side-menu">
 	      <li><a><i class="fa fa-file-text-o"></i> 전자결재 <span class="fa fa-chevron-down"></span></a>
 	        <ul class="nav child_menu">
+	          <!-- <li><a href="e_commerce.html">계약제안</a></li> -->
 	          <li><a href="approval.do">결재신청</a></li>
-	          <li><a href="approvalListE.do?emp_no=${loginEmp.emp_no}">결재목록</a></li>
+	          <li><a href="approvalList.do">결재목록</a></li>
+	         <!--  <li><a href="projects.html">월간보고</a></li> -->
 	        </ul>
 	      </li>
 	      
-	       <li><a href="messageList.do"><i class="fa fa-file-text-o"></i> 쪽지함 <span class="count_badge badge bg-green"></span></a>
+	       <li><a href="messageList.do"><i class="fa fa-file-text-o"></i> 쪽지함</a>
 	      </li>
-	      
+	      <!-- </li>
+	      <li><a><i class="fa fa-cog"></i> 설정</a>
+	      </li> -->
 	      
 	    </ul>
 	  </div>
@@ -69,28 +67,6 @@
 	<div class="sidebar-footer hidden-small">
 	  
 	</div>
-	<script type="text/javascript">
-	$(function(){
-		
-	})
-	var emp_no = ${loginEmp.emp_no};
-	var EventSource2 = new EventSource("count.do?emp_no="+emp_no);
-	EventSource2.onopen = function(){
-		//console.log("연결중2");		
-	}
-	EventSource2.onmessage = function(event) {
-
-		var count = event.data;
-		if(count>0){
-			$(".count_badge").html(count);		
-		}else{
-			$(".count_badge").css("display","none");
-		}
-		
-
-	};
-	
-	</script>
 
 
 </body>

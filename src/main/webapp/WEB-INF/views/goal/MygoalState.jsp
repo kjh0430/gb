@@ -24,60 +24,6 @@
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script>
 
-	function searchEmp(){
-	
-		emp_name=$('#empName').val();
-		
-		if($('#empName').val()!=null){
-		
-		$.ajax({
-		url:"search.do",
-		type:"post",
-		dataType:"json",
-		data:{
-			emp_name:emp_name,
-			emp_no:"${loginEmp.emp_no}"
-		},
-		success :function(obj){
-			var objStr = JSON.stringify(obj);
-	        var jsonl = JSON.parse(objStr);
-	        var size = Object.keys(jsonl.list).length;	
-			
-	     	if(size>0){
-	            var value = "<table class='table table-hover' id='getvalues'><thead><tr><th>이름</th><th>직급</th><th>부서</th><th>e-mail</th><th>사원번호</th></tr></thead><tbody>";
-	
-	               for ( var i in jsonl.list) {
-	
-	                  value += "<tr onclick='selectEmp(this);' style='cusor:hand'><td>"
-	                        + jsonl.list[i].emp_name
-	                        + "</td><td>"
-	                        + jsonl.list[i].emp_job
-	                        + "</td><td>"
-	                        + jsonl.list[i].dept_name
-	                        + "</td><td>"
-	                        + jsonl.list[i].emp_email
-	                        + "</td><td>"
-	                        + jsonl.list[i].emp_no + "</td></tr>";
-	               }
-	
-	               value += "</tbody></table>";
-	
-	               $('#searchModal').modal("show");
-	               $('#searchTable').html(value);
-	     	}else{
-	     		values="<br><br><br><br><br><br><h2 style='text-align:center;'>검색 결과가 없습니다."+
-	     		"</h2><br><br><br><br><br><br>"
-	     		 $('#searchModal').modal("show");
-	            $('#searchTable').html(values);	     		
-	    	 	}
-			}
-		});
-		}else{
-			alert("검색할 사원을 입력해주세요.");
-		}
-		
-		
-	}
 
 </script>
 <style>
@@ -106,7 +52,7 @@ display:none;
 					<div class="clearfix"></div>
 
 					<!-- sidebar menu -->
-					<%@ include file="../etc/adminsidebar.jsp"%>
+					<%@ include file="../etc/sidebar.jsp"%>
 					<!-- /sidebar menu -->
 
 				</div>
@@ -127,12 +73,7 @@ display:none;
 							<h3>목표 현황</h3>
 						</div>
 						<div style="float:right">
-							<div class="input-group" style="width:300px">
-								<input type="text" class="form-control" placeholder="사원별 검색" id="empName"> 
-								<span class="input-group-btn">
-								<button type="submit" class="btn btn-primary" onclick="searchEmp();">검색</button>
-								</span>
-							</div>
+							
 							
 							<!-- 사원 검색 modal -->
 							  <div class="modal fade sendMsg2" tabindex="-1" role="dialog"
@@ -149,7 +90,8 @@ display:none;
                                           <div class="modal-body">
                                              <div class="form-group" style="margin: 0px;">
                                                 <div class="row">
-                                                   <label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
+                                                   <label
+                                                      class="control-label col-md-3 col-sm-3 col-xs-12"></label>
                                                    <div class="col-md-9 col-sm-9 col-xs-12">
                                                       <div class="input-group">
 
@@ -199,7 +141,7 @@ display:none;
 					<div class="row" style="vertical-align: middle;">
 						<div class="col-xs-12">
 							<div class="x_panel">
-								<div id="goalEmpTable" style="overflow:auto"></div>								
+								<div id="goalEmpTable"></div>								
 							</div>
 						</div>
 					</div>
@@ -231,97 +173,47 @@ display:none;
 	var month = [];
 	
    	$(document).ready(function() {
-   	//모든 사원의 목표,달성 등등 가져오기
    	
-   	 $.ajax({
-	  	  url:"getAll.do",
-		    type:"post",
-		    dataType:"json",
-		    success:function(obj){
-		      	goal = [];
-		    	perform =[];
-		    	month = [];
-		    	var objStr = JSON.stringify(obj);
-		        var jsonl = JSON.parse(objStr);
-		        var size = Object.keys(jsonl.list).length;
-		        
-		        values = "<table class='table table-striped table-bordered table-responsive' style='min-width:500px;'><thead><tr><th>(월)</th><th>목표(원)</th><th>매출(원)</th><th>달성(%)</th></thead>"
-		            + "<tbody>";
-					for(var i in jsonl.list){
-						values+="<tr><td>"+jsonl.list[i].goalMonth+"</td>"+
-									"<td>"+jsonl.list[i].goalMoney+"</td>"+
-									"<td>"+jsonl.list[i].sales+"</td>"+
-									"<td>"+jsonl.list[i].acheive+"%</td></tr>"				
-						goal.push(jsonl.list[i].goalMoney);
-						perform.push(jsonl.list[i].sales);
-						month.push(jsonl.list[i].goalMonth);
-					}
-					
-		            values +="</tbody></table>";
-		            $('#goalEmpTable').html(values);
-		            
-		            drawChart();
-		   		}
-	   	  });
-   		
+        $.ajax({
+  	  	  url:"getgoalInfo.do",
+  		    type:"post",
+  		    dataType:"json",
+  		    data:{
+  		    	emp_no:"${loginEmp.emp_no}"
+  		    },
+  		    success:function(obj){
+  		    	goal = [];
+  		    	perform =[];
+  		    	month = [];
+  		    	
+  		    	var objStr = JSON.stringify(obj);
+  		        var jsonl = JSON.parse(objStr);
+  		        var size = Object.keys(jsonl.list).length;
+  		        
+  		        values = "<table class='table table-striped table-bordered table-responsive' style='min-width:550px;'><thead><tr><th>(월)</th><th>목표(원)</th><th>매출(원)</th><th>달성(%)</th></thead>"
+  		            + "<tbody>";
+  					for(var i in jsonl.list){
+  						values+="<tr><td>"+jsonl.list[i].goalMonth+"</td>"+
+  									"<td>"+jsonl.list[i].goalMoney+"</td>"+
+  									"<td>"+jsonl.list[i].sales+"</td>"+
+  									"<td>"+jsonl.list[i].acheive+"%</td></tr>"				
+  						goal.push(jsonl.list[i].goalMoney);
+  						perform.push(jsonl.list[i].sales);
+  						month.push(jsonl.list[i].goalMonth);
+  					}
+  					
+  		            values +="</tbody></table>";
+  		            $('#goalEmpTable').html(values);
+  		            
+  		            drawChart();
+  		   		}
+  	   	  });
    		
    		
    		
    	});
    	
-   	
- 
-
-	function selectEmp(obj){
-		
-		 var content = $(obj);
-	     var td = content.children();
-	
-	     var emp_name = td.eq(0).text();
-	     var dept_name = td.eq(1).text();
-	     var emp_job = td.eq(2).text();
-	     var emp_email = td.eq(3).text();
-	      emp_no = td.eq(4).text();
-	     $('#searchModal').modal("hide");
-	
-	 
-	      $.ajax({
-	  	  url:"getgoalInfo.do",
-		    type:"post",
-		    dataType:"json",
-		    data:{
-		    	emp_no:emp_no
-		    },
-		    success:function(obj){
-		    	goal = [];
-		    	perform =[];
-		    	month = [];
-		    	
-		    	var objStr = JSON.stringify(obj);
-		        var jsonl = JSON.parse(objStr);
-		        var size = Object.keys(jsonl.list).length;
-		        
-		        values = "<table class='table table-striped table-bordered table-responsive' style='min-width:550px;'><thead><tr><th>(월)</th><th>목표(원)</th><th>매출(원)</th><th>달성(%)</th></thead>"
-		            + "<tbody>";
-					for(var i in jsonl.list){
-						values+="<tr><td>"+jsonl.list[i].goalMonth+"</td>"+
-									"<td>"+jsonl.list[i].goalMoney+"</td>"+
-									"<td>"+jsonl.list[i].sales+"</td>"+
-									"<td>"+jsonl.list[i].acheive+"%</td></tr>"				
-						goal.push(jsonl.list[i].goalMoney);
-						perform.push(jsonl.list[i].sales);
-						month.push(jsonl.list[i].goalMonth);
-					}
-					
-		            values +="</tbody></table>";
-		            $('#goalEmpTable').html(values);
-		            
-		            drawChart();
-		   		}
-	   	  });
-	     
-		
-	}
+   
 	
 
 	   	function drawChart(){
@@ -342,7 +234,7 @@ display:none;
 	   		  }],
 	   		  yAxis: [{ // Primary yAxis
 	   		    labels: {
-	   		       format: false, 
+	   		       format: '{value} 원', 
 	   		      style: {
 	   		        color: Highcharts.getOptions().colors[1]
 	   		      }
@@ -361,7 +253,7 @@ display:none;
 	   		      }
 	   		    },
 	   		    labels: {
-	   		      format:false,
+	   		      format: '{value} 원',
 	   		      style: {
 	   		        color: Highcharts.getOptions().colors[0]
 	   		      }
@@ -379,36 +271,7 @@ display:none;
 	   		    y: 100,
 	   		    floating: true,
 	   		    backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
-	   		  },responsive: {
-	   	        rules: [{
-	   	            condition: {
-	   	                maxWidth: 500
-	   	            },
-	   	            chartOptions: {
-	   	                legend: {
-	   	                    align: 'center',
-	   	                    verticalAlign: 'bottom',
-	   	                    layout: 'horizontal'
-	   	                },
-	   	                yAxis: {
-	   	                    labels: {
-	   	                        align: 'left',
-	   	                        x: 0,
-	   	                        y: -5
-	   	                    },
-	   	                    title: {
-	   	                        text: null
-	   	                    }
-	   	                },
-	   	                subtitle: {
-	   	                    text: null
-	   	                },
-	   	                credits: {
-	   	                    enabled: false
-	   	                }
-	   	            }
-	   	        }]
-	   	    },
+	   		  },
 	   		  exporting:{
 	   			 'enabled':false 
 	   		  },

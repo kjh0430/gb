@@ -29,7 +29,6 @@ public class ProductServiceImpl implements ProductService {
 		return productDao.insertProductFile(pf);
 	}
 	
-
 	//권성훈 전체 제품 리스트 목록
 	@Override
 	public List<Product> selectAllList() {
@@ -50,6 +49,25 @@ public class ProductServiceImpl implements ProductService {
 	public int updateProductAmount(Order orderlist) {
 		return productDao.updateProductAmount(orderlist);
 	}
+
+	@Override
+	public int updateProduct(Product product) {
+		return productDao.updateProduct(product);
+	}
+
+	@Override
+	public int deleteProduct(int product_no) {
+		return productDao.deleteProduct(product_no);
+	}
 	
+	@Override
+	public ArrayList<ProductFile> selectProductFile(Product pd) {
+		return productDao.selectProductDetailFile(pd);
+	}
+
+	@Override
+	public int deleteFile(String product_rename_file) {
+		return productDao.deleteFile(product_rename_file);
+	}
 
 }

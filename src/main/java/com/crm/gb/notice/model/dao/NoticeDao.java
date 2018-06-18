@@ -49,5 +49,9 @@ public class NoticeDao {
 		
 		return sqlSession.selectOne("notice_mapper.countNotice");
 	}
+	public ArrayList<Notice> selectLatestNotice() {
+		
+		return (ArrayList)sqlSession.selectList("selectLatestNotice");
+	}
 
 }

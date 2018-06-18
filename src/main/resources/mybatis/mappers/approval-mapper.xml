@@ -5,23 +5,13 @@
 
 <mapper namespace="Approval">
 	
-	 <resultMap id="approvalListE" type="approval">
-		<id column="approval_no" property="approval_no"/>
-		<result column="emp_no" property="emp_no"/>
-		<result column="approval_choose_no" property="approval_choose_no"/>
-		<result column="approval_submit_date" property="approval_submit_date"/>
-		<result column="approval_start_date" property="approval_start_date"/>
-		<result column="approval_end_date" property="approval_end_date"/>
-		<result column="approval_comment" property="approval_comment"/>
-		<result column="approval_team_date" property="approval_team_date"/>
-		<result column="apporval_mgr_date" property="apporval_mgr_date"/>	
-	</resultMap>
+	
 	
 	<select id="getName" parameterType="int" resultType="approval">
 		<![CDATA[
 		select t.emp_name as team_mgr_name,t.emp_no as approval_team_no,a.emp_name as mgr_name,a.emp_no as approval_mgr_no from
-		(select emp_name,emp_no from emp where emp_no = (select emp_mgr from emp where emp_no=#{emp_no})) t,
-		(select emp_name,emp_no from emp where job_no=3) a		
+		(select emp_name,emp_no,emp_mgr from emp  where emp_no = (select emp_mgr from emp where emp_no=#{emp_no})) t,
+		(select emp_name,emp_no from emp where job_no=3) a where t.emp_mgr=a.emp_no
 		]]>	
 	</select>
 	
@@ -33,69 +23,73 @@
 		]]>	
 	</insert> 
 	
-	<select id="approvalListE" parameterType="approval" resultType="approval" resultMap="approvalListE">
+	<select id="approvalListE" parameterType="approval" resultType="approval">
 		<![CDATA[
-		select * from(select rownum rnum,team_mgr_name,mgr_name,approval_no,emp_no,approval_choose_no,approval_submit_date,approval_start_date,approval_end_date,approval_comment,
+		select * from(select rownum rnum,team_mgr_name,mgr_name,reason_name,approval_no,emp_no,approval_choose_no,approval_submit_date,approval_start_date,approval_end_date,approval_comment,
 		approval_team_date,approval_mgr_date from
-		(select rownum rnum,t.emp_name as team_mgr_name,s.emp_name as mgr_name, a.approval_no,a.emp_no,a.approval_choose_no,to_char(a.approval_submit_date,'yyyy-mm-dd hh24:mi:ss') 
+		(select rownum rnum,r.reason_name,t.emp_name as team_mgr_name,s.emp_name as mgr_name, a.approval_no,a.emp_no,a.approval_choose_no,to_char(a.approval_submit_date,'yyyy-mm-dd hh24:mi:ss') 
 		as approval_submit_date,a.approval_start_date,a.approval_end_date,a.approval_comment,
 		to_char(a.approval_team_date,'yyyy-mm-dd hh24:mi:ss') as 
-		approval_team_date,a.approval_mgr_date from approval a,
-		(select emp_name from emp where emp_no = (select emp_mgr from emp where emp_no=#{emp_no})) t,
-		(select emp_name from emp where job_no=3) s where a.emp_no=#{emp_no} order by approval_mgr_date desc NULLS first,approval_team_date desc nulls first)) where rnum>=#{startRow} and rnum<=#{endRow}
-    
-		
-		]]>
+		approval_team_date,a.approval_mgr_date from approval a,reason r,
+		(select emp_name,emp_mgr from emp where emp_no = (select emp_mgr from emp where emp_no=#{emp_no})) t,
+		(select emp_name,emp_no from emp where job_no=3) s where r.reason_no=a.approval_choose_no and a.emp_no=#{emp_no} and t.emp_mgr=s.emp_no 
+		order by approval_mgr_date desc NULLS first,approval_team_date desc nulls first)) where rnum>=#{startRow} and rnum<=#{endRow}
+    	]]>
 	</select>
 	
 	<select id="selectgetListCountA" parameterType="approval" resultType="int">
 	<![CDATA[
-	select count(*) listCount from approval a
+	select count(*) listCount from approval a ,reason r
 	]]>
 	<choose>
 			<when test="job_no==2">
-			,(select emp_name,dept_no,emp_no,emp_mgr from emp) h,
-			(select emp_name,emp_no from emp where emp_no=#{emp_no}) t,(select emp_name,emp_no from emp where job_no=3) s 
-			where h.emp_no=a.emp_no and h.emp_mgr=#{emp_no} order by approval_submit_date desc
+		,(select emp_name,dept_no,emp_no,emp_mgr from emp) h,
+			(select emp_name,emp_no,emp_mgr from emp where emp_no=#{emp_no}) t,
+			(select emp_name,emp_no from emp where job_no=3) s 
+			where r.reason_no=a.approval_choose_no and h.emp_no=a.emp_no and h.emp_mgr=#{emp_no} 
+			and s.emp_no=t.emp_mgr order by approval_submit_date desc
 			</when>
 			<when test="job_no==3">
-			,(select emp_name,dept_no,emp_no,emp_mgr from emp) h,
-			(select emp_name,emp_no from emp where emp_mgr =0 and job_no != 3) t,(select emp_name,emp_no from emp where job_no=3) s
-			where a.approval_team_date is not null and h.emp_no=a.emp_no and s.emp_no=1 and h.emp_mgr=t.emp_no order by approval_submit_date desc
+		,(select emp_name,dept_no,emp_no,emp_mgr from emp) h,
+		(select emp_name,emp_no,emp_mgr from emp where emp_mgr =(select emp_no from emp where emp_no=#{emp_no})) t,
+		(select emp_name,emp_no from emp where job_no=3) s
+		where r.reason_no=approval_choose_no and a.approval_team_date is not null 
+		and h.emp_no=a.emp_no and s.emp_no=t.emp_mgr and h.emp_mgr=t.emp_no and s.emp_no=#{emp_no} order by approval_submit_date desc
 			</when>
 	</choose>
 	</select>
 	
 	
  	<select id="approvalListA" parameterType="approval" resultType="approval">
-	
+
 	<if test="job_no==2">
 		<![CDATA[
-		select * from (select rownum rnum,emp_name,dept_no,team_mgr_name,mgr_name,emp_no,approval_no,approval_choose_no,
+	select * from (select rownum rnum,reason_name,emp_name,dept_no,team_mgr_name,mgr_name,emp_no,approval_no,approval_choose_no,
 		approval_submit_date,approval_start_date,
 		approval_end_date,approval_comment,approval_team_date,approval_mgr_date from 
-		(select rownum rnum,h.emp_name as emp_name,h.dept_no as dept_no,t.emp_name as team_mgr_name,s.emp_name as mgr_name,a.approval_no,a.emp_no,a.approval_choose_no,
+		(select rownum rnum,r.reason_name,h.emp_name as emp_name,h.dept_no as dept_no,t.emp_name as team_mgr_name,s.emp_name as mgr_name,a.approval_no,a.emp_no,a.approval_choose_no,
 		to_char(a.approval_submit_date,'yyyy-mm-dd hh24:mi:ss') as approval_submit_date,a.approval_start_date,
 		a.approval_end_date,a.approval_comment,
 		to_char(a.approval_team_date,'yyyy-mm-dd hh24:mi:ss') 
-		as approval_team_date,a.approval_mgr_date from approval a ,(select emp_name,dept_no,emp_no,emp_mgr from emp) h,
-			(select emp_name,emp_no from emp where emp_no=#{emp_no}) t,(select emp_name,emp_no from emp where job_no=3) s 
-			where h.emp_no=a.emp_no and h.emp_mgr=#{emp_no} order by approval_submit_date desc)) where rnum>=#{startRow} and rnum<=#{endRow}
+		as approval_team_date,a.approval_mgr_date from approval a,reason r,(select emp_name,dept_no,emp_no,emp_mgr from emp) h,
+			(select emp_name,emp_no,emp_mgr from emp where emp_no=#{emp_no}) t,(select emp_name,emp_no from emp where job_no=3) s 
+			where r.reason_no=a.approval_choose_no and h.emp_no=a.emp_no and h.emp_mgr=#{emp_no} and t.emp_mgr=s.emp_no order by approval_team_date desc NULLS first,approval_submit_date desc)) where rnum>=#{startRow} and rnum<=#{endRow}
+      
 		
 		]]>
 		</if>
 		<if test="job_no==3">
 		<![CDATA[
-		select * from (select rownum rnum,emp_name,dept_no,team_mgr_name,mgr_name,emp_no,approval_no,approval_choose_no,
+		select * from (select rownum rnum,reason_name,emp_name,dept_no,team_mgr_name,mgr_name,emp_no,approval_no,approval_choose_no,
 		approval_submit_date,approval_start_date,
 		approval_end_date,approval_comment,approval_team_date,approval_mgr_date from 
-		(select rownum rnum,h.emp_name as emp_name,h.dept_no as dept_no,t.emp_name as team_mgr_name,s.emp_name as mgr_name,a.approval_no,a.emp_no,a.approval_choose_no,
+		(select rownum rnum,r.reason_name,h.emp_name as emp_name,h.dept_no as dept_no,t.emp_name as team_mgr_name,s.emp_name as mgr_name,a.approval_no,a.emp_no,a.approval_choose_no,
 		to_char(a.approval_submit_date,'yyyy-mm-dd hh24:mi:ss') as approval_submit_date,a.approval_start_date,
 		a.approval_end_date,a.approval_comment,
 		to_char(a.approval_team_date,'yyyy-mm-dd hh24:mi:ss') 
-		as approval_team_date,a.approval_mgr_date from approval a ,(select emp_name,dept_no,emp_no,emp_mgr from emp) h,
-			(select emp_name,emp_no from emp where emp_mgr =0 and job_no != 3) t,(select emp_name,emp_no from emp where job_no=3) s
-			where a.approval_team_date is not null and h.emp_no=a.emp_no and s.emp_no=#{emp_no} and h.emp_mgr=t.emp_no order by approval_submit_date desc)) 
+		as approval_team_date,a.approval_mgr_date from approval a , reason r,(select emp_name,dept_no,emp_no,emp_mgr from emp) h,
+			(select emp_name,emp_no,emp_mgr from emp where emp_mgr=(select emp_no from emp where emp_no=#{emp_no})) t,(select emp_name,emp_no from emp where job_no=3) s
+			where r.reason_no=a.approval_choose_no and a.approval_team_date is not null and h.emp_no=a.emp_no and s.emp_no=t.emp_mgr and h.emp_mgr=t.emp_no and s.emp_no=#{emp_no} order by approval_mgr_date desc NULLS first,approval_submit_date desc)) 
 			 where rnum>=#{startRow} and rnum<=#{endRow}
 		]]>
 		</if>	
@@ -121,28 +115,28 @@
 
 <select id="selectgetListCountE" parameterType="approval" resultType="int">
 <![CDATA[
-select count(*) as listCount from approval a,
-		(select emp_name from emp where emp_no = (select emp_mgr from emp where emp_no=#{emp_no})) t,
-		(select emp_name from emp where job_no=3) s where a.emp_no=#{emp_no}
+select count(*) as listCount from approval a,reason r,
+		(select emp_name,emp_mgr from emp where emp_no = (select emp_mgr from emp where emp_no=#{emp_no})) t,
+		(select emp_name,emp_no from emp where job_no=3) s where r.reason_no=a.approval_choose_no and a.emp_no=#{emp_no} and  t.emp_mgr=s.emp_no
 ]]>
 </select>
 
 <select id="selectgetConditionCountA" parameterType="approval" resultType="int">
 <![CDATA[
-select count(*) as listCount from approval a
+select count(*) as listCount from approval a,reason r
 
 ]]>
 			<choose>
 			<when test="job_no==2">
 			,(select emp_name,dept_no,emp_no,emp_mgr from emp) h,
-			(select emp_name,emp_no from emp where emp_no=#{emp_no}) t,(select emp_name,emp_no from emp where job_no=3) s 
-			where h.emp_no=a.emp_no and h.emp_mgr=#{emp_no} and h.emp_name=#{emp_name}
+			(select emp_name,emp_no,emp_mgr from emp where emp_no=#{emp_no}) t,(select emp_name,emp_no from emp where job_no=3) s 
+			where r.reason_no=a.approval_choose_no and h.emp_no=a.emp_no and h.emp_mgr=#{emp_no} and t.emp_mgr=s.emp_no and h.emp_name like '%'||#{emp_name}||'%'
 		
 			</when>
 			<when test="job_no==3">
-			,(select emp_name,dept_no,emp_no,emp_mgr from emp) h,
-			(select emp_name,emp_no from emp where emp_mgr =0 and job_no != 3) t,(select emp_name,emp_no from emp where job_no=3) s
-			where a.approval_team_date is not null and h.emp_no=a.emp_no and s.emp_no=#{emp_no} and a.emp_no=h.emp_no and h.emp_mgr=t.emp_no and h.emp_name=#{emp_name}
+		,(select emp_name,dept_no,emp_no,emp_mgr from emp) h,
+			(select emp_name,emp_no,emp_mgr from emp where emp_mgr=(select emp_no from emp where emp_no=#{emp_no})) t,(select emp_name,emp_no from emp where job_no=3) s
+			where r.reason_no=a.approval_choose_no and a.approval_team_date is not null and h.emp_no=a.emp_no and s.emp_no=#{emp_no} and t.emp_mgr=s.emp_no and a.emp_no=h.emp_no and h.emp_mgr=t.emp_no and h.emp_name like '%'||#{emp_name}||'%'
 			</when>	
 			</choose>
 
@@ -155,31 +149,39 @@ select count(*) as listCount from approval a
 
 <if test="job_no==2">
 <![CDATA[
-select * from(select rownum rnum,emp_name,dept_no,team_mgr_name,mgr_name,approval_no,emp_no,approval_choose_no,approval_submit_date,approval_start_date,approval_end_date,approval_comment, 
+select * from(select rownum rnum,reason_name,emp_name,dept_no,team_mgr_name,mgr_name,approval_no,
+emp_no,approval_choose_no,approval_submit_date,approval_start_date,approval_end_date,approval_comment, 
 approval_team_date,approval_mgr_date from
-(select rownum rnum,h.emp_name as emp_name,h.dept_no as dept_no,t.emp_name as team_mgr_name,s.emp_name as mgr_name,a.approval_no,a.emp_no,a.approval_choose_no,
-to_char(a.approval_submit_date,'yyyy-mm-dd hh24:mi:ss') as approval_submit_date,a.approval_start_date,
+(select rownum rnum,r.reason_name,h.emp_name as emp_name,h.dept_no as dept_no,t.emp_name as team_mgr_name,s.emp_name as mgr_name,
+a.approval_no,a.emp_no,a.approval_choose_no,
+to_char(a.approval_submit_date,'yyyy-mm-dd hh24:mi:ss')
+ as approval_submit_date,a.approval_start_date,
 a.approval_end_date,a.approval_comment,
 to_char(a.approval_team_date,'yyyy-mm-dd hh24:mi:ss') 
-as approval_team_date,a.approval_mgr_date from approval a ,(select emp_name,dept_no,emp_no,emp_mgr from emp) h,
-(select emp_name,emp_no from emp where emp_no=#{emp_no}) t,(select emp_name,emp_no from emp where job_no=3) s 
-where h.emp_no=a.emp_no and h.emp_mgr=#{emp_no} and a.emp_no=h.emp_no and t.emp_no=h.emp_mgr and h.emp_name=#{emp_name} order by a.approval_submit_date desc)) where rnum>=#{startRow} and rnum<=#{endRow}
+as approval_team_date,a.approval_mgr_date from approval a,reason r
+,(select emp_name,dept_no,emp_no,emp_mgr from emp) h,
+(select emp_name,emp_no,emp_mgr from emp where emp_no=#{emp_no}) t,
+(select emp_name,emp_no from emp where job_no=3) s 
+where r.reason_no=a.approval_choose_no and h.emp_no=a.emp_no and h.emp_mgr=#{emp_no} and
+a.emp_no=h.emp_no and t.emp_no=h.emp_mgr and t.emp_mgr=s.emp_no and h.emp_name like '%'||#{emp_name}||'%' 
+order by a.approval_submit_date desc)) where rnum>=#{startRow} and rnum<=#{endRow}
 ]]>
 </if>
 <if test="job_no==3">
 <![CDATA[
-select * from(select rownum rnum,emp_name,dept_no,team_mgr_name,mgr_name,approval_no,emp_no,approval_choose_no,approval_submit_date,approval_start_date,approval_end_date,approval_comment, 
+select * from(select rownum rnum,reason_name,emp_name,dept_no,team_mgr_name,mgr_name,approval_no,emp_no,approval_choose_no,approval_submit_date,approval_start_date,approval_end_date,approval_comment, 
 approval_team_date,approval_mgr_date from
-(select rownum rnum,h.emp_name as emp_name,h.dept_no as dept_no,t.emp_name as team_mgr_name,s.emp_name as mgr_name,a.approval_no,a.emp_no,a.approval_choose_no,
+(select rownum rnum,r.reason_name,h.emp_name as emp_name,h.dept_no as dept_no,t.emp_name as team_mgr_name,s.emp_name as mgr_name,a.approval_no,a.emp_no,a.approval_choose_no,
 to_char(a.approval_submit_date,'yyyy-mm-dd hh24:mi:ss') as approval_submit_date,a.approval_start_date,
 a.approval_end_date,a.approval_comment,
 to_char(a.approval_team_date,'yyyy-mm-dd hh24:mi:ss') 
-as approval_team_date,a.approval_mgr_date from approval a
+as approval_team_date,a.approval_mgr_date from approval a,reason r,
 ,(select emp_name,dept_no,emp_no,emp_mgr from emp) h,
-(select emp_name,emp_no from emp where emp_mgr =0 and job_no != 3) t,
+(select emp_name,emp_no,emp_mgr from emp where emp_mgr=(select emp_no from emp where emp_no=#{emp_no})) t,
 (select emp_name,emp_no from emp where job_no=3) s
-where a.approval_team_date is not null and h.emp_no=a.emp_no and
-s.emp_no=#{emp_no} and a.emp_no=h.emp_no and h.emp_mgr=t.emp_no and h.emp_name=#{emp_name} order by approval_mgr_date desc NULLS first,approval_team_date desc)) where rnum>=#{startRow} and rnum<=#{endRow}
+where r.reason_no=a.approval_choose_no and a.approval_team_date is not null and h.emp_no=a.emp_no and s.emp_no=t.emp_mgr and
+s.emp_no=#{emp_no} and a.emp_no=h.emp_no and h.emp_mgr=t.emp_no and h.emp_name like '%'||#{emp_name}||'%' order by approval_mgr_date desc NULLS first,approval_team_date desc)) where rnum>=#{startRow} and rnum<=#{endRow}
+
 
 
 

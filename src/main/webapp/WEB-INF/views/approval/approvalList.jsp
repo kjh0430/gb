@@ -106,15 +106,28 @@ background-color:#2A3F54;
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="main.html" class="site_title"><i class="fa fa-google"></i>
+						<a href="mainView.do" class="site_title"><i class="fa fa-google"></i>
 							<span>GROUP BEAN</span></a>
 					</div>
 
 					<div class="clearfix"></div>
 
-					<!-- sidebar menu -->
-					<%@ include file="../etc/sidebar.jsp"%>
-					<!-- /sidebar menu -->
+					<c:choose>
+						<c:when test="${ loginEmp.job_no == 3}">
+							<!-- sidebar menu -->
+							<%@ include file="../etc/adminsidebar.jsp"%>
+							<!-- /sidebar menu -->
+						</c:when>
+						<c:when test="${ loginEmp.job_no == 2}">
+							<%@ include file="../etc/adminsidebar.jsp"%>
+
+						</c:when>
+						<c:otherwise>
+							<!-- sidebar menu -->
+							<%@ include file="../etc/sidebar.jsp"%>
+							<!-- /sidebar menu -->
+						</c:otherwise>
+					</c:choose>
 
 				</div>
 			</div>
@@ -155,19 +168,10 @@ background-color:#2A3F54;
 											</tr>
 										</thead>
 										<tbody>
+											
+											
 											 <c:forEach items="${approvalListE}" var="approval">
-												<c:if test="${approval.approval_choose_no eq '1'}">
-													<c:set var="approval_choose_no" value="휴가" />
-												</c:if>
-												<c:if test="${approval.approval_choose_no eq '2'}">
-													<c:set var="approval_choose_no" value="경조사" />
-												</c:if>
-												<c:if test="${approval.approval_choose_no eq '3'}">
-													<c:set var="approval_choose_no" value="병가" />
-												</c:if>
-												<c:if test="${approval.approval_choose_no eq '4'}">
-													<c:set var="approval_choose_no" value="비고" />
-												</c:if>
+												
 												<c:if
 													test="${approval.approval_mgr_date eq null && approval.approval_team_date eq null}">
 													<c:set var="approval_process" value="미진행 " />
@@ -180,8 +184,8 @@ background-color:#2A3F54;
 													<c:set var="approval_process" value="결재 완료" />
 												</c:if>
 
-												<tr onclick="modalUp(this);">
-													<td style="width: 50%;">${approval_choose_no}</td>
+												<tr onclick="modalUp(this);" style="cursor:pointer">
+													<td style="width: 50%;">${approval.reason_name}</td>
 													<td style="width: 30%;">${approval.approval_submit_date}</td>
 													<td>${approval_process}</td>
 													<td>${approval.emp_no }</td>
@@ -337,9 +341,7 @@ background-color:#2A3F54;
 										</div>
 									</div>
 									<div class="modal-footer">
-										<button onclick="modal1Close()" type="button"
-											class="btn btn-primary">확인</button>
-
+										<button onclick="modal1Close()" type="button" class="btn btn-primary">확인</button>
 									</div>
 								</form>
 
@@ -365,6 +367,14 @@ background-color:#2A3F54;
 
 	<!-- Custom Theme Scripts -->
 	<script src="resources/build/js/custom.min.js"></script>
+	
+
+   	
+   	<script type="text/javascript">
+   	
+   
+   	
+   	</script>
 
 </body>
 </html>

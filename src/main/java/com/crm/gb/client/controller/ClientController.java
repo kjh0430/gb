@@ -30,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.crm.gb.client.model.service.ClientService;
 import com.crm.gb.client.model.vo.Client;
 import com.crm.gb.client.model.vo.ClientFile;
+import com.crm.gb.message.model.vo.Message;
 
 /**
  * Handles requests for the application home page.
@@ -219,18 +220,32 @@ public class ClientController {
 	
 	/** 거래중인 거래처 리스트 메소드 **/
 	@RequestMapping("accountList.do")
-	public String showAccountClient(@RequestParam("emp_no") String emp_num, Model model, @RequestParam(value="page") int page, Client client) {
+	public String showAccountClient(@RequestParam("emp_no") String emp_num, Model model, 
+	@RequestParam(value="page") int page, Client client, @RequestParam(value="job_no") String jobNo) {
 		logger.info("거래처 리스트 메소드 실행됨!!");
+		
 		int emp_no = Integer.parseInt(emp_num);
+		int job_no = Integer.parseInt(jobNo);
+		
+		client.setEmp_no(emp_no);
+		client.setJob_no(job_no);
 		
 		//페이지 기본값 지정
 		int currentPage=page;				
 		//한 페이지당 출력할 목록갯수 지정
 		int pageSize=10;
 		int pageGroupSize=5;
+
+	
+		//System.out.println("jobNo : " + job_no);
+		//System.out.println("page: " + page);
 		
-		int listCount_1 = clientService.clientListCount(emp_no);
 		
+	
+		
+		int listCount_1 = clientService.clientListCount(client);
+		System.out.println("oooooooooooooooooooooo");
+		System.out.println("count : " + listCount_1);
 		//페이지수 계산 
 		int maxPage=(int)((double)listCount_1/pageSize+0.9);				
 		//페이지 번호 갯수 출력 					
@@ -262,7 +277,9 @@ public class ClientController {
 		client.setEndPage(endPage);
 		client.setEmp_no(emp_no);
 		
+		System.out.println("client : " + client);
 		ArrayList<Client> accountClientList = clientService.selectAccountClientList(client);
+		System.out.println("accountClientList"+accountClientList.size());
 		model.addAttribute("accountClientList", accountClientList);
 		model.addAttribute("listCount",listCount_1);
 		model.addAttribute("currentPage",currentPage);
@@ -276,6 +293,7 @@ public class ClientController {
 		model.addAttribute("totBlock",totBlock);
 		model.addAttribute("prevBlock",prevBlock);
 		model.addAttribute("nextBlock",nextBlock);
+		model.addAttribute("client_company",client.getClient_company());
 		return "client/accountList";
 	}
 	
@@ -531,6 +549,7 @@ public class ClientController {
 				out.close();
 		
 	}
+	
 	
 }
 

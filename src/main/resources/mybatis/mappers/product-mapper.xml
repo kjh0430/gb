@@ -24,6 +24,13 @@
 		<result column="product_availability" property="product_availability"/>
 	</resultMap>
 	
+	<resultMap type="ProductFile" id="productFile">
+		<result column="product_file_no" property="product_file_no"/>
+		<result column="product_no" property="product_no"/>
+		<result column="product_original_file" property="product_original_file"/>
+		<result column="product_rename_file" property="product_rename_file"/>
+	</resultMap>
+	
 	<insert id="insertProduct" parameterType="Product" useGeneratedKeys="true" keyProperty="product_no">
 		<selectKey keyProperty="product_no" resultType="int" order="BEFORE">
 			select max(product_no)+1 from product
@@ -45,7 +52,7 @@
 	
 	<select id="productList" resultType="arraylist" resultMap="selectAllProductList">
 	<![CDATA[
-	select product_no, product_name, product_price, product_availability from product
+	select product_no, product_name, product_price, product_availability from product where product_delete = 'N'
 	]]>
 	</select>
 
@@ -70,6 +77,7 @@
 			select * from product where product_no = #{product_no}
 		]]>
 	</select>
+	
 	<update id="updateProductAmount" parameterType="order">
 		<![CDATA[
 			update product set product_amount = (product_amount - #{order_amount}) where product_no = #{product_no}
@@ -77,17 +85,30 @@
 		
 	</update>
 
+	<update id="updateProduct" parameterType="product">
+		<![CDATA[
+			update product set product_name = #{product_name},product_price=#{product_price},product_availability=#{product_availability},
+			product_amount=#{product_amount},product_comment=#{product_comment} where product_no = #{product_no}
+		]]>		
+	</update>
 
-
-
-
-
-
-
-
-
-
-
-
-
+	<update id="deleteProduct" parameterType="product">
+		<![CDATA[
+			update product set product_delete = 'Y' where product_no = #{product_no}
+		]]>		
+	</update>
+	
+	<!-- 파일 이름 값 가지고오는 메소드 권성훈 -->
+	<select id="productDetailFile" parameterType="product" resultMap="productFile">
+		<![CDATA[
+		select * from PRODUCT_FILE
+		where PRODUCT_NO=#{product_no}
+		]]>
+	</select>
+	
+	<delete id="deleteFile" parameterType="string">
+		<![CDATA[
+		delete from product_file where product_rename_file = #{product_rename_file}
+		]]>
+	</delete>
 </mapper>

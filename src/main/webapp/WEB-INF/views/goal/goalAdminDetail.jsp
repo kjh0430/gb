@@ -30,18 +30,17 @@ $(document).ready(function() {
 } );
 
 </script>
-
 <script type="text/javascript">
 	$(function(){
-		$('#notice_add_1').click(function(){
-			alert('공지사항을 추가합니다.');
+		$('#edit_add').click(function(){
+			alert('수정합니다.');
 			
 		});
-		
 	});
 
-
 </script>
+
+
 <style type="text/css">
 	.btn-modify{
 		padding:3px 6px;
@@ -84,7 +83,7 @@ $(document).ready(function() {
 					<div class="page-title">
 						<div class="title_left">
 							<h3>
-								공지사항
+								목표관리설정
 							</h3>
 						</div>
 					</div>
@@ -96,62 +95,63 @@ $(document).ready(function() {
 							<div class="x_panel">
 								<div class="x_title">
 									<h2>
-										공지사항 작성
+										목표상세설정
 									</h2>
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
 									<br />
 									<form id="demo-form2" data-parsley-validate
-										class="form-horizontal form-label-left" action="noticeAdd.do" method="post">
-
+										class="form-horizontal form-label-left" action="noticeEditUpdate.do">
+											
+										
+										
+										
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12"
-												for="first-name">제목
+												for="first-name">사원명
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<input type="text" id="first-name" name="notice_title" required="required"
-													class="form-control col-md-7 col-xs-12" >
+												<input type="text" id="first-name" required="required"
+													class="form-control col-md-7 col-xs-12" name ="notice_title" value="${detailNotice.notice_title}">
 											</div>
 										</div>
-										<!-- 상세화면
+										
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12"
-												for="last-name">
+												for="first-name">총실적
 											</label>
-											<div class="col-md-3 col-sm-3 col-xs-6">게시일 : 2018-06-05</div>
-											<div class="col-md-3 col-sm-3 col-xs-6" style="text-align:right">조회수 : 25</div>
-												
+											<div class="col-md-6 col-sm-6 col-xs-12">
+												<input type="text" id="first-name" required="required"
+													class="form-control col-md-7 col-xs-12" name ="notice_title" value="${detailNotice.notice_title}">
+											</div>
 										</div>
-										 -->
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12"
-												for="last-name">내용
+												for="first-name">월별실적
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<textarea class="form-control col-md-7 col-xs-12" rows="8" name="notice_content"></textarea>
+												<input type="text" id="first-name" required="required"
+													class="form-control col-md-7 col-xs-12" name ="notice_title" value="${detailNotice.notice_title}">
 											</div>
 										</div>
-										<!-- <div class="form-group">
-											<label for="middle-name"
-												class="control-label col-md-3 col-sm-3 col-xs-12">첨부파일</label>
+										<div class="form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12"
+												for="first-name">목표금액 설정
+											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<input id="middle-name"
-													class="form-control col-md-7 col-xs-12" type="file"
-													name="middle-name">
+												<input type="text" id="first-name" required="required"
+													class="form-control col-md-7 col-xs-12" name ="notice_title" value="${detailNotice.notice_title}">
 											</div>
-										</div> -->
+										</div>
+										
+										
 										<div class="ln_solid"></div>
 										<div class="form-group">
 											<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-												<button type="submit" id="notice_add_1"class="btn btn-success">등록</button>
+												<button  id="edit_add"type="submit" class="btn btn-success">수정</button>
 											</div>
-											<!-- 수정화면
-											<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-												<button class="btn btn-danger" type="reset">삭제</button>
-												<button type="submit" class="btn btn-primary">수정</button>
-											</div>
-											 -->
+											
 										</div>
 
 									</form>
@@ -173,8 +173,8 @@ $(document).ready(function() {
 	<script src="resources/vendors/jquery/dist/jquery.min.js"></script>
 	<!-- Bootstrap -->
 	<script src="resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+	<!-- FastClick -->
 	
-
 	<!-- Custom Theme Scripts -->
 	<script src="resources/build/js/custom.min.js"></script>
 

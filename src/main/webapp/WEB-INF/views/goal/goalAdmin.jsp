@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -50,26 +51,63 @@ $(document).ready(function() {
 
 $(function(){
 	
-	$('goal_select')
+	$('#goalMonth').change(function(){
+		var gdate=$('#goalMonth').val();
+		
+		alert(gdate);
+		
+		
+		$.ajax({
+			url:"goalMonthList.do",
+			data:{ 
+				
+				
+			},
+			type:"",
+			success:function(data){
+				
+				
+			}
+			
+			
+		})
+		
+		
+	});
 	
-	
-	$('#goal_search').click(
-		function(){
-			#('').html(
-					
-			
-			
-			);
-			
-			
-		}		
-	
-	)
 	
 });
 
-
-
+function goalAdminDetail(){
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/* $.ajax({
+		url:"",
+		data:{
+			
+			
+			
+		},
+		type:"post",
+		dataType:"json",
+		success:function(data){
+			
+			
+		}
+		
+		
+		
+	}); */
+	
+	
+	}
 
 
 
@@ -94,7 +132,7 @@ $(function(){
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="main.html" class="site_title"><i class="fa fa-google"></i>
+						<a href="mainView.do" class="site_title"><i class="fa fa-google"></i>
 							<span>GROUP BEAN</span></a>
 					</div>
 
@@ -238,7 +276,7 @@ $(function(){
 								<div class="title_right">
 									<div class="control-group" style="float:right">
 										<div class="controls">
-										<input type="month" class="form-control" style="width:260px"></div>
+										<input type="month" class="form-control" id="goalMonth" style="width:260px"></div>
 									</div>
 								</div>
 								<div class="x_content table-responsive">									
@@ -247,134 +285,36 @@ $(function(){
 											<tr>
 												<th>사원번호</th>
 												<th>사원명</th>
-												<th>평균 실적(월)</th>
-												<th>지난달 실적</th>
+												<th>총 실적(월)</th>
+												<th>(월)</th>
 												<th>이번달 목표</th>
-												<th>수정</th>
+												<th>수정1</th>
+												<th>수정2</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td>01548</td>
-												<td>강백호</td>
-												<td>1,210,000</td>
-												<td>2,100,000</td>
-												<td><input type="text" value="이번달 목표" name="target_num"/></td>
-												<td><input type="button" class="btn btn-primary btn-modify" value="수정" name="target_modify"/></td>
-											</tr>
-											<tr>
-												<td>01548</td>
-												<td>강백호</td>
-												<td>1,210,000</td>
-												<td>2,100,000</td>
-												<td><input type="text" value="이번달 목표" name="target_num"/></td>
-												<td><input type="button" class="btn btn-primary btn-modify" value="수정" name="target_modify"/></td>
-											</tr>
-											<tr>
-												<td>01548</td>
-												<td>강백호</td>
-												<td>1,210,000</td>
-												<td>2,100,000</td>
-												<td><input type="text" value="이번달 목표" name="target_num"/></td>
-												<td><input type="button" class="btn btn-primary btn-modify" value="수정" name="target_modify"/></td>
-											</tr>
-											<tr>
-												<td>01548</td>
-												<td>강백호</td>
-												<td>1,210,000</td>
-												<td>2,100,000</td>
-												<td><input type="text" value="이번달 목표" name="target_num"/></td>
-												<td><input type="button" class="btn btn-primary btn-modify" value="수정" name="target_modify"/></td>
-											</tr>
-											<tr>
-												<td>01548</td>
-												<td>강백호</td>
-												<td>1,210,000</td>
-												<td>2,100,000</td>
-												<td><input type="text" value="이번달 목표" name="target_num"/></td>
-												<td><input type="button" class="btn btn-primary btn-modify" value="수정" name="target_modify"/></td>
-											</tr>
-											<tr>
-												<td>01548</td>
-												<td>강백호</td>
-												<td>1,210,000</td>
-												<td>2,100,000</td>
-												<td><input type="text" value="이번달 목표" name="target_num"/></td>
-												<td><input type="button" class="btn btn-primary btn-modify" value="수정" name="target_modify"/></td>
-											</tr>
-											<tr>
-												<td>01548</td>
-												<td>강백호</td>
-												<td>1,210,000</td>
-												<td>2,100,000</td>
-												<td><input type="text" value="이번달 목표" name="target_num"/></td>
-												<td><input type="button" class="btn btn-primary btn-modify" value="수정" name="target_modify"/></td>
-											</tr>
-											<tr>
-												<td>01548</td>
-												<td>강백호</td>
-												<td>1,210,000</td>
-												<td>2,100,000</td>
-												<td><input type="text" value="이번달 목표" name="target_num"/></td>
-												<td><input type="button" class="btn btn-primary btn-modify" value="수정" name="target_modify"/></td>
-											</tr>
-											<tr>
-												<td>01548</td>
-												<td>강백호</td>
-												<td>1,210,000</td>
-												<td>2,100,000</td>
-												<td><input type="text" value="이번달 목표" name="target_num"/></td>
-												<td><input type="button" class="btn btn-primary btn-modify" value="수정" name="target_modify"/></td>
-											</tr>
-											<tr>
-												<td>01548</td>
-												<td>강백호</td>
-												<td>1,210,000</td>
-												<td>2,100,000</td>
-												<td><input type="text" value="이번달 목표" name="target_num"/></td>
-												<td><input type="button" class="btn btn-primary btn-modify" value="수정" name="target_modify"/></td>
-											</tr>
-											<tr>
-												<td>01548</td>
-												<td>강백호</td>
-												<td>1,210,000</td>
-												<td>2,100,000</td>
-												<td><input type="text" value="이번달 목표" name="target_num"/></td>
-												<td><input type="button" class="btn btn-primary btn-modify" value="수정" name="target_modify"/></td>
-											</tr>
-											<tr>
-												<td>01548</td>
-												<td>강백호</td>
-												<td>1,210,000</td>
-												<td>2,100,000</td>
-												<td><input type="text" value="이번달 목표" name="target_num"/></td>
-												<td><input type="button" class="btn btn-primary btn-modify" value="수정" name="target_modify"/></td>
-											</tr>
-											<tr>
-												<td>01548</td>
-												<td>강백호</td>
-												<td>1,210,000</td>
-												<td>2,100,000</td>
-												<td><input type="text" value="이번달 목표" name="target_num"/></td>
-												<td><input type="button" class="btn btn-primary btn-modify" value="수정" name="target_modify"/></td>
-											</tr>
-											<tr>
-												<td>01548</td>
-												<td>강백호</td>
-												<td>1,210,000</td>
-												<td>2,100,000</td>
-												<td><input type="text" value="이번달 목표" name="target_num"/></td>
-												<td><input type="button" class="btn btn-primary btn-modify" value="수정" name="target_modify"/></td>
-											</tr>
-											<tr>
-												<td>01548</td>
-												<td>강백호</td>
-												<td>1,210,000</td>
-												<td>2,100,000</td>
-												<td><input type="text" value="이번달 목표" name="target_num"/></td>
-												<td><input type="button" class="btn btn-primary btn-modify" value="수정" name="target_modify"/></td>
-											</tr>
-										<tbody>
+										
+											<c:forEach var="goalList" items="${goalStateList}">
+												<c:choose>
+													<c:when test="${goalList.emp_name=='관리자'}">
+													
+														
+													</c:when>
+													<c:otherwise>
+														<tr>
+															<td>${goalList.emp_no}</td>
+															<td>${goalList.emp_name}</td>												
+															<td>${goalList.contract_money}</td>
+															<td>${goalList.contract_date_start_goal}월</td>
+															<td><input type="text" value="삼번달이번달 목표" name="target_num"/></td>
+															<td><input type="button" class="btn btn-primary btn-modify" value="수정" name="target_modify" onsubmit="return goalAdminDetail();"/></td>
+															<td><a class="btn btn-primary btn-modify" href="goalAdminDetail.do?emp_no=${goalList.emp_no}">수정</a></td>
+														</tr>
+													</c:otherwise>
+												</c:choose>
+											</c:forEach>
+											
+										</tbody>
 									</table>
 								</div>
 								

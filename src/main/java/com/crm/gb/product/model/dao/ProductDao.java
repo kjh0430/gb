@@ -20,7 +20,6 @@ public class ProductDao {
 	public int insertProduct(Product product) {
 		// 제품등록
 		return sqlSession.insert("insertProduct",product);
-		
 	}
 
 	public int insertProductFile(ProductFile pf) {
@@ -44,6 +43,22 @@ public class ProductDao {
 
 	public int updateProductAmount(Order orderlist) {
 		return sqlSession.update("updateProductAmount",orderlist);
+	}
+
+	public int updateProduct(Product product) {
+		return sqlSession.update("updateProduct",product);
+	}
+
+	public int deleteProduct(int product_no) {
+		return sqlSession.update("deleteProduct",product_no);
+	}
+
+	public ArrayList<ProductFile> selectProductDetailFile(Product pd) {
+		return (ArrayList)sqlSession.selectList("productDetailFile",pd);
+	}
+
+	public int deleteFile(String product_rename_file) {
+		return sqlSession.delete("deleteFile",product_rename_file);
 	}
 
 }
