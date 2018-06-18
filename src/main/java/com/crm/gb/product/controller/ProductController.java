@@ -23,6 +23,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -31,6 +32,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.crm.gb.approval.model.vo.Approval;
 import com.crm.gb.client.controller.ClientController;
 import com.crm.gb.client.model.vo.Client;
+import com.crm.gb.message.model.vo.Message;
 import com.crm.gb.notice.controller.NoticeController;
 import com.crm.gb.notice.model.vo.Notice;
 import com.crm.gb.product.model.service.ProductService;
@@ -363,6 +365,34 @@ public class ProductController {
 		return "product/productList";
 	}
 
+    @RequestMapping(value="searchProduct.do" ,method=RequestMethod.GET)
+	@ResponseBody
+	public void searchProduct(Product product,HttpServletResponse  response) throws IOException {		
+	
+		ArrayList<Product> SearchProduct=productService.selectSearchProduct(product);		
+		JSONArray jarr=new JSONArray();
+		
+		for(Product pro2 : SearchProduct) {
+			
+			JSONObject jsonobject=new JSONObject();
+			
+			jsonobject.put("product_name",pro2.getProduct_name());
+			jsonobject.put("product_no", pro2.getProduct_no());
+			jarr.add(jsonobject);
+			
+			}
+		
+		JSONObject send=new JSONObject();
+		send.put("list",jarr);
+		
+		response.setContentType("application/json; charset=utf-8");	
+		
+		PrintWriter out=response.getWriter();
+		out.println(send.toJSONString());
+		out.flush();
+		out.close();
+	
+	}
 }	
 
 
