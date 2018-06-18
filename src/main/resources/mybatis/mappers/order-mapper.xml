@@ -149,29 +149,61 @@
 	 ]]>
 	</select>
 	
-	<select id="selectOrderSum" resultType="_int" parameterType="int">
+	<select id="selectOrderSum" resultType="_int" parameterType="emp">
+	<if test="job_no == 1">
 	<![CDATA[
 		select sum(order_amount*order_price) as order_sum from orderlist 
 		where substr(to_char(order_date),1,6) = substr(sysdate,1,6) and emp_no = #{emp_no}
 	]]>
+	</if>
+	<if test="job_no != 1">
+	<![CDATA[
+		select sum(order_amount*order_price) as order_sum from orderlist 
+		where substr(to_char(order_date),1,6) = substr(sysdate,1,6)
+	]]>
+	</if>
+	
 	</select>
 	
-	<select id="selectOrderAvg" resultType="_int" parameterType="int">
+	<select id="selectOrderAvg" resultType="_int" parameterType="emp">
+	<if test="job_no ==1">
 	
 	<![CDATA[
 		select distinct(((select sum(order_amount*order_price) as order_sum from orderlist 
-		where substr(to_char(order_date),1,6) = substr(sysdate,1,6) and emp_no = #{emp_no})/(select count(distinct order_no) from orderlist))) as avg from orderlist
-		
+		where substr(to_char(order_date),1,6) = substr(sysdate,1,6) and emp_no = #{emp_no})/(select count(distinct order_no) from orderlist))) as avg from orderlist		
 	]]>
+	</if>
+	<if test="job_no !=1">
+	
+	<![CDATA[
+		select distinct(((select sum(order_amount*order_price) as order_sum from orderlist 
+		where substr(to_char(order_date),1,6) = substr(sysdate,1,6))/(select count(distinct order_no) from orderlist))) as avg from orderlist		
+	]]>
+	</if>
+	
+	
+	
 	</select>
 	
-	<select id="selectGoalState" resultType="string" parameterType="int">
+	<select id="selectGoalState" resultType="string" parameterType="emp">
+	<if test="job_no ==1">
 	<![CDATA[
 		select distinct(ROUND(((select sum(order_amount*order_price) as order_sum from orderlist 
 		where substr(to_char(order_date),1,6) = substr(sysdate,1,6) and emp_no =#{emp_no})/
 		(select goal_money from goal where substr(to_char(goal_date),1,6) = substr(sysdate,1,6) and emp_no = #{emp_no})*100),2)) as goalstate 
 		from orderlist
 	]]>
+	</if>
+	<if test="job_no !=1">
+	<![CDATA[
+		select distinct(round(((select sum(order_amount*order_price) as order_sum from orderlist 
+		where substr(to_char(order_date),1,6) = substr(sysdate,1,6))/(select SUM(goal_money) 
+		from goal where substr(to_char(goal_date),1,6) = substr(sysdate,1,6))*100),2)) as goalstate 
+		from orderlist
+  
+	]]>
+	</if>
+	
 	
 	</select>
 
