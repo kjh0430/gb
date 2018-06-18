@@ -144,8 +144,13 @@
 	});//onload
 
 	function selectDailyreport(){		
-		selectVisit(emp_no);	
-		selectOrder(emp_no);	
+		var date = $("#daily_date").val();
+		if(date != ""){
+			selectVisit();	
+			selectOrder();
+		}else{
+			alert("날짜를 선택해주세요.");				
+		}	
 	}
 	
 

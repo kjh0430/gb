@@ -148,6 +148,7 @@ public class ProductController {
 			product.setProduct_availability("Y");
 		}		
 		
+		System.out.println(product);
 		int result = productService.insertProduct(product);
 		int product_no = product.getProduct_no();
 		String path = request.getSession().getServletContext().getRealPath("resources/upload/product");
