@@ -254,8 +254,8 @@ display:none;
 						str1=String(jsonl.list[i].sales);
 						str1.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
 						values+="<tr><td>"+jsonl.list[i].goalMonth+"</td>"+
-									"<td>"+str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');+"</td>"+
-									"<td>"+str1.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');+"</td>"+
+									"<td>"+str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,')+"</td>"+
+									"<td>"+str1.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,')+"</td>"+
 									"<td>"+jsonl.list[i].acheive+"%</td></tr>"				
 						goal.push(jsonl.list[i].goalMoney);
 						perform.push(jsonl.list[i].sales);

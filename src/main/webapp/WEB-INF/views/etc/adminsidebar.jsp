@@ -33,7 +33,7 @@
          <li><a><i class="fa fa-edit"></i>영업현황 <span class="fa fa-chevron-down"></span></a>
            <ul class="nav child_menu">
              <li><a href="accountList.do?emp_no=${loginEmp.emp_no}&job_no=${loginEmp.job_no}&page=1">거래처 목록</a></li>
-             <li><a href="orderList.do?emp_no=${loginEmp.emp_no}&page=1">매출현황</a></li>
+             <li><a href="orderList.do?emp_no=${loginEmp.emp_no}&page=1&client_company=null">매출현황</a></li>
            </ul>
          </li>
           <li><a href="#"><i class="fa fa-table"></i>영업관리<span class="fa fa-chevron-down"></span></a>

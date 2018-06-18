@@ -146,8 +146,8 @@
 	function selectDailyreport(){		
 		var date = $("#daily_date").val();
 		if(date != ""){
-			selectVisit();	
-			selectOrder();
+			selectVisit(emp_no);	
+			selectOrder(emp_no);
 		}else{
 			alert("날짜를 선택해주세요.");				
 		}	

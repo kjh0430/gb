@@ -682,7 +682,7 @@ $(function(){
        		url : "mainCount.do",
        		type: "post",
        		dataType: "json",
-       		data: {emp_no :  '${loginEmp.emp_no}'},
+       		data: {emp_no :  '${loginEmp.emp_no}' , job_no : '${loginEmp.job_no}'},
        		
        		success:function(obj){
        			
@@ -1418,10 +1418,8 @@ $(function(){
 	    
    $(function(){
 	  getWeather();
-	   
 	});  
-   
-  */
+   */
 	    
 		
 
