@@ -244,8 +244,8 @@ public class ClientController {
 	
 		
 		int listCount_1 = clientService.clientListCount(client);
-		System.out.println("oooooooooooooooooooooo");
-		System.out.println("count : " + listCount_1);
+		//System.out.println("oooooooooooooooooooooo");
+		//System.out.println("count : " + listCount_1);
 		//페이지수 계산 
 		int maxPage=(int)((double)listCount_1/pageSize+0.9);				
 		//페이지 번호 갯수 출력 					
@@ -277,7 +277,7 @@ public class ClientController {
 		client.setEndPage(endPage);
 		client.setEmp_no(emp_no);
 		
-		System.out.println("client : " + client);
+		//System.out.println("client : " + client);
 		ArrayList<Client> accountClientList = clientService.selectAccountClientList(client);
 		System.out.println("accountClientList"+accountClientList.size());
 		model.addAttribute("accountClientList", accountClientList);

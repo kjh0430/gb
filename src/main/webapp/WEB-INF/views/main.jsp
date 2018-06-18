@@ -682,7 +682,7 @@ $(function(){
        		url : "mainCount.do",
        		type: "post",
        		dataType: "json",
-       		data: {emp_no :  '${loginEmp.emp_no}'},
+       		data: {emp_no :  '${loginEmp.emp_no}' , job_no : '${loginEmp.job_no}'},
        		
        		success:function(obj){
        			
@@ -1301,12 +1301,7 @@ $(function(){
 							name :result.list[i].product_name,
 							y : result.list[i].total
 						};
-				}
-					/*
-			 for(var i in result.list){
-					amount.push(result.list[i].total);
-					pname.push(result.list[i].product_name);
-				}	 */
+					}
 				getChart();
 			} 
 		
@@ -1358,7 +1353,7 @@ $(function(){
 
 		
 
-	
+	/*
 	function getWeather(){
 		var city = '${loginEmp.getCity()}';
 		var county = '${loginEmp.getCounty()}';
@@ -1423,11 +1418,8 @@ $(function(){
 	    
    $(function(){
 	  getWeather();
-	  
-	   
 	});  
-   
-  
+   */
 	    
 		
 

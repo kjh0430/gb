@@ -37,26 +37,22 @@ function searchClient(){
 	
 	location.href="accountList.do?emp_no="+emp_no+"&job_no="+job_no+"&client_company="+client_company+"&page="+1
 	
-	
-	
 }
 
+function list(page,word){
 
+	if(word==""){
+		location.href="accountList.do?client_company=null&page="+page;
 
-function list(page){
-	
-	location.href="accountList.do?page="+page;
+	}else{
+		location.href="accountList.do?client_company="+word+"&page="+page;
+
+	}
 }
 
 </script>
 
-<!-- ----------------------스크립트관련 작업영역 시작------------------------ -->
 
-
-
-
-
-<!-- ----------------------스크립트관련 작업영역 끝------------------------ -->
 
 </head>
 
@@ -124,7 +120,7 @@ function list(page){
 								</div>
 								<div class="x_content">
 								<div style="text-align:right">
-                                     <input id='clientCondition' class="form-control" style="width:130px;display:inline-block;margin-right:3px;" type="text" placeholder="사원명">
+                                     <input id='clientCondition' class="form-control" style="width:130px;display:inline-block;margin-right:3px;" type="text" placeholder="회사명">
                                    <button class="btn btn-dark" style="margin:0 0 3px 0" onclick="searchClient();">검색</button>
                                   </div>
 									
@@ -144,8 +140,8 @@ function list(page){
 										<c:forEach var="list" items="${ accountClientList }">
 										
 											<tr>
-												<td><a href="detailClient.do?client_no=${list.client_no }">${ list.client_name }</a></td>
-												<td>${ list.client_company }</td>
+												<td>${ list.client_name }</td>
+												<td><a href="detailClient.do?client_no=${list.client_no }" style="font-weight: bold">${ list.client_company }</a></td>
 												<td>${ list.client_job }</td>
 												<td>${ list.client_email }</td>
 												<td>${ list.client_phone }</td>
@@ -162,11 +158,14 @@ function list(page){
 								<c:set var="client_company" value="${client_company}"/>
 									<ul class="pagination">
 									<!-- if문 -->
-									 <c:if test="${curBlock>1}">
-
-										<li class="page-item"><a class="page-link" href="accountList.do?page=1&client_company=${client_company}">PREV</a></li>
-
-									</c:if> 
+									<c:if test="${curBlock>1}">
+									 	<c:if test="${client_company != null }">
+											<li class="page-item"><a class="page-link" href="accountList.do?client_company=${client_company }&page=1"><<</a></li>
+										</c:if>
+										<c:if test="${client_company == null }">
+											<li class="page-item"><a class="page-link" href="accountList.do?client_company=null&page=1"><<</a></li>
+										</c:if>
+									</c:if>  
 									
 									<!--첫페이지로 이동  -->
 									<!--if else문 형식임  -->
@@ -174,10 +173,12 @@ function list(page){
 								
 									
 									 <c:if test="${curBlock>1}">
-
-										<li class="page-item"><a class="page-link" href="accountList.do?page=${blockBegin-1}&client_company=${client_company}">prev</a></li>
-
-									
+										<c:if test="${client_company != null }">
+											<li class="page-item"><a class="page-link" href="accountList.do?client_company=${client_company }&page=${blockBegin-1}">prev</a></li>
+										</c:if>
+										<c:if test="${client_company == null }">
+											<li class="page-item"><a class="page-link" href="accountList.do?client_company=null&page=${blockBegin-1}">prev</a></li>
+										</c:if>
 									</c:if> 
 									
 									
@@ -194,7 +195,7 @@ function list(page){
 											<c:otherwise> 
 												<%-- <li class="page-item"><a class="page-link" href="noticeList.do?page=${page}">${page}</a></li> --%>	
 									
-													<li class="page-item"><a class="page-link" href="accountList.do?page=${page}&client_company=${client_company}">${page}</a></li>	
+													<li class="page-item"><a class="page-link" href="#" onclick="list('${page}','${ client_company}')">${page}</a></li>	
 													
 											
 											 </c:otherwise> 
@@ -205,17 +206,27 @@ function list(page){
 									
 									
 									 <c:if test="${curBlock!=totBlock}">
-										<li class="page-item"><a class="page-link" href="accountList.do?page=${blockEnd+1}&client_company=${client_company}">next</a></li>
-									
+										 <c:if test="${client_company != null }">
+											<li class="page-item"><a class="page-link" href="accountList.do?page=${blockEnd+1}&client_company=${client_company}">next</a></li>
+										 </c:if>
+										 <c:if test="${client_company == null }">
+											<li class="page-item"><a class="page-link" href="accountList.do?page=${blockEnd+1}&client_company=null">next</a></li>
+										 </c:if>
 									</c:if> 
 									
 									
 									<!-- 다음페이지 next -->
 									
 									
-									<c:if test="${curBlock!=totBlock}">
-										<li class="page-item"><a class="page-link" href="accountList.do?page=${maxPage}&client_company=${client_company}">NEXT</a></li>	
-									
+									<c:if test="${curBlock < endPage}">
+										<c:if test="${client_company != null }">										
+											<li class="page-item"><a class="page-link" href="accountList.do?page=${maxPage}&client_company=${client_company}">>></a></li>							
+										</c:if>
+										<c:if test="${client_company == null }">
+											<c:if test="${currentPage != maxPage }">
+												<li class="page-item"><a class="page-link" href="accountList.do?page=${maxPage}&client_company=null">>></a></li>	
+											</c:if>
+										</c:if>
 									</c:if> 										
 										
 									</ul>
