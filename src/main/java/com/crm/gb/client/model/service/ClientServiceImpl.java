@@ -66,6 +66,12 @@ public class ClientServiceImpl implements ClientService{
 		return clientDao.updateClient(client);
 	}
 	
+	/** 고객관련 첨부파일 수정 메소드 */
+	@Override
+	public int deleteClientFile(int client_file_no) {
+		return clientDao.deleteClientFile(client_file_no);
+	}
+	
 	/** 계약 후 계약현황 수정 메소드 */
 	@Override
 	public int updateClientContract(int client_no) {
