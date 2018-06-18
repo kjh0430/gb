@@ -73,12 +73,6 @@ public class EmpController {
       return "main";
    }
    
-   /** 사원급여화면 *//*
-   @RequestMapping("empSalary.do")
-   public String empSalaryView() {
-      return "emp/empSalary";
-   }*/
-   
    /** 로그인 정보확인 컨트롤러 */
    @RequestMapping(value="login.do", method=RequestMethod.POST)
    public void loginEmp(Emp emp, Model model, HttpServletResponse response) throws IOException{
@@ -380,8 +374,6 @@ public class EmpController {
       out.flush();
       out.close();
       
-     
-         
    }
    
    /*이메일 중복검사*/
@@ -447,6 +439,7 @@ public class EmpController {
          
    }
    
+   /*상사목록 조회*/
    @RequestMapping(value="selectMgrList.do", method=RequestMethod.POST)
    @ResponseBody
    public void selectMgrList(Emp emp, @RequestParam(value="job_no2") String job_no2, HttpServletResponse response) throws IOException{
@@ -482,6 +475,7 @@ public class EmpController {
       out.close();
       
    }
+   
    //마이 페이지 정보 가져오기
    @RequestMapping(value="getMyInfo.do" ,method=RequestMethod.POST)
    @ResponseBody
@@ -524,8 +518,8 @@ public class EmpController {
       out.close();
    
    } 
-   //email check
    
+   //email check   
    @RequestMapping(value="emailCheck.do" ,method=RequestMethod.POST)
    @ResponseBody
 
@@ -551,8 +545,7 @@ public class EmpController {
    
    }
    
-      //phone number check
-
+   //phone number check
    @RequestMapping(value="checkPhoneck.do" ,method=RequestMethod.POST)
    @ResponseBody
    public void checkPhonedupl(Emp emp,HttpServletResponse  response) throws IOException {      
@@ -579,7 +572,8 @@ public class EmpController {
       out.close();
    
    }
-      //수정한 값 집어넣기
+   
+   //수정한 값 집어넣기
    @RequestMapping(value="modifyInfo.do",method=RequestMethod.POST)
    public String updateEmpDelete(Emp emp) {
       
@@ -589,11 +583,11 @@ public class EmpController {
    }
 
    
-      @RequestMapping(value="updatePassword.do",method=RequestMethod.POST)
-      public String updatePassword(Emp emp) {
+   @RequestMapping(value="updatePassword.do",method=RequestMethod.POST)
+   public String updatePassword(Emp emp) {
       
-      String pwd =pwdEncoder.encode(emp.getEmp_pwd());
-      emp.setEmp_pwd(pwd);
+   String pwd =pwdEncoder.encode(emp.getEmp_pwd());
+   emp.setEmp_pwd(pwd);
       
       int result=empService.updatePassword(emp);   
       
