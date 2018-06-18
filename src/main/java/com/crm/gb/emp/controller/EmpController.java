@@ -2,7 +2,6 @@ package com.crm.gb.emp.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletResponse;
@@ -12,7 +11,6 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
-
+import com.crm.gb.contract.model.service.ContractService;
 import com.crm.gb.emp.exception.EmpLoginFailException;
 import com.crm.gb.emp.model.service.EmpService;
 import com.crm.gb.emp.model.vo.Emp;
@@ -37,6 +35,9 @@ public class EmpController {
    @Autowired
    private EmpService empService;
 
+   @Autowired
+   private ContractService contractService;
+   
    /* 일반 사원 테이블 추가부분 */
    @Autowired
    private BCryptPasswordEncoder pwdEncoder;

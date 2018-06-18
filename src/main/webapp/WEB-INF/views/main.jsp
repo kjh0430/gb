@@ -698,6 +698,26 @@ $(function(){
        			
        		}
 		});
+		
+		// 등록된 고객수
+		$.ajax({
+			url : "countContract.do",
+       		type: "post",
+       		dataType: "json",
+       		data: {
+       			emp_no :  '${loginEmp.emp_no}'
+       		},
+       		success:function(data){
+       			
+       			var objStr = JSON.stringify(data);
+				var json = JSON.parse(objStr);
+       			var count = json.contractCount;
+       			
+       			$('#countContract').html(count);
+       			
+       		}
+		});
+		
 	});
 
 </script>
@@ -763,7 +783,7 @@ $(function(){
      	 	<!-- top navigation -->
 			<c:import url="etc/topnav.jsp"></c:import>
 			<!-- /top navigation -->
-
+	
         <!-- page content -->
         <div class="right_col" role="main">
           <!-- top tiles -->
@@ -785,8 +805,7 @@ $(function(){
             </div>
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i> 신규거래처수</span>
-              <div class="count">2,315</div>
-              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
+	              	<div class="count" id="countContract"></div>
             </div>
           </div>
           <!-- /top tiles -->

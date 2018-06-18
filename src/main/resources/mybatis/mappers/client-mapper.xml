@@ -221,9 +221,9 @@
 				client_addr = #{client_addr},
 				client_phone = #{client_phone},
 				client_contract	= #{client_contract},
-				client_comment = #{client_comment}	
-				
+				client_comment = #{client_comment}
 		]]>
+		
 	</update>
 	
 	<!-- 고객관련 첨부파일 수정 -->

@@ -12,4 +12,5 @@ public interface ContractService {
 	public abstract ArrayList<Contract> selectPageList(Contract contract);	// 페이징 처리 리스트
 	public abstract ArrayList<Contract> selectContractList(ContractSearchList contractSearch);	// 계약정보 검색
 	public abstract int selectDiscount(int client_no); //고객 할인율 검색
+	public abstract int selectCountContract(int emp_no);	// 계약된 고객수
 }

@@ -294,29 +294,7 @@ $(document).ready(function() {
 													</div>
 												</div>
 											</li>
-											<li>
-												<div class="block">
-													<div class="block_content">
-														<h2 class="title">프로젝트 413 역삼</h2>
-														<div class="byline">
-															<span>2018-02-05 12:30</span>
-														</div>
-														<p class="excerpt"></p>
-													</div>
-												</div>
-											</li>
-											<li>
-												<div class="block">
-													<div class="block_content">
-														<h2 class="title">카페 플로레</h2>
-														<div class="byline">
-															<span>2018-02-05 14:25</span>
-														</div>
-														<p class="excerpt">모닝커피 메뉴가 없어지면서 주문 원두량이 줄어서 계약금액 조정을
-															원하심. 계약금액 조정시 할인율 변경이 불가피함을 공지하고 계약을 유지하는 방향으로 상담</p>
-													</div>
-												</div>
-											</li>
+											
 										</ul>
 									</div>
                    					
