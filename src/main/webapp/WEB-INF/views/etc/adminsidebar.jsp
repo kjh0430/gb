@@ -25,7 +25,7 @@
              <li><a href="goalAdmin.do">목표관리</a></li>
              <li><a href="goalStateAdmin.do">목표현황</a>
              <li><a href="empRegister.do">사원등록</a></li>
-             <li><a href="empList.do">사원목록</a></li>
+             <li><a href="empList.do?page=1">사원목록</a></li>
              <li><a href="empSalary.do">사원급여</a></li>
            </ul>
          </li>

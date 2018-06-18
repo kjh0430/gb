@@ -108,5 +108,17 @@ public class EmpDao {
       
       return sqlSession.update("updatePassword",emp);
    }
+
+   public Emp selectListCount() {
+	  return sqlSession.selectOne("selectListCount");
+   }
+   
+   public ArrayList<Emp> selectEmpList(Emp emp) {
+	  return (ArrayList)sqlSession.selectList("empListPage", emp);
+   }
+
+   public ArrayList<Emp> selectMgrList(Emp emp) {
+	   return (ArrayList)sqlSession.selectList("mgrList", emp);
+   }
    
 }

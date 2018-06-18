@@ -148,11 +148,71 @@ public class EmpController {
    
    /*사원 목록*/
    @RequestMapping(value = "empList.do")
-   public String empList(Emp emp, Model model) {
+   public String empList(Emp emp, Model model, @RequestParam(value="page") int page) {
       logger.info("사원 목록 실행");
-      ArrayList<Emp> empList = empService.selectEmpList();
-      System.out.println("empList : " + empList);
+      
+      int currentPage=page;
+      int listSize = 10;
+      int pageSize = 5;
+      
+      Emp listCount = empService.selectListCount();
+      int listCount2 = listCount.getListCount();
+      
+      int maxPage = (int)((double)listCount2 / listSize + 0.9);
+      
+      int curPage = (currentPage-1) / pageSize + 1;
+	  int totalPage = (int)Math.ceil(maxPage*1.0) / pageSize+1;
+	  
+	  int beginPage = (curPage-1) * pageSize + 1;
+	  int finalPage = beginPage + pageSize - 1;
+	  
+	  int prevPage = (curPage==1)?1:(curPage-1)*pageSize;
+	  int nextPage = curPage>totalPage?(curPage*pageSize):(curPage*pageSize)+1;
+		
+	  if(nextPage>=totalPage) {
+		nextPage = totalPage;
+	  }		
+	  
+	  if(maxPage < finalPage) {
+		finalPage = maxPage;
+	  }		
+		
+	  int startPage=(currentPage-1)*listSize+1;
+	  int endPage=startPage+listSize-1;
+	  
+	  emp.setStartPage(startPage);
+	  emp.setEndPage(endPage);
+	  
+	  System.out.println("listCount : " + listCount2);
+	  System.out.println("currentPage : " + currentPage);
+	  System.out.println("listSize : " + listSize);
+	  System.out.println("pageSize : " + pageSize);
+	  System.out.println("maxPage : " + maxPage);
+	  System.out.println("curPage : " + curPage);
+	  System.out.println("totalPage : " + totalPage);
+	  System.out.println("beginPage : " + beginPage);
+	  System.out.println("finalPage : " + finalPage);
+	  System.out.println("prevPage : " + prevPage);
+	  System.out.println("nextPage : " + nextPage);
+	  System.out.println("startPage : " + startPage);
+	  System.out.println("endPage : " + endPage);
+      
+      ArrayList<Emp> empList = empService.selectEmpList(emp);
       model.addAttribute("empList", empList);
+      model.addAttribute("listCount", listCount2);
+      model.addAttribute("currentPage", currentPage);
+      model.addAttribute("listSize", listSize);
+      model.addAttribute("pageSize", pageSize);
+      model.addAttribute("maxPage", maxPage);
+      model.addAttribute("curPage", curPage);
+      model.addAttribute("totalPage", totalPage);
+      model.addAttribute("beginPage", beginPage);
+      model.addAttribute("finalPage", finalPage);
+      model.addAttribute("prevPage", prevPage);
+      model.addAttribute("nextPage", nextPage);
+      model.addAttribute("startPage", startPage);
+      model.addAttribute("endPage", endPage);      
+      
       return "emp/empList";
    }
    
@@ -227,8 +287,68 @@ public class EmpController {
       int emp_no = (Integer.parseInt(emp_num));
       
       int result = empService.updateEmpDelete(emp_no);
-      ArrayList<Emp> empList = empService.selectEmpList();
+      
+      int currentPage=1;
+      int listSize = 10;
+      int pageSize = 5;
+      
+      Emp listCount = empService.selectListCount();
+      int listCount2 = listCount.getListCount();
+      
+      int maxPage = (int)((double)listCount2 / listSize + 0.9);
+      
+      int curPage = (currentPage-1) / pageSize + 1;
+	  int totalPage = (int)Math.ceil(maxPage*1.0) / pageSize+1;
+	  
+	  int beginPage = (curPage-1) * pageSize + 1;
+	  int finalPage = beginPage + pageSize - 1;
+	  
+	  int prevPage = (curPage==1)?1:(curPage-1)*pageSize;
+	  int nextPage = curPage>totalPage?(curPage*pageSize):(curPage*pageSize)+1;
+		
+	  if(nextPage>=totalPage) {
+		nextPage = totalPage;
+	  }		
+	  
+	  if(maxPage < finalPage) {
+		finalPage = maxPage;
+	  }		
+		
+	  int startPage=(currentPage-1)*listSize+1;
+	  int endPage=startPage+listSize-1;
+	  
+	  emp.setStartPage(startPage);
+	  emp.setEndPage(endPage);
+	  
+	  System.out.println("listCount : " + listCount2);
+	  System.out.println("currentPage : " + currentPage);
+	  System.out.println("listSize : " + listSize);
+	  System.out.println("pageSize : " + pageSize);
+	  System.out.println("maxPage : " + maxPage);
+	  System.out.println("curPage : " + curPage);
+	  System.out.println("totalPage : " + totalPage);
+	  System.out.println("beginPage : " + beginPage);
+	  System.out.println("finalPage : " + finalPage);
+	  System.out.println("prevPage : " + prevPage);
+	  System.out.println("nextPage : " + nextPage);
+	  System.out.println("startPage : " + startPage);
+	  System.out.println("endPage : " + endPage);
+      
+      ArrayList<Emp> empList = empService.selectEmpList(emp);
       model.addAttribute("empList", empList);
+      model.addAttribute("listCount", listCount2);
+      model.addAttribute("currentPage", currentPage);
+      model.addAttribute("listSize", listSize);
+      model.addAttribute("pageSize", pageSize);
+      model.addAttribute("maxPage", maxPage);
+      model.addAttribute("curPage", curPage);
+      model.addAttribute("totalPage", totalPage);
+      model.addAttribute("beginPage", beginPage);
+      model.addAttribute("finalPage", finalPage);
+      model.addAttribute("prevPage", prevPage);
+      model.addAttribute("nextPage", nextPage);
+      model.addAttribute("startPage", startPage);
+      model.addAttribute("endPage", endPage);    
       
       return "emp/empList";
    }
@@ -293,37 +413,6 @@ public class EmpController {
       
    }
    
-   /*사원번호 중복검사*/
-   @RequestMapping(value="checkEmpNo.do", method=RequestMethod.POST)
-   @ResponseBody
-   public String selectCheckEmpNo(@RequestParam(value="emp_no") String emp_num, HttpServletResponse response) throws IOException{
-      
-      logger.info("selectCheckEmpNo 실행");
-      int emp_no = (Integer.parseInt(emp_num));
-      
-      System.out.println("연락처 번호 : "+emp_no);
-      
-      
-      Emp checkEmpNo = empService.selectCheckEmpNo(emp_no);
-      
-      if(checkEmpNo != null) {      
-         
-      JSONObject job = new JSONObject();
-      job.put("emp_no", emp_no);
-      
-      System.out.println("checkEmpNo 값 있음");
-      System.out.println("emp : " + checkEmpNo);
-      System.out.println("emp_no : " + emp_no);
-
-      return job.toJSONString();
-      
-      }else {
-         System.out.println("checkEmpNo null");
-         return null;
-      }
-         
-   }
-   
    /*상사번호로 이름 가져오기*/
    @RequestMapping(value="mgrName.do", method=RequestMethod.POST)
    @ResponseBody
@@ -360,16 +449,25 @@ public class EmpController {
    
    @RequestMapping(value="selectMgrList.do", method=RequestMethod.POST)
    @ResponseBody
-   public void selectMgrList(HttpServletResponse response) throws IOException{
+   public void selectMgrList(Emp emp, @RequestParam(value="job_no2") String job_no2, HttpServletResponse response) throws IOException{
       logger.info("selectMgrList 실행");
       
-      ArrayList<Emp> selectMgrList = empService.selectEmpList();
+      int job_no = (Integer.parseInt(job_no2))+1;
+      System.out.println("job_no : " + job_no);
+      
+      emp.setJob_no(job_no);
+      System.out.println("emp.getJob_no : " + emp.getJob_no());
+      
+      ArrayList<Emp> selectMgrList = empService.selectMgrList(emp);
       JSONArray jarr = new JSONArray();
       
-      for(Emp emp : selectMgrList) {
+      System.out.println("selectMgrList : " + selectMgrList);
+      
+      for(Emp e : selectMgrList) {
          JSONObject jsonobject = new JSONObject();
-         jsonobject.put("emp_no", emp.getEmp_no());
-         jsonobject.put("emp_name", emp.getEmp_name());
+         jsonobject.put("emp_no", e.getEmp_no());
+         jsonobject.put("emp_name", e.getEmp_name());
+         jsonobject.put("job_no", e.getJob_no());
          jarr.add(jsonobject);
       }
       

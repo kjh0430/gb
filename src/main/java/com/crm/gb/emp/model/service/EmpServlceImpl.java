@@ -3,7 +3,6 @@ package com.crm.gb.emp.model.service;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.crm.gb.emp.exception.EmpLoginFailException;
@@ -125,6 +124,21 @@ public class EmpServlceImpl implements EmpService{
 	public int updatePassword(Emp emp) {
 		
 		return empDao.updatePassword(emp);
+	}
+
+	@Override
+	public Emp selectListCount() {
+		return empDao.selectListCount();
+	}
+
+	@Override
+	public ArrayList<Emp> selectEmpList(Emp emp) {
+		return empDao.selectEmpList(emp);
+	}
+
+	@Override
+	public ArrayList<Emp> selectMgrList(Emp emp) {
+		return empDao.selectMgrList(emp);
 	}	
 	
 }
