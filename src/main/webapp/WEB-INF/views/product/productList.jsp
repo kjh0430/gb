@@ -42,6 +42,14 @@
 	 var index=page;
 	 return index;
 	 } */
+
+	 //제픔 검색시 ajax or form
+	 
+	 
+	 
+	 
+	 
+	 
 </script>
 </head>
 
@@ -107,11 +115,11 @@
 								</c:if>
 								<!-- 검색 바 -->
 								<div class="x_content">
-									<select name="selectProductType">
+									<select name="selectProductType" style="height:20px;">
 										<option val="1">제품번호</option>
 										<option val="2">제 품 명</option>
 									</select> <input type="text" name="keyword" />
-									<button>검색</button>
+									<button onclick="">검색</button>
 								</div>
 								<!-- 검색 바 종료 -->
 								<div class="x_content">

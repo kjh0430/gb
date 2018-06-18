@@ -365,33 +365,26 @@ public class ProductController {
 		return "product/productList";
 	}
 
-    @RequestMapping(value="searchProduct.do" ,method=RequestMethod.GET)
 	@ResponseBody
+	@RequestMapping(value="searchProduct.do" ,method=RequestMethod.GET)
 	public void searchProduct(Product product,HttpServletResponse  response) throws IOException {		
 	
 		ArrayList<Product> SearchProduct=productService.selectSearchProduct(product);		
 		JSONArray jarr=new JSONArray();
 		
 		for(Product pro2 : SearchProduct) {
-			
 			JSONObject jsonobject=new JSONObject();
-			
 			jsonobject.put("product_name",pro2.getProduct_name());
 			jsonobject.put("product_no", pro2.getProduct_no());
 			jarr.add(jsonobject);
-			
 			}
-		
 		JSONObject send=new JSONObject();
 		send.put("list",jarr);
-		
 		response.setContentType("application/json; charset=utf-8");	
-		
 		PrintWriter out=response.getWriter();
 		out.println(send.toJSONString());
 		out.flush();
 		out.close();
-	
 	}
 }	
 
