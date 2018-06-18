@@ -45,24 +45,34 @@
 		
 	});
 </script>
+
+
 <script type="text/javascript">
-
-	function addFile(){
-		var index=1;
-		var value="<li id='cFile-"+index+"' class='added'><input type='file' class='form-control' name='client_file'>"
-		+"<a href='javascript:delFile(\"cFile-"+index+"\")' title='삭제'>&nbsp;&nbsp;<i class='fa fa-times'></i></a></li>";
-		$(".c_file").append(value);
-		index++;
-	};
+	var count = 0;
 	
-	function delFile(idx){
-		$("#"+idx).remove();
+	function deleteFiles(num) {
+		$.ajax({
+			url : "updateClientFile.do",
+			type: "post",
+			data : {
+				client_file_no : $('#reFile'+num).val()
+			},
+			success: function(data) {
+				if(data == "ok") {
+					$("#file"+num).html("");
+				}
+			}
+		});
+	}
+	function addFiles(){
+		
+		$('#fileF').append("<div id='dfile"+count+"'><input name='client_file' type='file'> <a href='javascript:dFile("+count+")'>삭제</a> </div>");
+		count++;
+	}
+	function dFile(count){
+		$('#dfile'+count).html("");
 	}
 	
-	function resetFile(){
-		$("#firstFile").val("");
-	}
-
 </script>
 
 </head>
@@ -74,7 +84,7 @@
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="main.html" class="site_title"><i class="fa fa-google"></i>
+						<a href="mainView.do" class="site_title"><i class="fa fa-google"></i>
 							<span>GROUP BEAN</span></a>
 					</div>
 
@@ -136,7 +146,7 @@
 								<div class="x_content">
                    					 <br />
 									<form action="updateClient.do" method="post" id="updateClient" data-parsley-validate
-										class="form-horizontal form-label-left">
+										class="form-horizontal form-label-left" enctype="multipart/form-data">
 									<input type="hidden" name="emp_no" value="${ detailClient.emp.emp_no }">
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12"
@@ -246,24 +256,28 @@
 													value="${ detailClient.client_comment }" >
 											</div>
 										</div>
+										
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">
 												첨부파일
 											</label>
 											
-											<div class="col-md-6 col-sm-6 col-xs-12">
-												<c:forEach var="list" items="${ clientFileList }">
-													<input name="client_original_file" id="client_original_file"
+											<div id="fileF" class="col-md-6 col-sm-6 col-xs-12">
+											
+												<a href="javascript:addFiles()">추가</a>
+												<c:forEach var="list" items="${ clientFileList }" varStatus="num">
+												<div id="file${ num.index }">
+												<input id="reFile${ num.index }" type="hidden" name="reFile" value="${ list.client_file_no }">
+													<input name="client_file" id="client_original_file"
 														class="date-picker form-control col-md-7 col-xs-12"
 														required="required" type="text" 
 														value="${ list.client_original_file }" readonly>
-														<a href="#">파일삭제</a> / <a href="#">파일추가</a>
+												<a onclick="deleteFiles('${ num.index }')" style="cursor:pointer;">삭제</a>
+												</div>
 												</c:forEach>
 											</div>
-											
-											
-												
 										</div>
+										
 										<div class="ln_solid"></div>
 										<div class="form-group">
 											<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">

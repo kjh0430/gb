@@ -35,6 +35,7 @@ private static final long serialVersionUID = 1111L;
 	private int blockEnd;//블록 페이지 끝 번호
 	
 	//조건 검색을 위한 client_company 추가
+	private String searchCom;
 	
 		
 	public Order() {}
@@ -91,7 +92,7 @@ private static final long serialVersionUID = 1111L;
 	public Order(int orderlist_no, int order_no, int emp_no, String emp_name, int client_no, int product_no,
 			String product_name, int order_amount, int order_price, String client_company, String order_date, int total,
 			int startPage, int endPage, int totBlock, int curBlock, int prevBlock, int nextBlock, int blockBegin,
-			int blockEnd, int order_list_count) {
+			int blockEnd, int order_list_count, String searchCom) {
 		super();
 		this.orderlist_no = orderlist_no;
 		this.order_no = order_no;
@@ -114,6 +115,8 @@ private static final long serialVersionUID = 1111L;
 		this.blockBegin = blockBegin;
 		this.blockEnd = blockEnd;
 		this.order_list_count= order_list_count;
+		this.searchCom = searchCom;
+	
 	}
 	
 	
@@ -298,6 +301,15 @@ private static final long serialVersionUID = 1111L;
 	public void setOrder_list_count(int order_list_count) {
 		this.order_list_count = order_list_count;
 	}
+		
+
+	public String getSearchCom() {
+		return searchCom;
+	}
+
+	public void setSearchCom(String searchCom) {
+		this.searchCom = searchCom;
+	}
 
 	@Override
 	public String toString() {
@@ -307,7 +319,7 @@ private static final long serialVersionUID = 1111L;
 				+ client_company + ", order_date=" + order_date + ", total=" + total + ", startPage=" + startPage
 				+ ", endPage=" + endPage + ", totBlock=" + totBlock + ", curBlock=" + curBlock + ", prevBlock="
 				+ prevBlock + ", nextBlock=" + nextBlock + ", blockBegin=" + blockBegin + ", blockEnd=" + blockEnd
-				+ "order_list_count : " + order_list_count+"]";
+				+ "order_list_count : " + order_list_count+ "searchCom : " + searchCom +"]";
 	}
 
 	

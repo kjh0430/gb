@@ -73,6 +73,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public ArrayList<Product> selectproductList(Product pro) {
 		return productDao.productListB(pro);
+
 	}
 
 }

@@ -20,6 +20,8 @@ public interface NoticeService {
 
 	public abstract Notice noticeListCount();
 
+	public abstract ArrayList<Notice> selectLatestNotice(); //최근 공지사항 가져오기
+
 	
 
 }

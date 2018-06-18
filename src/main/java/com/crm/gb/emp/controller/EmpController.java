@@ -184,11 +184,6 @@ public class EmpController {
       
       int result = empService.insertEmp(emp);
       
-      /*ArrayList<Emp> empList = empService.selectEmpList();
-      model.addAttribute("empList", empList);
-      
-      return "emp/empList";*/
-      
       System.out.println("emp : " + emp);
       System.out.println("emp_no : " + emp.getEmp_no());
       System.out.println("emp_name : " + emp.getEmp_name());
@@ -201,9 +196,9 @@ public class EmpController {
    }
    
    /*사원 정보 수정*/
-   @DateTimeFormat(pattern="yyyy-MM-dd")
-   @RequestMapping(value="empupdate.do")
-   public String updateEmp(Emp emp, Model model) {
+   @RequestMapping(value="empupdate.do", method = RequestMethod.POST)
+   @ResponseBody
+   public String updateEmp(Emp emp, Model model, HttpServletResponse response) {
       
       logger.info("emp update 실행");
       
@@ -213,10 +208,12 @@ public class EmpController {
       emp.setEmp_pwd(encPassword);
       
       int result = empService.updateEmp(emp);
-      ArrayList<Emp> empList = empService.selectEmpList();
-      model.addAttribute("empList", empList);
       
-      return "emp/empList";
+      JSONObject job = new JSONObject();
+      job.put("emp_name", emp.getEmp_name());
+
+      return job.toJSONString();      
+      
    }
    
    /*사원 삭제여부 수정*/

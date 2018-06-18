@@ -23,4 +23,5 @@ public interface ProductService {
 	public abstract ArrayList<ProductFile> selectProductFile(Product pd);
 	public abstract int selectgetProduct(Product pro);
 	public abstract ArrayList<Product> selectproductList(Product pro);
+
 }

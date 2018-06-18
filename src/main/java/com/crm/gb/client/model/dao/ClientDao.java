@@ -142,5 +142,11 @@ public class ClientDao {
 		
 		return (ArrayList)sqlSession.selectList("selectConditionList",client);
 	}
+
+	/** 고객관련 첨부파일 수정 Dao */
+	public int deleteClientFile(int client_file_no) {
+		return sqlSession.delete("deleteClientFile", client_file_no);
+	}
+
 	
 }

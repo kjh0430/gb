@@ -32,7 +32,7 @@
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="Movemain.do" class="site_title"><i class="fa fa-google"></i>
+						<a href="mainView.do" class="site_title"><i class="fa fa-google"></i>
 							<span>GROUP BEAN</span></a>
 					</div>
 
@@ -144,8 +144,13 @@
 	});//onload
 
 	function selectDailyreport(){		
-		selectVisit(emp_no);	
-		selectOrder(emp_no);	
+		var date = $("#daily_date").val();
+		if(date != ""){
+			selectVisit();	
+			selectOrder();
+		}else{
+			alert("날짜를 선택해주세요.");				
+		}	
 	}
 	
 

@@ -224,6 +224,24 @@
 	
 	</script>
 
+	<!-- 고객등록 유효성검사 -->
+	<script type="text/javascript">
+		function nameCheck(){
+			if($('#client_name').val() == ""){
+				$('#infoNameCheck').text("고객명을 입력하세요!");
+			}else{
+				$('#infoNameCheck').text("");
+			}
+		}
+		function companyCheck(){
+			if($('#client_company').val() == ""){
+				$('#infoCompanyCheck').text("회사명을 입력하세요!");
+			}else{
+				$('#infoCompanyCheck').text("");
+			}
+		}
+		
+	</script>
 
 </head>
 
@@ -234,7 +252,7 @@
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="main.html" class="site_title"><i class="fa fa-google"></i>
+						<a href="mainView.do" class="site_title"><i class="fa fa-google"></i>
 							<span>GROUP BEAN</span></a>
 					</div>
 
@@ -296,7 +314,8 @@
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<input name="client_name" type="text" id="client_name" required="required"
-													class="form-control col-md-7 col-xs-12" >
+													class="form-control col-md-7 col-xs-12" onkeydown="nameCheck()" >
+												<div id="infoNameCheck" style="color:red;text-align:center;"></div>
 											</div>
 										</div>
 										<div class="form-group">
@@ -305,7 +324,8 @@
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<input name="client_company" type="text" id="client_company" required="required"
-													class="form-control col-md-7 col-xs-12" >
+													class="form-control col-md-7 col-xs-12" onkeydown="companyCheck()" onmousedown="nameCheck()">
+												<div id="infoCompanyCheck" style="color:red;text-align:center;"></div>	
 											</div>
 										</div>
 										<div class="form-group">

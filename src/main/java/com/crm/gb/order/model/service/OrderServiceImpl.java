@@ -63,8 +63,8 @@ public class OrderServiceImpl implements OrderService{
 	}
 	
 	@Override
-	public int orderListCount() {
-		return orderDao.orderListCount();
+	public int orderListCount(Order order) {
+		return orderDao.orderListCount(order);
 	}
 	
 	//주문리스트 중 제품별 판매량
@@ -79,5 +79,18 @@ public class OrderServiceImpl implements OrderService{
 		return orderDao.selectConditionListCount(order);
 	}
 
+	@Override
+	public int selectOrderSum(int emp_no) {
+		return orderDao.selectOrderSum(emp_no);
+	}
 	
+	@Override
+	public int selectselectOrderAvg(int emp_no) {
+		return orderDao.selectselectOrderAvg(emp_no);
+	}
+	
+	@Override
+	public String selectGoalState(int emp_no) {
+		return orderDao.selectGoalState(emp_no);
+	}
 }

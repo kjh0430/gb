@@ -226,6 +226,14 @@
 		]]>
 	</update>
 	
+	<!-- 고객관련 첨부파일 수정 -->
+	<update id="deleteClientFile" parameterType="_int">
+		<![CDATA[
+			delete from client_file
+			where client_file_no = #{client_file_no}
+		]]>	
+	</update>
+	
 	<!-- 이메일 조회로 특정고객 조회 -->
 	<select id="selectClient" parameterType="string" resultMap="resultAccountClient">
 		<![CDATA[

@@ -143,7 +143,7 @@ public class ProductController {
 			) {
 		/*System.out.println("데이터="+request.getParameter("data"));*/
 		Product pd = productService.selectProductDetail(request.getParameter("data"));
-		System.out.println(pd.toString());
+		//System.out.println(pd.toString());
 		mv.addObject("productDetail", pd);
 		mv.addObject("avail",pd.getProduct_availability());
 		//여기까지가 제품 정보에 관한 것 뿌리는거
@@ -173,9 +173,10 @@ public class ProductController {
 		return "product/productInsert";
 	}
 	
+	
 	//상품 등록 처리 컨트롤러
 	@RequestMapping(value="insertProduct.do", method=RequestMethod.POST)
-	public void insertProduct(Product product,ModelAndView mv,HttpServletRequest request,
+	public ModelAndView insertProduct(Product product,ModelAndView mv,HttpServletRequest request,
 			MultipartHttpServletRequest mtfRequest, HttpServletResponse response) {
 				
 		if(product.getProduct_availability().equals("sale_n")) {
@@ -183,65 +184,73 @@ public class ProductController {
 		}else {
 			product.setProduct_availability("Y");
 		}		
-		//System.out.println(product);
 		
+		System.out.println(product);
 		int result = productService.insertProduct(product);
 		int product_no = product.getProduct_no();
 		String path = request.getSession().getServletContext().getRealPath("resources/upload/product");
 		List<MultipartFile> filelist=mtfRequest.getFiles("product_file");
+		System.out.println("filelist : "+filelist);
+		
 		int idx=0;
-		for(MultipartFile mf:filelist) {
-			
-			try {
-				mf.transferTo(new File(path+"\\"+mf.getOriginalFilename()));
-				String originalFileName = mf.getOriginalFilename();
+		
+		
+		if (filelist.size() == 1 && filelist.get(0).getOriginalFilename().equals("")) {
+			 
+		 }else {     
+
+
+			for(MultipartFile mf:filelist) {
 				
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-				String renameFileName = product_no + "_" + sdf.format(new java.sql.Date(System.currentTimeMillis()))
-						+ idx+"." + mf.getOriginalFilename().substring(mf.getOriginalFilename().lastIndexOf(".") + 1);
-				idx++;
-			    File originFile = new File(path + "//" + mf.getOriginalFilename());
-	            File renameFile = new File(path + "//" + renameFileName);
-	            
-	            if (!originFile.renameTo(renameFile)) {
-	                int read = -1;
-	                byte[] buf = new byte[1024];
-	                // 원본을 읽기 위한 파일스트림 생성
-	                FileInputStream fin = new FileInputStream(originFile);
-	                // 읽은 내용 기록할 복사본 파일 출력용 파일스트림 생성
-	                FileOutputStream fout = new FileOutputStream(renameFile);
-	
-	                // 원본 읽어서 복사본에 기록 처리
-	                while ((read = fin.read(buf, 0, buf.length)) != -1) {
-	                   fout.write(buf, 0, read);
-	                }
-	                fin.close();
-	                fout.close();
-	                originFile.delete(); // 원본파일 삭제            
+				try {
+					mf.transferTo(new File(path+"\\"+mf.getOriginalFilename()));
+					String originalFileName = mf.getOriginalFilename();
+					
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+					String renameFileName = product_no + "_" + sdf.format(new java.sql.Date(System.currentTimeMillis()))
+							+ idx+"." + mf.getOriginalFilename().substring(mf.getOriginalFilename().lastIndexOf(".") + 1);
+					idx++;
+				    File originFile = new File(path + "//" + mf.getOriginalFilename());
+		            File renameFile = new File(path + "//" + renameFileName);
 		            
-				}
-	            ProductFile pf = new ProductFile(product_no,originFile.getName(),renameFile.getName());
-				
-				int result2=productService.insertProductFile(pf);
-				
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}			
-		}
+		            if (!originFile.renameTo(renameFile)) {
+		                int read = -1;
+		                byte[] buf = new byte[1024];
+		                // 원본을 읽기 위한 파일스트림 생성
+		                FileInputStream fin = new FileInputStream(originFile);
+		                // 읽은 내용 기록할 복사본 파일 출력용 파일스트림 생성
+		                FileOutputStream fout = new FileOutputStream(renameFile);
 		
-		try {
-			response.sendRedirect("productList.do");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}			
+		                // 원본 읽어서 복사본에 기록 처리
+		                while ((read = fin.read(buf, 0, buf.length)) != -1) {
+		                   fout.write(buf, 0, read);
+		                }
+		                fin.close();
+		                fout.close();
+		                originFile.delete(); // 원본파일 삭제            
+			            
+					}
+		            ProductFile pf = new ProductFile(product_no,originFile.getName(),renameFile.getName());
+					
+					int result2=productService.insertProductFile(pf);
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}			
+			}
+			
+					
+		 }
+		mv.setView(new RedirectView("/productList.do",true));
 		
+		return mv;
 		
 	}
 	
 	@RequestMapping(value="updateProduct.do", method=RequestMethod.POST)
-	public ModelAndView updateProduct(Product product,ModelAndView mv) {
+	public ModelAndView updateProduct(Product product,ModelAndView mv,HttpServletRequest request,
+			MultipartHttpServletRequest mtfRequest, HttpServletResponse response) {
 		
 		System.out.println("update : "+product);
 		if(product.getProduct_availability().equals("sale_y")) {
@@ -250,7 +259,54 @@ public class ProductController {
 			product.setProduct_availability("N");
 		}
 		int result = productService.updateProduct(product);
-		
+		int product_no = product.getProduct_no();
+
+		String path = request.getSession().getServletContext().getRealPath("resources/upload/product");
+		List<MultipartFile> filelist=mtfRequest.getFiles("product_file");
+		int idx=0;
+	
+		 
+			for(MultipartFile mf:filelist) {
+				
+				try {
+					if(!mf.getOriginalFilename().isEmpty()) {
+						mf.transferTo(new File(path+"\\"+mf.getOriginalFilename()));
+						String originalFileName = mf.getOriginalFilename();
+						
+						SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+						String renameFileName = product_no + "_" + sdf.format(new java.sql.Date(System.currentTimeMillis()))
+								+ idx+"." + mf.getOriginalFilename().substring(mf.getOriginalFilename().lastIndexOf(".") + 1);
+						idx++;
+					    File originFile = new File(path + "//" + mf.getOriginalFilename());
+			            File renameFile = new File(path + "//" + renameFileName);
+			            
+			            if (!originFile.renameTo(renameFile)) {
+			                int read = -1;
+			                byte[] buf = new byte[1024];
+			                // 원본을 읽기 위한 파일스트림 생성
+			                FileInputStream fin = new FileInputStream(originFile);
+			                // 읽은 내용 기록할 복사본 파일 출력용 파일스트림 생성
+			                FileOutputStream fout = new FileOutputStream(renameFile);
+			
+			                // 원본 읽어서 복사본에 기록 처리
+			                while ((read = fin.read(buf, 0, buf.length)) != -1) {
+			                   fout.write(buf, 0, read);
+			                }
+			                fin.close();
+			                fout.close();
+			                originFile.delete(); // 원본파일 삭제            
+				            
+						}
+			            ProductFile pf = new ProductFile(product_no,originFile.getName(),renameFile.getName());
+						
+						int result2=productService.insertProductFile(pf);
+					}
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}			
+				
+		}
 		mv.setView(new RedirectView("/productList.do",true));
 		
 		return mv;
@@ -265,6 +321,7 @@ public class ProductController {
 		return mv;
 	}
 	
+
     @RequestMapping("productListE2.do")
 	public String productListE(Product pro, Model model, 
 			@RequestParam(value="startPage", defaultValue="1") int startPage){
@@ -305,6 +362,7 @@ public class ProductController {
 		
 		return "product/productList";
 	}
+
 }	
 
 

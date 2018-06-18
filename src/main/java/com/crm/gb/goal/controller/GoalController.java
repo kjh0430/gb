@@ -74,6 +74,11 @@ public class GoalController {
 		return "goal/goalStateAdmin";
 	}
 	
+	@RequestMapping("myGoal.do")
+	public String myGoal() {
+		return "goal/MygoalState";
+	}
+	
 	@RequestMapping("search.do")
 	@ResponseBody
 	public void searchEmp(Goal goal,HttpServletResponse  response) throws IOException {
@@ -102,5 +107,62 @@ public class GoalController {
 	out.flush();
 	out.close();
 	}
+	@RequestMapping("getgoalInfo.do")
+	@ResponseBody
+	public void goalEmpInfo(Goal goal,HttpServletResponse  response) throws IOException {
+	ArrayList<Goal> selectEmpGoal=goalService.selectEmpGoal(goal);
+	JSONArray jarr=new JSONArray();
+	
+	for(Goal goal1: selectEmpGoal) {
+		
+		JSONObject jsonobject=new JSONObject();
+		
+		jsonobject.put("goalMonth",goal1.getGoalMonth());
+		jsonobject.put("goalMoney",goal1.getGoalmoney());
+		jsonobject.put("sales",goal1.getSales());
+		jsonobject.put("acheive",goal1.getAcheive());
+		
+		jarr.add(jsonobject);
+		
+	}
+	JSONObject send=new JSONObject();
+	send.put("list",jarr);
+	
+	response.setContentType("application/json; charset=utf-8");	
+	PrintWriter out=response.getWriter();
+	out.println(send.toJSONString());
+	out.flush();
+	out.close();
+	}
+
+	
+	@RequestMapping("getAll.do")
+	@ResponseBody
+	public void goalAllEmp(HttpServletResponse  response) throws IOException {
+	ArrayList<Goal> selectAllgoal=goalService.selectEmpAll();
+	JSONArray jarr=new JSONArray();
+	
+	for(Goal goal1: selectAllgoal) {
+		
+		JSONObject jsonobject=new JSONObject();
+		
+		jsonobject.put("goalMonth",goal1.getGoalMonth());
+		jsonobject.put("goalMoney",goal1.getGoalmoney());
+		jsonobject.put("sales",goal1.getSales());
+		jsonobject.put("acheive",goal1.getAcheive());
+		
+		jarr.add(jsonobject);
+		
+	}
+	JSONObject send=new JSONObject();
+	send.put("list",jarr);
+	
+	response.setContentType("application/json; charset=utf-8");	
+	PrintWriter out=response.getWriter();
+	out.println(send.toJSONString());
+	out.flush();
+	out.close();
+	}
+	
 	
 }

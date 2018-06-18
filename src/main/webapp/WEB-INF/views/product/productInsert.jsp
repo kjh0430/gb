@@ -25,10 +25,13 @@
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 	
-	
-	function addFile(){
-		var index=1;		
-		var value="<li id='pFile-"+index+"' class='added'><input type='file' class='form-control' name='product_file'>"
+	var index=1;	
+	$(function(){
+		$(".add_btn").attr("disabled",true)
+	})
+
+	function addFile(){			
+		var value="<li id='pFile-"+index+"' class='added'><input type='file' onchange='fileChange()' class='form-control' name='product_file'>"
 		+"<a href='javascript:delFile(\"pFile-"+index+"\")' title='삭제'>&nbsp;&nbsp;<i class='fa fa-times'></i></a></li>";
 		$(".p_file").append(value);
 		var firstFile = $("#firstFile").val(); 
@@ -38,6 +41,9 @@
 		}else{
 			index++;
 		}		
+		$(".add_btn").attr("disabled",true);
+		$(".fileSpan").html("");
+		
 	};
 	
 	function delFile(idx){
@@ -47,18 +53,38 @@
 			$("#"+idx).remove();
 		}else{
 			$("#"+idx).remove();
-		}		
+		}	
+		
+		var count = $(".p_file").length;
+		if(count==1){
+			$("#pFile-0 .fileSpan").html("<a href='javascript:resetFile()' title='삭제'>&nbsp;<i class='fa fa-times'></i></a>");
+		}
+		$(".add_btn").attr("disabled",false)
 	}
 	
 	function resetFile(){
 		$("#firstFile").val("");
-		$(".fileSpan").html("");		
+		$(".fileSpan").html("");	
+		$(".add_btn").attr("disabled",true)
 	}
 	
 	function firstChange(){
 		var firstFile = $("#firstFile").val(); 
 		if(firstFile!=""){
 			$(".fileSpan").html("<a href='javascript:resetFile()' title='삭제'>&nbsp;<i class='fa fa-times'></i></a>");
+		}
+		$(".add_btn").attr("disabled",false)
+		
+	}
+	
+	function fileChange(){
+		$(".add_btn").attr("disabled",false)
+	}
+	
+	function checkInsert(){
+		alert($("#product_amount").val());
+		if($("#product_amount").val() == ""){
+			$("#product_amount").val("0");
 		}
 	}
 
@@ -90,7 +116,7 @@
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="Movemain.do" class="site_title"><i class="fa fa-google"></i>
+						<a href="mainView.do" class="site_title"><i class="fa fa-google"></i>
 							<span>GROUP BEAN</span></a>
 					</div>
 
@@ -126,12 +152,12 @@
 								
 								<div class="x_content">
                    					 <br />
-									<form action="insertProduct.do" method="post" encType="multipart/form-data" 
+									<form action="insertProduct.do" method="post" onsubmit="return checkInsert()" encType="multipart/form-data" 
 									class="form-horizontal form-label-left">
 
 										<div class="form-group">
-											<label class="control-label col-md-3 col-sm-3 col-xs-12"
-												for="product_name">제품 이름
+											<label class="control-label col-md-3 col-sm-3 col-xs-12" for="product_name">
+												제품 이름
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<input type="text" id="product_name" required="required"
@@ -148,14 +174,12 @@
 											</div>
 										</div>
 										<div class="form-group">
-											<label for="middle-name"
+											<label for="product_amount"
 												class="control-label col-md-3 col-sm-3 col-xs-12">
 												재고
 												</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<input id="product_amount"
-													class="form-control col-md-7 col-xs-12" type="number"
-													name="product_amount">
+												<input id="product_amount" class="form-control col-md-7 col-xs-12" type="number" name="product_amount">
 											</div>
 										</div>
 										<div class="form-group">
@@ -193,11 +217,6 @@
 										</div>
 										<div class="ln_solid"></div>
 										<div class="form-group">
-											<!-- <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-												<button type="submit" class="btn btn-primary">정보수정</button>
-												<button class="btn btn-danger" type="button">제품삭제</button>
-											</div> -->
-											
 											<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
 												<button type="submit" class="btn btn-primary">등록</button>
 											</div>

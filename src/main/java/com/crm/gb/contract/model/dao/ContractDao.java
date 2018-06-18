@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.crm.gb.contract.model.vo.Contract;
+import com.crm.gb.contract.model.vo.ContractSearchList;
 
 @Repository("contractDao")
 public class ContractDao {
@@ -38,4 +39,11 @@ public class ContractDao {
 	public ArrayList<Contract> selectPageList(Contract contract) {
 		return (ArrayList)sqlSession.selectList("contract.contractPageList", contract);
 	}
+
+	/** 계약리스트 조회 메소드 */
+	public ArrayList<Contract> selectContractList(ContractSearchList contractSearch) {
+		return (ArrayList)sqlSession.selectList("contract.searchContractList", contractSearch);
+	}
+	
+	
 }

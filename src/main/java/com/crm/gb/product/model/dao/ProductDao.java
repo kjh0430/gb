@@ -57,12 +57,14 @@ public class ProductDao {
 		return (ArrayList)sqlSession.selectList("productDetailFile",pd);
 	}
 
+
 	public int productListE(Product pro) {
 		return sqlSession.selectOne("productListA", pro);
 	}
 
 	public ArrayList<Product> productListB(Product pro) {
 		return (ArrayList)sqlSession.selectList("productListC", pro);
+
 	}
 
 }

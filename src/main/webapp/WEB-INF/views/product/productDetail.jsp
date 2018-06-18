@@ -27,21 +27,139 @@
 
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
-$(document).ready(function() {
-	var st = "${avail}";
-	var yes = "Y";
-	var no = "N";
-if(st == yes){
-	  $("#sale_y").attr("checked",true);
-  }else if(st == no){
-	  $("#sale_n").attr("checked",true);
-  }
+	$(document).ready(function() {
+		var st = "${avail}";
+		var yes = "Y";
+		var no = "N";
+		if (st == yes) {
+			$("#sale_y").attr("checked", true);
+		} else if (st == no) {
+			$("#sale_n").attr("checked", true);
+		}
+		var job_no = "${loginEmp.job_no}";
+		if(job_no != 3){
+			$("#admin_btn").css("display","none");
+			
+		}
 
-
-
-});
+	});
+	
+	function modify(){
+		$("#product_name").attr('readonly',false);
+		$("#product_price").attr('readonly',false);
+		$("#product_comment").attr('readonly',false);
+		$("#product_amount").attr('readonly',false);
+		$("#sale_y").attr('disabled',false);
+		$("#sale_n").attr('disabled',false);	
+		$("#pFile-0").css("display","inherit");
+		$("#admin_btn").html("<button type='submit' class='btn btn-primary'>확인</button>"		
+		+"<button class='btn btn-danger' type='button' onclick='deleteProduct();'>제품삭제</button>");
+		
+	}
+	
+	var index=1;	
+	
+	$(function(){
+		$(".add_btn").attr("disabled",true)
+	});
+	
+	function addFile(){			
+		var value="<li id='pFile-"+index+"' class='added' style='border:none;padding:0px;width:100%'><input type='file' onchange='fileChange()' class='form-control' name='product_file'>"
+		+"<a href='javascript:delFile(\"pFile-"+index+"\")' title='삭제'>&nbsp;&nbsp;<i class='fa fa-times'></i></a></li>";
+		$(".p_file").append(value);
+		var firstFile = $("#firstFile").val(); 
+		if(index==1 && firstFile==("")){
+			$(".fileSpan").html("");
+			index++;
+		}else{
+			index++;
+		}		
+		$(".add_btn").attr("disabled",true);
+		$(".fileSpan").html("");
+	};
+	
+	function delFile(idx){
+		var firstFile = $("#firstFile").val(); 
+		if(idx==1 && firstFile !=("")){
+			$(".fileSpan").html("<a href='javascript:resetFile()' title='삭제'>&nbsp;<i class='fa fa-times'></i></a>");
+			$("#"+idx).remove();
+		}else{
+			$("#"+idx).remove();
+		}	
+		
+		var count = $(".p_file").length;
+		if(count==1){
+			$("#pFile-0 .fileSpan").html("<a href='javascript:resetFile()' title='삭제'>&nbsp;<i class='fa fa-times'></i></a>");
+		}
+		$(".add_btn").attr("disabled",false)
+	}
+	
+	function resetFile(){
+		$("#firstFile").val("");
+		$(".fileSpan").html("");	
+		$(".add_btn").attr("disabled",true)	
+	}
+	
+	function firstChange(){
+		var firstFile = $("#firstFile").val(); 
+		if(firstFile!=""){
+			$(".fileSpan").html("<a href='javascript:resetFile()' title='삭제'>&nbsp;<i class='fa fa-times'></i></a>");
+		}
+		$(".add_btn").attr("disabled",false);		
+	}
+	
+	function fileChange(){
+		$(".add_btn").attr("disabled",false)
+	}
+	
+	function deleteFile(renameFile){
+		var test = confirm("첨부파일을 삭제하시겠습니까?");
+		if(test){
+			$.ajax({
+				url:"deleteFile.do",
+				data:{product_rename_file:renameFile},
+				type:"post",
+				success:function(result){
+					
+				},
+				error:function(request,status,errorData){
+					console.log("error data : " +request.status+"\n"
+							+"message : "+request.responseText+"\n"
+							+"error : "+errorData);
+				}	
+			})//ajax
+		}
+		location.reload();
+		
+			
+	}
 
 </script>
+<style type="text/css">
+	.p_file{
+		list-style:none;
+		padding-left:0px;
+	}
+	input[type=file]{
+		display:inline-block;
+		width:80%;
+	}
+	.add_btn{
+		margin-bottom:0px;
+		float:right;
+		display:inline-block;
+	}
+	#pfs > li{
+		border:solid 1px #ccc;
+		padding:5px;
+		margin-bottom:5px;
+		width:80%;
+	}
+	.add{
+		margin-top:10px;
+	}
+	
+</style>
 </head>
 
 
@@ -51,14 +169,27 @@ if(st == yes){
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="main.html" class="site_title"><i class="fa fa-google"></i>
+						<a href="mainView.do" class="site_title"><i class="fa fa-google"></i>
 							<span>GROUP BEAN</span></a>
 					</div>
 					<div class="clearfix"></div>
 
-					<!-- sidebar menu -->
-					<%@ include file="../etc/sidebar.jsp"%>
-					<!-- /sidebar menu -->
+					<c:choose>
+						<c:when test="${ loginEmp.job_no == 3}">
+							<!-- sidebar menu -->
+							<%@ include file="../etc/adminsidebar.jsp"%>
+							<!-- /sidebar menu -->
+						</c:when>
+						<c:when test="${ loginEmp.job_no == 2}">
+							<%@ include file="../etc/adminsidebar.jsp"%>
+
+						</c:when>
+						<c:otherwise>
+							<!-- sidebar menu -->
+							<%@ include file="../etc/sidebar.jsp"%>
+							<!-- /sidebar menu -->
+						</c:otherwise>
+					</c:choose>
 
 				</div>
 			</div>
@@ -86,7 +217,7 @@ if(st == yes){
 								
 								<div class="x_content">
                    					 <br />
-									<form id="demo-form2" data-parsley-validate	class="form-horizontal form-label-left" method="post" action="updateProduct.do">
+									<form class="form-horizontal form-label-left" method="post" action="updateProduct.do" encType="multipart/form-data">
 
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12"
@@ -102,8 +233,8 @@ if(st == yes){
 												for="first-name">제품명
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<input type="text" id="first-name" required="required"
-													class="form-control col-md-7 col-xs-12" name="product_name" value="${productDetail.product_name}" >
+												<input type="text" id="product_name" required="required"
+													class="form-control col-md-7 col-xs-12" name="product_name" value="${productDetail.product_name}" readonly>
 											</div>
 										</div>
 										<div class="form-group">
@@ -111,8 +242,8 @@ if(st == yes){
 												for="last-name">판매가격 
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<input type="text" id="last-name" required="required" 
-												class="form-control col-md-7 col-xs-12" name="product_price" value="${productDetail.product_price}" >
+												<input type="text" id="product_price" required="required" 
+												class="form-control col-md-7 col-xs-12" name="product_price" value="${productDetail.product_price}" readonly>
 											</div>
 										</div>
 										<div class="form-group">
@@ -121,8 +252,8 @@ if(st == yes){
 												재고
 												</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<input id="middle-name"	class="form-control col-md-7 col-xs-12" type="text"
-												value="${productDetail.product_amount}" name="product_amount" >
+												<input id="product_amount"	class="form-control col-md-7 col-xs-12" type="text"
+												value="${productDetail.product_amount}" name="product_amount" readonly>
 											</div>
 										</div>
 										<div class="form-group">
@@ -130,7 +261,7 @@ if(st == yes){
 												제품정보
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<textarea class="form-control col-md-7 col-xs-12" rows="3" name="product_comment">${productDetail.product_comment}</textarea>
+												<textarea id="product_comment" class="form-control col-md-7 col-xs-12" rows="3" readonly name="product_comment" >${productDetail.product_comment}</textarea>
 											</div>
 										</div>
 										<div class="form-group">
@@ -139,9 +270,9 @@ if(st == yes){
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12" style="height:34px;padding:6px 12px">
 												
-										<input class="form-check-input" type="radio" name="product_availability" id="sale_y" value="sale_y"> 
+										<input class="form-check-input" type="radio" name="product_availability" id="sale_y" value="sale_y" disabled> 
 										<label class="form-check-label"	for="sale_yn">판매가능 </label>
-										<input class="form-check-input" type="radio" name="product_availability" id="sale_n" value="sale_n">
+										<input class="form-check-input" type="radio" name="product_availability" id="sale_n" value="sale_n" disabled>
 										<label class="form-check-label" for="sale_n">판매불가 </label>
 											</div>
 										</div>
@@ -150,18 +281,26 @@ if(st == yes){
 												첨부파일
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<ul class="product_attach" id="pfs">
-												<c:forEach var="list" items="${productFileNames}">
-												<li><a href="productFileDown.do?pfName=${list.product_rename_file}&oriName=${list.product_original_file}">${list.product_original_file}</a></li>
-												
+												<ul class="p_file" id="pfs">
+												<c:forEach var="list" items="${productFileNames}">													
+												<li>
+													<a href="productFileDown.do?pfName=${list.product_rename_file}&oriName=${list.product_original_file}">${list.product_original_file}</a>
+													<span class="fileSpan1"><a href="javascript:deleteFile('${list.product_rename_file}')" title='삭제'>&nbsp;<i class='fa fa-times'></i></a></span>	
+													<!-- <input type="button" class="btn btn-dark add_btn" onclick="addFile()" value="추가"/> -->
+												</li>
 												</c:forEach>
+												<li id="pFile-0" style="border:none;padding:0px;width:100%;display:none" >
+													<input type="file" id="firstFile" name="product_file" onchange="firstChange()" class="form-control">
+													<span class="fileSpan"></span>	
+													<input type="button" class="btn btn-dark add_btn" onclick="addFile()" value="추가"/>
+												</li>
 												</ul>
 											</div>
 										</div>
 										<div class="ln_solid"></div>
 										<div class="form-group">
-											<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-												<button type="submit" class="btn btn-primary">정보수정</button>
+											<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3" id="admin_btn">
+												<button type="button" onclick="modify()" class="btn btn-primary">정보수정</button>
 												<button class="btn btn-danger" type="button" onclick="deleteProduct();">제품삭제</button>
 											</div>
 										</div>

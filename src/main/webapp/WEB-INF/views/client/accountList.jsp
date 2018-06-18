@@ -67,7 +67,7 @@ function list(page){
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="main.html" class="site_title"><i class="fa fa-google"></i>
+						<a href="mainView.do" class="site_title"><i class="fa fa-google"></i>
 							<span>GROUP BEAN</span></a>
 					</div>
 
@@ -163,8 +163,9 @@ function list(page){
 									<ul class="pagination">
 									<!-- if문 -->
 									 <c:if test="${curBlock>1}">
+
 										<li class="page-item"><a class="page-link" href="accountList.do?page=1&client_company=${client_company}">PREV</a></li>
-									
+
 									</c:if> 
 									
 									<!--첫페이지로 이동  -->
@@ -173,7 +174,9 @@ function list(page){
 								
 									
 									 <c:if test="${curBlock>1}">
+
 										<li class="page-item"><a class="page-link" href="accountList.do?page=${blockBegin-1}&client_company=${client_company}">prev</a></li>
+
 									
 									</c:if> 
 									

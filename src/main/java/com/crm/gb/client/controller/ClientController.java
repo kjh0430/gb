@@ -52,6 +52,26 @@ public class ClientController {
 		return "client/addClient2";
 	}
 	
+	/** 고객 파일삭제 메소드 */
+	@RequestMapping(value="updateClientFile.do", method=RequestMethod.POST)
+	public void updateClientFile(ClientFile clientFile, HttpServletResponse response,
+			@RequestParam(value="client_file_no") int client_file_no) throws IOException{
+			
+			System.out.println("받아온 파일번호 : "+client_file_no);
+		
+		int result=clientService.deleteClientFile(client_file_no);
+			System.out.println("파일삭제 결과:"+result);
+			
+		if(result > 0) {	
+			
+		PrintWriter out = response.getWriter();
+			out.print("ok");
+			out.flush();
+			out.close();
+		}
+			
+	}
+	
 	/** 신규고객 등록 메소드 */
 	@RequestMapping(value="insertClient.do", method=RequestMethod.POST)
 	public String insertClient(Client client, ClientFile clientFile, Model model, HttpServletRequest request,
@@ -73,7 +93,7 @@ public class ClientController {
 				List<MultipartFile> filelist=mtfRequest.getFiles("client_file");
 				String path = request.getSession().getServletContext().getRealPath("resources/upload/client");
 				int idx=0;
-				if(filelist != null) {
+				if(filelist.size() != 0) {
 				
 					int client_no = client.getClient_no();
 					clientFile.setClient_no(client_no);
@@ -211,32 +231,20 @@ public class ClientController {
 		client.setJob_no(job_no);
 		
 		//페이지 기본값 지정
-				int currentPage=page;				
-				//한 페이지당 출력할 목록갯수 지정
-				int pageSize=10;
-				int pageGroupSize=5;
-		
-		
-	/*	//조건 검색
-		if(client.getClient_company()!=null && client.getClient_company()!="") {
-		int listCount=clientService.selectClientCondition(client); //조건으로 검색된 행의 개수 
-		System.out.println("listCount"+listCount);
-		//
-		client.setStartRow((currentPage-1)*pageSize+1);
-		client.setEndRow(client.getStartRow()+pageSize+1);
-		//조건에 맞는 리스트 뽑아오기
-		ArrayList<Client> clientListCondition=clientService.selectgetClientCondition(client);
-		
-		}*/
-		
-		
-		System.out.println("jobNo : " + job_no);
-		System.out.println("page: " + page);
+		int currentPage=page;				
+		//한 페이지당 출력할 목록갯수 지정
+		int pageSize=10;
+		int pageGroupSize=5;
+
+	
+		//System.out.println("jobNo : " + job_no);
+		//System.out.println("page: " + page);
 		
 		
 	
 		
 		int listCount_1 = clientService.clientListCount(client);
+		System.out.println("oooooooooooooooooooooo");
 		System.out.println("count : " + listCount_1);
 		//페이지수 계산 
 		int maxPage=(int)((double)listCount_1/pageSize+0.9);				
@@ -372,16 +380,74 @@ public class ClientController {
 	}
 
 	/** 고객정보 수정 메소드 */
-	@RequestMapping("updateClient.do")
-	public String updateClient(Client client, Model model, @RequestParam("client_no") int client_no) {
+	@RequestMapping(value="updateClient.do", method=RequestMethod.POST)
+	public String updateClient(Client client, ArrayList <ClientFile> clientFile, ClientFile cFile,
+			Model model, @RequestParam("client_no") int client_no, HttpServletRequest request,
+			MultipartHttpServletRequest mtfRequest,HttpServletResponse response) throws IOException{
 		logger.info("고객정보 수정메소드 실행됨");
 			System.out.println("받아온 고객번호: "+client_no);
 		
 		int resultClient=clientService.updateClient(client);	//고객정보 수정
 			System.out.println("고객정보 수정결과: "+resultClient);
+		
+			//고객관련 파일추가부분
+			List<MultipartFile> filelist=mtfRequest.getFiles("client_file");
+			String path = request.getSession().getServletContext().getRealPath("resources/upload/client");
+			int idx=0;
+			if(filelist.size() != 0) {
+			
+			for(MultipartFile mfile : filelist) {
+				try {
+					mfile.transferTo(new File(path+"/"+mfile.getOriginalFilename()));
+					String originalFileName = mfile.getOriginalFilename();
+					
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+					String renameFileName = client_no + "_" + sdf.format(new java.sql.Date(System.currentTimeMillis()))
+							+ idx+"." + mfile.getOriginalFilename().substring(mfile.getOriginalFilename().lastIndexOf(".") + 1);
+					idx++;
+					
+					cFile.setClient_original_file(originalFileName);
+					cFile.setClient_rename_file(renameFileName);
+					cFile.setClient_no(client_no);
+					
+					
+				    File originFile = new File(path + "/" + mfile.getOriginalFilename());
+		            File renameFile = new File(path + "/" + renameFileName);
+		            
+		            if (!originFile.renameTo(renameFile)) {
+		                int read = -1;
+		                byte[] buf = new byte[1024];
+		                // 원본을 읽기 위한 파일스트림 생성
+		                FileInputStream fin = new FileInputStream(originFile);
+		                // 읽은 내용 기록할 복사본 파일 출력용 파일스트림 생성
+		                FileOutputStream fout = new FileOutputStream(renameFile);
+		
+		                // 원본 읽어서 복사본에 기록 처리
+		                while ((read = fin.read(buf, 0, buf.length)) != -1) {
+		                   fout.write(buf, 0, read);
+		                }
+		                fin.close();
+		                fout.close();
+		                originFile.delete(); // 원본파일 삭제            
+			            
+					}
+		            
+		            System.out.println("clientFile정보 : "+cFile);
+					int resultFile=clientService.insertClientFile(cFile);
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}			
+			}
+			
+		}//if close	
 			
 		Client returnClient=clientService.selectClient(client_no);
+		clientFile = clientService.selectClientFileList(client_no);	//고객 첨부파일 조회
+	
 		model.addAttribute("detailClient", returnClient);
+		model.addAttribute("clientFileList", clientFile);
 		
 		return "client/poList_detail";
 	}
