@@ -118,13 +118,13 @@ function list(page,word){
 									</h2>
 									<div class="clearfix"></div>
 								</div>
-								<div class="x_content">
+								<div class="x_content" style="overflow:auto">
 								<div style="text-align:right">
                                      <input id='clientCondition' class="form-control" style="width:130px;display:inline-block;margin-right:3px;" type="text" placeholder="회사명">
                                    <button class="btn btn-dark" style="margin:0 0 3px 0" onclick="searchClient();">검색</button>
                                   </div>
 									
-									<table id="table_cl" class="table table-striped table-bordered" style="min-width:650px;">
+									<table id="table_cl" class="table table-striped table-bordered table-responsive" style="min-width:650px;">
 										<thead>
 											<tr>
 												<th>고객명</th>
