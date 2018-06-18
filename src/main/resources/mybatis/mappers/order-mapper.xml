@@ -191,6 +191,7 @@
 		select distinct(ROUND(((select sum(order_amount*order_price) as order_sum from orderlist 
 		where substr(to_char(order_date),1,6) = substr(sysdate,1,6) and emp_no =#{emp_no})/
 		(select goal_money from goal where substr(to_char(goal_date),1,6) = substr(sysdate,1,6) and emp_no = #{emp_no})*100),2)) as goalstate 
+
 		from orderlist
 	]]>
 	</if>
