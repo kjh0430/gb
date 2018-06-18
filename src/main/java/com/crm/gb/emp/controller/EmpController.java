@@ -380,9 +380,7 @@ public class EmpController {
 		  
 		JSONObject send=new JSONObject();
 		
-<<<<<<< HEAD
 	
-=======
 		if(emp.getJob_no()==2) {
 			getMyInfo.setMgr_name("");
 			getMyInfo.setCounty("");
@@ -492,5 +490,4 @@ public class EmpController {
 		return "emp/myInfo";
 	}
 
->>>>>>> branch 'master' of https://github.com/kjh0430/gb.git
 }

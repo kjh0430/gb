@@ -60,7 +60,44 @@ function clientList(){
 
 <!-- ----------------------스크립트관련 작업영역 시작------------------------ -->
 
+<script type="text/javascript">
 
+$(function(){
+	
+	$('#searchContractList').keyup(function() {
+		
+		$.ajax({
+			url: "searchContractList.do",
+			type: "post",
+			data: {
+				client_name: $('#searchContractList').val(),
+				emp_no : '${loginEmp.emp_no}'
+			},
+			dataType: "json",
+			success: function(data) {
+				var obj = JSON.stringify(data);
+				var json = JSON.parse(obj);
+				var list = "";
+				
+					for(var i in json.list) {
+						list += 
+							"<tr>"+
+								"<td>"+"<a href="+"contractDetail.do?client_no="+json.list[i].client_no+">"+decodeURIComponent(json.list[i].client_name)+"</a>"+"</td>"+
+								"<td>"+decodeURIComponent(json.list[i].client_company)+"</td>"+
+								"<td>"+json.list[i].client_phone+"</td>"+
+								"<td>"+json.list[i].contract_discount+"</td>"+
+								"<td>"+json.list[i].contract_money+"</td>"+
+								"<td>"+json.list[i].contract_start+"</td>"+
+								"<td>"+json.list[i].contract_end+"</td>"+
+							"</tr>";	
+					}
+							
+							$('table tbody').html(list);
+				}	//success
+		});	//ajax
+	});	//keyup	
+});	//onload
+</script>
 
 
 
@@ -128,6 +165,12 @@ function clientList(){
 									<h2>
 										계약리스트
 									</h2>
+										<form onsubmit="return false;">
+											<input style="float:right;"
+												type="text" id="searchContractList">
+												<button style="float:right" id="conSearch">검색</button>
+										</form>
+									
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
@@ -159,7 +202,7 @@ function clientList(){
 											
 										</c:forEach>
 
-										<tbody>
+										</tbody>
 									</table>
 								</div>
 								

@@ -131,5 +131,11 @@ public class ClientDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	/** 고객관련 첨부파일 수정 Dao */
+	public int deleteClientFile(int client_file_no) {
+		return sqlSession.delete("deleteClientFile", client_file_no);
+	}
+
 	
 }

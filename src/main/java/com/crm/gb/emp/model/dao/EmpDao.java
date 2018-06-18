@@ -83,8 +83,6 @@ public class EmpDao {
 		return sqlSession.selectOne("selectCheckEmpNo", emp_no);
 	}
 
-<<<<<<< HEAD
-=======
 	public Emp selectMyInfo(Emp emp) {
 		
 		return sqlSession.selectOne("selectMyInfo",emp);
@@ -108,6 +106,5 @@ public class EmpDao {
 		
 		return sqlSession.update("updatePassword",emp);
 	}
->>>>>>> branch 'master' of https://github.com/kjh0430/gb.git
 	
 }

@@ -48,7 +48,32 @@
 			});	//click
 		}); //onload
 		
-	
+		function enterKey() {
+			var keyCode = window.event.keyCode;
+			if(keyCode==13){
+				$.ajax({
+					url: "login.do",
+					data: {
+						emp_no: $('#emp_no').val(),
+						emp_pwd: $('#emp_pwd').val()
+					},
+					type: "post",
+					success: function(data) {
+						if(data == "correct") {
+							location.href="mainView.do"	
+						}else {
+							alert("사원번호와 비밀번호를 확인하시기 바랍니다.");
+							$('#emp_no').val("");
+							$('#emp_pwd').val("");
+							return false;
+						}
+					}
+				});	//ajax
+			}
+			
+		}
+		
+		
 </script>
 
 </head>
@@ -71,7 +96,7 @@
 						</div>
 						<div>
 							<input id="emp_pwd" type="password" name="emp_pwd" class="form-control"
-								placeholder="Password"/>
+								placeholder="Password" onkeydown="javascript:enterKey()"/>
 						</div>
 						<div>
 							<input id="mainLoginBtn" type="button" class="btn btn-default submit" 
