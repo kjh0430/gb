@@ -39,16 +39,23 @@
 		var job_no = "${loginEmp.job_no}";
 		if(job_no != 3){
 			$("#admin_btn").css("display","none");
-			$("#product_name").attr('readonly',true);
-			$("#product_price").attr('readonly',true);
-			$("#product_comment").attr('readonly',true);
-			$("#product_amount").attr('readonly',true);
-			$("#sale_y").attr('disabled',true);
-			$("#sale_n").attr('disabled',true);	
-			$("#pFile-0").css("display","none");
+			
 		}
 
 	});
+	
+	function modify(){
+		$("#product_name").attr('readonly',false);
+		$("#product_price").attr('readonly',false);
+		$("#product_comment").attr('readonly',false);
+		$("#product_amount").attr('readonly',false);
+		$("#sale_y").attr('disabled',false);
+		$("#sale_n").attr('disabled',false);	
+		$("#pFile-0").css("display","inherit");
+		$("#admin_btn").html("<button type='submit' class='btn btn-primary'>확인</button>"		
+		+"<button class='btn btn-danger' type='button' onclick='deleteProduct();'>제품삭제</button>");
+		
+	}
 	
 	var index=1;	
 	
@@ -227,7 +234,7 @@
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<input type="text" id="product_name" required="required"
-													class="form-control col-md-7 col-xs-12" name="product_name" value="${productDetail.product_name}" >
+													class="form-control col-md-7 col-xs-12" name="product_name" value="${productDetail.product_name}" readonly>
 											</div>
 										</div>
 										<div class="form-group">
@@ -236,7 +243,7 @@
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<input type="text" id="product_price" required="required" 
-												class="form-control col-md-7 col-xs-12" name="product_price" value="${productDetail.product_price}" >
+												class="form-control col-md-7 col-xs-12" name="product_price" value="${productDetail.product_price}" readonly>
 											</div>
 										</div>
 										<div class="form-group">
@@ -246,7 +253,7 @@
 												</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<input id="product_amount"	class="form-control col-md-7 col-xs-12" type="text"
-												value="${productDetail.product_amount}" name="product_amount" >
+												value="${productDetail.product_amount}" name="product_amount" readonly>
 											</div>
 										</div>
 										<div class="form-group">
@@ -254,7 +261,7 @@
 												제품정보
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<textarea id="product_comment" class="form-control col-md-7 col-xs-12" rows="3" name="product_comment">${productDetail.product_comment}</textarea>
+												<textarea id="product_comment" class="form-control col-md-7 col-xs-12" rows="3" readonly name="product_comment" >${productDetail.product_comment}</textarea>
 											</div>
 										</div>
 										<div class="form-group">
@@ -263,9 +270,9 @@
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12" style="height:34px;padding:6px 12px">
 												
-										<input class="form-check-input" type="radio" name="product_availability" id="sale_y" value="sale_y"> 
+										<input class="form-check-input" type="radio" name="product_availability" id="sale_y" value="sale_y" disabled> 
 										<label class="form-check-label"	for="sale_yn">판매가능 </label>
-										<input class="form-check-input" type="radio" name="product_availability" id="sale_n" value="sale_n">
+										<input class="form-check-input" type="radio" name="product_availability" id="sale_n" value="sale_n" disabled>
 										<label class="form-check-label" for="sale_n">판매불가 </label>
 											</div>
 										</div>
@@ -282,7 +289,7 @@
 													<!-- <input type="button" class="btn btn-dark add_btn" onclick="addFile()" value="추가"/> -->
 												</li>
 												</c:forEach>
-												<li id="pFile-0" style="border:none;padding:0px;width:100%">
+												<li id="pFile-0" style="border:none;padding:0px;width:100%;display:none" >
 													<input type="file" id="firstFile" name="product_file" onchange="firstChange()" class="form-control">
 													<span class="fileSpan"></span>	
 													<input type="button" class="btn btn-dark add_btn" onclick="addFile()" value="추가"/>
@@ -293,7 +300,7 @@
 										<div class="ln_solid"></div>
 										<div class="form-group">
 											<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3" id="admin_btn">
-												<button type="submit" class="btn btn-primary">정보수정</button>
+												<button type="button" onclick="modify()" class="btn btn-primary">정보수정</button>
 												<button class="btn btn-danger" type="button" onclick="deleteProduct();">제품삭제</button>
 											</div>
 										</div>

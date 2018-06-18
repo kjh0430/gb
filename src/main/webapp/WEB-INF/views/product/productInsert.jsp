@@ -80,6 +80,13 @@
 	function fileChange(){
 		$(".add_btn").attr("disabled",false)
 	}
+	
+	function checkInsert(){
+		alert($("#product_amount").val());
+		if($("#product_amount").val() == ""){
+			$("#product_amount").val("0");
+		}
+	}
 
 </script>
 <style type="text/css">
@@ -145,12 +152,12 @@
 								
 								<div class="x_content">
                    					 <br />
-									<form action="insertProduct.do" method="post" encType="multipart/form-data" 
+									<form action="insertProduct.do" method="post" onsubmit="return checkInsert()" encType="multipart/form-data" 
 									class="form-horizontal form-label-left">
 
 										<div class="form-group">
-											<label class="control-label col-md-3 col-sm-3 col-xs-12"
-												for="product_name">제품 이름
+											<label class="control-label col-md-3 col-sm-3 col-xs-12" for="product_name">
+												제품 이름
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<input type="text" id="product_name" required="required"
@@ -167,14 +174,12 @@
 											</div>
 										</div>
 										<div class="form-group">
-											<label for="middle-name"
+											<label for="product_amount"
 												class="control-label col-md-3 col-sm-3 col-xs-12">
 												재고
 												</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<input id="product_amount"
-													class="form-control col-md-7 col-xs-12" type="number"
-													name="product_amount">
+												<input id="product_amount" class="form-control col-md-7 col-xs-12" type="number" name="product_amount">
 											</div>
 										</div>
 										<div class="form-group">
