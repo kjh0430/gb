@@ -38,10 +38,10 @@
 		});		
 		
 		//정보수정 취소
-		$('#cancelClientBtn').on('click', function(){
+		/* $('#cancelClientBtn').on('click', function(){
 			//location.href="detailClient.do?client_no="+""+${ detailClient.client_no }+"";
 			history.go(-1);
-		});
+		}); */
 		
 	});
 </script>
@@ -51,18 +51,26 @@
 	var count = 0;
 	
 	function deleteFiles(num) {
-		$.ajax({
-			url : "updateClientFile.do",
-			type: "post",
-			data : {
-				client_file_no : $('#reFile'+num).val()
-			},
-			success: function(data) {
-				if(data == "ok") {
-					$("#file"+num).html("");
+		var really = confirm("해당파일이 삭제됩니다. 삭제하시겠습니까?");
+		if(really == true) {
+			
+			$.ajax({
+				url : "updateClientFile.do",
+				type: "post",
+				data : {
+					client_file_no : $('#reFile'+num).val()
+				},
+				success: function(data) {
+					if(data == "ok") {
+						$("#file"+num).html("");
+					}
 				}
-			}
-		});
+			});
+		
+		}else{
+			return false;
+		}
+		
 	}
 	function addFiles(){
 		
@@ -282,7 +290,6 @@
 										<div class="form-group">
 											<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
 												<button id="updateClientBtn" type="submit" class="btn btn-primary">수정완료</button>
-												<button id="cancelClientBtn" type="reset" class="btn btn-primary">취소</button>
 											</div>
 										</div>
 

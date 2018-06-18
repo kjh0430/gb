@@ -380,10 +380,10 @@ public class ClientController {
 	}
 
 	/** 고객정보 수정 메소드 */
-	@RequestMapping(value="updateClient.do", method=RequestMethod.POST)
+	@RequestMapping("updateClient.do")
 	public String updateClient(Client client, ArrayList <ClientFile> clientFile, ClientFile cFile,
 			Model model, @RequestParam("client_no") int client_no, HttpServletRequest request,
-			MultipartHttpServletRequest mtfRequest,HttpServletResponse response) throws IOException{
+			MultipartHttpServletRequest mtfRequest) throws IOException{
 		logger.info("고객정보 수정메소드 실행됨");
 			System.out.println("받아온 고객번호: "+client_no);
 		
