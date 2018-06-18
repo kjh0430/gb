@@ -692,8 +692,11 @@ $(function(){
        			var order_avg = json.order_avg;
        			var goal_state = json.goal_state;
        			
-       			$('#orderState').html(order_sum);
-       			$('#orderAvg').html(order_avg);
+       			str=String(order_sum);
+				str2=String(order_avg);
+				
+       			$('#orderState').html(str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'));
+       			$('#orderAvg').html(str2.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'));
        			$('#goalState').html(goal_state);
        			
        		}
