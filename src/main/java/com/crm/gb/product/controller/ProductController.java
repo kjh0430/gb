@@ -137,6 +137,7 @@ public class ProductController {
 		return "product/productInsert";
 	}
 	
+	
 	//상품 등록 처리 컨트롤러
 	@RequestMapping(value="insertProduct.do", method=RequestMethod.POST)
 	public ModelAndView insertProduct(Product product,ModelAndView mv,HttpServletRequest request,
