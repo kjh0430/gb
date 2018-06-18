@@ -146,7 +146,7 @@ $(function(){
 				<div class="">
 					<div class="page-title">
 						<div class="title_left">
-							<h3>Information</h3>
+							<h3>나의 정보</h3>
 						</div>
 					</div>
 
