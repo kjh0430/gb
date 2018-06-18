@@ -91,7 +91,7 @@
 						<img src="resources/images/login.png" style="margin-bottom:20px;"/>
 						
 						<div>
-							<input id="emp_no" type="text" name="emp_no" class="form-control" placeholder="Username"
+							<input id="emp_no" type="text" name="emp_no" class="form-control" placeholder="emp password"
 								required>
 						</div>
 						<div>

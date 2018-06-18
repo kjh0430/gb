@@ -54,6 +54,17 @@
 
 $(function(){
 	
+
+
+if("${loginEmp==null}"){
+	location.href="view.do";
+}
+	
+
+
+
+	
+	
 var allCheck=false;
 
 $('#emp_phone').blur(function(){
@@ -272,6 +283,8 @@ text-align:center;
 </head>
 
 <body class="nav-md">
+<c:if test="${empty loginEmp}">
+</c:if>
 	<div class="container body">
 		<div class="main_container">
 			<div class="col-md-3 left_col">
