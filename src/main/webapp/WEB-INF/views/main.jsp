@@ -1418,10 +1418,8 @@ $(function(){
 	    
    $(function(){
 	  getWeather();
-	   
 	});  
-   
-  */
+   */
 	    
 		
 
