@@ -351,15 +351,17 @@
 	<if test="job_no==1">
 	<![CDATA[
 	select * from (
-	(select rownum as rn, A.* from (select * from client where client_contract = 'Y' and emp_no=#{emp_no} and client_company=#{client_company} order by client_enroll desc) A))
+	(select rownum as rn, A.* from (select * from client where client_contract = 'Y' and emp_no=#{emp_no} 
+	and client_company like '%'||#{client_company}||'%' order by client_enroll desc) A))
 	where rn between #{startPage} and #{endPage}
 	]]>
 	</if>
 	<if test="job_no==2 || job_no==3">
 	<![CDATA[
 	select * from (
-			(select rownum as rn, A.* from (select * from client where client_contract = 'Y' and client_company=#{client_company} order by client_enroll desc) A))
-			where rn between #{startPage} and #{endPage}
+	(select rownum as rn, A.* from (select * from client where client_contract = 'Y'
+	and client_company like '%'||#{client_company}||'%' order by client_enroll desc) A))
+	where rn between #{startPage} and #{endPage}
 	]]>
 	</if>
 	</select>

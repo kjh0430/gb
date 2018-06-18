@@ -28,7 +28,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.crm.gb.approval.model.vo.Approval;
 import com.crm.gb.client.controller.ClientController;
+import com.crm.gb.client.model.vo.Client;
 import com.crm.gb.notice.controller.NoticeController;
 import com.crm.gb.notice.model.vo.Notice;
 import com.crm.gb.product.model.service.ProductService;
@@ -57,12 +59,46 @@ public class ProductController {
 	
 	//상품 리스트 화면으로 이동: 권성훈
 	@RequestMapping("productList.do")
-	public String moveProductList(HttpServletResponse response, Model model) throws IOException{
+	public String moveProductList(HttpServletResponse response, Model model, Product pro,
+			@RequestParam(value="startPage", defaultValue="1") int startPage) throws IOException{
 		System.out.println("test moveProductList run...");
 		ArrayList<Product> list = new ArrayList<Product>();	
 		for(int i=0; i<productService.selectAllList().size(); i++) {
 			list.add(i, ((ArrayList<Product>)productService.selectAllList()).get(i));
 		}
+		
+		int count = productService.selectgetProduct(pro);
+		System.out.println("리스트 개수 : "+count);
+			pro.setShowPage(10); //보여줄 페이지 수
+			pro.setTotalRow(count);	// 총 회원 수
+			pro.setStart(startPage);	// 시작페이지
+			
+			int showPage = pro.getShowPage();
+			int totalRow = pro.getTotalRow();
+			int start = (pro.getStart() - 1)*showPage+1;
+			int end = start+9;
+			int currentPage = 1;
+		
+			pro.setStartRow(start);	// 시작 열
+			pro.setEndRow(end);	// 끝 열
+			
+			if(totalRow%showPage != 0) {	// 끝페이지
+				pro.setEnd((totalRow/showPage)+1);
+			}else {
+				pro.setEnd(totalRow/showPage);
+			}
+			
+			System.out.println("고객수: "+totalRow);
+			System.out.println("총 페이지 수: "+pro.getEnd());
+			System.out.println("시작 로우: "+pro.getStartRow());
+			System.out.println("끝 로우: "+pro.getEndRow());
+			
+			ArrayList<Product> pList = productService.selectproductList(pro);
+			
+			model.addAttribute("pageList", pList);
+			model.addAttribute("startPage", currentPage);
+			model.addAttribute("endPage", pro.getEnd());
+		
 		model.addAttribute("list",list);
 		return "product/productList";
 	}
@@ -136,6 +172,7 @@ public class ProductController {
 	public String moveProductInsert() {
 		return "product/productInsert";
 	}
+	
 	
 	//상품 등록 처리 컨트롤러
 	@RequestMapping(value="insertProduct.do", method=RequestMethod.POST)
@@ -284,12 +321,48 @@ public class ProductController {
 		return mv;
 	}
 	
-	@RequestMapping(value="deleteFile.do", method=RequestMethod.POST)
-	public void deleteFile(@RequestParam("product_rename_file") String product_rename_file) {
-		int result = productService.deleteFile(product_rename_file);
+
+    @RequestMapping("productListE2.do")
+	public String productListE(Product pro, Model model, 
+			@RequestParam(value="startPage", defaultValue="1") int startPage){
 		
+    	System.out.println("클릭한 페이지 : "+startPage);
+    	
+    	int count = productService.selectgetProduct(pro);
+    		System.out.println("리스트 개수 : "+count);
+    	pro.setShowPage(10); //보여줄 페이지 수
+		pro.setTotalRow(count);	// 총 회원 수
+		pro.setStart(startPage);	// 시작페이지
+		
+		int showPage = pro.getShowPage();
+		int totalRow = pro.getTotalRow();
+		int start = (pro.getStart() - 1)*showPage+1;
+		int end = start+9;
+		int currentPage = 1;
+
+		pro.setStartRow(start);	// 시작 열
+		pro.setEndRow(end);	// 끝 열
+		
+		if(totalRow%showPage != 0) {	// 끝페이지
+			pro.setEnd((totalRow/showPage)+1);
+		}else {
+			pro.setEnd(totalRow/showPage);
+		}
+		
+		System.out.println("고객수: "+totalRow);
+		System.out.println("총 페이지 수: "+pro.getEnd());
+		System.out.println("시작 로우: "+pro.getStartRow());
+		System.out.println("끝 로우: "+pro.getEndRow());
+		
+		ArrayList<Product> pList = productService.selectproductList(pro);
+		
+		model.addAttribute("pageList", pList);
+		model.addAttribute("startPage", currentPage);
+		model.addAttribute("endPage", pro.getEnd());
+		
+		return "product/productList";
 	}
-	
+
 }	
 
 

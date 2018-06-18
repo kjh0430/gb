@@ -77,24 +77,22 @@ $(document).ready(function() {
 } );
 
 
-function list(page){
-	console.log("paging확인");
-	client_company=$('#clientCondition').val();
-	console.log("ccom : " + client_company);
-	if(client_company==""){
+function list(page,word){
+	
+	if(word==""){
 		location.href="orderList.do?client_company=null&page="+page;
 
 	}else{
-		location.href="orderList.do?client_company="+client_company+"&page="+page;
+		location.href="orderList.do?client_company="+word+"&page="+page;
 
 	}
 }
 
 function searchCondition(){
+	
 	client_company=$('#clientCondition').val();
 	if(client_company==""){
 		 location.href="orderList.do?page=1&client_company=null"
-
 	}else{
 	 	location.href="orderList.do?page=1&client_company="+client_company
 	}
@@ -154,7 +152,7 @@ function searchCondition(){
 								</div>
 								<div class="x_content">
 								<div style="text-align:right">
-                                   <input id='clientCondition' class="form-control" style="width:130px;display:inline-block;margin-right:3px;" type="text" placeholder="사원명">
+                                   <input id='clientCondition' class="form-control" style="width:130px;display:inline-block;margin-right:3px;" type="text" placeholder="회사명">
                                    <button class="btn btn-dark" style="margin:0 0 3px 0" onclick="searchCondition();">검색</button>
                                    </div>	
 									<table id="table_order" class="table table-striped table-bordered" style="min-width:650px;">
@@ -172,7 +170,7 @@ function searchCondition(){
 											<c:forEach var="list" items="${orderList }"> 
 												<tr>												
 													<td>${list.order_no }</td>										
-													<td><a href="orderdetail.do?order_no=${list.order_no}">${list.client_company }</td>
+													<td><a href="orderdetail.do?order_no=${list.order_no}" style="font-weight: bold">${list.client_company }</td>
 													<td>${list.total }</td>
 													<td>${list.order_date }</td>
 												</tr>
@@ -217,19 +215,14 @@ function searchCondition(){
 									 	
 										  <c:choose>
 											<c:when test="${page==currentPage}">
-												
-												 <li class="page-item" class="page-link" ><a class="page-link" style="color:red;">${page}</a></li>
+												<li class="page-item" class="page-link" ><a class="page-link" style="color:red;">${page}</a></li>
 											</c:when> 
 										
 											<c:otherwise> 
-												<%-- <li class="page-item"><a class="page-link" href="noticeList.do?page=${page}">${page}</a></li> --%>	
-									
-													<li class="page-item"><a class="page-link" href="#" onclick="list('${page}')">${page}</a></li>	
-													
-											
-											 </c:otherwise> 
+												<li class="page-item"><a class="page-link" href="#" onclick="list('${page}','${ searchCom}')">${page}</a></li>	
+											</c:otherwise> 
 										
-										 </c:choose> 
+										  </c:choose> 
 									
 									</c:forEach>  
 									
@@ -238,11 +231,11 @@ function searchCondition(){
 									 <c:if test="${curBlock!=totBlock}">
 									 <c:if test="${searchCom != null }">
 										<li class="page-item"><a class="page-link" href="orderList.do?client_company=${searchCom }&page=${blockEnd+1}">next</a></li>
-									</c:if>
-									<c:if test="${searchCom == null }">
+									 </c:if>
+									 <c:if test="${searchCom == null }">
 										<li class="page-item"><a class="page-link" href="orderList.do?client_company=null&page=${blockEnd+1}">next</a></li>
-									</c:if>	
-									</c:if> 
+									 </c:if>	
+									 </c:if> 
 									
 									
 									<!-- 다음페이지 next -->

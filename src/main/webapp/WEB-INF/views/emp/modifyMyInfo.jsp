@@ -177,7 +177,7 @@ var allCheck=false;
 				<div class="">
 					<div class="page-title">
 						<div class="title_left">
-							<h3>Information</h3>
+							<h3>나의 정보</h3>
 						</div>
 					</div>
 
@@ -187,7 +187,7 @@ var allCheck=false;
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
 								<div class="x_title">
-									<h2>Information</h2>
+									<h2>나의 정보</h2>
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
