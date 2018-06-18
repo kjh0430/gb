@@ -32,7 +32,7 @@
 
          <li><a href="#"><i class="fa fa-table"></i>영업관리<span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">   
-             <li><a href="productList.do">제품관리</a></li>
+             <li><a href="productList.do?startPage=1">제품관리</a></li>
              <li><a href="moveAdminDailyReport.do">영업일지</a></li>
            </ul>
            

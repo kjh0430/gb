@@ -105,4 +105,21 @@
 		where PRODUCT_NO=#{product_no}
 		]]>
 	</select>
+	
+	<select id="productListA" parameterType="int" resultType="int">
+	<![CDATA[
+	select count(*) from PRODUCT
+		]]>
+	</select>
+	
+	<select id="productListC" parameterType="product" resultType="product">
+	<![CDATA[
+	select * from
+		(select rownum rnum, xx.*
+		  from (select ex.* from( select product_no, product_name, product_price, PRODUCT_AVAILABILITY from product p order by product_no desc) ex) xx)
+	where rnum >= #{startRow} and rnum <= #{endRow}
+		 
+	]]>
+	</select>
+	
 </mapper>

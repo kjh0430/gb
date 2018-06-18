@@ -65,4 +65,14 @@ public class ProductServiceImpl implements ProductService {
 		return productDao.selectProductDetailFile(pd);
 	}
 
+	@Override
+	public int selectgetProduct(Product pro) {
+		return productDao.productListE(pro);
+	}
+
+	@Override
+	public ArrayList<Product> selectproductList(Product pro) {
+		return productDao.productListB(pro);
+	}
+
 }

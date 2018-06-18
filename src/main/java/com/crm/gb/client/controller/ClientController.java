@@ -163,7 +163,7 @@ public class ClientController {
 			HttpServletResponse response) throws IOException{
 		logger.info("고객리스트 메소드 실행됨");
 		
-		ArrayList<Client> clientList=clientService.selectAllClient();
+		ArrayList<Client> clientList=clientService.selectAllClient();	// 전체 고객조회
 		
 		client.setShowPage(10); //보여줄 페이지 수
 		client.setTotalRow(clientList.size());	// 총 회원 수
