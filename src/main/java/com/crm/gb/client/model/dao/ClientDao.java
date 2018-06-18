@@ -40,10 +40,10 @@ public class ClientDao {
 	public ArrayList<Client> selectAccountClient(Client client){
 	System.out.println(client.toString());
 		if(client.getClient_company()!=null) {
-			System.out.println(1);
+			//System.out.println(1);
 		return (ArrayList)sqlSession.selectList("selectConditionList",client);
 		}else {
-			System.out.println(2);
+			//System.out.println(2);
 		return (ArrayList)sqlSession.selectList("selectAccountClient",client);
 		}
 	}

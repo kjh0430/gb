@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.crm.gb.client.model.dao.ClientDao;
 import com.crm.gb.client.model.vo.Client;
+import com.crm.gb.emp.model.vo.Emp;
 import com.crm.gb.order.model.dao.OrderDao;
 import com.crm.gb.order.model.vo.Order;
 
@@ -80,17 +81,17 @@ public class OrderServiceImpl implements OrderService{
 	}
 
 	@Override
-	public int selectOrderSum(int emp_no) {
-		return orderDao.selectOrderSum(emp_no);
+	public int selectOrderSum(Emp emp) {
+		return orderDao.selectOrderSum(emp);
 	}
 	
 	@Override
-	public int selectselectOrderAvg(int emp_no) {
-		return orderDao.selectselectOrderAvg(emp_no);
+	public int selectselectOrderAvg(Emp emp) {
+		return orderDao.selectselectOrderAvg(emp);
 	}
 	
 	@Override
-	public String selectGoalState(int emp_no) {
-		return orderDao.selectGoalState(emp_no);
+	public String selectGoalState(Emp emp) {
+		return orderDao.selectGoalState(emp);
 	}
 }

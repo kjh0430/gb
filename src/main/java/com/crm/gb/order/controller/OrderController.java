@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +22,7 @@ import com.crm.gb.client.controller.ClientController;
 import com.crm.gb.client.model.service.ClientService;
 import com.crm.gb.client.model.vo.Client;
 import com.crm.gb.contract.model.service.ContractService;
+import com.crm.gb.emp.model.vo.Emp;
 import com.crm.gb.order.model.service.OrderService;
 import com.crm.gb.order.model.vo.Order;
 import com.crm.gb.product.model.service.ProductService;
@@ -306,14 +306,16 @@ public class OrderController {
 	}
 	
 	@RequestMapping(value="mainCount.do", method=RequestMethod.POST)
-	public void mainCount(@RequestParam(value="emp_no") String empNo,Order order,HttpServletResponse response) throws IOException{
+	public void mainCount(@RequestParam(value="emp_no") String empNo,@RequestParam(value="job_no") String jobNo,Emp emp,Order order,HttpServletResponse response) throws IOException{
 		logger.info("main count 메소드 실행...");
-		
+		int job_no = Integer.parseInt(jobNo);
 		int emp_no = Integer.parseInt(empNo);
+		emp.setJob_no(job_no);
+		emp.setEmp_no(emp_no);
 		//System.out.println("emp_no : " + emp_no);
-		int order_sum = orderService.selectOrderSum(emp_no);
-		int order_avg = orderService.selectselectOrderAvg(emp_no);
-		String goal_state = orderService.selectGoalState(emp_no);
+		int order_sum = orderService.selectOrderSum(emp);
+		int order_avg = orderService.selectselectOrderAvg(emp);
+		String goal_state = orderService.selectGoalState(emp);
 		//JSONArray jarr = new JSONArray();
 		JSONObject job = new JSONObject();
 		job.put("order_sum", order_sum);
