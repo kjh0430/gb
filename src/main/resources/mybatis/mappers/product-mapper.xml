@@ -125,10 +125,9 @@
 	
 	<select id="productSearch2" parameterType="product" resultType="product">
 	<![CDATA[
-	select product_no, product_name from product
-	
+		select * from product
+		where product_name like '%'||#{product_name}||'%'
 	]]>
-	
 	</select>
 
 </mapper>
