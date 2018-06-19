@@ -1377,7 +1377,11 @@ $(function(){
 		var city = '${loginEmp.getCity()}';
 		var county = '${loginEmp.getCounty()}';
 		var village = '${loginEmp.getVillage()}';
-
+		if(city=="" || county=="" || village==""){//정보 없을때 본사날씨
+			city="서울";
+			county ="강남구";
+			village="역삼동"			
+		}
 		var headers = {};
 		headers["Accept"]="application/json";
 		headers["Content-Type"]="application/json; charset=UTF-8";
@@ -1390,7 +1394,7 @@ $(function(){
 			url:'https://api2.sktelecom.com/weather/current/hourly?version=1&callback=result',
 			async:false,
 			success : function(data){
-				console.log(data);
+				//console.log(data);
 				var todayDate = data["weather"]["hourly"][0]['timeRelease'];
 				var todayTemp = Math.round(data["weather"]["hourly"][0]['temperature']['tc']);
 				var todayMinTemp = Math.round(data["weather"]["hourly"][0]['temperature']['tmin']);
@@ -1439,8 +1443,6 @@ $(function(){
 	  getWeather();
 	});  
    
-	    
-		
 
 	</script>
    	
