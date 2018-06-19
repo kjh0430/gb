@@ -34,7 +34,7 @@ function searchCondition(){
 	
 	location.href="approvalListAdmin.do?emp_no="+emp_no+"&job_no="+job_no+"&emp_name="+emp_name
 
-	
+
 }
 
 
@@ -239,7 +239,9 @@ background-color:#2A3F54;
 												<th>no</th>
 												
 											</tr>
+											
 										</thead>
+										
 										<tbody>
 										
 										
@@ -262,11 +264,11 @@ background-color:#2A3F54;
 											</c:if>
 											
 											
-											<c:if test="${empty approval.emp_name}">
-											<h2>검색 결과가  없습니다.</h2>
-											</c:if>
-											<tr onclick="modalUp(this);">
 											
+											
+											<tr onclick="modalUp(this);">
+												
+												
 												<td>${approval.emp_name}</td>
 												<td>${approval_dept_name}</td>
 												
@@ -291,6 +293,9 @@ background-color:#2A3F54;
 											
 										</tbody>
 									</table>
+									<c:if test="${empty approvalListA}">
+									<h2 style="text-align:center">표시할 목록이 없습니다.</h2>
+									</c:if>
 			<ul class='pagination'>
 	        
 	      

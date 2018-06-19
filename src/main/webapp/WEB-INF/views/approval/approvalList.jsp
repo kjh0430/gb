@@ -200,6 +200,9 @@ background-color:#2A3F54;
 											</c:forEach>
 										<tbody>
 									</table>
+									<c:if test="${empty approvalListE}">
+									<h2 style="text-align:center">결재한 리스트가 없습니다.</h2>
+									</c:if>
 									
 									  <ul class='pagination'>
 	        

@@ -23,6 +23,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -32,6 +33,7 @@ import com.crm.gb.client.model.vo.Client;
 import com.crm.gb.client.model.vo.ClientFile;
 import com.crm.gb.dailywork.model.service.DailyworkService;
 import com.crm.gb.dailywork.model.vo.Dailywork;
+import com.crm.gb.emp.model.vo.Emp;
 
 /**
  * Handles requests for the application home page.
@@ -564,7 +566,57 @@ public class ClientController {
 		
 	}
 	
-	
+	 //email check   
+	   @RequestMapping(value="clientemailCheck.do" ,method=RequestMethod.POST)
+	   @ResponseBody
+
+	   public void checkEmail(Client client,HttpServletResponse  response) throws IOException {      
+	   
+	      Client checkEmail=clientService.selectClientEmail(client);      
+	   
+	      JSONObject send=new JSONObject();
+	      System.out.println(checkEmail);
+	      String check="Y";
+	      if(checkEmail==null) {
+	         check="N";
+	      }
+	      
+	      send.put("check",check);
+	      
+	      response.setContentType("application/json; charset=utf-8");   
+	   
+	      PrintWriter out=response.getWriter();
+	      out.append(send.toJSONString());
+	      out.flush();
+	      out.close();
+	   
+	   }
+	   
+		   //phone check   
+		   @RequestMapping(value="clientephoneCheck.do" ,method=RequestMethod.POST)
+		   @ResponseBody
+
+		   public void checkPhone(Client client,HttpServletResponse  response) throws IOException {      
+		   
+		      Client checkPhone=clientService.selectClientPhone(client);      
+		   
+		      JSONObject send=new JSONObject();
+		      
+		      String check="Y";
+		      if(checkPhone==null) {
+		         check="N";
+		      }
+		      
+		      send.put("check",check);
+		      
+		      response.setContentType("application/json; charset=utf-8");   
+		   
+		      PrintWriter out=response.getWriter();
+		      out.append(send.toJSONString());
+		      out.flush();
+		      out.close();
+		   
+		   }
 }
 
 
