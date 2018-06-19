@@ -742,6 +742,7 @@ function searchFunction2(){
    //사원 검색하기
    function searchEmp() {
 	if($('#searchName').val()!=""){
+		
       $.ajax({
          url : "searchEmp.do",
          type : "post",

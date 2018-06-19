@@ -663,7 +663,7 @@ $(function(){
     	
     	
     		}else{
-    			value="<h1>공지사항이 없습니다.</h1>"
+    			value="<h5>등록된 공지사항이 없습니다.</h5>"
     				$('#latest_notice').html(value); 
     		}
     		}
