@@ -165,16 +165,26 @@ function searchItem2() {
 								</c:if>
 								<!-- 검색 바 -->
 								<!-- <form action="searchProduct.do" onsubmit ="return searchItem();"> -->
-								<div class="x_content">
-									<select name="selectProductType" style="height:20px;">
-										<option val="1">제품명</option>
-									</select> 
-									<form onsubmit="return false;">
-										<input id="keykey" type="text" name="keyword" placeholder="제품명으로 검색합니다."/>
-										<!-- <input type ="button" id="button1" value="검색" /> -->
-										<button id="button1" onclick="searchItem2();">검색</button>
-										<!-- onclick="javascript:searchItem2()" -->
-									</form>
+								</select> 
+								<form onsubmit="return false;">
+								<div style="text-align:right">
+                           <input class="form-control" style="width:130px;display:inline-block;margin-right:3px;" type="text" placeholder="제품명 검색" id="keykey">
+                           <button id="button1" class="btn btn-dark" style="margin:0 0 3px 0" onclick="searchItem2();">검색</button>
+                           </div>
+                           </form>
+								
+								
+									<!-- <form onsubmit="return false;">
+										<input id="keykey" class="form-control" style="float:right" "width:130px;display:inline-block;margin-right:3px;" type="text" name="keyword" placeholder="제품명으로 검색합니다."/>
+										<input type ="button" id="button1" value="검색" />
+										<button id="button1" class="btn btn-dark" style="float:right" "margin:0 0 3px 0" onclick="searchItem2();">검색</button>
+										onclick="javascript:searchItem2()"
+									</form> -->
+									
+									
+									
+															
+									
 								</div>
 							<!-- 	</form> -->
 								<!-- 검색 바 종료 -->
