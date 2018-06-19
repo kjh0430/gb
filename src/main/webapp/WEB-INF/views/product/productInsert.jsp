@@ -82,7 +82,6 @@
 	}
 	
 	function checkInsert(){
-		alert($("#product_amount").val());
 		if($("#product_amount").val() == ""){
 			$("#product_amount").val("0");
 		}

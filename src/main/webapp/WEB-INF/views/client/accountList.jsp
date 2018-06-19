@@ -127,9 +127,9 @@ function list(page,word){
 									<table id="table_cl" class="table table-striped table-bordered table-responsive" style="min-width:650px;">
 										<thead>
 											<tr>
-												<th>고객명</th>
+												<th width="75">고객명</th>
 												<th>회사명</th>
-												<th>직 급</th>
+												<th width="70">직 급</th>
 												<th>이메일</th>
 												<th>연락처</th>
 												<th>주 소</th>

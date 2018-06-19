@@ -24,6 +24,7 @@ public interface ProductService {
 	public abstract int selectgetProduct(Product pro);
 	public abstract ArrayList<Product> selectproductList(Product pro);
 	public abstract ArrayList<Product> selectSearchProduct(Product product);
+	public abstract int deleteFile(ProductFile pf);
 	
 
 }

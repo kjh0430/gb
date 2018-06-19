@@ -386,6 +386,23 @@ public class ProductController {
 		out.flush();
 		out.close();
 	}
+	
+	@RequestMapping(value="deleteFile.do" ,method=RequestMethod.POST)
+	public void deleteFile(ProductFile pf,HttpServletResponse  response) throws IOException {		
+	
+		int result=productService.deleteFile(pf);	
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		if(result>0) {
+			out.append("OK");
+			out.flush();
+		}else {
+			out.append("FAIL");
+			out.flush();
+		}
+		out.close();		
+		
+	}
 }	
 
 
