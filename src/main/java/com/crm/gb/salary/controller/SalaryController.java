@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.crm.gb.emp.model.vo.Emp;
 import com.crm.gb.salary.model.service.SalaryService;
 import com.crm.gb.salary.model.vo.Salary;
 
@@ -32,11 +32,13 @@ public class SalaryController {
 	/** 급여관련 사원리스트 화면출력 */
 	@RequestMapping("empSalary.do")
 	public String empSalaryList(Salary salary, Model model,
-			@RequestParam(value="startPage", defaultValue="1") int startPage) {
+			@RequestParam(value="startPage", defaultValue="1") int startPage,
+			@RequestParam(value="emp_name", defaultValue="") String emp_name) {
 		logger.info("급여관련 사원리스트 실행");
 		
 		ArrayList<Salary> salaryList = salaryService.selectSalaryList();
 		
+			salary.setEmp_name(emp_name);
 			salary.setShowPage(10); //보여줄 페이지 수
 			salary.setTotalRow(salaryList.size());	// 총 회원 수
 			salary.setStart(startPage);	// 시작페이지
@@ -64,6 +66,61 @@ public class SalaryController {
 		model.addAttribute("end", salary.getEnd());
 		
 		return "emp/empSalary";
+	}
+	
+	/** 사원급여 리스트 검색 */
+	@RequestMapping(value="searchSalaryList.do", method=RequestMethod.POST)
+	public void searchSalaryList(Salary salary, Model model,
+			@RequestParam(value="startPage", defaultValue="1") int startPage,
+			@RequestParam(value="emp_name", defaultValue="") String emp_name,
+			HttpServletResponse response) throws IOException {
+		
+			ArrayList<Salary> salaryList = salaryService.selectSalaryList();
+			
+			salary.setEmp_name(emp_name);
+			salary.setShowPage(10); //보여줄 페이지 수
+			salary.setTotalRow(salaryList.size());	// 총 회원 수
+			salary.setStart(startPage);	// 시작페이지
+			
+			int showPage = salary.getShowPage();
+			int totalRow = salary.getTotalRow();
+			int start = (salary.getStart() - 1)*showPage+1;
+			int end = start+9;
+			int currentPage = 1;
+	
+			salary.setStartRow(start);	// 시작 열
+			salary.setEndRow(end);	// 끝 열
+			
+			if(totalRow%showPage != 0) {	// 끝페이지
+				salary.setEnd((totalRow/showPage)+1);
+			}else {
+				salary.setEnd(totalRow/showPage);
+			}
+		
+			ArrayList<Salary> list = salaryService.selectSalaryPageList(salary);
+			
+			JSONArray jarr = new JSONArray();
+				for(Salary s : list) {
+					JSONObject job = new JSONObject();
+					
+					job.put("emp_name", URLEncoder.encode(s.getEmp_name(), "utf-8"));
+					job.put("dept_name", URLEncoder.encode(s.getDept().getDept_name(), "utf-8"));
+					job.put("emp_phone", URLEncoder.encode(s.getEmp().getEmp_phone(), "utf-8"));
+					job.put("sal", s.getSal());
+					job.put("sal_date", URLEncoder.encode(s.getSal_date().toString(), "utf-8"));
+					job.put("emp_hiredate", URLEncoder.encode(s.getEmp().getEmp_hiredate().toString(), "utf-8"));
+					
+					jarr.add(job);
+				}
+				
+			JSONObject result = new JSONObject();
+				result.put("list", jarr);
+		
+			PrintWriter out = response.getWriter();	
+				out.print(result.toJSONString());
+				out.flush();
+				out.close();
+			
 	}
 	
 	/** 사원 급여명세서 */

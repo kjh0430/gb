@@ -59,6 +59,7 @@
 		                where e.dept_no = d.dept_no) em, salary sal
 		       		 where em.emp_no = sal.emp_no) ex)
 		    where rownum >= #{startRow} and rownum <= #{endRow}
+		    and emp_name like '%'||#{emp_name}||'%'
 		]]>
 	</select>
 	

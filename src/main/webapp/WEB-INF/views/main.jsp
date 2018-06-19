@@ -707,9 +707,6 @@ $(function(){
 			url : "countContract.do",
        		type: "post",
        		dataType: "json",
-       		data: {
-       			emp_no :  '${loginEmp.emp_no}'
-       		},
        		success:function(data){
        			
        			var objStr = JSON.stringify(data);

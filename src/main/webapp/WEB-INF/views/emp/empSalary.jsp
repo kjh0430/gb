@@ -88,6 +88,25 @@ function clientList(){
 
 </script>
 
+<script type="text/javascript">
+	$('#searchSalaryList').keyup(function() {
+		$.ajax({
+			url: "searchSalaryList.do",
+			type: "post",
+			dataType: "json",
+			data: {
+				emp_name: $('#searchSalaryList').val()
+			},
+			success: function(data) {
+				var obj = JSON.stringify(data);
+				var json = JSON.parse(obj);
+				
+			}
+			
+		});
+	});
+</script>
+
 </head>
 
 
@@ -199,8 +218,8 @@ function clientList(){
 								
 								<!-- 페이징 처리 -->
 								<div style="text-align:center;">
-									<c:forEach var="i" begin="${ start }" end="${ end }">
-										<a id="listNumber" href="empSalary.do?startPage=${ i }">[${ i }]</a>
+									<c:forEach var="i" begin="${ start }" end="${ end }" varStatus="num">
+										<a id="listNumber${ num.index }" href="empSalary.do?startPage=${ i }&emp_name=">[${ i }]</a>
 									</c:forEach>
 								</div>
 								
