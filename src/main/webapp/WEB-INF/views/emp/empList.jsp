@@ -121,7 +121,7 @@ function list(page){
 										<c:forEach items="${ empList }" var="empList">
 											<tr>
 												<td><a href="empDetail.do?emp_no=${ empList.emp_no }">${ empList.emp_no }</a></td>
-												<td>${ empList.emp_name }</td>
+												<td><a href="empDetail.do?emp_no=${ empList.emp_no }">${ empList.emp_name }</a></td>
 												<td>${ empList.emp_addr }</td>
 												<td>${ empList.emp_phone }</td>
 												<td>${ empList.emp_email }</td>
@@ -132,7 +132,7 @@ function list(page){
 									<div style="text-align:center;">
 									
 									 <c:if test="${curPage>1}">
-										<a class="page-link" href="empList.do?page=1">처음으로</a>
+										<a class="page-link" href="empList.do?page=1">처음</a>
 									</c:if> 
 									
 									 <c:if test="${curPage>1}">

@@ -399,7 +399,7 @@ $(function(){
 	       			values = "입력된 값이 없습니다.";
 	       			$(".to_do").html(values);
 	       			
-	       			values2 = '<li><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target=".bs-example-modal-lg" style="float:right;">등록</button></li>';
+	       			values2 = '<button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target=".bs-example-modal-lg" style="float:right;">등록</button>';
 	       			$(".todo_1").html(values2);
 	       			}
 	       		});

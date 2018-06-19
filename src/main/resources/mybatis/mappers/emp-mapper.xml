@@ -177,7 +177,7 @@
 	<!-- 사원목록 갯수 -->
 	<select id="selectListCount" parameterType="int" resultType="emp">
 	<![CDATA[
-	select count(*) as listCount from emp
+	select count(*) as listCount from emp where emp_delete='N'
 	]]>
 	</select>
 	
