@@ -75,6 +75,10 @@ public class SalaryController {
 			@RequestParam(value="emp_name", defaultValue="") String emp_name,
 			HttpServletResponse response) throws IOException {
 		
+			logger.info("사원급여 검색 실행");
+			
+			System.out.println("받아온 검색어: "+ emp_name);
+		
 			ArrayList<Salary> salaryList = salaryService.selectSalaryList();
 			
 			salary.setEmp_name(emp_name);
@@ -99,27 +103,33 @@ public class SalaryController {
 		
 			ArrayList<Salary> list = salaryService.selectSalaryPageList(salary);
 			
-			JSONArray jarr = new JSONArray();
-				for(Salary s : list) {
-					JSONObject job = new JSONObject();
-					
-					job.put("emp_name", URLEncoder.encode(s.getEmp_name(), "utf-8"));
-					job.put("dept_name", URLEncoder.encode(s.getDept().getDept_name(), "utf-8"));
-					job.put("emp_phone", URLEncoder.encode(s.getEmp().getEmp_phone(), "utf-8"));
-					job.put("sal", s.getSal());
-					job.put("sal_date", URLEncoder.encode(s.getSal_date().toString(), "utf-8"));
-					job.put("emp_hiredate", URLEncoder.encode(s.getEmp().getEmp_hiredate().toString(), "utf-8"));
-					
-					jarr.add(job);
-				}
-				
-			JSONObject result = new JSONObject();
-				result.put("list", jarr);
-		
-			PrintWriter out = response.getWriter();	
-				out.print(result.toJSONString());
-				out.flush();
-				out.close();
+			for(Salary s : list) {
+				System.out.println("검색한 이름결과 : "+s.getEmp_name());
+			}
+			
+//			JSONArray jarr = new JSONArray();
+//				for(Salary s : list) {
+//					JSONObject job = new JSONObject();
+//					
+//					job.put("emp_name", URLEncoder.encode(s.getEmp_name(), "utf-8"));
+//					job.put("dept_name", URLEncoder.encode(s.getDept().getDept_name(), "utf-8"));
+//					job.put("emp_phone", URLEncoder.encode(s.getEmp().getEmp_phone(), "utf-8"));
+//					job.put("sal", s.getSal());
+//					job.put("sal_date", URLEncoder.encode(s.getSal_date().toString(), "utf-8"));
+//					job.put("emp_hiredate", URLEncoder.encode(s.getEmp().getEmp_hiredate().toString(), "utf-8"));
+//					
+//					jarr.add(job);
+//					
+//					System.out.println("받아온 이름: "+s.getEmp_name());
+//				}
+//				
+//			JSONObject result = new JSONObject();
+//				result.put("list", jarr);
+//		
+//			PrintWriter out = response.getWriter();	
+//				out.print(result.toJSONString());
+//				out.flush();
+//				out.close();
 			
 	}
 	

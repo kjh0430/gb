@@ -1369,7 +1369,7 @@ $(function(){
 
 		
 
-	
+	/*
 	function getWeather(){
 		var city = '${loginEmp.getCity()}';
 		var county = '${loginEmp.getCounty()}';
@@ -1401,7 +1401,7 @@ $(function(){
 				var todayRain = data["weather"]["hourly"][0]['precipitation']['sinceOntime'];
 				var year = todayDate.substring(0,4);
 				var month = todayDate.substring(6,7);
-				var day = todayDate.substring(9,10);
+				var day = todayDate.substring(8,10);
 					$(".todayDate").append(year+"년 "+month+"월 "+day+"일" );						
 					$(".todayMinTemp").append(todayMinTemp);		
 					$(".todayMaxTemp").append(todayMaxTemp);		
@@ -1439,7 +1439,7 @@ $(function(){
    $(function(){
 	  getWeather();
 	});  
-   
+   */
 
 	</script>
    	
