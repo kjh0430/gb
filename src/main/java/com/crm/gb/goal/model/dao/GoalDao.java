@@ -37,5 +37,20 @@ public class GoalDao {
 		
 		return sqlSession.selectOne("Goal.selectCountGoal",goal);
 	}
+	public ArrayList<Goal> selectEmpCondition(Goal goal) {
+		
+		return (ArrayList)sqlSession.selectList("Goal.selectEmp",goal);
+	}
+
+	public ArrayList<Goal> selectEmpGoal(Goal goal) {
+	
+		return (ArrayList)sqlSession.selectList("Goal.selectEmpGoal",goal);
+	}
+
+	public ArrayList<Goal> selectEmpAll() {
+		
+		return (ArrayList)sqlSession.selectList("Goal.selectEmpAll");
+
+	}
 
 }

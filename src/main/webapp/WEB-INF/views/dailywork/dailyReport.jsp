@@ -32,7 +32,7 @@
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="Movemain.do" class="site_title"><i class="fa fa-google"></i>
+						<a href="mainView.do" class="site_title"><i class="fa fa-google"></i>
 							<span>GROUP BEAN</span></a>
 					</div>
 
@@ -50,7 +50,7 @@
 			<!-- /top navigation -->
 
 			<!-- page content -->
-			<div class="right_col" role="main">
+			<div class="right_col" role="main"  id="print-area">
 				<div class="">
 					<div class="page-title">
 						<div class="title_left">
@@ -110,7 +110,7 @@
 							</div>
 						</div>
 						<!-- row -->
-
+						
 					</div>
 
 				</div>
@@ -129,11 +129,11 @@
 	
 	<!-- Custom Theme Scripts -->
 	<script src="resources/build/js/custom.min.js"></script>
-	
+		
 	<!-- daum map script -->
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9847a2e4326a2ca39c99b754b2d4e80c&libraries=services"></script>
 		
-	<script type="text/javascript" src="resources/js/map.js?ver=9"></script>		
+	<script type="text/javascript" src="resources/js/map.js"></script>		
 	<script type="text/javascript">
 	var emp_no = ${loginEmp.emp_no};
 	$(function(){
@@ -144,9 +144,17 @@
 	});//onload
 
 	function selectDailyreport(){		
-		selectVisit(emp_no);	
-		selectOrder(emp_no);	
+		var date = $("#daily_date").val();
+		if(date != ""){
+			selectVisit(emp_no);	
+			selectOrder(emp_no);
+		}else{
+			alert("날짜를 선택해주세요.");				
+		}	
 	}
+	
+
+ 	
 	
 	
 	</script>

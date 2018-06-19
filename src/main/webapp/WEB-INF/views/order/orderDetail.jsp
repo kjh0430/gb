@@ -37,7 +37,7 @@
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="main.html" class="site_title"><i class="fa fa-google"></i>
+						<a href="mainView.do" class="site_title"><i class="fa fa-google"></i>
 							<span>GROUP BEAN</span></a>
 					</div>
 
@@ -51,73 +51,7 @@
 			</div>
 
 			<!-- top navigation -->
-			<div class="top_nav">
-				<div class="nav_menu">
-					<nav>
-						<div class="nav toggle">
-							<a id="menu_toggle"><i class="fa fa-bars"></i></a>
-						</div>
-
-						<ul class="nav navbar-nav navbar-right">
-							<li class=""><a href="javascript:;"
-								class="user-profile dropdown-toggle" data-toggle="dropdown"
-								aria-expanded="false"> <img src="images/img.jpg" alt="">${loginEmp.emp_name } <span class=" fa fa-angle-down"></span>
-							</a>
-								<ul class="dropdown-menu dropdown-usermenu pull-right">
-									<li><a href="javascript:;"> Profile</a></li>
-									<li><a href="javascript:;"> <span
-											class="badge bg-red pull-right">50%</span> <span>Settings</span>
-									</a></li>
-									<li><a href="javascript:;">Help</a></li>
-									<li><a href="login.html"><i
-											class="fa fa-sign-out pull-right"></i> Log Out</a></li>
-								</ul></li>
-
-							<li role="presentation" class="dropdown"><a
-								href="javascript:;" class="dropdown-toggle info-number"
-								data-toggle="dropdown" aria-expanded="false"> <i
-									class="fa fa-envelope-o"></i> <span class="badge bg-green">6</span>
-							</a>
-								<ul id="menu1" class="dropdown-menu list-unstyled msg_list"
-									role="menu">
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li>
-										<div class="text-center">
-											<a> <strong>See All Alerts</strong> <i
-												class="fa fa-angle-right"></i>
-											</a>
-										</div>
-									</li>
-								</ul></li>
-						</ul>
-					</nav>
-				</div>
-			</div>
-			<!-- /top navigation -->
-
+			<c:import url="../etc/topnav.jsp"></c:import>
 			<!-- page content -->
 			<div class="right_col" role="main">
 				<div class="">
@@ -159,31 +93,31 @@
 										<div class="form-group">
 											<label class="col-sm-3 control-label">거래처명</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
-												<input type="text" class="form-control" name="client_name" id="searchComName2" value="${clientInfo.client_company }">
+												<input type="text" class="form-control" name="client_name" id="searchComName2" value="${clientInfo.client_company }" readonly>
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="col-sm-3 control-label">거래처번호</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
-												<input type="text" class="form-control" name="client_no" id="clientNo" value="${clientInfo.client_no }">
+												<input type="text" class="form-control" name="client_no" id="clientNo" value="${clientInfo.client_no }" readonly>
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">담당자</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
-												<input type="text" class="form-control" id="searchEmpName" value="${clientInfo.emp_name}" name="emp_name">
+												<input type="text" class="form-control" id="searchEmpName" value="${clientInfo.emp_name}" name="emp_name" readonly>
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">전화번호</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
-												<input type="text" class="form-control" id="searchClientPhone" value="${clientInfo.client_phone }" name="client_phone">
+												<input type="text" class="form-control" id="searchClientPhone" value="${clientInfo.client_phone }" name="client_phone" readonly>
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">주소</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
-												<input type="text" class="form-control" id="searchClientAddr" value="${clientInfo.client_addr }" >
+												<input type="text" class="form-control" id="searchClientAddr" value="${clientInfo.client_addr }" readonly>
 											</div>
 										</div>
 										
@@ -264,6 +198,9 @@
 					 </form> 
 				</div>
 			</div>
+			
+			<c:import url="../etc/footer.jsp"></c:import>
+			
 		</div>
 	</div>
 

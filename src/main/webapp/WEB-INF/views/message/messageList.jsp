@@ -1040,7 +1040,7 @@ font-weight:900;
          <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
                <div class="navbar nav_title" style="border: 0;">
-                  <a href="main.html" class="site_title"><i class="fa fa-google"></i>
+                  <a href="mainView.do" class="site_title"><i class="fa fa-google"></i>
                      <span>GROUP BEAN</span></a>
                </div>
 
@@ -1478,10 +1478,15 @@ font-weight:900;
       src="resources/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
    <script
       src="resources/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+   
 
 
    <!-- Custom Theme Scripts -->
    <script src="resources/build/js/custom.min.js"></script>
+
+     
+   
+   
 
 </body>
 </html>

@@ -17,23 +17,7 @@
 <!-- Font Awesome -->
 <link href="resources/vendors/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet">
-<!-- NProgress -->
-<link href="resources/vendors/nprogress/nprogress.css" rel="stylesheet">
-<!-- iCheck -->
-<link href="resources/vendors/iCheck/skins/flat/green.css"
-	rel="stylesheet">
 
-<!-- bootstrap-progressbar -->
-<link
-	href="resources/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css"
-	rel="stylesheet">
-<!-- JQVMap -->
-<link href="resources/vendors/jqvmap/dist/jqvmap.min.css"
-	rel="stylesheet" />
-<!-- bootstrap-daterangepicker -->
-<link
-	href="resources/vendors/bootstrap-daterangepicker/daterangepicker.css"
-	rel="stylesheet">
 
 <!-- Custom Theme Style -->
 <link href="resources/build/css/custom.min.css" rel="stylesheet">
@@ -61,11 +45,16 @@ $(function(){
 			var objStr = JSON.stringify(obj);
 			var jsonl = JSON.parse(objStr);
 			
-			console.log(jsonl.emp_name);
-			console.log(obj.emp_name);
+			var mgrname = jsonl.emp_name;
 			
-			$('#style1_mgr').html('<input type="text" class="form-control" id="emp_mgr" name="emp_mgr" value="${jsonl.emp_name}" readonly>');
-			},
+			console.log("jsonl.emp_name : " + jsonl.emp_name);
+			console.log("mgrname : " + mgrname);
+			
+			$('#style1_mgr').html('<input type="text" class="form-control" id="emp_mgr2" name="emp_mgr2" value="" readonly>');
+			$('#emp_mgr2').val(mgrname);
+		
+		}
+		,
 			error: function(){
 				console.log("상사이름 가져오기 에러");
 				$('#style1_mgr').html('<input type="text" class="form-control" id="emp_mgr" name="emp_mgr" value="" readonly>');
@@ -95,7 +84,7 @@ function empDe(){
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="main.html" class="site_title"><i class="fa fa-google"></i>
+						<a href="mainView.do" class="site_title"><i class="fa fa-google"></i>
 							<span>GROUP BEAN</span></a>
 					</div>
 
@@ -290,10 +279,8 @@ function empDe(){
 								</div>
 							</div>
 						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+		
+	
 	</div>
 	</div>
 	<!-- /page content -->
@@ -306,12 +293,7 @@ function empDe(){
 	<script src="resources/vendors/jquery/dist/jquery.min.js"></script>
 	<!-- Bootstrap -->
 	<script src="resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-	<!-- FastClick -->
-	<script src="resources/vendors/fastclick/lib/fastclick.js"></script>
-	<!-- NProgress -->
-	<script src="resources/vendors/nprogress/nprogress.js"></script>
-	<!-- iCheck -->
-	<script src="resources/vendors/iCheck/icheck.min.js"></script>
+	
 	<!-- Datatables -->
 	<script
 		src="resources/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
@@ -337,9 +319,7 @@ function empDe(){
 		src="resources/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
 	<script
 		src="resources/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-	<script src="resources/vendors/jszip/dist/jszip.min.js"></script>
-	<script src="resources/vendors/pdfmake/build/pdfmake.min.js"></script>
-	<script src="resources/vendors/pdfmake/build/vfs_fonts.js"></script>
+
 
 	<!-- Custom Theme Scripts -->
 	<script src="resources/build/js/custom.min.js"></script>

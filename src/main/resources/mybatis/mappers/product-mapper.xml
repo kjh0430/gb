@@ -24,6 +24,13 @@
 		<result column="product_availability" property="product_availability"/>
 	</resultMap>
 	
+	<resultMap type="ProductFile" id="productFile">
+		<result column="product_file_no" property="product_file_no"/>
+		<result column="product_no" property="product_no"/>
+		<result column="product_original_file" property="product_original_file"/>
+		<result column="product_rename_file" property="product_rename_file"/>
+	</resultMap>
+	
 	<insert id="insertProduct" parameterType="Product" useGeneratedKeys="true" keyProperty="product_no">
 		<selectKey keyProperty="product_no" resultType="int" order="BEFORE">
 			select max(product_no)+1 from product
@@ -90,6 +97,38 @@
 			update product set product_delete = 'Y' where product_no = #{product_no}
 		]]>		
 	</update>
+	
+	<!-- 파일 이름 값 가지고오는 메소드 권성훈 -->
+	<select id="productDetailFile" parameterType="product" resultMap="productFile">
+		<![CDATA[
+		select * from PRODUCT_FILE
+		where PRODUCT_NO=#{product_no}
+		]]>
+	</select>
+	
 
+	<select id="productListA" parameterType="int" resultType="int">
+	<![CDATA[
+	select count(*) from PRODUCT
+		]]>
+	</select>
+	
+	<select id="productListC" parameterType="product" resultType="product">
+	<![CDATA[
+	select * from
+		(select rownum rnum, xx.*
+		  from (select ex.* from( select product_no, product_name, product_price, PRODUCT_AVAILABILITY from product p order by product_no desc) ex) xx)
+	where rnum >= #{startRow} and rnum <= #{endRow}
+		 
+	]]>
+	</select>
+	
+	<select id="productSearch2" parameterType="product" resultType="product">
+	<![CDATA[
+	select product_no, product_name from product
+	
+	]]>
+	
+	</select>
 
 </mapper>

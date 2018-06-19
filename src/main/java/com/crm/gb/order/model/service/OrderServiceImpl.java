@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.crm.gb.client.model.dao.ClientDao;
 import com.crm.gb.client.model.vo.Client;
+import com.crm.gb.emp.model.vo.Emp;
 import com.crm.gb.order.model.dao.OrderDao;
 import com.crm.gb.order.model.vo.Order;
 
@@ -63,8 +64,8 @@ public class OrderServiceImpl implements OrderService{
 	}
 	
 	@Override
-	public int orderListCount() {
-		return orderDao.orderListCount();
+	public int orderListCount(Order order) {
+		return orderDao.orderListCount(order);
 	}
 	
 	//주문리스트 중 제품별 판매량
@@ -79,5 +80,18 @@ public class OrderServiceImpl implements OrderService{
 		return orderDao.selectConditionListCount(order);
 	}
 
+	@Override
+	public int selectOrderSum(Emp emp) {
+		return orderDao.selectOrderSum(emp);
+	}
 	
+	@Override
+	public int selectselectOrderAvg(Emp emp) {
+		return orderDao.selectselectOrderAvg(emp);
+	}
+	
+	@Override
+	public String selectGoalState(Emp emp) {
+		return orderDao.selectGoalState(emp);
+	}
 }

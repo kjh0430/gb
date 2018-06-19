@@ -2,9 +2,7 @@ package com.crm.gb.order.model.service;
 
 import java.util.ArrayList;
 
-import org.springframework.stereotype.Service;
-
-import com.crm.gb.client.model.vo.Client;
+import com.crm.gb.emp.model.vo.Emp;
 import com.crm.gb.order.model.vo.Order;
 
 public interface OrderService {
@@ -23,10 +21,16 @@ public interface OrderService {
 	
 	public abstract ArrayList<Order> selectAllOrderList(Order order); //매출현황 전체 리스트
 	
-	public abstract int orderListCount(); // 주문 리스트 카운드
+	public abstract int orderListCount(Order order); // 주문 리스트 카운드
 
 	public abstract ArrayList<Order> productShare();
 
 	public abstract int selectConditionListCount(Order order); //조건 검색 시 행의 개수ㄴ
+	
+	public abstract int selectOrderSum(Emp emp); //이달의 매출현황
+	
+	public abstract int selectselectOrderAvg(Emp emp); //이달의 매출 평균 
+	
+	public abstract String selectGoalState(Emp emp); //목표달성 현황 
 	
 }

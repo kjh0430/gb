@@ -23,21 +23,23 @@
 
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
+	
+	
+	var idx = 1;
+	var amount = new Array(); //상품수량 변수 
+	var price = new Array(); //상품가격 변수 
+	var orderInfo = new Array(); 
+	var client_no;
+	var calcValue=new Array(); // 예상 결재 비용 배열 변수
+	var discount =  new Array(); //할인율 배열 
+	var c_discount; //해당 고객의 할인율 
 
 
-var idx = 1;
-var amount = new Array(); //상품수량 변수 
-var price = new Array(); //상품가격 변수 
-var orderInfo = new Array(); 
-var client_no;
-var calcValue=new Array(); // 예상 결재 비용 배열 변수
-var discount =  new Array(); //할인율 배열 
-var c_discount; //해당 고객의 할인율 
-
-
-	function searchCom(){	
+	function searchCom(){
+	
 		
 	if($('#searchComName').val()!=null && $('#searchComName').val()!="") {
+		
 		$.ajax({
 			url: "searchCom.do",
 			type : "post",
@@ -47,31 +49,38 @@ var c_discount; //해당 고객의 할인율
 				emp_no : '${loginEmp.emp_no}'
 			},
 			success : function(obj){
+				
 				var objStr = JSON.stringify(obj);
 				var jsonl = JSON.parse(objStr);
 				var value = "<table id='table_items' class='table table-striped table-bordered'>"
 				+"<tr><th>거래처번호</th><th>거래처명</th><th>전화번호</th><th>주소</th></tr>";
 				
-				for(var i in jsonl.list){
-					value += "<tr onclick='selectCom(this);'>"
-					+"<td>"+jsonl.list[i].client_no+"</td>"
-					+"<td>"+jsonl.list[i].client_company+"</td>"
-					+"<td>"+jsonl.list[i].client_phone+"</td>"
-					+"<td>"+jsonl.list[i].client_addr+"</td>"
-					+"</tr>";	
-					discount[i] = jsonl.list[i].contract_discount;
-				}
 				
-				value += "</table>";
-			//	alert("value : " + value);
-				$('#searchResult').html(value);
-			}
+				
+				
+					for(var i in jsonl.list){
+						value += "<tr onclick='selectCom(this);'>"
+						+"<td>"+jsonl.list[i].client_no+"</td>"
+						+"<td>"+jsonl.list[i].client_company+"</td>"
+						+"<td>"+jsonl.list[i].client_phone+"</td>"
+						+"<td>"+jsonl.list[i].client_addr+"</td>"
+						+"</tr>";	
+						discount[i] = jsonl.list[i].contract_discount;
+					}
+					
+					value += "</table>";
+				//	alert("value : " + value);
+					$('#searchResult').html(value);
+					
+					
+				}
 			
-		});//ajax complete
-	}else{
-		alert("검색값을  입력해줏ㅇ5")
+			});//ajax complete
+		}else{
+			alert("검색어를 입력해주세요.");
+		}
 	}
-	}
+
 	
 	function selectCom(obj){
 		$('.order_body').html("");
@@ -100,36 +109,40 @@ var c_discount; //해당 고객의 할인율
 
 	//상품 검색용.
 	function searchProduct(){
-		$.ajax({
-			url: "searchProduct.do",
-			type : "post",
-			dataType : "json",
-			data : {
-				searchProductName : $('#searchProductName').val(),
-				client_no : client_no
-			},
-			success : function(obj){
-				
-				var objStr = JSON.stringify(obj);
-				var json = JSON.parse(objStr);
-				var value = "<table id='table_items' class='table table-striped table-bordered'>"
-				+"<tr><th>제품번호</th><th>제품명</th><th>단가</th></tr>";
-				
-				for(var i in json.plist){
-					this.row = i;
-					value += "<tr onclick='selectProduct(this);'>"
-					+"<td>"+json.plist[i].product_no+"</td>"
-					+"<td>"+json.plist[i].product_name+"</td>"
-					+"<td>"+json.plist[i].product_price+"</td>"
-					+"</tr>";
+		if($('#searchProductName').val()!=null && $('#searchProductName').val()!="") {
+			$.ajax({
+				url: "searchProduct.do",
+				type : "post",
+				dataType : "json",
+				data : {
+					searchProductName : $('#searchProductName').val(),
+					client_no : client_no
+				},
+				success : function(obj){
 					
+					var objStr = JSON.stringify(obj);
+					var json = JSON.parse(objStr);
+					var value = "<table id='table_items' class='table table-striped table-bordered'>"
+					+"<tr><th>제품번호</th><th>제품명</th><th>단가</th></tr>";
+					
+					for(var i in json.plist){
+						this.row = i;
+						value += "<tr onclick='selectProduct(this);'>"
+						+"<td>"+json.plist[i].product_no+"</td>"
+						+"<td>"+json.plist[i].product_name+"</td>"
+						+"<td>"+json.plist[i].product_price+"</td>"
+						+"</tr>";
+						
+					}
+					
+					
+					value += "</table>";
+					$('#searchProductList').html(value);
 				}
-				
-				
-				value += "</table>";
-				$('#searchProductList').html(value);
-			}
-		});//ajax complete
+			});//ajax complete
+		}else{
+			alert("검색할 제품명을 입력해주세요");
+		}
 	}
 	
 	function selectProduct(obj){
@@ -259,6 +272,13 @@ var c_discount; //해당 고객의 할인율
 		alert("발주가 완료되었습니다!");
 	}
 	
+	 $('#searchComName').keydown(function() {
+	    if (event.keyCode != 13) {
+	        event.preventDefault();
+	    }
+	}); 
+		
+	
 	
 </script>
 <style type="text/css">
@@ -279,7 +299,7 @@ var c_discount; //해당 고객의 할인율
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="main.html" class="site_title"><i class="fa fa-google"></i>
+						<a href="mainView.do" class="site_title"><i class="fa fa-google"></i>
 							<span>GROUP BEAN</span></a>
 					</div>
 
@@ -293,71 +313,7 @@ var c_discount; //해당 고객의 할인율
 			</div>
 
 			<!-- top navigation -->
-			<div class="top_nav">
-				<div class="nav_menu">
-					<nav>
-						<div class="nav toggle">
-							<a id="menu_toggle"><i class="fa fa-bars"></i></a>
-						</div>
-
-						<ul class="nav navbar-nav navbar-right">
-							<li class=""><a href="javascript:;"
-								class="user-profile dropdown-toggle" data-toggle="dropdown"
-								aria-expanded="false"> <img src="images/img.jpg" alt="">${loginEmp.emp_name } <span class=" fa fa-angle-down"></span>
-							</a>
-								<ul class="dropdown-menu dropdown-usermenu pull-right">
-									<li><a href="javascript:;"> Profile</a></li>
-									<li><a href="javascript:;"> <span
-											class="badge bg-red pull-right">50%</span> <span>Settings</span>
-									</a></li>
-									<li><a href="javascript:;">Help</a></li>
-									<li><a href="login.html"><i
-											class="fa fa-sign-out pull-right"></i> Log Out</a></li>
-								</ul></li>
-
-							<li role="presentation" class="dropdown"><a
-								href="javascript:;" class="dropdown-toggle info-number"
-								data-toggle="dropdown" aria-expanded="false"> <i
-									class="fa fa-envelope-o"></i> <span class="badge bg-green">6</span>
-							</a>
-								<ul id="menu1" class="dropdown-menu list-unstyled msg_list"
-									role="menu">
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li>
-										<div class="text-center">
-											<a> <strong>See All Alerts</strong> <i
-												class="fa fa-angle-right"></i>
-											</a>
-										</div>
-									</li>
-								</ul></li>
-						</ul>
-					</nav>
-				</div>
-			</div>
+			<%@ include file="../etc/topnav.jsp"%>
 			<!-- /top navigation -->
 
 			<!-- page content -->
@@ -381,6 +337,7 @@ var c_discount; //해당 고객의 할인율
 					
 					 <form id="formTag" class="form-horizontal form-label-left input_mask" action="insertorder.do" method="post">
 					<input type="hidden" name="emp_no" value="${loginEmp.emp_no }"/>
+					<input type="hidden" name="anything" value=""/>
 										
 					<div class="row">
 						<div class="col-md-12 col-sm-12 col-xs-12">
@@ -411,7 +368,7 @@ var c_discount; //해당 고객의 할인율
 															<label class="col-sm-2 control-label">거래처명</label>
 																<div class="col-sm-10">	
 																	<div class="input-group">
-																		<input type="text" class="form-control" placeholder="상호명을 입력해주세요." id="searchComName" name="client_company"> <span class="input-group-btn">
+																		<input type="text" class="form-control" placeholder="상호명을 입력해주세요." id="searchComName" name="client_company" > <span class="input-group-btn">
 																			
 																			
 																			<button type="button" class="btn btn-primary" onclick="searchCom();">
@@ -600,7 +557,6 @@ var c_discount; //해당 고객의 할인율
 								
 									<div class="ln_solid"></div>
 									<div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-3" style="margin:0px; text-align:center;">											
-											<button type="submit" class="btn btn-success" onclick="noticeAlert();">주문</button>
 									</div>
 								</div>
 							</div>
@@ -609,8 +565,12 @@ var c_discount; //해당 고객의 할인율
 					
 					</div>
 					 </form> 
+					 
 				</div>
 			</div>
+			<!-- footer content -->
+			<%@ include file="../etc/footer.jsp"%>
+			<!-- /footer content -->
 		</div>
 	</div>
 

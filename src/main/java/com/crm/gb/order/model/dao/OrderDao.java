@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.crm.gb.client.model.vo.Client;
+import com.crm.gb.emp.model.vo.Emp;
 import com.crm.gb.order.model.vo.Order;
 
 @Repository("orderDao")
@@ -45,18 +46,31 @@ public class OrderDao {
 	}
 	
 	//orderList count
-	public int orderListCount() {
-		return sqlSession.selectOne("orderListCount");
+	public int orderListCount(Order order) {
+		return sqlSession.selectOne("orderListCount",order);
 	}
 
 	public ArrayList<Order> productShare() {
 		return (ArrayList)sqlSession.selectList("productShare");
 	}
 
-	
-
 	public int selectConditionListCount(Order order) {
 		
 		return sqlSession.selectOne("conditionListCount",order);
+	}
+	
+	//이달의 매출현황
+	public int selectOrderSum(Emp emp) {
+		return sqlSession.selectOne("selectOrderSum",emp);
+	}
+	
+	//이달의 평균매출
+	public int selectselectOrderAvg(Emp emp) {
+		return sqlSession.selectOne("selectOrderAvg",emp);
+	}
+	
+	//목표달성현황 
+	public String selectGoalState(Emp emp) {
+		return sqlSession.selectOne("selectGoalState",emp);
 	}
 }

@@ -22,6 +22,7 @@ import com.crm.gb.client.controller.ClientController;
 import com.crm.gb.client.model.service.ClientService;
 import com.crm.gb.client.model.vo.Client;
 import com.crm.gb.contract.model.service.ContractService;
+import com.crm.gb.emp.model.vo.Emp;
 import com.crm.gb.order.model.service.OrderService;
 import com.crm.gb.order.model.vo.Order;
 import com.crm.gb.product.model.service.ProductService;
@@ -173,7 +174,7 @@ public class OrderController {
 	
 	//매출현황 페이지 메소드 
 		@RequestMapping(value="orderList.do")
-		public String orderListPage(Model model, Order order, @RequestParam(value="page") int page){
+		public String orderListPage(@RequestParam(value="client_company") String client_company, Model model, Order order, @RequestParam(value="page") int page){
 			
 			logger.info("매출현황 메소드 run...");
 			//int emp_no = Integer.parseInt(empNo);
@@ -183,26 +184,16 @@ public class OrderController {
 			//한 페이지당 출력할 목록갯수 지정
 			int pageSize=10;
 			int pageGroupSize=5;		
-			
-//			System.out.println("page="+page);
-//			System.out.println("pageSize="+pageSize);
-//			System.out.println("currentPage="+currentPage);
-			
-			
-			//조건 검색
-			if(order.getClient_company()!=null  && order.getClient_company()!="") {
-			int listCount=orderService.selectConditionListCount(order);
-			System.out.println("listCount"+listCount);
-			
+			String searchCom = client_company;
+			if(searchCom.equals("null") || searchCom==null) {
+				searchCom = null;
 			}
-			
-			
-			
-			
-			
-			int listCount_1 = orderService.orderListCount();
+			//System.out.println("searchCom 1: "+searchCom );
+			order.setSearchCom(searchCom);
+			//System.out.println("order : " + order);
+			int listCount_1 = orderService.orderListCount(order);
 			//int listCount_2 = listCount_1.getOrder_list_count();
-			System.out.println("listCount : " + listCount_1);
+			//System.out.println("listCount : " + listCount_1);
 			
 			//페이지수 계산 
 			int maxPage=(int)((double)listCount_1/pageSize+0.9);				
@@ -227,14 +218,10 @@ public class OrderController {
 			if(maxPage<blockEnd)
 				blockEnd=maxPage;
 			
-			//int startPage=(((int)((double)currentPage/pageSize+0.9))-1)*pageSize+1;
 			int startPage=(currentPage-1)*pageSize+1;
 			int endPage=startPage+pageSize-1;
 			
-//			System.out.println("startPage 시작페이지 = "+startPage);//			
-//			System.out.println("endPage 마지막 페이지 = "+endPage);//			
-//			System.out.println("maxPage 페이지수 계산 = "+maxPage);//			
-//			System.out.println("게시판 갯수 숫자 = "+listCount_1);			
+//				
 			order.setStartPage(startPage);
 			order.setEndPage(endPage);
 			
@@ -250,12 +237,12 @@ public class OrderController {
 			model.addAttribute("endPage",endPage);
 			model.addAttribute("maxPage",maxPage);
 			model.addAttribute("blockBegin",blockBegin);
-			model.addAttribute("blockEnd",blockEnd);
+			model.addAttribute("blockEnd",blockEnd); 
 			model.addAttribute("curBlock",curBlock);
 			model.addAttribute("totBlock",totBlock);
 			model.addAttribute("prevBlock",prevBlock);
 			model.addAttribute("nextBlock",nextBlock);
-		
+			model.addAttribute("searchCom",searchCom);
 			return "order/orderList";
 		}
 		
@@ -316,6 +303,33 @@ public class OrderController {
 		out.flush();
 		out.close();
 	
+	}
+	
+	@RequestMapping(value="mainCount.do", method=RequestMethod.POST)
+	public void mainCount(@RequestParam(value="emp_no") String empNo,@RequestParam(value="job_no") String jobNo,Emp emp,Order order,HttpServletResponse response) throws IOException{
+		logger.info("main count 메소드 실행...");
+		int job_no = Integer.parseInt(jobNo);
+		int emp_no = Integer.parseInt(empNo);
+		emp.setJob_no(job_no);
+		emp.setEmp_no(emp_no);
+		//System.out.println("emp_no : " + emp_no);
+		int order_sum = orderService.selectOrderSum(emp);
+		int order_avg = orderService.selectselectOrderAvg(emp);
+		String goal_state = orderService.selectGoalState(emp);
+		//JSONArray jarr = new JSONArray();
+		JSONObject job = new JSONObject();
+		job.put("order_sum", order_sum);
+		job.put("order_avg", order_avg);
+		job.put("goal_state", goal_state);
+		//jarr.add(job);
+		//System.out.println("jarr : " + jarr.toString());
+		
+		response.setContentType("application/json; charset=utf-8");
+		PrintWriter out = response.getWriter();
+	
+		out.println(job.toJSONString());
+		out.flush();
+		out.close();
 	}
 	
 	

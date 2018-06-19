@@ -6,6 +6,7 @@
 <mapper namespace="TodoList">
 
 	<resultMap type="TodoList" id="resultTodoList">
+		<result column="todolist_no" property="todolist_no" />
 		<result column="emp_no" property="emp_no" />
 		<result column="do1" property="do1" />
 		<result column="check1" property="check1" />
@@ -24,7 +25,7 @@
 	<insert id="todolistInsert" parameterType="TodoList">
 	<![CDATA[
 		insert into todolist
-		values (#{emp_no}, #{todo1, jdbcType = VARCHAR}, default, #{todo2, jdbcType = VARCHAR}, default,
+		values ((select max(todolist_no)+1 from todolist), #{emp_no}, #{todo1, jdbcType = VARCHAR}, default, #{todo2, jdbcType = VARCHAR}, default,
 		#{todo3, jdbcType = VARCHAR}, default, #{todo4, jdbcType = VARCHAR}, default, #{todo5, jdbcType = VARCHAR}, default, sysdate)
 	]]>
 	</insert>
@@ -35,5 +36,11 @@
 		select * from todolist where emp_no=#{emp_no} and to_char(todo_date,'yyyy-mm-dd') = to_char(sysdate,'yyyy-mm-dd')
 	]]>
 	</select>
+	
+	<update id="todolistUpdate" parameterType="TodoList">
+	<![CDATA[
+		update todolist set check1=#{check1}, check2=#{check2}, check3=#{check3}, check4=#{check4}, check5=#{check5} where emp_no=#{emp_no} and to_char(todo_date,'yyyy-mm-dd') = to_char(sysdate,'yyyy-mm-dd')
+	]]>
+	</update>
 
 </mapper>

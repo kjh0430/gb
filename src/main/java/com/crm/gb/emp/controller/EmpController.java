@@ -2,7 +2,6 @@ package com.crm.gb.emp.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletResponse;
@@ -12,7 +11,6 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
-
+import com.crm.gb.contract.model.service.ContractService;
 import com.crm.gb.emp.exception.EmpLoginFailException;
 import com.crm.gb.emp.model.service.EmpService;
 import com.crm.gb.emp.model.vo.Emp;
@@ -37,6 +35,9 @@ public class EmpController {
    @Autowired
    private EmpService empService;
 
+   @Autowired
+   private ContractService contractService;
+   
    /* 일반 사원 테이블 추가부분 */
    @Autowired
    private BCryptPasswordEncoder pwdEncoder;
@@ -71,12 +72,6 @@ public class EmpController {
    public String mainView() {
       return "main";
    }
-   
-   /** 사원급여화면 *//*
-   @RequestMapping("empSalary.do")
-   public String empSalaryView() {
-      return "emp/empSalary";
-   }*/
    
    /** 로그인 정보확인 컨트롤러 */
    @RequestMapping(value="login.do", method=RequestMethod.POST)
@@ -147,11 +142,71 @@ public class EmpController {
    
    /*사원 목록*/
    @RequestMapping(value = "empList.do")
-   public String empList(Emp emp, Model model) {
+   public String empList(Emp emp, Model model, @RequestParam(value="page") int page) {
       logger.info("사원 목록 실행");
-      ArrayList<Emp> empList = empService.selectEmpList();
-      System.out.println("empList : " + empList);
+      
+      int currentPage=page;
+      int listSize = 10;
+      int pageSize = 5;
+      
+      Emp listCount = empService.selectListCount();
+      int listCount2 = listCount.getListCount();
+      
+      int maxPage = (int)((double)listCount2 / listSize + 0.9);
+      
+      int curPage = (currentPage-1) / pageSize + 1;
+	  int totalPage = (int)Math.ceil(maxPage*1.0) / pageSize+1;
+	  
+	  int beginPage = (curPage-1) * pageSize + 1;
+	  int finalPage = beginPage + pageSize - 1;
+	  
+	  int prevPage = (curPage==1)?1:(curPage-1)*pageSize;
+	  int nextPage = curPage>totalPage?(curPage*pageSize):(curPage*pageSize)+1;
+		
+	  if(nextPage>=totalPage) {
+		nextPage = totalPage;
+	  }		
+	  
+	  if(maxPage < finalPage) {
+		finalPage = maxPage;
+	  }		
+		
+	  int startPage=(currentPage-1)*listSize+1;
+	  int endPage=startPage+listSize-1;
+	  
+	  emp.setStartPage(startPage);
+	  emp.setEndPage(endPage);
+	  
+	  System.out.println("listCount : " + listCount2);
+	  System.out.println("currentPage : " + currentPage);
+	  System.out.println("listSize : " + listSize);
+	  System.out.println("pageSize : " + pageSize);
+	  System.out.println("maxPage : " + maxPage);
+	  System.out.println("curPage : " + curPage);
+	  System.out.println("totalPage : " + totalPage);
+	  System.out.println("beginPage : " + beginPage);
+	  System.out.println("finalPage : " + finalPage);
+	  System.out.println("prevPage : " + prevPage);
+	  System.out.println("nextPage : " + nextPage);
+	  System.out.println("startPage : " + startPage);
+	  System.out.println("endPage : " + endPage);
+      
+      ArrayList<Emp> empList = empService.selectEmpList(emp);
       model.addAttribute("empList", empList);
+      model.addAttribute("listCount", listCount2);
+      model.addAttribute("currentPage", currentPage);
+      model.addAttribute("listSize", listSize);
+      model.addAttribute("pageSize", pageSize);
+      model.addAttribute("maxPage", maxPage);
+      model.addAttribute("curPage", curPage);
+      model.addAttribute("totalPage", totalPage);
+      model.addAttribute("beginPage", beginPage);
+      model.addAttribute("finalPage", finalPage);
+      model.addAttribute("prevPage", prevPage);
+      model.addAttribute("nextPage", nextPage);
+      model.addAttribute("startPage", startPage);
+      model.addAttribute("endPage", endPage);      
+      
       return "emp/empList";
    }
    
@@ -184,11 +239,6 @@ public class EmpController {
       
       int result = empService.insertEmp(emp);
       
-      /*ArrayList<Emp> empList = empService.selectEmpList();
-      model.addAttribute("empList", empList);
-      
-      return "emp/empList";*/
-      
       System.out.println("emp : " + emp);
       System.out.println("emp_no : " + emp.getEmp_no());
       System.out.println("emp_name : " + emp.getEmp_name());
@@ -201,9 +251,9 @@ public class EmpController {
    }
    
    /*사원 정보 수정*/
-   @DateTimeFormat(pattern="yyyy-MM-dd")
-   @RequestMapping(value="empupdate.do")
-   public String updateEmp(Emp emp, Model model) {
+   @RequestMapping(value="empupdate.do", method = RequestMethod.POST)
+   @ResponseBody
+   public String updateEmp(Emp emp, Model model, HttpServletResponse response) {
       
       logger.info("emp update 실행");
       
@@ -213,10 +263,12 @@ public class EmpController {
       emp.setEmp_pwd(encPassword);
       
       int result = empService.updateEmp(emp);
-      ArrayList<Emp> empList = empService.selectEmpList();
-      model.addAttribute("empList", empList);
       
-      return "emp/empList";
+      JSONObject job = new JSONObject();
+      job.put("emp_name", emp.getEmp_name());
+
+      return job.toJSONString();      
+      
    }
    
    /*사원 삭제여부 수정*/
@@ -229,8 +281,68 @@ public class EmpController {
       int emp_no = (Integer.parseInt(emp_num));
       
       int result = empService.updateEmpDelete(emp_no);
-      ArrayList<Emp> empList = empService.selectEmpList();
+      
+      int currentPage=1;
+      int listSize = 10;
+      int pageSize = 5;
+      
+      Emp listCount = empService.selectListCount();
+      int listCount2 = listCount.getListCount();
+      
+      int maxPage = (int)((double)listCount2 / listSize + 0.9);
+      
+      int curPage = (currentPage-1) / pageSize + 1;
+	  int totalPage = (int)Math.ceil(maxPage*1.0) / pageSize+1;
+	  
+	  int beginPage = (curPage-1) * pageSize + 1;
+	  int finalPage = beginPage + pageSize - 1;
+	  
+	  int prevPage = (curPage==1)?1:(curPage-1)*pageSize;
+	  int nextPage = curPage>totalPage?(curPage*pageSize):(curPage*pageSize)+1;
+		
+	  if(nextPage>=totalPage) {
+		nextPage = totalPage;
+	  }		
+	  
+	  if(maxPage < finalPage) {
+		finalPage = maxPage;
+	  }		
+		
+	  int startPage=(currentPage-1)*listSize+1;
+	  int endPage=startPage+listSize-1;
+	  
+	  emp.setStartPage(startPage);
+	  emp.setEndPage(endPage);
+	  
+	  System.out.println("listCount : " + listCount2);
+	  System.out.println("currentPage : " + currentPage);
+	  System.out.println("listSize : " + listSize);
+	  System.out.println("pageSize : " + pageSize);
+	  System.out.println("maxPage : " + maxPage);
+	  System.out.println("curPage : " + curPage);
+	  System.out.println("totalPage : " + totalPage);
+	  System.out.println("beginPage : " + beginPage);
+	  System.out.println("finalPage : " + finalPage);
+	  System.out.println("prevPage : " + prevPage);
+	  System.out.println("nextPage : " + nextPage);
+	  System.out.println("startPage : " + startPage);
+	  System.out.println("endPage : " + endPage);
+      
+      ArrayList<Emp> empList = empService.selectEmpList(emp);
       model.addAttribute("empList", empList);
+      model.addAttribute("listCount", listCount2);
+      model.addAttribute("currentPage", currentPage);
+      model.addAttribute("listSize", listSize);
+      model.addAttribute("pageSize", pageSize);
+      model.addAttribute("maxPage", maxPage);
+      model.addAttribute("curPage", curPage);
+      model.addAttribute("totalPage", totalPage);
+      model.addAttribute("beginPage", beginPage);
+      model.addAttribute("finalPage", finalPage);
+      model.addAttribute("prevPage", prevPage);
+      model.addAttribute("nextPage", nextPage);
+      model.addAttribute("startPage", startPage);
+      model.addAttribute("endPage", endPage);    
       
       return "emp/empList";
    }
@@ -262,8 +374,6 @@ public class EmpController {
       out.flush();
       out.close();
       
-     
-         
    }
    
    /*이메일 중복검사*/
@@ -293,37 +403,6 @@ public class EmpController {
       out.flush();
       out.close();
       
-   }
-   
-   /*사원번호 중복검사*/
-   @RequestMapping(value="checkEmpNo.do", method=RequestMethod.POST)
-   @ResponseBody
-   public String selectCheckEmpNo(@RequestParam(value="emp_no") String emp_num, HttpServletResponse response) throws IOException{
-      
-      logger.info("selectCheckEmpNo 실행");
-      int emp_no = (Integer.parseInt(emp_num));
-      
-      System.out.println("연락처 번호 : "+emp_no);
-      
-      
-      Emp checkEmpNo = empService.selectCheckEmpNo(emp_no);
-      
-      if(checkEmpNo != null) {      
-         
-      JSONObject job = new JSONObject();
-      job.put("emp_no", emp_no);
-      
-      System.out.println("checkEmpNo 값 있음");
-      System.out.println("emp : " + checkEmpNo);
-      System.out.println("emp_no : " + emp_no);
-
-      return job.toJSONString();
-      
-      }else {
-         System.out.println("checkEmpNo null");
-         return null;
-      }
-         
    }
    
    /*상사번호로 이름 가져오기*/
@@ -360,18 +439,28 @@ public class EmpController {
          
    }
    
+   /*상사목록 조회*/
    @RequestMapping(value="selectMgrList.do", method=RequestMethod.POST)
    @ResponseBody
-   public void selectMgrList(HttpServletResponse response) throws IOException{
+   public void selectMgrList(Emp emp, @RequestParam(value="job_no2") String job_no2, HttpServletResponse response) throws IOException{
       logger.info("selectMgrList 실행");
       
-      ArrayList<Emp> selectMgrList = empService.selectEmpList();
+      int job_no = (Integer.parseInt(job_no2))+1;
+      System.out.println("job_no : " + job_no);
+      
+      emp.setJob_no(job_no);
+      System.out.println("emp.getJob_no : " + emp.getJob_no());
+      
+      ArrayList<Emp> selectMgrList = empService.selectMgrList(emp);
       JSONArray jarr = new JSONArray();
       
-      for(Emp emp : selectMgrList) {
+      System.out.println("selectMgrList : " + selectMgrList);
+      
+      for(Emp e : selectMgrList) {
          JSONObject jsonobject = new JSONObject();
-         jsonobject.put("emp_no", emp.getEmp_no());
-         jsonobject.put("emp_name", emp.getEmp_name());
+         jsonobject.put("emp_no", e.getEmp_no());
+         jsonobject.put("emp_name", e.getEmp_name());
+         jsonobject.put("job_no", e.getJob_no());
          jarr.add(jsonobject);
       }
       
@@ -386,6 +475,7 @@ public class EmpController {
       out.close();
       
    }
+   
    //마이 페이지 정보 가져오기
    @RequestMapping(value="getMyInfo.do" ,method=RequestMethod.POST)
    @ResponseBody
@@ -428,8 +518,8 @@ public class EmpController {
       out.close();
    
    } 
-   //email check
    
+   //email check   
    @RequestMapping(value="emailCheck.do" ,method=RequestMethod.POST)
    @ResponseBody
 
@@ -455,8 +545,7 @@ public class EmpController {
    
    }
    
-      //phone number check
-
+   //phone number check
    @RequestMapping(value="checkPhoneck.do" ,method=RequestMethod.POST)
    @ResponseBody
    public void checkPhonedupl(Emp emp,HttpServletResponse  response) throws IOException {      
@@ -483,7 +572,8 @@ public class EmpController {
       out.close();
    
    }
-      //수정한 값 집어넣기
+   
+   //수정한 값 집어넣기
    @RequestMapping(value="modifyInfo.do",method=RequestMethod.POST)
    public String updateEmpDelete(Emp emp) {
       
@@ -493,11 +583,11 @@ public class EmpController {
    }
 
    
-      @RequestMapping(value="updatePassword.do",method=RequestMethod.POST)
-      public String updatePassword(Emp emp) {
+   @RequestMapping(value="updatePassword.do",method=RequestMethod.POST)
+   public String updatePassword(Emp emp) {
       
-      String pwd =pwdEncoder.encode(emp.getEmp_pwd());
-      emp.setEmp_pwd(pwd);
+   String pwd =pwdEncoder.encode(emp.getEmp_pwd());
+   emp.setEmp_pwd(pwd);
       
       int result=empService.updatePassword(emp);   
       

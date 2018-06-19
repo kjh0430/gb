@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.crm.gb.contract.model.dao.ContractDao;
 import com.crm.gb.contract.model.vo.Contract;
+import com.crm.gb.contract.model.vo.ContractSearchList;
 
 @Service("contractService")
 public class ContractServiceImpl implements ContractService {
@@ -18,6 +19,19 @@ public class ContractServiceImpl implements ContractService {
 	@Override
 	public ArrayList<Contract> selectAllList(int emp_no) {
 		return contractDao.selectAllList(emp_no);
+	}
+	
+	/** 계약된 고객수 */
+	@Override
+	public int selectCountContract(int emp_no) {
+		// TODO Auto-generated method stub
+		return contractDao.selectCountContract(emp_no);
+	}
+	
+	/** 계약리스트 검색 */
+	@Override
+	public ArrayList<Contract> selectContractList(ContractSearchList contractSearch) {
+		return contractDao.selectContractList(contractSearch);
 	}
 	
 	/** 페이지 처리 계약리스트 조회 */

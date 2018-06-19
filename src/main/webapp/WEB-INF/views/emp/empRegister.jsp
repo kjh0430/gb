@@ -54,6 +54,17 @@
 
 $(function(){
 	
+
+
+/* if("${loginEmp==null}"){
+	location.href="view.do";
+} */
+	
+
+
+
+	
+	
 var allCheck=false;
 
 $('#emp_phone').blur(function(){
@@ -120,13 +131,18 @@ $('#emp_email').blur(function(){
 
 });
 
+$('#job_no').blur(function(){
+	console.log("job_no : " + $('#job_no').val());
+	if($('#job_no').val()==3){
+		$('#emp_mgr').val(0);
+	}
+});
+
 	
 });
 
 function Regiemp(){	
-	
-	var emp_num = 0;
-	
+		
 	var emp_name = $('#emp_name').val();
 	var emp_pwd = $('#emp_pwd').val();	
 	var emp_addr = $('#emp_addr').val();
@@ -138,12 +154,6 @@ function Regiemp(){
 	var county = $('#county').val();
 	var village = $('#village').val();
 	var dept_no = $('#dept_no').val();
-	
-	if(emp_mgr == null){
-		$('#emp_mgr').val(0);
-	}else{
-		$('#emp_mgr').val(emp_num);
-	}
 	
 	var en1 = new RegExp("[A-Z]");
 	var en2 = new RegExp("[a-z]");
@@ -172,7 +182,16 @@ function Regiemp(){
 		alert("e-mail을 입력해주세요.");
 		allCheck=false;
 		return allCheck;
-	}if(emp_name.length > 1 && pwd_pattern.test(emp_pwd) && emp_addr.length > 1 && emp_phone.length > 1 && emp_email.length > 1){
+	}if(emp_mgr.length == 0){
+		alert("상사번호를 입력해주세요.");
+		allCheck=false;
+		return allCheck;
+	}if(!num.test(emp_mgr)){
+		alert("상사번호는 숫자만 입력할 수 있습니다.");
+		allCheck=false;
+		return allCheck;
+	}
+	if(emp_name.length > 1 && pwd_pattern.test(emp_pwd) && emp_addr.length > 1 && emp_phone.length > 1 && emp_email.length > 1 && emp_mgr.length != 0 && num.test(emp_mgr)){
 				
 		 $.ajax({
     		url : "empinsert.do",
@@ -193,7 +212,7 @@ function Regiemp(){
     		},
     		success:function(obj){
     				alert("사원이 등록 되었습니다.");
-    				location.href="empList.do";    			
+    				location.href="empList.do?page=1";    			
     			},
     			error: function(request, status, errorData){
     				console.log("error code : " + request.status + "\n"
@@ -210,19 +229,35 @@ function Regiemp(){
 <script type="text/javascript">
 
 function mgrList(){
+	
+	var job_no2 = $('#job_no option:selected').val();
+	console.log("job_no2 : " + job_no2);
+	
 	$.ajax({
 		url: "selectMgrList.do",
 		type : "post",
+		data: {
+			job_no2 : job_no2										    			
+		},
 		dataType : "json",
 		success : function(obj){
-			console.log("selectMgrList.do 실행");
+			console.log("selectMgrList.do 실행");			
 			var objStr = JSON.stringify(obj);
 			var jsonObj = JSON.parse(objStr);
-			var outValues = "<table id='mgrTable'><tr><th style='text-align:center;'>사원번호</th><th style='text-align:center;'>사원이름</th></tr>";
+			var outValues = "<table id='mgrTable'><tr><th style='text-align:center;'>직급</th><th style='text-align:center;'>사원번호</th><th style='text-align:center;'>사원이름</th></tr>";
 			
-			for(var i in jsonObj.mgrList){
-				outValues += "<tr onclick='selectMgrNo(this);'><td>" + jsonObj.mgrList[i].emp_no + "</td><td>" 
-				+ decodeURIComponent(jsonObj.mgrList[i].emp_name) + "</td></tr>";
+			if(job_no2 == 3){
+				outValues += "<tr><td id='mgrList3' colspan='3'>결과가 존재하지 않습니다.</td></tr>";
+			}else{
+				for(var i in jsonObj.mgrList){
+					if(job_no2 == 1){
+					outValues += "<tr onclick='selectMgrNo(this);'><td>팀장</td><td>" + jsonObj.mgrList[i].emp_no + "</td><td>" 
+					+ decodeURIComponent(jsonObj.mgrList[i].emp_name) + "</td></tr>";
+					}else if(job_no2 == 2){
+					outValues += "<tr onclick='selectMgrNo(this);'><td>관리자</td><td>" + jsonObj.mgrList[i].emp_no + "</td><td>" 
+					+ decodeURIComponent(jsonObj.mgrList[i].emp_name) + "</td></tr>";	
+					}
+				}
 			}
 			
 			outValues += "</table>";
@@ -244,8 +279,8 @@ function selectMgrNo(obj){
 	var tr = $(obj);
 	var td = tr.children();
 	
-	var emp_no = td.eq(0).text();
-	var emp_name = td.eq(1).text();
+	var emp_no = td.eq(1).text();
+	var emp_name = td.eq(2).text();
 	
 	$('#mgrModal').modal('hide');	
 	$('#emp_mgr').val(emp_no);
@@ -264,12 +299,14 @@ text-align:center;
 </head>
 
 <body class="nav-md">
+<c:if test="${empty loginEmp}">
+</c:if>
 	<div class="container body">
 		<div class="main_container">
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="main.html" class="site_title"><i class="fa fa-google"></i>
+						<a href="mainView.do" class="site_title"><i class="fa fa-google"></i>
 							<span>GROUP BEAN</span></a>
 					</div>
 
@@ -380,18 +417,6 @@ text-align:center;
                           <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm" style="float:right;" onclick="mgrList()">조회</button>
                         </div>
                       </div>
-                      <!-- <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">입사일</label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input class="form-control" id="emp_hiredate" name="emp_hiredate" type="date">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">퇴사일</label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input class="form-control" id="emp_firedate" name="emp_firedate" type="date">
-                        </div>
-                      </div> -->
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">담당지역</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">

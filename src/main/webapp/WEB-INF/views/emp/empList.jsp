@@ -17,23 +17,6 @@
 <!-- Font Awesome -->
 <link href="resources/vendors/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet">
-<!-- NProgress -->
-<link href="resources/vendors/nprogress/nprogress.css" rel="stylesheet">
-<!-- iCheck -->
-<link href="resources/vendors/iCheck/skins/flat/green.css"
-	rel="stylesheet">
-
-<!-- bootstrap-progressbar -->
-<link
-	href="resources/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css"
-	rel="stylesheet">
-<!-- JQVMap -->
-<link href="resources/vendors/jqvmap/dist/jqvmap.min.css"
-	rel="stylesheet" />
-<!-- bootstrap-daterangepicker -->
-<link
-	href="resources/vendors/bootstrap-daterangepicker/daterangepicker.css"
-	rel="stylesheet">
 
 <!-- Custom Theme Style -->
 <link href="resources/build/css/custom.min.css" rel="stylesheet">
@@ -45,11 +28,20 @@ $(document).ready(function() {
     $('#table_cl').dataTable( {
         ordering:false,
         lengthChange:false,
-        pageLength:15
+        paging: false,
+        info: false,
+        searching: false
     } );
 } );
 
 </script>
+
+<script type="text/javascript">
+function list(page){	
+	location.href="empList.do?page="+page;
+}
+</script>
+
 </head>
 
 
@@ -59,7 +51,7 @@ $(document).ready(function() {
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="main.html" class="site_title"><i class="fa fa-google"></i>
+						<a href="mainView.do" class="site_title"><i class="fa fa-google"></i>
 							<span>GROUP BEAN</span></a>
 					</div>
 
@@ -137,6 +129,36 @@ $(document).ready(function() {
 										</c:forEach>																	
 										</tbody>
 									</table>
+									<div style="text-align:center;">
+									
+									 <c:if test="${curPage>1}">
+										<a class="page-link" href="empList.do?page=1">처음으로</a>
+									</c:if> 
+									
+									 <c:if test="${curPage>1}">
+										<a class="page-link" href="empList.do?page=${beginPage-1}">Pre</a>
+									</c:if>									
+									
+									 <c:forEach var ="page" begin="${beginPage}" end="${finalPage}">
+										  <c:choose>
+											<c:when test="${page==currentPage}">												
+												 <a class="page-link" style="color:red;">${page}</a>
+											</c:when>										
+										  <c:otherwise> 
+												 <a class="page-link" href="#" onclick="list('${page}')">${page}</a>	
+										  </c:otherwise> 
+										 </c:choose> 
+									</c:forEach>  
+									
+									 <c:if test="${curPage!=totalPage}">
+										<a class="page-link" href="empList.do?page=${finalPage+1}">Next</a>
+									</c:if> 
+									
+									<c:if test="${curPage!=totalPage}">
+										<a class="page-link" href="empList.do?page=${maxPage}">맨끝</a>
+									</c:if>
+									
+								</div>
 								</div>
 							</div>
 						</div>
@@ -156,12 +178,7 @@ $(document).ready(function() {
 	<script src="resources/vendors/jquery/dist/jquery.min.js"></script>
 	<!-- Bootstrap -->
 	<script src="resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-	<!-- FastClick -->
-	<script src="resources/vendors/fastclick/lib/fastclick.js"></script>
-	<!-- NProgress -->
-	<script src="resources/vendors/nprogress/nprogress.js"></script>
-	<!-- iCheck -->
-	<script src="resources/vendors/iCheck/icheck.min.js"></script>
+	
 	<!-- Datatables -->
 	<script
 		src="resources/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
@@ -187,9 +204,6 @@ $(document).ready(function() {
 		src="resources/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
 	<script
 		src="resources/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-	<script src="resources/vendors/jszip/dist/jszip.min.js"></script>
-	<script src="resources/vendors/pdfmake/build/pdfmake.min.js"></script>
-	<script src="resources/vendors/pdfmake/build/vfs_fonts.js"></script>
 
 	<!-- Custom Theme Scripts -->
 	<script src="resources/build/js/custom.min.js"></script>

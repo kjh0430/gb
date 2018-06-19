@@ -66,6 +66,40 @@
 		]]>
 	</select>
 	
+	<!-- 계약된 고객리스트 검색 -->
+	<select id="searchContractList" parameterType="contract" resultMap="resultContractList">
+		<![CDATA[
+			select * from
+		        (select rownum rnum, list.contract_money, list.client_name, list.client_company, list.client_phone,
+			                list.contract_discount, list.contract_date_start, list.contract_date_end, list.client_delete,
+			                list.client_no
+		            from
+		                (select co.contract_money, cl.client_name, cl.client_company, cl.client_phone,
+			                co.contract_discount, co.contract_date_start, co.contract_date_end, cl.client_delete,
+			                cl.client_no, co.client_sign, co.emp_sign, co.emp_no
+		            from client cl, contract co
+		            where (cl.client_no = co.client_no
+		            and co.client_sign <> 'N'
+		            and co.emp_sign <> 'N'
+		            and co.emp_no = #{emp_no}
+		            and client_delete = 'N'
+                    and cl.client_name like '%'||#{client_name}||'%')
+                    
+                    or
+                    
+                    (cl.client_no = co.client_no
+		            and co.client_sign <> 'N'
+		            and co.emp_sign <> 'N'
+		            and co.emp_no = #{emp_no}
+		            and client_delete = 'N'
+                    and cl.client_company like '%'||#{client_name}||'%')
+                    
+		            order by contract_date_start desc) list
+		            where rownum >= 1)
+			where rnum >= #{startRow} and rnum <= #{endRow}
+			and client_delete <> 'Y'
+		]]>
+	</select>
 	
 	<!-- 계약서 상세보기 -->
 	<select id="contractDetail" parameterType="_int" resultMap="resultContractList">
@@ -95,6 +129,14 @@
 			select contract_discount from contract
 			where client_no = #{client_no}
 		]]>
-		</select>	
+	</select>	
+	
+	<!-- 신규 고객수 -->
+	<select id="countContract" parameterType="_int" resultType="_int">
+		<![CDATA[
+			select count(contract_no) from contract
+			where emp_no = #{emp_no}
+		]]>
+	</select>
 			
 </mapper>

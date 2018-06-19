@@ -15,7 +15,7 @@
  }
 </style>
 <script src="resources/js/EventSource.js"></script>
-<script src="resources/js/PushNotify.js?ver=1"></script>
+<script src="resources/js/PushNotify.js?ver=2"></script>
 </head>
 
 <body>
@@ -134,7 +134,7 @@
 	    Notification.requestPermission(function (status) {
 	      if (Notification.permission !== status) {
 	        Notification.permission = status;
-	        console.log(status);
+	        //console.log(status);
 	      }
 	    });
 	}

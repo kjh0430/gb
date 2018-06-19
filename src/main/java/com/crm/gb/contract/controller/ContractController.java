@@ -1,22 +1,29 @@
 package com.crm.gb.contract.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.URLEncoder;
+import java.sql.Date;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.crm.gb.client.model.service.ClientService;
 import com.crm.gb.client.model.vo.Client;
 import com.crm.gb.contract.model.service.ContractService;
 import com.crm.gb.contract.model.vo.Contract;
+import com.crm.gb.contract.model.vo.ContractSearchList;
 
 @Controller
 public class ContractController {
@@ -28,6 +35,89 @@ public class ContractController {
 	@Autowired
 	private ClientService clientService;
 	
+	/** 계약된 고객수 */
+	@RequestMapping(value="countContract.do", method=RequestMethod.POST)
+	public void countContract(@RequestParam(value="emp_no") int emp_no, HttpServletResponse response) 
+		throws IOException{
+		int contractCount = contractService.selectCountContract(emp_no);
+			System.out.println("계약된 고객수: "+contractCount);
+		JSONObject job = new JSONObject();
+			job.put("contractCount", contractCount);
+			
+			PrintWriter out = response.getWriter();
+				out.print(job.toJSONString());
+				out.flush();
+				out.close();
+			
+	}
+	
+	/** 계약리스트 검색 */
+	@RequestMapping(value="searchContractList.do", method=RequestMethod.POST)
+	public void searchContractList(Contract contract, ContractSearchList contractSearch,
+			@RequestParam(value="emp_no") int emp_no,
+			@RequestParam(value="client_name") String clientName,
+			@RequestParam(value="startPage", defaultValue="1") int startPage,
+			Model model,
+			HttpServletResponse response) throws IOException{
+		
+		logger.info("계약리스트 검색 실행됨");
+
+		ArrayList<Contract> returnList=contractService.selectAllList(emp_no);
+		
+		contractSearch.setShowPage(10); //보여줄 페이지 수
+		contractSearch.setTotalRow(returnList.size());	// 총 회원 수
+		contractSearch.setStart(startPage);	// 시작페이지
+		
+		int showPage = contractSearch.getShowPage();
+		int totalRow = contractSearch.getTotalRow();
+		int start = (contractSearch.getStart() - 1)*showPage+1;
+		int end = start+9;
+		int currentPage = 1;
+
+		contractSearch.setStartRow(start);	// 시작 열
+		contractSearch.setEndRow(end);	// 끝 열
+		
+		if(totalRow%showPage != 0) {	// 끝페이지
+			contractSearch.setEnd((totalRow/showPage)+1);
+		}else {
+			contractSearch.setEnd(totalRow/showPage);
+		}
+		
+		contractSearch.setEmp_no(emp_no);
+		contractSearch.setClient_name(clientName);
+		
+		ArrayList<Contract> list = contractService.selectContractList(contractSearch);
+			
+		JSONArray jarr = new JSONArray();
+		
+		for(Contract c : list) {
+			
+			JSONObject job = new JSONObject();
+				job.put("client_no", c.getClient_no());
+				job.put("client_name", URLEncoder.encode(c.getClient().getClient_name(), "utf-8"));
+				job.put("client_company", URLEncoder.encode(c.getClient().getClient_company(), "utf-8"));
+				job.put("client_phone", c.getClient().getClient_phone());
+				job.put("contract_discount", c.getContract_discount());
+				job.put("contract_money", c.getContract_money());
+				job.put("contract_start", c.getContract_date_start().toString());
+				job.put("contract_end", c.getContract_date_end().toString());
+				
+				jarr.add(job);
+				
+				
+		}
+		
+		
+		response.setContentType("application/json; charset=utf-8");
+		JSONObject result = new JSONObject();
+			result.put("list", jarr);
+		PrintWriter out = response.getWriter();
+			out.print(result.toJSONString());
+			out.flush();
+			out.close();
+		
+		
+	}
 	
 	/** 계약리스트  */
 	@RequestMapping("contractList.do")

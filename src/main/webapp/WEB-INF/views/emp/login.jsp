@@ -48,7 +48,32 @@
 			});	//click
 		}); //onload
 		
-	
+		function enterKey() {
+			var keyCode = window.event.keyCode;
+			if(keyCode==13){
+				$.ajax({
+					url: "login.do",
+					data: {
+						emp_no: $('#emp_no').val(),
+						emp_pwd: $('#emp_pwd').val()
+					},
+					type: "post",
+					success: function(data) {
+						if(data == "correct") {
+							location.href="mainView.do"	
+						}else {
+							alert("사원번호와 비밀번호를 확인하시기 바랍니다.");
+							$('#emp_no').val("");
+							$('#emp_pwd').val("");
+							return false;
+						}
+					}
+				});	//ajax
+			}
+			
+		}
+		
+		
 </script>
 
 </head>
@@ -66,12 +91,12 @@
 						<img src="resources/images/login.png" style="margin-bottom:20px;"/>
 						
 						<div>
-							<input id="emp_no" type="text" name="emp_no" class="form-control" placeholder="Username"
+							<input id="emp_no" type="text" name="emp_no" class="form-control" placeholder="emp password"
 								required>
 						</div>
 						<div>
 							<input id="emp_pwd" type="password" name="emp_pwd" class="form-control"
-								placeholder="Password"/>
+								placeholder="Password" onkeydown="javascript:enterKey()"/>
 						</div>
 						<div>
 							<input id="mainLoginBtn" type="button" class="btn btn-default submit" 
@@ -79,7 +104,7 @@
 									value="LOGIN" />							
 						</div><br/>
 						<!-- <a class="reset_pass" href="#">Lost your password?</a> -->
-						<a class="reset_pass" href="adminmain.do">관리자main보기</a> 
+						
 	
 						<div class="clearfix"></div>
 						<br />
@@ -93,48 +118,6 @@
 				</section>
 			</div>
 
-			<!-- <div id="register" class="animate form registration_form">
-				<section class="login_content">
-					<form>
-						<h1>Create Account</h1>
-						<div>
-							<input type="text" class="form-control" placeholder="Username"
-								required="" />
-						</div>
-						<div>
-							<input type="email" class="form-control" placeholder="Email"
-								required="" />
-						</div>
-						<div>
-							<input type="password" class="form-control"
-								placeholder="Password" required="" />
-						</div>
-						<div>
-							<a class="btn btn-default submit" href="index.html">Submit</a>
-						</div>
-
-						<div class="clearfix"></div>
-
-						<div class="separator">
-							<p class="change_link">
-								Already a member ? <a href="#signin" class="to_register">
-									Log in </a>
-							</p>
-
-							<div class="clearfix"></div>
-							<br />
-
-							<div>
-								<h1>
-									<i class="fa fa-paw"></i> Gentelella Alela!
-								</h1>
-								<p>©2016 All Rights Reserved. Gentelella Alela! is a
-									Bootstrap 3 template. Privacy and Terms</p>
-							</div>
-						</div>
-					</form>
-				</section>
-			</div> -->
 		</div>
 	</div>
 </body>

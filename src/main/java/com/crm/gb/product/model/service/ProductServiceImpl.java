@@ -60,5 +60,25 @@ public class ProductServiceImpl implements ProductService {
 		return productDao.deleteProduct(product_no);
 	}
 	
+	@Override
+	public ArrayList<ProductFile> selectProductFile(Product pd) {
+		return productDao.selectProductDetailFile(pd);
+	}
+
+	@Override
+	public int selectgetProduct(Product pro) {
+		return productDao.productListE(pro);
+	}
+
+	@Override
+	public ArrayList<Product> selectproductList(Product pro) {
+		return productDao.productListB(pro);
+
+	}
+
+	@Override
+	public ArrayList<Product> selectSearchProduct(Product product) {
+		return productDao.productSearch(product);
+	}
 
 }

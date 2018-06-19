@@ -17,23 +17,6 @@
 <!-- Font Awesome -->
 <link href="resources/vendors/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet">
-<!-- NProgress -->
-<link href="resources/vendors/nprogress/nprogress.css" rel="stylesheet">
-<!-- iCheck -->
-<link href="resources/vendors/iCheck/skins/flat/green.css"
-	rel="stylesheet">
-
-<!-- bootstrap-progressbar -->
-<link
-	href="resources/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css"
-	rel="stylesheet">
-<!-- JQVMap -->
-<link href="resources/vendors/jqvmap/dist/jqvmap.min.css"
-	rel="stylesheet" />
-<!-- bootstrap-daterangepicker -->
-<link
-	href="resources/vendors/bootstrap-daterangepicker/daterangepicker.css"
-	rel="stylesheet">
 
 <!-- Custom Theme Style -->
 <link href="resources/build/css/custom.min.css" rel="stylesheet">
@@ -49,30 +32,39 @@ $(document).ready(function() {
     } );
 } );
 </script>
-<style type="text/css">
-table tr th, table tr td
-{ 
-	/* font-size: 15px;
-	margin: 10px 0 30px 0; */
-}
-</style>
 
 <script type="text/javascript">
 
 function mgrList(){
+	
+	var job_no2 = $('#job_no option:selected').val();
+	console.log("job_no2 : " + job_no2);
+	
 	$.ajax({
 		url: "selectMgrList.do",
 		type : "post",
+		data: {
+			job_no2 : job_no2										    			
+		},
 		dataType : "json",
 		success : function(obj){
 			console.log("selectMgrList.do 실행");
 			var objStr = JSON.stringify(obj);
 			var jsonObj = JSON.parse(objStr);
-			var outValues = "<table id='mgrTable'><tr><th style='text-align:center;'>사원번호</th><th style='text-align:center;'>사원이름</th></tr>";
+			var outValues = "<table id='mgrTable'><tr><th style='text-align:center;'>직급</th><th style='text-align:center;'>사원번호</th><th style='text-align:center;'>사원이름</th></tr>";
 			
-			for(var i in jsonObj.mgrList){
-				outValues += "<tr onclick='selectMgrNo(this);'><td>" + jsonObj.mgrList[i].emp_no + "</td><td>" 
-				+ decodeURIComponent(jsonObj.mgrList[i].emp_name) + "</td></tr>";
+			if(job_no2 == 3){
+				outValues += "<tr><td id='mgrList3' colspan='3'>결과가 존재하지 않습니다.</td></tr>";
+			}else{
+				for(var i in jsonObj.mgrList){
+					if(job_no2 == 1){
+					outValues += "<tr onclick='selectMgrNo(this);'><td>팀장</td><td>" + jsonObj.mgrList[i].emp_no + "</td><td>" 
+					+ decodeURIComponent(jsonObj.mgrList[i].emp_name) + "</td></tr>";
+					}else if(job_no2 == 2){
+					outValues += "<tr onclick='selectMgrNo(this);'><td>관리자</td><td>" + jsonObj.mgrList[i].emp_no + "</td><td>" 
+					+ decodeURIComponent(jsonObj.mgrList[i].emp_name) + "</td></tr>";	
+					}
+				}
 			}
 			
 			outValues += "</table>";
@@ -94,8 +86,8 @@ function selectMgrNo(obj){
 	var tr = $(obj);
 	var td = tr.children();
 	
-	var emp_no = td.eq(0).text();
-	var emp_name = td.eq(1).text();
+	var emp_no = td.eq(1).text();
+	var emp_name = td.eq(2).text();
 	
 	$('#mgrModal').modal('hide');
 	$('#emp_mgr').val(emp_no);
@@ -104,25 +96,89 @@ function selectMgrNo(obj){
 
 function empUpdate(){
 	
+	var allCheck=false;
+	
+	var emp_no = $('#emp_no').val();
 	var emp_pwd = $('#emp_pwd').val();
+	var emp_name = $('#emp_name').val();
+	var emp_addr = $('#emp_addr').val();
+	var job_no = $('#job_no').val();
+	var emp_phone = $('#emp_phone').val();
+	var emp_email = $('#emp_email').val();
+	var emp_mgr = $('#emp_mgr').val();
+	var emp_hiredate = $('#emp_hiredate').val();
+	var city = $('#city').val();
+	var county = $('#county').val();
+	var village = $('#village').val();
+	var dept_no = $('#dept_no').val();
 	
+	var num = new RegExp("[0-9]");
 	var pwd_pattern= /^[A-Za-z0-9]{5,10}$/; //숫자와 문자 포함 형태의  5에서 10자리 비밀번호
+	var phone_check = /^\d{3}-\d{3,4}-\d{4}$/;
+	var email_check = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 	
-	if(emp_pwd==null && password1==""){
-		alert("password를 입력해주세요!")
-		allCheck=false;
-		return allCheck;
-	 }
-	 if(!pwd_pattern.test(emp_pwd)){
+	if(!pwd_pattern.test(emp_pwd)){
 		alert("비밀번호는 숫자,문자 포함 5~10자리 입니다.");
 		allCheck=false;
 		return allCheck; 
-	}
-
-	if(pwd_pattern.test(password1)){		
-		alert("수정이 완료 되었습니다.");
-		allCheck=true;
-		return allCheck;		
+	}if(emp_name.length < 1){
+		alert("사원이름을 입력해주세요.");
+		allCheck=false;
+		return allCheck;
+	}if(emp_addr.length < 1){
+		alert("주소를 입력해주세요.");
+		allCheck=false;
+		return allCheck;
+	}if(emp_phone.length < 1){
+		alert("연락처를 입력해주세요.");
+		allCheck=false;
+		return allCheck;
+	}if(emp_email.length < 1){
+		alert("e-mail을 입력해주세요.");
+		allCheck=false;
+		return allCheck;
+	}if(emp_mgr.length == 0){
+		alert("상사번호를 입력해주세요.");
+		allCheck=false;
+		return allCheck;
+	}if(!num.test(emp_mgr)){
+		alert("상사번호는 숫자만 입력할 수 있습니다.");
+		allCheck=false;
+		return allCheck;
+	}if(emp_name.length > 1 && pwd_pattern.test(emp_pwd) && emp_addr.length > 1 && emp_phone.length > 1 && emp_email.length > 1 && emp_mgr.length != 0 && num.test(emp_mgr)){
+		
+		console.log("ajax 실행");
+		
+		$.ajax({
+   		url : "empupdate.do",
+   		type: "post",
+   		dataType: "json",
+   		data: {
+   			emp_no : emp_no,
+   			emp_name : emp_name,
+   			emp_pwd : emp_pwd,    			
+   			emp_addr : emp_addr,
+   			emp_phone : emp_phone,
+   			job_no : job_no,
+   			emp_email : emp_email,
+   			emp_mgr : emp_mgr,
+   			emp_hiredate : emp_hiredate,
+   			city : city,
+   			county : county,
+   			village : village,
+   			dept_no : dept_no											    			
+   		},
+   		success:function(obj){
+   				alert("사원정보가 수정 되었습니다.");
+   				location.href="empDetail.do?emp_no="+""+${ emp.emp_no }+"";    			
+   			},
+   			error: function(request, status, errorData){
+   				console.log("error code : " + request.status + "\n"
+   						+ "message : " + request.responseText + "\n"
+   						+ "error : " + errorData);
+   				
+   			}
+   		});		
 	}
 }
 
@@ -147,7 +203,7 @@ text-align:center;
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="main.html" class="site_title"><i class="fa fa-google"></i>
+						<a href="mainView.do" class="site_title"><i class="fa fa-google"></i>
 							<span>GROUP BEAN</span></a>
 					</div>
 
@@ -203,7 +259,7 @@ text-align:center;
 								
 								
 					<!-- 사원 수정폼 -->
-					<form class="form-horizontal form-label-left" action="empupdate.do" method="post" onsubmit="return empUpdate();">	
+					<form class="form-horizontal form-label-left">	
 					 <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">사원번호</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -278,15 +334,9 @@ text-align:center;
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">입사일</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input class="form-control" id="emp_hiredate" name="emp_hiredate" type="date" value="${ emp.emp_hiredate }">
+                          <input class="form-control" id="emp_hiredate" name="emp_hiredate" type="date" value="${ emp.emp_hiredate }" readonly>
                         </div>
                       </div>
-                      <%-- <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">퇴사일</label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-            			  <input class="form-control" id="emp_firedate" name="emp_firedate" type="text" value="${ emp.emp_firedate }">              
-                        </div>
-                      </div> --%>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">담당지역</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -337,59 +387,14 @@ text-align:center;
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                          <button class="btn btn-success" type="submit">수정</button>                    
+                          <button class="btn btn-success" type="button" onclick="empUpdate()">수정</button>                    
                           <button class="btn btn-primary" type="button" onclick="backMyInfo()">취소</button>                     
                         </div>
                       </div>
 					</form>
                   </div>
                 </div>
-              </div>
-									
-			  <!-- <div class="col-md-12 col-sm-6 col-xs-12">
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2>접촉이력</h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
-                          </li>
-                          <li><a href="#">Settings 2</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
-                    <table class="table table-hover">
-                      <thead>
-                        <tr>
-                          <th>접촉일</th>
-                          <th>접촉구분</th>
-                          <th>접촉내용</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>2018/05/05</td>
-                          <td></td>
-                          <td></td>
-                        </tr>
-                      </tbody>
-                    </table>
-
-                  </div>
-                </div>
-              </div> -->
-									
-									
+              </div>		
 								</div>
 							</div>
 						</div>
@@ -416,8 +421,6 @@ text-align:center;
              </table>
              </div>
              <div class="modal-footer">
-             <!-- <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-             <button type="button" class="btn btn-primary">등록</button> -->
              </div>
 
            </div>
@@ -433,12 +436,7 @@ text-align:center;
 	<script src="resources/vendors/jquery/dist/jquery.min.js"></script>
 	<!-- Bootstrap -->
 	<script src="resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-	<!-- FastClick -->
-	<script src="resources/vendors/fastclick/lib/fastclick.js"></script>
-	<!-- NProgress -->
-	<script src="resources/vendors/nprogress/nprogress.js"></script>
-	<!-- iCheck -->
-	<script src="resources/vendors/iCheck/icheck.min.js"></script>
+
 	<!-- Datatables -->
 	<script
 		src="resources/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
@@ -464,10 +462,7 @@ text-align:center;
 		src="resources/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
 	<script
 		src="resources/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-	<script src="resources/vendors/jszip/dist/jszip.min.js"></script>
-	<script src="resources/vendors/pdfmake/build/pdfmake.min.js"></script>
-	<script src="resources/vendors/pdfmake/build/vfs_fonts.js"></script>
-
+	
 	<!-- Custom Theme Scripts -->
 	<script src="resources/build/js/custom.min.js"></script>
 

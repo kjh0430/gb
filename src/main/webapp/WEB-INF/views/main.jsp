@@ -52,32 +52,28 @@
 			 event=new Array();
 		
 	
-	for ( var i in json.list) {
-		
+		for ( var i in json.list) {
 			event.push({
 				title: json.list[i].calendar_title,
 				start:json.list[i].calendar_start_date,
 				end:json.list[i].calendar_end_date,
 				url:"javascript:detailCalendar("+json.list[i].calendar_no+")"
 			});
-									 
 		 };
 		
-
-			
 			$('#myCalendar').fullCalendar({
 	    		  				
 			 	header: {
+			 		left:'month,basicWeek,basicDay',
 				    right: 'today prev,next'
 				  }, 
 		  
 				  defaultDate: '2018-06-01',
 				  buttonIcons: false,
-				  weekNumbers: true,
+				  weekNumbers: false,
+				
 				  
 				 events:event
-					
-					 
 					 
 	    	}); 
 					
@@ -95,49 +91,41 @@
     	calendarLoad();
     	
   	}); 
-  		function Schedule(){
-  		
-  		$.ajax({
-  			
-  		url:"getInfo.do",               
-  		data:{emp_no :"${loginEmp.emp_no}",dept_no :"${loginEmp.dept_no}"},
-  		type:"post",
-  		dataType:"json",
-  		success:function(data){
-  			
+ 	function Schedule(){
+ 		$.ajax({
+ 		url:"getInfo.do",               
+ 		data:{emp_no :"${loginEmp.emp_no}",dept_no :"${loginEmp.dept_no}"},
+ 		type:"post",
+ 		dataType:"json",
+ 		success:function(data){
   			$('#addwriter').val(data.emp_name);
   			$('#adddept_name').val(data.calendar_dept_name);
   			$('#modal3').modal("show");
-  			
-  			
-  		}
-  		
-  		});
-  		
   			}
+ 		
+ 		});
+ 	}//Schedule
   		
   		//일정 비교 (수정)
- 		function checkDate(){
- 			var ckModistartDate=$('#startDateM').val();
- 			var sArr=ckModistartDate.split('-');
- 		
- 			
- 			var ckModiendDate=$('#endDateM').val();
- 			var eArr=ckModiendDate.split('-');
- 			
- 			var start1 =new Date(sArr[0],parseInt(sArr[1])-1,sArr[2]);
- 			var end1 =new Date(eArr[0],parseInt(eArr[1])-1,eArr[2]);
- 			
- 			if(start1.getTime()>end1.getTime()){
- 				alert("시작 날짜 또는 종료 날짜가 유효하지 않습니다.");
- 			}
-  	} 	
+	function checkDate(){
+		var ckModistartDate=$('#startDateM').val();
+		var sArr=ckModistartDate.split('-');
+		
+		var ckModiendDate=$('#endDateM').val();
+		var eArr=ckModiendDate.split('-');
+		
+		var start1 =new Date(sArr[0],parseInt(sArr[1])-1,sArr[2]);
+		var end1 =new Date(eArr[0],parseInt(eArr[1])-1,eArr[2]);
+		
+		if(start1.getTime()>end1.getTime()){
+			alert("시작 날짜 또는 종료 날짜가 유효하지 않습니다.");
+		}
+	} 	
   		//일정 비교(추가)
 		function checkDates(){
  			var ckModistartDate=$('#addstartDate').val();
  			var sArr=ckModistartDate.split('-');
  		
- 			
  			var ckModiendDate=$('#addendDate').val();
  			var eArr=ckModiendDate.split('-');
  			
@@ -147,14 +135,12 @@
  			if(start1.getTime()>end1.getTime()){
  				alert("시작 날짜 또는 종료 날짜가 유효하지 않습니다.");
  			}
-  	} 	
+  		} 	
  		
-  	 	
   	 	
   	 	//modal 상세보기 닫기 detail 닫기
 
     	function modal1Close(){
-    		
     		$('#modal1').modal("hide");
     	}
   		
@@ -327,9 +313,6 @@
   					 	 }
   					 });
   					 
-  					 
-  					 
-  					 
   				 }
     	}
     	//일정 삭제
@@ -373,29 +356,51 @@ $(function(){
 	       			console.log("size : " + size);
 	       			
 	       			var obj = [json.todo1, json.todo2, json.todo3, json.todo4, json.todo5];
+	       			var obj2 = [json.check1, json.check2, json.check3, json.check4, json.check5];
 	       			
 	       			console.log("obj : " + obj);
-	       			
-	       			var count = 1;	       			
+	       			console.log("obj2 : " + obj2);	       			
+	       			     			
 	       			var values = ""
+	       			var values2 = ""
+	       			var count = 0;
+	       			var count2 = 0;
 	       			
 	       			for(var i in obj){
-	       				if(obj[i] != null){
-	       			values += '<li><p><input type="checkbox" class="flat" id="todo_list'+count+'" name="todo_list'+count+'" >'+obj[i]+'</p></li>';
-	    	       	count++;
+	       				if(obj[i] != null && obj2[i] == "N"){
+	       			values += '<li><p><input type="checkbox" class="flat" id="todo_list'+i+'" name="todo_list'+i+'" >'+obj[i]+'</p></li>';
 	    	       	console.log("obj["+i+"] : " + obj[i]);
+	    	       	count2++;
+	       				}else if(obj[i] != null && obj2[i] == "Y"){
+	       					values += '<li><p id="checkp"><input type="checkbox" class="flat" id="todo_list'+i+'" name="todo_list'+i+'" checked disabled>'+obj[i]+'</p></li>';
+	    	    	       	console.log("obj["+i+"] : " + obj[i]);
+	    	    	       	count++;
+	    	    	       	count2++;
 	       				}
-	       			}	       		
+	       			}
 	       			
-	       			values+='<button type="button" class="btn btn-primary" onclick="checkList()">확인</button>';
+	       			var goal = new Number((count/count2)*100);
+	       			
+	       			console.log("count : " + count);
+	       			console.log("count2 : " + count2);
+	       			console.log("goal : " + goal.toFixed(2));
+	       			
+	       			if(obj2[0] == "Y" || obj2[1] == "Y" || obj2[2] == "Y" || obj2[3] == "Y" || obj2[4] == "Y"){
+	       				values+='<p id="goalpp" style="float:right;">달성률 : '+goal.toFixed(1)+'%</p>'	       			
+	       			}else{
+	       				values+='<p><button type="button" class="btn btn-default btn-sm" onclick="checkList()" style="float:right; margin-top:5px;">확인</button></p>';
+	       			}
 	       			
 	       			$(".to_do").html(values);
 	       			
 	       			},
-	       			error: function(){       				
+	       			error: function(){
 	       			console.log("todolist 출력 error");
-	       			values = "입력된 값이 없습니다";
+	       			values = "입력된 값이 없습니다.";
 	       			$(".to_do").html(values);
+	       			
+	       			values2 = '<li><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target=".bs-example-modal-lg" style="float:right;">등록</button></li>';
+	       			$(".todo_1").html(values2);
 	       			}
 	       		});
 	});
@@ -442,6 +447,8 @@ $(function(){
        	var todo4 = $('#todo_keyword3').val();
        	var todo5 = $('#todo_keyword4').val();
        	
+       	console.log("todo1 : " + todo1);
+       	
        	console.log("main에서 출력 emp_no : " + emp_no);
        	console.log("main에서 출력 todo1 : " + todo1);
        	console.log("main에서 출력 todo2 : " + todo2);
@@ -449,6 +456,10 @@ $(function(){
        	console.log("main에서 출력 todo4 : " + todo4);
        	console.log("main에서 출력 todo5 : " + todo5);
        	
+       	if($('#todo_keyword0').val() == null || $('#todo_keyword0').val() == ""){
+       		alert("값을 입력해주세요.");
+       	}else{
+       		
        	$.ajax({
        		url : "todoInsert.do",
        		type: "post",
@@ -486,22 +497,23 @@ $(function(){
 	       			var obj = [json.todo1, json.todo2, json.todo3, json.todo4, json.todo5];
 	       			
 	       			console.log("obj : " + obj);
-	       			
-	       			var count = 1;	       			
+	       			       			
 	       			var values = ""
+	       			var values2 = ""
 	       			
 	       			for(var i in obj){
 	       				if(obj[i] != null){
-	       			values += '<li><p><input type="checkbox" class="flat" id="todo_list'+count+'" name="todo_list'+count+'" >'+obj[i]+'</p></li>';
-	    	       	count++;
+	       			values += '<li><p><input type="checkbox" class="flat" id="todo_list'+i+'" name="todo_list'+i+'" >'+obj[i]+'</p></li>';
 	    	       	console.log("obj["+i+"] : " + obj[i]);
 	       				}
 	       			}	       			
 	       			
-	       			values+='<button type="button" class="btn btn-primary" onclick="checkList()">확인</button>';
+	       			values+='<p><button type="button" class="btn btn-default btn-sm" onclick="checkList()" style="float:right;">확인</button></p>';
 	       			
 	       			$(".to_do").html(values);
-       	       			
+	       			
+	       			$(".todo_1").html(values2);
+	       			
        	       			},
        	       			error: function(){       				
        	       			console.log("error");
@@ -513,17 +525,207 @@ $(function(){
        			}
        		});
        }
+       }
        
        function checkList(){
-    	   alert("checkList 실행");
+           
+       var emp_no = $('#emp_no').val();
+       var check1 = 'N';
+       var check2 = 'N';
+       var check3 = 'N';
+       var check4 = 'N';
+       var check5 = 'N';
+       
+    	   if($("input:checkbox[name='todo_list0']").is(":checked")){
+    		   check1 = 'Y';
+    	   }
+    	   if($("input:checkbox[name='todo_list1']").is(":checked")){
+    		   check2 = 'Y';
+    	   }
+    	   if($("input:checkbox[name='todo_list2']").is(":checked")){
+    		   check3 = 'Y';
+    	   }
+    	   if($("input:checkbox[name='todo_list3']").is(":checked")){
+    		   check4 = 'Y';
+    	   }
+    	   if($("input:checkbox[name='todo_list4']").is(":checked")){
+    		   check5 = 'Y';
+    	   }
+    	   
+    	   if(!($("input:checkbox[name='todo_list0']").is(":checked")) && !($("input:checkbox[name='todo_list1']").is(":checked")) && !($("input:checkbox[name='todo_list2']").is(":checked")) && !($("input:checkbox[name='todo_list3']").is(":checked")) && !($("input:checkbox[name='todo_list4']").is(":checked"))){
+    		   alert("한개 이상 체크 해주세요.");
+    	   }else{
+    	   
+    		$.ajax({
+           		url : "todoChecked.do",
+           		type: "post",
+           		dataType: "json",
+           		data: {
+           			emp_no : emp_no,
+           			check1 : check1,
+           			check2 : check2,
+           			check3 : check3,
+           			check4 : check4,
+           			check5 : check5
+           		},
+           		success:function(data){
+           			console.log("todoChecked.do 제대로 실행됨");
+           			
+           			alert("등록 되었습니다.");
+           			
+           			var jsonSt = JSON.stringify(data);
+	                var json = JSON.parse(jsonSt);
+	                var size = Object.keys(json).length;
+	       			
+	       			var obj = [json.todo1, json.todo2, json.todo3, json.todo4, json.todo5];
+	       			var obj2 = [json.check1, json.check2, json.check3, json.check4, json.check5];
+	       			
+	       			console.log("obj : " + obj);
+	       			console.log("obj2 : " + obj2);	       			
+	       			     			
+	       			var values = ""
+	       			var values2 = ""
+	       			var count = 0;
+	       			var count2 = 0;
+	       			
+	       			for(var i in obj){
+	       				if(obj[i] != null && obj2[i] == "N"){
+	       			values += '<li><p><input type="checkbox" class="flat" id="todo_list'+i+'" name="todo_list'+i+'" >'+obj[i]+'</p></li>';
+	    	       	console.log("obj["+i+"] : " + obj[i]);
+	    	       	count2++;
+	       				}else if(obj[i] != null && obj2[i] == "Y"){
+	       					values += '<li><p id="checkp"><input type="checkbox" class="flat" id="todo_list'+i+'" name="todo_list'+i+'" checked disabled>'+obj[i]+'</p></li>';
+	    	    	       	console.log("obj["+i+"] : " + obj[i]);
+	    	    	       	count++;
+	    	    	       	count2++;
+	       				}
+	       			}
+	       			
+	       			var goal = new Number((count/count2)*100);
+	       			
+	       			console.log("count : " + count);
+	       			console.log("count2 : " + count2);
+	       			console.log("goal : " + goal.toFixed(2));
+	       			
+	       			if(obj2[0] == "Y" || obj2[1] == "Y" || obj2[2] == "Y" || obj2[3] == "Y" || obj2[4] == "Y"){
+	       				values+='<p id="goalpp" style="float:right;">달성률 : '+goal.toFixed(1)+'%</p>'	       			
+	       			}else{
+	       				values+='<p><button type="button" class="btn btn-default btn-sm" onclick="checkList()" style="float:right; margin-top:5px;">확인</button></p>';
+	       			}
+	       			
+	       			$(".to_do").html(values);
+	       			
+           			
+           		},
+           		error: function(){       				
+           			console.log("error");
+           			}
+    	   
+    		});
+    	   
+       }
        }
        
     </script>
-    <style>
-   
+    
+    
 
-    </style>
-        <style type="text/css">
+    <script >//notice
+    
+     $(function(){
+    
+    	$.ajax({
+    		url:"latestNotice.do",
+    		type:"post",
+    		dataType:"json",
+    		success:function(data){
+    	
+    	  var jsonSt = JSON.stringify(data);
+	        var jsonl = JSON.parse(jsonSt);
+	        var size = Object.keys(jsonl.list).length;
+    	
+	   
+	        
+	        
+    	value="";
+    	if(size>0) {
+    	value="<ul class='notice_list'>";
+    	
+    	 for(var i in jsonl.list){
+     	value+="<li><a href='noticeDetail.do?notice_no="+jsonl.list[i].notice_no+"'><span>"+jsonl.list[i].notice_date+"</span>&nbsp;&nbsp;"+jsonl.list[i].notice_title+"</a></li>";
+    		
+    	}
+    	
+    	value+="</ul>"
+    	
+    		$('#latest_notice').html(value); 
+    		
+    	
+    	
+    		}else{
+    			value="<h1>공지사항이 없습니다.</h1>"
+    				$('#latest_notice').html(value); 
+    		}
+    		}
+    	});
+    	
+    
+    
+    }); 
+   
+    </script>
+
+<script type="text/javascript">
+	$(function(){
+		//alert("tttttttt");
+		$.ajax({
+       		url : "mainCount.do",
+       		type: "post",
+       		dataType: "json",
+       		data: {emp_no :  '${loginEmp.emp_no}' , job_no : '${loginEmp.job_no}'},
+       		
+       		success:function(obj){
+       			
+       			var objStr = JSON.stringify(obj);
+				var json = JSON.parse(objStr);
+       			var order_sum = json.order_sum;
+       			var order_avg = json.order_avg;
+       			var goal_state = json.goal_state;
+       			
+       			str=String(order_sum);
+				str2=String(order_avg);
+				
+       			$('#orderState').html(str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'));
+       			$('#orderAvg').html(str2.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'));
+       			$('#goalState').html(goal_state);
+       			
+       		}
+		});
+		
+		// 등록된 고객수
+		$.ajax({
+			url : "countContract.do",
+       		type: "post",
+       		dataType: "json",
+       		data: {
+       			emp_no :  '${loginEmp.emp_no}'
+       		},
+       		success:function(data){
+       			
+       			var objStr = JSON.stringify(data);
+				var json = JSON.parse(objStr);
+       			var count = json.contractCount;
+       			
+       			$('#countContract').html(count);
+       			
+       		}
+		});
+		
+	});
+
+</script>
+
+  <style type="text/css">
    .form-control{
       display:inline-block;
       width:90%;
@@ -533,7 +735,20 @@ $(function(){
    .fa.fa-times{
       margin-left:10px;
    }
-   </style>  
+   
+   
+    input[type=checkbox]{
+ 	  margin-right:5px;
+   }
+   
+   #checkp{
+     text-decoration: line-through;
+   }
+   
+   #goalpp{
+      margin-top:5px;
+   }
+   </style>
     
   </head>
 
@@ -543,7 +758,7 @@ $(function(){
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="Movemain.do" class="site_title"><i class="fa fa-google"></i> <span>GROUP BEAN</span></a>
+              <a href="mainView.do" class="site_title"><i class="fa fa-google"></i> <span>GROUP BEAN</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -571,55 +786,40 @@ $(function(){
      	 	<!-- top navigation -->
 			<c:import url="etc/topnav.jsp"></c:import>
 			<!-- /top navigation -->
-
+	
         <!-- page content -->
         <div class="right_col" role="main">
           <!-- top tiles -->
           <div class="row tile_count">
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i> 매출현황</span>
-              <div class="count">2500</div>
+              <div class="count" id="orderState"></div>
               <span class="count_bottom"><i class="green">4% </i> From last Week</span>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 tile_stats_count">
               <span class="count_top"><i class="fa fa-clock-o"></i> 목표달성현황</span>
-              <div class="count">123.50</div>
+              <div class="count" id="goalState"></div>
               <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span>
             </div>   
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i> 평균 주문액</span>
-              <div class="count">4,567</div>
+              <div class="count" id="orderAvg"></div>
               <span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>12% </i> From last Week</span>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i> 신규거래처수</span>
-              <div class="count">2,315</div>
-              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
+	              	<div class="count" id="countContract"></div>
             </div>
           </div>
           <!-- /top tiles -->
            <div class="row">       	
-                <!-- Start to do list -->
+                 <!-- Start to do list -->
                  <div class="col-md-6 col-sm-6 col-xs-12" style="padding:0px;">
                 <div class="col-xs-12">
                   <div class="x_panel">
                     <div class="x_title">
                       <h2>To Do List</h2>
-                      <ul class="nav navbar-right panel_toolbox">
-                      <%-- <c:choose>
-            			<c:when test="${ todolist == null }">
-		           		<li><button type="button" class="btn btn-link" data-toggle="modal" data-target=".bs-example-modal-lg" style="float:right;">등록</button>
-                        </li>
-            			</c:when>
-            			<c:otherwise>
-						<li><button type="button" class="btn btn-link" data-toggle="modal" data-target=".bs-example-modal-lg" style="float:right;">수정</button>
-                        </li>
-            			</c:otherwise>
-            		  </c:choose> --%>
-            		  	<li><button type="button" class="btn btn-link" data-toggle="modal" data-target=".bs-example-modal-lg" style="float:right;">등록</button>
-                        </li>
-                        <!-- <li><button type="button" class="btn btn-link" data-toggle="modal" data-target=".bs-example-modal-lg" style="float:right;">수정</button>
-                        </li> -->
+                      <ul class="todo_1">
                       </ul>
                       <div class="clearfix"></div>
                     </div>
@@ -1010,10 +1210,15 @@ $(function(){
 	                      
 	                    </div>
 	                  </div>
-	                  <div class="col-sm-8">
+	                  <div class="col-sm-2">
+	                    <div class="weather-text">
+	                      <h2 class="todayDesc"></h2>
+	                    </div>
+	                  </div>
+	                  <div class="col-sm-6">
 	                    <div class="weather-text">
 	                      <h2 class="degrees todayTemp">현재기온 : </h2>
-	                      <h2 class="todayDesc"></h2>
+	                      <h2 class="todayRain">강수량 : </h2>
 	                    </div>
 	                  </div>
 	                </div>
@@ -1027,51 +1232,41 @@ $(function(){
 	                <div class="clearfix"></div>
 	              </div>
 	            </div>	
-	          <!-- </div> -->
 	          <!-- end of weather widget -->
+	          
 	          <!-- start of notice widget -->
 	          
 	          <div class="col-xs-12">
 	            <div class="x_panel">
 	              <div class="x_title">
 	                <h2>Notice </h2> 
-	                <ul class="nav navbar-right panel_toolbox">	                 
-	                  <li><a class="#"><i class="fa fa-plus"></i> 더보기</a>
-	                  </li>
-	                </ul>
+	                 <ul style="float:right;">	                 
+	                  <a href="noticeList.do?page=1"><i class="fa fa-plus"></i> 더보기</a>
+	                  
+	               </ul>
 	                
 	                <div class="clearfix"></div> 
 	              </div>
 	              <div class="x_content">
-	              	<ul class="notice_list">
-	              		<li><span>2018.04.30</span>&nbsp;&nbsp;<a href="">공지사항 들어갈 자리입니다.</a></li>
-	              		<li><span>2018.04.30</span>&nbsp;&nbsp;<a href="">GROUP BEAN 서비스 점검 일정입니다.</a></li>
-	              		<li><span>2018.04.30</span>&nbsp;&nbsp;<a href="">2018년 5월 1일 개최예정이었던 영업회의는 연기되었습니다.</a></li>
-	              		<li><span>2018.04.30</span>&nbsp;&nbsp;<a href="">공지사항 들어갈 자리입니다.</a></li>
-	              		<li><span>2018.04.30</span>&nbsp;&nbsp;<a href="">GROUP BEAN 서비스 점검 일정입니다.</a></li>
-	              	</ul>
+	              <div id="latest_notice"></div>
+	              	
 	               
 	                <div class="clearfix"></div>
 	              </div>
 	            </div>	
 	          </div>
 	           <!-- end of notice widget -->
-          <!-- </div> -->
-
-          <!-- <div class="row"> -->
 
             
 
             <div class="col-xs-12">
               <div class="x_panel tile">
                 <div class="x_title">
-                  <h2>이번달 판매량</h2>
+                  <h2>이번달 제품 판매율</h2>
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                  <div class="pie">
-                  <canvas id="myChart"></canvas>
-                  </div>
+                 	<div id="container" style="min-width:200px; height: 300px; max-width: 500px; margin: 0 auto"></div>
                 </div>
               </div>
             </div>
@@ -1096,62 +1291,90 @@ $(function(){
     <script src="resources/vendors/iCheck/icheck.min.js"></script>
   
     <!-- Custom Theme Scripts -->
-     <script src="resources/fullcalendar-3.9.0/lib/tooltipster.bundle.min.js"></script>
+    <script src="resources/fullcalendar-3.9.0/lib/tooltipster.bundle.min.js"></script>
     <script src="resources/build/js/custom.min.js"></script>    	
     <script src="resources/fullcalendar-3.9.0/lib/moment.min.js"></script> 
    	<script src="resources/fullcalendar-3.9.0/fullcalendar.js"></script>
-   	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
-   	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
-   	<script>
-  	var amount=[];
-	var pname=[];
-  		
-	$.ajax({
-		url:"productShare.do",
-		type:"post",
-		dataType:"json",
-		success: function(data) {
-			var objStr =JSON.stringify(data);
-			var result = JSON.parse(objStr);				
-			
-			for(var i in result.list){
-				amount.push(result.list[i].total);
-				pname.push(result.list[i].product_name);
-			}			
-		} 
-	});//ajax  
-	 
-   		
-	 var ctx = document.getElementById("myChart");
-	 var myChart = new Chart(ctx, {
-	     type: 'pie',
-	     data: {
-	         labels: pname,
-	         datasets: [{
-	             data: amount,
-	             backgroundColor: [
-	                 'rgba(59, 81, 89)',
-	                 'rgba(163, 201, 217)',
-	                 'rgba(217, 179, 132)',
-	                 'rgba(140, 110, 84)',
-	                 'rgba(191, 146, 107)'
-	             ]
-	         }]
-	     },
-	     options: {
-	    	 responsive: true,
-	   	    	maintainAspectRatio: false,
-		   	     legend: {
-		             display: true,
-		             position:'right'
-		         }
-	     }
-	 });
+   
+   <script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+	<script src="https://code.highcharts.com/modules/export-data.js"></script>
+    
 
-	    
-   $(function(){
-    	
-    	var city = '${loginEmp.getCity()}';
+   	<script>
+   	var amount=[];
+	var pname=[];
+	var c_data=[];
+ 	 $(function(){
+		  $.ajax({
+			url:"productShare.do",
+			type:"post",
+			dataType:"json",
+			success: function(data) {
+				
+				var objStr =JSON.stringify(data);
+				var result = JSON.parse(objStr);				
+				
+				for ( var i in result.list) {
+					c_data[i] = {
+							name :result.list[i].product_name,
+							y : result.list[i].total
+						};
+					}
+				getChart();
+			} 
+		
+	});//ajax
+	
+  })
+	
+	function getChart(){
+	  Highcharts.chart('container', {
+		  chart: {
+		    plotBackgroundColor: null,
+		    plotBorderWidth: null,
+		    plotShadow: false,
+		    type: 'pie'
+		  },
+		  title: {
+		    text: ''
+		  },
+		  tooltip: {
+		    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+		  },
+   		  exporting:{
+   			 'enabled':false 
+   		  },
+		  plotOptions: {
+		    pie: {
+		      allowPointSelect: true,
+		      cursor: 'pointer',
+		      dataLabels: {
+		        enabled: false
+		      },
+		      showInLegend: true
+		    }
+		  },
+		  colors:[
+			    "#3b5159",
+			    "#a3c9d9",
+			    "#d9b384",
+			    "#8c6e54",
+			    "#6c8aa2"
+		  ],
+		  series: [{
+		    name: '점유율',
+		    colorByPoint: true,
+		    data:c_data
+		  }]
+		});
+  }
+
+		
+
+	/*
+	function getWeather(){
+		var city = '${loginEmp.getCity()}';
 		var county = '${loginEmp.getCounty()}';
 		var village = '${loginEmp.getVillage()}';
 
@@ -1167,21 +1390,22 @@ $(function(){
 			url:'https://api2.sktelecom.com/weather/current/hourly?version=1&callback=result',
 			async:false,
 			success : function(data){
-				//console.log(data);
+				console.log(data);
 				var todayDate = data["weather"]["hourly"][0]['timeRelease'];
 				var todayTemp = Math.round(data["weather"]["hourly"][0]['temperature']['tc']);
 				var todayMinTemp = Math.round(data["weather"]["hourly"][0]['temperature']['tmin']);
 				var todayMaxTemp = Math.round(data["weather"]["hourly"][0]['temperature']['tmax']);
 				var todayDesc = data["weather"]["hourly"][0]['sky']['name'];
 				var todayIcon = data["weather"]["hourly"][0]['sky']['code'];
-				var todayTimeRelease = data["weather"]["hourly"][0]['timeRelease'];
+				var todayRain = data["weather"]["hourly"][0]['precipitation']['sinceOntime'];
 				var year = todayDate.substring(0,4);
 				var month = todayDate.substring(6,7);
 				var day = todayDate.substring(9,10);
 					$(".todayDate").append(year+"년 "+month+"월 "+day+"일" );						
 					$(".todayMinTemp").append(todayMinTemp);		
 					$(".todayMaxTemp").append(todayMaxTemp);		
-					$(".todayTemp").append(todayTemp);
+					$(".todayTemp").append(todayTemp);		
+					$(".todayRain").append(todayRain);
 					$(".todayDesc").html(todayDesc);
 				var icon;
 				switch(todayIcon){
@@ -1209,8 +1433,12 @@ $(function(){
 				}
 			
 		}); //end of ajax
-		
+	}
+	    
+   $(function(){
+	  getWeather();
 	});  
+   */
 	    
 		
 

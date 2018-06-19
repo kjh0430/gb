@@ -125,6 +125,7 @@
 	
 	<!-- 거래중인 거래처 리스트 mapping -->
 	<select id="selectAccountClient" resultMap="resultAccountClient" parameterType="client">
+	
 	<if test="job_no ==3|| job_no==2">
 		<![CDATA[
 			select * from (
@@ -132,7 +133,7 @@
 			where rn between #{startPage} and #{endPage}
 		]]>	
 	</if>
-	<if test="job_no ==1">
+	<if test="job_no==1">
 		<![CDATA[
 			select * from (
 			(select rownum as rn, A.* from (select * from client where emp_no = #{emp_no} and client_contract = 'Y') A))
@@ -140,12 +141,13 @@
 		]]>
 	
 	</if>
-		
+	
 	</select>
 	
 	<!-- 거래중인 고객사 리스트카운트 -->
 	<select id="clCount" parameterType="client" resultType="int">
-	
+		
+		<if test="client_company==null">
 		<if test="job_no==3|| job_no==2">
 		<![CDATA[
 			select count(*) from client where client_contract = 'Y'
@@ -155,6 +157,20 @@
 			<![CDATA[
 				select count(*) from client where emp_no = #{emp_no} and client_contract = 'Y'
 			]]>
+		
+		</if>
+		</if>
+		<if test="client_company!=null">
+		<if test="job_no==1">
+	<![CDATA[
+		select count(*) from client where client_contract = 'Y' and emp_no=#{emp_no} and client_company=#{client_company}
+	]]>
+	</if>
+	<if test="job_no==2 || job_no==3">
+	<![CDATA[
+		select count(*) from client where client_contract = 'Y' and client_company=#{client_company}
+	]]>
+	</if>
 		
 		</if>
 	</select>
@@ -205,9 +221,17 @@
 				client_addr = #{client_addr},
 				client_phone = #{client_phone},
 				client_contract	= #{client_contract},
-				client_comment = #{client_comment}	
-				
+				client_comment = #{client_comment}
 		]]>
+		
+	</update>
+	
+	<!-- 고객관련 첨부파일 수정 -->
+	<update id="deleteClientFile" parameterType="_int">
+		<![CDATA[
+			delete from client_file
+			where client_file_no = #{client_file_no}
+		]]>	
 	</update>
 	
 	<!-- 이메일 조회로 특정고객 조회 -->
@@ -306,7 +330,7 @@
 		]]>
 	</select>
 	
-	<select id="conditionClient" parameterType="client" resultType="int">
+	<!-- <select id="conditionClient" parameterType="client" resultType="int">
 	
 	
 	<if test="job_no==1">
@@ -321,21 +345,23 @@
 	</if>
 	
 	
-	</select>
+	</select> -->
 	
- 	<select id="selectConditionList" parameterType="client" resultMap="resultAccountClient">
+ 	 <select id="selectConditionList" parameterType="client" resultMap="resultAccountClient">
 	<if test="job_no==1">
 	<![CDATA[
 	select * from (
-			(select rownum as rn, A.* from (select * from client where client_contract = 'Y' and emp_no=#{emp_no} and client_company=#{client_company} order by client_enroll desc) A))
-			where rn between #{startRow} and #{endRow}
+	(select rownum as rn, A.* from (select * from client where client_contract = 'Y' and emp_no=#{emp_no} 
+	and client_company like '%'||#{client_company}||'%' order by client_enroll desc) A))
+	where rn between #{startPage} and #{endPage}
 	]]>
 	</if>
 	<if test="job_no==2 || job_no==3">
 	<![CDATA[
 	select * from (
-			(select rownum as rn, A.* from (select * from client where client_contract = 'Y' and client_company=#{client_company} order by client_enroll desc) A))
-			where rn between #{startRow} and #{endRow}
+	(select rownum as rn, A.* from (select * from client where client_contract = 'Y'
+	and client_company like '%'||#{client_company}||'%' order by client_enroll desc) A))
+	where rn between #{startPage} and #{endPage}
 	]]>
 	</if>
 	</select>
