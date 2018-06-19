@@ -21,4 +21,28 @@ public class GoalServiceImpl implements GoalService{
 		return goalDao.selectAllGoalState();
 	}
 
+	@Override
+	public ArrayList<Goal> selectGoalStateListMonth(String gdata) {
+		
+		return goalDao.selectAllGoalStateMonth(gdata);
+	}
+
+	@Override
+	public Goal selectGoalContractMoneySum(int emp_no) {
+		
+		return goalDao.selectGoalContractMoneySum(emp_no);
+	}
+
+	@Override
+	public int insertGoal(Goal goal) {
+		
+		return goalDao.insertGoal(goal);
+	}
+
+	@Override
+	public int countGoal(Goal goal) {
+		
+		return goalDao.countGoal(goal);
+	}
+
 }

@@ -2,6 +2,7 @@ package com.crm.gb.goal.model.vo;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.ArrayList;
 
 import org.springframework.stereotype.Component;
 
@@ -30,28 +31,25 @@ public class Goal implements Serializable{
 	private int goal_money;
 	private Date goal_date;
 	
+	private String gdata;
+	
+	
+	//목표날짜 설정
+	private String goal_date_start;
+	
+	//총 계약 금액	
+	private int contract_money_sum;
+	
+	//목표설정 확인유무
+	private int goal_count;
 	
 	
 	public Goal() {}
 
 
-
-	@Override
-	public String toString() {
-		return "Goal [emp_no=" + emp_no + ", emp_name=" + emp_name + ", job_no=" + job_no + ", dept_no=" + dept_no
-				+ ", contract_no=" + contract_no + ", contract_discount=" + contract_discount + ", contract_money="
-				+ contract_money + ", contract_date_start_goal=" + contract_date_start_goal + ", contract_date_start="
-				+ contract_date_start + ", goal_no=" + goal_no + ", goal_money=" + goal_money + ", goal_date="
-				+ goal_date + "]";
-	}
-
-	
-	
-
-
 	public Goal(int emp_no, String emp_name, int job_no, int dept_no, int contract_no, int contract_discount,
 			int contract_money, String contract_date_start_goal, Date contract_date_start, int goal_no, int goal_money,
-			Date goal_date) {
+			Date goal_date, String gdata, String goal_date_start, int contract_money_sum, int goal_count) {
 		super();
 		this.emp_no = emp_no;
 		this.emp_name = emp_name;
@@ -65,8 +63,22 @@ public class Goal implements Serializable{
 		this.goal_no = goal_no;
 		this.goal_money = goal_money;
 		this.goal_date = goal_date;
+		this.gdata = gdata;
+		this.goal_date_start = goal_date_start;
+		this.contract_money_sum = contract_money_sum;
+		this.goal_count = goal_count;
 	}
 
+
+	@Override
+	public String toString() {
+		return "Goal [emp_no=" + emp_no + ", emp_name=" + emp_name + ", job_no=" + job_no + ", dept_no=" + dept_no
+				+ ", contract_no=" + contract_no + ", contract_discount=" + contract_discount + ", contract_money="
+				+ contract_money + ", contract_date_start_goal=" + contract_date_start_goal + ", contract_date_start="
+				+ contract_date_start + ", goal_no=" + goal_no + ", goal_money=" + goal_money + ", goal_date="
+				+ goal_date + ", gdata=" + gdata + ", goal_date_start=" + goal_date_start + ", contract_money_sum="
+				+ contract_money_sum + ", goal_count=" + goal_count + "]";
+	}
 
 
 	public int getEmp_no() {
@@ -74,11 +86,9 @@ public class Goal implements Serializable{
 	}
 
 
-
 	public void setEmp_no(int emp_no) {
 		this.emp_no = emp_no;
 	}
-
 
 
 	public String getEmp_name() {
@@ -86,11 +96,9 @@ public class Goal implements Serializable{
 	}
 
 
-
 	public void setEmp_name(String emp_name) {
 		this.emp_name = emp_name;
 	}
-
 
 
 	public int getJob_no() {
@@ -98,11 +106,9 @@ public class Goal implements Serializable{
 	}
 
 
-
 	public void setJob_no(int job_no) {
 		this.job_no = job_no;
 	}
-
 
 
 	public int getDept_no() {
@@ -110,11 +116,9 @@ public class Goal implements Serializable{
 	}
 
 
-
 	public void setDept_no(int dept_no) {
 		this.dept_no = dept_no;
 	}
-
 
 
 	public int getContract_no() {
@@ -122,11 +126,9 @@ public class Goal implements Serializable{
 	}
 
 
-
 	public void setContract_no(int contract_no) {
 		this.contract_no = contract_no;
 	}
-
 
 
 	public int getContract_discount() {
@@ -134,11 +136,9 @@ public class Goal implements Serializable{
 	}
 
 
-
 	public void setContract_discount(int contract_discount) {
 		this.contract_discount = contract_discount;
 	}
-
 
 
 	public int getContract_money() {
@@ -146,11 +146,9 @@ public class Goal implements Serializable{
 	}
 
 
-
 	public void setContract_money(int contract_money) {
 		this.contract_money = contract_money;
 	}
-
 
 
 	public String getContract_date_start_goal() {
@@ -158,11 +156,9 @@ public class Goal implements Serializable{
 	}
 
 
-
 	public void setContract_date_start_goal(String contract_date_start_goal) {
 		this.contract_date_start_goal = contract_date_start_goal;
 	}
-
 
 
 	public Date getContract_date_start() {
@@ -170,11 +166,9 @@ public class Goal implements Serializable{
 	}
 
 
-
 	public void setContract_date_start(Date contract_date_start) {
 		this.contract_date_start = contract_date_start;
 	}
-
 
 
 	public int getGoal_no() {
@@ -182,11 +176,9 @@ public class Goal implements Serializable{
 	}
 
 
-
 	public void setGoal_no(int goal_no) {
 		this.goal_no = goal_no;
 	}
-
 
 
 	public int getGoal_money() {
@@ -194,11 +186,9 @@ public class Goal implements Serializable{
 	}
 
 
-
 	public void setGoal_money(int goal_money) {
 		this.goal_money = goal_money;
 	}
-
 
 
 	public Date getGoal_date() {
@@ -206,11 +196,49 @@ public class Goal implements Serializable{
 	}
 
 
-
 	public void setGoal_date(Date goal_date) {
 		this.goal_date = goal_date;
 	}
 
+
+	public String getGdata() {
+		return gdata;
+	}
+
+
+	public void setGdata(String gdata) {
+		this.gdata = gdata;
+	}
+
+
+	public String getGoal_date_start() {
+		return goal_date_start;
+	}
+
+
+	public void setGoal_date_start(String goal_date_start) {
+		this.goal_date_start = goal_date_start;
+	}
+
+
+	public int getContract_money_sum() {
+		return contract_money_sum;
+	}
+
+
+	public void setContract_money_sum(int contract_money_sum) {
+		this.contract_money_sum = contract_money_sum;
+	}
+
+
+	public int getGoal_count() {
+		return goal_count;
+	}
+
+
+	public void setGoal_count(int goal_count) {
+		this.goal_count = goal_count;
+	}
 
 
 	public static long getSerialversionuid() {
@@ -220,9 +248,14 @@ public class Goal implements Serializable{
 
 
 	
-	
+
 
 	
+	
+	
+	
+
+
 	
 	
 	
