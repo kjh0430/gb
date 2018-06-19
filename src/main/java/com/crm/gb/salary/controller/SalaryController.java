@@ -31,12 +31,37 @@ public class SalaryController {
 	
 	/** 급여관련 사원리스트 화면출력 */
 	@RequestMapping("empSalary.do")
-	public String empSalaryList(Salary salary, Model model) {
+	public String empSalaryList(Salary salary, Model model,
+			@RequestParam(value="startPage", defaultValue="1") int startPage) {
 		logger.info("급여관련 사원리스트 실행");
 		
 		ArrayList<Salary> salaryList = salaryService.selectSalaryList();
 		
+			salary.setShowPage(10); //보여줄 페이지 수
+			salary.setTotalRow(salaryList.size());	// 총 회원 수
+			salary.setStart(startPage);	// 시작페이지
+			
+			int showPage = salary.getShowPage();
+			int totalRow = salary.getTotalRow();
+			int start = (salary.getStart() - 1)*showPage+1;
+			int end = start+9;
+			int currentPage = 1;
+	
+			salary.setStartRow(start);	// 시작 열
+			salary.setEndRow(end);	// 끝 열
+			
+			if(totalRow%showPage != 0) {	// 끝페이지
+				salary.setEnd((totalRow/showPage)+1);
+			}else {
+				salary.setEnd(totalRow/showPage);
+			}
+		
+			ArrayList<Salary> list = salaryService.selectSalaryPageList(salary);
+			
 		model.addAttribute("salaryList", salaryList);
+		model.addAttribute("salaryPageList", list);
+		model.addAttribute("start", currentPage);
+		model.addAttribute("end", salary.getEnd());
 		
 		return "emp/empSalary";
 	}

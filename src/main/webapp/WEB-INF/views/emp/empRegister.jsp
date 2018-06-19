@@ -17,9 +17,6 @@
 <!-- Font Awesome -->
 <link href="resources/vendors/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet">
-
-
-
 <!-- Custom Theme Style -->
 <link href="resources/build/css/custom.min.css" rel="stylesheet">
 <link href="resources/css/main.css" rel="stylesheet">
@@ -39,17 +36,10 @@
 
 $(function(){
 	
-
-
 /* if("${loginEmp==null}"){
 	location.href="view.do";
 } */
-	
 
-
-
-	
-	
 var allCheck=false;
 
 $('#emp_phone').blur(function(){
@@ -341,20 +331,10 @@ text-align:center;
 									<h2>사원등록</h2>
 									<div class="clearfix"></div>
 								</div>
-								<div class="x_content">
-									
-									
+								<div class="x_content">									
 									
 					<!-- 사원 등록 -->
 					<form class="form-horizontal form-label-left">
-					<!-- <form class="form-horizontal form-label-left" action="empinsert.do" method="post"> -->
-
-                      <!-- <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">사원번호 *</label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input class="form-control" id="emp_no" name="emp_no" type="text" placeholder="사원번호">
-                        </div>
-                      </div> -->
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">이름 *</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -434,7 +414,14 @@ text-align:center;
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                          <button class="btn btn-success" type="button" onclick="Regiemp()">등록</button>
+                        <c:choose>
+			            	<c:when test="${ loginEmp.job_no == 3}">
+					            <button class="btn btn-success" type="button" onclick="Regiemp()">등록</button>
+			            	</c:when>
+			            	<c:otherwise>
+								<button class="btn btn-success" type="button" onclick="Regiemp()" disabled>등록</button>
+			            	</c:otherwise>
+			            </c:choose>
 								</div>
 							</div>
 						</div>
@@ -444,8 +431,7 @@ text-align:center;
 		</div>
 	</div>
 	<%@ include file="../etc/footer.jsp" %>
-	</div>
-	
+	</div>	
 	
 	<!-- modal -->
 	<div class="modal fade bs-example-modal-sm" id="mgrModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -462,8 +448,6 @@ text-align:center;
              </table>
              </div>
              <div class="modal-footer">
-             <!-- <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-             <button type="button" class="btn btn-primary">등록</button> -->
              </div>
 
            </div>
@@ -471,14 +455,12 @@ text-align:center;
     </div>
 	<!-- /page content -->
 
-
 	</div>
 
 	<!-- jQuery -->
 	<script src="resources/vendors/jquery/dist/jquery.min.js"></script>
 	<!-- Bootstrap -->
-	<script src="resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-	
+	<script src="resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>	
 
 	<!-- Custom Theme Scripts -->
 	<script src="resources/build/js/custom.min.js"></script>

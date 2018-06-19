@@ -29,6 +29,11 @@ public class SalaryDao {
 	public Emp selectEmpJob(int emp_no) {
 		return sqlSession.selectOne("salary.empJob", emp_no);
 	}
+
+	/** 급여리스트 페이지 조회 */
+	public ArrayList<Salary> selectSalaryPageList(Salary salary) {
+		return (ArrayList)sqlSession.selectList("salary.selectSalaryPageList", salary);
+	}
 	
 	
 }

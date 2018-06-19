@@ -26,5 +26,10 @@ public class DailyworkServiceImpl implements DailyworkService{
 		return dailyworkDao.selectVisit(dw);
 	}
 	
+	/** 방문내역 리스트 */
+	@Override
+	public ArrayList<Dailywork> selectDailyHistory(int client_no) {
+		return dailyworkDao.selectDailyHistory(client_no);
+	}
 
 }
