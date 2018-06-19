@@ -53,12 +53,21 @@
 	
 	
 	
+	<script>
+	$(function(){
+	
+		if(${loginEmp==null}){
+			location.href="view.do";
+		}
+	});
+	</script>
 	<script type="text/javascript">
 	
 	var emp_no = ${loginEmp.emp_no};
 
 	var mNotify;
-	$(function(){
+	$(function(){	
+		
 		selectNotify();
 		var mobile = [	        
 	        'iphone', 'ipad', 'windows ce', 'android', 'blackberry', 'nokia',
