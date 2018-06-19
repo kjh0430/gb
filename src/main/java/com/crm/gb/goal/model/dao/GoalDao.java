@@ -18,6 +18,25 @@ public class GoalDao {
 		return (ArrayList)sqlSession.selectList("Goal.selectAllGoalState");
 	}
 
+	public ArrayList<Goal> selectAllGoalStateMonth(String gdata) {
+		
+		return (ArrayList)sqlSession.selectList("Goal.selectAllGoalStateMonth",gdata);
+	}
+
+	public Goal selectGoalContractMoneySum(int emp_no) {
+		
+		return sqlSession.selectOne("Goal.selectGoalContractMoneySum",emp_no);
+	}
+
+	public int insertGoal(Goal goal) {
+		
+		return sqlSession.insert("Goal.insertGoal", goal);
+	}
+
+	public int countGoal(Goal goal) {
+		
+		return sqlSession.selectOne("Goal.selectCountGoal",goal);
+	}
 	public ArrayList<Goal> selectEmpCondition(Goal goal) {
 		
 		return (ArrayList)sqlSession.selectList("Goal.selectEmp",goal);
@@ -31,6 +50,7 @@ public class GoalDao {
 	public ArrayList<Goal> selectEmpAll() {
 		
 		return (ArrayList)sqlSession.selectList("Goal.selectEmpAll");
+
 	}
 
 }

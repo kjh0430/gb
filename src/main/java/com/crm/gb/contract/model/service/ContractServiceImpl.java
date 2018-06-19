@@ -21,6 +21,13 @@ public class ContractServiceImpl implements ContractService {
 		return contractDao.selectAllList(emp_no);
 	}
 	
+	/** 계약된 고객수 */
+	@Override
+	public int selectCountContract(int emp_no) {
+		// TODO Auto-generated method stub
+		return contractDao.selectCountContract(emp_no);
+	}
+	
 	/** 계약리스트 검색 */
 	@Override
 	public ArrayList<Contract> selectContractList(ContractSearchList contractSearch) {

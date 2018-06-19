@@ -11,10 +11,19 @@ public interface GoalService {
 
 	public abstract ArrayList<Goal> selectGoalStateList();
 
+	public abstract ArrayList<Goal> selectGoalStateListMonth(String gdata);
+
+	public abstract Goal selectGoalContractMoneySum(int emp_no);
+
+	public abstract int insertGoal(Goal goal);
+
+	public abstract int countGoal(Goal goal);
+
 	public abstract ArrayList<Goal> selectEmpCondition(Goal goal);
 
 	public abstract ArrayList<Goal> selectEmpGoal(Goal goal); //사원별 목표 상세 가져오기
 
 	public abstract ArrayList<Goal> selectEmpAll(); //모든 사원들의 목표 등등..
+
 
 }

@@ -399,7 +399,7 @@ $(function(){
 	       			values = "입력된 값이 없습니다.";
 	       			$(".to_do").html(values);
 	       			
-	       			values2 = '<li><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target=".bs-example-modal-lg" style="float:right;">등록</button></li>';
+	       			values2 = '<button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target=".bs-example-modal-lg" style="float:right;">등록</button>';
 	       			$(".todo_1").html(values2);
 	       			}
 	       		});
@@ -701,6 +701,26 @@ $(function(){
        			
        		}
 		});
+		
+		// 등록된 고객수
+		$.ajax({
+			url : "countContract.do",
+       		type: "post",
+       		dataType: "json",
+       		data: {
+       			emp_no :  '${loginEmp.emp_no}'
+       		},
+       		success:function(data){
+       			
+       			var objStr = JSON.stringify(data);
+				var json = JSON.parse(objStr);
+       			var count = json.contractCount;
+       			
+       			$('#countContract').html(count);
+       			
+       		}
+		});
+		
 	});
 
 </script>
@@ -766,7 +786,7 @@ $(function(){
      	 	<!-- top navigation -->
 			<c:import url="etc/topnav.jsp"></c:import>
 			<!-- /top navigation -->
-
+	
         <!-- page content -->
         <div class="right_col" role="main">
           <!-- top tiles -->
@@ -788,8 +808,7 @@ $(function(){
             </div>
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i> 신규거래처수</span>
-              <div class="count">2,315</div>
-              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
+	              	<div class="count" id="countContract"></div>
             </div>
           </div>
           <!-- /top tiles -->

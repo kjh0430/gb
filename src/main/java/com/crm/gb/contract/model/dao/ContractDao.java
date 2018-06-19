@@ -44,6 +44,11 @@ public class ContractDao {
 	public ArrayList<Contract> selectContractList(ContractSearchList contractSearch) {
 		return (ArrayList)sqlSession.selectList("contract.searchContractList", contractSearch);
 	}
+
+	/** 계약된 고객수 */
+	public int selectCountContract(int emp_no) {
+		return sqlSession.selectOne("contract.countContract", emp_no);
+	}
 	
 	
 }

@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,16 +15,12 @@
 <title>GROUP BEAN |</title>
 
 <!-- Bootstrap -->
-<link href="resources/vendors/bootstrap/dist/css/bootstrap.min.css"
-	rel="stylesheet">
+<link href="resources/vendors/bootstrap/dist/css/bootstrap.min.css"	rel="stylesheet">
 <!-- Font Awesome -->
-<link href="resources/vendors/font-awesome/css/font-awesome.min.css"
-	rel="stylesheet">
+<link href="resources/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
 <!-- iCheck -->
-<link href="resources/vendors/iCheck/skins/flat/green.css"
-	rel="stylesheet">
-
+<link href="resources/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
 
 <!-- Custom Theme Style -->
 <link href="resources/build/css/custom.min.css" rel="stylesheet">
@@ -32,21 +28,28 @@
 
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
-$(document).ready(function() {
-    $('#table_pl').dataTable( {
-        ordering:false,
-        lengthChange:false,
-        paging:false,
-        searching:false,
-        info:false
-    } );
-} );
+	$(document).ready(function() {
+		$('#table_pl').dataTable({
+			ordering : false,
+			lengthChange : false,
+			paging : false,
+			searching : false,
+			info : false
+		});
+	});
 
-/*  function goToDetail(page){
-   var index=page;
-return index;
-} */
+	/*  function goToDetail(page){
+	 var index=page;
+	 return index;
+	 } */
 
+	 //제픔 검색시 ajax or form
+	 
+	 
+	 
+	 
+	 
+	 
 </script>
 </head>
 
@@ -57,8 +60,8 @@ return index;
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="mainView.do" class="site_title"><i class="fa fa-google"></i>
-							<span>GROUP BEAN</span></a>
+						<a href="mainView.do" class="site_title"><i
+							class="fa fa-google"></i> <span>GROUP BEAN</span></a>
 					</div>
 
 					<div class="clearfix"></div>
@@ -82,8 +85,8 @@ return index;
 
 				</div>
 			</div>
-			
-			
+
+
 
 			<!-- top navigation -->
 			<c:import url="../etc/topnav.jsp"></c:import>
@@ -94,9 +97,7 @@ return index;
 				<div class="">
 					<div class="page-title">
 						<div class="title_left">
-							<h3>
-								제품목록
-							</h3>
+							<h3>제품목록</h3>
 						</div>
 					</div>
 
@@ -106,14 +107,26 @@ return index;
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
 								<c:if test="${ loginEmp.job_no == 3}">
-								<div class="x_title" style="text-align:right">
-									<button class="btn btn-primary" onclick="location.href='moveProductInsert.do'">제품등록</button>
-									<div class="clearfix"></div>
-								</div>
+									<div class="x_title" style="text-align: right">
+										<button class="btn btn-primary"
+											onclick="location.href='moveProductInsert.do'">제품등록</button>
+										<div class="clearfix"></div>
+									</div>
 								</c:if>
+								<!-- 검색 바 -->
 								<div class="x_content">
-									
-									<table id="table_pl" class="table table-striped table-bordered table-responsive" style="min-width:550px;">
+									<select name="selectProductType" style="height:20px;">
+										<option val="1">제품번호</option>
+										<option val="2">제 품 명</option>
+									</select> <input type="text" name="keyword" />
+									<button onclick="">검색</button>
+								</div>
+								<!-- 검색 바 종료 -->
+								<div class="x_content">
+
+									<table id="table_pl"
+										class="table table-striped table-bordered table-responsive"
+										style="min-width: 550px;">
 										<thead>
 											<tr>
 												<th>제품번호</th>
@@ -123,23 +136,23 @@ return index;
 											</tr>
 										</thead>
 										<tbody>
-											<c:forEach items="${pageList}" var="li"> 
-											<tr>
-												<td>${li.product_no}</td>
-												<td><a href=moveproductDetail.do?data=${li.product_no}>${li.product_name}</a></td>
-												<td>${li.product_price}</td>
-												<td>${li.product_availability}</td>
-											</tr>
+											<c:forEach items="${pageList}" var="li">
+												<tr>
+													<td>${li.product_no}</td>
+													<td><a href=moveproductDetail.do?data=${li.product_no}>${li.product_name}</a></td>
+													<td>${li.product_price}</td>
+													<td>${li.product_availability}</td>
+												</tr>
 											</c:forEach>
 										<tbody>
 									</table>
 								</div>
-							
-														  <!-- <ul class='pagination'> -->
-	        
-	      
-	        
-	        <%--  <c:set var="startPage" value="${startPage}"/>
+
+								<!-- <ul class='pagination'> -->
+
+
+
+								<%--  <c:set var="startPage" value="${startPage}"/>
 	        <c:choose>
 	        <c:when test="${startPage>5}">
 	          <li class='page-item'><a class='page-link' href='productListE.do?page=${startPage-1}'>PREV</a></li>
@@ -170,25 +183,25 @@ return index;
 	        </c:otherwise>
 	        </c:choose>
 	        </ul> --%>
-							
-								<div style="text-align:center;">
+
+								<div style="text-align: center;">
 									<c:forEach var="i" begin="${ startPage }" end="${ endPage }">
 										<a id="listNumber" href="productListE2.do?startPage=${ i }">${ i }</a>
 									</c:forEach>
 								</div>
-							
+
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			   <%@ include file="../etc/footer.jsp" %>
+			<%@ include file="../etc/footer.jsp"%>
 		</div>
 	</div>
 	<!-- /page content -->
 
-	
-	
+
+
 
 	<!-- jQuery -->
 	<script src="resources/vendors/jquery/dist/jquery.min.js"></script>
@@ -222,7 +235,7 @@ return index;
 		src="resources/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
 	<script
 		src="resources/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-	
+
 
 	<!-- Custom Theme Scripts -->
 	<script src="resources/build/js/custom.min.js"></script>

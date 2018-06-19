@@ -76,4 +76,9 @@ public class ProductServiceImpl implements ProductService {
 
 	}
 
+	@Override
+	public ArrayList<Product> selectSearchProduct(Product product) {
+		return productDao.productSearch(product);
+	}
+
 }

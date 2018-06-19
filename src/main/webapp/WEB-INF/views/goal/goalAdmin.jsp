@@ -54,23 +54,54 @@ $(function(){
 	$('#goalMonth').change(function(){
 		var gdate=$('#goalMonth').val();
 		
-		alert(gdate);
+		/* alert("date: "+gdate); */
 		
 		
 		$.ajax({
 			url:"goalMonthList.do",
-			data:{ 
-				
-				
+			type:"post",
+			data: {
+				gdata:gdate
 			},
-			type:"",
+			dataType:"json",
 			success:function(data){
 				
+				var jsonStr = JSON.stringify(data);
+				var json = JSON.parse(jsonStr);
 				
+				
+				var values='';
+				for(var i in json.list){
+					 /* alert("이름"+json.list[i].emp_name);
+					alert("사원번호"+json.list[i].emp_no); */
+					/* alert("총금액"+json.list[i].contract_money);
+					alert("시작날짜 "+json.list[i].contract_date_start_goal);  */
+					
+					
+					
+					values += 
+						"<tr><td>"+json.list[i].emp_no+"</td>"+
+						"<td>"+decodeURIComponent(json.list[i].emp_name)+"</td>"+
+						"<td>"+json.list[i].contract_money+"</td>"+
+						"<td>"+decodeURIComponent(json.list[i].contract_date_start_goal)+"</td>"+													
+						"<td><a class='btn btn-primary btn-modify' href='goalAdminDetail.do?emp_no="+json.list[i].emp_no+"&emp_name="+decodeURIComponent(json.list[i].emp_name)+"&contract_money="+json.list[i].contract_money+"&contract_date_start_goal="+decodeURIComponent(json.list[i].contract_date_start_goal)+"'>수정</a></td></tr>"
+						
+								
+						/* "<td><a class='btn btn-primary btn-modify' href='goalAdminDetail.do?emp_no="+json.list[i].emp_no+"&emp_name="+decodeURIComponent(json.list[i].emp_name)+"&contract_money="+json.list[i].contract_money+"'>수정</a></td></tr>" */
+						/* "<td><a class='btn btn-primary btn-modify' href='goalAdminDetail.do?emp_name="+decodeURIComponent(json.list[i].emp_name)+"&'>수정</a></td></tr>" */
+						
+						
+					
+				}
+				
+				$('#goalListMonth').html(values);
+			},
+			error : function(a, b, c) {
+				console.log(a + b + c);
 			}
 			
 			
-		})
+		});
 		
 		
 	});
@@ -269,7 +300,7 @@ function goalAdminDetail(){
 							<div class="x_panel">
 								<div class="x_title">
 									<h2>
-										5월 목표관리
+										목표관리
 									</h2>
 									<div class="clearfix"></div>
 								</div>
@@ -287,12 +318,12 @@ function goalAdminDetail(){
 												<th>사원명</th>
 												<th>총 실적(월)</th>
 												<th>(월)</th>
-												<th>이번달 목표</th>
-												<th>수정1</th>
-												<th>수정2</th>
+												<!-- <th>이번달 목표</th>
+												<th>수정1</th> -->
+												<th>수정</th>
 											</tr>
 										</thead>
-										<tbody>
+										<tbody id="goalListMonth">
 										
 											<c:forEach var="goalList" items="${goalStateList}">
 												<c:choose>
@@ -302,13 +333,13 @@ function goalAdminDetail(){
 													</c:when>
 													<c:otherwise>
 														<tr>
-															<td>${goalList.emp_no}</td>
+															<td>${goalList.emp_no}</td> 
 															<td>${goalList.emp_name}</td>												
 															<td>${goalList.contract_money}</td>
 															<td>${goalList.contract_date_start_goal}월</td>
-															<td><input type="text" value="삼번달이번달 목표" name="target_num"/></td>
-															<td><input type="button" class="btn btn-primary btn-modify" value="수정" name="target_modify" onsubmit="return goalAdminDetail();"/></td>
-															<td><a class="btn btn-primary btn-modify" href="goalAdminDetail.do?emp_no=${goalList.emp_no}">수정</a></td>
+															<!-- <td><input type="text" value="삼번달이번달 목표" name="target_num"/></td>
+															<td><input type="button" class="btn btn-primary btn-modify" value="수정" name="target_modify" onsubmit="return goalAdminDetail();"/></td> -->
+															<td><a class="btn btn-primary btn-modify" href="goalAdminDetail.do?emp_no=${goalList.emp_no}&emp_name=${goalList.emp_name}&contract_money=${goalList.contract_money}&contract_date_start_goal=${goalList.contract_date_start_goal}">수정</a></td>
 														</tr>
 													</c:otherwise>
 												</c:choose>

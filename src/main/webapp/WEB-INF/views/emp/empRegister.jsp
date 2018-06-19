@@ -56,9 +56,9 @@ $(function(){
 	
 
 
-if("${loginEmp==null}"){
+/* if("${loginEmp==null}"){
 	location.href="view.do";
-}
+} */
 	
 
 
@@ -212,7 +212,7 @@ function Regiemp(){
     		},
     		success:function(obj){
     				alert("사원이 등록 되었습니다.");
-    				location.href="empList.do";    			
+    				location.href="empList.do?page=1";    			
     			},
     			error: function(request, status, errorData){
     				console.log("error code : " + request.status + "\n"
@@ -229,19 +229,35 @@ function Regiemp(){
 <script type="text/javascript">
 
 function mgrList(){
+	
+	var job_no2 = $('#job_no option:selected').val();
+	console.log("job_no2 : " + job_no2);
+	
 	$.ajax({
 		url: "selectMgrList.do",
 		type : "post",
+		data: {
+			job_no2 : job_no2										    			
+		},
 		dataType : "json",
 		success : function(obj){
-			console.log("selectMgrList.do 실행");
+			console.log("selectMgrList.do 실행");			
 			var objStr = JSON.stringify(obj);
 			var jsonObj = JSON.parse(objStr);
-			var outValues = "<table id='mgrTable'><tr><th style='text-align:center;'>사원번호</th><th style='text-align:center;'>사원이름</th></tr>";
+			var outValues = "<table id='mgrTable'><tr><th style='text-align:center;'>직급</th><th style='text-align:center;'>사원번호</th><th style='text-align:center;'>사원이름</th></tr>";
 			
-			for(var i in jsonObj.mgrList){
-				outValues += "<tr onclick='selectMgrNo(this);'><td>" + jsonObj.mgrList[i].emp_no + "</td><td>" 
-				+ decodeURIComponent(jsonObj.mgrList[i].emp_name) + "</td></tr>";
+			if(job_no2 == 3){
+				outValues += "<tr><td id='mgrList3' colspan='3'>결과가 존재하지 않습니다.</td></tr>";
+			}else{
+				for(var i in jsonObj.mgrList){
+					if(job_no2 == 1){
+					outValues += "<tr onclick='selectMgrNo(this);'><td>팀장</td><td>" + jsonObj.mgrList[i].emp_no + "</td><td>" 
+					+ decodeURIComponent(jsonObj.mgrList[i].emp_name) + "</td></tr>";
+					}else if(job_no2 == 2){
+					outValues += "<tr onclick='selectMgrNo(this);'><td>관리자</td><td>" + jsonObj.mgrList[i].emp_no + "</td><td>" 
+					+ decodeURIComponent(jsonObj.mgrList[i].emp_name) + "</td></tr>";	
+					}
+				}
 			}
 			
 			outValues += "</table>";
@@ -263,8 +279,8 @@ function selectMgrNo(obj){
 	var tr = $(obj);
 	var td = tr.children();
 	
-	var emp_no = td.eq(0).text();
-	var emp_name = td.eq(1).text();
+	var emp_no = td.eq(1).text();
+	var emp_name = td.eq(2).text();
 	
 	$('#mgrModal').modal('hide');	
 	$('#emp_mgr').val(emp_no);
