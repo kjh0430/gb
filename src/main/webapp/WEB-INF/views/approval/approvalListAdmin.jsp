@@ -67,16 +67,23 @@ function modalUp(obj){
 	$('#mgrname').text("관리자"+"("+mgr_name+")");
 	
 	var value="";
-	if(approval_team_date=="" && ${loginEmp.job_no==2}){
+	if(approval_team_date=="" && ${loginEmp.job_no==2} &&){
         value="<button onclick='teamapproval();' type='button' class='btn btn-primary' style='float:right;'>승인</button>";	
              $('#manager').html(value);             
 	
+	}
+	if(approval_team_date!=null){
+		$('#manager').html("");
 	}
 	if(approval_team_date!=""  && ${loginEmp.job_no==3}) {
 		
 		 value="<button onclick='adminapproval();' type='button' class='btn btn-primary' style='float:right;'>승인</button>";
 	
 		 	$('#manager').html(value);
+	}
+	
+	if(approval_mgr_date!=null){
+		$('#manager').html("");
 	}
 	
 	if(approval_team_date!=""){
@@ -207,7 +214,7 @@ background-color:#2A3F54;
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
 								
-								<div class="x_content">
+								<div class="x_content" style="overflow:auto">
 									
 									
 									<div style="text-align:right">
@@ -215,7 +222,7 @@ background-color:#2A3F54;
 									<button class="btn btn-dark" style="margin:0 0 3px 0" onclick="searchCondition();">검색</button>
 									</div>
 									
-									<table id="table_ap" class="table table-striped table-bordered">
+									<table id="table_ap" class="table table-striped table-bordered table-responsive" style="min-width:500px;">
 										<thead>
 											<tr>
 												<th>사원 이름</th>

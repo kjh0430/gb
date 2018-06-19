@@ -283,17 +283,20 @@ $(document).ready(function() {
 								<div class="x_content">
 									<div class="dashboard-widget-content">
 										<ul class="list-unstyled timeline widget">
-											<li>
-												<div class="block">
-													<div class="block_content">
-														<h2 class="title">스타벅스 석촌호수 서호</h2>
-														<div class="byline">
-															<span>2018-02-05 10:34</span>
+										
+											<c:forEach var="list" items="${ dailyHistoryList }">
+												<li>
+													<div class="block">
+														<div class="block_content">
+															<h2 class="title">${ list.client_company }</h2>
+															<div class="byline">
+																<span>${ list.daily_date }</span>
+															</div>
+															<p class="excerpt">${ list.daily_comment }</p>
 														</div>
-														<p class="excerpt">방문일지에서 코멘트란에 쓴 내용들어갈 자리</p>
 													</div>
-												</div>
-											</li>
+												</li>
+											</c:forEach>
 											
 										</ul>
 									</div>

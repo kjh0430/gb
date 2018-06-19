@@ -30,7 +30,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.crm.gb.client.model.service.ClientService;
 import com.crm.gb.client.model.vo.Client;
 import com.crm.gb.client.model.vo.ClientFile;
-import com.crm.gb.message.model.vo.Message;
+import com.crm.gb.dailywork.model.service.DailyworkService;
+import com.crm.gb.dailywork.model.vo.Dailywork;
 
 /**
  * Handles requests for the application home page.
@@ -44,7 +45,8 @@ public class ClientController {
 	
 	@Autowired
 	private ClientService clientService;
-	
+	@Autowired
+	private DailyworkService dailyworkService;
 	
 	/** 신규고객 등록 화면이동 */
 	@RequestMapping("addClient.do")
@@ -343,17 +345,20 @@ public class ClientController {
 	/** 고객정보 상세보기 메소드 */
 	@RequestMapping("detailClient.do")
 	public String detailClient(Client client, Model model, 
-			ArrayList <ClientFile> clientFile, @RequestParam(value="client_no") String client_num) {
+			ArrayList <ClientFile> clientFile, @RequestParam(value="client_no") int client_no,
+			Dailywork dailyWork) {
 		logger.info("고객정보 상세보기 메소드 실행됨");
 		
-		int client_no=Integer.parseInt(client_num);
 		System.out.println("고객번호: "+client_no);	
+		
 		Client returnClient=clientService.selectClient(client_no);	//고객정보 조회
 		clientFile = clientService.selectClientFileList(client_no);	//고객 첨부파일 조회
-		
+		ArrayList<Dailywork> list = dailyworkService.selectDailyHistory(client_no);	// 방문내역 리스트
 			System.out.println("상세보기 정보: "+returnClient);
+		
 		model.addAttribute("detailClient", returnClient);
 		model.addAttribute("clientFileList", clientFile);
+		model.addAttribute("dailyHistoryList", list);
 		
 		return "client/poList_detail";
 	}
@@ -379,8 +384,11 @@ public class ClientController {
 			ArrayList <ClientFile> clientFile) {
 		Client returnClient=clientService.selectClient(client_no);
 		clientFile = clientService.selectClientFileList(client_no);	//고객 첨부파일 조회
+		ArrayList<Dailywork> list = dailyworkService.selectDailyHistory(client_no);	// 방문내역 리스트
+		
 		model.addAttribute("detailClient", returnClient);
 		model.addAttribute("clientFileList", clientFile);
+		model.addAttribute("dailyHistoryList", list);
 		
 		return "client/updateClient";
 	}

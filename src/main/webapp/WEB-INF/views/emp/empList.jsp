@@ -42,6 +42,49 @@ function list(page){
 }
 </script>
 
+<script type="text/javascript">
+
+function empSearch(){
+	
+	var emp_name = $('#searhEmpName').val();
+	
+	console.log("emp_name : " + emp_name);
+	
+	$.ajax({
+		url : "empSearch.do",
+		type: "post",
+		dataType: "json",
+		data: {
+			emp_name : emp_name
+		},
+		success:function(obj){
+			var objStr = JSON.stringify(obj);
+			var jsonObj = JSON.parse(objStr);
+			var outValues = "";
+			
+			for(var i in jsonObj.empSearch){
+				outValues += "<tr><td><a href=" + "empDetail.do?emp_no=" + jsonObj.empSearch[i].emp_no + ">" + decodeURIComponent(jsonObj.empSearch[i].emp_no)+ "</a></td>"
+						+ "<td><a href=" + "empDetail.do?emp_no=" + jsonObj.empSearch[i].emp_no + ">" + decodeURIComponent(jsonObj.empSearch[i].emp_name)+"</a></td>"
+						+ "<td>" + decodeURIComponent(jsonObj.empSearch[i].emp_addr) + "</td>"
+						+ "<td>" + decodeURIComponent(jsonObj.empSearch[i].emp_phone) + "</td>"
+						+ "<td>" + decodeURIComponent(jsonObj.empSearch[i].emp_email) + "</td></tr>";				
+			}
+			
+			$('table tbody').html(outValues);
+			
+		},
+		error: function(request, status, errorData){
+			console.log("error code : " + request.status + "\n"
+					+ "message : " + request.responseText + "\n"
+					+ "error : " + errorData);			
+		}
+	
+});
+	
+}
+
+</script>
+
 </head>
 
 
@@ -89,7 +132,7 @@ function list(page){
 					<div class="page-title">
 						<div class="title_left">
 							<h3>
-								인사관리
+								사원목록
 							</h3>
 						</div>
 					</div>
@@ -101,8 +144,14 @@ function list(page){
 							<div class="x_panel">
 								<div class="x_title">
 									<h2>
-										사원관리
+									
 									</h2>
+									<div class="input-group col-md-3 col-sm-3 col-xs-12" style="float:right;">
+                            		<input type="text" class="form-control" id="searhEmpName">
+                            		<span class="input-group-btn">
+                                    <button type="button" class="btn btn-primary" onclick="empSearch()">검색</button>
+                                    </span>
+               	      			    </div>
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
@@ -163,14 +212,12 @@ function list(page){
 							</div>
 						</div>
 					</div>
-				</div>
-			</div>
-		</div>
+				
 	</div>
 	</div>
 	<!-- /page content -->
 
-	
+		<%@ include file="../etc/footer.jsp" %>
 	</div>
 	</div>
 

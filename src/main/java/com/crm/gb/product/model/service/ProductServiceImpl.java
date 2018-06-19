@@ -81,4 +81,9 @@ public class ProductServiceImpl implements ProductService {
 		return productDao.productSearch(product);
 	}
 
+	@Override
+	public int deleteFile(ProductFile pf) {
+		return productDao.deleteFile(pf);
+	}
+
 }
