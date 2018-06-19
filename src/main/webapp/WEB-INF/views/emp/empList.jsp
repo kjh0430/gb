@@ -163,14 +163,12 @@ function list(page){
 							</div>
 						</div>
 					</div>
-				</div>
-			</div>
-		</div>
+				
 	</div>
 	</div>
 	<!-- /page content -->
 
-	
+		<%@ include file="../etc/footer.jsp" %>
 	</div>
 	</div>
 
