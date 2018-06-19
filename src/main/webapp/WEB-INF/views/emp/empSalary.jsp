@@ -105,7 +105,25 @@ $(function(){
 				var json = JSON.parse(obj);
 				var list = "";
 				
-				alert("성공");
+				for(var i in json.list) {
+					list += 
+						"<tr>"+
+							"<td><a onclick="+"'clickNames(${ list.emp.emp_no })'"+
+								"class="+"'showSalary'"+
+								"id="+"'showSalary'"+ 
+								"style="+"'cursor:pointer;'"+ 
+								"data-toggle="+"'modal'"+ 
+								"data-target="+"'#myModal'"+">"+
+								decodeURIComponent(json.list[i].emp_name)+"</a></td>"+
+							"<td>"+decodeURIComponent(json.list[i].dept_name)+"</td>"+
+							"<td>"+json.list[i].emp_phone+"</td>"+
+							"<td>"+json.list[i].sal+"</td>"+
+							"<td>"+json.list[i].sal_date+"</td>"+
+							"<td>"+json.list[i].emp_hiredate+"</td>"+
+						"</tr>";
+
+				}
+				$('table tbody').html(list);
 			}
 			
 		});
@@ -197,7 +215,7 @@ $(function(){
 												<th>입사일</th>
 											</tr>
 										</thead>
-										<tbody>
+										<tbody id="salarySearchList">
 										
 										<c:forEach items="${ salaryList }" var="list">
 											<tr>

@@ -47,7 +47,7 @@
 	</select>
 	
 	<!-- 급여리스트 페이지처리  -->
-	<select id="selectSalaryPageList" parameterType="salary" resultMap="resultSalaryList">
+	<select id="selectSalaryPageList" parameterType="salary" resultType="salary">
 		<![CDATA[
 			select * 
 			from        
@@ -59,8 +59,9 @@
 		                where e.dept_no = d.dept_no) em, salary sal
 		       		 where em.emp_no = sal.emp_no) ex)
 		    where rownum >= #{startRow} and rownum <= #{endRow}
-		    and emp_name like '%'||#{emp_name}||'%'
+			and emp_name like '%'||#{emp_name}||'%'
 		]]>
 	</select>
+	
 	
 </mapper>
