@@ -50,7 +50,7 @@ public class MessageController {
 	@RequestMapping(value="searchEmp.do" ,method=RequestMethod.POST)
 	@ResponseBody
 	public void searchEmp(Message message,HttpServletResponse  response) throws IOException {		
-	
+		
 		ArrayList<Message> SearchEmp=MessageService.selectSearch(message);		
 		JSONArray jarr=new JSONArray();
 		//System.out.println("사원검색"+message.getMessage_from_no());

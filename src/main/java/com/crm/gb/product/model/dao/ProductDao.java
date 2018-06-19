@@ -71,4 +71,8 @@ public class ProductDao {
 		return (ArrayList)sqlSession.selectList("productSearch2", product);
 	}
 
+	public int deleteFile(ProductFile pf) {
+		return sqlSession.delete("deleteFile",pf);
+	}
+
 }

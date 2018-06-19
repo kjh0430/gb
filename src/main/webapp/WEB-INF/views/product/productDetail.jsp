@@ -120,6 +120,12 @@
 				data:{product_rename_file:renameFile},
 				type:"post",
 				success:function(result){
+					if(result =="OK"){
+						alert("삭제되었습니다.");
+						location.reload();
+					}else{
+						alert("실패하였습니다.")
+					}
 					
 				},
 				error:function(request,status,errorData){
@@ -129,7 +135,7 @@
 				}	
 			})//ajax
 		}
-		location.reload();
+		
 		
 			
 	}

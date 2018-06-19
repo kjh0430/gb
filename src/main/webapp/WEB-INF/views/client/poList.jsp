@@ -139,7 +139,7 @@ $(document).ready(function() {
 								<form onsubmit="return false;">
 									<input style="float:right;"
 										type="text" id="searchPoList">
-										<button style="float:right" id="poSearch">검색</button>
+										<font style="float:right" id="poSearch">Search</font>
 								</form>
 									
 									<div class="clearfix"></div>
@@ -178,7 +178,7 @@ $(document).ready(function() {
 								<!-- 페이징 처리 -->
 								<div style="text-align:center;">
 									<c:forEach var="i" begin="${ start }" end="${ end }">
-										<a id="listNumber" href="poList.do?startPage=${ i }">${ i }</a>
+										<a id="listNumber" href="poList.do?startPage=${ i }">[${ i }]</a>
 									</c:forEach>
 								</div>
 								

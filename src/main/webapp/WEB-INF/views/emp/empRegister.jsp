@@ -17,23 +17,8 @@
 <!-- Font Awesome -->
 <link href="resources/vendors/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet">
-<!-- NProgress -->
-<!-- <link href="resources/vendors/nprogress/nprogress.css" rel="stylesheet"> -->
-<!-- iCheck -->
-<!-- <link href="resources/vendors/iCheck/skins/flat/green.css"
-	rel="stylesheet"> -->
 
-<!-- bootstrap-progressbar -->
-<link
-	href="resources/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css"
-	rel="stylesheet">
-<!-- JQVMap -->
-<!-- <link href="resources/vendors/jqvmap/dist/jqvmap.min.css"
-	rel="stylesheet" /> -->
-<!-- bootstrap-daterangepicker -->
-<link
-	href="resources/vendors/bootstrap-daterangepicker/daterangepicker.css"
-	rel="stylesheet">
+
 
 <!-- Custom Theme Style -->
 <link href="resources/build/css/custom.min.css" rel="stylesheet">
@@ -56,9 +41,9 @@ $(function(){
 	
 
 
-if("${loginEmp==null}"){
+/* if("${loginEmp==null}"){
 	location.href="view.do";
-}
+} */
 	
 
 
@@ -212,7 +197,7 @@ function Regiemp(){
     		},
     		success:function(obj){
     				alert("사원이 등록 되었습니다.");
-    				location.href="empList.do";    			
+    				location.href="empList.do?page=1";    			
     			},
     			error: function(request, status, errorData){
     				console.log("error code : " + request.status + "\n"
@@ -229,19 +214,35 @@ function Regiemp(){
 <script type="text/javascript">
 
 function mgrList(){
+	
+	var job_no2 = $('#job_no option:selected').val();
+	console.log("job_no2 : " + job_no2);
+	
 	$.ajax({
 		url: "selectMgrList.do",
 		type : "post",
+		data: {
+			job_no2 : job_no2										    			
+		},
 		dataType : "json",
 		success : function(obj){
-			console.log("selectMgrList.do 실행");
+			console.log("selectMgrList.do 실행");			
 			var objStr = JSON.stringify(obj);
 			var jsonObj = JSON.parse(objStr);
-			var outValues = "<table id='mgrTable'><tr><th style='text-align:center;'>사원번호</th><th style='text-align:center;'>사원이름</th></tr>";
+			var outValues = "<table id='mgrTable'><tr><th style='text-align:center;'>직급</th><th style='text-align:center;'>사원번호</th><th style='text-align:center;'>사원이름</th></tr>";
 			
-			for(var i in jsonObj.mgrList){
-				outValues += "<tr onclick='selectMgrNo(this);'><td>" + jsonObj.mgrList[i].emp_no + "</td><td>" 
-				+ decodeURIComponent(jsonObj.mgrList[i].emp_name) + "</td></tr>";
+			if(job_no2 == 3){
+				outValues += "<tr><td id='mgrList3' colspan='3'>결과가 존재하지 않습니다.</td></tr>";
+			}else{
+				for(var i in jsonObj.mgrList){
+					if(job_no2 == 1){
+					outValues += "<tr onclick='selectMgrNo(this);'><td>팀장</td><td>" + jsonObj.mgrList[i].emp_no + "</td><td>" 
+					+ decodeURIComponent(jsonObj.mgrList[i].emp_name) + "</td></tr>";
+					}else if(job_no2 == 2){
+					outValues += "<tr onclick='selectMgrNo(this);'><td>관리자</td><td>" + jsonObj.mgrList[i].emp_no + "</td><td>" 
+					+ decodeURIComponent(jsonObj.mgrList[i].emp_name) + "</td></tr>";	
+					}
+				}
 			}
 			
 			outValues += "</table>";
@@ -263,8 +264,8 @@ function selectMgrNo(obj){
 	var tr = $(obj);
 	var td = tr.children();
 	
-	var emp_no = td.eq(0).text();
-	var emp_name = td.eq(1).text();
+	var emp_no = td.eq(1).text();
+	var emp_name = td.eq(2).text();
 	
 	$('#mgrModal').modal('hide');	
 	$('#emp_mgr').val(emp_no);
@@ -397,7 +398,7 @@ text-align:center;
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">상사번호</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input class="form-control col-md-7 col-xs-12" id="emp_mgr" name="emp_mgr" type="text" placeholder="상사번호" style="width:85%;">
+                          <input class="form-control col-md-7 col-xs-12" id="emp_mgr" name="emp_mgr" type="text" placeholder="상사번호" style="width:70%;">
                           <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm" style="float:right;" onclick="mgrList()">조회</button>
                         </div>
                       </div>
@@ -442,6 +443,7 @@ text-align:center;
 			</div>
 		</div>
 	</div>
+	<%@ include file="../etc/footer.jsp" %>
 	</div>
 	
 	
@@ -471,46 +473,12 @@ text-align:center;
 
 
 	</div>
-	</div>
 
 	<!-- jQuery -->
 	<script src="resources/vendors/jquery/dist/jquery.min.js"></script>
 	<!-- Bootstrap -->
 	<script src="resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-	<!-- FastClick -->
-	<!-- <script src="resources/vendors/fastclick/lib/fastclick.js"></script> -->
-	<!-- NProgress -->
-	<!-- <script src="resources/vendors/nprogress/nprogress.js"></script> -->
-	<!-- iCheck -->
-	<!-- <script src="resources/vendors/iCheck/icheck.min.js"></script> -->
-	<!-- Datatables -->
-	<!-- <script
-		src="resources/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-	<script
-		src="resources/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-	<script src="resources/vendors/jszip/dist/jszip.min.js"></script>
-	<script src="resources/vendors/pdfmake/build/pdfmake.min.js"></script>
-	<script src="resources/vendors/pdfmake/build/vfs_fonts.js"></script> -->
+	
 
 	<!-- Custom Theme Scripts -->
 	<script src="resources/build/js/custom.min.js"></script>

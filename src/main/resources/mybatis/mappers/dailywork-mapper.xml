@@ -36,13 +36,11 @@
 	</insert>
 	
 	<!-- 방문이력 -->
-	<select id="dailyworkHistory" parameterType="_int">
+	<select id="selectDailyHistory" parameterType="_int" resultType="dailywork">
 		<![CDATA[
-			select dw.dailywork_no,dw.client_no,to_char(dw.daily_date,'YYYY-MM-DD hh24:mi') as daily_date,
-		   		c.client_company,dw.emp_no,dw.daily_comment
-			from dailywork dw,client c 
-			where dw.client_no = c.client_no and dw.emp_no = #{emp_no}
-			order by daily_date;
+			select client_no, daily_comment, to_char(daily_date, 'YYYY-MM-DD hh24:mi') as daily_date, client_company
+			from dailywork
+			where client_no = #{client_no}
 		]]>
 	</select>
 

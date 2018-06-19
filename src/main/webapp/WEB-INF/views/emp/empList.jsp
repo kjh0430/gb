@@ -28,11 +28,20 @@ $(document).ready(function() {
     $('#table_cl').dataTable( {
         ordering:false,
         lengthChange:false,
-        pageLength:15
+        paging: false,
+        info: false,
+        searching: false
     } );
 } );
 
 </script>
+
+<script type="text/javascript">
+function list(page){	
+	location.href="empList.do?page="+page;
+}
+</script>
+
 </head>
 
 
@@ -112,7 +121,7 @@ $(document).ready(function() {
 										<c:forEach items="${ empList }" var="empList">
 											<tr>
 												<td><a href="empDetail.do?emp_no=${ empList.emp_no }">${ empList.emp_no }</a></td>
-												<td>${ empList.emp_name }</td>
+												<td><a href="empDetail.do?emp_no=${ empList.emp_no }">${ empList.emp_name }</a></td>
 												<td>${ empList.emp_addr }</td>
 												<td>${ empList.emp_phone }</td>
 												<td>${ empList.emp_email }</td>
@@ -120,18 +129,46 @@ $(document).ready(function() {
 										</c:forEach>																	
 										</tbody>
 									</table>
+									<div style="text-align:center;">
+									
+									 <c:if test="${curPage>1}">
+										<a class="page-link" href="empList.do?page=1">처음</a>
+									</c:if> 
+									
+									 <c:if test="${curPage>1}">
+										<a class="page-link" href="empList.do?page=${beginPage-1}">Pre</a>
+									</c:if>									
+									
+									 <c:forEach var ="page" begin="${beginPage}" end="${finalPage}">
+										  <c:choose>
+											<c:when test="${page==currentPage}">												
+												 <a class="page-link" style="color:red;">${page}</a>
+											</c:when>										
+										  <c:otherwise> 
+												 <a class="page-link" href="#" onclick="list('${page}')">${page}</a>	
+										  </c:otherwise> 
+										 </c:choose> 
+									</c:forEach>  
+									
+									 <c:if test="${curPage!=totalPage}">
+										<a class="page-link" href="empList.do?page=${finalPage+1}">Next</a>
+									</c:if> 
+									
+									<c:if test="${curPage!=totalPage}">
+										<a class="page-link" href="empList.do?page=${maxPage}">맨끝</a>
+									</c:if>
+									
+								</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			</div>
-		</div>
+				
 	</div>
 	</div>
 	<!-- /page content -->
 
-	
+		<%@ include file="../etc/footer.jsp" %>
 	</div>
 	</div>
 
@@ -165,7 +202,6 @@ $(document).ready(function() {
 		src="resources/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
 	<script
 		src="resources/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-	<
 
 	<!-- Custom Theme Scripts -->
 	<script src="resources/build/js/custom.min.js"></script>

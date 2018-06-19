@@ -51,9 +51,9 @@
 	</insert>
 	
 	<select id="productList" resultType="arraylist" resultMap="selectAllProductList">
-	<![CDATA[
-	select product_no, product_name, product_price, product_availability from product where product_delete = 'N'
-	]]>
+		<![CDATA[
+		select product_no, product_name, product_price, product_availability from product where product_delete = 'N'
+		]]>
 	</select>
 
 	<!-- 상품검색 mapping  -->
@@ -109,7 +109,7 @@
 
 	<select id="productListA" parameterType="int" resultType="int">
 	<![CDATA[
-	select count(*) from PRODUCT
+		select count(*) from PRODUCT where product_delete = 'N'
 		]]>
 	</select>
 	
@@ -117,7 +117,7 @@
 	<![CDATA[
 	select * from
 		(select rownum rnum, xx.*
-		  from (select ex.* from( select product_no, product_name, product_price, PRODUCT_AVAILABILITY from product p order by product_no desc) ex) xx)
+		  from (select ex.* from( select product_no, product_name, product_price, PRODUCT_AVAILABILITY from product p where product_delete = 'N' order by product_no desc) ex) xx)
 	where rnum >= #{startRow} and rnum <= #{endRow}
 		 
 	]]>
@@ -129,5 +129,12 @@
 		where product_name like '%'||#{product_name}||'%'
 	]]>
 	</select>
+	
+	<delete id="deleteFile" parameterType="ProductFile">
+	<![CDATA[
+		delete from product_file where product_rename_file = #{product_rename_file}	
+	]]>
+	
+	</delete>
 
 </mapper>

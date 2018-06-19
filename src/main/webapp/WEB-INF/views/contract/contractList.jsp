@@ -168,7 +168,7 @@ $(function(){
 										<form onsubmit="return false;">
 											<input style="float:right;"
 												type="text" id="searchContractList">
-												<button style="float:right" id="conSearch">검색</button>
+												<font style="float:right" id="conSearch">Search</font>
 										</form>
 									
 									<div class="clearfix"></div>
@@ -209,7 +209,7 @@ $(function(){
 								<!-- 페이징 처리 -->
 								<div style="text-align:center;">
 									<c:forEach var="i" begin="${ start }" end="${ end }">
-										<a id="listNumber" href="contractList.do?startPage=${ i }&emp_no=${ loginEmp.emp_no }">${ i }</a>
+										<a id="listNumber" href="contractList.do?startPage=${ i }&emp_no=${ loginEmp.emp_no }">[${ i }]</a>
 									</c:forEach>
 								</div>
 								

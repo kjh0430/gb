@@ -78,12 +78,6 @@ public class EmpDao {
       return sqlSession.selectOne("selectMgrNo", emp_no);
    }
 
-   /*사원번호 중복검사*/
-   public Emp selectCheckEmpNo(int emp_no) {
-      return sqlSession.selectOne("selectCheckEmpNo", emp_no);
-   }
-
-
    public Emp selectMyInfo(Emp emp) {
       
       return sqlSession.selectOne("selectMyInfo",emp);
@@ -107,6 +101,26 @@ public class EmpDao {
    public int updatePassword(Emp emp) {
       
       return sqlSession.update("updatePassword",emp);
+   }
+
+   /*사원목록 갯수*/
+   public Emp selectListCount() {
+	  return sqlSession.selectOne("selectListCount");
+   }
+   
+   /*사원목록 페이징*/
+   public ArrayList<Emp> selectEmpList(Emp emp) {
+	  return (ArrayList)sqlSession.selectList("empListPage", emp);
+   }
+
+   /*상사번호 목록*/
+   public ArrayList<Emp> selectMgrList(Emp emp) {
+	   return (ArrayList)sqlSession.selectList("mgrList", emp);
+   }
+
+   /*상사목록 검색*/
+   public ArrayList<Emp> selectEmpSearch(Emp emp) {
+	   return (ArrayList)sqlSession.selectList("empSearch", emp);
    }
    
 }

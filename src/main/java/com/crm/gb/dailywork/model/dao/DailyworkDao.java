@@ -25,4 +25,9 @@ public class DailyworkDao {
 	public ArrayList<Dailywork> selectVisit(Dailywork dw) {
 		return (ArrayList)sqlSession.selectList("selectVisit", dw);
 	}
+
+	/** 방문내역 리스트 */
+	public ArrayList<Dailywork> selectDailyHistory(int client_no) {
+		return (ArrayList)sqlSession.selectList("selectDailyHistory", client_no);
+	}
 }

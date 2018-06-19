@@ -3,7 +3,6 @@ package com.crm.gb.emp.model.service;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.crm.gb.emp.exception.EmpLoginFailException;
@@ -90,11 +89,6 @@ public class EmpServlceImpl implements EmpService{
 		return empDao.selectDeptEmp(emp);
 	}
 
-	/*사원번호 중복검사*/
-	@Override
-	public Emp selectCheckEmpNo(int emp_no) {
-		return empDao.selectCheckEmpNo(emp_no);
-	}
 	//나의 정보 가져오기
 	@Override
 	public Emp selectMyInfo(Emp emp) {
@@ -125,6 +119,30 @@ public class EmpServlceImpl implements EmpService{
 	public int updatePassword(Emp emp) {
 		
 		return empDao.updatePassword(emp);
+	}
+
+	//사원목록 갯수
+	@Override
+	public Emp selectListCount() {
+		return empDao.selectListCount();
+	}
+
+	//사원목록 페이징
+	@Override
+	public ArrayList<Emp> selectEmpList(Emp emp) {
+		return empDao.selectEmpList(emp);
+	}
+
+	//상사번호 목록
+	@Override
+	public ArrayList<Emp> selectMgrList(Emp emp) {
+		return empDao.selectMgrList(emp);
+	}
+
+	//사원목록 검색
+	@Override
+	public ArrayList<Emp> selectEmpSearch(Emp emp) {
+		return empDao.selectEmpSearch(emp);
 	}	
 	
 }

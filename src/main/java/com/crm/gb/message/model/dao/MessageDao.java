@@ -16,7 +16,7 @@ public class MessageDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	public ArrayList<Message> selectSearch(Message message) {
-		return (ArrayList)sqlSession.selectList("selectEmp",message);
+		return (ArrayList)sqlSession.selectList("MessageselectEmp",message);
 	}
 	
 	public int insertMessage(Message message) {		

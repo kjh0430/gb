@@ -6,10 +6,10 @@
 <mapper namespace="Message"> 
 
 
-	<select id="selectEmp" parameterType="message" resultType="Message">		
+	<select id="MessageselectEmp" parameterType="message" resultType="Message">		
 		<![CDATA[
 		select e.emp_name,d.dept_name,j.job_name,e.emp_email,e.emp_no from emp e,
-		dept d,job j where e.emp_name like '%'||#{emp_name}||'%'  and e.dept_no=d.dept_no and j.job_no=e.job_no 
+		dept d,job j where e.emp_name like '%'||#{emp_name}||'%' and e.dept_no=d.dept_no and j.job_no=e.job_no 
 		and e.emp_no != #{message_from_no}
 		]]>		
 	</select>
