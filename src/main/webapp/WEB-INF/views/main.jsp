@@ -251,9 +251,38 @@
     		
     		var modifyEndSchedule=ModiendDate+" "+ModiendTime;
     		
+    		 sArr=ModistartDate.split('-');
+    		 eArr=ModistartTime.split('-');
     		
-    		if($('#startDateM').val() ==null || $('#startTimeM').val() ==null 
-  					|| $('#endDateM').val()  ==null || $('#endTimeM').val() ==null  || $('#calendar_titleM').val() ==null  || $('#calendar_contentM').val() ==null ){
+    		 start1 =new Date(sArr[0],parseInt(sArr[1])-1,sArr[2]);
+    		 end1 =new Date(eArr[0],parseInt(eArr[1])-1,eArr[2]);
+    		
+    		 
+    		 startTimeck =new Date(modifyStartSchedule);
+    		 endTimeck= new Date(modifyEndSchedule);
+    		 
+    		 
+    		 
+    		if(startTimeck.getMinutes()>endTimeck.getMinutes() && startTimeck.getHours()>endTimeck.getHours()){
+    			
+    			alert("시작시간이 종료 시간보다 늦습니다.");
+    	
+    		}else if(startTimeck.getMinutes()==endTimeck.getMinutes() && startTimeck.getHours()>endTimeck.getHours() ){
+    			alert("시작시간이 종료 시간보다 늦습니다.");
+    		
+    			
+    		}else if(startTimeck.getMinutes()<endTimeck.getMinutes() &&startTimeck.getHours()>endTimeck.getHours()){
+    			alert("시작시간이 종료 시간보다 늦습니다.");
+			}
+    		else if (start1.getTime()>end1.getTime()){
+    			
+    		alert("날짜가 유효하지 않습니다.");
+    		}
+    		
+    	else if(start1.getTime()>end1.getTime()){	
+    		alert("날짜가 유효하지 않습니다.");
+    	}else if($('#startDateM').val() =="" || $('#startTimeM').val() ==""
+  					|| $('#endDateM').val()  =="" || $('#endTimeM').val() ==""  || $('#calendar_titleM').val() ==""  || $('#calendar_contentM').val() =="" ){
   				alert("입력하지 않은 정보가 있습니다. 빠짐없이 입력해주세요.");
   				
   				 }else{
@@ -267,7 +296,7 @@
     					},
     			type:"post",
     			success:function(data){
-    				
+    				alert("일정 수정이 완료 되었습니다.");
     				 modal2Close();
     				modal1Close();
     				location.href="mainView.do";
@@ -288,26 +317,51 @@
     		
     		var addendDate=$('#addendDate').val();
     		var addendTime=$('#addendTime').val();
-    		
+    	
     		var addend=addendDate+" "+addendTime;
     		
     		var addcalendar_title=$('#addcalendar_title').val();
     		var addcalendar_content=$('#addcalendar_content').val();
     		
     		
-    		if($('#addstartDate').val() ==null || $('#addstartTime').val() ==null 
-  					|| $('#addendDate').val()  ==null || $('#addendTime').val() ==null  || $('#addcalendar_title').val() ==null  || $('#addcalendar_content').val() ==null ){
+    	     sArr=addstartDate.split('-');
+    		 eArr=addendDate.split('-');
+    		
+    		  start1 =new Date(sArr[0],parseInt(sArr[1])-1,sArr[2]);
+    		 end1 =new Date(eArr[0],parseInt(eArr[1])-1,eArr[2]);
+    		 
+    		 startTimeck =new Date(addstart);
+    		 endTimeck= new Date(addend);
+    		 
+    		 
+    		 
+    		if(startTimeck.getMinutes()>endTimeck.getMinutes() && startTimeck.getHours()>endTimeck.getHours()){
+    			
+    			alert("시작시간이 종료 시간보다 늦습니다.");
+    	
+    		}else if(startTimeck.getMinutes()==endTimeck.getMinutes() && startTimeck.getHours()>endTimeck.getHours() ){
+    			alert("시작시간이 종료 시간보다 늦습니다.");
+    		
+    			
+    		}else if(startTimeck.getMinutes()<endTimeck.getMinutes() &&startTimeck.getHours()>endTimeck.getHours()){
+    			alert("시작시간이 종료 시간보다 늦습니다.");
+			}
+    		else if (start1.getTime()>end1.getTime()){
+    			
+    		alert("날짜가 유효하지 않습니다.");
+    		}
+    		else if($('#addstartDate').val()=="" || $('#addstartTime').val()=="" || $('#addendDate').val()=="" || $('#addendTime').val()=="" || $('#addcalendar_title').val()=="" || $('#addcalendar_content').val()==""){
   				alert("입력하지 않은 정보가 있습니다. 빠짐없이 입력해주세요.");
   				
   				 }else{
-  					 
+  					alert("dnvldvndvdlvdvd");
   					 $.ajax({
   						 
   						 url:"addSchedule.do",
   						 data:{emp_no:"${loginEmp.emp_no}",calendar_title:addcalendar_title,calendar_content:addcalendar_content,calendar_start_date:addstart,calendar_end_date:addend},
   					 	 type:"post",
   					 	 success:function(data){
-  					 	
+  					 	alert("일정이 추가되었습니다.");
   					 		 modal3Close();
   					 		location.href="mainView.do";
   							calendarLoad();  
