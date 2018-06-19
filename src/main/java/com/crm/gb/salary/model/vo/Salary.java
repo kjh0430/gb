@@ -19,19 +19,35 @@ public class Salary implements Serializable{
 	private int sal_bonus;
 	private Date sal_date;
 
+	private int showPage;
+	private int totalRow;
+	private int start;
+	private int end;
+	private int startRow;
+	private int endRow;
+	private String emp_name;
+	
 	private Emp emp;
 	private Dept dept;
 	private Job job;
 	
 	public Salary() {}
 
-	public Salary(int salary_no, int emp_no, int sal, int sal_bonus, Date sal_date, Emp emp, Dept dept, Job job) {
+	public Salary(int salary_no, int emp_no, int sal, int sal_bonus, Date sal_date, int showPage, int totalRow,
+			int start, int end, int startRow, int endRow, String emp_name, Emp emp, Dept dept, Job job) {
 		super();
 		this.salary_no = salary_no;
 		this.emp_no = emp_no;
 		this.sal = sal;
 		this.sal_bonus = sal_bonus;
 		this.sal_date = sal_date;
+		this.showPage = showPage;
+		this.totalRow = totalRow;
+		this.start = start;
+		this.end = end;
+		this.startRow = startRow;
+		this.endRow = endRow;
+		this.emp_name = emp_name;
 		this.emp = emp;
 		this.dept = dept;
 		this.job = job;
@@ -77,6 +93,62 @@ public class Salary implements Serializable{
 		this.sal_date = sal_date;
 	}
 
+	public int getShowPage() {
+		return showPage;
+	}
+
+	public void setShowPage(int showPage) {
+		this.showPage = showPage;
+	}
+
+	public int getTotalRow() {
+		return totalRow;
+	}
+
+	public void setTotalRow(int totalRow) {
+		this.totalRow = totalRow;
+	}
+
+	public int getStart() {
+		return start;
+	}
+
+	public void setStart(int start) {
+		this.start = start;
+	}
+
+	public int getEnd() {
+		return end;
+	}
+
+	public void setEnd(int end) {
+		this.end = end;
+	}
+
+	public int getStartRow() {
+		return startRow;
+	}
+
+	public void setStartRow(int startRow) {
+		this.startRow = startRow;
+	}
+
+	public int getEndRow() {
+		return endRow;
+	}
+
+	public void setEndRow(int endRow) {
+		this.endRow = endRow;
+	}
+
+	public String getEmp_name() {
+		return emp_name;
+	}
+
+	public void setEmp_name(String emp_name) {
+		this.emp_name = emp_name;
+	}
+
 	public Emp getEmp() {
 		return emp;
 	}
@@ -104,7 +176,9 @@ public class Salary implements Serializable{
 	@Override
 	public String toString() {
 		return "Salary [salary_no=" + salary_no + ", emp_no=" + emp_no + ", sal=" + sal + ", sal_bonus=" + sal_bonus
-				+ ", sal_date=" + sal_date + ", emp=" + emp + ", dept=" + dept + ", job=" + job + "]";
+				+ ", sal_date=" + sal_date + ", showPage=" + showPage + ", totalRow=" + totalRow + ", start=" + start
+				+ ", end=" + end + ", startRow=" + startRow + ", endRow=" + endRow + ", emp_name=" + emp_name + ", emp="
+				+ emp + ", dept=" + dept + ", job=" + job + "]";
 	}
 
 	
