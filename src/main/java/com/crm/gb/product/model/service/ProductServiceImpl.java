@@ -76,4 +76,14 @@ public class ProductServiceImpl implements ProductService {
 
 	}
 
+	@Override
+	public ArrayList<Product> selectSearchProduct(Product product) {
+		return productDao.productSearch(product);
+	}
+
+	@Override
+	public int deleteFile(ProductFile pf) {
+		return productDao.deleteFile(pf);
+	}
+
 }

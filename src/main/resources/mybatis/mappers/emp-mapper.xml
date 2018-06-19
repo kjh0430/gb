@@ -173,4 +173,25 @@
 	 update emp set emp_pwd=#{emp_pwd} where emp_no=#{emp_no}
 	 ]]>
 	</update>
+	
+	<!-- 사원목록 갯수 -->
+	<select id="selectListCount" parameterType="int" resultType="emp">
+	<![CDATA[
+	select count(*) as listCount from emp where emp_delete='N'
+	]]>
+	</select>
+	
+	<!-- 사원목록 페이징 -->
+	<select id="empListPage" resultMap="resultEmpList" parameterType="emp">
+	<![CDATA[
+	select * from(select rownum rnum, A.* from(select * from emp where emp_delete='N' order by emp_no desc) A ) where rnum between #{startPage} and #{endPage}
+	]]>
+	</select>
+	
+	<!-- 상사번호 목록 -->
+	<select id="mgrList" resultMap="resultEmpList" parameterType="emp">
+	<![CDATA[
+	select * from emp where emp_delete='N' and job_no = #{job_no} order by emp_no asc
+	]]>
+	</select>
 </mapper>

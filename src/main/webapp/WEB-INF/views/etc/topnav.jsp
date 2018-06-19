@@ -15,7 +15,7 @@
  }
 </style>
 <script src="resources/js/EventSource.js"></script>
-<script src="resources/js/PushNotify.js?ver=2"></script>
+<script src="resources/js/PushNotify.js?ver=1"></script>
 </head>
 
 <body>
@@ -53,12 +53,21 @@
 	
 	
 	
+	<script>
+	$(function(){
+	
+		if(${loginEmp==null}){
+			location.href="view.do";
+		}
+	});
+	</script>
 	<script type="text/javascript">
 	
 	var emp_no = ${loginEmp.emp_no};
 
 	var mNotify;
-	$(function(){
+	$(function(){	
+		
 		selectNotify();
 		var mobile = [	        
 	        'iphone', 'ipad', 'windows ce', 'android', 'blackberry', 'nokia',

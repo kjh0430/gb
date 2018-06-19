@@ -39,13 +39,13 @@ function searchClient(){
 	
 }
 
-function list(page,word){
+function list(page,word,empno,jobno){
 
 	if(word==""){
-		location.href="accountList.do?client_company=null&page="+page;
+		location.href="accountList.do?client_company=null&page="+page+"&emp_no="+empno+"&job_no="+jobno;
 
 	}else{
-		location.href="accountList.do?client_company="+word+"&page="+page;
+		location.href="accountList.do?client_company="+word+"&page="+page+"&emp_no="+empno+"&job_no="+jobno;
 
 	}
 }
@@ -127,9 +127,9 @@ function list(page,word){
 									<table id="table_cl" class="table table-striped table-bordered table-responsive" style="min-width:650px;">
 										<thead>
 											<tr>
-												<th>고객명</th>
+												<th width="75">고객명</th>
 												<th>회사명</th>
-												<th>직 급</th>
+												<th width="70">직 급</th>
 												<th>이메일</th>
 												<th>연락처</th>
 												<th>주 소</th>
@@ -160,10 +160,10 @@ function list(page,word){
 									<!-- if문 -->
 									<c:if test="${curBlock>1}">
 									 	<c:if test="${client_company != null }">
-											<li class="page-item"><a class="page-link" href="accountList.do?client_company=${client_company }&page=1"><<</a></li>
+											<li class="page-item"><a class="page-link" href="accountList.do?client_company=${client_company }&page=1&emp_no=${loginEmp.emp_no}&job_no=${loginEmp.job_no}"><<</a></li>
 										</c:if>
 										<c:if test="${client_company == null }">
-											<li class="page-item"><a class="page-link" href="accountList.do?client_company=null&page=1"><<</a></li>
+											<li class="page-item"><a class="page-link" href="accountList.do?client_company=null&page=1&emp_no=${loginEmp.emp_no}&job_no=${loginEmp.job_no}"><<</a></li>
 										</c:if>
 									</c:if>  
 									
@@ -174,10 +174,10 @@ function list(page,word){
 									
 									 <c:if test="${curBlock>1}">
 										<c:if test="${client_company != null }">
-											<li class="page-item"><a class="page-link" href="accountList.do?client_company=${client_company }&page=${blockBegin-1}">prev</a></li>
+											<li class="page-item"><a class="page-link" href="accountList.do?client_company=${client_company }&page=${blockBegin-1}&emp_no=${loginEmp.emp_no}&job_no=${loginEmp.job_no}">prev</a></li>
 										</c:if>
 										<c:if test="${client_company == null }">
-											<li class="page-item"><a class="page-link" href="accountList.do?client_company=null&page=${blockBegin-1}">prev</a></li>
+											<li class="page-item"><a class="page-link" href="accountList.do?client_company=null&page=${blockBegin-1}&emp_no=${loginEmp.emp_no}&job_no=${loginEmp.job_no}">prev</a></li>
 										</c:if>
 									</c:if> 
 									
@@ -195,7 +195,7 @@ function list(page,word){
 											<c:otherwise> 
 												<%-- <li class="page-item"><a class="page-link" href="noticeList.do?page=${page}">${page}</a></li> --%>	
 									
-													<li class="page-item"><a class="page-link" href="#" onclick="list('${page}','${ client_company}')">${page}</a></li>	
+													<li class="page-item"><a class="page-link" href="#" onclick="list('${page}','${ client_company}','${loginEmp.emp_no}','${loginEmp.job_no}')">${page}</a></li>	
 													
 											
 											 </c:otherwise> 
@@ -207,10 +207,10 @@ function list(page,word){
 									
 									 <c:if test="${curBlock!=totBlock}">
 										 <c:if test="${client_company != null }">
-											<li class="page-item"><a class="page-link" href="accountList.do?page=${blockEnd+1}&client_company=${client_company}">next</a></li>
+											<li class="page-item"><a class="page-link" href="accountList.do?page=${blockEnd+1}&client_company=${client_company}&emp_no=${loginEmp.emp_no}&job_no=${loginEmp.job_no}">next</a></li>
 										 </c:if>
 										 <c:if test="${client_company == null }">
-											<li class="page-item"><a class="page-link" href="accountList.do?page=${blockEnd+1}&client_company=null">next</a></li>
+											<li class="page-item"><a class="page-link" href="accountList.do?page=${blockEnd+1}&client_company=null&emp_no=${loginEmp.emp_no}&job_no=${loginEmp.job_no}">next</a></li>
 										 </c:if>
 									</c:if> 
 									
@@ -220,11 +220,11 @@ function list(page,word){
 									
 									<c:if test="${curBlock < endPage}">
 										<c:if test="${client_company != null }">										
-											<li class="page-item"><a class="page-link" href="accountList.do?page=${maxPage}&client_company=${client_company}">>></a></li>							
+											<li class="page-item"><a class="page-link" href="accountList.do?page=${maxPage}&client_company=${client_company}&emp_no=${loginEmp.emp_no}&job_no=${loginEmp.job_no}">>></a></li>							
 										</c:if>
 										<c:if test="${client_company == null }">
 											<c:if test="${currentPage != maxPage }">
-												<li class="page-item"><a class="page-link" href="accountList.do?page=${maxPage}&client_company=null">>></a></li>	
+												<li class="page-item"><a class="page-link" href="accountList.do?page=${maxPage}&client_company=null&emp_no=${loginEmp.emp_no}&job_no=${loginEmp.job_no}">>></a></li>	
 											</c:if>
 										</c:if>
 									</c:if> 										
