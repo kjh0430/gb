@@ -31,7 +31,7 @@
 	      </li>
 	      <li><a><i class="fa fa-table"></i> 영업현황 <span class="fa fa-chevron-down"></span></a>
 	        <ul class="nav child_menu">
-	          <li><a href="accountList.do?emp_no=${loginEmp.emp_no}&page=1&job_no=${loginEmp.job_no}">거래처</a></li>
+	          <li><a href="accountList.do?emp_no=${loginEmp.emp_no}&page=1&job_no=${loginEmp.job_no}&client_company=null">거래처</a></li>
 	          <li><a href="selectOrderClient.do?emp_no=${loginEmp.emp_no}">발주하기</a>
 	          <li><a href="orderList.do?emp_no=${loginEmp.emp_no}&page=1&client_company=null">매출현황</a></li>
 	          <li><a href="visit.do">방문일지</a></li>

@@ -41,6 +41,7 @@ function searchClient(){
 
 function list(page,word,empno,jobno){
 
+	//alert("empp : " + empno+ " , jobno : " + jobno);
 	if(word==""){
 		location.href="accountList.do?client_company=null&page="+page+"&emp_no="+empno+"&job_no="+jobno;
 
@@ -188,16 +189,11 @@ function list(page,word,empno,jobno){
 									 	
 										  <c:choose>
 											<c:when test="${page==currentPage}">
-												
-												 <li class="page-item" class="page-link" ><a class="page-link" style="color:red;">${page}</a></li>
+												 <li class="page-item" class="page-link" ><a class="page-link" style="font-weight: bold">${page}</a></li>
 											</c:when> 
 										
 											<c:otherwise> 
-												<%-- <li class="page-item"><a class="page-link" href="noticeList.do?page=${page}">${page}</a></li> --%>	
-									
 													<li class="page-item"><a class="page-link" href="#" onclick="list('${page}','${ client_company}','${loginEmp.emp_no}','${loginEmp.job_no}')">${page}</a></li>	
-													
-											
 											 </c:otherwise> 
 										
 										 </c:choose> 
@@ -219,9 +215,9 @@ function list(page,word,empno,jobno){
 									
 									
 									<c:if test="${curBlock < endPage}">
-										<c:if test="${client_company != null }">										
+										<%-- <c:if test="${client_company != null }">										
 											<li class="page-item"><a class="page-link" href="accountList.do?page=${maxPage}&client_company=${client_company}&emp_no=${loginEmp.emp_no}&job_no=${loginEmp.job_no}">>></a></li>							
-										</c:if>
+										</c:if> --%>
 										<c:if test="${client_company == null }">
 											<c:if test="${currentPage != maxPage }">
 												<li class="page-item"><a class="page-link" href="accountList.do?page=${maxPage}&client_company=null&emp_no=${loginEmp.emp_no}&job_no=${loginEmp.job_no}">>></a></li>	
