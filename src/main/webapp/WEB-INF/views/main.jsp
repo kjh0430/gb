@@ -352,14 +352,14 @@ $(function(){
 	                var json = JSON.parse(jsonSt);
 	                var size = Object.keys(json).length;
 	       			
-	       			console.log("todoSelect.do 제대로 실행됨");
-	       			console.log("size : " + size);
+	       			/* console.log("todoSelect.do 제대로 실행됨");
+	       			console.log("size : " + size); */
 	       			
 	       			var obj = [json.todo1, json.todo2, json.todo3, json.todo4, json.todo5];
 	       			var obj2 = [json.check1, json.check2, json.check3, json.check4, json.check5];
 	       			
-	       			console.log("obj : " + obj);
-	       			console.log("obj2 : " + obj2);	       			
+	       			/* console.log("obj : " + obj);
+	       			console.log("obj2 : " + obj2); */	       			
 	       			     			
 	       			var values = ""
 	       			var values2 = ""
@@ -369,11 +369,11 @@ $(function(){
 	       			for(var i in obj){
 	       				if(obj[i] != null && obj2[i] == "N"){
 	       			values += '<li><p><input type="checkbox" class="flat" id="todo_list'+i+'" name="todo_list'+i+'" >'+obj[i]+'</p></li>';
-	    	       	console.log("obj["+i+"] : " + obj[i]);
+	    	       	/* console.log("obj["+i+"] : " + obj[i]); */
 	    	       	count2++;
 	       				}else if(obj[i] != null && obj2[i] == "Y"){
 	       					values += '<li><p id="checkp"><input type="checkbox" class="flat" id="todo_list'+i+'" name="todo_list'+i+'" checked disabled>'+obj[i]+'</p></li>';
-	    	    	       	console.log("obj["+i+"] : " + obj[i]);
+	    	    	       	/* console.log("obj["+i+"] : " + obj[i]); */
 	    	    	       	count++;
 	    	    	       	count2++;
 	       				}
@@ -381,9 +381,9 @@ $(function(){
 	       			
 	       			var goal = new Number((count/count2)*100);
 	       			
-	       			console.log("count : " + count);
+	       			/* console.log("count : " + count);
 	       			console.log("count2 : " + count2);
-	       			console.log("goal : " + goal.toFixed(2));
+	       			console.log("goal : " + goal.toFixed(2)); */
 	       			
 	       			if(obj2[0] == "Y" || obj2[1] == "Y" || obj2[2] == "Y" || obj2[3] == "Y" || obj2[4] == "Y"){
 	       				values+='<p id="goalpp" style="float:right;">달성률 : '+goal.toFixed(1)+'%</p>'	       			
@@ -395,7 +395,7 @@ $(function(){
 	       			
 	       			},
 	       			error: function(){
-	       			console.log("todolist 출력 error");
+	       			/* console.log("todolist 출력 error"); */
 	       			values = "입력된 값이 없습니다.";
 	       			$(".to_do").html(values);
 	       			
@@ -417,7 +417,7 @@ $(function(){
        addedDiv.setAttribute("id", "keyword_Frm"+count);
        addedDiv.innerHTML = str;
        addedFormDiv.appendChild(addedDiv);       
-       console.log("todo_keyword : " + str);
+       /* console.log("todo_keyword : " + str); */
        count++;
        }else{
        alert("5개까지 입력하실 수 있습니다");
@@ -431,7 +431,7 @@ $(function(){
        if(count>1){
        var thisDiv = document.getElementById("keyword_Frm"+thisCount);
        addedFormDiv.removeChild(thisDiv);
-       console.log("addedFormDiv : " + addedFormDiv);
+       /* console.log("addedFormDiv : " + addedFormDiv); */
        }else{
        document.addedFormDiv.reset();
        }
@@ -447,14 +447,14 @@ $(function(){
        	var todo4 = $('#todo_keyword3').val();
        	var todo5 = $('#todo_keyword4').val();
        	
-       	console.log("todo1 : " + todo1);
+       	/* console.log("todo1 : " + todo1);
        	
        	console.log("main에서 출력 emp_no : " + emp_no);
        	console.log("main에서 출력 todo1 : " + todo1);
        	console.log("main에서 출력 todo2 : " + todo2);
        	console.log("main에서 출력 todo3 : " + todo3);
        	console.log("main에서 출력 todo4 : " + todo4);
-       	console.log("main에서 출력 todo5 : " + todo5);
+       	console.log("main에서 출력 todo5 : " + todo5); */
        	
        	if($('#todo_keyword0').val() == null || $('#todo_keyword0').val() == ""){
        		alert("값을 입력해주세요.");
@@ -485,18 +485,18 @@ $(function(){
        	       			emp_no : emp_no
        	       		},
        	       		success:function(data){       	       			
-       	       			console.log("todoSelect.do 제대로 실행됨");       	       			
+       	       			/* console.log("todoSelect.do 제대로 실행됨"); */       	       			
        	       			
        	       		var jsonSt = JSON.stringify(data);
 	                var json = JSON.parse(jsonSt);
 	                var size = Object.keys(json).length;
 	       			
-	       			console.log("todoSelect.do 제대로 실행됨");
-	       			console.log("size : " + size);
+	       			/* console.log("todoSelect.do 제대로 실행됨");
+	       			console.log("size : " + size); */
 	       			
 	       			var obj = [json.todo1, json.todo2, json.todo3, json.todo4, json.todo5];
 	       			
-	       			console.log("obj : " + obj);
+	       			/* console.log("obj : " + obj); */
 	       			       			
 	       			var values = ""
 	       			var values2 = ""
@@ -504,7 +504,7 @@ $(function(){
 	       			for(var i in obj){
 	       				if(obj[i] != null){
 	       			values += '<li><p><input type="checkbox" class="flat" id="todo_list'+i+'" name="todo_list'+i+'" >'+obj[i]+'</p></li>';
-	    	       	console.log("obj["+i+"] : " + obj[i]);
+	    	       	/* console.log("obj["+i+"] : " + obj[i]); */
 	       				}
 	       			}	       			
 	       			
@@ -516,12 +516,12 @@ $(function(){
 	       			
        	       			},
        	       			error: function(){       				
-       	       			console.log("error");
+       	       			/* console.log("error"); */
        	       			}
        	       		});
        			},
        			error: function(){       				
-       			console.log("error");
+       			/* console.log("error"); */
        			}
        		});
        }
@@ -569,7 +569,7 @@ $(function(){
            			check5 : check5
            		},
            		success:function(data){
-           			console.log("todoChecked.do 제대로 실행됨");
+           			/* console.log("todoChecked.do 제대로 실행됨"); */
            			
            			alert("등록 되었습니다.");
            			
@@ -580,8 +580,8 @@ $(function(){
 	       			var obj = [json.todo1, json.todo2, json.todo3, json.todo4, json.todo5];
 	       			var obj2 = [json.check1, json.check2, json.check3, json.check4, json.check5];
 	       			
-	       			console.log("obj : " + obj);
-	       			console.log("obj2 : " + obj2);	       			
+	       			/* console.log("obj : " + obj);
+	       			console.log("obj2 : " + obj2); */	       			
 	       			     			
 	       			var values = ""
 	       			var values2 = ""
@@ -591,11 +591,11 @@ $(function(){
 	       			for(var i in obj){
 	       				if(obj[i] != null && obj2[i] == "N"){
 	       			values += '<li><p><input type="checkbox" class="flat" id="todo_list'+i+'" name="todo_list'+i+'" >'+obj[i]+'</p></li>';
-	    	       	console.log("obj["+i+"] : " + obj[i]);
+	    	       	/* console.log("obj["+i+"] : " + obj[i]); */
 	    	       	count2++;
 	       				}else if(obj[i] != null && obj2[i] == "Y"){
 	       					values += '<li><p id="checkp"><input type="checkbox" class="flat" id="todo_list'+i+'" name="todo_list'+i+'" checked disabled>'+obj[i]+'</p></li>';
-	    	    	       	console.log("obj["+i+"] : " + obj[i]);
+	    	    	       	/* console.log("obj["+i+"] : " + obj[i]); */
 	    	    	       	count++;
 	    	    	       	count2++;
 	       				}
@@ -603,9 +603,9 @@ $(function(){
 	       			
 	       			var goal = new Number((count/count2)*100);
 	       			
-	       			console.log("count : " + count);
+	       			/* console.log("count : " + count);
 	       			console.log("count2 : " + count2);
-	       			console.log("goal : " + goal.toFixed(2));
+	       			console.log("goal : " + goal.toFixed(2)); */
 	       			
 	       			if(obj2[0] == "Y" || obj2[1] == "Y" || obj2[2] == "Y" || obj2[3] == "Y" || obj2[4] == "Y"){
 	       				values+='<p id="goalpp" style="float:right;">달성률 : '+goal.toFixed(1)+'%</p>'	       			
@@ -618,7 +618,7 @@ $(function(){
            			
            		},
            		error: function(){       				
-           			console.log("error");
+           			/* console.log("error"); */
            			}
     	   
     		});

@@ -223,15 +223,21 @@ public class ClientController {
 	/** 거래중인 거래처 리스트 메소드 **/
 	@RequestMapping("accountList.do")
 	public String showAccountClient(@RequestParam("emp_no") String emp_num, Model model, 
-	@RequestParam(value="page") int page, Client client, @RequestParam(value="job_no") String jobNo) {
+	@RequestParam(value="page") int page, Client client, @RequestParam(value="job_no") String jobNo,
+	@RequestParam(value="client_company") String clientCompany) {
 		logger.info("거래처 리스트 메소드 실행됨!!");
 		
 		int emp_no = Integer.parseInt(emp_num);
 		int job_no = Integer.parseInt(jobNo);
+		String client_company = clientCompany;
+		
+		if(client_company.equals("null") || client_company==null) {
+			client_company = null;
+		}
 		
 		client.setEmp_no(emp_no);
 		client.setJob_no(job_no);
-		
+		client.setClient_company(client_company);
 		//페이지 기본값 지정
 		int currentPage=page;				
 		//한 페이지당 출력할 목록갯수 지정
@@ -239,22 +245,22 @@ public class ClientController {
 		int pageGroupSize=5;
 
 	
-		//System.out.println("jobNo : " + job_no);
-		//System.out.println("page: " + page);
-		
+		System.out.println("jobNo : " + job_no);
+		System.out.println("page: " + page);
+		System.out.println("client_company : " + client_company);
 		
 	
 		
 		int listCount_1 = clientService.clientListCount(client);
 		//System.out.println("oooooooooooooooooooooo");
-		//System.out.println("count : " + listCount_1);
+		System.out.println("count : " + listCount_1);
 		//페이지수 계산 
 		int maxPage=(int)((double)listCount_1/pageSize+0.9);				
 		//페이지 번호 갯수 출력 					
-		
+		System.out.println("maxPage:" + maxPage);
 		int curBlock=(currentPage-1)/pageGroupSize+1;//원하는 페이지가 몇번째 블록인지계산
 		int totBlock=(int)Math.ceil(maxPage*1.0)/pageGroupSize+1;//총 블록 갯수
-		
+		System.out.println("totBlock : " + totBlock);
 		
 		//블록의 시작 페이지와 끝 페이지 번호 계산
 		int blockBegin=(curBlock-1)*pageGroupSize+1;
@@ -274,7 +280,7 @@ public class ClientController {
 		//int startPage=(((int)((double)currentPage/pageSize+0.9))-1)*pageSize+1;
 		int startPage=(currentPage-1)*pageSize+1;
 		int endPage=startPage+pageSize-1;
-		
+		System.out.println("start : " + startPage +", end :" + endPage);
 		client.setStartPage(startPage);
 		client.setEndPage(endPage);
 		client.setEmp_no(emp_no);
