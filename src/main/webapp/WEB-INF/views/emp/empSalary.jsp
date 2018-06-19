@@ -243,7 +243,7 @@ $(function(){
 								<!-- 페이징 처리 -->
 								<div style="text-align:center;">
 									<c:forEach var="i" begin="${ start }" end="${ end }" varStatus="num">
-										<a id="listNumber${ num.index }" href="empSalary.do?startPage=${ i }">[${ i }]</a>
+										<a id="listNumber${ num.index }" href="empSalary.do?startPage=${ i }&emp_name=$('#searchSalaryList').val()">[${ i }]</a>
 									</c:forEach>
 								</div>
 								
