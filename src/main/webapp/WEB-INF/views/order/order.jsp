@@ -554,13 +554,14 @@
 									<td><input type="number" id="calcValue" readonly></td>
 									</tr>
 									</table>
-								
+	
 									<div class="ln_solid"></div>
 									<div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-3" style="margin:0px; text-align:center;">
 										<button type="submit" class="btn btn-success" onclick="noticeAlert();">주문</button>											
 									</div>
 								</div>
 							</div>
+							
 						</div>
 					
 					
