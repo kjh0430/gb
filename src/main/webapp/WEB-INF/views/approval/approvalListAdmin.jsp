@@ -67,7 +67,7 @@ function modalUp(obj){
 	$('#mgrname').text("관리자"+"("+mgr_name+")");
 	
 	var value="";
-	if(approval_team_date=="" && ${loginEmp.job_no==2} &&){
+	if(approval_team_date=="" && ${loginEmp.job_no==2}){
         value="<button onclick='teamapproval();' type='button' class='btn btn-primary' style='float:right;'>승인</button>";	
              $('#manager').html(value);             
 	
