@@ -188,7 +188,7 @@ function searchCondition(){
 									<!-- if문 -->
 									 <c:if test="${curBlock>1}">
 									 	<c:if test="${searchCom != null }">
-											<li class="page-item"><a class="page-link" href="orderList.do?client_company=${searchCom }&page=1"><<</a></li>
+											<li class="page-item"><a class="page-link" href="orderList.do?client_company=${searchCom}&page=1"><<</a></li>
 										</c:if>
 										<c:if test="${searchCom == null }">
 											<li class="page-item"><a class="page-link" href="orderList.do?client_company=null&page=1"><<</a></li>
@@ -200,7 +200,7 @@ function searchCondition(){
 								
 									 <c:if test="${curBlock>1}">
 										 <c:if test="${searchCom != null }">
-											<li class="page-item"><a class="page-link" href="orderList.do?client_company=${searchCom }&page=${blockBegin-1}">prev</a></li>
+											<li class="page-item"><a class="page-link" href="orderList.do?client_company=${searchCom}&page=${blockBegin-1}">prev</a></li>
 										</c:if>
 										<c:if test="${searchCom == null }">
 											<li class="page-item"><a class="page-link" href="orderList.do?client_company=null&page=${blockBegin-1}">prev</a></li>
@@ -230,7 +230,7 @@ function searchCondition(){
 									
 									 <c:if test="${curBlock!=totBlock}">
 									 <c:if test="${searchCom != null }">
-										<li class="page-item"><a class="page-link" href="orderList.do?client_company=${searchCom }&page=${blockEnd+1}">next</a></li>
+										<li class="page-item"><a class="page-link" href="orderList.do?client_company=${searchCom}&page=${blockEnd+1}">next</a></li>
 									 </c:if>
 									 <c:if test="${searchCom == null }">
 										<li class="page-item"><a class="page-link" href="orderList.do?client_company=null&page=${blockEnd+1}">next</a></li>
@@ -242,7 +242,7 @@ function searchCondition(){
 									
 									<c:if test="${curBlock < endPage}">
 										<c:if test="${searchCom != null }">
-											<li class="page-item"><a class="page-link" href="orderList.do?client_company=${searchCom }&page=${maxPage}">>></a></li>
+											<li class="page-item"><a class="page-link" href="orderList.do?client_company=${searchCom}&page=${maxPage}">>></a></li>
 										</c:if>
 										<c:if test="${searchCom == null }">
 											<c:if test="${currentPage != maxPage }">
