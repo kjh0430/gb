@@ -593,5 +593,41 @@ public class EmpController {
       
       return "emp/myInfo";
    }
+   
+   /*사원목록 검색*/
+   @RequestMapping(value="empSearch.do", method=RequestMethod.POST)
+   @ResponseBody
+   public void selectEmpSearch(Emp emp, @RequestParam(value="emp_name") String emp_name, HttpServletResponse response) throws IOException{
+      logger.info("selectEmpSearch 실행");
+      
+      System.out.println("emp_name : " + emp_name);
+      
+      ArrayList<Emp> selectEmpSearch = empService.selectEmpSearch(emp);
+      JSONArray jarr = new JSONArray();
+      
+      System.out.println("selectEmpSearch : " + selectEmpSearch);
+      
+      for(Emp e : selectEmpSearch) {
+         JSONObject jsonobject = new JSONObject();
+         jsonobject.put("emp_no", e.getEmp_no());
+         jsonobject.put("emp_name", e.getEmp_name());
+         jsonobject.put("emp_addr", e.getEmp_addr());
+         jsonobject.put("emp_phone", e.getEmp_phone());
+         jsonobject.put("emp_email", e.getEmp_email());   
+         
+         jarr.add(jsonobject);
+      }
+      
+      JSONObject sendJson = new JSONObject();
+      sendJson.put("empSearch", jarr);
+      
+      response.setContentType("application/json; charset=utf-8");
+      System.out.println("empSearchList : " + sendJson);
+      PrintWriter out = response.getWriter();
+      out.println(sendJson.toJSONString());
+      out.flush();
+      out.close();
+      
+   }
 
 }

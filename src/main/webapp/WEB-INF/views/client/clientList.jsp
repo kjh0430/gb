@@ -165,7 +165,7 @@ function clientList(){
 								<form onsubmit="return false;">
 									<input style="float:right;"
 										type="text" id="searchClientList">
-										<button style="float:right" id="cSearch">검색</button>
+										<font style="float:right" id="cSearch">Search</font>
 								</form>
 										
 									<div class="clearfix"></div>
@@ -204,7 +204,7 @@ function clientList(){
 								<!-- 페이징 처리 -->
 								<div style="text-align:center;">
 									<c:forEach var="i" begin="${ start }" end="${ end }">
-										<a id="listNumber" href="clientList.do?startPage=${ i }">${ i }</a>
+										<a id="listNumber" href="clientList.do?startPage=${ i }">[${ i }]</a>
 									</c:forEach>
 								</div>
 								

@@ -132,10 +132,9 @@
 	</select>	
 	
 	<!-- 신규 고객수 -->
-	<select id="countContract" parameterType="_int" resultType="_int">
+	<select id="countContract" resultType="_int">
 		<![CDATA[
 			select count(contract_no) from contract
-			where emp_no = #{emp_no}
 		]]>
 	</select>
 			

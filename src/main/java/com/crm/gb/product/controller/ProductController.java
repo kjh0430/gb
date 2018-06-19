@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -365,24 +366,37 @@ public class ProductController {
 		return "product/productList";
 	}
 
-	@ResponseBody
-	@RequestMapping(value="searchProduct.do" ,method=RequestMethod.GET)
-	public void searchProduct(Product product,HttpServletResponse  response) throws IOException {		
-	
-		ArrayList<Product> SearchProduct=productService.selectSearchProduct(product);		
+	@RequestMapping(value="searchProduct2.do" ,method=RequestMethod.POST)
+	public void searchProduct2(Product product,
+			@RequestParam(value="product_name") String product_name, HttpServletResponse  response) throws IOException {		
+		/*System.out.println(request.getParameter("keyword"));*/
+		product.setProduct_name(product_name);
+		
+		System.out.println("입력한 값: "+product.getProduct_name());
+		//페이징 처리 감안한 쿼리문 작성
+		//페이징 처리해서 값을 다시 해당 페이지로 넘길것
+		//jsp작업 할것!
+		ArrayList<Product> SearchProduct=productService.selectSearchProduct(product);
+			
+			for(Product p : SearchProduct) {
+				System.out.println("가져온 이름: "+p.getProduct_name());
+			}
+		
 		JSONArray jarr=new JSONArray();
 		
 		for(Product pro2 : SearchProduct) {
 			JSONObject jsonobject=new JSONObject();
-			jsonobject.put("product_name",pro2.getProduct_name());
+			jsonobject.put("product_name",URLEncoder.encode(pro2.getProduct_name(), "utf-8"));
 			jsonobject.put("product_no", pro2.getProduct_no());
+			jsonobject.put("product_price", pro2.getProduct_price());
+			jsonobject.put("product_availability", URLEncoder.encode(pro2.getProduct_availability(), "utf-8"));
 			jarr.add(jsonobject);
 			}
 		JSONObject send=new JSONObject();
 		send.put("list",jarr);
 		response.setContentType("application/json; charset=utf-8");	
 		PrintWriter out=response.getWriter();
-		out.println(send.toJSONString());
+		out.print(send.toJSONString());
 		out.flush();
 		out.close();
 	}

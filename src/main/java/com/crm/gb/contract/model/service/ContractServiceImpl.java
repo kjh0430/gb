@@ -23,9 +23,9 @@ public class ContractServiceImpl implements ContractService {
 	
 	/** 계약된 고객수 */
 	@Override
-	public int selectCountContract(int emp_no) {
+	public int selectCountContract() {
 		// TODO Auto-generated method stub
-		return contractDao.selectCountContract(emp_no);
+		return contractDao.selectCountContract();
 	}
 	
 	/** 계약리스트 검색 */
