@@ -1372,7 +1372,7 @@ $(function(){
 
 		
 
-	/*
+	
 	function getWeather(){
 		var city = '${loginEmp.getCity()}';
 		var county = '${loginEmp.getCounty()}';
@@ -1438,7 +1438,7 @@ $(function(){
    $(function(){
 	  getWeather();
 	});  
-   */
+   
 	    
 		
 
