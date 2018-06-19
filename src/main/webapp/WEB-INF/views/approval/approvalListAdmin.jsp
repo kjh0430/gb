@@ -24,6 +24,8 @@
 <link href="resources/css/main.css" rel="stylesheet">
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
+
+
 function searchCondition(){
 	
 	emp_name=$('#emp_name').val();
@@ -240,6 +242,7 @@ background-color:#2A3F54;
 										</thead>
 										<tbody>
 										
+										
 										<c:forEach items="${approvalListA}" var="approval">
 											
 											<c:if test="${approval.approval_mgr_date eq null && approval.approval_team_date eq null}">
@@ -258,8 +261,12 @@ background-color:#2A3F54;
 											 <c:set var="approval_dept_name" value="영업2팀"/>
 											</c:if>
 											
+											
+											<c:if test="${empty approval.emp_name}">
+											<h2>검색 결과가  없습니다.</h2>
+											</c:if>
 											<tr onclick="modalUp(this);">
-												
+											
 												<td>${approval.emp_name}</td>
 												<td>${approval_dept_name}</td>
 												
@@ -276,9 +283,7 @@ background-color:#2A3F54;
 												<td>${approval.mgr_name}</td>
 												<td>${approval.approval_no}</td>
 											
-											<c:if test="${approval.emp_no eq null}">
-											<h2>검색 결과가 없습니다.</h2>
-											</c:if>
+											
 											</tr>
 											
 												</c:forEach>
