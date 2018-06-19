@@ -77,12 +77,14 @@ $(function(){
 					/* alert("총금액"+json.list[i].contract_money);
 					alert("시작날짜 "+json.list[i].contract_date_start_goal);  */
 					
+					var str=String(json.list[i].contract_money);
+                    var a =str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
 					
-					
+                    
 					values += 
 						"<tr><td>"+json.list[i].emp_no+"</td>"+
 						"<td>"+decodeURIComponent(json.list[i].emp_name)+"</td>"+
-						"<td>"+json.list[i].contract_money+"</td>"+
+						"<td>"+a+"</td>"+
 						"<td>"+decodeURIComponent(json.list[i].contract_date_start_goal)+"</td>"+													
 						"<td><a class='btn btn-primary btn-modify' href='goalAdminDetail.do?emp_no="+json.list[i].emp_no+"&emp_name="+decodeURIComponent(json.list[i].emp_name)+"&contract_money="+json.list[i].contract_money+"&contract_date_start_goal="+decodeURIComponent(json.list[i].contract_date_start_goal)+"'>수정</a></td></tr>"
 						
@@ -177,72 +179,7 @@ function goalAdminDetail(){
 			</div>
 
 			<!-- top navigation -->
-			<div class="top_nav">
-				<div class="nav_menu">
-					<nav>
-						<div class="nav toggle">
-							<a id="menu_toggle"><i class="fa fa-bars"></i></a>
-						</div>
-
-						<ul class="nav navbar-nav navbar-right">
-							<li class=""><a href="javascript:;"
-								class="user-profile dropdown-toggle" data-toggle="dropdown"
-								aria-expanded="false"> <img src="images/img.jpg" alt="">John
-									Doe <span class=" fa fa-angle-down"></span>
-							</a>
-								<ul class="dropdown-menu dropdown-usermenu pull-right">
-									<li><a href="javascript:;"> Profile</a></li>
-									<li><a href="javascript:;"> <span
-											class="badge bg-red pull-right">50%</span> <span>Settings</span>
-									</a></li>
-									<li><a href="javascript:;">Help</a></li>
-									<li><a href="login.html"><i
-											class="fa fa-sign-out pull-right"></i> Log Out</a></li>
-								</ul></li>
-
-							<li role="presentation" class="dropdown"><a
-								href="javascript:;" class="dropdown-toggle info-number"
-								data-toggle="dropdown" aria-expanded="false"> <i
-									class="fa fa-envelope-o"></i> <span class="badge bg-green">6</span>
-							</a>
-								<ul id="menu1" class="dropdown-menu list-unstyled msg_list"
-									role="menu">
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
-													Smith</span> <span class="time">3 mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li>
-										<div class="text-center">
-											<a> <strong>See All Alerts</strong> <i
-												class="fa fa-angle-right"></i>
-											</a>
-										</div>
-									</li>
-								</ul></li>
-						</ul>
-					</nav>
-				</div>
-			</div>
+			<%@ include file="../etc/topnav.jsp"%>
 			<!-- /top navigation -->
 
 			<!-- page content -->
@@ -258,37 +195,7 @@ function goalAdminDetail(){
 					
 					
 					<div class="row">
-						<div class="col-md-12 col-sm-12 col-xs-12">
-							<div class="x_panel">
-								<div class="x_title">
-									<h2>상세검색</h2>
-									<div class="clearfix"></div>
-								</div>
-								<div class="x_content">
-									<div class="col-md-6 col-sm-12 col-xs-12">
-									<form class="form-horizontal form-label-left">
-										<div class="form-group">
-											<div class="col-sm-3">
-											<select class="form-control" id="goal_select">
-												<option value="">전체</option>
-												<option value="">팀별</option>
-												<option value="">사원별</option>
-											</select>
-											</div>
-											<div class="col-sm-9">
-												<div class="input-group">
-													<input type="text" class="form-control"> <span
-														class="input-group-btn">
-														<button type="submit" class="btn btn-primary" id ="goal_search">검색</button>
-													</span>
-												</div>
-											</div>
-										</div>
-									</form>
-									</div>
-								</div>
-							</div>
-						</div>
+						
 
 					</div><!-- end row -->
 					
@@ -334,7 +241,7 @@ function goalAdminDetail(){
 													<c:otherwise>
 														<tr>
 															<td>${goalList.emp_no}</td> 
-															<td>${goalList.emp_name}</td>												
+															<td>${goalList.emp_name}</td>																										
 															<td>${goalList.contract_money}</td>
 															<td>${goalList.contract_date_start_goal}월</td>
 															<!-- <td><input type="text" value="삼번달이번달 목표" name="target_num"/></td>
@@ -349,16 +256,13 @@ function goalAdminDetail(){
 									</table>
 								</div>
 								
-								<div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-3" style="margin:0px">
-										<button type="button" class="btn btn-primary">Cancel</button>
-										<button class="btn btn-primary" type="reset">Reset</button>
-										<button type="submit" class="btn btn-success">Submit</button>
-								</div>
+								
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+			<%@ include file="../etc/footer.jsp"%>
 		</div>
 	</div>
 
@@ -370,40 +274,7 @@ function goalAdminDetail(){
 	<!-- Bootstrap -->
 	<script src="resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
 	<!-- FastClick -->
-	<script src="resources/vendors/fastclick/lib/fastclick.js"></script>
-	<!-- NProgress -->
-	<script src="resources/vendors/nprogress/nprogress.js"></script>
-	<!-- iCheck -->
-	<script src="resources/vendors/iCheck/icheck.min.js"></script>
-	<!-- Datatables -->
-	<script
-		src="resources/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-	<script
-		src="resources/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-	<script
-		src="resources/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-	<script src="resources/vendors/jszip/dist/jszip.min.js"></script>
-	<script src="resources/vendors/pdfmake/build/pdfmake.min.js"></script>
-	<script src="resources/vendors/pdfmake/build/vfs_fonts.js"></script>
-
+	
 	<!-- Custom Theme Scripts -->
 	<script src="resources/build/js/custom.min.js"></script>
 
