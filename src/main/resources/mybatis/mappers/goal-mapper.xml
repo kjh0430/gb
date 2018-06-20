@@ -133,13 +133,9 @@
 	<![CDATA[
 	select e.emp_no,e.emp_name,sum(nvl((ol.order_amount*ol.order_price),0)) as sales 
 	from emp e left join orderlist ol on e.emp_no=ol.emp_no and to_char(ol.order_date,'yyyy-MM') 
-<<<<<<< HEAD
-	= #{setdate} group by e.emp_no,e.emp_name,e.dept_no having dept_no=#{dept_no}
-=======
 	= #{date} group by e.emp_no,e.emp_name,e.dept_no having dept_no=#{dept_no}
   
   
->>>>>>> branch 'master' of https://github.com/kjh0430/gb
 	]]>
 	
 	</select>
