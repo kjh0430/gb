@@ -170,7 +170,6 @@
 		$("#searchProductList").html("");	
 		var tr=$(obj);
 		var td=tr.children();
-		//alert("ㅎㅇㅎㅇㅎ: " + discount);
 		var product_no=td.eq(0).text();
 		var product_name=td.eq(1).text();
 		var product_price=td.eq(2).text()*(1-c_discount/100);
