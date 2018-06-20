@@ -123,8 +123,8 @@ public class EmpServlceImpl implements EmpService{
 
 	//사원목록 갯수
 	@Override
-	public Emp selectListCount() {
-		return empDao.selectListCount();
+	public Emp selectEmpListCount2() {
+		return empDao.selectEmpListCount2();
 	}
 
 	//사원목록 페이징
@@ -146,8 +146,8 @@ public class EmpServlceImpl implements EmpService{
 	}
 
 	@Override
-	public Emp selectListCount(Emp emp) {
-		return empDao.selectListCount(emp);
+	public Emp selectEmpListCount(Emp emp) {
+		return empDao.selectEmpListCount(emp);
 	}	
 	
 }
