@@ -59,6 +59,15 @@
 		id="multipartResolver">
 	<beans:property name="maxUploadSize" value="10000000" />
 	</beans:bean>
-	
-	
+	<interceptors>
+    <interceptor>
+        <mapping path="/moveAdminDailyReport.do" />
+        <mapping path="/goalStateAdmin.do" />
+        <mapping path="/empRegister.do" />
+        <beans:bean class="com.crm.gb.common.AdminCheck"></beans:bean>            
+    </interceptor>        
+</interceptors>
+
+
+
 </beans:beans>
