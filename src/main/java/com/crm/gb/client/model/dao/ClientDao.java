@@ -148,5 +148,15 @@ public class ClientDao {
 		return sqlSession.delete("deleteClientFile", client_file_no);
 	}
 
+	public Client selectClientEmail(Client client) {
+	
+		return sqlSession.selectOne("selectClientEmail",client);
+	}
+
+	public Client selectClientPhone(Client client) {
+	
+		return sqlSession.selectOne("selectClientPhone",client);
+	}
+
 	
 }

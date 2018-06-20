@@ -365,5 +365,19 @@
 	]]>
 	</if>
 	</select>
+	
+	 <select id="selectClientEmail" parameterType="client" resultType="client">
+	<![CDATA[
+	select client_email from client where client_email=#{client_email} 
+	
+	
+	]]>
+	</select>
+	<select id="selectClientPhone" parameterType="client" resultType="client">
+	<![CDATA[
+	select client_phone from client where client_phone=#{client_phone}
+	]]>
+	
+	</select> 
 </mapper>
 

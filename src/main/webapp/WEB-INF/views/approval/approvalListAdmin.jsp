@@ -24,6 +24,8 @@
 <link href="resources/css/main.css" rel="stylesheet">
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
+
+
 function searchCondition(){
 	
 	emp_name=$('#emp_name').val();
@@ -32,7 +34,7 @@ function searchCondition(){
 	
 	location.href="approvalListAdmin.do?emp_no="+emp_no+"&job_no="+job_no+"&emp_name="+emp_name
 
-	
+
 }
 
 
@@ -67,14 +69,13 @@ function modalUp(obj){
 	$('#mgrname').text("관리자"+"("+mgr_name+")");
 	
 	var value="";
-	if(approval_team_date=="" && ${loginEmp.job_no==2} &&){
+	if(approval_team_date=="" && ${loginEmp.job_no==2}){
         value="<button onclick='teamapproval();' type='button' class='btn btn-primary' style='float:right;'>승인</button>";	
              $('#manager').html(value);             
 	
 	}
-	if(approval_team_date!=null){
-		$('#manager').html("");
-	}
+
+	
 	if(approval_team_date!=""  && ${loginEmp.job_no==3}) {
 		
 		 value="<button onclick='adminapproval();' type='button' class='btn btn-primary' style='float:right;'>승인</button>";
@@ -82,9 +83,6 @@ function modalUp(obj){
 		 	$('#manager').html(value);
 	}
 	
-	if(approval_mgr_date!=null){
-		$('#manager').html("");
-	}
 	
 	if(approval_team_date!=""){
 		$('#circle2').css('background-color','#2A3F54');
@@ -241,8 +239,11 @@ background-color:#2A3F54;
 												<th>no</th>
 												
 											</tr>
+											
 										</thead>
+										
 										<tbody>
+										
 										
 										<c:forEach items="${approvalListA}" var="approval">
 											
@@ -262,7 +263,11 @@ background-color:#2A3F54;
 											 <c:set var="approval_dept_name" value="영업2팀"/>
 											</c:if>
 											
+											
+											
+											
 											<tr onclick="modalUp(this);">
+												
 												
 												<td>${approval.emp_name}</td>
 												<td>${approval_dept_name}</td>
@@ -280,9 +285,7 @@ background-color:#2A3F54;
 												<td>${approval.mgr_name}</td>
 												<td>${approval.approval_no}</td>
 											
-											<c:if test="${approval.emp_no eq null}">
-											<h2>검색 결과가 없습니다.</h2>
-											</c:if>
+											
 											</tr>
 											
 												</c:forEach>
@@ -290,6 +293,9 @@ background-color:#2A3F54;
 											
 										</tbody>
 									</table>
+									<c:if test="${empty approvalListA}">
+									<h2 style="text-align:center">표시할 목록이 없습니다.</h2>
+									</c:if>
 			<ul class='pagination'>
 	        
 	      

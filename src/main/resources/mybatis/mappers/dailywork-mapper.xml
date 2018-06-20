@@ -38,9 +38,10 @@
 	<!-- 방문이력 -->
 	<select id="selectDailyHistory" parameterType="_int" resultType="dailywork">
 		<![CDATA[
-			select client_no, daily_comment, to_char(daily_date, 'YYYY-MM-DD hh24:mi') as daily_date, client_company
-			from dailywork
-			where client_no = #{client_no}
+			select c.client_no, dw.daily_comment, to_char(dw.daily_date, 'YYYY-MM-DD hh24:mi') as daily_date, c.client_company
+			from dailywork dw, client c
+			where dw.client_no = c.client_no
+            and dw.client_no = #{client_no}
 		]]>
 	</select>
 

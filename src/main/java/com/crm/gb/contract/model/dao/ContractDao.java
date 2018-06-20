@@ -46,8 +46,8 @@ public class ContractDao {
 	}
 
 	/** 계약된 고객수 */
-	public int selectCountContract(int emp_no) {
-		return sqlSession.selectOne("contract.countContract", emp_no);
+	public int selectCountContract() {
+		return sqlSession.selectOne("contract.countContract");
 	}
 	
 	
