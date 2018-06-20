@@ -142,7 +142,7 @@ background-color:#2A3F54;
 					<div class="page-title">
 						<div class="title_left">
 							<h3>
-								전자결재 리스트
+								결재목록
 							</h3>
 						</div>
 					</div>
@@ -151,7 +151,7 @@ background-color:#2A3F54;
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
 								<div class="x_content">
-									<table id="table_ap" class="table table-striped table-bordered">
+									<table id="table_ap" class="table table-striped table-bordered" style="min-width:650px;">
 										<thead>
 											<tr>
 												<th>결재유형</th>
@@ -244,7 +244,7 @@ background-color:#2A3F54;
 						</div>
 					</div><!-- row close -->
 					<!--  modal start -->
-					<div class="modal fade sendMsg" tabindex="-1" role="dialog"	id="modal1" aria-hidden="true">
+					 <div class="modal fade sendMsg" tabindex="-1" role="dialog"	id="modal1" aria-hidden="true">
 						<div class="modal-dialog modal-lg">
 							<div class="modal-content">
 								<form class="form-horizontal form-label-left input_mask">
