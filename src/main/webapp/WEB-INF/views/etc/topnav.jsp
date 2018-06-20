@@ -169,7 +169,7 @@
 			 if (window.Notification && Notification.permission === "granted") {
 				var notification = new Notification('Message', { body: text, icon: img });
     		}else if(mNotify =="mobile"){
-    			alert(text);
+    			alert(text);ㄴ
     		}		
 		}
 		 

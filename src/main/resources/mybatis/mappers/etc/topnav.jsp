@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>sidebar</title>
+<title>topnav</title>
 </head>
 <script type="text/javascript">
 	var eventSource = new EventSource("notify.do");
