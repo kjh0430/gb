@@ -39,81 +39,9 @@ public class GoalController {
 		
 	//목표 관리 리스트 출력
 	@RequestMapping("goalAdmin.do")
-	public String GoalAdmin(Goal goal, Model model ,@RequestParam(value="page") int page) {
-		logger.info("목표관리  리스트 메소드 실행됨-------------------");
-		//,@RequestParam(value="page") int page
-		System.out.println("------------------------------- goaladmin.do 시작");
-		
-		
-		int currentPage=page;	//page 써야됨			
-		//한 페이지당 출력할 목록갯수 지정
-		
-		System.out.println("page=: --------"+page);
-		int pageSize=10;
-		int pageGroupSize=5;
-		Goal listCount=(goalService.goalListCount());
-		
-		
-		int listCount_2=listCount.getGoal_list_count();
-		System.out.println("목표관리 리스트 갯수 "+listCount_2);
-		
-		int maxPage=(int)((double)listCount_2/pageSize+0.9);				
-		//페이지 번호 갯수 출력 					
-		
-		int curBlock=(currentPage-1)/pageGroupSize+1;//원하는 페이지가 몇번째 블록인지계산
-		int totBlock=(int)Math.ceil(maxPage*1.0)/pageGroupSize+1;//총 블록 갯수
-		
-		
-		//블록의 시작 페이지와 끝 페이지 번호 계산
-		int blockBegin=(curBlock-1)*pageGroupSize+1;
-		int blockEnd=blockBegin+pageGroupSize-1;
-		//[이전][다음] 을 눌렀을떄 이동할 페이지 번호
-		int prevBlock=(curBlock==1)?1:(curBlock-1)*pageGroupSize;
-		int nextBlock=curBlock>totBlock?(curBlock*pageGroupSize):(curBlock*pageGroupSize)+1;
-		
-		if(nextBlock>=totBlock) {
-			nextBlock=totBlock;
-		}				
-		
-		//마지막 페이지 번호가 범위를 초과하지 않도록 처리 
-		if(maxPage<blockEnd)
-			blockEnd=maxPage;
-		
-		//int startPage=(((int)((double)currentPage/pageSize+0.9))-1)*pageSize+1;
-		int startPage=(currentPage-1)*pageSize+1;
-		int endPage=startPage+pageSize-1;
-		
-		
-		goal.setStartPage(startPage);
-		goal.setEndPage(endPage);
-		
-		System.out.println("시작페이지 :"+goal.getStartPage());
-		System.out.println("마지막 페이지 :"+goal.getEndPage());
-		
-		ArrayList<Goal> goalStateList=goalService.selectGoalStateList(goal);
-		
-		System.out.println("목표 관리 리스트"+goalStateList);
-		
-		
-		model.addAttribute("goalStateList", goalStateList); 
-		
-		
-		model.addAttribute("listCount",listCount_2);
-		model.addAttribute("currentPage",currentPage);
-		model.addAttribute("pageGroupSize",pageGroupSize);		
-		model.addAttribute("startPage",startPage);
-		model.addAttribute("endPage",endPage);
-		model.addAttribute("maxPage",maxPage);
-		model.addAttribute("blockBegin",blockBegin);
-		model.addAttribute("blockEnd",blockEnd);
-		model.addAttribute("curBlock",curBlock);
-		model.addAttribute("totBlock",totBlock);
-		model.addAttribute("prevBlock",prevBlock);
-		model.addAttribute("nextBlock",nextBlock);
-		
-		
-		
+	public String GoalAdmin() {
 		return "goal/goalAdmin";
+		
 	}
 	
 	//달별 리스트 출력
@@ -343,6 +271,6 @@ public class GoalController {
 	out.flush();
 	out.close();
 	}
-	
+
 	
 }
