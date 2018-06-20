@@ -49,6 +49,17 @@ $(document).ready(function() {
 
 <script type="text/javascript">
 
+function list(page){
+	
+	location.href="goalAdmin.do?page="+page;
+	
+	
+	
+}
+
+
+
+
 $(function(){
 	
 	$('#goalMonth').change(function(){
@@ -255,7 +266,52 @@ function goalAdminDetail(){
 										</tbody>
 									</table>
 								</div>
+								 <nav aria-label="Page navigation example">
 								
+									<ul class="pagination">
+									
+									 <c:if test="${curBlock>1}">
+										<li class="page-item"><a class="page-link" href="goalAdmin.do?page=1">처음으로</a></li>
+									
+									</c:if> 
+									
+									 <c:if test="${curBlock>1}">
+										<li class="page-item"><a class="page-link" href="goalAdmin.do?page=${blockBegin-1}">이전</a></li>
+									
+									</c:if> 
+								<!-- 페이지 리스트var="page"   -->
+									 <c:forEach var ="page" begin="${blockBegin}" end="${blockEnd}">
+									 	
+										  <c:choose>
+											<c:when test="${page==currentPage}">
+												
+												 <li class="page-item" class="page-link" ><a class="page-link" style="color:red;">${page}</a></li>
+											</c:when> 
+										
+											<c:otherwise> 
+												
+													<li class="page-item"><a class="page-link" href="#" onclick="list('${page}')">${page}</a></li>	
+													
+											
+											 </c:otherwise> 
+										
+										 </c:choose> 
+									
+									</c:forEach>  
+									
+									 <c:if test="${curBlock!=totBlock}">
+										<li class="page-item"><a class="page-link" href="goalAdmin.do?page=${blockEnd+1}">다음</a></li>
+									
+									</c:if> 
+									<!-- 다음페이지 next -->
+									
+									<c:if test="${curBlock!=totBlock}">
+										<li class="page-item"><a class="page-link" href="goalAdmin.do?page=${maxPage}">맨끝</a></li>	
+									
+									</c:if> 	
+									
+									</ul>
+								</nav>
 								
 							</div>
 						</div>
