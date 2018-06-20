@@ -58,4 +58,8 @@ public class GoalDao {
 		return sqlSession.selectOne("Goal.selectListCount");
 	}
 
+	public ArrayList<Goal> selectGoalList(Goal goal) {
+		return (ArrayList)sqlSession.selectList("Goal.selectGoalList");
+	}
+
 }
