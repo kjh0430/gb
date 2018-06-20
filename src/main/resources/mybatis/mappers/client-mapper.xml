@@ -163,12 +163,12 @@
 		<if test="client_company!=null">
 			<if test="job_no==1">
 				<![CDATA[
-					select count(*) from client where client_contract = 'Y' and emp_no=#{emp_no} and client_company=#{client_company}
+					select count(*) from client where client_contract = 'Y' and emp_no=#{emp_no} and client_company like '%'||#{client_company}||'%'
 				]]>
 			</if>
 			<if test="job_no==2 || job_no==3">
 				<![CDATA[
-					select count(*) from client where client_contract = 'Y' and client_company=#{client_company}
+					select count(*) from client where client_contract = 'Y' and client_company like '%'||#{client_company}||'%'
 				]]>
 			</if>
 		

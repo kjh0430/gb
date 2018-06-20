@@ -254,7 +254,6 @@ public class ClientController {
 	
 		
 		int listCount_1 = clientService.clientListCount(client);
-		//System.out.println("oooooooooooooooooooooo");
 		System.out.println("count : " + listCount_1);
 		//페이지수 계산 
 		int maxPage=(int)((double)listCount_1/pageSize+0.9);				
