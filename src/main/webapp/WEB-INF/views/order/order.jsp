@@ -52,7 +52,7 @@
 				
 				var objStr = JSON.stringify(obj);
 				var jsonl = JSON.parse(objStr);
-				var value = "<table id='table_items' class='table table-bordered'>"
+				var value = "<table id='table_items' class='table table-bordered table-striped'>"
 				+"<tr><th>거래처번호</th><th>거래처명</th><th>전화번호</th><th>주소</th></tr>";
 				
 				
@@ -122,6 +122,8 @@
 
 	//상품 검색용.
 	function searchProduct(){
+		
+		
 		if($('#searchComName2').val() != ""){
 		if($('#searchProductName').val()!=null && $('#searchProductName').val()!="") {
 			$.ajax({
@@ -136,7 +138,7 @@
 					
 					var objStr = JSON.stringify(obj);
 					var json = JSON.parse(objStr);
-					var value = "<table id='table_items' class='table table-bordered'>"
+					var value = "<table id='table_items2' class='table table-striped table-bordered'>"
 					+"<tr><th>제품번호</th><th>제품명</th><th>단가</th></tr>";
 					
 					for(var i in json.plist){
@@ -165,7 +167,7 @@
 	
 	function selectProduct(obj){
 		//alert("obj : " + $(obj));
-				
+		$("#searchProductList").html("");	
 		var tr=$(obj);
 		var td=tr.children();
 		//alert("ㅎㅇㅎㅇㅎ: " + discount);
@@ -205,7 +207,6 @@
 		
 		//alert($('#productName').val());	
 		$('#searchProductName').val('');
-		$('.order_body').html('');
 		
 		
 	}
