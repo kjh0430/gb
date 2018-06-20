@@ -32,7 +32,12 @@ public class SalaryDao {
 
 	/** 급여리스트 페이지 조회 */
 	public ArrayList<Salary> selectSalaryPageList(Salary salary) {
-		return (ArrayList)sqlSession.selectList("selectSalaryPageList", salary);
+		return (ArrayList)sqlSession.selectList("salary.selectSalaryPageList", salary);
+	}
+
+	/** 급여리스트 검색 */
+	public ArrayList<Salary> selectSearchList(String emp_name) {
+		return (ArrayList)sqlSession.selectList("salary.selectSearchName", emp_name);
 	}
 	
 	
