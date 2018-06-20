@@ -16,9 +16,9 @@ public class GoalServiceImpl implements GoalService{
 	private GoalDao goalDao;
 	
 	@Override
-	public ArrayList<Goal> selectGoalStateList() {
+	public ArrayList<Goal> selectGoalStateList(Goal goal) {
 		
-		return goalDao.selectAllGoalState();
+		return goalDao.selectAllGoalState(goal);
 	}
 
 	@Override
@@ -60,6 +60,12 @@ public class GoalServiceImpl implements GoalService{
 		
 		return goalDao.selectEmpAll();
 
+	}
+	//목표관리 리스트 카운트 조회
+	@Override
+	public Goal goalListCount() {
+		
+		return goalDao.selectGoalCount();
 	}
 
 }
