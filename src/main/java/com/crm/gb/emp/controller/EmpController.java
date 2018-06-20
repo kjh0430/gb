@@ -146,7 +146,7 @@ public class EmpController {
    public String empList(Emp emp, Model model, @RequestParam(value="page") int page,HttpServletRequest request) {
       logger.info("사원 목록 실행");
       
-      int currentPage=1;
+      int currentPage=page;
       int listSize = 10;
       int pageSize = 5;
       int listCount2 = 0;
