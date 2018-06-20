@@ -18,18 +18,25 @@
 		<result column="contract_date_start" property="contract_date_start"/>	
 		<result column="goal_no" property="goal_no"/>	
 		<result column="goal_money" property="goal_money"/>	
-		<result column="goal_date" property="goal_date"/>		
+		<result column="goal_date" property="goal_date"/>
+		<result column="goal_list_count" property="goal_list_count"/>		
 				
 	</resultMap>
 
 
 	<!-- 목표관리를 위한 리스트 출력 -->
-	<select id="selectAllGoalState" resultType="goal">
+	<select id="selectAllGoalState" resultType="goal" parameterType="goal">
 		<![CDATA[
 			
-		select e.emp_name,sum(c.contract_money)as contract_money,e.emp_no ,to_char(c.contract_date_start, 'yyyy-MM') as contract_date_start_goal
-  			from emp e left join contract c on e.emp_no = c.emp_no
- 			group by e.emp_name,e.emp_no ,to_char(c.contract_date_start, 'yyyy-MM')
+		select *from (
+          select rownum as rn,A.* from(
+          select e.emp_name,sum(c.contract_money)as contract_money,e.emp_no ,to_char(c.contract_date_start, 'yyyy-MM') as contract_date_start_goal
+                  from emp e left join contract c on e.emp_no = c.emp_no
+                group by e.emp_name,e.emp_no ,to_char(c.contract_date_start, 'yyyy-MM')
+                order by contract_date_start_goal desc
+         			 )A
+   				 )where rn between  #{startPage} and #{endPage}
+   						
 			
 		]]>	
 	</select>
@@ -112,6 +119,16 @@
 	
 		]]>	
 	</select>
+
+	<select id="selectListCount" parameterType="int" resultType="goal">
+		<![CDATA[
+			
+			select count(*) as goal_list_count from emp e,contract c where e.emp_no=c.emp_no
+			
+		]]>
+	
+	</select>
+
 
 	
 </mapper>

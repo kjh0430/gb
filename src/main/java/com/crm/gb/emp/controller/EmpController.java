@@ -146,7 +146,7 @@ public class EmpController {
    public String empList(Emp emp, Model model, @RequestParam(value="page") int page,HttpServletRequest request) {
       logger.info("사원 목록 실행");
       
-      int currentPage=1;
+      int currentPage=page;
       int listSize = 10;
       int pageSize = 5;
       int listCount2 = 0;
@@ -157,7 +157,7 @@ public class EmpController {
       
       if(emp.getEmp_name()!=null && emp.getEmp_name()!="") {
     	  System.out.println("검색어 if문 실행");
-    	  Emp listCount = empService.selectListCount(emp);
+    	  Emp listCount = empService.selectEmpListCount(emp);
           listCount2 = listCount.getListCount();
           System.out.println("count까지 실행");
           emp.setStartPage((currentPage-1)*listSize+1);
@@ -178,7 +178,7 @@ public class EmpController {
           
       }else {
       
-      Emp listCount = empService.selectListCount();
+      Emp listCount = empService.selectEmpListCount2();
       listCount2 = listCount.getListCount();
 	  
 	  emp.setStartPage((currentPage-1)*listSize+1);
@@ -310,7 +310,7 @@ public class EmpController {
       int listSize = 10;
       int pageSize = 5;
       
-      Emp listCount = empService.selectListCount();
+      Emp listCount = empService.selectEmpListCount2();
       int listCount2 = listCount.getListCount();
       
       int maxPage = (int)((double)listCount2 / listSize + 0.9);

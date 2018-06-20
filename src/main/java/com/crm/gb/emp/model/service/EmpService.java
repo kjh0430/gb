@@ -28,9 +28,9 @@ public interface EmpService {
 	public abstract Emp selectPhoneckdupl(Emp emp); //phone check
 	public abstract int updateMyInfo(Emp emp); //내 정보 업데이트
 	public abstract int updatePassword(Emp emp); //비밀번호  수정하기
-	public abstract Emp selectListCount(); //사원목록 갯수
+	public abstract Emp selectEmpListCount2(); //사원목록 갯수
 	public abstract ArrayList<Emp> selectEmpList(Emp emp); //사원목록 페이징
 	public abstract ArrayList<Emp> selectMgrList(Emp emp); //상사번호 목록
 	public abstract ArrayList<Emp> selectEmpSearch(Emp emp); //사원목록 검색
-	public abstract Emp selectListCount(Emp emp); //사원목록 갯수
+	public abstract Emp selectEmpListCount(Emp emp); //사원목록 갯수
 }
