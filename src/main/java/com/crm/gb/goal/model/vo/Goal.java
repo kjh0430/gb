@@ -1,6 +1,8 @@
 package com.crm.gb.goal.model.vo;
 
 import java.io.Serializable;
+import java.sql.Date;
+import java.util.ArrayList;
 
 import org.springframework.stereotype.Component;
 

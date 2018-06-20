@@ -24,8 +24,8 @@
 	</resultMap>
 
 
-	<!-- 목표관리를 위한 리스트 출력 -->
-	<select id="selectAllGoalState" resultType="goal" parameterType="goal">
+	 <!-- 목표관리를 위한 리스트 출력 -->
+	<!-- <select id="selectAllGoalState" resultType="goal" parameterType="goal">
 		<![CDATA[
 			
 		select *from (
@@ -39,11 +39,11 @@
    						
 			
 		]]>	
-	</select>
+	</select> -->
 	
 
 	<!--목표 달별 리스트 출력 -->
-	<select id="selectAllGoalStateMonth" resultType="goal" parameterType="String">
+	<!-- <select id="selectAllGoalStateMonth" resultType="goal" parameterType="String">
 		<![CDATA[
 			
 		select e.emp_name,sum(c.contract_money)as contract_money,e.emp_no ,to_char(c.contract_date_start, 'yyyy-MM') as contract_date_start_goal
@@ -52,7 +52,7 @@
 			  having to_char(c.contract_date_start, 'yyyy-MM') like ''||#{gdata}||'%'
 			
 		]]>	
-	</select>
+	</select> -->
 	<select id="selectEmp" parameterType="goal" resultType="goal">
 	<![CDATA[
 	select e.emp_name,d.dept_name,j.job_name,e.emp_email,e.emp_no from emp e,
@@ -88,17 +88,17 @@
 	
 	</select>
 	
-	<!--사원 목표 총합  -->
-	<select id="selectGoalContractMoneySum" resultType="goal" parameterType="int">
+ 	<!--사원 목표 총합  -->
+	<!-- <select id="selectGoalContractMoneySum" resultType="goal" parameterType="int">
 		<![CDATA[
 			
 		select sum(contract_money) as contract_money_sum from contract where emp_no=#{emp_no}
 			
 		]]>	
-	</select>
+	</select>  -->
 	
 	<!--목표 관리 추가   -->
-	<insert id="insertGoal" parameterType="goal">
+	<!-- <insert id="insertGoal" parameterType="goal">
 		<![CDATA[
 		
 			insert into goal values(
@@ -107,9 +107,9 @@
 			#{goal_money},to_date(#{goal_date_start},'yyyy-mm'))
 		
 		]]>	
-	</insert>
+	</insert>  -->
 	
-	<select id="selectCountGoal" parameterType="goal" resultType="int">
+<!-- 	<select id="selectCountGoal" parameterType="goal" resultType="int">
 		<![CDATA[
 		
 		select count(goal_no)as goal_count from goal where emp_no=#{emp_no} and goal_date=to_date(#{goal_date_start},'yyyy-mm')
@@ -124,7 +124,7 @@
 			
 		]]>
 	
-	</select>
+	</select> -->
 
 
 
@@ -133,7 +133,13 @@
 	<![CDATA[
 	select e.emp_no,e.emp_name,sum(nvl((ol.order_amount*ol.order_price),0)) as sales 
 	from emp e left join orderlist ol on e.emp_no=ol.emp_no and to_char(ol.order_date,'yyyy-MM') 
+<<<<<<< HEAD
 	= #{setdate} group by e.emp_no,e.emp_name,e.dept_no having dept_no=#{dept_no}
+=======
+	= #{date} group by e.emp_no,e.emp_name,e.dept_no having dept_no=#{dept_no}
+  
+  
+>>>>>>> branch 'master' of https://github.com/kjh0430/gb
 	]]>
 	
 	</select>
