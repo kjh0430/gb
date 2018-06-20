@@ -128,7 +128,7 @@ function searchFunctionP(page){
 
 function searchFunction(){
 	
-	if($('#receiveCondition').val()==null){
+	if($('#receiveCondition').val()==""){
 		
 		receive();
 	}else{
@@ -889,7 +889,7 @@ function searchFunction2(){
    function answerSubmit(){
       
       
-      if($('#answer_title').val()!=null && $('#answer_title').val()!=""){
+      if($('#answer_title').val()!="" && $('#answer_content').val()!=""){
     	  $('#modal4').modal("hide");
     	  closeModal3();
       $.ajax({
@@ -919,7 +919,7 @@ function searchFunction2(){
    //쪽지 보내기
    function modalSubmit() {
 
-	   if($('#searchName').val() !="" && $('#searchName').val() !=null && $('#message_title').val() !="" && $('#message_title').val() !=null && $('#message_content').val()!="" && $('#message_content').val()!=null){
+	   if($('#searchName').val() !="" && $('#message_title').val() !="" && $('#message_content').val()!=""){
 	   
 	   
 	   
