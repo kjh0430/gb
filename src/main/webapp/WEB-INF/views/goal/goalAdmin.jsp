@@ -19,8 +19,6 @@
 	rel="stylesheet">
 
 
-
-
 <!-- Custom Theme Style -->
 <link href="resources/build/css/custom.min.css" rel="stylesheet">
 <link href="resources/css/main.css" rel="stylesheet">
@@ -31,8 +29,9 @@ var dept_no;
 var string="";
 
 $(function(){
-	document.getElementById("goalMonth").valueAsDate = new Date();	
-
+	document.getElementById("goalMonth").valueAsDate = new Date();
+	
+	
 	
 		$.ajax({
 			url:"selectDeptEmp.do",
@@ -46,7 +45,6 @@ $(function(){
 				var size = Object.keys(result.list).length;
 				var arrDept = [];
 				var value_dept="";
-				var value_emp="<option>사원선택</option>";
 				if(size>0){
 					for(var i in result.list){
 						arrDept[i]=result.list[i].dept_no +" / " +result.list[i].dept_name;							
@@ -56,13 +54,14 @@ $(function(){
 					
 					for(var i in uni_dept){
 						if(i==0){
-							value_dept+="<option selected>"+uni_dept[i]+"</option>"							
+							value_dept+="<option selected>"+uni_dept[i]+"</option>"	
+							string=uni_dept[i];
 						}else{
 							value_dept+="<option>"+uni_dept[i]+"</option>"
 						}
 					}
 					$("#dept_no").html(value_dept);	
-					
+					getList();
 				}				
 				
 			},
@@ -73,6 +72,7 @@ $(function(){
 			}			
 			
 		});//ajax
+		
 	
 	});//onload	
 	
@@ -84,16 +84,69 @@ $(function(){
 	    return result;
 	}
 	
-	function getGoalList(){
-				
-		/* $.ajax({
-			url:"getGoalList.do",
-			type:"post",
-			data:{'dept_name'},
-			
-			
-		}); */
+	function checkCondition(){
+		
+		alert("checkCondition");
+		
+		
 	}
+	function getList(){
+		//alert($("#dept_no option:selected").val());
+		//string=$("#dept_no option:selected").val();	
+		dept_no = string.split(' / ',1)*1;
+		console.log("string : " + string);
+		console.log("dept_no : " +dept_no);
+		
+		 var date = $("#goalMonth").val();
+		   var year = date.substring(0,4);
+		   var month = date.substring(6,7)-1;
+		   if(month==0){
+		      month=12;
+		      year =year-1;
+		   }
+		   if(month<10){
+		      month = "0"+month;
+		   }
+		   date = year+"-"+month;
+		
+		
+		$.ajax({
+		url:"getList.do",
+		type:"post",
+		dataType:"json",
+		data :{dept_no:dept_no,date:date},
+		success:function(data){
+			var objStr =JSON.stringify(data);
+			var jsonl = JSON.parse(objStr);		
+			console.log(jsonl);
+			var size = Object.keys(jsonl.list).length;
+			
+			var value="";
+			value="<table id='table_goal' class='table table-striped table-responsive table-bordered' style='min-width:650px;'>"+
+			"<thead><tr><th>사원번호</th><th>사원명</th><th>전월 실적</th><th>입력</th><th>확인</th></tr></thead><tbody>"
+			for(var i in jsonl.list){
+			value+="<tr><td>"+jsonl.list[i].emp_no+"</td>"+
+						"<td>"+jsonl.list[i].emp_name+"</td>"+
+						 "<td>"+jsonl.list[i].sales+"</td>"+
+						 "<td><input type='number' class='form-control' name='goal'></td>"+
+						 "<td><input type='button' class='btn-modify btn btn-info' value='확인'></td></tr>";
+						 
+				
+				
+				
+				
+			}
+			value+="</tbody></table>";
+			
+			$('#tableArea').html(value);
+		}
+			
+		});
+		
+		
+		
+	}
+	
 
 </script>
 
@@ -164,7 +217,7 @@ $(function(){
 												    
 												  </select>
 												<input type="month" class="form-control" id="goalMonth" style="display:inline-block;width:260px">
-												<input type="button" class="btn btn-dark" style="display:inline-block" value="확인">
+												<input type="button" class="btn btn-dark" style="display:inline-block" onclick="checkCondition();" value="확인">
 											</div>
 										</div>
 									<div class="clearfix"></div>
@@ -172,31 +225,8 @@ $(function(){
 								<div class="title_right">
 									
 								</div>
-								<div class="x_content table-responsive">									
-									<table id="table_goal" class="table table-striped table-responsive table-bordered" style="min-width:650px;">
-										<thead>
-											<tr>
-												<th>사원번호</th>
-												<th>팀명</th>
-												<th>사원명</th>
-												<th>전월 목표</th>
-												<th>달성율</th>
-												<th>입력</th>
-												<th>확인</th>
-											</tr>
-										</thead>
-										<tbody id="goalListMonth">
-											<tr>
-												<td>7</td>
-												<td>영업1팀</td>
-												<td>정대만</td>
-												<td>1,000,000</td>
-												<td>85%</td>
-												<td><input type="number" class="form-control" name="goal"></td>
-												<td><input type="button" class="btn-modify btn btn-info" value="확인"></td>
-											</tr>											
-										</tbody>
-									</table>
+								<div class="x_content" id="tableArea">									
+									
 									
 								</div>
 			
@@ -217,7 +247,6 @@ $(function(){
 	<script src="resources/vendors/jquery/dist/jquery.min.js"></script>
 	<!-- Bootstrap -->
 	<script src="resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-	<!-- FastClick -->
 	
 	<!-- Custom Theme Scripts -->
 	<script src="resources/build/js/custom.min.js"></script>
