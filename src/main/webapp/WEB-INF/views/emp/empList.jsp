@@ -37,8 +37,8 @@ $(document).ready(function() {
 </script>
 
 <script type="text/javascript">
-function list(page){	
-	location.href="empList.do?page="+page;
+function list(page, emp_name){	
+	location.href="empList.do?page="+page+"&emp_name="+emp_name;
 }
 </script>
 
@@ -46,7 +46,7 @@ function list(page){
 
 function empSearch(){
 	
-	var emp_name = $('#searhEmpName').val();
+	/* var emp_name = $('#searhEmpName').val();
 	
 	console.log("emp_name : " + emp_name);
 	
@@ -79,7 +79,11 @@ function empSearch(){
 					+ "error : " + errorData);			
 		}
 	
-});
+}); */
+
+	emp_name = $('#searhEmpName').val();
+	
+	location.href="empList.do?page="+1+"&emp_name="+emp_name
 	
 }
 
@@ -179,13 +183,13 @@ function empSearch(){
 										</tbody>
 									</table>
 									<div style="text-align:center;">
-									
+									 <c:set var="emp_name" value="${emp_name}"/>
 									 <c:if test="${curPage>1}">
-										<a class="page-link" href="empList.do?page=1">처음</a>
+										<a class="page-link" href="empList.do?page=1&emp_name=${emp_name}">처음</a>
 									</c:if> 
 									
 									 <c:if test="${curPage>1}">
-										<a class="page-link" href="empList.do?page=${beginPage-1}">Pre</a>
+										<a class="page-link" href="empList.do?page=${beginPage-1}&emp_name=${emp_name}">Pre</a>
 									</c:if>									
 									
 									 <c:forEach var ="page" begin="${beginPage}" end="${finalPage}">
@@ -194,17 +198,17 @@ function empSearch(){
 												 <a class="page-link" style="color:red;">${page}</a>
 											</c:when>										
 										  <c:otherwise> 
-												 <a class="page-link" href="#" onclick="list('${page}')">${page}</a>	
+												 <a class="page-link" href="#" onclick="list('${page}','${emp_name}')">${page}</a>	
 										  </c:otherwise> 
 										 </c:choose> 
 									</c:forEach>  
 									
 									 <c:if test="${curPage!=totalPage}">
-										<a class="page-link" href="empList.do?page=${finalPage+1}">Next</a>
+										<a class="page-link" href="empList.do?page=${finalPage+1}&emp_name=${emp_name}">Next</a>
 									</c:if> 
 									
 									<c:if test="${curPage!=totalPage}">
-										<a class="page-link" href="empList.do?page=${maxPage}">맨끝</a>
+										<a class="page-link" href="empList.do?page=${maxPage}&emp_name=${emp_name}">맨끝</a>
 									</c:if>
 									
 								</div>
