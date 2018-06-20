@@ -43,7 +43,7 @@
 	$('#startDate').val(approval_start_date);
 	$('#endDate').val(approval_end_date);
 	$('#reason').val(approval_choose_no);
-	alert("approval_team_date"+approval_team_date);
+	
 	$('#team').val(approval_team_date);
 	$('#admin').val(approval_mgr_date);
 	$('#textarea').val(approval_comment);

@@ -838,7 +838,6 @@ function searchFunction2(){
       var a_message_content=td.eq(6).text();
    	  //읽음처리를 위해 가져온 message_no
       var a_message_no=td.eq(7).text();
-      alert(a_message_no);
       
      
       $.ajax({

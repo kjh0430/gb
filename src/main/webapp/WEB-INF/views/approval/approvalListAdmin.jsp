@@ -110,7 +110,7 @@ function modalUp(obj){
 			data:{ approval_no:approval_no},
 			type:"post",
 		 	success : function(data){
-				//alert("팀장 승인 완료"+data);
+				
 				 ws.send(data);
 				alert("결재가 완료 되었습니다.");
 				$('#modal1').modal("hide");

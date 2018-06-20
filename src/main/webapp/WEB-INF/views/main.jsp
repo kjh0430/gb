@@ -354,7 +354,7 @@
   				alert("입력하지 않은 정보가 있습니다. 빠짐없이 입력해주세요.");
   				
   				 }else{
-  					alert("dnvldvndvdlvdvd");
+  					
   					 $.ajax({
   						 
   						 url:"addSchedule.do",
@@ -372,7 +372,7 @@
     	}
     	//일정 삭제
     	function deleteSchedule(calendar_no){
-    		alert("deleteSchedule");
+    	
     		$.ajax({
     			url:"deleteSchedule.do",
     			data:{calendar_no:calendar_no},

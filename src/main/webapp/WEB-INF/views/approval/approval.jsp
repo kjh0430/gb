@@ -82,7 +82,7 @@ function submitApproval(){
 	
 	
 	
-	alert($('#startDate').val());
+	
 	if($('#selectReason').val()!="선택" && !(start1.getTime()>end1.getTime()) && $('#approval_comment').val()!=null){
 	 $.ajax({
 			url:"submitApproval.do",
