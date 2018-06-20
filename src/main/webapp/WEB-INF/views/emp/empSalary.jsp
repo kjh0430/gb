@@ -104,13 +104,75 @@ $(function(){
 				var obj = JSON.stringify(data);
 				var json = JSON.parse(obj);
 				var list = "";
-				
-				alert("성공");
+				var maxPage = json.maxPage;
+				var page ="";
+				for(var i in json.list) {
+					list += 
+						"<tr>"+
+							"<td><a onclick='clickNames("+json.list[i].emp_no+")'"+
+								"class="+"'showSalary'"+
+								"id="+"'showSalary'"+ 
+								"style="+"'cursor:pointer;'"+ 
+								"data-toggle="+"'modal'"+ 
+								"data-target="+"'#myModal'"+">"+
+								decodeURIComponent(json.list[i].emp_name)+"</a></td>"+
+							"<td>"+decodeURIComponent(json.list[i].dept_name)+"</td>"+
+							"<td>"+json.list[i].emp_phone+"</td>"+
+							"<td>"+json.list[i].sal+"</td>"+
+							"<td>"+json.list[i].sal_date+"</td>"+
+							"<td>"+json.list[i].emp_hiredate+"</td>"+
+						"</tr>";
+
+				}
+				for(var i=1; i<=maxPage; i++) {
+					page += "<a style='cursor:pointer;' onclick='searchPageAjax("+i+")'>["+i+"]</a>"
+				}
+					$('table tbody').html(list);
+					$('#showPageNumber').html(page);
 			}
 			
 		});
 	});
 });
+</script>
+<script type="text/javascript">
+	function searchPageAjax(num){
+		$.ajax({
+			url: "searchSalaryList.do",
+			type: "post",
+			dataType: "json",
+			data: {
+				emp_name: $('#searchSalaryList').val(),
+				startPage: num
+			},
+			success: function(data) {
+				var obj = JSON.stringify(data);
+				var json = JSON.parse(obj);
+				var list = "";
+
+				for(var i in json.list) {
+					list += 
+						"<tr>"+
+							"<td><a onclick="+"'clickNames(${ list.emp_no })'"+
+								"class="+"'showSalary'"+
+								"id="+"'showSalary'"+ 
+								"style="+"'cursor:pointer;'"+ 
+								"data-toggle="+"'modal'"+ 
+								"data-target="+"'#myModal'"+">"+
+								decodeURIComponent(json.list[i].emp_name)+"</a></td>"+
+							"<td>"+decodeURIComponent(json.list[i].dept_name)+"</td>"+
+							"<td>"+json.list[i].emp_phone+"</td>"+
+							"<td>"+json.list[i].sal+"</td>"+
+							"<td>"+json.list[i].sal_date+"</td>"+
+							"<td>"+json.list[i].emp_hiredate+"</td>"+
+						"</tr>";
+				}
+					
+				$('table tbody').html(list);
+			}
+			
+		});
+	}
 </script>
 
 </head>
@@ -197,24 +259,24 @@ $(function(){
 												<th>입사일</th>
 											</tr>
 										</thead>
-										<tbody>
+										<tbody id="salarySearchList">
 										
-										<c:forEach items="${ salaryList }" var="list">
+										<c:forEach items="${ salaryPageList }" var="list">
 											<tr>
 												<td>
-												<a onclick="clickNames('${ list.emp.emp_no }')"
+												<a onclick="clickNames('${ list.emp_no }')"
 													class="showSalary"
 													id="showSalary" 
 													style="cursor:pointer;" 
 													data-toggle="modal" 
 													data-target="#myModal">
-													${ list.emp.emp_name }</a></td>
+													${ list.emp_name }</a></td>
 													
-												<td>${ list.dept.dept_name }</td>
-												<td>${ list.emp.emp_phone }</td>
+												<td>${ list.dept_name }</td>
+												<td>${ list.emp_phone }</td>
 												<td>${ list.sal }</td>
 												<td>${ list.sal_date }</td>
-												<td>${ list.emp.emp_hiredate }</td>
+												<td>${ list.emp_hiredate }</td>
 											</tr>	
 										</c:forEach>
 										
@@ -223,9 +285,9 @@ $(function(){
 								</div>
 								
 								<!-- 페이징 처리 -->
-								<div style="text-align:center;">
+								<div id="showPageNumber" style="text-align:center;">
 									<c:forEach var="i" begin="${ start }" end="${ end }" varStatus="num">
-										<a id="listNumber${ num.index }" href="empSalary.do?startPage=${ i }">[${ i }]</a>
+										<a id="listNumber${ num.index }" style="cursor:pointer;" onclick="searchPageAjax(${ num.index })">[${ i }]</a>
 									</c:forEach>
 								</div>
 								

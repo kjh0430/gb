@@ -75,7 +75,6 @@
 <script type="text/javascript">
 
 $(function(){
-
 	
 	 $('#contract_date_end').blur(function(){
 		 
@@ -89,10 +88,10 @@ $(function(){
 		 end1 =new Date(eArr[0],parseInt(eArr[1])-1,eArr[2]);
 		 
 		 
-	if(start1.getTime()>end1.getTime()){
-		alert("입력날짜가 유효하지 않습니다.");
-	}
-	 })
+		if(start1.getTime()>end1.getTime()){
+			alert("입력날짜가 유효하지 않습니다.");
+		}
+	 });
 	
 });
 

@@ -846,17 +846,14 @@ $(function(){
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i> 매출현황</span>
               <div class="count" id="orderState"></div>
-              <span class="count_bottom"><i class="green">4% </i> From last Week</span>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 tile_stats_count">
               <span class="count_top"><i class="fa fa-clock-o"></i> 목표달성현황</span>
               <div class="count" id="goalState"></div>
-              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span>
             </div>   
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i> 평균 주문액</span>
               <div class="count" id="orderAvg"></div>
-              <span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>12% </i> From last Week</span>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i> 신규거래처수</span>

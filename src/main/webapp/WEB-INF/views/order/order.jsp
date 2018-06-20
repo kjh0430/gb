@@ -37,7 +37,7 @@
 
 	function searchCom(){
 	
-		
+	
 	if($('#searchComName').val()!=null && $('#searchComName').val()!="") {
 		
 		$.ajax({
@@ -52,14 +52,19 @@
 				
 				var objStr = JSON.stringify(obj);
 				var jsonl = JSON.parse(objStr);
-				var value = "<table id='table_items' class='table table-striped table-bordered'>"
+				var value = "<table id='table_items' class='table table-bordered table-striped'>"
 				+"<tr><th>거래처번호</th><th>거래처명</th><th>전화번호</th><th>주소</th></tr>";
 				
 				
-				
+				//alert("aaaa:" + $('#searchComName2').val());
+				/* if($('#searchComName2').val()!=null && $('#searchComName2').val()!=""){
+					$('#searchComName').html('');
+					
+				}else{
+					 */
 				
 					for(var i in jsonl.list){
-						value += "<tr onclick='selectCom(this);'>"
+						value += "<tr id='resultCom' onclick='selectCom(this);'>"
 						+"<td>"+jsonl.list[i].client_no+"</td>"
 						+"<td>"+jsonl.list[i].client_company+"</td>"
 						+"<td>"+jsonl.list[i].client_phone+"</td>"
@@ -67,8 +72,10 @@
 						+"</tr>";	
 						discount[i] = jsonl.list[i].contract_discount;
 					}
+				//}
 					
 					value += "</table>";
+				
 				//	alert("value : " + value);
 					$('#searchResult').html(value);
 					
@@ -79,10 +86,13 @@
 		}else{
 			alert("검색어를 입력해주세요.");
 		}
+	
+	
 	}
 
 	
 	function selectCom(obj){
+	
 		$('.order_body').html("");
 		var tr=$(obj);
 		//alert("obj : " + $(obj).index());
@@ -93,7 +103,8 @@
 		var client_company=td.eq(1).text();
 		var client_phone=td.eq(2).text();
 		var client_addr=td.eq(3).text();
-		
+
+			
 		$('#searchModal').modal("hide");
 		
 		/* submit하기 위하여 갑 넣기 */
@@ -105,10 +116,15 @@
 		$('#searchClientPhone').val(client_phone);
 		$('#searchClientAddr').val(client_addr);
 		
+		$('#searchComName').val("");
+		$('#table_items').html("");
 	}
 
 	//상품 검색용.
 	function searchProduct(){
+		
+		
+		if($('#searchComName2').val() != ""){
 		if($('#searchProductName').val()!=null && $('#searchProductName').val()!="") {
 			$.ajax({
 				url: "searchProduct.do",
@@ -122,12 +138,12 @@
 					
 					var objStr = JSON.stringify(obj);
 					var json = JSON.parse(objStr);
-					var value = "<table id='table_items' class='table table-striped table-bordered'>"
+					var value = "<table id='table_items2' class='table table-striped table-bordered'>"
 					+"<tr><th>제품번호</th><th>제품명</th><th>단가</th></tr>";
 					
 					for(var i in json.plist){
 						this.row = i;
-						value += "<tr onclick='selectProduct(this);'>"
+						value += "<tr id='resultProd' onclick='selectProduct(this);'>"
 						+"<td>"+json.plist[i].product_no+"</td>"
 						+"<td>"+json.plist[i].product_name+"</td>"
 						+"<td>"+json.plist[i].product_price+"</td>"
@@ -140,16 +156,20 @@
 					$('#searchProductList').html(value);
 				}
 			});//ajax complete
+			
 		}else{
 			alert("검색할 제품명을 입력해주세요");
 		}
+	}else{
+		alert("거래처를 먼저 선택해 주세요.");
+	}
 	}
 	
 	function selectProduct(obj){
 		//alert("obj : " + $(obj));
+		$("#searchProductList").html("");	
 		var tr=$(obj);
 		var td=tr.children();
-		//alert("ㅎㅇㅎㅇㅎ: " + discount);
 		var product_no=td.eq(0).text();
 		var product_name=td.eq(1).text();
 		var product_price=td.eq(2).text()*(1-c_discount/100);
@@ -164,10 +184,10 @@
 		//console.log(amount[1]);
 		/* submit하기 위하여 갑 넣기 */
 		value += "<tr id='tr"+idx+"'>"
-		+"<td><input type='text' id='productNo"+idx+"' name='product_no' class='form-control' value='"+product_no+"' readonly/></td>"
+		+"<td><input type='text' id='productNo"+idx+"' name='product_no' class='form-control' value='"+product_no+"' readonly required/></td>"
 		+"<td>"+product_name+"</td>"
-		+"<td><input type='number' onblur='saveAmount("+idx+");' id='orderAmount"+idx+"' name='order_amount' class='form-control' min='1' value='1'/></td>"
-		+"<td><input type='text' id='orderPrice"+idx+"' name='order_price' class='form-control' value='"+product_price+"'/></td>"
+		+"<td><input type='number' onblur='saveAmount("+idx+");' id='orderAmount"+idx+"' name='order_amount' class='form-control' min='1' value='1' required/></td>"
+		+"<td><input type='text' id='orderPrice"+idx+"' name='order_price' class='form-control' value='"+product_price+"' required/></td>"
 		+"<td><button type='button' class='btn btn-danger btn-order' onclick='deleteRow("+idx+");'>&nbsp;&nbsp;<i class='fa fa-trash-o'></i>&nbsp;&nbsp;</button></td>"
 		+"</tr>";
 		
@@ -183,8 +203,10 @@
 		}
 		
 		calcPrice(idx-1);
-	
+		
 		//alert($('#productName').val());	
+		$('#searchProductName').val('');
+		
 		
 	}
 	
@@ -210,14 +232,14 @@
 		
 	
 		amount[idx] = $('#orderAmount'+idx).val();
-		console.log("amount["+idx+"]: " + amount[idx]);
+		//console.log("amount["+idx+"]: " + amount[idx]);
 		price[idx] = $('#orderPrice'+idx).val();
 		
-		console.log("price ["+idx+"]: " + price[idx]);
+		///console.log("price ["+idx+"]: " + price[idx]);
 		
 		calcValue[idx] = amount[idx] * price[idx];
 		
-		console.log("calc : " + calcValue[idx]);
+		//console.log("calc : " + calcValue[idx]);
 		//alert("idx : " +idx);
 		
 		
@@ -268,17 +290,34 @@
 		
 	}
 	
-	function noticeAlert(){
-		alert("발주가 완료되었습니다!");
-	}
 	
-	 $('#searchComName').keydown(function() {
-	    if (event.keyCode != 13) {
+	
+	document.addEventListener('keydown', function(event) {
+	    if (event.keyCode === 13) {
 	        event.preventDefault();
 	    }
-	}); 
-		
+	}, true);
 	
+	function blockCheck(){
+		var a = false;
+		if($('#calcValue').val()==""){
+			a = false;
+			alert("주문 정보가 없습니다.");
+			return a;
+		}else{
+			a = true;
+			alert("발주가 완료되었습니다. ");
+			return a;
+		}
+	}
+	
+	function closeCom(){
+		$('#searchComName').val("");
+	}
+	
+	function closeProd(){
+		$('#searchProductName').val('');
+	}
 	
 </script>
 <style type="text/css">
@@ -335,7 +374,7 @@
 					<div class="clearfix"></div>
 					<br>
 					
-					 <form id="formTag" class="form-horizontal form-label-left input_mask" action="insertorder.do" method="post">
+					<form id="formTag" class="form-horizontal form-label-left input_mask" action="insertorder.do" onsubmit="return blockCheck();" method="post">
 					<input type="hidden" name="emp_no" value="${loginEmp.emp_no }"/>
 					<input type="hidden" name="anything" value=""/>
 										
@@ -357,7 +396,7 @@
 
 												<div class="modal-header">
 													<button type="button" class="close" data-dismiss="modal">
-														<span aria-hidden="true">×</span>
+														<span aria-hidden="true" onclick="closeCom();">×</span>
 													</button>
 													<h4 class="modal-title" id="myModalLabel">거래처</h4>
 												</div>
@@ -380,24 +419,11 @@
 															</div>
 														</div>
 														<div class="row" id="searchResult">
-															<table id="table_items" class="table table-striped table-bordered">
-																<tr>
-																	<th>거래처번호</th>
-																	<th>거래처명</th>
-																	<th>전화번호</th>
-																	<th>주소</th>
-																</tr>
-																
-															</table>
+															
 														</div>
 													
 												</div>
-												<!-- <div class="modal-footer">
-													<button type="button" class="btn btn-default"
-														data-dismiss="modal">Close</button>
-													<button type="button" class="btn btn-primary">Save
-														changes</button>
-												</div> -->
+												
 
 											</div>
 										</div>
@@ -414,31 +440,31 @@
 										<div class="form-group">
 											<label class="col-sm-3 control-label">거래처명</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
-												<input type="text" class="form-control" placeholder="거래처명을 검색해주세요." name="client_name" id="searchComName2" value="">
+												<input type="text" class="form-control" placeholder="거래처명을 검색해주세요." name="client_name" id="searchComName2" value="" readonly>
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="col-sm-3 control-label">거래처번호</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
-												<input type="text" class="form-control" placeholder="거래처 번호" name="client_no" id="clientNo">
+												<input type="text" class="form-control" placeholder="거래처 번호" name="client_no" id="clientNo" readonly>
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">담당자</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
-												<input type="text" class="form-control" placeholder="담당직원" id="searchEmpName" value="" name="emp_name">
+												<input type="text" class="form-control" placeholder="담당직원" id="searchEmpName" value="" name="emp_name" readonly>
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">전화번호</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
-												<input type="text" class="form-control" placeholder="연락처" id="searchClientPhone" value="" name="client_phone">
+												<input type="text" class="form-control" placeholder="연락처" id="searchClientPhone" value="" name="client_phone" readonly>
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">주소</label>
 											<div class="col-md-9 col-sm-9 col-xs-12">
-												<input type="text" class="form-control" id="searchClientAddr" value="" placeholder="주소">
+												<input type="text" class="form-control" id="searchClientAddr" value="" placeholder="주소" readonly>
 											</div>
 										</div>
 										
@@ -456,7 +482,7 @@
 									</h2>
 									<div class="clearfix"></div>
 								</div>
-								<div class="x_content">
+								<div class="x_content" style="overflow:auto">
 								<!-- product modal start -->
 									<div style="text-align:right">
 									
@@ -469,7 +495,7 @@
 
 												<div class="modal-header">
 													<button type="button" class="close" data-dismiss="modal">
-														<span aria-hidden="true">×</span>
+														<span aria-hidden="true" onclick="closeProd();">×</span>
 													</button>
 													<h4 class="modal-title" id="myModalLabel">품목</h4>
 												</div>
@@ -490,25 +516,12 @@
 															</div>
 														</div>
 														<div class="row" id="searchProductList">
-															<table id="table_items" class="table table-striped table-bordered">
-																<tr>
-																	<th>품번</th>
-																	<th>제품명</th>
-																	<th>단가</th>
-																	<th>선택</th>
-																</tr>
-																
 															
-															</table>
 														</div>
 													
 													
 												</div>
-												<div class="modal-footer">
-													<button type="button" class="btn btn-default"
-														data-dismiss="modal">Close</button>
-													
-												</div>
+												
 
 											</div>
 										</div>
@@ -516,7 +529,7 @@
 									<!-- product modal end -->
 									
 
-									<table class="table table-striped table-bordered">
+									<table class="table table-striped table-bordered table-responsive" style="min-width:500px;">
 										<thead>
 											<tr>
 												<th style="width: 16%;">제품번호</th>
@@ -528,36 +541,18 @@
 										</thead>
 										<tbody class="order_body">
 										</tbody>	
-										<!-- <thead>
-											<tr>
-												<th>제품번호</th>
-												<th>제품명</th>
-												<th>단가</th>
-												<th>수량</th>
-												<th>삭제</th>
-											</tr>
-										</thead>
-										<tbody id="order_tbody">
-											<tr>
-												<td>21549871</td>
-												<td>예가체프 아라비카 500g</td>
-												<td><input type="text" name="order_amount" class="form-control" value="13,000"/></td>
-												<td><input type="number" name="order_amount" class="form-control" min="1"/></td>
-												<td><button class="btn btn-danger btn-order">&nbsp;&nbsp;<i class="fa fa-trash-o"></i>&nbsp;&nbsp;</button></td>
-											</tr>
-										<tbody> -->
+										
 									</table>
-									<table class="table table-striped table-bordered">
+									<table class="table table-striped table-bordered table-responsive" style="min-width:500px;">
 									<tr>
 									<td style="width: 63.2%;">합계</td>
 							
-									<td><input type="number" id="calcValue" readonly></td>
+									<td><input type="number" id="calcValue" readonly required></td>
 									</tr>
 									</table>
 	
-									<div class="ln_solid"></div>
 									<div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-3" style="margin:0px; text-align:center;">
-										<button type="submit" class="btn btn-success" onclick="noticeAlert();">주문</button>											
+										<button type="submit" class="btn btn-success">주문</button>											
 									</div>
 								</div>
 							</div>

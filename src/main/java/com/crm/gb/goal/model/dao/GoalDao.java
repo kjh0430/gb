@@ -13,9 +13,9 @@ public class GoalDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
-	public ArrayList<Goal> selectAllGoalState() {//목표관리 리스트 출력
+	public ArrayList<Goal> selectAllGoalState(Goal goal) {//목표관리 리스트 출력
 		
-		return (ArrayList)sqlSession.selectList("Goal.selectAllGoalState");
+		return (ArrayList)sqlSession.selectList("Goal.selectAllGoalState",goal);
 	}
 
 	public ArrayList<Goal> selectAllGoalStateMonth(String gdata) {
@@ -51,6 +51,11 @@ public class GoalDao {
 		
 		return (ArrayList)sqlSession.selectList("Goal.selectEmpAll");
 
+	}
+
+	public Goal selectGoalCount() {
+		
+		return sqlSession.selectOne("Goal.selectListCount");
 	}
 
 }

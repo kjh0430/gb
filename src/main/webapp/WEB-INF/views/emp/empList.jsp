@@ -198,7 +198,7 @@ function empSearch(){
 												 <a class="page-link" style="color:red;">${page}</a>
 											</c:when>										
 										  <c:otherwise> 
-												 <a class="page-link" href="#" onclick="list('${page}','${emp_name}')">${page}</a>	
+												 <a class="page-link" onclick="list('${page}','${emp_name}')">${page}</a>	
 										  </c:otherwise> 
 										 </c:choose> 
 									</c:forEach>  
