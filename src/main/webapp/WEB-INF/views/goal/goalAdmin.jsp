@@ -99,7 +99,7 @@ $(function(){
 		
 		 var date = $("#goalMonth").val();
 		   var year = date.substring(0,4);
-		   var month = date.substring(6,7)-1;
+		   var month = date.substring(6,7);
 		   if(month==0){
 		      month=12;
 		      year =year-1;

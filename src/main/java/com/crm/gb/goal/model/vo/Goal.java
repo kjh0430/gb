@@ -15,7 +15,7 @@ public class Goal implements Serializable{
 	private int emp_no;
 	private String emp_name;
 	private int job_no;
-	private String dept_no;
+	private int dept_no;
 	
 	//goal 테이블 data
 	private int goal_no;
@@ -49,7 +49,7 @@ public class Goal implements Serializable{
 	public Goal() {}
 
 
-	public Goal(int emp_no, String emp_name, int job_no, String dept_no, int goal_no, int goal_money, Date goal_date,
+	public Goal(int emp_no, String emp_name, int job_no, int dept_no, int goal_no, int goal_money, Date goal_date,
 			String goal_date_start, int contract_money_sum, int goal_count, String dept_name, String job_name,
 			String emp_email, String goalMonth, int goalmoney, int sales, float acheive, String date) {
 		super();
@@ -104,12 +104,12 @@ public class Goal implements Serializable{
 	}
 
 
-	public String getDept_no() {
+	public int getDept_no() {
 		return dept_no;
 	}
 
 
-	public void setDept_no(String dept_no) {
+	public void setDept_no(int dept_no) {
 		this.dept_no = dept_no;
 	}
 
@@ -254,6 +254,11 @@ public class Goal implements Serializable{
 	}
 
 
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+
 	@Override
 	public String toString() {
 		return "Goal [emp_no=" + emp_no + ", emp_name=" + emp_name + ", job_no=" + job_no + ", dept_no=" + dept_no
@@ -263,6 +268,9 @@ public class Goal implements Serializable{
 				+ emp_email + ", goalMonth=" + goalMonth + ", goalmoney=" + goalmoney + ", sales=" + sales
 				+ ", acheive=" + acheive + ", date=" + date + "]";
 	}
+
+
+	
 
 
 
