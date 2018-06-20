@@ -143,6 +143,11 @@ public class EmpServlceImpl implements EmpService{
 	@Override
 	public ArrayList<Emp> selectEmpSearch(Emp emp) {
 		return empDao.selectEmpSearch(emp);
+	}
+
+	@Override
+	public Emp selectListCount(Emp emp) {
+		return empDao.selectListCount(emp);
 	}	
 	
 }
