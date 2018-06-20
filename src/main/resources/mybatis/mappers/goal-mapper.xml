@@ -77,18 +77,15 @@
 	</select>
 	
 	<select id="selectEmpAll" resultType="goal">
-	<![CDATA[
-	select goalMonth,goalmoney,sum(nvl((oll.order_amount*oll.order_price),0)) as sales,
-	round(sum(nvl((oll.order_amount*oll.order_price),0))/sum(goalmoney)*100,2) as acheive from
-	(select substr(to_char(g1.goal_date,'yyyy-mm-dd'),1,7) as goalMonth,sum(g1.goal_money) as goalmoney
-	from goal g1 group by substr(to_char(g1.goal_date,'yyyy-mm-dd'),1,7)) t1 left join orderlist oll on 
-	t1.goalMonth=substr(to_char(oll.order_date,'yyyy-mm'),1,7) group by goalMonth,goalmoney order by goalMonth asc
 	
-	]]>
+		<![CDATA[
+		select goalMonth,goalmoney,sum(nvl((oll.order_amount*oll.order_price),0)) as sales,
+		round(sum(nvl((oll.order_amount*oll.order_price),0))/sum(goalmoney)*100,2) as acheive from
+		(select substr(to_char(g1.goal_date,'yyyy-mm-dd'),1,7) as goalMonth,sum(g1.goal_money) as goalmoney
+		from goal g1 group by substr(to_char(g1.goal_date,'yyyy-mm-dd'),1,7)) t1 left join orderlist oll on 
+		t1.goalMonth=substr(to_char(oll.order_date,'yyyy-mm'),1,7) group by goalMonth,goalmoney order by goalMonth asc
+		]]>
 	
-	
-	
-
 	</select>
 	
 	<!--사원 목표 총합  -->

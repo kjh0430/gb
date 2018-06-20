@@ -29,7 +29,9 @@
 <script type="text/javascript">
 
 $(function(){
-	document.getElementById("goalMonth").valueAsDate = new Date();		
+	document.getElementById("goalMonth").valueAsDate = new Date();	
+
+	
 		$.ajax({
 			url:"selectDeptEmp.do",
 			type:"post",
