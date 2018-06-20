@@ -150,8 +150,8 @@ background-color:#2A3F54;
 					<div class="row">
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
-								<div class="x_content">
-									<table id="table_ap" class="table table-striped table-bordered" style="min-width:650px;">
+								<div class="x_content" style="overflow:auto">
+									<table id="table_ap" class="table table-striped table-bordered table-responsive" style="min-width:450px;">
 										<thead>
 											<tr>
 												<th>결재유형</th>
@@ -185,8 +185,8 @@ background-color:#2A3F54;
 												</c:if>
 
 												<tr onclick="modalUp(this);" style="cursor:pointer">
-													<td style="width: 50%;">${approval.reason_name}</td>
-													<td style="width: 30%;">${approval.approval_submit_date}</td>
+													<td>${approval.reason_name}</td>
+													<td>${approval.approval_submit_date}</td>
 													<td>${approval_process}</td>
 													<td>${approval.emp_no }</td>
 													<td>${approval.approval_start_date}</td>

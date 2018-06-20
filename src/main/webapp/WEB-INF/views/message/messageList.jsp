@@ -21,7 +21,12 @@
 <!-- Custom Theme Style -->
 <link href="resources/build/css/custom.min.css" rel="stylesheet">
 <link href="resources/css/main.css" rel="stylesheet">
+<style type="text/css">
+	#table_rec{
+		min-width:600px;
+	}
 
+</style>
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 //받은 쪽지함
@@ -52,7 +57,7 @@ function searchFunctionP(page){
 	        
 	    
 			if(size>0) {
-				values = "<table class='table table-hover' id='table_rec'><thead><tr><th>부서</th><th>직급</th><th>보낸사람</th><th style='width:40%;'>제목</th><th>받은날짜</th><th>사번</th><th>내용</th><th>mnumber</th></thead>"
+				values = "<table class='table table-hover table-responsive' id='table_rec'><thead><tr><th>부서</th><th>직급</th><th>보낸사람</th><th style='width:40%;'>제목</th><th>받은날짜</th><th>사번</th><th>내용</th><th>mnumber</th></thead>"
 		              + "<tbody>"
 
 	        for ( var i in json.list) {
@@ -1114,7 +1119,7 @@ font-weight:900;
                                    <input id='receiveCondition' class="form-control" style="width:130px;display:inline-block;margin-right:3px;" type="text" placeholder="사원명">
                                    <button class="btn btn-dark" style="margin:0 0 3px 0" onclick="searchFunction();">검색</button>
                                    </div>
-                                   <div id="receive_msg1"></div>
+                                   <div id="receive_msg1" style="overflow:auto"></div>
                                    </div>
                                  <!-- end of receive msg tab -->
 
