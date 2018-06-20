@@ -91,13 +91,8 @@ $(function(){
 		
 	}
 	function getList(){
-		//alert($("#dept_no option:selected").val());
-		//string=$("#dept_no option:selected").val();	
-		dept_no = string.split(' / ',1)*1;
-		console.log("string : " + string);
-		console.log("dept_no : " +dept_no);
-		
-		 var date = $("#goalMonth").val();
+			dept_no = string.split(' / ',1)*1;
+			var date = $("#goalMonth").val();
 		   var year = date.substring(0,4);
 		   var month = date.substring(6,7)-1;
 		   if(month==0){
@@ -114,7 +109,7 @@ $(function(){
 		url:"getList.do",
 		type:"post",
 		dataType:"json",
-		data :{dept_no:dept_no,date:date},
+		data :{dept_no:dept_no,setdate:date},
 		success:function(data){
 			var objStr =JSON.stringify(data);
 			var jsonl = JSON.parse(objStr);		
@@ -131,10 +126,6 @@ $(function(){
 						 "<td><input type='number' class='form-control' name='goal'></td>"+
 						 "<td><input type='button' class='btn-modify btn btn-info' value='확인'></td></tr>";
 						 
-				
-				
-				
-				
 			}
 			value+="</tbody></table>";
 			

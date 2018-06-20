@@ -199,8 +199,6 @@ public class GoalController {
 		
 		jsonobject.put("emp_name",goal1.getEmp_name());
 		jsonobject.put("dept_name",goal1.getDept_name());
-		jsonobject.put("emp_job",goal1.getJob_name());
-		jsonobject.put("emp_email",goal1.getEmp_email());
 		jsonobject.put("emp_no",goal1.getEmp_no());
 		jarr.add(jsonobject);
 		
@@ -276,7 +274,7 @@ public class GoalController {
 	@RequestMapping(value="getList.do", method=RequestMethod.POST)
 	@ResponseBody
 	public void selectGoalList(Goal goal,HttpServletResponse  response) throws IOException {
-		System.out.println(goal.getDate()+","+goal.getDept_no());
+	System.out.println(goal.getSetDate()+","+goal.getDept_no());
 	ArrayList<Goal> selectGoalList=goalService.selectGoalList(goal);
 	JSONArray jarr=new JSONArray();
 	

@@ -59,7 +59,7 @@ public class GoalDao {
 	}
 
 	public ArrayList<Goal> selectGoalList(Goal goal) {
-		return (ArrayList)sqlSession.selectList("Goal.selectGoalList");
+		return (ArrayList)sqlSession.selectList("Goal.selectGoalList",goal);
 	}
 
 }

@@ -1,8 +1,6 @@
 package com.crm.gb.goal.model.vo;
 
 import java.io.Serializable;
-import java.sql.Date;
-import java.util.ArrayList;
 
 import org.springframework.stereotype.Component;
 
@@ -14,44 +12,30 @@ public class Goal implements Serializable{
 	//emp 테이블 data
 	private int emp_no;
 	private String emp_name;
-	private int job_no;
+	private String job_no;
 	private String dept_no;
 	
 	//goal 테이블 data
 	private int goal_no;
 	private int goal_money;
-	private Date goal_date;
+	private String goal_setdate;
 	
-	
-	//목표날짜 설정
-	private String goal_date_start;
-	
-	//총 계약 금액	
-	private int contract_money_sum;
-	
-	//목표설정 확인유무
-	private int goal_count;
 
 	//사원 검색을 위한 변수 추가
 	private String dept_name;
-	private String job_name;
-	private String emp_email;
-
 	
 	//사원의 목표 및 달성률등을 가져오기 위한 변수 추가
 	private String goalMonth;
 	private int goalmoney;
 	private int sales;
 	private float acheive;
-	private String date;
+	private String setDate;
 		
-	
 	public Goal() {}
 
-
-	public Goal(int emp_no, String emp_name, int job_no, String dept_no, int goal_no, int goal_money, Date goal_date,
-			String goal_date_start, int contract_money_sum, int goal_count, String dept_name, String job_name,
-			String emp_email, String goalMonth, int goalmoney, int sales, float acheive, String date) {
+	public Goal(int emp_no, String emp_name, String job_no, String dept_no, int goal_no, int goal_money,
+			String goal_setdate, String dept_name, String goalMonth, int goalmoney, int sales, float acheive,
+			String setDate) {
 		super();
 		this.emp_no = emp_no;
 		this.emp_name = emp_name;
@@ -59,18 +43,13 @@ public class Goal implements Serializable{
 		this.dept_no = dept_no;
 		this.goal_no = goal_no;
 		this.goal_money = goal_money;
-		this.goal_date = goal_date;
-		this.goal_date_start = goal_date_start;
-		this.contract_money_sum = contract_money_sum;
-		this.goal_count = goal_count;
+		this.goal_setdate = goal_setdate;
 		this.dept_name = dept_name;
-		this.job_name = job_name;
-		this.emp_email = emp_email;
 		this.goalMonth = goalMonth;
 		this.goalmoney = goalmoney;
 		this.sales = sales;
 		this.acheive = acheive;
-		this.date = date;
+		this.setDate = setDate;
 	}
 
 
@@ -94,12 +73,12 @@ public class Goal implements Serializable{
 	}
 
 
-	public int getJob_no() {
+	public String getJob_no() {
 		return job_no;
 	}
 
 
-	public void setJob_no(int job_no) {
+	public void setJob_no(String job_no) {
 		this.job_no = job_no;
 	}
 
@@ -134,43 +113,13 @@ public class Goal implements Serializable{
 	}
 
 
-	public Date getGoal_date() {
-		return goal_date;
+	public String getGoal_setdate() {
+		return goal_setdate;
 	}
 
 
-	public void setGoal_date(Date goal_date) {
-		this.goal_date = goal_date;
-	}
-
-
-	public String getGoal_date_start() {
-		return goal_date_start;
-	}
-
-
-	public void setGoal_date_start(String goal_date_start) {
-		this.goal_date_start = goal_date_start;
-	}
-
-
-	public int getContract_money_sum() {
-		return contract_money_sum;
-	}
-
-
-	public void setContract_money_sum(int contract_money_sum) {
-		this.contract_money_sum = contract_money_sum;
-	}
-
-
-	public int getGoal_count() {
-		return goal_count;
-	}
-
-
-	public void setGoal_count(int goal_count) {
-		this.goal_count = goal_count;
+	public void setGoal_setdate(String goal_setdate) {
+		this.goal_setdate = goal_setdate;
 	}
 
 
@@ -181,26 +130,6 @@ public class Goal implements Serializable{
 
 	public void setDept_name(String dept_name) {
 		this.dept_name = dept_name;
-	}
-
-
-	public String getJob_name() {
-		return job_name;
-	}
-
-
-	public void setJob_name(String job_name) {
-		this.job_name = job_name;
-	}
-
-
-	public String getEmp_email() {
-		return emp_email;
-	}
-
-
-	public void setEmp_email(String emp_email) {
-		this.emp_email = emp_email;
 	}
 
 
@@ -243,78 +172,28 @@ public class Goal implements Serializable{
 		this.acheive = acheive;
 	}
 
-
-	public String getDate() {
-		return date;
+	public String getSetDate() {
+		return setDate;
 	}
 
-
-	public void setDate(String date) {
-		this.date = date;
+	public void setSetDate(String setDate) {
+		this.setDate = setDate;
 	}
-
 
 	@Override
 	public String toString() {
 		return "Goal [emp_no=" + emp_no + ", emp_name=" + emp_name + ", job_no=" + job_no + ", dept_no=" + dept_no
-				+ ", goal_no=" + goal_no + ", goal_money=" + goal_money + ", goal_date=" + goal_date
-				+ ", goal_date_start=" + goal_date_start + ", contract_money_sum=" + contract_money_sum
-				+ ", goal_count=" + goal_count + ", dept_name=" + dept_name + ", job_name=" + job_name + ", emp_email="
-				+ emp_email + ", goalMonth=" + goalMonth + ", goalmoney=" + goalmoney + ", sales=" + sales
-				+ ", acheive=" + acheive + ", date=" + date + "]";
+				+ ", goal_no=" + goal_no + ", goal_money=" + goal_money + ", goal_setdate=" + goal_setdate
+				+ ", dept_name=" + dept_name + ", goalMonth=" + goalMonth + ", goalmoney=" + goalmoney + ", sales="
+				+ sales + ", acheive=" + acheive + ", setDate=" + setDate + "]";
 	}
 
 
 
+
+
+
 	
 	
 
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }
-
-
-	
-
-
-
-	
-	
-
-
-	
-
-
-
-
-
-
-
-
-
-	
-
-
-
-	
-
-
-	
-	
-	
-	
-
-
-	
-	
-
