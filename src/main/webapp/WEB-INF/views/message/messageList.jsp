@@ -55,6 +55,7 @@ function searchFunctionP(page){
 	      
 	        
 	        
+	        
 	    
 			if(size>0) {
 				values = "<table class='table table-hover table-responsive' id='table_rec'><thead><tr><th>부서</th><th>직급</th><th>보낸사람</th><th style='width:40%;'>제목</th><th>받은날짜</th><th>사번</th><th>내용</th><th>mnumber</th></thead>"

@@ -44,7 +44,7 @@ public class GoalController {
 		
 	}
 	
-	//달별 리스트 출력
+	/*//달별 리스트 출력
 	@RequestMapping(value="goalMonthList.do" ,method=RequestMethod.POST)
 	public void GoalAdminList(Goal goal, Model model ,HttpServletResponse  response, 
 			HttpServletRequest request,@RequestParam(value="gdata") String gdata) throws IOException{
@@ -84,10 +84,10 @@ public class GoalController {
 		
 		
 		
-	}
+	}*/
 	
 	
-	//목표 상세보기
+	/*//목표 상세보기
 	@RequestMapping("goalAdminDetail.do")
 	public String GoalAmdinDetail(Goal goal, Model model, @RequestParam(value="emp_no") int emp_no,
 			@RequestParam(value="emp_name") String emp_name,@RequestParam(value="contract_money") int contract_money,
@@ -106,9 +106,9 @@ public class GoalController {
 		model.addAttribute("contract_money_sum", contract_money_sum.getContract_money_sum());
 		
 		return "goal/goalAdminDetail";
-	}
+	}*/
 	
-	//목표설정,method=RequestMethod.POST,@RequestParam("goal_date") Date goal_date,@RequestParam("goal_money") int goal_money,
+/*	//목표설정,method=RequestMethod.POST,@RequestParam("goal_date") Date goal_date,@RequestParam("goal_money") int goal_money,
 	@RequestMapping(value="goalAdminAdd.do" ,method=RequestMethod.POST)	
 	public void GoalAdd(Goal goal,HttpServletResponse response) throws IOException{
 		
@@ -157,7 +157,7 @@ public class GoalController {
 		
 		
 		
-	}
+	}*/
 	
 	
 	
@@ -258,6 +258,36 @@ public class GoalController {
 		jsonobject.put("goalMoney",goal1.getGoalmoney());
 		jsonobject.put("sales",goal1.getSales());
 		jsonobject.put("acheive",goal1.getAcheive());
+		
+		jarr.add(jsonobject);
+		
+	}
+	JSONObject send=new JSONObject();
+	send.put("list",jarr);
+	
+	response.setContentType("application/json; charset=utf-8");	
+	PrintWriter out=response.getWriter();
+	out.println(send.toJSONString());
+	out.flush();
+	out.close();
+	}
+	
+	
+	@RequestMapping(value="getList.do", method=RequestMethod.POST)
+	@ResponseBody
+	public void selectGoalList(Goal goal,HttpServletResponse  response) throws IOException {
+		System.out.println(goal.getDate()+","+goal.getDept_no());
+	ArrayList<Goal> selectGoalList=goalService.selectGoalList(goal);
+	JSONArray jarr=new JSONArray();
+	
+	for(Goal goal1: selectGoalList) {
+		
+		JSONObject jsonobject=new JSONObject();
+		
+		jsonobject.put("emp_no",goal1.getEmp_no());
+		jsonobject.put("emp_name",goal1.getEmp_name());
+		jsonobject.put("sales",goal1.getSales());
+		
 		
 		jarr.add(jsonobject);
 		

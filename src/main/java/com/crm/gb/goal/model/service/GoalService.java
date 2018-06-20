@@ -27,5 +27,12 @@ public interface GoalService {
 
 	public abstract Goal goalListCount();//목표관리 리스트 카운트 조회 
 
+	
+	
+	
+	
+	
+	public abstract ArrayList<Goal> selectGoalList(Goal goal);
+
 
 }

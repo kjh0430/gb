@@ -68,4 +68,9 @@ public class GoalServiceImpl implements GoalService{
 		return goalDao.selectGoalCount();
 	}
 
+	@Override
+	public ArrayList<Goal> selectGoalList(Goal goal) {
+		return goalDao.selectGoalList(goal);
+	}
+
 }
