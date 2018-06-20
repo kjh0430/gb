@@ -23,6 +23,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -30,7 +31,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.crm.gb.client.model.service.ClientService;
 import com.crm.gb.client.model.vo.Client;
 import com.crm.gb.client.model.vo.ClientFile;
-import com.crm.gb.message.model.vo.Message;
+import com.crm.gb.dailywork.model.service.DailyworkService;
+import com.crm.gb.dailywork.model.vo.Dailywork;
+import com.crm.gb.emp.model.vo.Emp;
 
 /**
  * Handles requests for the application home page.
@@ -44,7 +47,8 @@ public class ClientController {
 	
 	@Autowired
 	private ClientService clientService;
-	
+	@Autowired
+	private DailyworkService dailyworkService;
 	
 	/** 신규고객 등록 화면이동 */
 	@RequestMapping("addClient.do")
@@ -221,15 +225,21 @@ public class ClientController {
 	/** 거래중인 거래처 리스트 메소드 **/
 	@RequestMapping("accountList.do")
 	public String showAccountClient(@RequestParam("emp_no") String emp_num, Model model, 
-	@RequestParam(value="page") int page, Client client, @RequestParam(value="job_no") String jobNo) {
+	@RequestParam(value="page") int page, Client client, @RequestParam(value="job_no") String jobNo,
+	@RequestParam(value="client_company") String clientCompany) {
 		logger.info("거래처 리스트 메소드 실행됨!!");
 		
 		int emp_no = Integer.parseInt(emp_num);
 		int job_no = Integer.parseInt(jobNo);
+		String client_company = clientCompany;
+		
+		if(client_company.equals("null") || client_company==null) {
+			client_company = null;
+		}
 		
 		client.setEmp_no(emp_no);
 		client.setJob_no(job_no);
-		
+		client.setClient_company(client_company);
 		//페이지 기본값 지정
 		int currentPage=page;				
 		//한 페이지당 출력할 목록갯수 지정
@@ -237,22 +247,21 @@ public class ClientController {
 		int pageGroupSize=5;
 
 	
-		//System.out.println("jobNo : " + job_no);
-		//System.out.println("page: " + page);
-		
+		System.out.println("jobNo : " + job_no);
+		System.out.println("page: " + page);
+		System.out.println("client_company : " + client_company);
 		
 	
 		
 		int listCount_1 = clientService.clientListCount(client);
-		//System.out.println("oooooooooooooooooooooo");
-		//System.out.println("count : " + listCount_1);
+		System.out.println("count : " + listCount_1);
 		//페이지수 계산 
 		int maxPage=(int)((double)listCount_1/pageSize+0.9);				
 		//페이지 번호 갯수 출력 					
-		
+		System.out.println("maxPage:" + maxPage);
 		int curBlock=(currentPage-1)/pageGroupSize+1;//원하는 페이지가 몇번째 블록인지계산
 		int totBlock=(int)Math.ceil(maxPage*1.0)/pageGroupSize+1;//총 블록 갯수
-		
+		System.out.println("totBlock : " + totBlock);
 		
 		//블록의 시작 페이지와 끝 페이지 번호 계산
 		int blockBegin=(curBlock-1)*pageGroupSize+1;
@@ -272,7 +281,7 @@ public class ClientController {
 		//int startPage=(((int)((double)currentPage/pageSize+0.9))-1)*pageSize+1;
 		int startPage=(currentPage-1)*pageSize+1;
 		int endPage=startPage+pageSize-1;
-		
+		System.out.println("start : " + startPage +", end :" + endPage);
 		client.setStartPage(startPage);
 		client.setEndPage(endPage);
 		client.setEmp_no(emp_no);
@@ -337,17 +346,20 @@ public class ClientController {
 	/** 고객정보 상세보기 메소드 */
 	@RequestMapping("detailClient.do")
 	public String detailClient(Client client, Model model, 
-			ArrayList <ClientFile> clientFile, @RequestParam(value="client_no") String client_num) {
+			ArrayList <ClientFile> clientFile, @RequestParam(value="client_no") int client_no,
+			Dailywork dailyWork) {
 		logger.info("고객정보 상세보기 메소드 실행됨");
 		
-		int client_no=Integer.parseInt(client_num);
 		System.out.println("고객번호: "+client_no);	
+		
 		Client returnClient=clientService.selectClient(client_no);	//고객정보 조회
 		clientFile = clientService.selectClientFileList(client_no);	//고객 첨부파일 조회
-		
+		ArrayList<Dailywork> list = dailyworkService.selectDailyHistory(client_no);	// 방문내역 리스트
 			System.out.println("상세보기 정보: "+returnClient);
+		
 		model.addAttribute("detailClient", returnClient);
 		model.addAttribute("clientFileList", clientFile);
+		model.addAttribute("dailyHistoryList", list);
 		
 		return "client/poList_detail";
 	}
@@ -373,8 +385,11 @@ public class ClientController {
 			ArrayList <ClientFile> clientFile) {
 		Client returnClient=clientService.selectClient(client_no);
 		clientFile = clientService.selectClientFileList(client_no);	//고객 첨부파일 조회
+		ArrayList<Dailywork> list = dailyworkService.selectDailyHistory(client_no);	// 방문내역 리스트
+		
 		model.addAttribute("detailClient", returnClient);
 		model.addAttribute("clientFileList", clientFile);
+		model.addAttribute("dailyHistoryList", list);
 		
 		return "client/updateClient";
 	}
@@ -550,7 +565,57 @@ public class ClientController {
 		
 	}
 	
-	
+	 //email check   
+	   @RequestMapping(value="clientemailCheck.do" ,method=RequestMethod.POST)
+	   @ResponseBody
+
+	   public void checkEmail(Client client,HttpServletResponse  response) throws IOException {      
+	   
+	      Client checkEmail=clientService.selectClientEmail(client);      
+	   
+	      JSONObject send=new JSONObject();
+	      System.out.println(checkEmail);
+	      String check="Y";
+	      if(checkEmail==null) {
+	         check="N";
+	      }
+	      
+	      send.put("check",check);
+	      
+	      response.setContentType("application/json; charset=utf-8");   
+	   
+	      PrintWriter out=response.getWriter();
+	      out.append(send.toJSONString());
+	      out.flush();
+	      out.close();
+	   
+	   }
+	   
+		   //phone check   
+		   @RequestMapping(value="clientephoneCheck.do" ,method=RequestMethod.POST)
+		   @ResponseBody
+
+		   public void checkPhone(Client client,HttpServletResponse  response) throws IOException {      
+		   
+		      Client checkPhone=clientService.selectClientPhone(client);      
+		   
+		      JSONObject send=new JSONObject();
+		      
+		      String check="Y";
+		      if(checkPhone==null) {
+		         check="N";
+		      }
+		      
+		      send.put("check",check);
+		      
+		      response.setContentType("application/json; charset=utf-8");   
+		   
+		      PrintWriter out=response.getWriter();
+		      out.append(send.toJSONString());
+		      out.flush();
+		      out.close();
+		   
+		   }
 }
 
 

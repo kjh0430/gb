@@ -37,9 +37,9 @@ public class ContractController {
 	
 	/** 계약된 고객수 */
 	@RequestMapping(value="countContract.do", method=RequestMethod.POST)
-	public void countContract(@RequestParam(value="emp_no") int emp_no, HttpServletResponse response) 
+	public void countContract(HttpServletResponse response) 
 		throws IOException{
-		int contractCount = contractService.selectCountContract(emp_no);
+		int contractCount = contractService.selectCountContract();
 			System.out.println("계약된 고객수: "+contractCount);
 		JSONObject job = new JSONObject();
 			job.put("contractCount", contractCount);

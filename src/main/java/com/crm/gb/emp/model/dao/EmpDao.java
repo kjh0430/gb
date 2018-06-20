@@ -117,5 +117,15 @@ public class EmpDao {
    public ArrayList<Emp> selectMgrList(Emp emp) {
 	   return (ArrayList)sqlSession.selectList("mgrList", emp);
    }
+
+   /*상사목록 검색*/
+   public ArrayList<Emp> selectEmpSearch(Emp emp) {
+	   return (ArrayList)sqlSession.selectList("empSearch", emp);
+   }
+
+   public Emp selectListCount(Emp emp) {
+	   System.out.println("selectListCount 여기까지 실행");
+	   return sqlSession.selectOne("selectSearchCount", emp); 
+   }
    
 }

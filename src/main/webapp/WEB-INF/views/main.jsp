@@ -251,12 +251,42 @@
     		
     		var modifyEndSchedule=ModiendDate+" "+ModiendTime;
     		
+    		 sArr=ModistartDate.split('-');
+    		 eArr=ModistartTime.split('-');
     		
-    		if($('#startDateM').val() ==null || $('#startTimeM').val() ==null 
-  					|| $('#endDateM').val()  ==null || $('#endTimeM').val() ==null  || $('#calendar_titleM').val() ==null  || $('#calendar_contentM').val() ==null ){
+    		 start1 =new Date(sArr[0],parseInt(sArr[1])-1,sArr[2]);
+    		 end1 =new Date(eArr[0],parseInt(eArr[1])-1,eArr[2]);
+    		
+    		 
+    		 startTimeck =new Date(modifyStartSchedule);
+    		 endTimeck= new Date(modifyEndSchedule);
+    		 
+    		 
+    		 
+    		if(startTimeck.getMinutes()>endTimeck.getMinutes() && startTimeck.getHours()>endTimeck.getHours()){
+    			
+    			alert("시작시간이 종료 시간보다 늦습니다.");
+    	
+    		}else if(startTimeck.getMinutes()==endTimeck.getMinutes() && startTimeck.getHours()>endTimeck.getHours() ){
+    			alert("시작시간이 종료 시간보다 늦습니다.");
+    		
+    			
+    		}else if(startTimeck.getMinutes()<endTimeck.getMinutes() &&startTimeck.getHours()>endTimeck.getHours()){
+    			alert("시작시간이 종료 시간보다 늦습니다.");
+			}
+    		else if (start1.getTime()>end1.getTime()){
+    			
+    		alert("날짜가 유효하지 않습니다.");
+    		}
+    		
+    	else if(start1.getTime()>end1.getTime()){	
+    		alert("날짜가 유효하지 않습니다.");
+    	}else if($('#startDateM').val() =="" || $('#startTimeM').val() ==""
+  					|| $('#endDateM').val()  =="" || $('#endTimeM').val() ==""  || $('#calendar_titleM').val() ==""  || $('#calendar_contentM').val() =="" ){
   				alert("입력하지 않은 정보가 있습니다. 빠짐없이 입력해주세요.");
   				
   				 }else{
+  					 
     		$.ajax({
     			
     			url:"modifySchedule.do",
@@ -266,7 +296,7 @@
     					},
     			type:"post",
     			success:function(data){
-    				
+    				alert("일정 수정이 완료 되었습니다.");
     				 modal2Close();
     				modal1Close();
     				location.href="mainView.do";
@@ -287,26 +317,51 @@
     		
     		var addendDate=$('#addendDate').val();
     		var addendTime=$('#addendTime').val();
-    		
+    	
     		var addend=addendDate+" "+addendTime;
     		
     		var addcalendar_title=$('#addcalendar_title').val();
     		var addcalendar_content=$('#addcalendar_content').val();
     		
     		
-    		if($('#addstartDate').val() ==null || $('#addstartTime').val() ==null 
-  					|| $('#addendDate').val()  ==null || $('#addendTime').val() ==null  || $('#addcalendar_title').val() ==null  || $('#addcalendar_content').val() ==null ){
+    	     sArr=addstartDate.split('-');
+    		 eArr=addendDate.split('-');
+    		
+    		  start1 =new Date(sArr[0],parseInt(sArr[1])-1,sArr[2]);
+    		 end1 =new Date(eArr[0],parseInt(eArr[1])-1,eArr[2]);
+    		 
+    		 startTimeck =new Date(addstart);
+    		 endTimeck= new Date(addend);
+    		 
+    		 
+    		 
+    		if(startTimeck.getMinutes()>endTimeck.getMinutes() && startTimeck.getHours()>endTimeck.getHours()){
+    			
+    			alert("시작시간이 종료 시간보다 늦습니다.");
+    	
+    		}else if(startTimeck.getMinutes()==endTimeck.getMinutes() && startTimeck.getHours()>endTimeck.getHours() ){
+    			alert("시작시간이 종료 시간보다 늦습니다.");
+    		
+    			
+    		}else if(startTimeck.getMinutes()<endTimeck.getMinutes() &&startTimeck.getHours()>endTimeck.getHours()){
+    			alert("시작시간이 종료 시간보다 늦습니다.");
+			}
+    		else if (start1.getTime()>end1.getTime()){
+    			
+    		alert("날짜가 유효하지 않습니다.");
+    		}
+    		else if($('#addstartDate').val()=="" || $('#addstartTime').val()=="" || $('#addendDate').val()=="" || $('#addendTime').val()=="" || $('#addcalendar_title').val()=="" || $('#addcalendar_content').val()==""){
   				alert("입력하지 않은 정보가 있습니다. 빠짐없이 입력해주세요.");
   				
   				 }else{
-  					 
+  					alert("dnvldvndvdlvdvd");
   					 $.ajax({
   						 
   						 url:"addSchedule.do",
   						 data:{emp_no:"${loginEmp.emp_no}",calendar_title:addcalendar_title,calendar_content:addcalendar_content,calendar_start_date:addstart,calendar_end_date:addend},
   					 	 type:"post",
   					 	 success:function(data){
-  					 	
+  					 	alert("일정이 추가되었습니다.");
   					 		 modal3Close();
   					 		location.href="mainView.do";
   							calendarLoad();  
@@ -352,14 +407,14 @@ $(function(){
 	                var json = JSON.parse(jsonSt);
 	                var size = Object.keys(json).length;
 	       			
-	       			console.log("todoSelect.do 제대로 실행됨");
-	       			console.log("size : " + size);
+	       			/* console.log("todoSelect.do 제대로 실행됨");
+	       			console.log("size : " + size); */
 	       			
 	       			var obj = [json.todo1, json.todo2, json.todo3, json.todo4, json.todo5];
 	       			var obj2 = [json.check1, json.check2, json.check3, json.check4, json.check5];
 	       			
-	       			console.log("obj : " + obj);
-	       			console.log("obj2 : " + obj2);	       			
+	       			/* console.log("obj : " + obj);
+	       			console.log("obj2 : " + obj2); */	       			
 	       			     			
 	       			var values = ""
 	       			var values2 = ""
@@ -369,11 +424,11 @@ $(function(){
 	       			for(var i in obj){
 	       				if(obj[i] != null && obj2[i] == "N"){
 	       			values += '<li><p><input type="checkbox" class="flat" id="todo_list'+i+'" name="todo_list'+i+'" >'+obj[i]+'</p></li>';
-	    	       	console.log("obj["+i+"] : " + obj[i]);
+	    	       	/* console.log("obj["+i+"] : " + obj[i]); */
 	    	       	count2++;
 	       				}else if(obj[i] != null && obj2[i] == "Y"){
 	       					values += '<li><p id="checkp"><input type="checkbox" class="flat" id="todo_list'+i+'" name="todo_list'+i+'" checked disabled>'+obj[i]+'</p></li>';
-	    	    	       	console.log("obj["+i+"] : " + obj[i]);
+	    	    	       	/* console.log("obj["+i+"] : " + obj[i]); */
 	    	    	       	count++;
 	    	    	       	count2++;
 	       				}
@@ -381,9 +436,9 @@ $(function(){
 	       			
 	       			var goal = new Number((count/count2)*100);
 	       			
-	       			console.log("count : " + count);
+	       			/* console.log("count : " + count);
 	       			console.log("count2 : " + count2);
-	       			console.log("goal : " + goal.toFixed(2));
+	       			console.log("goal : " + goal.toFixed(2)); */
 	       			
 	       			if(obj2[0] == "Y" || obj2[1] == "Y" || obj2[2] == "Y" || obj2[3] == "Y" || obj2[4] == "Y"){
 	       				values+='<p id="goalpp" style="float:right;">달성률 : '+goal.toFixed(1)+'%</p>'	       			
@@ -395,7 +450,7 @@ $(function(){
 	       			
 	       			},
 	       			error: function(){
-	       			console.log("todolist 출력 error");
+	       			/* console.log("todolist 출력 error"); */
 	       			values = "입력된 값이 없습니다.";
 	       			$(".to_do").html(values);
 	       			
@@ -417,7 +472,7 @@ $(function(){
        addedDiv.setAttribute("id", "keyword_Frm"+count);
        addedDiv.innerHTML = str;
        addedFormDiv.appendChild(addedDiv);       
-       console.log("todo_keyword : " + str);
+       /* console.log("todo_keyword : " + str); */
        count++;
        }else{
        alert("5개까지 입력하실 수 있습니다");
@@ -431,7 +486,7 @@ $(function(){
        if(count>1){
        var thisDiv = document.getElementById("keyword_Frm"+thisCount);
        addedFormDiv.removeChild(thisDiv);
-       console.log("addedFormDiv : " + addedFormDiv);
+       /* console.log("addedFormDiv : " + addedFormDiv); */
        }else{
        document.addedFormDiv.reset();
        }
@@ -447,14 +502,14 @@ $(function(){
        	var todo4 = $('#todo_keyword3').val();
        	var todo5 = $('#todo_keyword4').val();
        	
-       	console.log("todo1 : " + todo1);
+       	/* console.log("todo1 : " + todo1);
        	
        	console.log("main에서 출력 emp_no : " + emp_no);
        	console.log("main에서 출력 todo1 : " + todo1);
        	console.log("main에서 출력 todo2 : " + todo2);
        	console.log("main에서 출력 todo3 : " + todo3);
        	console.log("main에서 출력 todo4 : " + todo4);
-       	console.log("main에서 출력 todo5 : " + todo5);
+       	console.log("main에서 출력 todo5 : " + todo5); */
        	
        	if($('#todo_keyword0').val() == null || $('#todo_keyword0').val() == ""){
        		alert("값을 입력해주세요.");
@@ -485,18 +540,18 @@ $(function(){
        	       			emp_no : emp_no
        	       		},
        	       		success:function(data){       	       			
-       	       			console.log("todoSelect.do 제대로 실행됨");       	       			
+       	       			/* console.log("todoSelect.do 제대로 실행됨"); */       	       			
        	       			
        	       		var jsonSt = JSON.stringify(data);
 	                var json = JSON.parse(jsonSt);
 	                var size = Object.keys(json).length;
 	       			
-	       			console.log("todoSelect.do 제대로 실행됨");
-	       			console.log("size : " + size);
+	       			/* console.log("todoSelect.do 제대로 실행됨");
+	       			console.log("size : " + size); */
 	       			
 	       			var obj = [json.todo1, json.todo2, json.todo3, json.todo4, json.todo5];
 	       			
-	       			console.log("obj : " + obj);
+	       			/* console.log("obj : " + obj); */
 	       			       			
 	       			var values = ""
 	       			var values2 = ""
@@ -504,7 +559,7 @@ $(function(){
 	       			for(var i in obj){
 	       				if(obj[i] != null){
 	       			values += '<li><p><input type="checkbox" class="flat" id="todo_list'+i+'" name="todo_list'+i+'" >'+obj[i]+'</p></li>';
-	    	       	console.log("obj["+i+"] : " + obj[i]);
+	    	       	/* console.log("obj["+i+"] : " + obj[i]); */
 	       				}
 	       			}	       			
 	       			
@@ -516,12 +571,12 @@ $(function(){
 	       			
        	       			},
        	       			error: function(){       				
-       	       			console.log("error");
+       	       			/* console.log("error"); */
        	       			}
        	       		});
        			},
        			error: function(){       				
-       			console.log("error");
+       			/* console.log("error"); */
        			}
        		});
        }
@@ -569,7 +624,7 @@ $(function(){
            			check5 : check5
            		},
            		success:function(data){
-           			console.log("todoChecked.do 제대로 실행됨");
+           			/* console.log("todoChecked.do 제대로 실행됨"); */
            			
            			alert("등록 되었습니다.");
            			
@@ -580,8 +635,8 @@ $(function(){
 	       			var obj = [json.todo1, json.todo2, json.todo3, json.todo4, json.todo5];
 	       			var obj2 = [json.check1, json.check2, json.check3, json.check4, json.check5];
 	       			
-	       			console.log("obj : " + obj);
-	       			console.log("obj2 : " + obj2);	       			
+	       			/* console.log("obj : " + obj);
+	       			console.log("obj2 : " + obj2); */	       			
 	       			     			
 	       			var values = ""
 	       			var values2 = ""
@@ -591,11 +646,11 @@ $(function(){
 	       			for(var i in obj){
 	       				if(obj[i] != null && obj2[i] == "N"){
 	       			values += '<li><p><input type="checkbox" class="flat" id="todo_list'+i+'" name="todo_list'+i+'" >'+obj[i]+'</p></li>';
-	    	       	console.log("obj["+i+"] : " + obj[i]);
+	    	       	/* console.log("obj["+i+"] : " + obj[i]); */
 	    	       	count2++;
 	       				}else if(obj[i] != null && obj2[i] == "Y"){
 	       					values += '<li><p id="checkp"><input type="checkbox" class="flat" id="todo_list'+i+'" name="todo_list'+i+'" checked disabled>'+obj[i]+'</p></li>';
-	    	    	       	console.log("obj["+i+"] : " + obj[i]);
+	    	    	       	/* console.log("obj["+i+"] : " + obj[i]); */
 	    	    	       	count++;
 	    	    	       	count2++;
 	       				}
@@ -603,9 +658,9 @@ $(function(){
 	       			
 	       			var goal = new Number((count/count2)*100);
 	       			
-	       			console.log("count : " + count);
+	       			/* console.log("count : " + count);
 	       			console.log("count2 : " + count2);
-	       			console.log("goal : " + goal.toFixed(2));
+	       			console.log("goal : " + goal.toFixed(2)); */
 	       			
 	       			if(obj2[0] == "Y" || obj2[1] == "Y" || obj2[2] == "Y" || obj2[3] == "Y" || obj2[4] == "Y"){
 	       				values+='<p id="goalpp" style="float:right;">달성률 : '+goal.toFixed(1)+'%</p>'	       			
@@ -618,7 +673,7 @@ $(function(){
            			
            		},
            		error: function(){       				
-           			console.log("error");
+           			/* console.log("error"); */
            			}
     	   
     		});
@@ -663,7 +718,7 @@ $(function(){
     	
     	
     		}else{
-    			value="<h1>공지사항이 없습니다.</h1>"
+    			value="<h5>등록된 공지사항이 없습니다.</h5>"
     				$('#latest_notice').html(value); 
     		}
     		}
@@ -707,9 +762,6 @@ $(function(){
 			url : "countContract.do",
        		type: "post",
        		dataType: "json",
-       		data: {
-       			emp_no :  '${loginEmp.emp_no}'
-       		},
        		success:function(data){
        			
        			var objStr = JSON.stringify(data);
@@ -794,17 +846,14 @@ $(function(){
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i> 매출현황</span>
               <div class="count" id="orderState"></div>
-              <span class="count_bottom"><i class="green">4% </i> From last Week</span>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 tile_stats_count">
               <span class="count_top"><i class="fa fa-clock-o"></i> 목표달성현황</span>
               <div class="count" id="goalState"></div>
-              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span>
             </div>   
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i> 평균 주문액</span>
               <div class="count" id="orderAvg"></div>
-              <span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>12% </i> From last Week</span>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i> 신규거래처수</span>
@@ -1377,7 +1426,11 @@ $(function(){
 		var city = '${loginEmp.getCity()}';
 		var county = '${loginEmp.getCounty()}';
 		var village = '${loginEmp.getVillage()}';
-
+		if(city=="" || county=="" || village==""){//정보 없을때 본사날씨
+			city="서울";
+			county ="강남구";
+			village="역삼동"			
+		}
 		var headers = {};
 		headers["Accept"]="application/json";
 		headers["Content-Type"]="application/json; charset=UTF-8";
@@ -1390,7 +1443,7 @@ $(function(){
 			url:'https://api2.sktelecom.com/weather/current/hourly?version=1&callback=result',
 			async:false,
 			success : function(data){
-				console.log(data);
+				//console.log(data);
 				var todayDate = data["weather"]["hourly"][0]['timeRelease'];
 				var todayTemp = Math.round(data["weather"]["hourly"][0]['temperature']['tc']);
 				var todayMinTemp = Math.round(data["weather"]["hourly"][0]['temperature']['tmin']);
@@ -1400,7 +1453,7 @@ $(function(){
 				var todayRain = data["weather"]["hourly"][0]['precipitation']['sinceOntime'];
 				var year = todayDate.substring(0,4);
 				var month = todayDate.substring(6,7);
-				var day = todayDate.substring(9,10);
+				var day = todayDate.substring(8,10);
 					$(".todayDate").append(year+"년 "+month+"월 "+day+"일" );						
 					$(".todayMinTemp").append(todayMinTemp);		
 					$(".todayMaxTemp").append(todayMaxTemp);		
@@ -1439,8 +1492,6 @@ $(function(){
 	  getWeather();
 	});  
    */
-	    
-		
 
 	</script>
    	

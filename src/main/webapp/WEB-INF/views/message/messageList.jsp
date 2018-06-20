@@ -128,6 +128,12 @@ function searchFunctionP(page){
 
 function searchFunction(){
 	
+	if($('#receiveCondition').val()==null){
+		
+		receive();
+	}else{
+	
+	
 	 $.ajax({
 	     url : "receiveCondition.do",
 	     data : {
@@ -215,6 +221,7 @@ function searchFunction(){
 	     
 	     }
 	  });
+	}
 	 
 } 
 
@@ -630,6 +637,9 @@ function searchFunction2p(page){
 
 function searchFunction2(){
 	
+	if($('#sendCondition').val()==null){
+		send();
+	}else{
 	 $.ajax({
 	     url : "sendcondition.do",
 	     data : {
@@ -703,6 +713,7 @@ function searchFunction2(){
 	     
 	     }
 	  });
+	}
 	 
 }
 
@@ -742,6 +753,7 @@ function searchFunction2(){
    //사원 검색하기
    function searchEmp() {
 	if($('#searchName').val()!=""){
+		
       $.ajax({
          url : "searchEmp.do",
          type : "post",

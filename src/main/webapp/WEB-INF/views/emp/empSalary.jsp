@@ -39,7 +39,9 @@ $(document).ready(function() {
     $('#table_cl').dataTable( {
         ordering:false,
         lengthChange:false,
-        pageLength:15
+        paging: false,
+        info: false,
+        searching: false
     } );
 } );
 
@@ -69,17 +71,46 @@ function clientList(){
 				},
 				dataType: "json",
 				success: function(data) {
+					var sal = (data.sal).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+					var bonus = (data.bonus).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+					var total = (data.toSal).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+					
 					$('#emp_name').val(decodeURIComponent(data.name));
 					$('#dept_name').val(decodeURIComponent(data.dept));
 					$('#job_name').val(decodeURIComponent(data.job));
-					$('#sal').val(data.sal);
-					$('#sal_bonus').val(data.bonus);
-					$('#toSal').val(data.toSal);
+					$('#sal').val(sal+'원');
+					$('#sal_bonus').val(bonus+'원');
+					$('#toSal').val(total+'원');
 				}
 				
 			});	//ajax
 		}
 
+</script>
+
+<script type="text/javascript">
+$(function(){
+	
+	$('#searchSalaryList').keyup(function() {
+		
+		$.ajax({
+			url: "searchSalaryList.do",
+			type: "post",
+			dataType: "json",
+			data: {
+				emp_name: $('#searchSalaryList').val()
+			},
+			success: function(data) {
+				var obj = JSON.stringify(data);
+				var json = JSON.parse(obj);
+				var list = "";
+				
+				alert("성공");
+			}
+			
+		});
+	});
+});
 </script>
 
 </head>
@@ -144,6 +175,13 @@ function clientList(){
 									<h2>
 										사원목록
 									</h2>
+									
+										<form onsubmit="return false;">
+											<input style="float:right;"
+												type="text" id="searchSalaryList">
+												<font style="float:right" id="salSearch">Search</font>
+										</form>
+									
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
@@ -155,7 +193,7 @@ function clientList(){
 												<th>부서명</th>
 												<th>연락처</th>
 												<th>기본급</th>
-												<th>날짜(월)</th>
+												<th>급여일</th>
 												<th>입사일</th>
 											</tr>
 										</thead>
@@ -183,6 +221,14 @@ function clientList(){
 										</tbody>
 									</table>
 								</div>
+								
+								<!-- 페이징 처리 -->
+								<div style="text-align:center;">
+									<c:forEach var="i" begin="${ start }" end="${ end }" varStatus="num">
+										<a id="listNumber${ num.index }" href="empSalary.do?startPage=${ i }">[${ i }]</a>
+									</c:forEach>
+								</div>
+								
 							</div>
 						</div>
 					</div>

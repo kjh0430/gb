@@ -26,10 +26,27 @@
 
 
 <script type="text/javascript">
+
+
 var team_no="";
 var admin_no="";
 	$(document).ready(function() {
-	
+		 $('#endDate').blur(function(){
+			 
+			 ckModistartDate=$('#startDate').val();
+			 sArr=ckModistartDate.split('-');
+
+			 ckModiendDate=$('#endDate').val();
+			 eArr=ckModiendDate.split('-');
+
+			 start1 =new Date(sArr[0],parseInt(sArr[1])-1,sArr[2]);
+			 end1 =new Date(eArr[0],parseInt(eArr[1])-1,eArr[2]);
+			 
+			 
+		if(start1.getTime()>end1.getTime()){
+			alert("입력날짜가 유효하지 않습니다.");
+		}
+		 })
 		//팀장 이름, 및 관리자 이름 가져오기
  		$.ajax({
 			url:"getName.do",
@@ -53,7 +70,20 @@ var admin_no="";
 	
 	});
 function submitApproval(){
-	alert(admin_no);
+	
+	 ckModistartDate=$('#startDate').val();
+	 sArr=ckModistartDate.split('-');
+	
+	 ckModiendDate=$('#endDate').val();
+	 eArr=ckModiendDate.split('-');
+	
+	 start1 =new Date(sArr[0],parseInt(sArr[1])-1,sArr[2]);
+	 end1 =new Date(eArr[0],parseInt(eArr[1])-1,eArr[2]);
+	
+	
+	
+	alert($('#startDate').val());
+	if($('#selectReason').val()!="선택" && !(start1.getTime()>end1.getTime()) && $('#approval_comment').val()!=null){
 	 $.ajax({
 			url:"submitApproval.do",
 			data:{emp_no : "${loginEmp.emp_no}",approval_start_date:$('#startDate').val(),approval_end_date:$('#endDate').val(),approval_team_no:team_no,approval_mgr_no:admin_no,
@@ -68,7 +98,11 @@ function submitApproval(){
 			
 		}); 
 	
-	
+	}else if($('#selectReason').val()=="선택"){
+		alert("사유를 선택해주세요.");
+	}else if((start1.getTime()>end1.getTime()) || $('#selectReason').val()=="선택"){
+		alert("시작 날짜 또는 종료 날짜가 유효하지 않습니다.");
+	}
 }	
 
 	

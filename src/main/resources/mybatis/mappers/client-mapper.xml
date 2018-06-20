@@ -126,7 +126,7 @@
 	<!-- 거래중인 거래처 리스트 mapping -->
 	<select id="selectAccountClient" resultMap="resultAccountClient" parameterType="client">
 	
-	<if test="job_no ==3|| job_no==2">
+	<if test="job_no ==2 || job_no==3">
 		<![CDATA[
 			select * from (
 			(select rownum as rn, A.* from (select * from client where client_contract = 'Y') A))
@@ -148,29 +148,29 @@
 	<select id="clCount" parameterType="client" resultType="int">
 		
 		<if test="client_company==null">
-		<if test="job_no==3|| job_no==2">
-		<![CDATA[
-			select count(*) from client where client_contract = 'Y'
-		]]>
-		</if>
-		<if test="job_no ==1">
-			<![CDATA[
-				select count(*) from client where emp_no = #{emp_no} and client_contract = 'Y'
-			]]>
-		
-		</if>
+			<if test="job_no==2 || job_no==3">
+				<![CDATA[
+					select count(*) from client where client_contract = 'Y'
+				]]>
+			</if>
+			<if test="job_no ==1">
+				<![CDATA[
+					select count(*) from client where emp_no = #{emp_no} and client_contract = 'Y'
+				]]>
+			
+			</if>
 		</if>
 		<if test="client_company!=null">
-		<if test="job_no==1">
-	<![CDATA[
-		select count(*) from client where client_contract = 'Y' and emp_no=#{emp_no} and client_company=#{client_company}
-	]]>
-	</if>
-	<if test="job_no==2 || job_no==3">
-	<![CDATA[
-		select count(*) from client where client_contract = 'Y' and client_company=#{client_company}
-	]]>
-	</if>
+			<if test="job_no==1">
+				<![CDATA[
+					select count(*) from client where client_contract = 'Y' and emp_no=#{emp_no} and client_company like '%'||#{client_company}||'%'
+				]]>
+			</if>
+			<if test="job_no==2 || job_no==3">
+				<![CDATA[
+					select count(*) from client where client_contract = 'Y' and client_company like '%'||#{client_company}||'%'
+				]]>
+			</if>
 		
 		</if>
 	</select>
@@ -365,5 +365,19 @@
 	]]>
 	</if>
 	</select>
+	
+	 <select id="selectClientEmail" parameterType="client" resultType="client">
+	<![CDATA[
+	select client_email from client where client_email=#{client_email} 
+	
+	
+	]]>
+	</select>
+	<select id="selectClientPhone" parameterType="client" resultType="client">
+	<![CDATA[
+	select client_phone from client where client_phone=#{client_phone}
+	]]>
+	
+	</select> 
 </mapper>
 

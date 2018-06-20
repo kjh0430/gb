@@ -155,5 +155,17 @@ public class ClientServiceImpl implements ClientService{
 		
 		return clientDao.selectListClientCondition(client);
 	}
+
+	@Override
+	public Client selectClientEmail(Client client) {
+		
+		return clientDao.selectClientEmail(client);
+	}
+
+	@Override
+	public Client selectClientPhone(Client client) {
+	
+		return clientDao.selectClientPhone(client);
+	}
 	
 }

@@ -73,6 +73,84 @@
 	}
 
 </script>
+<script>
+$(function(){
+	 
+	
+
+	$('#client_email').blur(function(){
+		
+		
+		$.ajax({
+			
+			url:"clientemailCheck.do",
+			data:{client_email:$('#client_email').val()},
+			type:"post",
+			success:function(data){
+			
+				if(data.check=="N" && $('#client_email').val()!="" && $('#client_email').val()!=null){
+					alert("사용가능한 e-mail입니다.");
+					
+				}else if(data.check=="Y"){
+					alert("다른 사람이 사용하고 있는 e-mail입니다.");
+				}
+			}
+		});
+		
+	
+	});
+$('#client_phone').blur(function(){
+		
+		
+		$.ajax({
+			
+			url:"clientephoneCheck.do",
+			data:{client_phone:$('#client_phone').val()},
+			type:"post",
+			success:function(data){
+			
+				if(data.check=="N" && $('#client_phone').val()!="" && $('#client_phone').val()!=null){
+					alert("사용가능한 번호입니다.");
+					
+				}else if(data.check=="Y"){
+					alert("다른 사람이 사용하고 있는 번호입니다.");
+				}
+			}
+		});
+		
+	
+	}); 
+   
+});   
+    
+function checkCondition(){
+	
+	var phone_pattern = /^\d{3}-\d{3,4}-\d{4}$/;
+	var email_pattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+	
+	
+	var email=$('#client_email').val();
+	var phone=$('#client_phone').val();
+	
+	if(!phone_pattern.test(phone)){
+		alert("올바른 전화번호 형식이 아닙니다.ex)010-1234-5678");
+		allCheck=false;
+		return allCheck;
+	}if(!email_pattern.test(email)){
+		alert("올바른 e-mail 형식이 아닙니다.");
+		allCheck=false;
+		return allCheck;
+	}if(phone_pattern.test(phone) && email_pattern.test(email)){
+		allCheck=true;
+		alert("고객이 등록되었습니다.");
+		return allCheck;
+		
+	}
+	
+} 
+
+
+</script>
 <style type="text/css">
 	.c_file{
 		list-style:none;
@@ -226,7 +304,7 @@
 
 	<!-- 고객등록 유효성검사 -->
 	<script type="text/javascript">
-		function nameCheck(){
+	/* 	function nameCheck(){
 			if($('#client_name').val() == ""){
 				$('#infoNameCheck').text("고객명을 입력하세요!");
 			}else{
@@ -239,7 +317,7 @@
 			}else{
 				$('#infoCompanyCheck').text("");
 			}
-		}
+		} */
 		
 	</script>
 
@@ -313,9 +391,12 @@
 												for="client_name">고객명 *
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<input name="client_name" type="text" id="client_name" required="required"
+												<!-- <input name="client_name" type="text" id="client_name" required="required"
 													class="form-control col-md-7 col-xs-12" onkeydown="nameCheck()" >
-												<div id="infoNameCheck" style="color:red;text-align:center;"></div>
+												<div id="infoNameCheck" style="color:red;text-align:center;"></div> -->
+												<input name="client_name" type="text" id="client_name" required="required"
+													class="form-control col-md-7 col-xs-12">
+												
 											</div>
 										</div>
 										<div class="form-group">
@@ -323,9 +404,12 @@
 												for="client_company">회사명 *
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<input name="client_company" type="text" id="client_company" required="required"
+												<!-- <input name="client_company" type="text" id="client_company" required="required"
 													class="form-control col-md-7 col-xs-12" onkeydown="companyCheck()" onmousedown="nameCheck()">
-												<div id="infoCompanyCheck" style="color:red;text-align:center;"></div>	
+												<div id="infoCompanyCheck" style="color:red;text-align:center;"></div> -->
+												<input name="client_company" type="text" id="client_company" required="required"
+													class="form-control col-md-7 col-xs-12">
+											
 											</div>
 										</div>
 										<div class="form-group">

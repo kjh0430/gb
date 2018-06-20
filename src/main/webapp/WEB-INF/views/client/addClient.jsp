@@ -42,18 +42,8 @@
 <link href="resources/css/main.css" rel="stylesheet">
 
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-    $('#table_cl').dataTable( {
-        ordering:false,
-        lengthChange:false,
-        pageLength:15
-    } );
-    
-    
-} );
 
-</script>
+
 <style>
 
 #searchAddr img {
@@ -114,7 +104,7 @@ $(document).ready(function() {
 								</div>
 								<div class="x_content">
 								
-									<form action="insertClient.do" method="post" clear="both">
+									<form action="insertClient.do" method="post" clear="both" onsubmit="return checkCondition();">
 									<table id="table_cl" class="table table-striped table-bordered" style="min-width:650px;">
 										<input type="hidden" name="emp_no" value="${ loginEmp.emp_no }">
 										<input type="hidden" name="client_loc_x" value="">
@@ -138,11 +128,11 @@ $(document).ready(function() {
 											</tr>
 											<tr>
 												<th width="100px;">이메일 *</th>
-												<td><input style="width:300px;" type="email" name="client_email"></td>
+												<td><input style="width:300px;" id="client_email" type="email" name="client_email"></td>
 											</tr>
 											<tr>
 												<th width="100px;">연락처 *</th>
-												<td><input style="width:300px;" type="tel" name="client_phone"></td>
+												<td><input style="width:300px;" type="tel" name="client_phone" id="client_phone"></td>
 											</tr>
 											<tr>
 												<th width="100px;">주소</th>
@@ -169,6 +159,7 @@ $(document).ready(function() {
 											<tr>
 												<th width="100px;">비고</th>
 												<td><input style="width:300px;" type="text" name="client_comment"></td>
+												
 											</tr>
 
 										<tbody>

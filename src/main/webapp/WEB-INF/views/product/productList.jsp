@@ -14,6 +14,8 @@
 
 <title>GROUP BEAN |</title>
 
+<!-- jquery	 -->
+<script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <!-- Bootstrap -->
 <link href="resources/vendors/bootstrap/dist/css/bootstrap.min.css"	rel="stylesheet">
 <!-- Font Awesome -->
@@ -28,29 +30,80 @@
 
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
-	$(document).ready(function() {
-		$('#table_pl').dataTable({
+ $(document).ready(function() {
+$('#table_pl').dataTable({
 			ordering : false,
 			lengthChange : false,
 			paging : false,
 			searching : false,
 			info : false
-		});
 	});
-
-	/*  function goToDetail(page){
-	 var index=page;
-	 return index;
-	 } */
-
-	 //제픔 검색시 ajax or form
-	 
-	 
-	 
-	 
-	 
-	 
+});
+ 
+////버튼 클릭시
+/* $(function(){
+	$("#button1").click(function(){
+			alert("제발 좀 되라");
+			$.ajax({
+						 url: "searchProduct2.do",
+						 type: "post",
+						 data: {
+							 product_name: $('#keykey').val()
+						 },
+						 dataType: "json",
+						 success: function(data){
+							var obj = JSON.stringify(data);
+							var json = JSON.parse(obj);
+							var list = "";
+							for(var i in json.list){
+								list += 
+								"<tr>"+
+									"<td>"+${json.list.product_no}+"</td>"+
+									"<td><a href=moveproductDetail.do?data="+${json.list.product_no}+">"+${json.list.decodeURIComponent(product_name)}+"</a></td>"+
+									"<td>"+${json.list.product_price}+"</td>"+
+									"<td>"+${json.list.decodeURIComponent(product_availability)}+"</td>"+
+								"</tr>";
+								console.log(list);
+							}
+							$('body tbody').html(list);
+						 }
+					 });
+				});
+}); */
+	
 </script>
+
+<script type="text/javascript">
+//제픔 검색시 ajax or form
+function searchItem2() {
+	
+		 $.ajax({
+		 url: "searchProduct2.do",
+		 type: "post",
+		 data: {
+			 product_name: $('#keykey').val()
+		 },
+		 dataType: "json",
+		 success: function(data){
+			 var obj = JSON.stringify(data);
+			 var json = JSON.parse(obj);
+			 var list = "";
+			 for(var i in json.list){
+				 list += 
+						"<tr>"+
+							"<td>"+json.list[i].product_no+"</td>"+
+							"<td><a href=moveproductDetail.do?data="+json.list[i].product_no+">"+decodeURIComponent(json.list[i].product_name)+"</a></td>"+
+							"<td>"+json.list[i].product_price+"</td>"+
+							"<td>"+decodeURIComponent(json.list[i].product_availability)+"</td>"+
+						"</tr>";
+			 }
+				 $('body tbody').html(list);
+			 
+		 }
+	 });
+}
+</script>
+
 </head>
 
 
@@ -85,9 +138,6 @@
 
 				</div>
 			</div>
-
-
-
 			<!-- top navigation -->
 			<c:import url="../etc/topnav.jsp"></c:import>
 			<!-- /top navigation -->
@@ -99,6 +149,13 @@
 						<div class="title_left">
 							<h3>제품목록</h3>
 						</div>
+						<c:if test="${ loginEmp.job_no == 3}">
+						<div class="title_right" style="text-align:right">
+							<button class="btn btn-primary"
+								onclick="location.href='moveProductInsert.do'">제품등록</button>
+							<div class="clearfix"></div>
+						</div>
+						</c:if>
 					</div>
 
 					<div class="clearfix"></div>
@@ -106,21 +163,29 @@
 					<div class="row">
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
-								<c:if test="${ loginEmp.job_no == 3}">
-									<div class="x_title" style="text-align: right">
-										<button class="btn btn-primary"
-											onclick="location.href='moveProductInsert.do'">제품등록</button>
-										<div class="clearfix"></div>
-									</div>
-								</c:if>
-								<!-- 검색 바 -->
-								<div class="x_content">
-									<select name="selectProductType" style="height:20px;">
-										<option val="1">제품번호</option>
-										<option val="2">제 품 명</option>
-									</select> <input type="text" name="keyword" />
-									<button onclick="">검색</button>
+								
+								<div class="x_title" style="text-align: right">
+									<form onsubmit="return false;">
+										<div style="text-align: right">
+											<input class="form-control"
+												style="width: 130px; display: inline-block; margin-right: 3px;"
+												type="text" placeholder="제품명 검색" id="keykey">
+											<button id="button1" class="btn btn-dark"
+												style="margin: 0 0 3px 0" onclick="searchItem2();">검색</button>
+										</div>
+									</form>
 								</div>
+								
+								<!-- 검색 바 -->
+								<!-- <form action="searchProduct.do" onsubmit ="return searchItem();"> -->
+								
+								<!-- <form onsubmit="return false;">
+									<input id="keykey" class="form-control" style="float:right" "width:130px;display:inline-block;margin-right:3px;" type="text" name="keyword" placeholder="제품명으로 검색합니다."/>
+									<input type ="button" id="button1" value="검색" />
+									<button id="button1" class="btn btn-dark" style="float:right" "margin:0 0 3px 0" onclick="searchItem2();">검색</button>
+									onclick="javascript:searchItem2()"
+								</form> -->
+							<!-- 	</form> -->
 								<!-- 검색 바 종료 -->
 								<div class="x_content">
 
@@ -139,12 +204,12 @@
 											<c:forEach items="${pageList}" var="li">
 												<tr>
 													<td>${li.product_no}</td>
-													<td><a href=moveproductDetail.do?data=${li.product_no}>${li.product_name}</a></td>
+													<td><a style="font-weight:bold" href=moveproductDetail.do?data=${li.product_no}>${li.product_name}</a></td>
 													<td>${li.product_price}</td>
 													<td>${li.product_availability}</td>
 												</tr>
 											</c:forEach>
-										<tbody>
+										</tbody>
 									</table>
 								</div>
 
@@ -190,17 +255,18 @@
 									</c:forEach>
 								</div>
 
-							</div>
+							
 						</div>
 					</div>
 				</div>
 			</div>
-			<%@ include file="../etc/footer.jsp"%>
 		</div>
+		
+			<%@ include file="../etc/footer.jsp"%>
 	</div>
 	<!-- /page content -->
 
-
+	</div>
 
 
 	<!-- jQuery -->

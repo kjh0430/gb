@@ -26,12 +26,12 @@
 	          <li><a href="addClient.do">고객등록</a></li>
 	          <li><a href="clientList.do">고객목록</a></li>
 	          <li><a href="poList.do">잠재고객</a></li>
-	          <li><a href="contractList.do?emp_no=${ loginEmp.emp_no }">계약</a></li>
+	          <li><a href="contractList.do?emp_no=${ loginEmp.emp_no }">계약목록</a></li>
 	        </ul>
 	      </li>
 	      <li><a><i class="fa fa-table"></i> 영업현황 <span class="fa fa-chevron-down"></span></a>
 	        <ul class="nav child_menu">
-	          <li><a href="accountList.do?emp_no=${loginEmp.emp_no}&page=1&job_no=${loginEmp.job_no}">거래처</a></li>
+	          <li><a href="accountList.do?emp_no=${loginEmp.emp_no}&page=1&job_no=${loginEmp.job_no}&client_company=null">거래처</a></li>
 	          <li><a href="selectOrderClient.do?emp_no=${loginEmp.emp_no}">발주하기</a>
 	          <li><a href="orderList.do?emp_no=${loginEmp.emp_no}&page=1&client_company=null">매출현황</a></li>
 	          <li><a href="visit.do">방문일지</a></li>
@@ -42,7 +42,7 @@
 
 
 	          <li><a href="productList.do?page=1">제품관리</a></li>
-	          <li><a href="MovegoalState.do">목표현황</a></li>
+	          <li><a href="myGoal.do">목표현황</a></li>
 	          <li><a href="moveDailyReport.do">영업일지</a></li>
 
 

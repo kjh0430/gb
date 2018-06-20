@@ -32,4 +32,11 @@ public class SalaryServiceImpl implements SalaryService{
 	public Emp selectEmpJob(int emp_no) {
 		return salaryDao.selectEmpJob(emp_no);
 	}
+	
+	/** 급여리스트 페이지 처리 */
+	@Override
+	public ArrayList<Salary> selectSalaryPageList(Salary salary) {
+		return salaryDao.selectSalaryPageList(salary);
+	}
+	
 }

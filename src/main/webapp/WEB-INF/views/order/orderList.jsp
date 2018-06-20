@@ -215,11 +215,11 @@ function searchCondition(){
 									 	
 										  <c:choose>
 											<c:when test="${page==currentPage}">
-												<li class="page-item" class="page-link" ><a class="page-link" style="color:red;">${page}</a></li>
+												<li class="page-item" class="page-link" ><a class="page-link" style="font-weight: bold">${page}</a></li>
 											</c:when> 
 										
 											<c:otherwise> 
-												<li class="page-item"><a class="page-link" href="#" onclick="list('${page}','${ searchCom}')">${page}</a></li>	
+												<li class="page-item"><a class="page-link" href="#" onclick="list('${page}','${ searchCom}')"  >${page}</a></li>	
 											</c:otherwise> 
 										
 										  </c:choose> 
@@ -241,11 +241,8 @@ function searchCondition(){
 									<!-- 다음페이지 next -->
 									
 									<c:if test="${curBlock < endPage}">
-										<c:if test="${searchCom != null }">
-											<li class="page-item"><a class="page-link" href="orderList.do?client_company=${searchCom}&page=${maxPage}">>></a></li>
-										</c:if>
 										<c:if test="${searchCom == null }">
-											<c:if test="${currentPage != maxPage }">
+											<c:if test="${currentPage != maxPage}">
 											<li class="page-item"><a class="page-link" href="orderList.do?client_company=null&page=${maxPage}">>></a></li>
 											</c:if>
 											

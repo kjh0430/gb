@@ -35,4 +35,6 @@ public interface ClientService {
 	public abstract int clientListCount(Client client);
 	public abstract int selectClientCondition(Client client); //조건 검색
 	public abstract ArrayList<Client> selectgetClientCondition(Client client); //조건 검색 리스트 불러오기
+	public abstract Client selectClientEmail(Client client); //클라이언트 email 검사
+	public abstract Client selectClientPhone(Client client); //클라이언트 번호 검사
 }

@@ -31,5 +31,6 @@ public interface EmpService {
 	public abstract Emp selectListCount(); //사원목록 갯수
 	public abstract ArrayList<Emp> selectEmpList(Emp emp); //사원목록 페이징
 	public abstract ArrayList<Emp> selectMgrList(Emp emp); //상사번호 목록
-	
+	public abstract ArrayList<Emp> selectEmpSearch(Emp emp); //사원목록 검색
+	public abstract Emp selectListCount(Emp emp); //사원목록 갯수
 }
