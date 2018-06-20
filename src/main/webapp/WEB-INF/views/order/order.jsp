@@ -117,7 +117,7 @@
 		$('#searchClientAddr').val(client_addr);
 		
 		$('#searchComName').val("");
-		$('#resultCom').remove();
+		$('#table_items').html("");
 	}
 
 	//상품 검색용.
@@ -161,7 +161,7 @@
 			alert("검색할 제품명을 입력해주세요");
 		}
 	}else{
-		alert("고객사를 먼저 선택해 주세요.");
+		alert("거래처를 먼저 선택해 주세요.");
 	}
 	}
 	
@@ -311,6 +311,15 @@
 			return a;
 		}
 	}
+	
+	function closeCom(){
+		$('#searchComName').val("");
+	}
+	
+	function closeProd(){
+		$('#searchProductName').val('');
+	}
+	
 </script>
 <style type="text/css">
 	.table > tbody > tr > td{
@@ -388,7 +397,7 @@
 
 												<div class="modal-header">
 													<button type="button" class="close" data-dismiss="modal">
-														<span aria-hidden="true">×</span>
+														<span aria-hidden="true" onclick="closeCom();">×</span>
 													</button>
 													<h4 class="modal-title" id="myModalLabel">거래처</h4>
 												</div>
@@ -411,24 +420,11 @@
 															</div>
 														</div>
 														<div class="row" id="searchResult">
-															<table id="table_items" class="table table-bordered">
-																<tr>
-																	<th>거래처번호</th>
-																	<th>거래처명</th>
-																	<th>전화번호</th>
-																	<th>주소</th>
-																</tr>
-																
-															</table>
+															
 														</div>
 													
 												</div>
-												<!-- <div class="modal-footer">
-													<button type="button" class="btn btn-default"
-														data-dismiss="modal">Close</button>
-													<button type="button" class="btn btn-primary">Save
-														changes</button>
-												</div> -->
+												
 
 											</div>
 										</div>
@@ -500,7 +496,7 @@
 
 												<div class="modal-header">
 													<button type="button" class="close" data-dismiss="modal">
-														<span aria-hidden="true">×</span>
+														<span aria-hidden="true" onclick="closeProd();">×</span>
 													</button>
 													<h4 class="modal-title" id="myModalLabel">품목</h4>
 												</div>
@@ -521,25 +517,12 @@
 															</div>
 														</div>
 														<div class="row" id="searchProductList">
-															<table id="table_items" class="table table-bordered">
-																<tr>
-																	<th>품번</th>
-																	<th>제품명</th>
-																	<th>단가</th>
-																	<th>선택</th>
-																</tr>
-																
 															
-															</table>
 														</div>
 													
 													
 												</div>
-												<div class="modal-footer">
-													<button type="button" class="btn btn-default"
-														data-dismiss="modal">Close</button>
-													
-												</div>
+												
 
 											</div>
 										</div>
@@ -559,24 +542,7 @@
 										</thead>
 										<tbody class="order_body">
 										</tbody>	
-										<!-- <thead>
-											<tr>
-												<th>제품번호</th>
-												<th>제품명</th>
-												<th>단가</th>
-												<th>수량</th>
-												<th>삭제</th>
-											</tr>
-										</thead>
-										<tbody id="order_tbody">
-											<tr>
-												<td>21549871</td>
-												<td>예가체프 아라비카 500g</td>
-												<td><input type="text" name="order_amount" class="form-control" value="13,000"/></td>
-												<td><input type="number" name="order_amount" class="form-control" min="1"/></td>
-												<td><button class="btn btn-danger btn-order">&nbsp;&nbsp;<i class="fa fa-trash-o"></i>&nbsp;&nbsp;</button></td>
-											</tr>
-										<tbody> -->
+										
 									</table>
 									<table class="table table-striped table-bordered">
 									<tr>
