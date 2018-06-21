@@ -231,6 +231,7 @@ public class ApprovalController {
 		Date date=new Date();
 		Date time=new Date(date.getTime());
 		String getdate=format.format(time);
+		
 		//System.out.println(getdate);
 		
 		apr.setApproval_mgr_date(getdate);		
