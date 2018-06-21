@@ -15,7 +15,7 @@ public class Goal implements Serializable{
 	private int emp_no;
 	private String emp_name;
 	private int job_no;
-	private int dept_no;
+	private String dept_no;
 	
 	//goal 테이블 data
 	private int goal_no;
@@ -49,7 +49,10 @@ public class Goal implements Serializable{
 	public Goal() {}
 
 
-	public Goal(int emp_no, String emp_name, int job_no, int dept_no, int goal_no, int goal_money, Date goal_date,
+	
+
+
+	public Goal(int emp_no, String emp_name, int job_no, String dept_no, int goal_no, int goal_money, Date goal_date,
 			String goal_date_start, int contract_money_sum, int goal_count, String dept_name, String job_name,
 			String emp_email, String goalMonth, int goalmoney, int sales, float acheive, String date) {
 		super();
@@ -74,9 +77,15 @@ public class Goal implements Serializable{
 	}
 
 
+
+
+
 	public int getEmp_no() {
 		return emp_no;
 	}
+
+
+
 
 
 	public void setEmp_no(int emp_no) {
@@ -84,9 +93,15 @@ public class Goal implements Serializable{
 	}
 
 
+
+
+
 	public String getEmp_name() {
 		return emp_name;
 	}
+
+
+
 
 
 	public void setEmp_name(String emp_name) {
@@ -94,9 +109,15 @@ public class Goal implements Serializable{
 	}
 
 
+
+
+
 	public int getJob_no() {
 		return job_no;
 	}
+
+
+
 
 
 	public void setJob_no(int job_no) {
@@ -104,14 +125,23 @@ public class Goal implements Serializable{
 	}
 
 
-	public int getDept_no() {
+
+
+
+	public String getDept_no() {
 		return dept_no;
 	}
 
 
-	public void setDept_no(int dept_no) {
+
+
+
+	public void setDept_no(String dept_no) {
 		this.dept_no = dept_no;
 	}
+
+
+
 
 
 	public int getGoal_no() {
@@ -119,9 +149,15 @@ public class Goal implements Serializable{
 	}
 
 
+
+
+
 	public void setGoal_no(int goal_no) {
 		this.goal_no = goal_no;
 	}
+
+
+
 
 
 	public int getGoal_money() {
@@ -129,9 +165,15 @@ public class Goal implements Serializable{
 	}
 
 
+
+
+
 	public void setGoal_money(int goal_money) {
 		this.goal_money = goal_money;
 	}
+
+
+
 
 
 	public Date getGoal_date() {
@@ -139,9 +181,15 @@ public class Goal implements Serializable{
 	}
 
 
+
+
+
 	public void setGoal_date(Date goal_date) {
 		this.goal_date = goal_date;
 	}
+
+
+
 
 
 	public String getGoal_date_start() {
@@ -149,9 +197,15 @@ public class Goal implements Serializable{
 	}
 
 
+
+
+
 	public void setGoal_date_start(String goal_date_start) {
 		this.goal_date_start = goal_date_start;
 	}
+
+
+
 
 
 	public int getContract_money_sum() {
@@ -159,9 +213,15 @@ public class Goal implements Serializable{
 	}
 
 
+
+
+
 	public void setContract_money_sum(int contract_money_sum) {
 		this.contract_money_sum = contract_money_sum;
 	}
+
+
+
 
 
 	public int getGoal_count() {
@@ -169,9 +229,15 @@ public class Goal implements Serializable{
 	}
 
 
+
+
+
 	public void setGoal_count(int goal_count) {
 		this.goal_count = goal_count;
 	}
+
+
+
 
 
 	public String getDept_name() {
@@ -179,9 +245,15 @@ public class Goal implements Serializable{
 	}
 
 
+
+
+
 	public void setDept_name(String dept_name) {
 		this.dept_name = dept_name;
 	}
+
+
+
 
 
 	public String getJob_name() {
@@ -189,9 +261,15 @@ public class Goal implements Serializable{
 	}
 
 
+
+
+
 	public void setJob_name(String job_name) {
 		this.job_name = job_name;
 	}
+
+
+
 
 
 	public String getEmp_email() {
@@ -199,9 +277,15 @@ public class Goal implements Serializable{
 	}
 
 
+
+
+
 	public void setEmp_email(String emp_email) {
 		this.emp_email = emp_email;
 	}
+
+
+
 
 
 	public String getGoalMonth() {
@@ -209,9 +293,15 @@ public class Goal implements Serializable{
 	}
 
 
+
+
+
 	public void setGoalMonth(String goalMonth) {
 		this.goalMonth = goalMonth;
 	}
+
+
+
 
 
 	public int getGoalmoney() {
@@ -219,9 +309,15 @@ public class Goal implements Serializable{
 	}
 
 
+
+
+
 	public void setGoalmoney(int goalmoney) {
 		this.goalmoney = goalmoney;
 	}
+
+
+
 
 
 	public int getSales() {
@@ -229,9 +325,15 @@ public class Goal implements Serializable{
 	}
 
 
+
+
+
 	public void setSales(int sales) {
 		this.sales = sales;
 	}
+
+
+
 
 
 	public float getAcheive() {
@@ -239,9 +341,15 @@ public class Goal implements Serializable{
 	}
 
 
+
+
+
 	public void setAcheive(float acheive) {
 		this.acheive = acheive;
 	}
+
+
+
 
 
 	public String getDate() {
@@ -249,14 +357,23 @@ public class Goal implements Serializable{
 	}
 
 
+
+
+
 	public void setDate(String date) {
 		this.date = date;
 	}
 
 
+
+
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+
+
 
 
 	@Override
@@ -270,24 +387,12 @@ public class Goal implements Serializable{
 	}
 
 
-	
 
 
 
 	
-	
 
-	
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }
 
