@@ -31,318 +31,209 @@ import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class GoalController {
-	private static final Logger logger=LoggerFactory.getLogger(GoalController.class);
-	
-	@Autowired
-	private GoalService goalService;
-	
-		
-	//목표 관리 리스트 출력
-	@RequestMapping("goalAdmin.do")
-	public String GoalAdmin(Goal goal, Model model ,@RequestParam(value="page") int page) {
-		logger.info("목표관리  리스트 메소드 실행됨-------------------");
-		//,@RequestParam(value="page") int page
-		System.out.println("------------------------------- goaladmin.do 시작");
-		
-		
-		int currentPage=page;	//page 써야됨			
-		//한 페이지당 출력할 목록갯수 지정
-		
-		System.out.println("page=: --------"+page);
-		int pageSize=10;
-		int pageGroupSize=5;
-		Goal listCount=(goalService.goalListCount());
-		
-		
-		int listCount_2=listCount.getGoal_list_count();
-		System.out.println("목표관리 리스트 갯수 "+listCount_2);
-		
-		int maxPage=(int)((double)listCount_2/pageSize+0.9);				
-		//페이지 번호 갯수 출력 					
-		
-		int curBlock=(currentPage-1)/pageGroupSize+1;//원하는 페이지가 몇번째 블록인지계산
-		int totBlock=(int)Math.ceil(maxPage*1.0)/pageGroupSize+1;//총 블록 갯수
-		
-		
-		//블록의 시작 페이지와 끝 페이지 번호 계산
-		int blockBegin=(curBlock-1)*pageGroupSize+1;
-		int blockEnd=blockBegin+pageGroupSize-1;
-		//[이전][다음] 을 눌렀을떄 이동할 페이지 번호
-		int prevBlock=(curBlock==1)?1:(curBlock-1)*pageGroupSize;
-		int nextBlock=curBlock>totBlock?(curBlock*pageGroupSize):(curBlock*pageGroupSize)+1;
-		
-		if(nextBlock>=totBlock) {
-			nextBlock=totBlock;
-		}				
-		
-		//마지막 페이지 번호가 범위를 초과하지 않도록 처리 
-		if(maxPage<blockEnd)
-			blockEnd=maxPage;
-		
-		//int startPage=(((int)((double)currentPage/pageSize+0.9))-1)*pageSize+1;
-		int startPage=(currentPage-1)*pageSize+1;
-		int endPage=startPage+pageSize-1;
-		
-		
-		goal.setStartPage(startPage);
-		goal.setEndPage(endPage);
-		
-		System.out.println("시작페이지 :"+goal.getStartPage());
-		System.out.println("마지막 페이지 :"+goal.getEndPage());
-		
-		ArrayList<Goal> goalStateList=goalService.selectGoalStateList(goal);
-		
-		System.out.println("목표 관리 리스트"+goalStateList);
-		
-		
-		model.addAttribute("goalStateList", goalStateList); 
-		
-		
-		model.addAttribute("listCount",listCount_2);
-		model.addAttribute("currentPage",currentPage);
-		model.addAttribute("pageGroupSize",pageGroupSize);		
-		model.addAttribute("startPage",startPage);
-		model.addAttribute("endPage",endPage);
-		model.addAttribute("maxPage",maxPage);
-		model.addAttribute("blockBegin",blockBegin);
-		model.addAttribute("blockEnd",blockEnd);
-		model.addAttribute("curBlock",curBlock);
-		model.addAttribute("totBlock",totBlock);
-		model.addAttribute("prevBlock",prevBlock);
-		model.addAttribute("nextBlock",nextBlock);
-		
-		
-		
-		return "goal/goalAdmin";
-	}
-	
-	//달별 리스트 출력
-	@RequestMapping(value="goalMonthList.do" ,method=RequestMethod.POST)
-	public void GoalAdminList(Goal goal, Model model ,HttpServletResponse  response, 
-			HttpServletRequest request,@RequestParam(value="gdata") String gdata) throws IOException{
-		
-		
-	
-		//System.out.println(gdata);
-		
-		System.out.println("시작좀!!");
-		ArrayList<Goal> goalStateListMonth=goalService.selectGoalStateListMonth(gdata);
-		
-		//System.out.println("날짜"+gdata);
-		
-		JSONArray jarr=new JSONArray();
-		
-		for(Goal g : goalStateListMonth) {
-			//System.out.println("받아온 날짜: "+g.getContract_date_start_goal());		
-		
-			JSONObject jsonobject=new JSONObject();		
-			
-			jsonobject.put("emp_no",g.getEmp_no());
-			jsonobject.put("emp_name",g.getEmp_name());
-			jsonobject.put("contract_money",g.getContract_money());
-			jsonobject.put("contract_date_start_goal",g.getContract_date_start_goal());			
-			jarr.add(jsonobject);
-		
-		}
-		
-		JSONObject send=new JSONObject();
-		send.put("list",jarr);
-		
-		response.setContentType("application/json; charset=utf-8");	
-		PrintWriter out=response.getWriter();
-		out.println(send.toJSONString());
-		out.flush();
-		out.close();
-		
-		
-		
-	}
-	
-	
-	//목표 상세보기
-	@RequestMapping("goalAdminDetail.do")
-	public String GoalAmdinDetail(Goal goal, Model model, @RequestParam(value="emp_no") int emp_no,
-			@RequestParam(value="emp_name") String emp_name,@RequestParam(value="contract_money") int contract_money,
-			@RequestParam(value="contract_date_start_goal") String goal_date) {
-				
-	
-		Goal contract_money_sum=goalService.selectGoalContractMoneySum(emp_no);
-		
-		System.out.println(contract_money_sum.getContract_money_sum());
-		
-		
-		model.addAttribute("emp_no", emp_no);		
-		model.addAttribute("emp_name", emp_name);		
-		model.addAttribute("contract_money", contract_money);		
-		model.addAttribute("goal_date", goal_date);
-		model.addAttribute("contract_money_sum", contract_money_sum.getContract_money_sum());
-		
-		return "goal/goalAdminDetail";
-	}
-	
-	//목표설정,method=RequestMethod.POST,@RequestParam("goal_date") Date goal_date,@RequestParam("goal_money") int goal_money,
-	@RequestMapping(value="goalAdminAdd.do" ,method=RequestMethod.POST)	
-	public void GoalAdd(Goal goal,HttpServletResponse response) throws IOException{
-		
-		System.out.println("GoalAdd in");
-		
-		System.out.println("--------------------------");
-	
-		System.out.println(goal.getEmp_no());
-		System.out.println(goal.getGoal_date_start());
-		System.out.println(goal.getGoal_money());
-		
-		
-		
-		int goalcount=goalService.countGoal(goal);
-		System.out.println("확인유무 목표 수량 갯수 :" +goalcount);
-		if(goalcount>0) {
-			
-			System.out.println("엘스야");
-			JSONObject send=new JSONObject();
-			String pass="2";
-			send.put("send",URLEncoder.encode(pass,"utf-8"));
-			response.setContentType("text/html; charset=utf-8");
-			PrintWriter out=response.getWriter();
-			out.print(send.toJSONString());
-			out.flush();
-			out.close();
-			
-			
-		}else {
-		
-			int goalinsert=goalService.insertGoal(goal);
-			
-			System.out.println("목표설정goalInsert : "+goalinsert);
-			
-			JSONObject send=new JSONObject();
-			String pass="1";
-		
-			send.put("send",URLEncoder.encode(pass,"utf-8"));
-			response.setContentType("text/html; charset=utf-8");
-			PrintWriter out=response.getWriter();
-			out.print(send.toJSONString());
-			out.flush();
-			out.close();
-			
-		}
-		
-		
-		
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	@RequestMapping("goalState.do")
-	public String GoalSate() {
-		
-		return "goal/goalState";
-	}
-	
-	@RequestMapping("goalStateAdmin.do")
-	public String GoalStateAdmin() {
-		
-		return "goal/goalStateAdmin";
-	}
-	
-	@RequestMapping("myGoal.do")
-	public String myGoal() {
-		return "goal/MygoalState";
-	}
-	
-	@RequestMapping("search.do")
-	@ResponseBody
-	public void searchEmp(Goal goal,HttpServletResponse  response) throws IOException {
-	ArrayList<Goal> searchEmp=goalService.selectEmpCondition(goal);
-	JSONArray jarr=new JSONArray();
-	
-	for(Goal goal1: searchEmp) {
-		
-		JSONObject jsonobject=new JSONObject();
-		
-		jsonobject.put("emp_name",goal1.getEmp_name());
-		jsonobject.put("dept_name",goal1.getDept_name());
-		jsonobject.put("emp_job",goal1.getJob_name());
-		jsonobject.put("emp_email",goal1.getEmp_email());
-		jsonobject.put("emp_no",goal1.getEmp_no());
-		jarr.add(jsonobject);
-		
-	}
-	JSONObject send=new JSONObject();
-	send.put("list",jarr);
-	
-	response.setContentType("application/json; charset=utf-8");	
-	//System.out.println("messageController:"+send);
-	PrintWriter out=response.getWriter();
-	out.println(send.toJSONString());
-	out.flush();
-	out.close();
-	}
-	@RequestMapping("getgoalInfo.do")
-	@ResponseBody
-	public void goalEmpInfo(Goal goal,HttpServletResponse  response) throws IOException {
-	ArrayList<Goal> selectEmpGoal=goalService.selectEmpGoal(goal);
-	JSONArray jarr=new JSONArray();
-	
-	for(Goal goal1: selectEmpGoal) {
-		
-		JSONObject jsonobject=new JSONObject();
-		
-		jsonobject.put("goalMonth",goal1.getGoalMonth());
-		jsonobject.put("goalMoney",goal1.getGoalmoney());
-		jsonobject.put("sales",goal1.getSales());
-		jsonobject.put("acheive",goal1.getAcheive());
-		
-		jarr.add(jsonobject);
-		
-	}
-	JSONObject send=new JSONObject();
-	send.put("list",jarr);
-	
-	response.setContentType("application/json; charset=utf-8");	
-	PrintWriter out=response.getWriter();
-	out.println(send.toJSONString());
-	out.flush();
-	out.close();
-	}
+   private static final Logger logger=LoggerFactory.getLogger(GoalController.class);
+   
+   @Autowired
+   private GoalService goalService;
+   
+      
+   //목표 관리 리스트 출력
+   @RequestMapping("goalAdmin.do")
+   public String GoalAdmin() {
+      return "goal/goalAdmin";
+      
+   }
+   
 
-	
-	@RequestMapping("getAll.do")
-	@ResponseBody
-	public void goalAllEmp(HttpServletResponse  response) throws IOException {
-	ArrayList<Goal> selectAllgoal=goalService.selectEmpAll();
-	JSONArray jarr=new JSONArray();
-	
-	for(Goal goal1: selectAllgoal) {
-		
-		JSONObject jsonobject=new JSONObject();
-		
-		jsonobject.put("goalMonth",goal1.getGoalMonth());
-		jsonobject.put("goalMoney",goal1.getGoalmoney());
-		jsonobject.put("sales",goal1.getSales());
-		jsonobject.put("acheive",goal1.getAcheive());
-		
-		jarr.add(jsonobject);
-		
-	}
-	JSONObject send=new JSONObject();
-	send.put("list",jarr);
-	
-	response.setContentType("application/json; charset=utf-8");	
-	PrintWriter out=response.getWriter();
-	out.println(send.toJSONString());
-	out.flush();
-	out.close();
-	}
-	
-	
+   @RequestMapping("goalState.do")
+   public String GoalSate() {
+      
+      return "goal/goalState";
+   }
+   
+   @RequestMapping("goalStateAdmin.do")
+   public String GoalStateAdmin() {
+      
+      return "goal/goalStateAdmin";
+   }
+   
+   @RequestMapping("myGoal.do")
+   public String myGoal() {
+      return "goal/MygoalState";
+   }
+   
+   @RequestMapping("search.do")
+   @ResponseBody
+   public void searchEmp(Goal goal,HttpServletResponse  response) throws IOException {
+   ArrayList<Goal> searchEmp=goalService.selectEmpCondition(goal);
+   JSONArray jarr=new JSONArray();
+   
+   for(Goal goal1: searchEmp) {
+      
+      JSONObject jsonobject=new JSONObject();
+      
+      jsonobject.put("emp_name",goal1.getEmp_name());
+      jsonobject.put("dept_name",goal1.getDept_name());
+      jsonobject.put("emp_job",goal1.getJob_name());
+      jsonobject.put("emp_email",goal1.getEmp_email());
+      jsonobject.put("emp_no",goal1.getEmp_no());
+      jarr.add(jsonobject);
+      
+   }
+   JSONObject send=new JSONObject();
+   send.put("list",jarr);
+   
+   response.setContentType("application/json; charset=utf-8");   
+   //System.out.println("messageController:"+send);
+   PrintWriter out=response.getWriter();
+   out.println(send.toJSONString());
+   out.flush();
+   out.close();
+   }
+   @RequestMapping("getgoalInfo.do")
+   @ResponseBody
+   public void goalEmpInfo(Goal goal,HttpServletResponse  response) throws IOException {
+   ArrayList<Goal> selectEmpGoal=goalService.selectEmpGoal(goal);
+   JSONArray jarr=new JSONArray();
+   
+   for(Goal goal1: selectEmpGoal) {
+      
+      JSONObject jsonobject=new JSONObject();
+      
+      jsonobject.put("goalMonth",goal1.getGoalMonth());
+      jsonobject.put("goalMoney",goal1.getGoalmoney());
+      jsonobject.put("sales",goal1.getSales());
+      jsonobject.put("acheive",goal1.getAcheive());
+      
+      jarr.add(jsonobject);
+      
+   }
+   JSONObject send=new JSONObject();
+   send.put("list",jarr);
+   
+   response.setContentType("application/json; charset=utf-8");   
+   PrintWriter out=response.getWriter();
+   out.println(send.toJSONString());
+   out.flush();
+   out.close();
+   }
+
+   
+   @RequestMapping("getAll.do")
+   @ResponseBody
+   public void goalAllEmp(HttpServletResponse  response) throws IOException {
+   ArrayList<Goal> selectAllgoal=goalService.selectEmpAll();
+   JSONArray jarr=new JSONArray();
+   
+   for(Goal goal1: selectAllgoal) {
+      
+      JSONObject jsonobject=new JSONObject();
+      
+      jsonobject.put("goalMonth",goal1.getGoalMonth());
+      jsonobject.put("goalMoney",goal1.getGoalmoney());
+      jsonobject.put("sales",goal1.getSales());
+      jsonobject.put("acheive",goal1.getAcheive());
+      
+      jarr.add(jsonobject);
+      
+   }
+   JSONObject send=new JSONObject();
+   send.put("list",jarr);
+   
+   response.setContentType("application/json; charset=utf-8");   
+   PrintWriter out=response.getWriter();
+   out.println(send.toJSONString());
+   out.flush();
+   out.close();
+   }
+   
+   
+   @RequestMapping(value="getList.do", method=RequestMethod.POST)
+   @ResponseBody
+   public void selectGoalList(Goal goal,HttpServletResponse  response) throws IOException {
+      System.out.println(goal.getDate()+","+goal.getDept_no());
+   ArrayList<Goal> selectGoalList=goalService.selectGoalList(goal);
+   JSONArray jarr=new JSONArray();
+   
+   for(Goal goal1: selectGoalList) {
+      
+      JSONObject jsonobject=new JSONObject();
+      
+      jsonobject.put("emp_no",goal1.getEmp_no());
+      jsonobject.put("emp_name",goal1.getEmp_name());
+      jsonobject.put("sales",goal1.getSales());
+      
+      
+      jarr.add(jsonobject);
+      
+   }
+   JSONObject send=new JSONObject();
+   send.put("list",jarr);
+   
+   response.setContentType("application/json; charset=utf-8");   
+   PrintWriter out=response.getWriter();
+   out.println(send.toJSONString());
+   out.flush();
+   out.close();
+   }
+   
+   
+
+      @RequestMapping(value="checkGoal.do", method=RequestMethod.POST)
+      @ResponseBody
+      public void selectcheckGoal(Goal goal,HttpServletResponse  response) throws Exception {
+         System.out.println(goal.getDate()+","+goal.getDept_no()+","+goal.getEmp_no());
+      Goal selectcheckGoal=goalService.selectcheckGoal(goal);
+   
+
+      JSONObject send=new JSONObject();
+      System.out.println("selectcheckGoal"+selectcheckGoal);
+      System.out.println("fvxvxvx");
+      try {
+         
+         if(selectcheckGoal.getGoal_date()!=null) {
+
+            send.put("goal_date",selectcheckGoal.getGoal_date().toString());
+            send.put("goal_money",selectcheckGoal.getGoal_money());
+         }else {
+            send.put("goal_date","N");
+            send.put("goal_money","N");
+            
+         }
+         
+      } catch (NullPointerException e) {
+         send.put("goal_date","N");
+         send.put("goal_money","N");
+      }
+      
+      /*if(selectcheckGoal.getGoal_date()!=null) {
+
+         send.put("goal_date",selectcheckGoal.getGoal_date().toString());
+         send.put("goal_money",selectcheckGoal.getGoal_money());
+      }else{
+         send.put("goal_date","N");
+         send.put("goal_money","N");
+      }*/
+      
+      response.setContentType("application/json; charset=utf-8");   
+      PrintWriter out=response.getWriter();
+      out.println(send.toJSONString());
+      out.flush();
+      out.close();
+      
+      }
+      
+         
+      @RequestMapping(value="insertGoal.do", method=RequestMethod.POST)
+      @ResponseBody
+      public void insertGoal(Goal goal,HttpServletResponse  response) throws IOException {
+      int insertGoal=goalService.insertGoal(goal);
+      
+      response.setContentType("text/html;charset=utf-8");
+      PrintWriter out=response.getWriter();
+      
+      out.println("입력이 완료되었습니다.");
+      out.flush();
+      out.close();
+      }
 }

@@ -110,7 +110,7 @@ function modalUp(obj){
 			data:{ approval_no:approval_no},
 			type:"post",
 		 	success : function(data){
-				//alert("팀장 승인 완료"+data);
+				
 				 ws.send(data);
 				alert("결재가 완료 되었습니다.");
 				$('#modal1').modal("hide");
@@ -201,7 +201,7 @@ background-color:#2A3F54;
 					<div class="page-title">
 						<div class="title_left">
 							<h3>
-								결재 리스트
+								결재 목록
 							</h3>
 						</div>
 					</div>
@@ -220,7 +220,7 @@ background-color:#2A3F54;
 									<button class="btn btn-dark" style="margin:0 0 3px 0" onclick="searchCondition();">검색</button>
 									</div>
 									
-									<table id="table_ap" class="table table-striped table-bordered table-responsive" style="min-width:500px;">
+									<table id="table_ap" class="table table-striped table-bordered table-responsive" style="min-width:650px;">
 										<thead>
 											<tr>
 												<th>사원 이름</th>
@@ -459,7 +459,7 @@ background-color:#2A3F54;
 			<!-- /footer content -->
 		</div>
 	</div>
-	</div>
+	
 	<!-- /page content -->
 
 	
