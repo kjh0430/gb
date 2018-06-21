@@ -1,7 +1,6 @@
 package com.crm.gb.goal.model.vo;
 
 import java.io.Serializable;
-import java.sql.Date;
 
 
 import org.springframework.stereotype.Component;
@@ -20,7 +19,7 @@ public class Goal implements Serializable{
    //goal 테이블 data
    private int goal_no;
    private int goal_money;
-   private Date goal_date;
+   private String goal_date;
    
    
    //목표날짜 설정
@@ -52,7 +51,7 @@ public class Goal implements Serializable{
    
 
 
-   public Goal(int emp_no, String emp_name, int job_no, String dept_no, int goal_no, int goal_money, Date goal_date,
+   public Goal(int emp_no, String emp_name, int job_no, String dept_no, int goal_no, int goal_money, String goal_date,
          String goal_date_start, int contract_money_sum, int goal_count, String dept_name, String job_name,
          String emp_email, String goalMonth, int goalmoney, int sales, float acheive, String date) {
       super();
@@ -176,7 +175,7 @@ public class Goal implements Serializable{
 
 
 
-   public Date getGoal_date() {
+   public String getGoal_date() {
       return goal_date;
    }
 
@@ -184,7 +183,7 @@ public class Goal implements Serializable{
 
 
 
-   public void setGoal_date(Date goal_date) {
+   public void setGoal_date(String goal_date) {
       this.goal_date = goal_date;
    }
 

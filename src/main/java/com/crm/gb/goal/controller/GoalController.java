@@ -232,7 +232,8 @@ public class GoalController {
 		
 		response.setContentType("application/json; charset=utf-8");	
 		PrintWriter out=response.getWriter();
-		out.println("목표 값이 설정 되었습니다.");
+		
+		out.println("");
 		out.flush();
 		out.close();
 		}
