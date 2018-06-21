@@ -77,7 +77,7 @@ function empDe(){
 
 <script type="text/javascript">
 	function addSalary(){
-		location.href="addSalary.do?emp_no='${ emp.emp_no }'";
+		location.href="addSalary.do?emp_no="+${ emp.emp_no }+"";
 	}
 </script>
 
