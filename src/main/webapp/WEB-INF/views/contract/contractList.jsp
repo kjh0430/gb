@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 	
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 	
 <!DOCTYPE html>
 <html>
@@ -62,7 +64,7 @@ function clientList(){
 
 <script type="text/javascript">
 
-$(function(){
+$(function(num){
 	
 	$('#searchContractList').keyup(function() {
 		
@@ -80,14 +82,16 @@ $(function(){
 				var list = "";
 				var maxPage = json.maxPage;
 				var page = "";
+				
 					for(var i in json.list) {
+						var money = json.list[i].contract_money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 						list += 
 							"<tr>"+
 								"<td>"+"<a href="+"contractDetail.do?client_no="+json.list[i].client_no+">"+decodeURIComponent(json.list[i].client_name)+"</a>"+"</td>"+
 								"<td>"+decodeURIComponent(json.list[i].client_company.replace(/\+/g, " "))+"</td>"+
 								"<td>"+json.list[i].client_phone+"</td>"+
 								"<td>"+json.list[i].contract_discount+"</td>"+
-								"<td>"+json.list[i].contract_money+"</td>"+
+								"<td>"+money+"</td>"+
 								"<td>"+json.list[i].contract_start+"</td>"+
 								"<td>"+json.list[i].contract_end+"</td>"+
 							"</tr>";	
@@ -122,13 +126,14 @@ $(function(){
 				var list = "";
 				
 					for(var i in json.list) {
+						var money = json.list[i].contract_money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 						list += 
 							"<tr>"+
 								"<td>"+"<a href="+"contractDetail.do?client_no="+json.list[i].client_no+">"+decodeURIComponent(json.list[i].client_name)+"</a></td>"+
 								"<td>"+decodeURIComponent(json.list[i].client_company.replace(/\+/g, " "))+"</td>"+
 								"<td>"+json.list[i].client_phone+"</td>"+
 								"<td>"+json.list[i].contract_discount+"</td>"+
-								"<td>"+json.list[i].contract_money+"</td>"+
+								"<td>"+money+"</td>"+
 								"<td>"+json.list[i].contract_start+"</td>"+
 								"<td>"+json.list[i].contract_end+"</td>"+
 							"</tr>";	
@@ -221,7 +226,7 @@ $(function(){
 												<th>회사명</th>
 												<th>연락처</th>
 												<th>할인률 (%)</th>
-												<th>계약금</th>
+												<th>계약금 (원)</th>
 												<th>계약시작일</th>
 												<th>계약종료일</th>
 											</tr>
@@ -234,7 +239,7 @@ $(function(){
 												<td>${ list.client.client_company }</td>
 												<td>${ list.client.client_phone }</td>
 												<td>${ list.contract_discount }</td>
-												<td>${ list.contract_money }</td>
+												<td><fmt:formatNumber value="${ list.contract_money }" pattern="#,###"/></td>
 												<td>${ list.contract_date_start }</td>
 												<td>${ list.contract_date_end }</td>
 											</tr>
