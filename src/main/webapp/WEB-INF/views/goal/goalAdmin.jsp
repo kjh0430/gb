@@ -13,10 +13,10 @@
 
 <!-- Bootstrap -->
 <link href="resources/vendors/bootstrap/dist/css/bootstrap.min.css"
-   rel="stylesheet">
+	rel="stylesheet">
 <!-- Font Awesome -->
 <link href="resources/vendors/font-awesome/css/font-awesome.min.css"
-   rel="stylesheet">
+	rel="stylesheet">
 
 
 <!-- Custom Theme Style -->
@@ -26,7 +26,9 @@
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 var dept_no;
+var emp_no;
 var string="";
+
 
 $(function(){
    document.getElementById("goalMonth").valueAsDate = new Date();
@@ -159,97 +161,97 @@ $(function(){
 
 
 <style type="text/css">
-   .btn-modify{
-      padding:3px 6px;
-      margin:0px;
-      font-size:13px;
-   }
-   .table-bordered>tbody>tr>td{
-      vertical-align:middle;
-   }
+	.btn-modify{
+		padding:3px 6px;
+		margin:0px;
+		font-size:13px;
+	}
+	.table-bordered>tbody>tr>td{
+		vertical-align:middle;
+	}
 </style>
 </head>
 
 
 <body class="nav-md">
-   <div class="container body">
-      <div class="main_container">
-         <div class="col-md-3 left_col">
-            <div class="left_col scroll-view">
-               <div class="navbar nav_title" style="border: 0;">
-                  <a href="mainView.do" class="site_title"><i class="fa fa-google"></i>
-                     <span>GROUP BEAN</span></a>
-               </div>
+	<div class="container body">
+		<div class="main_container">
+			<div class="col-md-3 left_col">
+				<div class="left_col scroll-view">
+					<div class="navbar nav_title" style="border: 0;">
+						<a href="mainView.do" class="site_title"><i class="fa fa-google"></i>
+							<span>GROUP BEAN</span></a>
+					</div>
 
-               <div class="clearfix"></div>
+					<div class="clearfix"></div>
 
-               <!-- sidebar menu -->
-               <%@ include file="../etc/adminsidebar.jsp"%>
-               <!-- /sidebar menu -->
+					<!-- sidebar menu -->
+					<%@ include file="../etc/adminsidebar.jsp"%>
+					<!-- /sidebar menu -->
 
-            </div>
-         </div>
+				</div>
+			</div>
 
-         <!-- top navigation -->
-         <%@ include file="../etc/topnav.jsp"%>
-         <!-- /top navigation -->
+			<!-- top navigation -->
+			<%@ include file="../etc/topnav.jsp"%>
+			<!-- /top navigation -->
 
-         <!-- page content -->
-         <div class="right_col" role="main">
-            <div class="">
-               <div class="page-title">
-                  <div class="title_left">
-                     <h3>
-                        목표관리
-                     </h3>
-                  </div>
-               </div>
-               
-               <div class="clearfix"></div>
+			<!-- page content -->
+			<div class="right_col" role="main">
+				<div class="">
+					<div class="page-title">
+						<div class="title_left">
+							<h3>
+								목표관리
+							</h3>
+						</div>
+					</div>
+					
+					<div class="clearfix"></div>
 
-               <div class="row">
-                  <div class="col-md-12 col-sm-12 col-xs-12">
-                     <div class="x_panel">
-                        <div class="x_title">
-                           <div class="control-group" style="float:right">
-                                 <div class="controls">
-                                     <select class="form-control" id="dept_no" style="width:150px;margin-right:10px;float:left">
-                                        
-                                      </select>
-                                    <input type="month" class="form-control" id="goalMonth" style="display:inline-block;width:260px">
-                                    <input type="button" class="btn btn-dark" style="display:inline-block" onclick="checkCondition();" value="확인">
-                                 </div>
-                              </div>
-                           <div class="clearfix"></div>
-                        </div>
-                        <div class="title_right">
-                           
-                        </div>
-                        <div class="x_content" id="tableArea">                           
-                           
-                           
-                        </div>
-         
-                        
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-         <%@ include file="../etc/footer.jsp"%>
-      </div>
-   </div>
+					<div class="row">
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							<div class="x_panel">
+								<div class="x_title">
+									<div class="control-group" style="float:right">
+											<div class="controls">
+												 <select class="form-control" id="dept_no" style="width:150px;margin-right:10px;float:left">
+												    
+												  </select>
+												<input type="month" class="form-control" id="goalMonth" style="display:inline-block;width:260px">
+												<input type="button" class="btn btn-dark" style="display:inline-block" onclick="searchCondition();" value="확인">
+											</div>
+										</div>
+									<div class="clearfix"></div>
+								</div>
+								<div class="title_right">
+									
+								</div>
+								<div class="x_content" id="tableArea">									
+									
+									
+								</div>
+			
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<%@ include file="../etc/footer.jsp"%>
+		</div>
+	</div>
 
-   <!-- /page content -->
+	<!-- /page content -->
 
 
-   <!-- jQuery -->
-   <script src="resources/vendors/jquery/dist/jquery.min.js"></script>
-   <!-- Bootstrap -->
-   <script src="resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-   
-   <!-- Custom Theme Scripts -->
-   <script src="resources/build/js/custom.min.js"></script>
+	<!-- jQuery -->
+	<script src="resources/vendors/jquery/dist/jquery.min.js"></script>
+	<!-- Bootstrap -->
+	<script src="resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+	
+	<!-- Custom Theme Scripts -->
+	<script src="resources/build/js/custom.min.js"></script>
 
 </body>
 </html>
