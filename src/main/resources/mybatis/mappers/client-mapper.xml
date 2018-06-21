@@ -103,7 +103,7 @@
 	<select id="pageList" parameterType="client" resultType="Client">
 		<![CDATA[
 			select * from
-				(select rownum rnum, c.client_name, c.client_company, c.client_job, c.client_email, c.client_phone, c.client_addr, c.client_delete, c.emp_no
+				(select rownum rnum, c.client_no, c.client_name, c.client_company, c.client_job, c.client_email, c.client_phone, c.client_addr, c.client_delete, c.emp_no
 				    from
 				        (select * from client
 				            order by client_no desc) c
