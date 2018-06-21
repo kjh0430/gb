@@ -1175,7 +1175,7 @@ font-weight:900;
                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">제목</label>
                                                    <div class="col-md-9 col-sm-9 col-xs-12">
                                                       <div class="input-group" style="width:100%">
-                                                         <input type="text" class="form-control"
+                                                         <input type="text" class="form-control" maxlength="33"
                                                             name="message_title" id="message_title"
                                                             placeholder="제목을 입력해주세요." required>
                                                       </div>
@@ -1185,7 +1185,7 @@ font-weight:900;
                                                       <label
                                                          class="control-label col-md-3 col-sm-3 col-xs-12">내용</label>
                                                       <div class="col-md-9 col-sm-9 col-xs-12">
-                                                         <textarea class="form-control" rows="8"
+                                                         <textarea class="form-control" rows="8" maxlength="165"
                                                             name="message_content" id="message_content" required></textarea>
                                                       </div>
                                                    </div>
@@ -1280,7 +1280,7 @@ font-weight:900;
                                                       class="control-label col-md-3 col-sm-3 col-xs-12">제목</label>
                                                    <div class="col-md-9 col-sm-9 col-xs-12">
                                                       <div class="input-group" style="width:100%">
-                                                         <input type="text" class="form-control"
+                                                         <input type="text" class="form-control" maxlength="10"
                                                             name="message_title" id="a_message_title" readonly
                                                             >
                                                       </div>
@@ -1293,7 +1293,7 @@ font-weight:900;
                                                       <label
                                                          class="control-label col-md-3 col-sm-3 col-xs-12">내용</label>
                                                       <div class="col-md-9 col-sm-9 col-xs-12">
-                                                         <textarea class="form-control" rows="8"
+                                                         <textarea class="form-control" rows="8" maxlength="165"
                                                             id="a_message_content" readonly></textarea>
                                                       </div>
                                                    </div>
@@ -1345,7 +1345,7 @@ font-weight:900;
                                                       class="control-label col-md-3 col-sm-3 col-xs-12">제목</label>
                                                    <div class="col-md-9 col-sm-9 col-xs-12">
                                                       <div class="input-group" style="width:100%">
-                                                         <input type="text" class="form-control" 
+                                                         <input type="text" class="form-control" maxlength="10"
                                                              id="answer_title"
                                                             placeholder="제목을 입력해주세요." required>
                                                           
@@ -1359,7 +1359,7 @@ font-weight:900;
                                                       <label
                                                          class="control-label col-md-3 col-sm-3 col-xs-12">내용</label>
                                                       <div class="col-md-9 col-sm-9 col-xs-12">
-                                                         <textarea class="form-control" rows="8"
+                                                         <textarea class="form-control" rows="8" maxlength="165"
                                                              id="answer_content" required></textarea>
                                                       </div>
                                                    </div>

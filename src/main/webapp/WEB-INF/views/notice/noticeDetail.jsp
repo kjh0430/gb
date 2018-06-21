@@ -83,7 +83,21 @@ $(document).ready(function() {
 					<div class="clearfix"></div>
 
 					<!-- sidebar menu -->
-					 <%@ include file="../etc/adminsidebar.jsp" %>
+					 <c:choose>
+			            	<c:when test="${loginEmp.emp_no==3}">
+					            <!-- sidebar menu -->
+					            <%@ include file="../etc/adminsidebar.jsp" %>
+					            <!-- /sidebar menu -->
+			            	</c:when>
+			            	
+			            	<c:otherwise>
+								<!-- sidebar menu -->
+					            <%@ include file="../etc/sidebar.jsp" %>
+					            <!-- /sidebar menu --> 
+			            	</c:otherwise>
+			            </c:choose> 
+					 
+					 
 					<!-- /sidebar menu -->
 
 				</div>

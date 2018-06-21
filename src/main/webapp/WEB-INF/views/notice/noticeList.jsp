@@ -66,9 +66,21 @@ function list(page){
 					<div class="clearfix"></div>
 
 					<!-- sidebar menu -->
-					 <%@ include file="../etc/adminsidebar.jsp" %>
-					<!-- /sidebar menu -->
-
+						 <c:choose>
+			            	<c:when test="${loginEmp.emp_no==3}">
+					            <!-- sidebar menu -->
+					            <%@ include file="../etc/adminsidebar.jsp" %>
+					            <!-- /sidebar menu -->
+			            	</c:when>
+			            	
+			            	<c:otherwise>
+								<!-- sidebar menu -->
+					            <%@ include file="../etc/sidebar.jsp" %>
+					            <!-- /sidebar menu --> 
+			            	</c:otherwise>
+			            </c:choose>
+					 
+				
 				</div>
 			</div>
 
@@ -93,9 +105,11 @@ function list(page){
 					<div class="row">
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
-								<div class="x_content table-responsive">	
+								<div class="x_content table-responsive">
+								
+								 <c:if test="${loginEmp.emp_no==3}">		
 									<button type="button" class="btn btn-default btn-sm" style="float:right;"><a href="noticeWrite.do">글쓰기</a></button>
-										
+										</c:if> 
 									<!-- <table id="table_notice" class="table table-striped table-responsive table-bordered" style="min-width:600px;"> -->
 									<table id="table_notice" class="table table-striped jambo_table bulk_action" style="min-width:600px;">
 									
