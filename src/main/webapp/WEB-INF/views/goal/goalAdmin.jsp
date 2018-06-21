@@ -174,7 +174,7 @@ $(function(){
          type:"post",
          dataType:"json",
          data :{dept_no:dept_no,date:date,emp_no:emp_no},
-         success:function(data){
+        success:function(data){
             
             if(data.goal_date!="N"){
                   $('[name=goal]').eq(i).attr("readonly",true);

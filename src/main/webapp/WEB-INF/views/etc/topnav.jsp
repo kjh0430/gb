@@ -15,7 +15,7 @@
  }
 </style>
 <script src="resources/js/EventSource.js"></script>
-<script src="resources/js/PushNotify.js?ver=2"></script>
+<script src="resources/js/PushNotify.js?ver=1"></script>
 </head>
 
 <body>
