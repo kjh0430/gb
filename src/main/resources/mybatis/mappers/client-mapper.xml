@@ -103,14 +103,14 @@
 	<select id="pageList" parameterType="client" resultType="Client">
 		<![CDATA[
 			select * from
-				(select rownum rnum, c.client_no, c.client_name, c.client_company, c.client_job, c.client_email, c.client_phone, c.client_addr, c.client_delete, c.emp_no
-				    from
-				        (select * from client
-				            order by client_no desc) c
-				    where client_name like '%'||#{client_name}||'%' or client_company like '%'||#{client_name}||'%')
-				where rnum >= #{startRow} and rnum <= #{endRow}
-				and client_delete <> 'Y'
-				and emp_no = #{emp_no}	
+			    (select rownum rnum, c.client_no, c.client_name, c.client_company, c.client_job, c.client_email, c.client_phone, c.client_addr, c.client_delete, c.emp_no
+			        from
+			            (select * from client
+			                where (client_name like '%'||#{client_name}||'%' and emp_no = #{emp_no}) 
+			                	or (client_company like '%'||#{client_name}||'%' and emp_no = #{emp_no})
+			                order by client_no desc) c)
+			where rnum >= #{startRow} and rnum <= #{endRow}
+			and client_delete <> 'Y'	
 		]]>
 	</select>
 	
@@ -139,10 +139,11 @@
 				        (select * from client
 				        	where client_contract <> 'Y'
 				            order by client_no desc) cl
-				    where client_name like '%'||#{client_name}||'%' or client_company like '%'||#{client_name}||'%')
+				    where (client_name like '%'||#{client_name}||'%' and emp_no = #{emp_no}) 
+				    	or (client_company like '%'||#{client_name}||'%' and emp_no = #{emp_no}))
 				where rnum >= #{startRow} and rnum <= #{endRow}
 				and client_delete <> 'Y'
-				and emp_no = #{emp_no}
+				
 		]]>
 	</select>
 	

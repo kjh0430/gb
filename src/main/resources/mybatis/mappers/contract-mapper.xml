@@ -101,7 +101,7 @@
 		            order by contract_date_start desc) list
 		            where rownum >= 1)
 			where rnum >= #{startRow} and rnum <= #{endRow}
-			and client_delete <> 'Y'
+			
 		]]>
 	</select>
 	

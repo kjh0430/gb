@@ -84,7 +84,7 @@ $(function(){
 						list += 
 							"<tr>"+
 								"<td>"+"<a href="+"contractDetail.do?client_no="+json.list[i].client_no+">"+decodeURIComponent(json.list[i].client_name)+"</a>"+"</td>"+
-								"<td>"+decodeURIComponent(json.list[i].client_company)+"</td>"+
+								"<td>"+decodeURIComponent(json.list[i].client_company.replace(/\+/g, " "))+"</td>"+
 								"<td>"+json.list[i].client_phone+"</td>"+
 								"<td>"+json.list[i].contract_discount+"</td>"+
 								"<td>"+json.list[i].contract_money+"</td>"+
@@ -124,8 +124,8 @@ $(function(){
 					for(var i in json.list) {
 						list += 
 							"<tr>"+
-								"<td>"+"<a href="+"contractDetail.do?client_no="+json.list[i].client_no+">"+decodeURIComponent(json.list[i].client_name)+"</a>"+"</td>"+
-								"<td>"+decodeURIComponent(json.list[i].client_company)+"</td>"+
+								"<td>"+"<a href="+"contractDetail.do?client_no="+json.list[i].client_no+">"+decodeURIComponent(json.list[i].client_name)+"</a></td>"+
+								"<td>"+decodeURIComponent(json.list[i].client_company.replace(/\+/g, " "))+"</td>"+
 								"<td>"+json.list[i].client_phone+"</td>"+
 								"<td>"+json.list[i].contract_discount+"</td>"+
 								"<td>"+json.list[i].contract_money+"</td>"+

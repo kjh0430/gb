@@ -39,7 +39,7 @@ $(document).ready(function() {
 		//거래처 삭제하기
 		$('#deleteClient').on('click', function(){
 			if(confirm("해당 거래처를 삭제하시겠습니까?")==true) {
-				location.href="deleteClient.do?client_no="+""+${ detailClient.client_no }+"";
+				location.href="deleteClient.do?client_no="+${ detailClient.client_no }+"&emp_no="+${ loginEmp.emp_no }+"";
 			}else{
 				return false;
 			}

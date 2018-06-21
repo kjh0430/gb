@@ -27,13 +27,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.crm.gb.client.model.service.ClientService;
 import com.crm.gb.client.model.vo.Client;
 import com.crm.gb.client.model.vo.ClientFile;
 import com.crm.gb.dailywork.model.service.DailyworkService;
 import com.crm.gb.dailywork.model.vo.Dailywork;
-import com.crm.gb.emp.model.vo.Emp;
 
 /**
  * Handles requests for the application home page.
@@ -78,8 +78,8 @@ public class ClientController {
 	
 	/** 신규고객 등록 메소드 */
 	@RequestMapping(value="insertClient.do", method=RequestMethod.POST)
-	public String insertClient(Client client, ClientFile clientFile, Model model, HttpServletRequest request,
-			MultipartHttpServletRequest mtfRequest,
+	public ModelAndView insertClient(Client client, ClientFile clientFile, Model model, HttpServletRequest request,
+			MultipartHttpServletRequest mtfRequest, ModelAndView mv,
 			@RequestParam(value="startPage", defaultValue="1") int startPage,
 			@RequestParam(value="emp_no") int emp_no,
 			@RequestParam(value="client_name", defaultValue="") String client_name,
@@ -150,39 +150,12 @@ public class ClientController {
 				}
 				
 			}//if close
+				
 				client.setEmp_no(emp_no);
 				
-				ArrayList<Client> ppList = clientService.selectAllClient(client);
-				
-				client.setClient_name(client_name);
-				
-				client.setShowPage(10); //보여줄 페이지 수
-				client.setTotalRow(ppList.size());	// 총 회원 수
-				client.setStart(startPage);	// 시작페이지
-				
-				int showPage = client.getShowPage();
-				int totalRow = client.getTotalRow();
-				int start = (client.getStart() - 1)*showPage+1;
-				int end = start+9;
-				int currentPage = 1;
-
-				client.setStartRow(start);	// 시작 열
-				client.setEndRow(end);	// 끝 열
-				
-				if(totalRow%showPage != 0) {	// 끝페이지
-					client.setEnd((totalRow/showPage)+1);
-				}else {
-					client.setEnd(totalRow/showPage);
-				}
-				
-				ArrayList<Client> pList = clientService.selectAllClient(client);
-				
-				model.addAttribute("pageList", pList);
-				model.addAttribute("start", currentPage);
-				model.addAttribute("end", client.getEnd());
-		
-				
-		return "client/clientList";
+				mv.setView(new RedirectView("/clientList.do",true));
+				mv.addObject("emp_no", client.getEmp_no());
+			    return mv;
 	}
 	
 	
@@ -376,17 +349,19 @@ public class ClientController {
 	
 	/** 고객정보 삭제 메소드 */
 	@RequestMapping("deleteClient.do")
-	public String deleteClient(@RequestParam(value="client_no") String client_num,
-				Client client, Model model) {
+	public ModelAndView deleteClient(@RequestParam(value="client_no") String client_num,
+			@RequestParam(value="emp_no") int emp_no,
+				Client client, ModelAndView mv) {
 		logger.info("고객정보 삭제 메소드 실행됨");
 		int client_no=Integer.parseInt(client_num);
 		int result=clientService.updateDelClient(client_no);
 			System.out.println("삭제결과 실행: "+result);
 			
-		ArrayList<Client> clientList=clientService.selectAllClient();
-		model.addAttribute("clientList", clientList);	
+			client.setEmp_no(emp_no);
 			
-		return "client/clientList";
+		mv.setView(new RedirectView("/clientList.do",true));
+		mv.addObject("emp_no", client.getEmp_no());
+	    return mv;
 	}
 	
 	/** 고객정보 수정페이지 이동 */
