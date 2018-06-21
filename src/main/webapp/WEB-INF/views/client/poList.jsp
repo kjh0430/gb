@@ -72,7 +72,7 @@ $(document).ready(function() {
 							for(var i in json.searchList) {
 								clientList += 
 									"<tr>"+
-										"<td>"+"<a href="+"detailClient.do?client_no="+json.searchList[i].client_no+">"+decodeURIComponent(json.searchList[i].client_name.replace(/\+/g, " "))+"</a>"+"</td>"+
+										"<td>"+"<a href="+"detailClient.do?client_no="+json.searchList[i].client_no+">"+decodeURIComponent(json.searchList[i].client_name)+"</a>"+"</td>"+
 										"<td>"+decodeURIComponent(json.searchList[i].client_company.replace(/\+/g, " "))+"</td>"+
 										"<td>"+decodeURIComponent(json.searchList[i].client_job)+"</td>"+
 										"<td>"+json.searchList[i].client_email+"</td>"+
@@ -112,7 +112,7 @@ $(document).ready(function() {
 						clientList += 
 							"<tr>"+
 								"<td>"+"<a href="+"detailClient.do?client_no="+json.searchList[i].client_no+">"+decodeURIComponent(json.searchList[i].client_name)+"</a>"+"</td>"+
-								"<td>"+decodeURIComponent(json.searchList[i].client_company)+"</td>"+
+								"<td>"+decodeURIComponent(json.searchList[i].client_company.replace(/\+/g, " "))+"</td>"+
 								"<td>"+decodeURIComponent(json.searchList[i].client_job)+"</td>"+
 								"<td>"+json.searchList[i].client_email+"</td>"+
 								"<td>"+json.searchList[i].client_phone+"</td>"+
