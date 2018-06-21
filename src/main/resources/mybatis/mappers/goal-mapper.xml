@@ -66,4 +66,10 @@
    ]]>
    
    </select>
+   
+   <insert id="insertGoal" parameterType="goal" flushCache="true">
+   <![CDATA[
+   insert into goal values((select max(goal_no)+1 from goal),#{emp_no},#{goal_money},to_date(#{goal_date},'yyyy-mm'))
+   ]]>
+   </insert>
 </mapper>

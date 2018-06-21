@@ -134,10 +134,9 @@ $(function(){
        $.ajax({
          url:"insertGoal.do",
          type:"post",
-         dataType:"json",
          data:{emp_no:emp_no,goal_date:date,goal_money:goal_money},
-         success:function(data){
-            alert(data);
+         success:function(){
+            alert("ㅎㅇ");
             getList();
          },error:function(request,status,errorData){
             console.log("error data : " +request.status+"\n"
