@@ -85,26 +85,48 @@
 		]]>	
 	</select>
 	
+	<!-- 등록고객 전체리스트 -->
+	<select id="selectCList" parameterType="client" resultType="Client">
+		<![CDATA[
+			select * from client
+				where (emp_no = #{emp_no}
+				and client_name like '%'||#{client_name}||'%'
+				and client_delete <> 'Y')
+			or 
+				(emp_no = #{emp_no}
+				and client_company like '%'||#{client_name}||'%'
+				and client_delete <> 'Y')
+		]]>	
+	</select>
+	
 	<!-- 고객리스트 페이지처리 -->
 	<select id="pageList" parameterType="client" resultType="Client">
 		<![CDATA[
 			select * from
-				(select rownum rnum, cl.*
+				(select rownum rnum, c.client_name, c.client_company, c.client_job, c.client_email, c.client_phone, c.client_addr, c.client_delete, c.emp_no
 				    from
 				        (select * from client
-				            order by client_no desc) cl
+				            order by client_no desc) c
 				    where client_name like '%'||#{client_name}||'%' or client_company like '%'||#{client_name}||'%')
 				where rnum >= #{startRow} and rnum <= #{endRow}
-				and client_delete <> 'Y'	
+				and client_delete <> 'Y'
+				and emp_no = #{emp_no}	
 		]]>
 	</select>
 	
 	<!-- 등록된 잠재고객 리스트 mapping -->
-	<select id="selectPoList" resultMap="resultSelectAllClient">
+	<select id="selectPoList" parameterType="client" resultType="Client">
 		<![CDATA[
 			select * from client
-			where client_contract = 'N'
-			and client_delete <> 'Y'
+				where (emp_no = #{emp_no}
+				and client_name like '%'||#{client_name}||'%'
+				and client_delete <> 'Y'
+				and client_contract <> 'Y')
+			or 
+				(emp_no = #{emp_no}
+				and client_company like '%'||#{client_name}||'%'
+				and client_delete <> 'Y'
+				and client_contract <> 'Y')
 		]]>
 	</select>
 	
@@ -120,6 +142,7 @@
 				    where client_name like '%'||#{client_name}||'%' or client_company like '%'||#{client_name}||'%')
 				where rnum >= #{startRow} and rnum <= #{endRow}
 				and client_delete <> 'Y'
+				and emp_no = #{emp_no}
 		]]>
 	</select>
 	

@@ -9,9 +9,10 @@ import com.crm.gb.order.model.vo.Order;
 public interface ClientService {
 	
 	public abstract ArrayList<Client> selectAllClient(); 	// 모든 고객정보조회
+	public abstract ArrayList<Client> selectPageClient(Client client);
 	public abstract ArrayList<Client> selectAllClient(Client client);	//등록고객 페이징 처리 조회용
 	public abstract ArrayList<Client> selectPoClient(Client client);	//잠재고객 페이징 처리 조회용
-	public abstract ArrayList<Client> selectPoList();	// 잠재고객 정보조회
+	public abstract ArrayList<Client> selectPoList(Client client);	// 잠재고객 정보조회
 	public abstract ArrayList<Client> selectClientList(String client_name);	// 거래처 이름으로 검색
 	public abstract ArrayList<Client> selectPoList(String client_name);	// 잠재고객 이름으로 검색
 	public abstract Client selectClient(Client client);	// 고객정보 조회

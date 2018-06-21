@@ -32,8 +32,8 @@ public class ClientDao {
 	}
 
 	/** 등록된 잠재고객 정보확인 메소드 Dao */
-	public ArrayList<Client> selectPoList() {
-		return (ArrayList)sqlSession.selectList("selectPoList");
+	public ArrayList<Client> selectPoList(Client client) {
+		return (ArrayList)sqlSession.selectList("selectPoList", client);
 	}
 	
 	/** 거래중이 거래처 정보 확인 메소드 Dao **/
@@ -156,6 +156,10 @@ public class ClientDao {
 	public Client selectClientPhone(Client client) {
 	
 		return sqlSession.selectOne("selectClientPhone",client);
+	}
+
+	public ArrayList<Client> selectAllClient2(Client client) {
+		return (ArrayList)sqlSession.selectList("selectCList", client);
 	}
 
 	
