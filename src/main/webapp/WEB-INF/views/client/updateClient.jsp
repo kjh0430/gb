@@ -253,7 +253,7 @@
 													value="${ detailClient.client_contract }" readonly>
 											</div>
 										</div>
-										<div class="form-group">
+										<%-- <div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">
 												비고
 											</label>
@@ -263,7 +263,7 @@
 													required="required" type="text" 
 													value="${ detailClient.client_comment }" >
 											</div>
-										</div>
+										</div> --%>
 										
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">
