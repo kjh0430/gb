@@ -92,7 +92,8 @@ text-align:center;
 								<div class="x_content">									
 									
 					<!-- 급여 등록 -->
-					<form class="form-horizontal form-label-left">
+					<form class="form-horizontal form-label-left" method="post" action="insertSalary.do">
+					 <input type="hidden" value="${ emp.emp_no }" name="emp_no"> 
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">이름</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">

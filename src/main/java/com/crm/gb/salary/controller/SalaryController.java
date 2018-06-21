@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.crm.gb.emp.model.service.EmpService;
 import com.crm.gb.emp.model.vo.Emp;
@@ -64,7 +66,7 @@ public class SalaryController {
 			}
 		
 			ArrayList<Salary> list = salaryService.selectSalaryPageList(salary);
-			
+			System.out.println(list);
 				
 		model.addAttribute("salaryPageList", list);
 		model.addAttribute("start", currentPage);
@@ -171,5 +173,16 @@ public class SalaryController {
 		
 		return "emp/addSalary";
 	}
+	
+	@RequestMapping("insertSalary.do")
+	public ModelAndView insertSalary(Salary salary,ModelAndView mv) {
+		int result = salaryService.insertSalary(salary);
+		
+       mv.setView(new RedirectView("/empSalary.do",true));
+		
+		return mv;
+	}
+	
+	
 	
 }
