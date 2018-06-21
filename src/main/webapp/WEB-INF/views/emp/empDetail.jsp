@@ -289,8 +289,7 @@ function empDe(){
 						</div>
 		
 	
-	</div>
-	</div>
+			            <%@ include file="../etc/footer.jsp" %>
 	<!-- /page content -->
 
 	

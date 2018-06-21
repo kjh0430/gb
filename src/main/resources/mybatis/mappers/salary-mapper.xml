@@ -81,4 +81,10 @@
 		]]>
 	</select>
 	
+	<insert id="insertSalary" parameterType="salary">
+		<![CDATA[
+			insert into salary values((select max(salary_no)+1 from salary),#{emp_no},#{sal},#{sal_bonus},sysdate)
+		]]>		
+	</insert>
+	
 </mapper>

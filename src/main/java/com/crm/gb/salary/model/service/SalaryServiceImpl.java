@@ -44,4 +44,9 @@ public class SalaryServiceImpl implements SalaryService{
 	public ArrayList<Salary> selectSearchList(String emp_name) {
 		return salaryDao.selectSearchList(emp_name);
 	}
+
+	@Override
+	public int insertSalary(Salary salary) {
+		return salaryDao.insertSalary(salary);
+	}
 }

@@ -39,6 +39,10 @@ public class SalaryDao {
 	public ArrayList<Salary> selectSearchList(String emp_name) {
 		return (ArrayList)sqlSession.selectList("salary.selectSearchName", emp_name);
 	}
+
+	public int insertSalary(Salary salary) {
+		return sqlSession.insert("salary.insertSalary",salary);
+	}
 	
 	
 }
