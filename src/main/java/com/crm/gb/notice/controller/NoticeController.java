@@ -388,10 +388,7 @@ public class NoticeController {
 		jsonobject.put("notice_no",notice.getNotice_no());
 		jsonobject.put("notice_title",notice.getNotice_title());
 		jsonobject.put("notice_date",notice.getNotice_date().toString());
-		
-		System.out.println("notice_no"+notice.getNotice_no());
-		System.out.println("notice_title"+notice.getNotice_title());
-		System.out.println("notice_date"+notice.getNotice_date().toString());
+	
 		
 		jarr.add(jsonobject);
 		
