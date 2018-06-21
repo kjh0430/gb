@@ -752,7 +752,8 @@ $(function(){
 				
        			$('#orderState').html(str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'));
        			$('#orderAvg').html(str2.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'));
-       			$('#goalState').html(goal_state);
+       			$('#goalState').html(goal_state+" %");
+       			
        			
        		}
 		});

@@ -68,6 +68,7 @@
 	        <mapping path="/approvalListAdmin.do" />
 	        <mapping path="/empList.do" />
 	        <mapping path="/empSalary.do" />
+	        <mapping path="/goalAdmin.do" />
 	        <beans:bean class="com.crm.gb.common.AdminCheck"></beans:bean>            
 	    </interceptor>        
 	</interceptors>

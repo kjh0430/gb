@@ -52,6 +52,11 @@ public class GoalServiceImpl implements GoalService{
       return goalDao.insertGoal(goal);
    }
 
+	@Override
+	public int updateGoal(Goal goal) {
+		return goalDao.updateGoal(goal);
+	}
+
 
 
 }

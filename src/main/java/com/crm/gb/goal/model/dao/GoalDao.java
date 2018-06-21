@@ -44,8 +44,11 @@ public class GoalDao {
    }
 
    public int insertGoal(Goal goal) {
-      
       return sqlSession.insert("Goal.insertGoal",goal);
    }
+
+	public int updateGoal(Goal goal) {
+		 return sqlSession.update("Goal.updateGoal",goal);
+	}
 
 }

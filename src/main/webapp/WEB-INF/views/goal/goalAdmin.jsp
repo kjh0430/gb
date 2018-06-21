@@ -33,73 +33,63 @@ var string="";
 $(function(){
    document.getElementById("goalMonth").valueAsDate = new Date();
    
-   
-   
-   
-   $.ajax({
-      url:"selectDeptEmp.do",
-      type:"post",
-      dataType:"json",
-      data:{dept_no:"${loginEmp.dept_no}",job_no:"${loginEmp.job_no}",emp_no:"${loginEmp.emp_no}"},
-      success:function(obj){
-         console.log(obj);
-         var objStr =JSON.stringify(obj);
-         var result = JSON.parse(objStr);      
-         var size = Object.keys(result.list).length;
-         var arrDept = [];
-         var value_dept="";
-         if(size>0){
-            for(var i in result.list){
-               arrDept[i]=result.list[i].dept_no +" / " +result.list[i].dept_name;                     
-            }               
-            var uni_dept =[];
-            uni_dept = unique(arrDept);
-            value_dept="<select id='team'>"
-            for(var i in uni_dept){
-               if(i==0){
-                  value_dept+="<option selected>"+uni_dept[i]+"</option>"   
-                  string=uni_dept[i];
-               }else{
-                  value_dept+="<option>"+uni_dept[i]+"</option>"
-               }
-            }
-            value_dept="</select>"
-            $("#dept_no").html(value_dept);   
-            
-            getList();
-            
-            value_dept="";
-            $("#dept_no").html(value_dept);
-            value_dept="<select id='team'>"
-            for(var i in uni_dept){
-               
-               if(i==0){
-                  value_dept+="<option>"+uni_dept[i]+"</option>"   
-                  
-               }else{
-                  value_dept+="<option>"+uni_dept[i]+"</option>"
-               }
-               }
-            value_dept+="</select>"
-            
-            $("#dept_no").html(value_dept);
-            
-            
-            
-            
-         }            
-         
-      },
-      error:function(request,status,errorData){
-         console.log("error data : " +request.status+"\n"
-               +"message : "+request.responseText+"\n"
-               +"error : "+errorData);
-      }         
-      
-   });//ajax
-      
-      
-   
+	   $.ajax({
+	      url:"selectDeptEmp.do",
+	      type:"post",
+	      dataType:"json",
+	      data:{dept_no:"${loginEmp.dept_no}",job_no:"${loginEmp.job_no}",emp_no:"${loginEmp.emp_no}"},
+	      success:function(obj){
+	         //console.log(obj);
+	         var objStr =JSON.stringify(obj);
+	         var result = JSON.parse(objStr);      
+	         var size = Object.keys(result.list).length;
+	         var arrDept = [];
+	         var value_dept="";
+	         if(size>0){
+	            for(var i in result.list){
+	               arrDept[i]=result.list[i].dept_no +" / " +result.list[i].dept_name;                     
+	            }               
+	            var uni_dept =[];
+	            uni_dept = unique(arrDept);
+	            value_dept="<select id='team'>"
+	            for(var i in uni_dept){
+	               if(i==0){
+	                  value_dept+="<option selected>"+uni_dept[i]+"</option>"   
+	                  string=uni_dept[i];
+	               }else{
+	                  value_dept+="<option>"+uni_dept[i]+"</option>"
+	               }
+	            }
+	            value_dept="</select>"
+	            $("#dept_no").html(value_dept);   
+	            
+	            getList();
+	            
+	            value_dept="";
+	            $("#dept_no").html(value_dept);
+	            value_dept="<select id='team'>"
+	            for(var i in uni_dept){
+		               if(i==0){
+		                  value_dept+="<option>"+uni_dept[i]+"</option>"   
+		                  
+		               }else{
+		                  value_dept+="<option>"+uni_dept[i]+"</option>"
+		               }
+	               }
+	            value_dept+="</select>"
+	            
+	            $("#dept_no").html(value_dept);
+	            
+	         }            
+	         
+	      },
+	      error:function(request,status,errorData){
+	         console.log("error data : " +request.status+"\n"
+	               +"message : "+request.responseText+"\n"
+	               +"error : "+errorData);
+	      }         
+	      
+	   });//ajax
    });//onload   
 
    
@@ -116,7 +106,7 @@ $(function(){
       getList();
    }
    
-   function modifyInput(i,emp_no){
+   function insertGoal(i,emp_no){
       
        var date = $("#goalMonth").val();
          var year = date.substring(0,4);
@@ -126,17 +116,14 @@ $(function(){
          }
          date = year+"-"+month;
       
-      alert("emp_no"+emp_no);
       $('[name=goal]').eq(i).attr("readonly",true);
       var goal_money=$('[name=goal]').eq(i).val();
-      alert(goal_money);
-      alert(date);
        $.ajax({
          url:"insertGoal.do",
          type:"post",
          data:{emp_no:emp_no,goal_date:date,goal_money:goal_money},
-         success:function(){
-            alert("ㅎㅇ");
+         success:function(data){
+            alert(data);
             getList();
          },error:function(request,status,errorData){
             console.log("error data : " +request.status+"\n"
@@ -145,63 +132,13 @@ $(function(){
          }         
       });
    }
-   function checkGoal(emp_no){
-      
-      i=0;
-      add=1;
-      
-      
-      dept_no = string.split(' / ',1)*1;
-      console.log("string : " + string);
-      console.log("dept_no : " +dept_no);
-      
-       var date = $("#goalMonth").val();
-         var year = date.substring(0,4);
-         var month = date.substring(6,7);
-         /* if(month==0){
-            month=12;
-            year =year-1;
-         } */
-         if(month<10){
-            month = "0"+month;
-         }
-         date = year+"-"+month;
-      
-         
-         
-      $.ajax({
-         url:"checkGoal.do",
-         type:"post",
-         dataType:"json",
-         data :{dept_no:dept_no,date:date,emp_no:emp_no},
-        success:function(data){
-            
-            if(data.goal_date!="N"){
-                  $('[name=goal]').eq(i).attr("readonly",true);
-                  $('[name=modifyGoal]').eq(i).attr("disabled",true);
-                  $('[name=goal]').eq(i).val(data.goal_money);   
-            }else{
-               $('[name=goal]').eq(i).attr("readonly",false);
-               $('[name=modifyGoal]').eq(i).attr("disabled",false);
-               
-            }
-            
-            
-             i = ++add-1;
-         }
-         
-         
-      });
-      
-      
-   }
+
+  
    
    function getList(){
-      //alert($("#dept_no option:selected").val());
-      //string=$("#dept_no option:selected").val();   
+
       dept_no = string.split(' / ',1)*1;
-      console.log("string : " + string);
-      console.log("dept_no : " +dept_no);
+     
       
        var date = $("#goalMonth").val();
          var year = date.substring(0,4);
@@ -224,30 +161,32 @@ $(function(){
       success:function(data){
          var objStr =JSON.stringify(data);
          var jsonl = JSON.parse(objStr);      
-         console.log(jsonl);
+        // console.log(jsonl);
          var size = Object.keys(jsonl.list).length;
-         
          
          var value="";
       
-         value="<table id='table_goal' class='table table-striped table-responsive table-bordered' style='min-width:650px;'>"+
+         value="<table id='table_goal' class='table table-striped table-responsive table-bordered' style='min-width:550px;'>"+
          "<thead><tr><th>사원번호</th><th>사원명</th><th>전월 실적</th><th>입력</th><th>확인</th></tr></thead><tbody>"
          for(var i in jsonl.list){
-         
-         value+="<tr><td>"+jsonl.list[i].emp_no+"</td>"+
+        	
+        	 value+="<tr><td>"+jsonl.list[i].emp_no+"</td>"+
                   "<td>"+jsonl.list[i].emp_name+"</td>"+
-                   "<td>"+jsonl.list[i].sales+"</td>"+
-                   "<td><input type='number' class='"+i+"' class='form-control' name='goal' id='goal'></td>"+
-                   "<td><input type='button' class='btn-modify btn btn-info' name='modifyGoal' value='확인' onclick='modifyInput("+i+","+jsonl.list[i].emp_no+");'></td></tr>";
-                  
-                   emp_no=jsonl.list[i].emp_no;
-                   checkGoal(emp_no);
-                     
-            
-         }
-         value+="</tbody></table>";
-         
-         $('#tableArea').html(value);
+                   "<td>"+jsonl.list[i].sales+"</td>";
+                   
+            if(checkGoal(jsonl.list[i].emp_no)==0){
+            	value+="<td><input type='number' class='form-control' name='goal' id='goal_"+i+"' value='"+checkGoal(jsonl.list[i].emp_no)+"'></td>"+
+            	"<td id='td_"+i+"'><input type='button' class='btn-modify btn btn-info' name='insertGoal' value='확인' onclick='insertGoal("+i+","+jsonl.list[i].emp_no+");'></td></tr>";
+            }else{
+            	value+="<td><input type='number' class='form-control' name='goal' id='goal_"+i+"' value='"+checkGoal(jsonl.list[i].emp_no)+"' readonly></td>"+
+            	"<td id='td_"+i+"'><input type='button' class='btn-modify btn btn-warning' name='updateGoal' value='수정' onclick='modify("+i+","+jsonl.list[i].emp_no+");'></td></tr>";
+            }
+                   
+           
+	         }
+	         value+="</tbody></table>";
+	         
+	         $('#tableArea').html(value);
       }
          
       });
@@ -256,7 +195,74 @@ $(function(){
       
    }
    
-
+   function checkGoal(emp_no){
+		  var goal_money2;
+	      i=0;
+	      add=1;      
+	      dept_no = string.split(' / ',1)*1;
+	      
+	       var date = $("#goalMonth").val();
+	        var year = date.substring(0,4);
+	        var month = date.substring(6,7);
+	        /* if(month==0){
+	           month=12;
+	           year =year-1;
+	        } */
+	        if(month<10){
+	           month = "0"+month;
+	        }
+	        date = year+"-"+month;
+	      
+	      $.ajax({
+	         url:"checkGoal.do",
+	         type:"POST",
+	         dataType:"json",
+	         async:false,
+	         data :{dept_no:dept_no,date:date,emp_no:emp_no},
+	         success:function(data){
+	            //console.log("emp_no : "+emp_no +" 받아온 값 : " + data.goal_money);
+	            
+	        	 if(data.goal_date!="N"){
+	        		  goal_money2 = data.goal_money; 
+	            }else{
+	            	  goal_money2 = 0; 
+	            }
+	         }         
+	         
+	      });
+	      return goal_money2;
+	     
+	   }
+   function modify(i,emp_no){
+	   $("#goal_"+i).attr('readonly',false);
+	   $("#td_"+i).html("<input type='button' class='btn-modify btn btn-dark' value='완료' onclick='updateGoal("+i+","+emp_no+")'>");
+   }
+	
+   function updateGoal(i,emp_no){
+	      var date = $("#goalMonth").val();
+	         var year = date.substring(0,4);
+	         var month = date.substring(6,7);
+	         if(month<10){
+	            month = "0"+month;
+	         }
+	         date = year+"-"+month;
+	      
+	    
+	      var goal_money=$('#goal_'+i).val();
+	       $.ajax({
+	         url:"updateGoal.do",
+	         type:"post",
+	         data:{emp_no:emp_no,goal_date:date,goal_money:goal_money},
+	         success:function(data){
+	            alert(data);
+	            getList();
+	         },error:function(request,status,errorData){
+	            console.log("error data : " +request.status+"\n"
+	                  +"message : "+request.responseText+"\n"
+	                  +"error : "+errorData);
+	         }         
+	      });
+   }
 
 </script>
 
@@ -335,7 +341,7 @@ $(function(){
                         <div class="title_right">
                            
                         </div>
-                        <div class="x_content" id="tableArea">                           
+                        <div class="x_content" id="tableArea" style="overflow:auto">                           
                            
                            
                         </div>

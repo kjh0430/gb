@@ -71,7 +71,7 @@
 		<![CDATA[
 			insert into client values(
 				(select max(client_no)+1 from client), #{client_name}, #{client_company}, #{client_job}, #{client_email},
-				#{client_phone}, #{client_addr}, #{client_com_tel}, #{client_loc_x}, #{client_loc_y}, default, #{client_comment},
+				#{client_phone}, #{client_addr}, #{client_com_tel}, #{client_loc_x}, #{client_loc_y}, default, null,
 				#{emp_no}, sysdate, default
 			)
 		]]>
@@ -109,15 +109,15 @@
 	</select>
 	
 	<!-- 잠재고객 리스트 페이지 처리  -->
-	<select id="pagePoList" parameterType="client" resultMap="resultSelectAllClient">
+	<select id="pagePoList" parameterType="client" resultType="Client">
 		<![CDATA[
 			select * from
-	    				(select rownum rnum, cl.*
-	    					from
-	       			 			(select * from client
-	       			 				where client_contract <> 'Y'
-	        						order by client_no desc) cl
-	   						where rownum >= 1)
+				(select rownum rnum, cl.*
+				    from
+				        (select * from client
+				        	where client_contract <> 'Y'
+				            order by client_no desc) cl
+				    where client_name like '%'||#{client_name}||'%' or client_company like '%'||#{client_name}||'%')
 				where rnum >= #{startRow} and rnum <= #{endRow}
 				and client_delete <> 'Y'
 		]]>
@@ -220,8 +220,7 @@
 				client_email = #{client_email},
 				client_addr = #{client_addr},
 				client_phone = #{client_phone},
-				client_contract	= #{client_contract},
-				client_comment = #{client_comment}
+				client_contract	= #{client_contract}
 		]]>
 		
 	</update>

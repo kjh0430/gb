@@ -446,7 +446,7 @@ function checkCondition(){
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<input name="client_addr" type="text" id="search_client_addr" 
 													style="width:75%"
-													class="form-control col-md-7 col-xs-12" required>
+													class="form-control col-md-7 col-xs-12" placeholder="버튼을 클릭하여 검색하세요" readonly>
 												<button id="searchMap" type="button" class="btn btn-primary" style="margin-left:10px;float:right" data-toggle="modal" data-target="#myModal">검색</button>	
 													
 											</div>
@@ -472,14 +472,14 @@ function checkCondition(){
 											</div>
 										</div> -->
 																				
-										<div class="form-group">
+										<!-- <div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12"
 												for="client_comment">비고
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<textarea class="form-control col-md-7 col-xs-12" name="client_comment" rows="3"></textarea>
 											</div>
-										</div>
+										</div> -->
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">
 												첨부파일

@@ -182,36 +182,36 @@ function empSearch(){
 										</c:forEach>																	
 										</tbody>
 									</table>
-									<div style="text-align:center;">
+									<ul class='pagination'>
 									 <c:set var="emp_name" value="${emp_name}"/>
 									 <c:if test="${curPage>1}">
-										<a class="page-link" href="empList.do?page=1&emp_name=${emp_name}">처음</a>
+										<li class='page-item'><a class="page-link" href="empList.do?page=1&emp_name=${emp_name}">처음</a></li>
 									</c:if> 
 									
 									 <c:if test="${curPage>1}">
-										<a class="page-link" href="empList.do?page=${beginPage-1}&emp_name=${emp_name}">Pre</a>
+										<li class='page-item'><a class="page-link" href="empList.do?page=${beginPage-1}&emp_name=${emp_name}">Pre</a></li>
 									</c:if>									
 									
 									 <c:forEach var ="page" begin="${beginPage}" end="${finalPage}">
 										  <c:choose>
 											<c:when test="${page==currentPage}">												
-												 <a class="page-link" style="color:red;">${page}</a>
+												 <li class='page-item'><a class="page-link" style="color:red;">${page}</a></li>
 											</c:when>										
 										  <c:otherwise> 
-												 <a class="page-link" onclick="list('${page}','${emp_name}')">${page}</a>	
+												 <li class='page-item'><a class="page-link" onclick="list('${page}','${emp_name}')">${page}</a></li>
 										  </c:otherwise> 
 										 </c:choose> 
 									</c:forEach>  
 									
 									 <c:if test="${curPage!=totalPage}">
-										<a class="page-link" href="empList.do?page=${finalPage+1}&emp_name=${emp_name}">Next</a>
+										<li class='page-item'><a class="page-link" href="empList.do?page=${finalPage+1}&emp_name=${emp_name}">Next</a></li>
 									</c:if> 
 									
 									<c:if test="${curPage!=totalPage}">
-										<a class="page-link" href="empList.do?page=${maxPage}&emp_name=${emp_name}">맨끝</a>
+										<li class='page-item'><a class="page-link" href="empList.do?page=${maxPage}&emp_name=${emp_name}">맨끝</a></li>
 									</c:if>
 									
-								</div>
+								</ul>
 								</div>
 							</div>
 						</div>
