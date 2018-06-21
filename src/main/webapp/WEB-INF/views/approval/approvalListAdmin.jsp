@@ -56,9 +56,7 @@ function modalUp(obj){
 	var team_mgr_name=td.eq(11).text();
 	var mgr_name=td.eq(12).text();
 	 approval_no=td.eq(13).text();
-	 alert("approval_team_date"+approval_team_date);
-	 alert("approval_mgr_date"+approval_mgr_date);
-	 	
+	
 	 	
 	$('#startDate').val(approval_start_date);
 	$('#endDate').val(approval_end_date);
