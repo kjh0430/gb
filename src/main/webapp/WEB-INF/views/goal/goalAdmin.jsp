@@ -33,16 +33,13 @@ var string="";
 $(function(){
    document.getElementById("goalMonth").valueAsDate = new Date();
    
-   
-   
-   
    $.ajax({
       url:"selectDeptEmp.do",
       type:"post",
       dataType:"json",
       data:{dept_no:"${loginEmp.dept_no}",job_no:"${loginEmp.job_no}",emp_no:"${loginEmp.emp_no}"},
       success:function(obj){
-         console.log(obj);
+         //console.log(obj);
          var objStr =JSON.stringify(obj);
          var result = JSON.parse(objStr);      
          var size = Object.keys(result.list).length;
@@ -116,7 +113,7 @@ $(function(){
       getList();
    }
    
-   function modifyInput(i,emp_no){
+   function insertGoal(i,emp_no){
       
        var date = $("#goalMonth").val();
          var year = date.substring(0,4);
@@ -126,17 +123,14 @@ $(function(){
          }
          date = year+"-"+month;
       
-      alert("emp_no"+emp_no);
       $('[name=goal]').eq(i).attr("readonly",true);
       var goal_money=$('[name=goal]').eq(i).val();
-      alert(goal_money);
-      alert(date);
        $.ajax({
          url:"insertGoal.do",
          type:"post",
          data:{emp_no:emp_no,goal_date:date,goal_money:goal_money},
-         success:function(){
-            alert("ㅎㅇ");
+         success:function(data){
+            alert(data);
             getList();
          },error:function(request,status,errorData){
             console.log("error data : " +request.status+"\n"
@@ -150,10 +144,7 @@ $(function(){
       i=0;
       add=1;
       
-      
       dept_no = string.split(' / ',1)*1;
-      console.log("string : " + string);
-      console.log("dept_no : " +dept_no);
       
        var date = $("#goalMonth").val();
          var year = date.substring(0,4);
@@ -171,7 +162,7 @@ $(function(){
          
       $.ajax({
          url:"checkGoal.do",
-         type:"post",
+         type:"POST",
          dataType:"json",
          data :{dept_no:dept_no,date:date,emp_no:emp_no},
          success:function(data){
@@ -197,11 +188,9 @@ $(function(){
    }
    
    function getList(){
-      //alert($("#dept_no option:selected").val());
-      //string=$("#dept_no option:selected").val();   
+
       dept_no = string.split(' / ',1)*1;
-      console.log("string : " + string);
-      console.log("dept_no : " +dept_no);
+     
       
        var date = $("#goalMonth").val();
          var year = date.substring(0,4);
@@ -224,9 +213,8 @@ $(function(){
       success:function(data){
          var objStr =JSON.stringify(data);
          var jsonl = JSON.parse(objStr);      
-         console.log(jsonl);
+        // console.log(jsonl);
          var size = Object.keys(jsonl.list).length;
-         
          
          var value="";
       
@@ -237,17 +225,15 @@ $(function(){
          value+="<tr><td>"+jsonl.list[i].emp_no+"</td>"+
                   "<td>"+jsonl.list[i].emp_name+"</td>"+
                    "<td>"+jsonl.list[i].sales+"</td>"+
-                   "<td><input type='number' class='"+i+"' class='form-control' name='goal' id='goal'></td>"+
-                   "<td><input type='button' class='btn-modify btn btn-info' name='modifyGoal' value='확인' onclick='modifyInput("+i+","+jsonl.list[i].emp_no+");'></td></tr>";
+                   "<td><input type='number' class='form-control "+i+"' name='goal' id='goal'></td>"+
+                   "<td><input type='button' class='btn-modify btn btn-info' name='modifyGoal' value='확인' onclick='insertGoal("+i+","+jsonl.list[i].emp_no+");'></td></tr>";
                   
                    emp_no=jsonl.list[i].emp_no;
                    checkGoal(emp_no);
-                     
-            
-         }
-         value+="</tbody></table>";
-         
-         $('#tableArea').html(value);
+	         }
+	         value+="</tbody></table>";
+	         
+	         $('#tableArea').html(value);
       }
          
       });

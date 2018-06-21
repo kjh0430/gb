@@ -227,13 +227,12 @@ public class GoalController {
       @RequestMapping(value="insertGoal.do", method=RequestMethod.POST)
       @ResponseBody
       public void insertGoal(Goal goal,HttpServletResponse  response) throws IOException {
-      System.out.println("sevvssvjhgdvjdjvgdv"+goal.getGoal_date());
       int insertGoal=goalService.insertGoal(goal);
       
-      response.setContentType("application/json; charset=utf-8");   
+      response.setContentType("text/html;charset=utf-8");
       PrintWriter out=response.getWriter();
       
-      out.println("");
+      out.println("입력이 완료되었습니다.");
       out.flush();
       out.close();
       }
