@@ -30,12 +30,13 @@
 		<![CDATA[
 			select *
 			from client cl, contract co
-			where cl.client_no = co.client_no
-			and client_sign <> 'N'
-			and emp_sign <> 'N'
-			and cl.emp_no = #{emp_no}
-			and co.emp_no = #{emp_no}
-			and client_delete = 'N'
+				where cl.client_no = co.client_no
+				and client_sign <> 'N'
+				and emp_sign <> 'N'
+				and cl.emp_no = #{emp_no}
+				and co.emp_no = #{emp_no}
+				and client_delete = 'N'
+	       
 			order by contract_date_start desc
 		]]>
 	</select>
@@ -43,31 +44,34 @@
 	<!-- 페이지처리 계약고객 리스트  -->
 	<select id="contractPageList" parameterType="contract" resultMap="resultContractList">
 		<![CDATA[
-			select * from
-		        (select rownum rnum, list.contract_money, list.client_name, list.client_company, list.client_phone,
-			                list.contract_discount, list.contract_date_start, list.contract_date_end, list.client_delete,
-			                list.client_no
-		            from
-		                (select co.contract_money, cl.client_name, cl.client_company, cl.client_phone,
+			select co.contract_money, cl.client_name, cl.client_company, cl.client_phone,
 			                co.contract_discount, co.contract_date_start, co.contract_date_end, cl.client_delete,
 			                cl.client_no
 		            from client cl, contract co
-		            where cl.client_no = co.client_no
+		            where (cl.client_no = co.client_no
 		            and client_sign <> 'N'
 		            and emp_sign <> 'N'
 		            and cl.emp_no = #{emp_no}
 		            and co.emp_no = #{emp_no}
 		            and client_delete = 'N'
-		            order by contract_date_start desc) list
-		            where rownum >= 1)
-			where rnum >= #{startRow} and rnum <= #{endRow}
-			and client_delete <> 'Y'      
+                    and client_delete <> 'Y'
+                    and client_name like '%'||#{client_name}||'%')
+                    or
+                    (cl.client_no = co.client_no
+		            and client_sign <> 'N'
+		            and emp_sign <> 'N'
+		            and cl.emp_no = 121212
+		            and co.emp_no = 121212
+		            and client_delete = 'N'
+                    and client_delete <> 'Y'
+                    and client_company like '%'||#{client_name}||'%')
+		            order by contract_date_start desc
 	
 		]]>
 	</select>
 	
 	<!-- 계약된 고객리스트 검색 -->
-	<select id="searchContractList" parameterType="contract" resultMap="resultContractList">
+	<select id="searchContractList" parameterType="ContractSearchList" resultMap="resultContractList">
 		<![CDATA[
 			select * from
 		        (select rownum rnum, list.contract_money, list.client_name, list.client_company, list.client_phone,

@@ -22,6 +22,7 @@ public class Contract implements Serializable{
 	private String business_no;
 	private String client_sign;
 	private String emp_sign;
+	private String client_name;
 	private Emp emp;
 	private Client client;
 	private int showPage;
@@ -35,7 +36,8 @@ public class Contract implements Serializable{
 
 	public Contract(int contract_no, int emp_no, int client_no, int contract_discount, int contract_money,
 			Date contract_date_start, Date contract_date_end, String business_no, String client_sign, String emp_sign,
-			Emp emp, Client client, int showPage, int totalRow, int start, int end, int startRow, int endRow) {
+			String client_name, Emp emp, Client client, int showPage, int totalRow, int start, int end, int startRow,
+			int endRow) {
 		super();
 		this.contract_no = contract_no;
 		this.emp_no = emp_no;
@@ -47,6 +49,7 @@ public class Contract implements Serializable{
 		this.business_no = business_no;
 		this.client_sign = client_sign;
 		this.emp_sign = emp_sign;
+		this.client_name = client_name;
 		this.emp = emp;
 		this.client = client;
 		this.showPage = showPage;
@@ -137,6 +140,14 @@ public class Contract implements Serializable{
 		this.emp_sign = emp_sign;
 	}
 
+	public String getClient_name() {
+		return client_name;
+	}
+
+	public void setClient_name(String client_name) {
+		this.client_name = client_name;
+	}
+
 	public Emp getEmp() {
 		return emp;
 	}
@@ -206,9 +217,10 @@ public class Contract implements Serializable{
 		return "Contract [contract_no=" + contract_no + ", emp_no=" + emp_no + ", client_no=" + client_no
 				+ ", contract_discount=" + contract_discount + ", contract_money=" + contract_money
 				+ ", contract_date_start=" + contract_date_start + ", contract_date_end=" + contract_date_end
-				+ ", business_no=" + business_no + ", client_sign=" + client_sign + ", emp_sign=" + emp_sign + ", emp="
-				+ emp + ", client=" + client + ", showPage=" + showPage + ", totalRow=" + totalRow + ", start=" + start
-				+ ", end=" + end + ", startRow=" + startRow + ", endRow=" + endRow + "]";
+				+ ", business_no=" + business_no + ", client_sign=" + client_sign + ", emp_sign=" + emp_sign
+				+ ", client_name=" + client_name + ", emp=" + emp + ", client=" + client + ", showPage=" + showPage
+				+ ", totalRow=" + totalRow + ", start=" + start + ", end=" + end + ", startRow=" + startRow
+				+ ", endRow=" + endRow + "]";
 	}
 
 	

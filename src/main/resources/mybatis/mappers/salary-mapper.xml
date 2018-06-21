@@ -57,8 +57,10 @@
 			    from (select *
 			            from emp e, dept d
 			            where e.dept_no = d.dept_no) em, salary sal
-			         where em.emp_no = sal.emp_no
-			         and emp_name like '%'||#{emp_name}||'%') ex)
+			         where (em.emp_no = sal.emp_no
+			         and emp_name like '%'||#{emp_name}||'%')
+			         or (em.emp_no = sal.emp_no
+			         and dept_name like '%'||#{emp_name}||'%')) ex)
 			where rnum >= #{startRow} and rnum <= #{endRow}
 		]]>
 						    
@@ -70,8 +72,10 @@
 	    	 from (select *
 	            from emp e, dept d
 	            where e.dept_no = d.dept_no) em, salary sal
-	         where em.emp_no = sal.emp_no
-	         and emp_name like '%'||#{emp_name}||'%'
+	         where (em.emp_no = sal.emp_no
+	        	 and emp_name like '%'||#{emp_name}||'%')
+	         or (em.emp_no = sal.emp_no
+	        	 and em.dept_name like '%'||#{emp_name}||'%')
 			
 		]]>
 	</select>

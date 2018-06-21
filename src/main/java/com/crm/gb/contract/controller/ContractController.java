@@ -55,15 +55,17 @@ public class ContractController {
 	@RequestMapping(value="searchContractList.do", method=RequestMethod.POST)
 	public void searchContractList(Contract contract, ContractSearchList contractSearch,
 			@RequestParam(value="emp_no") int emp_no,
-			@RequestParam(value="client_name") String clientName,
+			@RequestParam(value="client_name", defaultValue="") String client_name,
 			@RequestParam(value="startPage", defaultValue="1") int startPage,
-			Model model,
-			HttpServletResponse response) throws IOException{
+			HttpServletResponse response,
+			Model model) throws IOException{
 		
 		logger.info("계약리스트 검색 실행됨");
 
-		ArrayList<Contract> returnList=contractService.selectAllList(emp_no);
+		ArrayList<Contract> returnList = contractService.selectPageList(contract);
 		
+		contractSearch.setEmp_no(emp_no);
+		contractSearch.setClient_name(client_name);
 		contractSearch.setShowPage(10); //보여줄 페이지 수
 		contractSearch.setTotalRow(returnList.size());	// 총 회원 수
 		contractSearch.setStart(startPage);	// 시작페이지
@@ -83,8 +85,7 @@ public class ContractController {
 			contractSearch.setEnd(totalRow/showPage);
 		}
 		
-		contractSearch.setEmp_no(emp_no);
-		contractSearch.setClient_name(clientName);
+		System.out.println("검색된 결과수: "+returnList.size()+"maxPage:"+contractSearch.getEnd());
 		
 		ArrayList<Contract> list = contractService.selectContractList(contractSearch);
 			
@@ -104,13 +105,13 @@ public class ContractController {
 				
 				jarr.add(job);
 				
-				
 		}
-		
 		
 		response.setContentType("application/json; charset=utf-8");
 		JSONObject result = new JSONObject();
 			result.put("list", jarr);
+			result.put("maxPage", contractSearch.getEnd());
+			
 		PrintWriter out = response.getWriter();
 			out.print(result.toJSONString());
 			out.flush();
@@ -121,37 +122,41 @@ public class ContractController {
 	
 	/** 계약리스트  */
 	@RequestMapping("contractList.do")
-	public String contractList(Contract contract, Model model,
+	public String contractList(Contract contract, Model model, ContractSearchList contractSearch,
 			@RequestParam(value="emp_no") int emp_no,
+			@RequestParam(value="client_name", defaultValue="") String client_name,
 			@RequestParam(value="startPage", defaultValue="1") int startPage,
 			HttpServletResponse response) {
 		logger.info("계약리스트 메소드 실행");
-		ArrayList<Contract> returnList=contractService.selectAllList(emp_no);
 		
-		contract.setShowPage(10); //보여줄 페이지 수
-		contract.setTotalRow(returnList.size());	// 총 회원 수
-		contract.setStart(startPage);	// 시작페이지
+		ArrayList<Contract> returnList = contractService.selectAllList(emp_no);
 		
-		int showPage = contract.getShowPage();
-		int totalRow = contract.getTotalRow();
-		int start = (contract.getStart() - 1)*showPage+1;
+		contractSearch.setEmp_no(emp_no);
+		contractSearch.setClient_name(client_name);
+		contractSearch.setShowPage(10); //보여줄 페이지 수
+		contractSearch.setTotalRow(returnList.size());	// 총 회원 수
+		contractSearch.setStart(startPage);	// 시작페이지
+		
+		int showPage = contractSearch.getShowPage();
+		int totalRow = contractSearch.getTotalRow();
+		int start = (contractSearch.getStart() - 1)*showPage+1;
 		int end = start+9;
 		int currentPage = 1;
 
-		contract.setStartRow(start);	// 시작 열
-		contract.setEndRow(end);	// 끝 열
+		contractSearch.setStartRow(start);	// 시작 열
+		contractSearch.setEndRow(end);	// 끝 열
 		
 		if(totalRow%showPage != 0) {	// 끝페이지
-			contract.setEnd((totalRow/showPage)+1);
+			contractSearch.setEnd((totalRow/showPage)+1);
 		}else {
-			contract.setEnd(totalRow/showPage);
+			contractSearch.setEnd(totalRow/showPage);
 		}
 		
-		ArrayList<Contract> list = contractService.selectPageList(contract);
+		ArrayList<Contract> list = contractService.selectContractList(contractSearch);
 		
 		model.addAttribute("contractPageList", list );
 		model.addAttribute("start", currentPage);
-		model.addAttribute("end", contract.getEnd());
+		model.addAttribute("end", contractSearch.getEnd());
 		
 		return "contract/contractList";
 	}

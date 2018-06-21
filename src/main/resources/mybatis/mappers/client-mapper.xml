@@ -109,15 +109,15 @@
 	</select>
 	
 	<!-- 잠재고객 리스트 페이지 처리  -->
-	<select id="pagePoList" parameterType="client" resultMap="resultSelectAllClient">
+	<select id="pagePoList" parameterType="client" resultType="Client">
 		<![CDATA[
 			select * from
-	    				(select rownum rnum, cl.*
-	    					from
-	       			 			(select * from client
-	       			 				where client_contract <> 'Y'
-	        						order by client_no desc) cl
-	   						where rownum >= 1)
+				(select rownum rnum, cl.*
+				    from
+				        (select * from client
+				        	where client_contract <> 'Y'
+				            order by client_no desc) cl
+				    where client_name like '%'||#{client_name}||'%' or client_company like '%'||#{client_name}||'%')
 				where rnum >= #{startRow} and rnum <= #{endRow}
 				and client_delete <> 'Y'
 		]]>
