@@ -5,141 +5,65 @@
 
 <mapper namespace="Goal">
 
-	<!-- 목표관리 리스트 -->
- 	 <resultMap type="goal" id="resultSelectAllGoalState">
-		
-		<result column="emp_no" property="emp_no"/>		
-		<result column="emp_name" property="emp_name"/>		
-		<result column="job_no" property="job_no"/>		
-		<result column="dept_no" property="dept_no"/>		
-		<result column="contract_no" property="contract_no"/>	
-		<result column="contract_discount" property="contract_discount"/>	
-		<result column="contract_money" property="contract_money"/>	
-		<result column="contract_date_start" property="contract_date_start"/>	
-		<result column="goal_no" property="goal_no"/>	
-		<result column="goal_money" property="goal_money"/>	
-		<result column="goal_date" property="goal_date"/>
-		<result column="goal_list_count" property="goal_list_count"/>		
-				
-	</resultMap>
-
-
-	 <!-- 목표관리를 위한 리스트 출력 -->
-	<!-- <select id="selectAllGoalState" resultType="goal" parameterType="goal">
-		<![CDATA[
-			
-		select *from (
-          select rownum as rn,A.* from(
-          select e.emp_name,sum(c.contract_money)as contract_money,e.emp_no ,to_char(c.contract_date_start, 'yyyy-MM') as contract_date_start_goal
-                  from emp e left join contract c on e.emp_no = c.emp_no
-                group by e.emp_name,e.emp_no ,to_char(c.contract_date_start, 'yyyy-MM')
-                order by contract_date_start_goal desc
-         			 )A
-   				 )where rn between  #{startPage} and #{endPage}
-   						
-			
-		]]>	
-	</select> -->
-	
-
-	<!--목표 달별 리스트 출력 -->
-	<!-- <select id="selectAllGoalStateMonth" resultType="goal" parameterType="String">
-		<![CDATA[
-			
-		select e.emp_name,sum(c.contract_money)as contract_money,e.emp_no ,to_char(c.contract_date_start, 'yyyy-MM') as contract_date_start_goal
-			  from emp e left join contract c on e.emp_no = c.emp_no    
-			  group by e.emp_name,e.emp_no , to_char(c.contract_date_start, 'yyyy-MM')
-			  having to_char(c.contract_date_start, 'yyyy-MM') like ''||#{gdata}||'%'
-			
-		]]>	
-	</select> -->
-	<select id="selectEmp" parameterType="goal" resultType="goal">
-	<![CDATA[
-	select e.emp_name,d.dept_name,j.job_name,e.emp_email,e.emp_no from emp e,
-		dept d,job j where e.emp_name like '%'||#{emp_name}||'%'  and e.dept_no=d.dept_no and j.job_no=e.job_no 
-		and e.emp_no != #{emp_no}
-	
-	]]>
-	
-	
-	</select>
-	
-	<select id="selectEmpGoal" parameterType="goal" resultType="goal">
-	<![CDATA[
-	select goalMonth,goalmoney,sales,round(sales/goalmoney*100,2) as acheive
-	from (select rownum rnum,substr(to_char(g1.goal_date,'yyyy-mm-dd'),1,7) as goalMonth,
-	g1.goal_money as goalmoney,sum(nvl((ol1.order_amount*ol1.order_price),0)) as sales
-	from (select * from goal where emp_no=#{emp_no}) g1 left join orderlist ol1 on
-	 ol1.emp_no=g1.emp_no and 
-	substr(to_char(ol1.order_date,'yyyy-mm'),1,7)=substr(to_char(g1.goal_date,'yyyy-mm'),1,7) 
-	group by substr(to_char(g1.goal_date,'yyyy-mm-dd'),1,7), g1.goal_money,rownum) where rnum<=12 order by goalMonth asc
-	]]>
-	</select>
-	
-	<select id="selectEmpAll" resultType="goal">
-	
-		<![CDATA[
-		select goalMonth,goalmoney,sum(nvl((oll.order_amount*oll.order_price),0)) as sales,
-		round(sum(nvl((oll.order_amount*oll.order_price),0))/sum(goalmoney)*100,2) as acheive from
-		(select substr(to_char(g1.goal_date,'yyyy-mm-dd'),1,7) as goalMonth,sum(g1.goal_money) as goalmoney
-		from goal g1 group by substr(to_char(g1.goal_date,'yyyy-mm-dd'),1,7)) t1 left join orderlist oll on 
-		t1.goalMonth=substr(to_char(oll.order_date,'yyyy-mm'),1,7) group by goalMonth,goalmoney order by goalMonth asc
-		]]>
-	
-	</select>
-	
- 	<!--사원 목표 총합  -->
-	<!-- <select id="selectGoalContractMoneySum" resultType="goal" parameterType="int">
-		<![CDATA[
-			
-		select sum(contract_money) as contract_money_sum from contract where emp_no=#{emp_no}
-			
-		]]>	
-	</select>  -->
-	
-	<!--목표 관리 추가   -->
-	<!-- <insert id="insertGoal" parameterType="goal">
-		<![CDATA[
-		
-			insert into goal values(
-			(select max(goal_no)+1 from goal),
-			(select emp_no from emp where emp_no=#{emp_no}),
-			#{goal_money},to_date(#{goal_date_start},'yyyy-mm'))
-		
-		]]>	
-	</insert>  -->
-	
-<!-- 	<select id="selectCountGoal" parameterType="goal" resultType="int">
-		<![CDATA[
-		
-		select count(goal_no)as goal_count from goal where emp_no=#{emp_no} and goal_date=to_date(#{goal_date_start},'yyyy-mm')
-	
-		]]>	
-	</select>
-
-	<select id="selectListCount" parameterType="int" resultType="goal">
-		<![CDATA[
-			
-			select count(*) as goal_list_count from emp e,contract c where e.emp_no=c.emp_no
-			
-		]]>
-	
-	</select> -->
+   
+   
+   <select id="selectEmp" parameterType="goal" resultType="goal">
+   <![CDATA[
+   select e.emp_name,d.dept_name,j.job_name,e.emp_email,e.emp_no from emp e,
+      dept d,job j where e.emp_name like '%'||#{emp_name}||'%'  and e.dept_no=d.dept_no and j.job_no=e.job_no 
+      and e.emp_no != #{emp_no}
+   
+   ]]>
+   
+   
+   </select>
+   
+   <select id="selectEmpGoal" parameterType="goal" resultType="goal">
+   <![CDATA[
+   select goalMonth,goalmoney,sales,round(sales/goalmoney*100,2) as acheive
+   from (select rownum rnum,substr(to_char(g1.goal_date,'yyyy-mm-dd'),1,7) as goalMonth,
+   g1.goal_money as goalmoney,sum(nvl((ol1.order_amount*ol1.order_price),0)) as sales
+   from (select * from goal where emp_no=#{emp_no}) g1 left join orderlist ol1 on
+    ol1.emp_no=g1.emp_no and 
+   substr(to_char(ol1.order_date,'yyyy-mm'),1,7)=substr(to_char(g1.goal_date,'yyyy-mm'),1,7) 
+   group by substr(to_char(g1.goal_date,'yyyy-mm-dd'),1,7), g1.goal_money,rownum) where rnum<=12 order by goalMonth asc
+   ]]>
+   </select>
+   
+   <select id="selectEmpAll" resultType="goal">
+   
+      <![CDATA[
+      select goalMonth,goalmoney,sum(nvl((oll.order_amount*oll.order_price),0)) as sales,
+      round(sum(nvl((oll.order_amount*oll.order_price),0))/sum(goalmoney)*100,2) as acheive from
+      (select substr(to_char(g1.goal_date,'yyyy-mm-dd'),1,7) as goalMonth,sum(g1.goal_money) as goalmoney
+      from goal g1 group by substr(to_char(g1.goal_date,'yyyy-mm-dd'),1,7)) t1 left join orderlist oll on 
+      t1.goalMonth=substr(to_char(oll.order_date,'yyyy-mm'),1,7) group by goalMonth,goalmoney order by goalMonth asc
+      ]]>
+   
+   </select>
+   
+    
 
 
 
+   <select id="selectGoalList" parameterType="goal" resultType="goal">
+   <![CDATA[
+   select e.emp_no,e.emp_name,e.job_no,sum(nvl((ol.order_amount*ol.order_price),0)) as sales 
+      from emp e left join orderlist ol on e.emp_no=ol.emp_no and to_char(ol.order_date,'yyyy-MM')
+      =#{date} group by e.emp_no,e.emp_name,e.dept_no,e.job_no,e.emp_delete,e.emp_hiredate 
+      having dept_no=#{dept_no} and job_no=1 and emp_delete='N'
+      order by e.emp_hiredate asc
+   
+   ]]>
+   
+   </select>
 
-	<select id="selectGoalList" parameterType="goal" resultType="goal">
-	<![CDATA[
-	select e.emp_no,e.emp_name,sum(nvl((ol.order_amount*ol.order_price),0)) as sales 
-	from emp e left join orderlist ol on e.emp_no=ol.emp_no and to_char(ol.order_date,'yyyy-MM') 
-	= #{date} group by e.emp_no,e.emp_name,e.dept_no having dept_no=#{dept_no}
-  
-  
-	]]>
-	
-	</select>
-
-	
+   <select id="selectcheckGoal" parameterType="goal" resultType="goal">
+   <![CDATA[
+   select g.goal_date as goal_date,g.goal_money as goal_money,g.emp_no as emp_no from goal g left join emp e on g.emp_no=e.emp_no 
+   where g.emp_no=#{emp_no} and to_char(g.goal_date,'yyyy-MM')=#{date}
+   
+   ]]>
+   
+   </select>
 </mapper>
-
