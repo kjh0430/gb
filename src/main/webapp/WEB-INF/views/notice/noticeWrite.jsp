@@ -68,7 +68,20 @@ $(document).ready(function() {
 					<div class="clearfix"></div>
 
 					<!-- sidebar menu -->
-					 <%@ include file="../etc/adminsidebar.jsp" %>
+					
+					 <c:choose>
+			            	<c:when test="${loginEmp.emp_no==3}">
+					            <!-- sidebar menu -->
+					            <%@ include file="../etc/adminsidebar.jsp" %>
+					            <!-- /sidebar menu -->
+			            	</c:when>
+			            	
+			            	<c:otherwise>
+								<!-- sidebar menu -->
+					            <%@ include file="../etc/sidebar.jsp" %>
+					            <!-- /sidebar menu --> 
+			            	</c:otherwise>
+			            </c:choose>
 					<!-- /sidebar menu -->
 
 				</div>
@@ -144,7 +157,9 @@ $(document).ready(function() {
 										<div class="ln_solid"></div>
 										<div class="form-group">
 											<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+											<c:if test="${loginEmp.emp_no==3}">
 												<button type="submit" id="notice_add_1"class="btn btn-success">등록</button>
+												</c:if>
 											</div>
 											<!-- 수정화면
 											<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">

@@ -223,7 +223,7 @@ function resetContent(){
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">비고
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<textarea rows="3" class="form-control col-md-7 col-xs-12" id="approval_comment" name="approval_comment"></textarea>
+												<textarea rows="3" class="form-control col-md-7 col-xs-12" id="approval_comment" name="approval_comment" maxlength="65"></textarea>
 											</div>
 										</div>
 										<div class="ln_solid"></div>

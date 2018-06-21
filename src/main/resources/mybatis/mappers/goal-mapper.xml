@@ -11,7 +11,7 @@
    <![CDATA[
    select e.emp_name,d.dept_name,j.job_name,e.emp_email,e.emp_no from emp e,
       dept d,job j where e.emp_name like '%'||#{emp_name}||'%'  and e.dept_no=d.dept_no and j.job_no=e.job_no 
-      and e.emp_no != #{emp_no}
+      and e.emp_no != #{emp_no} and e.job_no !=2 || e.job_no !=3
    
    ]]>
    
@@ -20,13 +20,12 @@
    
    <select id="selectEmpGoal" parameterType="goal" resultType="goal">
    <![CDATA[
-   select goalMonth,goalmoney,sales,round(sales/goalmoney*100,2) as acheive
-   from (select rownum rnum,substr(to_char(g1.goal_date,'yyyy-mm-dd'),1,7) as goalMonth,
-   g1.goal_money as goalmoney,sum(nvl((ol1.order_amount*ol1.order_price),0)) as sales
-   from (select * from goal where emp_no=#{emp_no}) g1 left join orderlist ol1 on
-    ol1.emp_no=g1.emp_no and 
-   substr(to_char(ol1.order_date,'yyyy-mm'),1,7)=substr(to_char(g1.goal_date,'yyyy-mm'),1,7) 
-   group by substr(to_char(g1.goal_date,'yyyy-mm-dd'),1,7), g1.goal_money,rownum) where rnum<=12 order by goalMonth asc
+      select goalMonth,goalmoney,sales,round(sales/goalmoney*100,2) as acheive
+    from (select substr(to_char(g1.goal_date,'yyyy-mm-dd'),1,7) as goalMonth,
+    g1.goal_money as goalmoney,sum(nvl((ol1.order_amount*ol1.order_price),0)) as sales
+  from (select * from goal where emp_no=#{emp_no}) g1 left join orderlist ol1 on ol1.emp_no=g1.emp_no and 
+    substr(to_char(ol1.order_date,'yyyy-mm'),1,7)=substr(to_char(g1.goal_date,'yyyy-mm'),1,7) 
+    group by substr(to_char(g1.goal_date,'yyyy-mm-dd'),1,7), g1.goal_money) order by goalMonth asc
    ]]>
    </select>
    
@@ -34,7 +33,7 @@
    
       <![CDATA[
       select goalMonth,goalmoney,sum(nvl((oll.order_amount*oll.order_price),0)) as sales,
-      round(sum(nvl((oll.order_amount*oll.order_price),0))/sum(goalmoney)*100,2) as acheive from
+      round(sum(nvl((oll.order_amount*oll.order_price),0))/goalmoney*100,2) as acheive from
       (select substr(to_char(g1.goal_date,'yyyy-mm-dd'),1,7) as goalMonth,sum(g1.goal_money) as goalmoney
       from goal g1 group by substr(to_char(g1.goal_date,'yyyy-mm-dd'),1,7)) t1 left join orderlist oll on 
       t1.goalMonth=substr(to_char(oll.order_date,'yyyy-mm'),1,7) group by goalMonth,goalmoney order by goalMonth asc
@@ -72,10 +71,4 @@
    insert into goal values((select max(goal_no)+1 from goal),#{emp_no},#{goal_money},to_date(#{goal_date},'yyyy-mm'))
    ]]>
    </insert>
-   
-   <update id="updateGoal" parameterType="goal" flushCache="true">
-	   <![CDATA[
-	   update goal set goal_money = #{goal_money} where emp_no = #{emp_no} and to_char(goal_date,'yyyy-MM') = #{goal_date}
-	   ]]>
-   </update>
 </mapper>

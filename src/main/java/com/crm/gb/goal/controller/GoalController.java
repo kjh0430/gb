@@ -188,8 +188,7 @@ public class GoalController {
    
 
 	      JSONObject send=new JSONObject();
-	      System.out.println("selectcheckGoal"+selectcheckGoal);
-	      System.out.println("fvxvxvx");
+	     
 	      try {
 	         
 	         if(selectcheckGoal.getGoal_date()!=null) {
