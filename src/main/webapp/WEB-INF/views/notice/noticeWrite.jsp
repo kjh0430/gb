@@ -144,7 +144,9 @@ $(document).ready(function() {
 										<div class="ln_solid"></div>
 										<div class="form-group">
 											<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+											<c:if test="${loginEmp.emp_no==3}">
 												<button type="submit" id="notice_add_1"class="btn btn-success">등록</button>
+												</c:if>
 											</div>
 											<!-- 수정화면
 											<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
