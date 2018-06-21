@@ -218,7 +218,7 @@
 	<!-- daum map script -->
 	
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9847a2e4326a2ca39c99b754b2d4e80c&libraries=services"></script>		
-	<script type="text/javascript" src="resources/js/map.js?ver=9"></script>
+	<script type="text/javascript" src="resources/js/map.js?ver=1"></script>
 	<script type="text/javascript">
 		function selectDailyreport(){	
 			var date = $("#daily_date").val();

@@ -175,7 +175,7 @@
 	</update>
 	
 	<!-- 사원목록 갯수 -->
-	<select id="selectListCount" parameterType="int" resultType="emp">
+	<select id="selectEmpListCount" parameterType="int" resultType="emp">
 	<![CDATA[
 	select count(*) as listCount from emp where emp_delete='N'
 	]]>
@@ -198,7 +198,14 @@
 	<!-- 사원목록 검색 -->
 	<select id="empSearch" resultMap="resultEmpList" parameterType="emp">
 	<![CDATA[
-	select * from(select rownum rnum, A.* from(select * from emp where emp_name like '%'||#{emp_name}||'%' and emp_delete='N' order by emp_no desc) A ) where rnum between 1 and 10
+	select * from(select rownum rnum, A.* from(select * from emp where emp_name like '%'||#{emp_name}||'%' and emp_delete='N' order by emp_no desc) A ) where rnum between #{startPage} and #{endPage}
+	]]>
+	</select>
+	
+	<!-- 사원목록 갯수 -->
+	<select id="selectSearchCount" parameterType="emp" resultType="emp">
+	<![CDATA[
+	select count(*) as listCount from emp where emp_name like '%'||#{emp_name}||'%' and emp_delete='N'
 	]]>
 	</select>
 </mapper>

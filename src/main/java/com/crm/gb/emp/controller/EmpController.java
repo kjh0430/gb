@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONArray;
@@ -142,15 +143,51 @@ public class EmpController {
    
    /*사원 목록*/
    @RequestMapping(value = "empList.do")
-   public String empList(Emp emp, Model model, @RequestParam(value="page") int page) {
+   public String empList(Emp emp, Model model, @RequestParam(value="page") int page,HttpServletRequest request) {
       logger.info("사원 목록 실행");
       
       int currentPage=page;
       int listSize = 10;
       int pageSize = 5;
+      int listCount2 = 0;
       
-      Emp listCount = empService.selectListCount();
-      int listCount2 = listCount.getListCount();
+      if(request.getParameter("page")!=null) {
+			currentPage=Integer.parseInt(request.getParameter("page"));
+		}
+      
+      if(emp.getEmp_name()!=null && emp.getEmp_name()!="") {
+    	  System.out.println("검색어 if문 실행");
+    	  Emp listCount = empService.selectEmpListCount(emp);
+          listCount2 = listCount.getListCount();
+          System.out.println("count까지 실행");
+          emp.setStartPage((currentPage-1)*listSize+1);
+          emp.setEndPage(emp.getStartPage()+listSize-1);
+          ArrayList<Emp> selectEmpSearch = empService.selectEmpSearch(emp);
+          System.out.println("arraylist까지 실행");
+          model.addAttribute("empList", selectEmpSearch);
+          model.addAttribute("emp_no", emp.getEmp_no());
+          model.addAttribute("emp_name", emp.getEmp_name());
+          model.addAttribute("emp_addr", emp.getEmp_addr());
+          model.addAttribute("emp_phone", emp.getEmp_phone());
+          model.addAttribute("emp_email", emp.getEmp_email());
+          
+          System.out.println("emp_name" + emp.getEmp_name());
+          System.out.println("startPage : " + emp.getStartPage());
+          System.out.println("endPage : " + emp.getEndPage());
+          System.out.println("selectEmpSearch 사이즈 : " + selectEmpSearch.size());
+          
+      }else {
+      
+      Emp listCount = empService.selectEmpListCount2();
+      listCount2 = listCount.getListCount();
+	  
+	  emp.setStartPage((currentPage-1)*listSize+1);
+	  emp.setEndPage(emp.getStartPage()+listSize-1);
+	  
+	  ArrayList<Emp> empList = empService.selectEmpList(emp);
+	  model.addAttribute("empList", empList);
+      model.addAttribute("listCount", listCount2);
+      }
       
       int maxPage = (int)((double)listCount2 / listSize + 0.9);
       
@@ -169,13 +206,7 @@ public class EmpController {
 	  
 	  if(maxPage < finalPage) {
 		finalPage = maxPage;
-	  }		
-		
-	  int startPage=(currentPage-1)*listSize+1;
-	  int endPage=startPage+listSize-1;
-	  
-	  emp.setStartPage(startPage);
-	  emp.setEndPage(endPage);
+	  }
 	  
 	  System.out.println("listCount : " + listCount2);
 	  System.out.println("currentPage : " + currentPage);
@@ -188,12 +219,7 @@ public class EmpController {
 	  System.out.println("finalPage : " + finalPage);
 	  System.out.println("prevPage : " + prevPage);
 	  System.out.println("nextPage : " + nextPage);
-	  System.out.println("startPage : " + startPage);
-	  System.out.println("endPage : " + endPage);
-      
-      ArrayList<Emp> empList = empService.selectEmpList(emp);
-      model.addAttribute("empList", empList);
-      model.addAttribute("listCount", listCount2);
+           
       model.addAttribute("currentPage", currentPage);
       model.addAttribute("listSize", listSize);
       model.addAttribute("pageSize", pageSize);
@@ -204,8 +230,6 @@ public class EmpController {
       model.addAttribute("finalPage", finalPage);
       model.addAttribute("prevPage", prevPage);
       model.addAttribute("nextPage", nextPage);
-      model.addAttribute("startPage", startPage);
-      model.addAttribute("endPage", endPage);      
       
       return "emp/empList";
    }
@@ -286,7 +310,7 @@ public class EmpController {
       int listSize = 10;
       int pageSize = 5;
       
-      Emp listCount = empService.selectListCount();
+      Emp listCount = empService.selectEmpListCount2();
       int listCount2 = listCount.getListCount();
       
       int maxPage = (int)((double)listCount2 / listSize + 0.9);

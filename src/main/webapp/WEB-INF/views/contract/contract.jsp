@@ -68,11 +68,79 @@
 
 <script type="text/javascript">
 	$(function(){
-		document.getElementById("to_date").valueAsDate = new Date();		
+		document.getElementById("contact_date_start").valueAsDate = new Date();		
 		//selectVisit();	
 	});
 </script>
+<script type="text/javascript">
 
+$(function(){
+	
+	 $('#contract_date_end').blur(function(){
+		 
+		 ckModistartDate=$('#contact_date_start').val();
+		 sArr=ckModistartDate.split('-');
+
+		 ckModiendDate=$('#contract_date_end').val();
+		 eArr=ckModiendDate.split('-');
+
+		 start1 =new Date(sArr[0],parseInt(sArr[1])-1,sArr[2]);
+		 end1 =new Date(eArr[0],parseInt(eArr[1])-1,eArr[2]);
+		 
+		 
+		if(start1.getTime()>end1.getTime()){
+			alert("입력날짜가 유효하지 않습니다.");
+		}
+	 });
+	
+});
+
+function checkCondition(){
+	var checkCondition=false;
+	
+
+	contract_money=$('#contract_money').val();
+	contract_discount=$('#contract_discount').val();
+	contact_date_start=$('#contact_date_start').val();
+	contract_date_end=$('#contract_date_end').val();
+	business_no=$('#business_no').val();
+	clientSign=$('#clientSign').val();
+	empSign=$('#empSign').val();
+	
+	if(contract_money==null || contract_money==""){
+		alert("계약금액을 입력해주세요.");
+		checkCondition=false;
+		return checkCondition;
+	}else if(contract_discount==null || contract_discount==""){
+		alert("할인율을 입력해주세요.");
+		checkCondition=false;
+		return checkCondition;
+	}else if(contact_date_start==null || contact_date_start==""){
+			alert("계약 시작 날짜를 입력해주세요.");
+			checkCondition=false;
+			return checkCondition;
+	}else if(contract_date_end==null || contract_date_end==""){
+			alert("계약 종료 날짜를 입력해주세요.");
+			checkCondition=false;
+			return checkCondition;
+	}else if(business_no==null || business_no==""){
+		alert("사업자 번호를 입력해주세요.");
+		checkCondition=false;
+		return checkCondition;
+	}else if(clientSign==null || clientSign=="" || empSign==null || empSign==""){
+		alert("누락된 사인이 있습니다.");
+		checkCondition=false;
+		return checkCondition;
+	}elss if(contract_money!=null && contract_discount!=null && contact_date_start!=null && contract_date_end!=null
+			 && business_no!=null && clientSign!=null && empSign!=null ){
+		checkCondition=true;
+		return checkCondition;
+	}
+}
+
+
+
+</script>
 	
 </head>
 
@@ -261,7 +329,7 @@
                         </div>
                         <div class="x_content">
                            <form class="form-horizontal form-label-left input_mask"
-                           	action="insertContract.do" method="post">
+                           	action="insertContract.do" method="post" onsubmit="return checkCondition();">
                            
                            <input type="hidden" name="emp_no" value="${ detailClient.emp_no }">
                            <input type="hidden" name="client_no" value="${ detailClient.client_no }">	
@@ -269,36 +337,36 @@
                               <div class="form-group">
                                  <label class="col-sm-3 control-label">계약금액</label>
                                  <div class="col-md-9 col-sm-9 col-xs-12">
-                                    <input type="text" class="form-control" 
-                                    placeholder="최소 500,000" name="contract_money">
+                                    <input type="number" class="form-control"  id="contract_money"
+                                    placeholder="최소 500,000" name="contract_money" required>
                                  </div>
                               </div>
                               <div class="form-group">
                                  <label class="control-label col-md-3 col-sm-3 col-xs-12">할인율 (%)</label>
                                  <div class="col-md-9 col-sm-9 col-xs-12">
-                                    <input type="text" class="form-control" 
-                                    placeholder="기본 10%" name="contract_discount">
+                                    <input type="number" class="form-control" 
+                                    placeholder="기본 10%" name="contract_discount" id="contract_discount"  required>
                                  </div>
                               </div>
                               <div class="form-group">
                                  <label class="control-label col-md-3 col-sm-3 col-xs-12">계약 시작일</label>
                                  <div class="col-md-9 col-sm-9 col-xs-12">
                                     <input type="date" class="form-control" 
-                                    id="to_date" name="contract_date_start">
+                                    id="contact_date_start" name="contract_date_start" required>
                                  </div>
                               </div>
                               <div class="form-group">
                                  <label class="control-label col-md-3 col-sm-3 col-xs-12">계약 종료일</label>
                                  <div class="col-md-9 col-sm-9 col-xs-12">
                                     <input type="date" class="form-control" 
-                                    placeholder="" name="contract_date_end">
+                                    name="contract_date_end" id="contract_date_end" required>
                                  </div>
                               </div>
                               <div class="form-group">
                                  <label class="control-label col-md-3 col-sm-3 col-xs-12">사업자등록번호</label>
                                  <div class="col-md-9 col-sm-9 col-xs-12">
                                     <input type="text" class="form-control" 
-                                    placeholder="사업자등록번호" name="business_no">
+                                    placeholder="사업자등록번호" name="business_no" id="business_no" required>
                                  </div>
                               </div>
                               <div class="form-group">
@@ -307,7 +375,7 @@
                                  <a href="javascript:clientReset();">reset</a></label>
                                  
                                 <span id="clientSignature_input"></span>
-                                	<input type="hidden" id="clientSign" name="client_Sign">
+                                	<input type="hidden" id="clientSign" name="client_Sign" required>
 							     
                               </div>
                               <div class="form-group">
@@ -316,7 +384,7 @@
                                  <a href="javascript:empReset();">reset</a></label>
                                  
                                  <span id="empSignature_input"></span>
-                                	<input type="hidden" id="empSign" name="emp_Sign">
+                                	<input type="hidden" id="empSign" name="emp_Sign" required>
                                  
                               </div>
                             <!-- <div class="form-group">

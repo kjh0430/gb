@@ -23,6 +23,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -32,6 +33,7 @@ import com.crm.gb.client.model.vo.Client;
 import com.crm.gb.client.model.vo.ClientFile;
 import com.crm.gb.dailywork.model.service.DailyworkService;
 import com.crm.gb.dailywork.model.vo.Dailywork;
+import com.crm.gb.emp.model.vo.Emp;
 
 /**
  * Handles requests for the application home page.
@@ -182,11 +184,12 @@ public class ClientController {
 	@RequestMapping("clientList.do")
 	public String showClient(Client client, Model model,
 			@RequestParam(value="startPage", defaultValue="1") int startPage,
-			HttpServletResponse response) throws IOException{
+			@RequestParam(value="client_name", defaultValue="") String client_name) throws IOException{
 		logger.info("고객리스트 메소드 실행됨");
 		
 		ArrayList<Client> clientList=clientService.selectAllClient();	// 전체 고객조회
 		
+		client.setClient_name(client_name);
 		client.setShowPage(10); //보여줄 페이지 수
 		client.setTotalRow(clientList.size());	// 총 회원 수
 		client.setStart(startPage);	// 시작페이지
@@ -206,10 +209,6 @@ public class ClientController {
 			client.setEnd(totalRow/showPage);
 		}
 		
-		System.out.println("고객수: "+totalRow);
-		System.out.println("총 페이지 수: "+client.getEnd());
-		System.out.println("시작 로우: "+client.getStartRow());
-		System.out.println("끝 로우: "+client.getEndRow());
 		
 		ArrayList<Client> pList = clientService.selectAllClient(client);
 		
@@ -252,7 +251,6 @@ public class ClientController {
 	
 		
 		int listCount_1 = clientService.clientListCount(client);
-		//System.out.println("oooooooooooooooooooooo");
 		System.out.println("count : " + listCount_1);
 		//페이지수 계산 
 		int maxPage=(int)((double)listCount_1/pageSize+0.9);				
@@ -496,14 +494,37 @@ public class ClientController {
 	/** 등록된 고객리스트 검색 메소드 */
 	@RequestMapping(value="searchClientList.do", method=RequestMethod.POST)
 	public void searchClientList(Client client, HttpServletResponse response,
-			@RequestParam(value="client_name") String client_name) throws IOException{
+			@RequestParam(value="client_name", defaultValue="") String client_name,
+			@RequestParam(value="startPage", defaultValue="1") int startPage) throws IOException{
 		logger.info("고객검색 메소드 실행됨");
 		
 		List<Client> cList = clientService.selectClientList(client_name);
 		
+			client.setClient_name(client_name);
+			client.setShowPage(10); //보여줄 페이지 수
+			client.setTotalRow(cList.size());	// 총 회원 수
+			client.setStart(startPage);	// 시작페이지
+			
+			int showPage = client.getShowPage();
+			int totalRow = client.getTotalRow();
+			int start = (client.getStart() - 1)*showPage+1;
+			int end = start+9;
+			int currentPage = 1;
+	
+			client.setStartRow(start);	// 시작 열
+			client.setEndRow(end);	// 끝 열
+			
+			if(totalRow%showPage != 0) {	// 끝페이지
+				client.setEnd((totalRow/showPage)+1);
+			}else {
+				client.setEnd(totalRow/showPage);
+			}
+		
+		ArrayList<Client> sList = clientService.selectAllClient(client);
+			
 		JSONArray jarr = new JSONArray();
 			
-			for(Client c : cList) {
+			for(Client c : sList) {
 				JSONObject job = new JSONObject();
 					job.put("client_no", c.getClient_no());
 					job.put("client_name", URLEncoder.encode(c.getClient_name(), "utf-8"));
@@ -518,6 +539,7 @@ public class ClientController {
 			
 				JSONObject resultJob = new JSONObject();
 					resultJob.put("searchList", jarr);
+					resultJob.put("maxPage", client.getEnd());
 					
 					response.setContentType("application/json; charset=utf-8");
 					PrintWriter out = response.getWriter();
@@ -564,7 +586,57 @@ public class ClientController {
 		
 	}
 	
-	
+	 //email check   
+	   @RequestMapping(value="clientemailCheck.do" ,method=RequestMethod.POST)
+	   @ResponseBody
+
+	   public void checkEmail(Client client,HttpServletResponse  response) throws IOException {      
+	   
+	      Client checkEmail=clientService.selectClientEmail(client);      
+	   
+	      JSONObject send=new JSONObject();
+	      System.out.println(checkEmail);
+	      String check="Y";
+	      if(checkEmail==null) {
+	         check="N";
+	      }
+	      
+	      send.put("check",check);
+	      
+	      response.setContentType("application/json; charset=utf-8");   
+	   
+	      PrintWriter out=response.getWriter();
+	      out.append(send.toJSONString());
+	      out.flush();
+	      out.close();
+	   
+	   }
+	   
+		   //phone check   
+		   @RequestMapping(value="clientephoneCheck.do" ,method=RequestMethod.POST)
+		   @ResponseBody
+
+		   public void checkPhone(Client client,HttpServletResponse  response) throws IOException {      
+		   
+		      Client checkPhone=clientService.selectClientPhone(client);      
+		   
+		      JSONObject send=new JSONObject();
+		      
+		      String check="Y";
+		      if(checkPhone==null) {
+		         check="N";
+		      }
+		      
+		      send.put("check",check);
+		      
+		      response.setContentType("application/json; charset=utf-8");   
+		   
+		      PrintWriter out=response.getWriter();
+		      out.append(send.toJSONString());
+		      out.flush();
+		      out.close();
+		   
+		   }
 }
 
 

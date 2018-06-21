@@ -39,4 +39,9 @@ public class SalaryServiceImpl implements SalaryService{
 		return salaryDao.selectSalaryPageList(salary);
 	}
 	
+	/** 이름검색 리스트 */
+	@Override
+	public ArrayList<Salary> selectSearchList(String emp_name) {
+		return salaryDao.selectSearchList(emp_name);
+	}
 }

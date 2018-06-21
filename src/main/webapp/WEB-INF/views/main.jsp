@@ -251,12 +251,42 @@
     		
     		var modifyEndSchedule=ModiendDate+" "+ModiendTime;
     		
+    		 sArr=ModistartDate.split('-');
+    		 eArr=ModistartTime.split('-');
     		
-    		if($('#startDateM').val() ==null || $('#startTimeM').val() ==null 
-  					|| $('#endDateM').val()  ==null || $('#endTimeM').val() ==null  || $('#calendar_titleM').val() ==null  || $('#calendar_contentM').val() ==null ){
+    		 start1 =new Date(sArr[0],parseInt(sArr[1])-1,sArr[2]);
+    		 end1 =new Date(eArr[0],parseInt(eArr[1])-1,eArr[2]);
+    		
+    		 
+    		 startTimeck =new Date(modifyStartSchedule);
+    		 endTimeck= new Date(modifyEndSchedule);
+    		 
+    		 
+    		 
+    		if(startTimeck.getMinutes()>endTimeck.getMinutes() && startTimeck.getHours()>endTimeck.getHours()){
+    			
+    			alert("시작시간이 종료 시간보다 늦습니다.");
+    	
+    		}else if(startTimeck.getMinutes()==endTimeck.getMinutes() && startTimeck.getHours()>endTimeck.getHours() ){
+    			alert("시작시간이 종료 시간보다 늦습니다.");
+    		
+    			
+    		}else if(startTimeck.getMinutes()<endTimeck.getMinutes() &&startTimeck.getHours()>endTimeck.getHours()){
+    			alert("시작시간이 종료 시간보다 늦습니다.");
+			}
+    		else if (start1.getTime()>end1.getTime()){
+    			
+    		alert("날짜가 유효하지 않습니다.");
+    		}
+    		
+    	else if(start1.getTime()>end1.getTime()){	
+    		alert("날짜가 유효하지 않습니다.");
+    	}else if($('#startDateM').val() =="" || $('#startTimeM').val() ==""
+  					|| $('#endDateM').val()  =="" || $('#endTimeM').val() ==""  || $('#calendar_titleM').val() ==""  || $('#calendar_contentM').val() =="" ){
   				alert("입력하지 않은 정보가 있습니다. 빠짐없이 입력해주세요.");
   				
   				 }else{
+  					 
     		$.ajax({
     			
     			url:"modifySchedule.do",
@@ -266,7 +296,7 @@
     					},
     			type:"post",
     			success:function(data){
-    				
+    				alert("일정 수정이 완료 되었습니다.");
     				 modal2Close();
     				modal1Close();
     				location.href="mainView.do";
@@ -287,26 +317,51 @@
     		
     		var addendDate=$('#addendDate').val();
     		var addendTime=$('#addendTime').val();
-    		
+    	
     		var addend=addendDate+" "+addendTime;
     		
     		var addcalendar_title=$('#addcalendar_title').val();
     		var addcalendar_content=$('#addcalendar_content').val();
     		
     		
-    		if($('#addstartDate').val() ==null || $('#addstartTime').val() ==null 
-  					|| $('#addendDate').val()  ==null || $('#addendTime').val() ==null  || $('#addcalendar_title').val() ==null  || $('#addcalendar_content').val() ==null ){
+    	     sArr=addstartDate.split('-');
+    		 eArr=addendDate.split('-');
+    		
+    		  start1 =new Date(sArr[0],parseInt(sArr[1])-1,sArr[2]);
+    		 end1 =new Date(eArr[0],parseInt(eArr[1])-1,eArr[2]);
+    		 
+    		 startTimeck =new Date(addstart);
+    		 endTimeck= new Date(addend);
+    		 
+    		 
+    		 
+    		if(startTimeck.getMinutes()>endTimeck.getMinutes() && startTimeck.getHours()>endTimeck.getHours()){
+    			
+    			alert("시작시간이 종료 시간보다 늦습니다.");
+    	
+    		}else if(startTimeck.getMinutes()==endTimeck.getMinutes() && startTimeck.getHours()>endTimeck.getHours() ){
+    			alert("시작시간이 종료 시간보다 늦습니다.");
+    		
+    			
+    		}else if(startTimeck.getMinutes()<endTimeck.getMinutes() &&startTimeck.getHours()>endTimeck.getHours()){
+    			alert("시작시간이 종료 시간보다 늦습니다.");
+			}
+    		else if (start1.getTime()>end1.getTime()){
+    			
+    		alert("날짜가 유효하지 않습니다.");
+    		}
+    		else if($('#addstartDate').val()=="" || $('#addstartTime').val()=="" || $('#addendDate').val()=="" || $('#addendTime').val()=="" || $('#addcalendar_title').val()=="" || $('#addcalendar_content').val()==""){
   				alert("입력하지 않은 정보가 있습니다. 빠짐없이 입력해주세요.");
   				
   				 }else{
-  					 
+  					
   					 $.ajax({
   						 
   						 url:"addSchedule.do",
   						 data:{emp_no:"${loginEmp.emp_no}",calendar_title:addcalendar_title,calendar_content:addcalendar_content,calendar_start_date:addstart,calendar_end_date:addend},
   					 	 type:"post",
   					 	 success:function(data){
-  					 	
+  					 	alert("일정이 추가되었습니다.");
   					 		 modal3Close();
   					 		location.href="mainView.do";
   							calendarLoad();  
@@ -317,7 +372,7 @@
     	}
     	//일정 삭제
     	function deleteSchedule(calendar_no){
-    		alert("deleteSchedule");
+    	
     		$.ajax({
     			url:"deleteSchedule.do",
     			data:{calendar_no:calendar_no},
@@ -791,17 +846,14 @@ $(function(){
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i> 매출현황</span>
               <div class="count" id="orderState"></div>
-              <span class="count_bottom"><i class="green">4% </i> From last Week</span>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 tile_stats_count">
               <span class="count_top"><i class="fa fa-clock-o"></i> 목표달성현황</span>
               <div class="count" id="goalState"></div>
-              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span>
             </div>   
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i> 평균 주문액</span>
               <div class="count" id="orderAvg"></div>
-              <span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>12% </i> From last Week</span>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i> 신규거래처수</span>
@@ -1369,7 +1421,7 @@ $(function(){
 
 		
 
-	
+	/*
 	function getWeather(){
 		var city = '${loginEmp.getCity()}';
 		var county = '${loginEmp.getCounty()}';
@@ -1401,7 +1453,7 @@ $(function(){
 				var todayRain = data["weather"]["hourly"][0]['precipitation']['sinceOntime'];
 				var year = todayDate.substring(0,4);
 				var month = todayDate.substring(6,7);
-				var day = todayDate.substring(9,10);
+				var day = todayDate.substring(8,10);
 					$(".todayDate").append(year+"년 "+month+"월 "+day+"일" );						
 					$(".todayMinTemp").append(todayMinTemp);		
 					$(".todayMaxTemp").append(todayMaxTemp);		
@@ -1439,7 +1491,7 @@ $(function(){
    $(function(){
 	  getWeather();
 	});  
-   
+   */
 
 	</script>
    	

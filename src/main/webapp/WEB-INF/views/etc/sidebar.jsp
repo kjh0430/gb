@@ -26,7 +26,7 @@
 	          <li><a href="addClient.do">고객등록</a></li>
 	          <li><a href="clientList.do">고객목록</a></li>
 	          <li><a href="poList.do">잠재고객</a></li>
-	          <li><a href="contractList.do?emp_no=${ loginEmp.emp_no }">계약</a></li>
+	          <li><a href="contractList.do?emp_no=${ loginEmp.emp_no }">계약목록</a></li>
 	        </ul>
 	      </li>
 	      <li><a><i class="fa fa-table"></i> 영업현황 <span class="fa fa-chevron-down"></span></a>

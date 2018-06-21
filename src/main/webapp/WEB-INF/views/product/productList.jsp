@@ -149,6 +149,13 @@ function searchItem2() {
 						<div class="title_left">
 							<h3>제품목록</h3>
 						</div>
+						<c:if test="${ loginEmp.job_no == 3}">
+						<div class="title_right" style="text-align:right">
+							<button class="btn btn-primary"
+								onclick="location.href='moveProductInsert.do'">제품등록</button>
+							<div class="clearfix"></div>
+						</div>
+						</c:if>
 					</div>
 
 					<div class="clearfix"></div>
@@ -156,36 +163,28 @@ function searchItem2() {
 					<div class="row">
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
-								<c:if test="${ loginEmp.job_no == 3}">
-									<div class="x_title" style="text-align: right">
-										<button class="btn btn-primary"
-											onclick="location.href='moveProductInsert.do'">제품등록</button>
-										<div class="clearfix"></div>
-									</div>
-								</c:if>
+								
+								<div class="x_title" style="text-align: right">
+									<form onsubmit="return false;">
+										<div style="text-align: right">
+											<input class="form-control"
+												style="width: 130px; display: inline-block; margin-right: 3px;"
+												type="text" placeholder="제품명 검색" id="keykey">
+											<button id="button1" class="btn btn-dark"
+												style="margin: 0 0 3px 0" onclick="searchItem2();">검색</button>
+										</div>
+									</form>
+								</div>
+								
 								<!-- 검색 바 -->
 								<!-- <form action="searchProduct.do" onsubmit ="return searchItem();"> -->
-								</select> 
-								<form onsubmit="return false;">
-								<div style="text-align:right">
-                           <input class="form-control" style="width:130px;display:inline-block;margin-right:3px;" type="text" placeholder="제품명 검색" id="keykey">
-                           <button id="button1" class="btn btn-dark" style="margin:0 0 3px 0" onclick="searchItem2();">검색</button>
-                           </div>
-                           </form>
 								
-								
-									<!-- <form onsubmit="return false;">
-										<input id="keykey" class="form-control" style="float:right" "width:130px;display:inline-block;margin-right:3px;" type="text" name="keyword" placeholder="제품명으로 검색합니다."/>
-										<input type ="button" id="button1" value="검색" />
-										<button id="button1" class="btn btn-dark" style="float:right" "margin:0 0 3px 0" onclick="searchItem2();">검색</button>
-										onclick="javascript:searchItem2()"
-									</form> -->
-									
-									
-									
-															
-									
-								</div>
+								<!-- <form onsubmit="return false;">
+									<input id="keykey" class="form-control" style="float:right" "width:130px;display:inline-block;margin-right:3px;" type="text" name="keyword" placeholder="제품명으로 검색합니다."/>
+									<input type ="button" id="button1" value="검색" />
+									<button id="button1" class="btn btn-dark" style="float:right" "margin:0 0 3px 0" onclick="searchItem2();">검색</button>
+									onclick="javascript:searchItem2()"
+								</form> -->
 							<!-- 	</form> -->
 								<!-- 검색 바 종료 -->
 								<div class="x_content">
@@ -205,7 +204,7 @@ function searchItem2() {
 											<c:forEach items="${pageList}" var="li">
 												<tr>
 													<td>${li.product_no}</td>
-													<td><a href=moveproductDetail.do?data=${li.product_no}>${li.product_name}</a></td>
+													<td><a style="font-weight:bold" href=moveproductDetail.do?data=${li.product_no}>${li.product_name}</a></td>
 													<td>${li.product_price}</td>
 													<td>${li.product_availability}</td>
 												</tr>
@@ -256,17 +255,18 @@ function searchItem2() {
 									</c:forEach>
 								</div>
 
-							</div>
+							
 						</div>
 					</div>
 				</div>
 			</div>
-			<%@ include file="../etc/footer.jsp"%>
 		</div>
+		
+			<%@ include file="../etc/footer.jsp"%>
 	</div>
 	<!-- /page content -->
 
-
+	</div>
 
 
 	<!-- jQuery -->

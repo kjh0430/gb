@@ -43,7 +43,7 @@
 	$('#startDate').val(approval_start_date);
 	$('#endDate').val(approval_end_date);
 	$('#reason').val(approval_choose_no);
-	alert("approval_team_date"+approval_team_date);
+	
 	$('#team').val(approval_team_date);
 	$('#admin').val(approval_mgr_date);
 	$('#textarea').val(approval_comment);
@@ -142,7 +142,7 @@ background-color:#2A3F54;
 					<div class="page-title">
 						<div class="title_left">
 							<h3>
-								전자결재 리스트
+								결재목록
 							</h3>
 						</div>
 					</div>
@@ -150,8 +150,8 @@ background-color:#2A3F54;
 					<div class="row">
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
-								<div class="x_content">
-									<table id="table_ap" class="table table-striped table-bordered">
+								<div class="x_content" style="overflow:auto">
+									<table id="table_ap" class="table table-striped table-bordered table-responsive" style="min-width:450px;">
 										<thead>
 											<tr>
 												<th>결재유형</th>
@@ -185,8 +185,8 @@ background-color:#2A3F54;
 												</c:if>
 
 												<tr onclick="modalUp(this);" style="cursor:pointer">
-													<td style="width: 50%;">${approval.reason_name}</td>
-													<td style="width: 30%;">${approval.approval_submit_date}</td>
+													<td>${approval.reason_name}</td>
+													<td>${approval.approval_submit_date}</td>
 													<td>${approval_process}</td>
 													<td>${approval.emp_no }</td>
 													<td>${approval.approval_start_date}</td>
@@ -200,6 +200,9 @@ background-color:#2A3F54;
 											</c:forEach>
 										<tbody>
 									</table>
+									<c:if test="${empty approvalListE}">
+									<h2 style="text-align:center">결재한 리스트가 없습니다.</h2>
+									</c:if>
 									
 									  <ul class='pagination'>
 	        
@@ -241,7 +244,7 @@ background-color:#2A3F54;
 						</div>
 					</div><!-- row close -->
 					<!--  modal start -->
-					<div class="modal fade sendMsg" tabindex="-1" role="dialog"	id="modal1" aria-hidden="true">
+					 <div class="modal fade sendMsg" tabindex="-1" role="dialog"	id="modal1" aria-hidden="true">
 						<div class="modal-dialog modal-lg">
 							<div class="modal-content">
 								<form class="form-horizontal form-label-left input_mask">

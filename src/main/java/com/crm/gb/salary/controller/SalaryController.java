@@ -60,7 +60,7 @@ public class SalaryController {
 		
 			ArrayList<Salary> list = salaryService.selectSalaryPageList(salary);
 			
-		model.addAttribute("salaryList", salaryList);
+				
 		model.addAttribute("salaryPageList", list);
 		model.addAttribute("start", currentPage);
 		model.addAttribute("end", salary.getEnd());
@@ -75,11 +75,13 @@ public class SalaryController {
 			@RequestParam(value="emp_name", defaultValue="") String emp_name,
 			HttpServletResponse response) throws IOException {
 		
-			ArrayList<Salary> salaryList = salaryService.selectSalaryList();
+			logger.info("사원급여 검색 실행");
+			
+			ArrayList<Salary> nameList = salaryService.selectSearchList(emp_name);
 			
 			salary.setEmp_name(emp_name);
 			salary.setShowPage(10); //보여줄 페이지 수
-			salary.setTotalRow(salaryList.size());	// 총 회원 수
+			salary.setTotalRow(nameList.size());	// 총 회원 수
 			salary.setStart(startPage);	// 시작페이지
 			
 			int showPage = salary.getShowPage();
@@ -102,19 +104,22 @@ public class SalaryController {
 			JSONArray jarr = new JSONArray();
 				for(Salary s : list) {
 					JSONObject job = new JSONObject();
-					
+					job.put("emp_no", s.getEmp_no());
 					job.put("emp_name", URLEncoder.encode(s.getEmp_name(), "utf-8"));
-					job.put("dept_name", URLEncoder.encode(s.getDept().getDept_name(), "utf-8"));
-					job.put("emp_phone", URLEncoder.encode(s.getEmp().getEmp_phone(), "utf-8"));
+					job.put("dept_name", URLEncoder.encode(s.getDept_name(), "utf-8"));
+					job.put("emp_phone", URLEncoder.encode(s.getEmp_phone(), "utf-8"));
 					job.put("sal", s.getSal());
 					job.put("sal_date", URLEncoder.encode(s.getSal_date().toString(), "utf-8"));
-					job.put("emp_hiredate", URLEncoder.encode(s.getEmp().getEmp_hiredate().toString(), "utf-8"));
+					job.put("emp_hiredate", URLEncoder.encode(s.getEmp_hiredate().toString(), "utf-8"));
+					job.put("maxPage", s.getEnd());
 					
 					jarr.add(job);
+					
 				}
 				
 			JSONObject result = new JSONObject();
 				result.put("list", jarr);
+				result.put("maxPage", salary.getEnd());
 		
 			PrintWriter out = response.getWriter();	
 				out.print(result.toJSONString());
