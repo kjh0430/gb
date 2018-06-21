@@ -166,7 +166,7 @@ $(function(){
          
          var value="";
       
-         value="<table id='table_goal' class='table table-striped table-responsive table-bordered' style='min-width:650px;'>"+
+         value="<table id='table_goal' class='table table-striped table-responsive table-bordered' style='min-width:550px;'>"+
          "<thead><tr><th>사원번호</th><th>사원명</th><th>전월 실적</th><th>입력</th><th>확인</th></tr></thead><tbody>"
          for(var i in jsonl.list){
         	
@@ -341,7 +341,7 @@ $(function(){
                         <div class="title_right">
                            
                         </div>
-                        <div class="x_content" id="tableArea">                           
+                        <div class="x_content" id="tableArea" style="overflow:auto">                           
                            
                            
                         </div>
