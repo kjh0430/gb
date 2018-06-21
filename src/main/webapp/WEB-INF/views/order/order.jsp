@@ -482,7 +482,7 @@
 									</h2>
 									<div class="clearfix"></div>
 								</div>
-								<div class="x_content">
+								<div class="x_content" style="overflow:auto">
 								<!-- product modal start -->
 									<div style="text-align:right">
 									
@@ -529,7 +529,7 @@
 									<!-- product modal end -->
 									
 
-									<table class="table table-striped table-bordered">
+									<table class="table table-striped table-bordered table-responsive" style="min-width:500px;">
 										<thead>
 											<tr>
 												<th style="width: 16%;">제품번호</th>
@@ -543,7 +543,7 @@
 										</tbody>	
 										
 									</table>
-									<table class="table table-striped table-bordered">
+									<table class="table table-striped table-bordered table-responsive" style="min-width:500px;">
 									<tr>
 									<td style="width: 63.2%;">합계</td>
 							
@@ -551,7 +551,6 @@
 									</tr>
 									</table>
 	
-									<div class="ln_solid"></div>
 									<div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-3" style="margin:0px; text-align:center;">
 										<button type="submit" class="btn btn-success">주문</button>											
 									</div>

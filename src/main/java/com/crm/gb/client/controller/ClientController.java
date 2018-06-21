@@ -184,11 +184,12 @@ public class ClientController {
 	@RequestMapping("clientList.do")
 	public String showClient(Client client, Model model,
 			@RequestParam(value="startPage", defaultValue="1") int startPage,
-			HttpServletResponse response) throws IOException{
+			@RequestParam(value="client_name", defaultValue="") String client_name) throws IOException{
 		logger.info("고객리스트 메소드 실행됨");
 		
 		ArrayList<Client> clientList=clientService.selectAllClient();	// 전체 고객조회
 		
+		client.setClient_name(client_name);
 		client.setShowPage(10); //보여줄 페이지 수
 		client.setTotalRow(clientList.size());	// 총 회원 수
 		client.setStart(startPage);	// 시작페이지
@@ -208,10 +209,6 @@ public class ClientController {
 			client.setEnd(totalRow/showPage);
 		}
 		
-		System.out.println("고객수: "+totalRow);
-		System.out.println("총 페이지 수: "+client.getEnd());
-		System.out.println("시작 로우: "+client.getStartRow());
-		System.out.println("끝 로우: "+client.getEndRow());
 		
 		ArrayList<Client> pList = clientService.selectAllClient(client);
 		
@@ -310,10 +307,12 @@ public class ClientController {
 	@RequestMapping("poList.do")
 	public String poList(Client client, Model model,
 			@RequestParam(value="startPage", defaultValue="1") int startPage,
-			HttpServletResponse response) throws IOException{
+			@RequestParam(value="client_name", defaultValue="") String client_name) throws IOException{
 		
 		logger.info("잠재고객 리스트 메소드 실행됨");
 		ArrayList<Client> poList = clientService.selectPoList();
+		
+		client.setClient_name(client_name);
 		
 		client.setShowPage(10); //보여줄 페이지 수
 		client.setTotalRow(poList.size());	// 총 회원 수
@@ -497,14 +496,37 @@ public class ClientController {
 	/** 등록된 고객리스트 검색 메소드 */
 	@RequestMapping(value="searchClientList.do", method=RequestMethod.POST)
 	public void searchClientList(Client client, HttpServletResponse response,
-			@RequestParam(value="client_name") String client_name) throws IOException{
+			@RequestParam(value="client_name", defaultValue="") String client_name,
+			@RequestParam(value="startPage", defaultValue="1") int startPage) throws IOException{
 		logger.info("고객검색 메소드 실행됨");
 		
 		List<Client> cList = clientService.selectClientList(client_name);
 		
+			client.setClient_name(client_name);
+			client.setShowPage(10); //보여줄 페이지 수
+			client.setTotalRow(cList.size());	// 총 회원 수
+			client.setStart(startPage);	// 시작페이지
+			
+			int showPage = client.getShowPage();
+			int totalRow = client.getTotalRow();
+			int start = (client.getStart() - 1)*showPage+1;
+			int end = start+9;
+			int currentPage = 1;
+	
+			client.setStartRow(start);	// 시작 열
+			client.setEndRow(end);	// 끝 열
+			
+			if(totalRow%showPage != 0) {	// 끝페이지
+				client.setEnd((totalRow/showPage)+1);
+			}else {
+				client.setEnd(totalRow/showPage);
+			}
+		
+		ArrayList<Client> sList = clientService.selectAllClient(client);
+			
 		JSONArray jarr = new JSONArray();
 			
-			for(Client c : cList) {
+			for(Client c : sList) {
 				JSONObject job = new JSONObject();
 					job.put("client_no", c.getClient_no());
 					job.put("client_name", URLEncoder.encode(c.getClient_name(), "utf-8"));
@@ -519,6 +541,7 @@ public class ClientController {
 			
 				JSONObject resultJob = new JSONObject();
 					resultJob.put("searchList", jarr);
+					resultJob.put("maxPage", client.getEnd());
 					
 					response.setContentType("application/json; charset=utf-8");
 					PrintWriter out = response.getWriter();
@@ -529,18 +552,42 @@ public class ClientController {
 			
 	}
 	
+	
 	/** 등록된 잠재고객리스트 검색용 */
 	@RequestMapping(value="searchPoList.do", method=RequestMethod.POST)
 	public void searchPoList(Client client, HttpServletResponse response,
-			@RequestParam(value="client_name") String client_name) throws IOException{
+			@RequestParam(value="client_name", defaultValue="") String client_name,
+			@RequestParam(value="startPage", defaultValue="1") int startPage) throws IOException{
 		
 		logger.info("잠재고객리스트 검색용");
 		
 		List<Client> poList = clientService.selectPoList(client_name);
 		
+		client.setClient_name(client_name);
+		client.setShowPage(10); //보여줄 페이지 수
+		client.setTotalRow(poList.size());	// 총 회원 수
+		client.setStart(startPage);	// 시작페이지
+		
+		int showPage = client.getShowPage();
+		int totalRow = client.getTotalRow();
+		int start = (client.getStart() - 1)*showPage+1;
+		int end = start+9;
+		int currentPage = 1;
+
+		client.setStartRow(start);	// 시작 열
+		client.setEndRow(end);	// 끝 열
+		
+		if(totalRow%showPage != 0) {	// 끝페이지
+			client.setEnd((totalRow/showPage)+1);
+		}else {
+			client.setEnd(totalRow/showPage);
+		}
+		
+		ArrayList<Client> pList = clientService.selectPoClient(client);
+		
 		JSONArray jarr = new JSONArray();
 		
-		for(Client c : poList) {
+		for(Client c : pList) {
 			JSONObject job = new JSONObject();
 				job.put("client_no", c.getClient_no());
 				job.put("client_name", URLEncoder.encode(c.getClient_name(), "utf-8"));
@@ -555,6 +602,7 @@ public class ClientController {
 		}
 			JSONObject resultJob = new JSONObject();
 				resultJob.put("searchList", jarr);
+				resultJob.put("maxPage", client.getEnd());
 				
 				response.setContentType("application/json; charset=utf-8");
 				PrintWriter out = response.getWriter();

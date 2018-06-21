@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import org.springframework.stereotype.Component;
 
-@Component("contractSearch")
+@Component("contractSearchList")
 public class ContractSearchList implements Serializable{
 	private static final long serialVersionUID = 1806141338L;
 	

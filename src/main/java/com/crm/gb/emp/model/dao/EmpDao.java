@@ -104,8 +104,8 @@ public class EmpDao {
    }
 
    /*사원목록 갯수*/
-   public Emp selectListCount() {
-	  return sqlSession.selectOne("selectListCount");
+   public Emp selectEmpListCount2() {
+	  return sqlSession.selectOne("selectEmpListCount");
    }
    
    /*사원목록 페이징*/
@@ -123,7 +123,7 @@ public class EmpDao {
 	   return (ArrayList)sqlSession.selectList("empSearch", emp);
    }
 
-   public Emp selectListCount(Emp emp) {
+   public Emp selectEmpListCount(Emp emp) {
 	   System.out.println("selectListCount 여기까지 실행");
 	   return sqlSession.selectOne("selectSearchCount", emp); 
    }

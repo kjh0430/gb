@@ -56,6 +56,8 @@ function modalUp(obj){
 	var team_mgr_name=td.eq(11).text();
 	var mgr_name=td.eq(12).text();
 	 approval_no=td.eq(13).text();
+	 alert("approval_team_date"+approval_team_date);
+	 alert("approval_mgr_date"+approval_mgr_date);
 	 	
 	 	
 	$('#startDate').val(approval_start_date);
@@ -68,15 +70,15 @@ function modalUp(obj){
 	$('#teamname').text("팀장"+"("+team_mgr_name+")");
 	$('#mgrname').text("관리자"+"("+mgr_name+")");
 	
+	 $('#modal1').modal("show");
+	
 	var value="";
 	if(approval_team_date=="" && ${loginEmp.job_no==2}){
         value="<button onclick='teamapproval();' type='button' class='btn btn-primary' style='float:right;'>승인</button>";	
              $('#manager').html(value);             
 	
 	}
-
-	
-	if(approval_team_date!=""  && ${loginEmp.job_no==3}) {
+	if(approval_mgr_date=="" && ${loginEmp.job_no==3}) {
 		
 		 value="<button onclick='adminapproval();' type='button' class='btn btn-primary' style='float:right;'>승인</button>";
 	
@@ -110,7 +112,7 @@ function modalUp(obj){
 			data:{ approval_no:approval_no},
 			type:"post",
 		 	success : function(data){
-				//alert("팀장 승인 완료"+data);
+				
 				 ws.send(data);
 				alert("결재가 완료 되었습니다.");
 				$('#modal1').modal("hide");
@@ -201,7 +203,7 @@ background-color:#2A3F54;
 					<div class="page-title">
 						<div class="title_left">
 							<h3>
-								결재 리스트
+								결재 목록
 							</h3>
 						</div>
 					</div>
@@ -220,7 +222,7 @@ background-color:#2A3F54;
 									<button class="btn btn-dark" style="margin:0 0 3px 0" onclick="searchCondition();">검색</button>
 									</div>
 									
-									<table id="table_ap" class="table table-striped table-bordered table-responsive" style="min-width:500px;">
+									<table id="table_ap" class="table table-striped table-bordered table-responsive" style="min-width:650px;">
 										<thead>
 											<tr>
 												<th>사원 이름</th>
@@ -275,12 +277,12 @@ background-color:#2A3F54;
 												<td style="width:30%;">${approval.reason_name}</td>
 												<td style="width:30%;">${approval.approval_submit_date}</td>
 												<td>${approval_process}</td>
-												<td>${approval.emp_no }</td>
+												<td>${approval.emp_no}</td>
 												<td>${approval.approval_start_date}</td>
 												<td>${approval.approval_end_date}</td>
 												<td>${approval.approval_comment}</td>
 												<td>${approval.approval_team_date}</td>
-												<td>${approval.approval_mgr_date }</td> 
+												<td>${approval.approval_mgr_date}</td> 
 												<td>${approval.team_mgr_name}</td>
 												<td>${approval.mgr_name}</td>
 												<td>${approval.approval_no}</td>
@@ -459,7 +461,7 @@ background-color:#2A3F54;
 			<!-- /footer content -->
 		</div>
 	</div>
-	</div>
+	
 	<!-- /page content -->
 
 	

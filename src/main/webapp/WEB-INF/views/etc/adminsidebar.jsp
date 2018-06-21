@@ -22,7 +22,7 @@
          <li><a href="mainView.do"><i class="fa fa-home"></i> Home</a></li>
          <li><a><i class="fa fa-desktop"></i>사원관리 <span class="fa fa-chevron-down"></span></a>
          <ul class="nav child_menu">
-             <li><a href="goalAdmin.do?page=1">목표관리</a></li>
+             <li><a href="goalAdmin.do">목표관리</a></li>
              <li><a href="goalStateAdmin.do">목표현황</a>
              <li><a href="empRegister.do">사원등록</a></li>
              <li><a href="empList.do?page=1">사원목록</a></li>

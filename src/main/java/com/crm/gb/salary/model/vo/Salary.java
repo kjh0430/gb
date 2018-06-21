@@ -26,6 +26,9 @@ public class Salary implements Serializable{
 	private int startRow;
 	private int endRow;
 	private String emp_name;
+	private String dept_name;
+	private String emp_phone;
+	private Date emp_hiredate;
 	
 	private Emp emp;
 	private Dept dept;
@@ -34,7 +37,8 @@ public class Salary implements Serializable{
 	public Salary() {}
 
 	public Salary(int salary_no, int emp_no, int sal, int sal_bonus, Date sal_date, int showPage, int totalRow,
-			int start, int end, int startRow, int endRow, String emp_name, Emp emp, Dept dept, Job job) {
+			int start, int end, int startRow, int endRow, String emp_name, String dept_name, String emp_phone,
+			Date emp_hiredate, Emp emp, Dept dept, Job job) {
 		super();
 		this.salary_no = salary_no;
 		this.emp_no = emp_no;
@@ -48,6 +52,9 @@ public class Salary implements Serializable{
 		this.startRow = startRow;
 		this.endRow = endRow;
 		this.emp_name = emp_name;
+		this.dept_name = dept_name;
+		this.emp_phone = emp_phone;
+		this.emp_hiredate = emp_hiredate;
 		this.emp = emp;
 		this.dept = dept;
 		this.job = job;
@@ -149,6 +156,30 @@ public class Salary implements Serializable{
 		this.emp_name = emp_name;
 	}
 
+	public String getDept_name() {
+		return dept_name;
+	}
+
+	public void setDept_name(String dept_name) {
+		this.dept_name = dept_name;
+	}
+
+	public String getEmp_phone() {
+		return emp_phone;
+	}
+
+	public void setEmp_phone(String emp_phone) {
+		this.emp_phone = emp_phone;
+	}
+
+	public Date getEmp_hiredate() {
+		return emp_hiredate;
+	}
+
+	public void setEmp_hiredate(Date emp_hiredate) {
+		this.emp_hiredate = emp_hiredate;
+	}
+
 	public Emp getEmp() {
 		return emp;
 	}
@@ -177,10 +208,12 @@ public class Salary implements Serializable{
 	public String toString() {
 		return "Salary [salary_no=" + salary_no + ", emp_no=" + emp_no + ", sal=" + sal + ", sal_bonus=" + sal_bonus
 				+ ", sal_date=" + sal_date + ", showPage=" + showPage + ", totalRow=" + totalRow + ", start=" + start
-				+ ", end=" + end + ", startRow=" + startRow + ", endRow=" + endRow + ", emp_name=" + emp_name + ", emp="
+				+ ", end=" + end + ", startRow=" + startRow + ", endRow=" + endRow + ", emp_name=" + emp_name
+				+ ", dept_name=" + dept_name + ", emp_phone=" + emp_phone + ", emp_hiredate=" + emp_hiredate + ", emp="
 				+ emp + ", dept=" + dept + ", job=" + job + "]";
 	}
 
+	
 	
 	
 	

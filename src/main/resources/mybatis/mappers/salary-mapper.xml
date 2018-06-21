@@ -47,19 +47,37 @@
 	</select>
 	
 	<!-- 급여리스트 페이지처리  -->
-	<select id="selectSalaryPageList" parameterType="salary" resultMap="resultSalaryList">
+	<select id="selectSalaryPageList" parameterType="Salary" resultType="Salary">
 		<![CDATA[
 			select * 
 			from        
-    			(select rownum, ex.*
-   			 	from
-		    		(select sal.salary_no, em.emp_no, em.emp_name, em.dept_name, em.emp_phone, em.emp_hiredate, sal.sal_date, sal.sal, sal.sal_bonus
-		        from (select *
-		                from emp e, dept d
-		                where e.dept_no = d.dept_no) em, salary sal
-		       		 where em.emp_no = sal.emp_no) ex)
-		    where rownum >= #{startRow} and rownum <= #{endRow}
-		    and emp_name like '%'||#{emp_name}||'%'
+			    (select rownum rnum, ex.*
+			    from
+			        (select sal.salary_no, em.emp_no, em.emp_name, em.dept_name, em.emp_phone, em.emp_hiredate, sal.sal_date, sal.sal, sal.sal_bonus
+			    from (select *
+			            from emp e, dept d
+			            where e.dept_no = d.dept_no) em, salary sal
+			         where (em.emp_no = sal.emp_no
+			         and emp_name like '%'||#{emp_name}||'%')
+			         or (em.emp_no = sal.emp_no
+			         and dept_name like '%'||#{emp_name}||'%')) ex)
+			where rnum >= #{startRow} and rnum <= #{endRow}
+		]]>
+						    
+	</select>
+	
+	<!-- 이름으로 검색 -->
+	<select id="selectSearchName" parameterType="string" resultType="Salary">
+		<![CDATA[
+			 select sal.salary_no, em.emp_no, em.emp_name, em.dept_name, em.emp_phone, em.emp_hiredate, sal.sal_date, sal.sal, sal.sal_bonus
+	    	 from (select *
+	            from emp e, dept d
+	            where e.dept_no = d.dept_no) em, salary sal
+	         where (em.emp_no = sal.emp_no
+	        	 and emp_name like '%'||#{emp_name}||'%')
+	         or (em.emp_no = sal.emp_no
+	        	 and em.dept_name like '%'||#{emp_name}||'%')
+			
 		]]>
 	</select>
 	

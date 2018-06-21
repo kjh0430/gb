@@ -15,7 +15,7 @@
  }
 </style>
 <script src="resources/js/EventSource.js"></script>
-<script src="resources/js/PushNotify.js?ver=2"></script>
+<script src="resources/js/PushNotify.js?ver=1"></script>
 </head>
 
 <body>
@@ -169,7 +169,7 @@
 			 if (window.Notification && Notification.permission === "granted") {
 				var notification = new Notification('Message', { body: text, icon: img });
     		}else if(mNotify =="mobile"){
-    			alert(text);
+    			alert(text);ㄴ
     		}		
 		}
 		 

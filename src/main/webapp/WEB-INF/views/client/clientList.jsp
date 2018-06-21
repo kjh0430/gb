@@ -74,7 +74,9 @@ function clientList(){
 					success: function(data) {
 						var obj = JSON.stringify(data);
 						var json = JSON.parse(obj);
+						var maxPage = json.maxPage;
 						var clientList = "";
+						var page ="";
 						
 							for(var i in json.searchList) {
 								clientList += 
@@ -87,8 +89,14 @@ function clientList(){
 										"<td>"+decodeURIComponent(json.searchList[i].client_addr.replace(/\+/g, " "))+"</td>"+
 									"</tr>";	
 							}
-									
-									$('table tbody').html(clientList);
+							
+							for(var i=1; i<=maxPage; i++) {
+								page += "<a style='cursor:pointer;' onclick='searchPageAjax("+i+")'>["+i+"]</a>";
+							}
+							
+							$('table tbody').html(clientList);
+							$('#showSearchClientNumber').html(page);
+							
 						}	//success
 				});	//ajax
 			});	//keyup	
@@ -96,6 +104,39 @@ function clientList(){
 		});	//onload
 	</script>
 
+<script type="text/javascript">
+	function searchPageAjax(num){
+		$.ajax({
+			url: "searchClientList.do",
+			type: "post",
+			dataType: "json",
+			data: {
+				client_name: $('#searchClientList').val(),
+				startPage: num
+			},
+			success: function(data) {
+				var obj = JSON.stringify(data);
+				var json = JSON.parse(obj);
+				var clientList = "";
+				
+					for(var i in json.searchList) {
+						clientList += 
+							"<tr>"+
+								"<td>"+"<a href="+"detailClient.do?client_no="+json.searchList[i].client_no+">"+decodeURIComponent(json.searchList[i].client_name)+"</a>"+"</td>"+
+								"<td>"+decodeURIComponent(json.searchList[i].client_company)+"</td>"+
+								"<td>"+decodeURIComponent(json.searchList[i].client_job)+"</td>"+
+								"<td>"+json.searchList[i].client_email+"</td>"+
+								"<td>"+json.searchList[i].client_phone+"</td>"+
+								"<td>"+decodeURIComponent(json.searchList[i].client_addr.replace(/\+/g, " "))+"</td>"+
+							"</tr>";	
+					}
+					
+					
+					$('table tbody').html(clientList);
+			}	
+		});
+	}
+</script>
 
 
 <!-- ---------------------- 고객리스트 검색 Ajax ------------------------ -->
@@ -202,9 +243,9 @@ function clientList(){
 								</div>
 								
 								<!-- 페이징 처리 -->
-								<div style="text-align:center;">
-									<c:forEach var="i" begin="${ start }" end="${ end }">
-										<a id="listNumber" href="clientList.do?startPage=${ i }">[${ i }]</a>
+								<div id="showSearchClientNumber" style="text-align:center;">
+									<c:forEach var="i" begin="${ start }" end="${ end }" varStatus="num">
+										<a id="listNumber${ num.index }" style="cursor:pointer;" onclick="searchPageAjax(${ num.index })">[${ i }]</a>
 									</c:forEach>
 								</div>
 								
