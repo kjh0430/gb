@@ -72,4 +72,10 @@
    insert into goal values((select max(goal_no)+1 from goal),#{emp_no},#{goal_money},to_date(#{goal_date},'yyyy-mm'))
    ]]>
    </insert>
+   
+   <update id="updateGoal" parameterType="goal" flushCache="true">
+	   <![CDATA[
+	   update goal set goal_money = #{goal_money} where emp_no = #{emp_no} and to_char(goal_date,'yyyy-MM') = #{goal_date}
+	   ]]>
+   </update>
 </mapper>

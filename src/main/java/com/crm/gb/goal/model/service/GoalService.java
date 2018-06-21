@@ -21,6 +21,8 @@ public interface GoalService {
    public abstract Goal selectcheckGoal(Goal goal);
 
    public abstract int insertGoal(Goal goal);
+   
+   public abstract int updateGoal(Goal goal);
 
 
 }

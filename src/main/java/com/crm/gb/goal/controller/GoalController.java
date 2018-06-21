@@ -152,21 +152,22 @@ public class GoalController {
    @ResponseBody
    public void selectGoalList(Goal goal,HttpServletResponse  response) throws IOException {
       System.out.println(goal.getDate()+","+goal.getDept_no());
-   ArrayList<Goal> selectGoalList=goalService.selectGoalList(goal);
-   JSONArray jarr=new JSONArray();
+      ArrayList<Goal> selectGoalList=goalService.selectGoalList(goal);
+      
+      JSONArray jarr=new JSONArray();
+      
    
-   for(Goal goal1: selectGoalList) {
-      
-      JSONObject jsonobject=new JSONObject();
-      
-      jsonobject.put("emp_no",goal1.getEmp_no());
-      jsonobject.put("emp_name",goal1.getEmp_name());
-      jsonobject.put("sales",goal1.getSales());
-      
-      
-      jarr.add(jsonobject);
-      
-   }
+	   for(Goal goal1: selectGoalList) {
+	      JSONObject jsonobject=new JSONObject();
+	      
+	      jsonobject.put("emp_no",goal1.getEmp_no());
+	      jsonobject.put("emp_name",goal1.getEmp_name());
+	      jsonobject.put("sales",goal1.getSales());
+	      
+	      
+	      jarr.add(jsonobject);
+	      
+	   }
    JSONObject send=new JSONObject();
    send.put("list",jarr);
    
@@ -183,28 +184,28 @@ public class GoalController {
       @ResponseBody
       public void selectcheckGoal(Goal goal,HttpServletResponse  response) throws Exception {
          System.out.println(goal.getDate()+","+goal.getDept_no()+","+goal.getEmp_no());
-      Goal selectcheckGoal=goalService.selectcheckGoal(goal);
+         Goal selectcheckGoal=goalService.selectcheckGoal(goal);
    
 
-      JSONObject send=new JSONObject();
-      System.out.println("selectcheckGoal"+selectcheckGoal);
-      System.out.println("fvxvxvx");
-      try {
-         
-         if(selectcheckGoal.getGoal_date()!=null) {
-
-            send.put("goal_date",selectcheckGoal.getGoal_date().toString());
-            send.put("goal_money",selectcheckGoal.getGoal_money());
-         }else {
-            send.put("goal_date","N");
-            send.put("goal_money","N");
-            
-         }
-         
-      } catch (NullPointerException e) {
-         send.put("goal_date","N");
-         send.put("goal_money","N");
-      }
+	      JSONObject send=new JSONObject();
+	      System.out.println("selectcheckGoal"+selectcheckGoal);
+	      System.out.println("fvxvxvx");
+	      try {
+	         
+	         if(selectcheckGoal.getGoal_date()!=null) {
+	
+	            send.put("goal_date",selectcheckGoal.getGoal_date());
+	            send.put("goal_money",selectcheckGoal.getGoal_money());
+	         }else {
+	            send.put("goal_date","N");
+	            send.put("goal_money","N");
+	            
+	         }
+	         
+	      } catch (NullPointerException e) {
+	         send.put("goal_date","N");
+	         send.put("goal_money","N");
+	      }
       
       /*if(selectcheckGoal.getGoal_date()!=null) {
 
@@ -233,6 +234,19 @@ public class GoalController {
       PrintWriter out=response.getWriter();
       
       out.println("입력이 완료되었습니다.");
+      out.flush();
+      out.close();
+      }
+      
+      @RequestMapping(value="updateGoal.do", method=RequestMethod.POST)
+      @ResponseBody
+      public void updateGoal(Goal goal,HttpServletResponse  response) throws IOException {
+      int updateGoal=goalService.updateGoal(goal);
+      
+      response.setContentType("text/html;charset=utf-8");
+      PrintWriter out=response.getWriter();
+      
+      out.println("수정이 완료되었습니다.");
       out.flush();
       out.close();
       }
