@@ -60,8 +60,8 @@
                     (cl.client_no = co.client_no
 		            and client_sign <> 'N'
 		            and emp_sign <> 'N'
-		            and cl.emp_no = 121212
-		            and co.emp_no = 121212
+		            and cl.emp_no = #{emp_no}
+		            and co.emp_no = #{emp_no}
 		            and client_delete = 'N'
                     and client_delete <> 'Y'
                     and client_company like '%'||#{client_name}||'%')

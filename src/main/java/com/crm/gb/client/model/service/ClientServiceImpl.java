@@ -36,8 +36,8 @@ public class ClientServiceImpl implements ClientService{
 
 	/** 잠재고객 조회 메소드 */
 	@Override
-	public ArrayList<Client> selectPoList() {
-		return clientDao.selectPoList();
+	public ArrayList<Client> selectPoList(Client client) {
+		return clientDao.selectPoList(client);
 	}
 	
 	/** 고객정보 조회 메소드 */
@@ -166,6 +166,11 @@ public class ClientServiceImpl implements ClientService{
 	public Client selectClientPhone(Client client) {
 	
 		return clientDao.selectClientPhone(client);
+	}
+	
+	@Override
+	public ArrayList<Client> selectPageClient(Client client) {
+		return clientDao.selectAllClient2(client);
 	}
 	
 }

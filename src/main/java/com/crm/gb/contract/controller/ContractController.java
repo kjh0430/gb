@@ -192,7 +192,8 @@ public class ContractController {
 		clientService.updateClientContract(client_no);	// 계약상태 Y로 변경
 		
 		ArrayList<Contract> returnList=contractService.selectAllList(emp_no);
-		
+			contract.setEmp_no(emp_no);
+			
 			contract.setShowPage(10); //보여줄 페이지 수
 			contract.setTotalRow(returnList.size());	// 총 회원 수
 			contract.setStart(startPage);	// 시작페이지
