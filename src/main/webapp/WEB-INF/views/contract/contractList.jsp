@@ -78,6 +78,48 @@ $(function(){
 				var obj = JSON.stringify(data);
 				var json = JSON.parse(obj);
 				var list = "";
+				var maxPage = json.maxPage;
+				var page = "";
+					for(var i in json.list) {
+						list += 
+							"<tr>"+
+								"<td>"+"<a href="+"contractDetail.do?client_no="+json.list[i].client_no+">"+decodeURIComponent(json.list[i].client_name)+"</a>"+"</td>"+
+								"<td>"+decodeURIComponent(json.list[i].client_company)+"</td>"+
+								"<td>"+json.list[i].client_phone+"</td>"+
+								"<td>"+json.list[i].contract_discount+"</td>"+
+								"<td>"+json.list[i].contract_money+"</td>"+
+								"<td>"+json.list[i].contract_start+"</td>"+
+								"<td>"+json.list[i].contract_end+"</td>"+
+							"</tr>";	
+					}
+							
+					for(var i=1; i<=maxPage; i++) {
+						page += "<a style='cursor:pointer;' onclick='searchPageAjax("+i+")'>["+i+"]</a>";
+					}
+					
+							$('table tbody').html(list);
+							$('#showSearchContractNumber').html(page);
+				}	//success
+		});	//ajax
+	});	//keyup	
+});	//onload
+</script>
+
+<script type="text/javascript">
+	function searchPageAjax(num){
+		$.ajax({
+			url: "searchContractList.do",
+			type: "post",
+			data: {
+				client_name: $('#searchContractList').val(),
+				emp_no : '${loginEmp.emp_no}',
+				startPage: num
+			},
+			dataType: "json",
+			success: function(data) {
+				var obj = JSON.stringify(data);
+				var json = JSON.parse(obj);
+				var list = "";
 				
 					for(var i in json.list) {
 						list += 
@@ -95,11 +137,8 @@ $(function(){
 							$('table tbody').html(list);
 				}	//success
 		});	//ajax
-	});	//keyup	
-});	//onload
+	}
 </script>
-
-
 
 <!-- ----------------------스크립트관련 작업영역 끝------------------------ -->
 
@@ -207,9 +246,9 @@ $(function(){
 								</div>
 								
 								<!-- 페이징 처리 -->
-								<div style="text-align:center;">
-									<c:forEach var="i" begin="${ start }" end="${ end }">
-										<a id="listNumber" href="contractList.do?startPage=${ i }&emp_no=${ loginEmp.emp_no }">[${ i }]</a>
+								<div id="showSearchContractNumber" style="text-align:center;">
+									<c:forEach var="i" begin="${ start }" end="${ end }" varStatus="num">
+										<a id="listNumber${ num.index }" style="cursor:pointer;" onclick="searchPageAjax(${ num.index })">[${ i }]</a>
 									</c:forEach>
 								</div>
 								
