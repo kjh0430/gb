@@ -66,6 +66,7 @@
 						    
 	</select>
 	
+	<!-- 이름으로 검색 -->
 	<select id="selectSearchName" parameterType="string" resultType="Salary">
 		<![CDATA[
 			 select sal.salary_no, em.emp_no, em.emp_name, em.dept_name, em.emp_phone, em.emp_hiredate, sal.sal_date, sal.sal, sal.sal_bonus

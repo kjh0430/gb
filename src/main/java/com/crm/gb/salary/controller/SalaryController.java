@@ -157,5 +157,10 @@ public class SalaryController {
 		
 	}
 	
+	/** 사원급여 등록 */
+	@RequestMapping("addSalary.do")
+	public String addSalary() {
+		return "emp/addSalary";
+	}
 	
 }

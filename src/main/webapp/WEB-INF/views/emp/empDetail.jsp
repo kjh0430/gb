@@ -75,6 +75,13 @@ function empDe(){
 
 </script>
 
+<script type="text/javascript">
+	function addSalary(){
+		location.href="addSalary.do?emp_no='${ emp.emp_no }'";
+	}
+</script>
+
+
 </head>
 
 
@@ -270,6 +277,7 @@ function empDe(){
                         <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
                           <button class="btn btn-success" type="button" onclick="empUp()">정보수정</button>                    
                           <button class="btn btn-primary" type="button" onclick="empDe()">사원삭제</button>                     
+                          <button class="btn btn-primary" type="button" onclick="javascript:addSalary();">급여등록</button>                     
                         </div>
                       </div>
                   </div>
