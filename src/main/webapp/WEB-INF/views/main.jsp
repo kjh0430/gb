@@ -9,7 +9,6 @@
 <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="refresh" content="600"> <!-- 10분마다 페이지 새로고침 -->
    <link rel="icon" href="images/favicon.ico" type="image/ico" />
 
     <title>GROUP BEAN | </title>
@@ -1422,7 +1421,7 @@ $(function(){
 
 		
 
-	/*
+	
 	function getWeather(){
 		var city = '${loginEmp.getCity()}';
 		var county = '${loginEmp.getCounty()}';
@@ -1492,7 +1491,7 @@ $(function(){
    $(function(){
 	  getWeather();
 	});  
-   */
+   
 
 	</script>
    	
