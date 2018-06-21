@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.crm.gb.emp.model.service.EmpService;
+import com.crm.gb.emp.model.vo.Emp;
 import com.crm.gb.salary.model.service.SalaryService;
 import com.crm.gb.salary.model.vo.Salary;
 
@@ -28,6 +30,9 @@ public class SalaryController {
 	
 	@Autowired
 	private SalaryService salaryService;
+	
+	@Autowired
+	private EmpService empService;
 	
 	/** 급여관련 사원리스트 화면출력 */
 	@RequestMapping("empSalary.do")
@@ -159,7 +164,11 @@ public class SalaryController {
 	
 	/** 사원급여 등록 */
 	@RequestMapping("addSalary.do")
-	public String addSalary() {
+	public String addSalary(Emp emp, Model model, @RequestParam(value="emp_no") int emp_no) {
+		
+		Emp detailEmp = empService.selectEmpNo(emp_no);
+        model.addAttribute("emp", detailEmp);
+		
 		return "emp/addSalary";
 	}
 	

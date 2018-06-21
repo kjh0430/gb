@@ -96,26 +96,67 @@ text-align:center;
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">이름</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input class="form-control" id="emp_name" name="emp_name" type="text" readonly>
+                          <input class="form-control" id="emp_name" name="emp_name" type="text" 
+                          value="${ emp.emp_name }" readonly>
                         </div>
                       </div>
                                           
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">부서명</label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                         <input class="form-control" id="emp_phone" name="dept_name" type="text" readonly>
-                        </div>
+                        
+                        <c:choose>
+            				<c:when test="${ emp.dept_no == 1 }">
+            					<div class="col-md-6 col-sm-6 col-xs-12">
+		                         <input class="form-control" id="emp_phone" name="dept_name" type="text"
+		                         value="영업1팀" readonly>
+		                        </div>	        		   
+            				</c:when>
+            				<c:when test="${ emp.dept_no == 2 }">
+            					<div class="col-md-6 col-sm-6 col-xs-12">
+		                         <input class="form-control" id="emp_phone" name="dept_name" type="text"
+		                         value="영업2팀" readonly>
+		                        </div>		        		   
+            				</c:when>
+            				<c:when test="${ emp.dept_no == 3 }">
+            					<div class="col-md-6 col-sm-6 col-xs-12">
+		                         <input class="form-control" id="emp_phone" name="dept_name" type="text"
+		                         value="관리자" readonly>
+		                        </div>				
+            				</c:when>
+            			</c:choose>
+                        
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">직급</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input class="form-control" id="job_no" type="text" name="job_no" readonly>
+                          
+                        <c:choose>
+            				<c:when test="${ emp.job_no == 1 }">
+            					<input class="form-control" id="job_no" type="text" name="job_no"
+                         		 value="사원" readonly>		        		   
+            				</c:when>
+            				<c:when test="${ emp.job_no == 2 }">
+            					<input class="form-control" id="job_no" type="text" name="job_no"
+                          		value="팀장" readonly>		        		   
+            				</c:when>
+            				<c:when test="${ emp.job_no == 3 }">
+            					<input class="form-control" id="job_no" type="text" name="job_no"
+                          		value="관리자" readonly>				
+            				</c:when>
+            			</c:choose>
+                          
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">기본급</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input class="form-control" id="job_no" type="text" name="job_no" readonly>
+                          <input class="form-control" id="sal" type="text" name="sal" >
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">인센티브</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input class="form-control" id="sal_bonus" type="text" name="sal_bonus" >
                         </div>
                       </div>
                       
