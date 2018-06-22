@@ -171,9 +171,7 @@
 												<th>단가</th>
 												<th>수량</th>
 												<th>삭제</th>
-											</tr>
-										</thead>
-										<tbody id="order_tbody">
+											</tr>a
 											<tr>
 												<td>21549871</td>
 												<td>예가체프 아라비카 500g</td>
@@ -187,7 +185,7 @@
 									<div class="ln_solid"></div>
 									<div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-3" style="margin:0px; text-align:right">
 											
-											<button type="button" class="btn btn-success" onclick="orderList.do">목록</button>
+											<button type="button" class="btn btn-success" onclick="history.go(-1)">목록</button>
 									</div>
 								</div>
 							</div>

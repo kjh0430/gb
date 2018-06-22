@@ -291,7 +291,9 @@
 												<c:forEach var="list" items="${productFileNames}">													
 												<li>
 													<a href="productFileDown.do?pfName=${list.product_rename_file}&oriName=${list.product_original_file}">${list.product_original_file}</a>
-													<span class="fileSpan1"><a href="javascript:deleteFile('${list.product_rename_file}')" title='삭제'>&nbsp;<i class='fa fa-times'></i></a></span>	
+					
+												
+													
 													<!-- <input type="button" class="btn btn-dark add_btn" onclick="addFile()" value="추가"/> -->
 												</li>
 												</c:forEach>

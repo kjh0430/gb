@@ -203,7 +203,7 @@ function clientList(){
 							<div class="x_panel">
 								<div class="x_title">
 									<h2>
-										등록된 모든고객
+										등록된 고객
 									</h2>
 								<form onsubmit="return false;">
 									<input style="float:right;"

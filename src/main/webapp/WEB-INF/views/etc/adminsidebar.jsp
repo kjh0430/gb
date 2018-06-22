@@ -63,6 +63,7 @@
    </div>
   
    	<script type="text/javascript">
+   	
 	var emp_no = ${loginEmp.emp_no};
 	var EventSource4 = new EventSource("count.do?emp_no="+emp_no);
 	EventSource4.onopen = function(){
@@ -76,7 +77,13 @@
 			$(".count_badge").css("display","none");
 		}
 	};
+	$(function(){
+		
+	if(${loginEmp==null}){
+		location.href="view.do";
+	}
 	
+	});
 	</script>
 
 

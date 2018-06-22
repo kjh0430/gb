@@ -75,6 +75,13 @@
 	<script type="text/javascript">
 	$(function(){
 		
+		
+		
+			if(${loginEmp==null}){
+				location.href="view.do";
+			}
+		
+		
 	})
 	var emp_no = ${loginEmp.emp_no};
 	var EventSource2 = new EventSource("count.do?emp_no="+emp_no);

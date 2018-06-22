@@ -9,7 +9,7 @@
    <![CDATA[
    select e.emp_name,d.dept_name,j.job_name,e.emp_email,e.emp_no from emp e,
       dept d,job j where e.emp_name like '%'||#{emp_name}||'%'  and e.dept_no=d.dept_no and j.job_no=e.job_no 
-      and e.emp_no != #{emp_no}
+      and e.emp_no !=#{emp_no} and e.job_no!=2 and  e.job_no!=3
    
    ]]>
    
