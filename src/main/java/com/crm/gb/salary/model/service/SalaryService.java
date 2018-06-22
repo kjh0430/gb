@@ -12,5 +12,6 @@ public interface SalaryService {
 	public abstract Emp selectEmpJob(int emp_no);	// 직책 조회용
 	public abstract ArrayList<Salary> selectSalaryPageList(Salary salary);	//급여리스트 page 조회
 	public abstract ArrayList<Salary> selectSearchList(String emp_name);	//리스트 이름검색
+	public abstract int insertSalary(Salary salary);
 	
 }
