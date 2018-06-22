@@ -5,13 +5,11 @@
 
 <mapper namespace="Goal">
 
-   
-   
    <select id="selectEmp" parameterType="goal" resultType="goal">
    <![CDATA[
    select e.emp_name,d.dept_name,j.job_name,e.emp_email,e.emp_no from emp e,
       dept d,job j where e.emp_name like '%'||#{emp_name}||'%'  and e.dept_no=d.dept_no and j.job_no=e.job_no 
-      and e.emp_no != #{emp_no} and e.job_no !=2 || e.job_no !=3
+      and e.emp_no != #{emp_no}
    
    ]]>
    
@@ -41,10 +39,6 @@
    
    </select>
    
-    
-
-
-
    <select id="selectGoalList" parameterType="goal" resultType="goal">
    <![CDATA[
    select e.emp_no,e.emp_name,e.job_no,sum(nvl((ol.order_amount*ol.order_price),0)) as sales 
@@ -71,4 +65,10 @@
    insert into goal values((select max(goal_no)+1 from goal),#{emp_no},#{goal_money},to_date(#{goal_date},'yyyy-mm'))
    ]]>
    </insert>
+   
+   <update id="updateGoal" parameterType="goal" flushCache="true">
+	   <![CDATA[
+	   update goal set goal_money = #{goal_money} where emp_no = #{emp_no} and to_char(goal_date,'yyyy-MM') = #{goal_date}
+	   ]]>
+   </update>
 </mapper>
