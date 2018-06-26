@@ -44,6 +44,7 @@
 
 <script type="text/javascript">
 var allCheck=false;
+//숫자와 문자 포함 형태의  5에서 10자리 비밀번호
 
 $(function(){
 
@@ -60,24 +61,22 @@ $(function(){
 			alert("비밀번호가 일치하지 않습니다.");
 			$('#emp_pwd1').val("");
 			$('#emp_pwd2').val("");
-			allCheck=false;
+		
 		}
 	});
-
 	
 });
 
 
   function checkPass(){
-	
-	var pwd_pattern= /^[A-Za-z0-9]{5,10}$/; //숫자와 문자 포함 형태의  5에서 10자리 비밀번호
-	
+
+	var pwd_pattern= /^[A-Za-z0-9]{5,10}$/; 
 	
 	var password1=$('#emp_pwd1').val();
 	var password2=$('#emp_pwd2').val();
 	
 	var checkN = password2.search(/[0-9]/g); 
-	 var checkE = password2.search(/[a-z]/ig);
+	var checkE = password2.search(/[a-z]/ig);
 	
 	 if(password1==null && password1=="" && password2==null && password2==""){
 		alert("password를 입력해주세요!")
@@ -89,23 +88,18 @@ $(function(){
 		allCheck=false;
 		return allCheck; 
 	}    
-
     if(checkN<0 || checkE< 0)
-
     { 
         alert("비밀번호는 숫자,문자 포함 5~10자리 입니다.");
         allCheck=false;
         return allCheck;
     }
-
 	if(pwd_pattern.test(password1) && pwd_pattern.test(password2)){
-		
 		alert("수정이 완료 되었습니다.");
 		allCheck=true;
-		return allCheck;
-		
+		return allCheck;		
 	}
-}
+  }
   
   function backMyInfo(){
 	  location.href="info.do";
@@ -178,7 +172,8 @@ $(function(){
 									
 									
 									
-					 <form class="form-horizontal form-label-left" action="updatePassword.do" method="post" onsubmit="return checkPass();">
+					 <form class="form-horizontal form-label-left" action="updatePassword.do" 
+					 method="post" onsubmit="return checkPass();">
 					
 					
                      

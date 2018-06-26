@@ -70,7 +70,6 @@ var allCheck=false;
 	
 	 $('#emp_email').blur(function(){
 		
-		
 		$.ajax({
 			
 			url:"emailCheck.do",
@@ -87,7 +86,6 @@ var allCheck=false;
 			}
 		});
 		
-	
 	});
 	
  	$('#emp_phone').blur(function(){
@@ -115,11 +113,9 @@ var allCheck=false;
 
   function checkCondition(){
 	
-	
 	var phone_pattern = /^\d{3}-\d{3,4}-\d{4}$/;
 	var email_pattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-	
-	
+		
 	var email=$('#emp_email').val();
 	var phone=$('#emp_phone').val();
 	

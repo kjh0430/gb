@@ -32,7 +32,7 @@ function searchCondition(){
 	emp_no=${loginEmp.emp_no};
 	job_no=${loginEmp.job_no};
 	
-	location.href="approvalListAdmin.do?emp_no="+emp_no+"&job_no="+job_no+"&emp_name="+emp_name
+	location.href="approvalListAdmin.do?emp_no="+emp_no+"&job_no="+job_no+"&emp_name="+emp_name;
 
 
 }
@@ -101,6 +101,7 @@ function modalUp(obj){
 	$('#circle3').css('background-color','#ddd');
 	
 	$('#modal1').modal("hide");
+	location.href="approvalListAdmin.do?emp_no=${loginEmp.emp_no}&job_no=${loginEmp.job_no}";
 	 }
 	 
 	 function teamapproval(){
@@ -246,7 +247,6 @@ background-color:#2A3F54;
 										
 										
 										<c:forEach items="${approvalListA}" var="approval">
-											
 											<c:if test="${approval.approval_mgr_date eq null && approval.approval_team_date eq null}">
 											 <c:set var="approval_process" value="미진행 "/>
 											</c:if>
@@ -262,16 +262,9 @@ background-color:#2A3F54;
 											<c:if test="${approval.dept_no eq '2'}">
 											 <c:set var="approval_dept_name" value="영업2팀"/>
 											</c:if>
-											
-											
-											
-											
-											<tr onclick="modalUp(this);">
-												
-												
+											<tr onclick="modalUp(this);">		
 												<td>${approval.emp_name}</td>
-												<td>${approval_dept_name}</td>
-												
+												<td>${approval_dept_name}</td>	
 												<td style="width:30%;">${approval.reason_name}</td>
 												<td style="width:30%;">${approval.approval_submit_date}</td>
 												<td>${approval_process}</td>
@@ -284,10 +277,7 @@ background-color:#2A3F54;
 												<td>${approval.team_mgr_name}</td>
 												<td>${approval.mgr_name}</td>
 												<td>${approval.approval_no}</td>
-											
-											
 											</tr>
-											
 												</c:forEach>
 											
 											
@@ -299,8 +289,7 @@ background-color:#2A3F54;
 			<ul class='pagination'>
 	        
 	      
-	        <c:set var="emp_name" value="${emp_name}"/>
-	         <c:set var="startPage" value="${startPage}"/>
+	        
 	        <c:choose>
 	        <c:when test="${startPage>5}">
 	          <li class='page-item'><a class='page-link' href='approvalListAdmin.do?page=${startPage-1}&emp_no=${loginEmp.emp_no}&job_no=${loginEmp.job_no}&emp_name=${emp_name}'>PREV</a></li>
@@ -437,7 +426,7 @@ background-color:#2A3F54;
 									
                                           </div>
                                           <div class="modal-footer">
-                                          	 <button onclick="modal1Close()" type="button"
+                                          	 <button onclick="modal1Close();" type="button"
                                                 class="btn btn-primary" style="float:right;">확인</button>
                                                 <div id="manager">
                                            

@@ -278,10 +278,11 @@
     		alert("날짜가 유효하지 않습니다.");
     		}
     		
-    	else if(start1.getTime()>end1.getTime()){	
+    		else if(start1.getTime()>end1.getTime()){	
     		alert("날짜가 유효하지 않습니다.");
-    	}else if($('#startDateM').val() =="" || $('#startTimeM').val() ==""
-  					|| $('#endDateM').val()  =="" || $('#endTimeM').val() ==""  || $('#calendar_titleM').val() ==""  || $('#calendar_contentM').val() =="" ){
+    		}else if($('#startDateM').val() =="" || $('#startTimeM').val() ==""
+  					|| $('#endDateM').val()  =="" || $('#endTimeM').val() ==""  || $('#calendar_titleM').val() ==""  || 
+  					$('#calendar_contentM').val() =="" ){
   				alert("입력하지 않은 정보가 있습니다. 빠짐없이 입력해주세요.");
   				
   				 }else{

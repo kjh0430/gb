@@ -139,10 +139,8 @@
 	where e.emp_no=#{emp_no} and e.job_no=j.job_no and d.dept_no=e.dept_no
  	</if>
  	<if test="job_no==2">
- 	<!-- (select emp_name from emp where job_no=3) t
-	where e.emp_no=#{emp_no} and e.job_no=j.job_no and d.dept_no=e.dept_no -->
-	(select emp_name from emp where emp_no=(select emp_mgr from emp where emp_no=3)) t
-	where e.emp_no=3 and e.job_no=j.job_no and d.dept_no=e.dept_no
+	(select emp_name from emp where emp_no=(select emp_mgr from emp where emp_no=#{emp_no})) t
+	where e.emp_no=#{emp_no} and e.job_no=j.job_no and d.dept_no=e.dept_no
 	</if> 
 	<if test="job_no==3">
 	(select emp_name,emp_no,dept_no from emp where job_no=3) t

@@ -139,9 +139,10 @@ public class ApprovalController {
 	}
 	
 	//admin 결재 리스트
+	
 	@RequestMapping(value="approvalListAdmin.do")
-	public String approvalListA(Approval apr,Model model,@RequestParam(name="emp_no") int emp_no ,@RequestParam(name="job_no") String job_no,HttpServletRequest request) {
-		
+	public String approvalListA(Approval apr,Model model,@RequestParam(name="emp_no") int emp_no ,@RequestParam(name="job_no") 
+	String job_no,HttpServletRequest request) {
 		
 		int currentPage=1;
 		int listCount=0;
@@ -150,12 +151,7 @@ public class ApprovalController {
 			currentPage=Integer.parseInt(request.getParameter("page"));
 		}
 		int limit=10;
-		
-		apr.setEmp_no(emp_no);
-		apr.setJob_no(job_no);
-		
-		
-		
+						
 		if(apr.getEmp_name()!=null && apr.getEmp_name()!="") {
 			System.out.println("hbdbdfbdfbdbb");
 			listCount=ApprovalService.selectgetConditionListA(apr);
@@ -170,7 +166,7 @@ public class ApprovalController {
 			System.out.println("approvalListA 사이즈"+approvalListConditionA.size());
 			
 		}else{
-			System.out.println("zzzzzz");
+		
 			listCount=ApprovalService.selectgetListCountA(apr);
 			apr.setStartRow((currentPage-1)*limit+1);
 			apr.setEndRow(apr.getStartRow()+limit-1);
@@ -191,8 +187,6 @@ public class ApprovalController {
 		if(maxPage<endPage) {
 			endPage=maxPage;
 		}
-		
-		
 		
 		model.addAttribute("currentPage",currentPage);
 		model.addAttribute("maxPage",maxPage);

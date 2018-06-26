@@ -64,8 +64,6 @@ var admin_no="";
 				team_no=data.team_mgr_no;
 				admin_no=data.mgr_no;				
 			}
-		
-		
 		}); 
 	
 	});

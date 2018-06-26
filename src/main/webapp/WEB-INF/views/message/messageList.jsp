@@ -775,7 +775,9 @@ function searchFunction2(){
                var size = Object.keys(jsonl.list).length;
              
                if(size>0){
-               var value = "<table class='table table-hover' id='getvalues'><thead><tr><th>이름</th><th>직급</th><th>부서</th><th>e-mail</th><th>사원번호</th></tr></thead><tbody>";
+               var value = "<table class='table table-hover' id='getvalues'><thead>"+
+               "<tr><th>이름</th><th>직급</th><th>부서</th><th>e-mail</th><th>사원번호</th>"+
+               "</tr></thead><tbody>";
 
                   for ( var i in jsonl.list) {
 
@@ -851,7 +853,7 @@ function searchFunction2(){
     	  type:"post",
     	  data:{message_no:a_message_no},
     	  success:function(data){
-    		  receive();
+    		
     		  
     		  
     	  }
@@ -924,9 +926,8 @@ function searchFunction2(){
    //쪽지 보내기
    function modalSubmit() {
 
-	   if($('#searchName').val() !="" && $('#message_title').val() !="" && $('#message_content').val()!=""){
-	   
-	   
+	   if($('#searchName').val() !="" && $('#message_title').val() !="" && 
+		 $('#message_content').val()!=""){
 	   
       $('#modal1').modal("hide");
 
@@ -937,9 +938,8 @@ function searchFunction2(){
             message_from_no : "${loginEmp.emp_no}",
             message_to_no : emp_no,
             message_title : $('#message_title').val(),
-            message_content : $('#message_content').val(),
+            message_content : $('#message_content').val()
             
-
          },
          success : function(data) {
         	 send();
@@ -949,8 +949,7 @@ function searchFunction2(){
         	   $('#message_to_no').val("");
         	   $('#message_title').val("");
         	   $('#message_content').val("");
-        	 
-        	 
+        	        	 
         	 alert(data);
            
                 
