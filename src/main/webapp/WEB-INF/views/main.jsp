@@ -36,6 +36,7 @@
     var writer_no="";
     var event=new Array();
   	//calendar load
+  	
   	function calendarLoad(){
   		
   		$.ajax({
@@ -50,7 +51,6 @@
             var json = JSON.parse(jsonSt);
 			 event=new Array();
 		
-	
 		for ( var i in json.list) {
 			event.push({
 				title: json.list[i].calendar_title,
@@ -58,31 +58,26 @@
 				end:json.list[i].calendar_end_date,
 				url:"javascript:detailCalendar("+json.list[i].calendar_no+")"
 			});
-		 };
-		
+		 };	
 			$('#myCalendar').fullCalendar({
 	    		  				
 			 	header: {
-			 		left:'month,basicWeek,basicDay',
-				    right: 'today prev,next'
+			 		 left:'month,basicWeek,basicDay',
+			 		 center:'title',
+				     right: 'today prev,next'
 				  }, 
 		  
-				  defaultDate: '2018-06-01',
 				  buttonIcons: false,
-				  weekNumbers: false,
-				
-				  
-				 events:event
+				  weekNumbers: false,	  
+				  events:event
 					 
 	    	}); 
 					
 			var value="<button class='btn btn-danger' onclick='Schedule();'"+
 			"style='padding:0.1%; margin-top:1%;' id='addScheduleRed'>일정추가</button>";
 			$('#addschedule').html(value);
-		 }
-		
-	});
-  		
+		 }		
+	});		
   	}
     
     $(function() {

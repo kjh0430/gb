@@ -21,7 +21,7 @@ emp e where
 </when>
 
 <when test="dept_no==3">
- d.dept_no=e.dept_no and c.emp_no=e.emp_no
+ d.dept_no=#{dept_no} and d.dept_no=e.dept_no and c.emp_no=e.emp_no
 
 </when>
 </choose> 

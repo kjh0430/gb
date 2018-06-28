@@ -924,12 +924,18 @@ function searchFunction2(){
    }
    
    //쪽지 보내기
+   
    function modalSubmit() {
 
 	   if($('#searchName').val() !="" && $('#message_title').val() !="" && 
 		 $('#message_content').val()!=""){
 	   
       $('#modal1').modal("hide");
+      
+       $('#searchName').val("");
+	   $('#message_to_no').val("");
+	   $('#message_title').val("");
+	   $('#message_content').val("");
 
       $.ajax({
          url : "sub.do",
@@ -942,14 +948,7 @@ function searchFunction2(){
             
          },
          success : function(data) {
-        	 send();
-        	 
-        	 //닫으면 내용 지워주기
-        	   $('#searchName').val("");
-        	   $('#message_to_no').val("");
-        	   $('#message_title').val("");
-        	   $('#message_content').val("");
-        	        	 
+        	 send();   	        	 
         	 alert(data);
            
                 
