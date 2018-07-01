@@ -774,6 +774,11 @@ $(function(){
 </script>
 
   <style type="text/css">
+  
+  .control-label{
+  margin-top:10px;
+  }
+  
    .form-control{
       display:inline-block;
       width:90%;
@@ -913,7 +918,7 @@ $(function(){
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content" id="myCalendar">
-               
+               	
 				<div id="addschedule"></div>
 			
 	
@@ -945,8 +950,10 @@ $(function(){
 									<form class="form-horizontal form-label-left">
 
 										<div class="form-group">
+										
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">시작일자
 											</label>
+											
 											<div class="col-md-9 col-sm-9 col-xs-12">
 												<input type="text"  id="startDate"
 													class="form-control" readonly style="width:30%;">
@@ -995,7 +1002,7 @@ $(function(){
 										    <div class="form-group">
 
                                                       <label
-                                                         class="control-label col-md-3 col-sm-3 col-xs-12">내용</label>
+                                                         class="control-label col-md-3 col-sm-3 col-xs-12 content">내용</label>
                                                       <div class="col-md-9 col-sm-9 col-xs-12">
                                                          <textarea class="form-control" rows="8"
                                                             id="calendar_content" readonly></textarea>
@@ -1100,7 +1107,7 @@ $(function(){
 										    <div class="form-group">
 
                                                       <label
-                                                         class="control-label col-md-3 col-sm-3 col-xs-12">내용</label>
+                                                         class="control-label col-md-3 col-sm-3 col-xs-12 content">내용</label>
                                                       <div class="col-md-9 col-sm-9 col-xs-12">
                                                          <textarea class="form-control" rows="8"
                                                             id="calendar_contentM" maxlength="333"></textarea>
@@ -1203,7 +1210,7 @@ $(function(){
 										    <div class="form-group">
 
                                                       <label
-                                                         class="control-label col-md-3 col-sm-3 col-xs-12">내용</label>
+                                                         class="control-label col-md-3 col-sm-3 col-xs-12 content">내용</label>
                                                       <div class="col-md-9 col-sm-9 col-xs-12">
                                                          <textarea class="form-control" rows="8"
                                                             id="addcalendar_content" maxlength="333"></textarea>

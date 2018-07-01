@@ -930,13 +930,8 @@ function searchFunction2(){
 	   if($('#searchName').val() !="" && $('#message_title').val() !="" && 
 		 $('#message_content').val()!=""){
 	   
-      $('#modal1').modal("hide");
+     	 $('#modal1').modal("hide");
       
-       $('#searchName').val("");
-	   $('#message_to_no').val("");
-	   $('#message_title').val("");
-	   $('#message_content').val("");
-
       $.ajax({
          url : "sub.do",
          type : "post",
@@ -948,7 +943,13 @@ function searchFunction2(){
             
          },
          success : function(data) {
-        	 send();   	        	 
+        	 
+             $('#searchName').val("");
+      	     $('#message_to_no').val("");
+      	     $('#message_title').val("");
+      	     $('#message_content').val("");
+        	 
+      	     send();   	        	 
         	 alert(data);
            
                 
